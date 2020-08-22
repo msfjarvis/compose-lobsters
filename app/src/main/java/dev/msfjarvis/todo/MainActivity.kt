@@ -2,8 +2,6 @@ package dev.msfjarvis.todo
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.Box
-import androidx.compose.foundation.ContentGravity
 import androidx.compose.foundation.Icon
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.Row
@@ -12,6 +10,7 @@ import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.Scaffold
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExposurePlus1
@@ -45,40 +44,40 @@ class MainActivity : AppCompatActivity() {
 fun TodoApp() {
   val items = remember { mutableStateListOf(TodoItem("Default item")) }
 
-  Box(gravity = ContentGravity.Center) {
-    TopAppBar(
-      title = {
-        Text(text = "I can Compose?")
-      }
-    )
-    LazyColumnFor(items = items, modifier = Modifier.padding(horizontal = 16.dp)) { todoItem ->
-      Row(
-        modifier = Modifier.padding(vertical = 8.dp).fillParentMaxWidth(),
+  Scaffold(
+    topBar = { TopAppBar({ Text(text = "I can Compose?") }) },
+    floatingActionButton = {
+      FloatingActionButton(
+        onClick = {
+          items.add(TodoItem("Item ${items.size + 1}"))
+        },
+        elevation = 8.dp,
       ) {
-        Card(
-          shape = RoundedCornerShape(8.dp),
-          modifier = Modifier.fillParentMaxWidth(),
-          backgroundColor = Color.Black
+        Icon(asset = Icons.Filled.ExposurePlus1)
+      }
+    },
+    bodyContent = {
+      LazyColumnFor(items = items, modifier = Modifier.padding(horizontal = 16.dp)) { todoItem ->
+        Row(
+          modifier = Modifier.padding(vertical = 8.dp).fillParentMaxWidth(),
         ) {
-          Text(
-            text = todoItem.title,
-            style = TextStyle(
-              color = Color.White,
-              fontSize = 20.sp,
-              textAlign = TextAlign.Center
-            ),
-            modifier = Modifier.padding(16.dp),
-          )
+          Card(
+            shape = RoundedCornerShape(8.dp),
+            modifier = Modifier.fillParentMaxWidth(),
+            backgroundColor = Color.Black
+          ) {
+            Text(
+              text = todoItem.title,
+              style = TextStyle(
+                color = Color.White,
+                fontSize = 20.sp,
+                textAlign = TextAlign.Center
+              ),
+              modifier = Modifier.padding(16.dp),
+            )
+          }
         }
       }
     }
-    FloatingActionButton(
-      onClick = {
-        items.add(TodoItem("Item ${items.size + 1}"))
-      },
-      elevation = 8.dp,
-    ) {
-      Icon(asset = Icons.Filled.ExposurePlus1)
-    }
-  }
+  )
 }

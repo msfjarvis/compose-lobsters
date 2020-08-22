@@ -7,6 +7,7 @@ import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumnFor
+import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.FloatingActionButton
@@ -58,26 +59,31 @@ fun TodoApp() {
     },
     bodyContent = {
       LazyColumnFor(items = items, modifier = Modifier.padding(horizontal = 16.dp)) { todoItem ->
-        Row(
-          modifier = Modifier.padding(vertical = 8.dp).fillParentMaxWidth(),
-        ) {
-          Card(
-            shape = RoundedCornerShape(8.dp),
-            modifier = Modifier.fillParentMaxWidth(),
-            backgroundColor = Color.Black
-          ) {
-            Text(
-              text = todoItem.title,
-              style = TextStyle(
-                color = Color.White,
-                fontSize = 20.sp,
-                textAlign = TextAlign.Center
-              ),
-              modifier = Modifier.padding(16.dp),
-            )
-          }
-        }
+        TodoRowItem(item = todoItem)
       }
     }
   )
+}
+
+@Composable
+fun LazyItemScope.TodoRowItem(item: TodoItem) {
+  Row(
+    modifier = Modifier.padding(vertical = 8.dp).fillParentMaxWidth(),
+  ) {
+    Card(
+      shape = RoundedCornerShape(8.dp),
+      modifier = Modifier.fillParentMaxWidth(),
+      backgroundColor = Color.Black
+    ) {
+      Text(
+        text = item.title,
+        style = TextStyle(
+          color = Color.White,
+          fontSize = 20.sp,
+          textAlign = TextAlign.Center
+        ),
+        modifier = Modifier.padding(16.dp),
+      )
+    }
+  }
 }

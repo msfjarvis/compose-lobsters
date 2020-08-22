@@ -14,22 +14,26 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextIndent
 import androidx.compose.ui.unit.sp
 
-private val lightColors = lightColors(
-  primary = Color(0xFF6200EE),
-  primaryVariant = Color(0xFF3700B3),
-  onPrimary = Color(0xFFFFFFFF),
-  secondary = Color(0xFF03DAC5),
-  secondaryVariant = Color(0xFF0000FF),
-  onSecondary = Color(0xFF000000),
-  background = Color(0xFFFFFFFF),
-  onBackground = Color(0xFF000000),
-  surface = Color(0xFFFFFFFF),
-  onSurface = Color(0xFF000000),
-  error = Color(0xFFB00020),
-  onError = Color(0xFFFFFFFF)
+val lightColors  = lightColors(
+  primary = Color.White,
+  secondary = Color(0xFF3700B3),
+  background = Color.White,
+  surface = Color.White,
+  onPrimary = Color.Black,
+  onSecondary = Color.White,
+  onBackground = Color.Black,
+  onSurface = Color.White,
 )
-
-private val darkColors = darkColors()
+val darkColors = darkColors(
+  primary = Color(0xFF121212),
+  secondary = Color(0xFFBB86FC),
+  background = Color.Black,
+  surface = Color(0xFF121212),
+  onPrimary = Color.White,
+  onSecondary = Color.White,
+  onBackground = Color.White,
+  onSurface = Color.White,
+)
 
 private val typography = Typography(
   body1 = TextStyle(

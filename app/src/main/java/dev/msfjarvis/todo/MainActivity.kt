@@ -9,10 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Scaffold
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExposurePlus1
 import androidx.compose.runtime.Composable
@@ -54,7 +51,7 @@ fun TodoApp() {
         },
         elevation = 8.dp,
       ) {
-        Icon(asset = Icons.Filled.ExposurePlus1)
+        Icon(asset = Icons.Filled.ExposurePlus1, tint = MaterialTheme.colors.onSurface)
       }
     },
     bodyContent = {
@@ -73,12 +70,10 @@ fun LazyItemScope.TodoRowItem(item: TodoItem) {
     Card(
       shape = RoundedCornerShape(8.dp),
       modifier = Modifier.fillParentMaxWidth(),
-      backgroundColor = Color.Black
     ) {
       Text(
         text = item.title,
         style = TextStyle(
-          color = Color.White,
           fontSize = 20.sp,
           textAlign = TextAlign.Center
         ),

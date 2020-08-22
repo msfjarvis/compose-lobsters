@@ -4,14 +4,17 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Box
 import androidx.compose.foundation.ContentGravity
+import androidx.compose.foundation.Icon
 import androidx.compose.foundation.Text
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ExposurePlus1
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
@@ -54,9 +57,7 @@ fun TodoApp() {
       ) {
         Card(
           shape = RoundedCornerShape(8.dp),
-          modifier = Modifier
-            .fillParentMaxWidth()
-            .clickable(onClick = { items.add(TodoItem("Item ${items.size + 1}")) }),
+          modifier = Modifier.fillParentMaxWidth(),
           backgroundColor = Color.Black
         ) {
           Text(
@@ -70,6 +71,14 @@ fun TodoApp() {
           )
         }
       }
+    }
+    FloatingActionButton(
+      onClick = {
+        items.add(TodoItem("Item ${items.size + 1}"))
+      },
+      elevation = 8.dp,
+    ) {
+      Icon(asset = Icons.Filled.ExposurePlus1)
     }
   }
 }

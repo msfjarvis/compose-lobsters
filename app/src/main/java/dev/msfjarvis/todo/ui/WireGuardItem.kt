@@ -51,7 +51,7 @@ fun LazyItemScope.WireGuardItem(item: TodoItem) {
             onCheckedChange = { checked = it },
             color = MaterialTheme.colors.onSecondary,
           )
-        }
+        },
       )
     }
   }

@@ -60,6 +60,6 @@ fun TodoApp() {
           TodoRowItem(item = todoItem)
         }
       }
-    }
+    },
   )
 }

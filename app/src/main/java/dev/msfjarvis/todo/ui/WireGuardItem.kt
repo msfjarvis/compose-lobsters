@@ -48,7 +48,8 @@ fun LazyItemScope.WireGuardItem(item: TodoItem) {
         trailing = {
           Switch(
             checked = checked,
-            onCheckedChange = { checked = !checked },
+            onCheckedChange = { checked = it },
+            color = MaterialTheme.colors.onSecondary,
           )
         }
       )

@@ -13,7 +13,8 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExposurePlus1
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.setContent
@@ -37,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 @Preview
 @Composable
 fun TodoApp() {
-  val items = remember { mutableStateListOf(TodoItem("Default item")) }
+  val items by remember { mutableStateOf(arrayListOf(TodoItem("Default item"))) }
 
   Scaffold(
     topBar = { TopAppBar({ Text(text = "I can Compose?") }) },

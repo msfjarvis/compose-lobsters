@@ -1,11 +1,13 @@
 package dev.msfjarvis.todo.ui
 
 import androidx.compose.foundation.Text
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.ripple.RippleIndication
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
@@ -17,7 +19,9 @@ import dev.msfjarvis.todo.data.TodoItem
 @Composable
 fun LazyItemScope.TodoRowItem(item: TodoItem) {
   Row(
-    modifier = Modifier.padding(vertical = 8.dp).fillParentMaxWidth(),
+    modifier = Modifier.padding(vertical = 8.dp)
+      .fillParentMaxWidth()
+      .clickable(onClick = {}, indication = RippleIndication()),
   ) {
     Card(
       shape = RoundedCornerShape(8.dp),

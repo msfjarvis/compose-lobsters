@@ -1,6 +1,7 @@
 package dev.msfjarvis.todo.ui
 
 import androidx.compose.foundation.Text
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyItemScope
@@ -9,6 +10,7 @@ import androidx.compose.material.Card
 import androidx.compose.material.ListItem
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Switch
+import androidx.compose.material.ripple.RippleIndication
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
@@ -26,7 +28,10 @@ import dev.msfjarvis.todo.data.TodoItem
 fun LazyItemScope.WireGuardItem(item: TodoItem) {
   var checked by remember { mutableStateOf(false) }
   Row(
-    modifier = Modifier.padding(vertical = 8.dp).fillParentMaxWidth(),
+    modifier = Modifier
+      .clickable(onClick = { checked = !checked }, indication = RippleIndication())
+      .padding(vertical = 8.dp)
+      .fillParentMaxWidth(),
   ) {
     Card(
       shape = RoundedCornerShape(8.dp),

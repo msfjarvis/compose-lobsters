@@ -10,6 +10,8 @@ import androidx.compose.material.ListItem
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Switch
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -20,6 +22,7 @@ import dev.msfjarvis.todo.data.TodoItem
 @Suppress("Unused")
 @Composable
 fun LazyItemScope.WireGuardItem(item: TodoItem) {
+  var checked by remember { mutableStateOf(false) }
   Row(
     modifier = Modifier.padding(vertical = 8.dp).fillParentMaxWidth(),
   ) {
@@ -42,8 +45,8 @@ fun LazyItemScope.WireGuardItem(item: TodoItem) {
         },
         trailing = {
           Switch(
-            checked = false,
-            onCheckedChange = { },
+            checked = checked,
+            onCheckedChange = { checked = !checked },
           )
         }
       )

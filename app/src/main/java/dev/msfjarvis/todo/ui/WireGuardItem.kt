@@ -29,13 +29,14 @@ fun LazyItemScope.WireGuardItem(item: TodoItem) {
   var checked by remember { mutableStateOf(false) }
   Row(
     modifier = Modifier
-      .clickable(onClick = { checked = !checked }, indication = RippleIndication())
       .padding(vertical = 8.dp)
       .fillParentMaxWidth(),
   ) {
     Card(
       shape = RoundedCornerShape(8.dp),
-      modifier = Modifier.fillParentMaxWidth(),
+      modifier = Modifier
+        .clickable(onClick = { checked = !checked }, indication = RippleIndication())
+        .fillParentMaxWidth(),
       backgroundColor = MaterialTheme.colors.secondary
     ) {
       ListItem(

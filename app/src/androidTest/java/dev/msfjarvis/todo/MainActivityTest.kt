@@ -2,9 +2,11 @@ package dev.msfjarvis.todo
 
 import androidx.ui.test.android.createAndroidComposeRule
 import androidx.ui.test.assertIsDisplayed
+import androidx.ui.test.hasTestTag
+import androidx.ui.test.onNode
 import androidx.ui.test.onNodeWithText
+import androidx.ui.test.performClick
 import dev.msfjarvis.todo.ui.TodoTheme
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
@@ -13,17 +15,25 @@ class MainActivityTest {
   @get:Rule
   val composeTestRule = createAndroidComposeRule<MainActivity>(disableTransitions = true)
 
-  @Before
-  fun setUp() {
+  @Test
+  fun test_default_item() {
     composeTestRule.setContent {
       TodoTheme {
         TodoApp()
       }
     }
+    onNodeWithText("Default item").assertIsDisplayed()
   }
 
   @Test
-  fun test_default_item() {
+  fun test_item_addition() {
+    composeTestRule.setContent {
+      TodoTheme {
+        TodoApp()
+      }
+    }
     onNodeWithText("Default item").assertIsDisplayed()
+    onNode(hasTestTag("fab")).performClick()
+    onNodeWithText("Item 2").assertIsDisplayed()
   }
 }

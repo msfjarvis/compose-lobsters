@@ -37,7 +37,7 @@ jobs:
       if: ${{ steps.service-changed.outputs.result == 'true' }}
       uses: reactivecircus/android-emulator-runner@v2.11.0
       with:
-        api-level: 30
+        api-level: 29
         target: default
         script: ./gradlew :app:connectedDebugAndroidTest
 

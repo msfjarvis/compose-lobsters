@@ -16,6 +16,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.setContent
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.unit.dp
 import androidx.ui.tooling.preview.Preview
 import dev.msfjarvis.todo.data.TodoItem
@@ -47,6 +49,7 @@ fun TodoApp() {
           items.add(TodoItem("Item ${items.size + 1}"))
         },
         elevation = 8.dp,
+        modifier = Modifier.semantics { testTag = "fab" }
       ) {
         Icon(asset = Icons.Filled.ExposurePlus1, tint = MaterialTheme.colors.onSurface)
       }

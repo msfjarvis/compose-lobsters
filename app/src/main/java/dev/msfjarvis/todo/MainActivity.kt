@@ -23,7 +23,6 @@ import androidx.ui.tooling.preview.Preview
 import dev.msfjarvis.todo.data.TodoItem
 import dev.msfjarvis.todo.ui.TodoRowItem
 import dev.msfjarvis.todo.ui.TodoTheme
-import dev.msfjarvis.todo.ui.WireGuardItem
 
 class MainActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,12 +55,7 @@ fun TodoApp() {
     },
     bodyContent = {
       LazyColumnFor(items = items, modifier = Modifier.padding(horizontal = 16.dp)) { todoItem ->
-        val isOdd = items.indexOf(todoItem) % 2 == 1
-        if (isOdd) {
-          WireGuardItem(item = todoItem)
-        } else {
-          TodoRowItem(item = todoItem)
-        }
+        TodoRowItem(item = todoItem)
       }
     },
   )

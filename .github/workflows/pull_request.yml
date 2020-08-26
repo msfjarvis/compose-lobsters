@@ -1,0 +1,49 @@
+on: [pull_request]
+
+name: Check pull request
+jobs:
+  test-pr:
+    runs-on: macos-latest
+    steps:
+
+    - name: Check if relevant files have changed
+      uses: actions/github-script@0.9.0
+      id: service-changed
+      with:
+        result-encoding: string
+        script: |
+          const result = await github.pulls.listFiles({
+            owner: context.payload.repository.owner.login,
+            repo: context.payload.repository.name,
+            pull_number: context.payload.number,
+            per_page: 100
+          })
+          const serviceChanged = result.data.filter(f => f.filename.startsWith("app/") || f.filename.endsWith("gradle") || f.filename.startsWith(".github/workflows/pull_request.yml") || f.filename.startsWith("gradle") || f.filename.endsWith("properties")).length > 0
+          console.log(serviceChanged)
+          return serviceChanged
+
+    - name: Checkout repository
+      if: ${{ steps.service-changed.outputs.result == 'true' }}
+      uses: actions/checkout@v2
+
+    - name: Copy CI gradle.properties
+      if: ${{ steps.service-changed.outputs.result == 'true' }}
+      run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
+
+    - uses: burrunan/gradle-cache-action@v1
+      name: Restore cache
+
+    - name: Run instrumentation tests
+      if: ${{ steps.service-changed.outputs.result == 'true' }}
+      uses: reactivecircus/android-emulator-runner@v2.11.0
+      with:
+        api-level: 30
+        target: default
+        script: ./gradlew :app:connectedDebugAndroidTest
+
+    - name: (Fail-only) upload test report
+      if: failure()
+      uses: actions/upload-artifact@v2
+      with:
+          name: Test report
+          path: app/build/reports

@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity() {
   }
 }
 
-@Preview
 @Composable
 fun TodoApp() {
   val items = mutableStateListOf(TodoItem("Default item"))
@@ -59,4 +58,12 @@ fun TodoApp() {
       }
     },
   )
+}
+
+@Preview
+@Composable
+fun PreviewApp() {
+  TodoTheme {
+    TodoApp()
+  }
 }

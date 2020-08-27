@@ -15,13 +15,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.msfjarvis.todo.data.model.TodoItem
+import kotlinx.coroutines.coroutineScope
 
 @Composable
-fun LazyItemScope.TodoRowItem(item: TodoItem) {
+fun LazyItemScope.TodoRowItem(item: TodoItem, onLongClick: () -> Unit) {
   Row(
     modifier = Modifier.padding(vertical = 8.dp)
       .fillParentMaxWidth()
-      .clickable(onClick = {}, indication = RippleIndication()),
+      .clickable(
+        onClick = {},
+        onLongClick = onLongClick,
+        indication = RippleIndication()
+      ),
   ) {
     Card(
       shape = RoundedCornerShape(8.dp),

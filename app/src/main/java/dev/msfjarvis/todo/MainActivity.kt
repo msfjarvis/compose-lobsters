@@ -63,7 +63,11 @@ fun TodoApp() {
     },
     bodyContent = {
       LazyColumnFor(items = items, modifier = Modifier.padding(horizontal = 16.dp)) { todoItem ->
-        TodoRowItem(item = todoItem)
+        TodoRowItem(item = todoItem) {
+          coroutineScope.launch {
+            itemsDao.delete(todoItem)
+          }
+        }
       }
     },
   )

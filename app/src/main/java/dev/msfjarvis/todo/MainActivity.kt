@@ -20,7 +20,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.unit.dp
 import androidx.ui.tooling.preview.Preview
-import dev.msfjarvis.todo.data.TodoItem
+import dev.msfjarvis.todo.data.model.TodoItem
 import dev.msfjarvis.todo.ui.TodoRowItem
 import dev.msfjarvis.todo.ui.TodoTheme
 

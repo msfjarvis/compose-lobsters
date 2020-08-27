@@ -14,7 +14,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.msfjarvis.todo.data.TodoItem
+import dev.msfjarvis.todo.data.model.TodoItem
 
 @Composable
 fun LazyItemScope.TodoRowItem(item: TodoItem) {

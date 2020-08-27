@@ -10,7 +10,9 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.semantics.semantics
@@ -19,8 +21,10 @@ import androidx.compose.ui.unit.dp
 import androidx.ui.tooling.preview.Preview
 import dev.msfjarvis.todo.compose.utils.IconResource
 import dev.msfjarvis.todo.data.model.TodoItem
+import dev.msfjarvis.todo.di.Graph
 import dev.msfjarvis.todo.ui.TodoRowItem
 import dev.msfjarvis.todo.ui.TodoTheme
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,14 +39,18 @@ class MainActivity : AppCompatActivity() {
 
 @Composable
 fun TodoApp() {
-  val items = mutableStateListOf(TodoItem("Default item"))
+  val coroutineScope = rememberCoroutineScope()
+  val itemsDao = Graph.database.todoItemsDao()
+  val items by itemsDao.getAllItems().collectAsState(initial = emptyList())
 
   Scaffold(
     topBar = { TopAppBar({ Text(text = "I can Compose?") }) },
     floatingActionButton = {
       FloatingActionButton(
         onClick = {
-          items.add(TodoItem("Item ${items.size + 1}"))
+          coroutineScope.launch {
+            itemsDao.insert(TodoItem("Item ${items.size + 1}"))
+          }
         },
         elevation = 8.dp,
         modifier = Modifier.semantics { testTag = "fab" }

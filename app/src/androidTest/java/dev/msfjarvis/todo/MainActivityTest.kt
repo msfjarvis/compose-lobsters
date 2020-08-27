@@ -16,24 +16,13 @@ class MainActivityTest {
   val composeTestRule = createAndroidComposeRule<MainActivity>(disableTransitions = true)
 
   @Test
-  fun test_default_item() {
-    composeTestRule.setContent {
-      TodoTheme {
-        TodoApp()
-      }
-    }
-    onNodeWithText("Default item").assertIsDisplayed()
-  }
-
-  @Test
   fun test_item_addition() {
     composeTestRule.setContent {
       TodoTheme {
         TodoApp()
       }
     }
-    onNodeWithText("Default item").assertIsDisplayed()
     onNode(hasTestTag("fab")).performClick()
-    onNodeWithText("Item 2").assertIsDisplayed()
+    onNodeWithText("Item 1").assertIsDisplayed()
   }
 }

@@ -23,6 +23,6 @@ class MainActivityTest {
       }
     }
     onNode(hasTestTag("fab")).performClick()
-    onNodeWithText("Item 2").assertIsDisplayed()
+    onNodeWithText("Item 1").assertIsDisplayed()
   }
 }

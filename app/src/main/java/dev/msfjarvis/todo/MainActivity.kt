@@ -31,27 +31,31 @@ class MainActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContent {
       TodoTheme {
-        TodoApp()
+        val coroutineScope = rememberCoroutineScope()
+        val itemsDao = Graph.database.todoItemsDao()
+        val items by itemsDao.getAllItems().collectAsState(initial = emptyList())
+        TodoApp(
+          items,
+          { item -> coroutineScope.launch { itemsDao.insert(item) } },
+          { item -> coroutineScope.launch { itemsDao.delete(item) } },
+        )
       }
     }
   }
 }
 
 @Composable
-fun TodoApp() {
-  val coroutineScope = rememberCoroutineScope()
-  val itemsDao = Graph.database.todoItemsDao()
-  val items by itemsDao.getAllItems().collectAsState(initial = emptyList())
+fun TodoApp(
+  items: List<TodoItem>,
+  onAdd: (item: TodoItem) -> Unit,
+  onDelete: (item: TodoItem) -> Unit,
+) {
 
   Scaffold(
     topBar = { TopAppBar({ Text(text = "I can Compose?") }) },
     floatingActionButton = {
       FloatingActionButton(
-        onClick = {
-          coroutineScope.launch {
-            itemsDao.insert(TodoItem("Item ${items.size + 1}"))
-          }
-        },
+        onClick = { onAdd.invoke(TodoItem("Item ${items.size + 1}")) },
         elevation = 8.dp,
         modifier = Modifier.semantics { testTag = "fab" }
       ) {
@@ -62,12 +66,11 @@ fun TodoApp() {
       }
     },
     bodyContent = {
-      LazyColumnFor(items = items, modifier = Modifier.padding(horizontal = 16.dp)) { todoItem ->
-        TodoRowItem(item = todoItem) {
-          coroutineScope.launch {
-            itemsDao.delete(todoItem)
-          }
-        }
+      LazyColumnFor(
+        items = items,
+        modifier = Modifier.padding(horizontal = 16.dp)
+      ) { todoItem ->
+        TodoRowItem(item = todoItem) { onDelete.invoke(todoItem) }
       }
     },
   )
@@ -77,6 +80,11 @@ fun TodoApp() {
 @Composable
 fun PreviewApp() {
   TodoTheme {
-    TodoApp()
+    val items = arrayListOf(TodoItem("Item 1"))
+    TodoApp(
+      items,
+      items::add,
+      items::remove,
+    )
   }
 }

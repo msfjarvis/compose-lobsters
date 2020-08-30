@@ -1,7 +1,7 @@
 package dev.msfjarvis.todo
 
-import androidx.ui.test.android.createAndroidComposeRule
 import androidx.ui.test.assertIsDisplayed
+import androidx.ui.test.createComposeRule
 import androidx.ui.test.hasTestTag
 import androidx.ui.test.onNode
 import androidx.ui.test.onNodeWithText
@@ -13,7 +13,7 @@ import org.junit.Test
 class MainActivityTest {
 
   @get:Rule
-  val composeTestRule = createAndroidComposeRule<MainActivity>(disableTransitions = true)
+  val composeTestRule = createComposeRule()
 
   @Test
   fun test_item_addition() {

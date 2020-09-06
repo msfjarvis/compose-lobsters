@@ -14,7 +14,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextIndent
 import androidx.compose.ui.unit.sp
 
-val lightColors  = lightColors(
+val lightColors = lightColors(
   primary = Color.White,
   secondary = Color(0xFF3700B3),
   background = Color.White,

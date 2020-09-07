@@ -81,7 +81,7 @@ fun TodoApp(
       ) {
         IconResource(
           resourceId = R.drawable.ic_exposure_plus_1_24dp,
-          tint = MaterialTheme.colors.onSurface,
+          tint = MaterialTheme.colors.onSecondary,
         )
       }
     },
@@ -108,6 +108,7 @@ fun ItemAddDialog(
     },
     text = {
       OutlinedTextField(
+        activeColor = MaterialTheme.colors.secondary,
         value = newItemName,
         onValueChange = { newItemName = it },
         label = {

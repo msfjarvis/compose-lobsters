@@ -52,4 +52,22 @@ class MainActivityTest {
     onNodeWithTag("add_button").performClick()
     onNodeWithText("Item 1").assertIsDisplayed()
   }
+
+  @Test
+  fun item_addition_with_empty_name_does_not_add_new_entry() {
+    composeTestRule.setContent {
+      val items by mutableStateOf(arrayListOf<TodoItem>())
+      TodoTheme {
+        TodoApp(
+          items,
+          items::add,
+          items::remove,
+        )
+      }
+    }
+    onNodeWithText("Item 1").assertDoesNotExist()
+    onNodeWithTag("fab").performClick()
+    onNodeWithTag("add_button").performClick()
+    onNodeWithText("Item 1").assertDoesNotExist()
+  }
 }

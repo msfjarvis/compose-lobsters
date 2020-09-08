@@ -2,9 +2,9 @@
 buildscript {
     ext {
         compose_version = '1.0.0-alpha02'
+        kotlin_version = '1.4.0'
         room_version = '2.3.0-alpha02'
     }
-    ext.kotlin_version = "1.4.0"
     repositories {
         google()
         jcenter()
@@ -12,9 +12,6 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:4.2.0-alpha09"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
     }
 }
 
@@ -22,6 +19,38 @@ allprojects {
     repositories {
         google()
         jcenter()
+    }
+}
+
+subprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+    if (name == 'app') {
+        apply plugin: 'com.android.application'
+    } else {
+        apply plugin: 'com.android.library'
+    }
+    android {
+        compileSdkVersion 30
+        buildToolsVersion "30.0.2"
+
+        defaultConfig {
+            minSdkVersion 23
+            targetSdkVersion 30
+            versionCode 1
+            versionName "1.0"
+        }
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
+    }
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+        kotlinOptions {
+            jvmTarget = '1.8'
+        }
     }
 }
 

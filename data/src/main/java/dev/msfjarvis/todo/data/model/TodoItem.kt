@@ -1,12 +1,10 @@
 package dev.msfjarvis.todo.data.model
 
-import androidx.compose.runtime.Immutable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.time.LocalDateTime
 import java.time.ZoneId
 
-@Immutable
 @Entity(
   tableName = "todo_items",
 )

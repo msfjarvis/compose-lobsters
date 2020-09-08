@@ -2,7 +2,8 @@ package dev.msfjarvis.todo
 
 import androidx.ui.test.assertIsDisplayed
 import androidx.ui.test.createComposeRule
-import androidx.ui.test.onNodeWithText
+import androidx.ui.test.onNodeWithTag
+import androidx.ui.test.performClick
 import dev.msfjarvis.todo.data.model.TodoItem
 import dev.msfjarvis.todo.ui.TodoTheme
 import org.junit.Rule
@@ -14,10 +15,10 @@ class MainActivityTest {
   val composeTestRule = createComposeRule()
 
   @Test
-  fun test_item_addition() {
+  fun item_add_dialog_shows_on_fab_click() {
     composeTestRule.setContent {
       TodoTheme {
-        val items = arrayListOf(TodoItem("Item 1"))
+        val items = arrayListOf<TodoItem>()
         TodoApp(
           items,
           items::add,
@@ -25,7 +26,7 @@ class MainActivityTest {
         )
       }
     }
-    //onNode(hasTestTag("fab")).performClick()
-    onNodeWithText("Item 1").assertIsDisplayed()
+    onNodeWithTag("fab").performClick()
+    onNodeWithTag("item_dialog").assertIsDisplayed()
   }
 }

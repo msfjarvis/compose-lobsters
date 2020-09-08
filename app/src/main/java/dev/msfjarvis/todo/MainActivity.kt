@@ -22,8 +22,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.setContent
-import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.semantics.testTag
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.ui.tooling.preview.Preview
@@ -64,6 +63,7 @@ fun TodoApp(
     ItemAddDialog(
       showingDialog = showingDialog,
       onAdd = onAdd,
+      modifier = Modifier.testTag("item_dialog")
     )
   }
 
@@ -73,7 +73,7 @@ fun TodoApp(
       FloatingActionButton(
         onClick = { showingDialog.value = true },
         elevation = 8.dp,
-        modifier = Modifier.semantics { testTag = "fab" }
+        modifier = Modifier.testTag("fab")
       ) {
         IconResource(
           resourceId = R.drawable.ic_exposure_plus_1_24dp,
@@ -96,6 +96,7 @@ fun TodoApp(
 fun ItemAddDialog(
   showingDialog: MutableState<Boolean>,
   onAdd: (item: TodoItem) -> Unit,
+  modifier: Modifier = Modifier,
 ) {
   var newItemName by mutableStateOf(TextFieldValue(""))
   val hideDialog = { showingDialog.value = false }
@@ -121,7 +122,8 @@ fun ItemAddDialog(
       ) {
         Text(text = "Add")
       }
-    }
+    },
+    modifier = Modifier then modifier,
   )
 }
 

@@ -108,6 +108,7 @@ fun ItemAddDialog(
         value = newItemName,
         onValueChange = { newItemName = it },
         label = { Text(text = "Name") },
+        modifier = Modifier.testTag("item_name")
       )
     },
     confirmButton = {
@@ -118,7 +119,8 @@ fun ItemAddDialog(
             newItemName = TextFieldValue("")
             hideDialog.invoke()
           }
-        }
+        },
+        modifier = Modifier.testTag("add_button")
       ) {
         Text(text = "Add")
       }

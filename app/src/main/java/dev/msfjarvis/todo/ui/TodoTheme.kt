@@ -48,7 +48,8 @@ private val typography = Typography(
 @Composable
 fun TodoTheme(children: @Composable () -> Unit) {
   MaterialTheme(
-    colors = if (isSystemInDarkTheme()) darkColors() else lightColors(),
+    colors = if (isSystemInDarkTheme()) darkColors else lightColors,
     content = children,
+    typography = typography,
   )
 }

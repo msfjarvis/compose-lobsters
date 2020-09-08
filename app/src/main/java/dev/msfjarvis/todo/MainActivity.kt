@@ -3,10 +3,10 @@ package dev.msfjarvis.todo
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Text
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.material.AlertDialog
+import androidx.compose.material.Button
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
@@ -24,12 +24,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.ui.tooling.preview.Preview
 import dev.msfjarvis.todo.compose.utils.IconResource
 import dev.msfjarvis.todo.data.model.TodoItem
@@ -102,41 +98,29 @@ fun ItemAddDialog(
   onAdd: (item: TodoItem) -> Unit,
 ) {
   var newItemName by mutableStateOf(TextFieldValue(""))
+  val hideDialog = { showingDialog.value = false }
   AlertDialog(
-    onDismissRequest = {
-      showingDialog.value = false
-    },
+    onDismissRequest = hideDialog,
     text = {
       OutlinedTextField(
         activeColor = MaterialTheme.colors.secondary,
         value = newItemName,
         onValueChange = { newItemName = it },
-        label = {
-          Text(
-            text = "Name",
-          )
-        },
-      )
-    },
-    title = {
-      Text(
-        text = "Create new item",
+        label = { Text(text = "Name") },
       )
     },
     confirmButton = {
-      Text(
-        text = "Add",
-        modifier = Modifier.padding(16.dp).clickable(onClick = {
-          onAdd.invoke(TodoItem(newItemName.text))
-          newItemName = TextFieldValue("")
-          showingDialog.value = false
-        }),
-        style = TextStyle(
-          fontSize = 18.sp,
-          textAlign = TextAlign.End,
-          fontStyle = FontStyle.Normal,
-        ),
-      )
+      Button(
+        onClick = {
+          if (newItemName.text.isNotEmpty()) {
+            onAdd.invoke(TodoItem(newItemName.text))
+            newItemName = TextFieldValue("")
+            hideDialog.invoke()
+          }
+        }
+      ) {
+        Text(text = "Add")
+      }
     }
   )
 }

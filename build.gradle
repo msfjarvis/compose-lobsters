@@ -2,7 +2,7 @@
 buildscript {
     ext {
         compose_version = '1.0.0-alpha02'
-        kotlin_version = '1.4.0'
+        kotlin_version = '1.4.10'
         room_version = '2.3.0-alpha02'
     }
     repositories {
@@ -10,7 +10,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:4.2.0-alpha09"
+        classpath "com.android.tools.build:gradle:4.2.0-alpha10"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -34,7 +34,6 @@ subprojects {
     }
     android {
         compileSdkVersion 30
-        buildToolsVersion "30.0.2"
 
         defaultConfig {
             minSdkVersion 23

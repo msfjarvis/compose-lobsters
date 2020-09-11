@@ -26,20 +26,25 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.ui.tooling.preview.Preview
+import dagger.hilt.android.AndroidEntryPoint
 import dev.msfjarvis.todo.compose.utils.IconResource
 import dev.msfjarvis.todo.data.model.TodoItem
-import dev.msfjarvis.todo.di.Graph
+import dev.msfjarvis.todo.data.source.TodoDatabase
 import dev.msfjarvis.todo.ui.TodoRowItem
 import dev.msfjarvis.todo.ui.TodoTheme
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+  @Inject lateinit var database: TodoDatabase
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
       TodoTheme {
         val coroutineScope = rememberCoroutineScope()
-        val itemsDao = Graph.database.todoItemsDao()
+        val itemsDao = database.todoItemsDao()
         val items by itemsDao.getAllItems().collectAsState(initial = emptyList())
         TodoApp(
           items,

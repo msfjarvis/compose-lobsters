@@ -4,6 +4,9 @@ name: Check pull request
 jobs:
   test-pr:
     runs-on: macos-latest
+    strategy:
+      matrix:
+        api-level: [23, 29]
     steps:
 
     - name: Check if relevant files have changed
@@ -37,7 +40,7 @@ jobs:
       if: ${{ steps.service-changed.outputs.result == 'true' }}
       uses: reactivecircus/android-emulator-runner@v2.11.0
       with:
-        api-level: 29
+        api-level: ${{ matrix.api-level }}
         target: default
         script: ./gradlew :app:connectedDebugAndroidTest
 

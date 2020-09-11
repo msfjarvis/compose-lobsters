@@ -1,11 +1,8 @@
 package dev.msfjarvis.todo
 
 import android.app.Application
-import dev.msfjarvis.todo.di.Graph
+import dagger.hilt.android.HiltAndroidApp
 
+@HiltAndroidApp
 class Application : Application() {
-  override fun onCreate() {
-    super.onCreate()
-    Graph.provide(this)
-  }
 }

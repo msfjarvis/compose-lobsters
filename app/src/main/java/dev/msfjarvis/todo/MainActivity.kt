@@ -90,9 +90,13 @@ fun TodoApp(
     bodyContent = {
       LazyColumnFor(
         items = items,
-        modifier = Modifier.padding(horizontal = 16.dp)
+        modifier = Modifier.padding(top = 16.dp)
       ) { todoItem ->
-        TodoRowItem(item = todoItem) { onDelete.invoke(todoItem) }
+        TodoRowItem(
+          item = todoItem,
+          onClick = { },
+          onDelete = { onDelete.invoke(todoItem) },
+        )
       }
     },
   )

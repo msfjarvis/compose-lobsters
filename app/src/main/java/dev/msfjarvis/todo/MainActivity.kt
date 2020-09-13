@@ -14,6 +14,8 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.Providers
+import androidx.compose.runtime.ambientOf
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -33,25 +35,31 @@ import dev.msfjarvis.todo.data.model.TodoItem
 import dev.msfjarvis.todo.data.source.TodoDatabase
 import dev.msfjarvis.todo.ui.TodoRowItem
 import dev.msfjarvis.todo.ui.TodoTheme
+import dev.msfjarvis.todo.urllauncher.UrlLauncher
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
+val UrlLauncherAmbient = ambientOf<UrlLauncher> { error("Needs to be provided") }
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
   @Inject lateinit var database: TodoDatabase
+  @Inject lateinit var urlLauncher: UrlLauncher
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
-      TodoTheme {
-        val coroutineScope = rememberCoroutineScope()
-        val itemsDao = database.todoItemsDao()
-        val items by itemsDao.getAllItems().collectAsState(initial = emptyList())
-        TodoApp(
-          items,
-          { item -> coroutineScope.launch { itemsDao.insert(item) } },
-          { item -> coroutineScope.launch { itemsDao.delete(item) } },
-        )
+      Providers(UrlLauncherAmbient provides urlLauncher) {
+        TodoTheme {
+          val coroutineScope = rememberCoroutineScope()
+          val itemsDao = database.todoItemsDao()
+          val items by itemsDao.getAllItems().collectAsState(initial = emptyList())
+          TodoApp(
+            items,
+            { item -> coroutineScope.launch { itemsDao.insert(item) } },
+            { item -> coroutineScope.launch { itemsDao.delete(item) } },
+          )
+        }
       }
     }
   }
@@ -64,6 +72,7 @@ fun TodoApp(
   onDelete: (item: TodoItem) -> Unit,
 ) {
   val showingDialog = remember { mutableStateOf(false) }
+  val urlLauncher = UrlLauncherAmbient.current
 
   if (showingDialog.value) {
     ItemAddDialog(
@@ -94,7 +103,7 @@ fun TodoApp(
       ) { todoItem ->
         TodoRowItem(
           item = todoItem,
-          onClick = { },
+          onClick = { urlLauncher.launch(todoItem.title) },
           onDelete = { onDelete.invoke(todoItem) },
         )
       }

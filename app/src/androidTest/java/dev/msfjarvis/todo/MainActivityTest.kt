@@ -22,54 +22,60 @@ class MainActivityTest {
 
   @Test
   fun item_add_dialog_shows_on_fab_click() {
-    composeTestRule.setContent {
-      TodoTheme {
-        val items = arrayListOf<TodoItem>()
-        TodoApp(
-          items,
-          items::add,
-          items::remove,
-        )
+    composeTestRule.apply {
+      setContent {
+        TodoTheme {
+          val items = arrayListOf<TodoItem>()
+          TodoApp(
+            items,
+            items::add,
+            items::remove,
+          )
+        }
       }
+      onNodeWithTag("fab").performClick()
+      onNodeWithTag("item_dialog").assertIsDisplayed()
     }
-    onNodeWithTag("fab").performClick()
-    onNodeWithTag("item_dialog").assertIsDisplayed()
   }
 
   @Test
   fun item_addition_adds_new_entry() {
-    composeTestRule.setContent {
-      val items by mutableStateOf(arrayListOf<TodoItem>())
-      TodoTheme {
-        TodoApp(
-          items,
-          items::add,
-          items::remove,
-        )
+    composeTestRule.apply {
+      setContent {
+        val items by mutableStateOf(arrayListOf<TodoItem>())
+        TodoTheme {
+          TodoApp(
+            items,
+            items::add,
+            items::remove,
+          )
+        }
       }
+      onNodeWithText("Item 1").assertDoesNotExist()
+      onNodeWithTag("fab").performClick()
+      onNodeWithTag("item_name").performTextInput("Item 1")
+      onNodeWithTag("add_button").performClick()
+      onNodeWithText("Item 1").assertIsDisplayed()
     }
-    onNodeWithText("Item 1").assertDoesNotExist()
-    onNodeWithTag("fab").performClick()
-    onNodeWithTag("item_name").performTextInput("Item 1")
-    onNodeWithTag("add_button").performClick()
-    onNodeWithText("Item 1").assertIsDisplayed()
   }
 
   @Test
   fun item_addition_with_empty_name_does_not_add_new_entry() {
-    composeTestRule.setContent {
-      val items by mutableStateOf(arrayListOf<TodoItem>())
-      TodoTheme {
-        TodoApp(
-          items,
-          items::add,
-          items::remove,
-        )
+    composeTestRule.apply {
+      setContent {
+        val items by mutableStateOf(arrayListOf<TodoItem>())
+        TodoTheme {
+          TodoApp(
+            items,
+            items::add,
+            items::remove,
+          )
+        }
       }
+      onNodeWithText("Item 1").assertDoesNotExist()
+      onNodeWithTag("fab").performClick()
+      onNodeWithTag("add_button").performClick()
+      onNodeWithText("Item 1").assertDoesNotExist()
     }
-    onNodeWithText("Item 1").assertDoesNotExist()
-    onNodeWithTag("fab").performClick()
-    onNodeWithTag("add_button").performClick()
-    onNodeWithText("Item 1").assertDoesNotExist()
   }
 }

@@ -3,8 +3,8 @@ package dev.msfjarvis.todo
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Text
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
 import androidx.compose.material.FloatingActionButton
@@ -33,7 +33,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.msfjarvis.todo.compose.utils.IconResource
 import dev.msfjarvis.todo.data.model.TodoItem
 import dev.msfjarvis.todo.data.source.TodoDatabase
-import dev.msfjarvis.todo.ui.TodoRowItem
+import dev.msfjarvis.todo.ui.ListContent
 import dev.msfjarvis.todo.ui.TodoTheme
 import dev.msfjarvis.todo.urllauncher.UrlLauncher
 import kotlinx.coroutines.launch
@@ -97,16 +97,13 @@ fun TodoApp(
       }
     },
     bodyContent = {
-      LazyColumnFor(
+      ListContent(
+        innerPadding = PaddingValues(start = 8.dp, end = 8.dp),
         items = items,
-        modifier = Modifier.padding(top = 16.dp)
-      ) { todoItem ->
-        TodoRowItem(
-          item = todoItem,
-          onClick = { urlLauncher.launch(todoItem.title) },
-          onDelete = { onDelete.invoke(todoItem) },
-        )
-      }
+        onSwipe = onDelete::invoke,
+        onClick = { urlLauncher.launch(it.title) },
+        modifier = Modifier.padding(top = 16.dp),
+      )
     },
   )
 }

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dev.msfjarvis.todo.compose.utils
+package dev.msfjarvis.lobsters.compose.utils
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Icon

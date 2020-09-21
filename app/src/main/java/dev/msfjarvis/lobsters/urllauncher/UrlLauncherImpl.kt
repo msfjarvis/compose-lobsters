@@ -1,4 +1,4 @@
-package dev.msfjarvis.todo.urllauncher
+package dev.msfjarvis.lobsters.urllauncher
 
 import android.content.Context
 import android.content.Intent

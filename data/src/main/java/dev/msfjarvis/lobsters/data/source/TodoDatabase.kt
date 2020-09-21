@@ -1,9 +1,9 @@
-package dev.msfjarvis.todo.data.source
+package dev.msfjarvis.lobsters.data.source
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import dev.msfjarvis.todo.data.model.TodoItem
+import dev.msfjarvis.lobsters.data.model.TodoItem
 
 @Database(
   entities = [

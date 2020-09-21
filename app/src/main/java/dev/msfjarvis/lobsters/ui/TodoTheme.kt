@@ -1,4 +1,4 @@
-package dev.msfjarvis.todo.ui
+package dev.msfjarvis.lobsters.ui
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme

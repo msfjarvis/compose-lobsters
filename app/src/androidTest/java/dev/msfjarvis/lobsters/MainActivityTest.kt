@@ -1,4 +1,4 @@
-package dev.msfjarvis.todo
+package dev.msfjarvis.lobsters
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -8,8 +8,8 @@ import androidx.ui.test.onNodeWithTag
 import androidx.ui.test.onNodeWithText
 import androidx.ui.test.performClick
 import androidx.ui.test.performTextInput
-import dev.msfjarvis.todo.data.model.TodoItem
-import dev.msfjarvis.todo.ui.TodoTheme
+import dev.msfjarvis.lobsters.data.model.TodoItem
+import dev.msfjarvis.lobsters.ui.TodoTheme
 import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test

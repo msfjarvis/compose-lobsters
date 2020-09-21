@@ -6,7 +6,7 @@ plugins {
 
 android {
     defaultConfig {
-        applicationId "dev.msfjarvis.todo"
+        applicationId "dev.msfjarvis.lobsters"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 

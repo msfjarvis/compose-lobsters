@@ -1,4 +1,4 @@
-package dev.msfjarvis.todo
+package dev.msfjarvis.lobsters
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -30,12 +30,12 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.ui.tooling.preview.Preview
 import dagger.hilt.android.AndroidEntryPoint
-import dev.msfjarvis.todo.compose.utils.IconResource
-import dev.msfjarvis.todo.data.model.TodoItem
-import dev.msfjarvis.todo.data.source.TodoDatabase
-import dev.msfjarvis.todo.ui.ListContent
-import dev.msfjarvis.todo.ui.TodoTheme
-import dev.msfjarvis.todo.urllauncher.UrlLauncher
+import dev.msfjarvis.lobsters.compose.utils.IconResource
+import dev.msfjarvis.lobsters.data.model.TodoItem
+import dev.msfjarvis.lobsters.data.source.TodoDatabase
+import dev.msfjarvis.lobsters.ui.ListContent
+import dev.msfjarvis.lobsters.ui.TodoTheme
+import dev.msfjarvis.lobsters.urllauncher.UrlLauncher
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

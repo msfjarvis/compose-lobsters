@@ -1,4 +1,4 @@
-package dev.msfjarvis.todo.data.model
+package dev.msfjarvis.lobsters.data.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

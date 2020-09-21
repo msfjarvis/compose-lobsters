@@ -1,4 +1,4 @@
-package dev.msfjarvis.todo.data.source
+package dev.msfjarvis.lobsters.data.source
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import dev.msfjarvis.todo.data.model.TodoItem
+import dev.msfjarvis.lobsters.data.model.TodoItem
 import kotlinx.coroutines.flow.Flow
 
 /**

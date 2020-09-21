@@ -1,4 +1,4 @@
-package dev.msfjarvis.todo.ui
+package dev.msfjarvis.lobsters.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition

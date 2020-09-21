@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package dev.msfjarvis.todo.data.source
+package dev.msfjarvis.lobsters.data.source
 
 import androidx.room.TypeConverter
 import java.time.LocalDateTime

@@ -1,4 +1,4 @@
-package dev.msfjarvis.todo
+package dev.msfjarvis.lobsters
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

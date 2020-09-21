@@ -1,4 +1,4 @@
-package dev.msfjarvis.todo.ui
+package dev.msfjarvis.lobsters.ui
 
 import androidx.compose.animation.animate
 import androidx.compose.foundation.Box
@@ -17,7 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import dev.msfjarvis.todo.data.model.TodoItem
+import dev.msfjarvis.lobsters.data.model.TodoItem
 
 @Composable
 fun ListContent(

@@ -1,4 +1,4 @@
-package dev.msfjarvis.todo.di
+package dev.msfjarvis.lobsters.di
 
 import android.content.Context
 import androidx.room.Room
@@ -7,7 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import dev.msfjarvis.todo.data.source.TodoDatabase
+import dev.msfjarvis.lobsters.data.source.TodoDatabase
 
 @InstallIn(SingletonComponent::class)
 @Module

@@ -1,4 +1,4 @@
-package dev.msfjarvis.todo.ui
+package dev.msfjarvis.lobsters.ui
 
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.clickable
@@ -14,7 +14,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.msfjarvis.todo.data.model.TodoItem
+import dev.msfjarvis.lobsters.data.model.TodoItem
 
 @Composable
 fun LazyItemScope.TodoRowItem(

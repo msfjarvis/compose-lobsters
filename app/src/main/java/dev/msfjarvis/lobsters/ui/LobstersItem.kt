@@ -3,6 +3,7 @@ package dev.msfjarvis.lobsters.ui
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -36,12 +37,16 @@ fun LazyItemScope.LobstersItem(
           fontWeight = FontWeight.Bold,
           modifier = Modifier.padding(top = 8.dp)
         )
-        Row {
+        Row(
+          modifier = Modifier.padding(vertical = 8.dp),
+          horizontalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
           post.tags.forEach { tag ->
             Text(
               text = tag,
               modifier = Modifier
-                .background(Color(0xFFE2E0C5), RoundedCornerShape(4.dp)),
+                .background(Color(0xFFFFFCD7), RoundedCornerShape(4.dp))
+                .padding(4.dp),
               color = Color.DarkGray,
             )
           }

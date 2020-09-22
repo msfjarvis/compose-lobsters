@@ -4,6 +4,7 @@ plugins {
     id 'dagger.hilt.android.plugin'
 }
 
+final def keystorePropertiesFile = rootProject.file("keystore.properties")
 android {
     defaultConfig {
         applicationId "dev.msfjarvis.lobsters"
@@ -24,6 +25,21 @@ android {
     composeOptions {
         kotlinCompilerVersion "${kotlin_version}"
         kotlinCompilerExtensionVersion "${compose_version}"
+    }
+
+    if (keystorePropertiesFile.exists()) {
+        final def keystoreProperties = new Properties()
+        keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
+        signingConfigs {
+            release {
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+                storeFile rootProject.file(keystoreProperties['storeFile'])
+                storePassword keystoreProperties['storePassword']
+            }
+        }
+        buildTypes.release.signingConfig = signingConfigs.release
     }
 }
 

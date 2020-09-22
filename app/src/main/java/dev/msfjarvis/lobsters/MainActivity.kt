@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
 import androidx.compose.material.FloatingActionButton
@@ -16,8 +17,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.Providers
 import androidx.compose.runtime.ambientOf
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -28,15 +29,20 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import androidx.ui.tooling.preview.Preview
 import dagger.hilt.android.AndroidEntryPoint
+import dev.msfjarvis.lobsters.api.LobstersApi
 import dev.msfjarvis.lobsters.compose.utils.IconResource
 import dev.msfjarvis.lobsters.data.model.TodoItem
 import dev.msfjarvis.lobsters.data.source.TodoDatabase
+import dev.msfjarvis.lobsters.model.LobstersPost
 import dev.msfjarvis.lobsters.ui.ListContent
+import dev.msfjarvis.lobsters.ui.LobstersItem
 import dev.msfjarvis.lobsters.ui.LobstersTheme
 import dev.msfjarvis.lobsters.urllauncher.UrlLauncher
 import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import javax.inject.Inject
 
 val UrlLauncherAmbient = ambientOf<UrlLauncher> { error("Needs to be provided") }
@@ -45,6 +51,7 @@ val UrlLauncherAmbient = ambientOf<UrlLauncher> { error("Needs to be provided") 
 class MainActivity : AppCompatActivity() {
   @Inject lateinit var database: TodoDatabase
   @Inject lateinit var urlLauncher: UrlLauncher
+  @Inject lateinit var apiClient: LobstersApi
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -52,6 +59,25 @@ class MainActivity : AppCompatActivity() {
       Providers(UrlLauncherAmbient provides urlLauncher) {
         LobstersTheme {
           val coroutineScope = rememberCoroutineScope()
+          val posts = mutableStateListOf<LobstersPost>()
+          coroutineScope.launch {
+            apiClient.getHottestPosts().enqueue(object : Callback<List<LobstersPost>> {
+              override fun onResponse(
+                call: Call<List<LobstersPost>>,
+                response: Response<List<LobstersPost>>
+              ) {
+                if (response.isSuccessful) {
+                  response.body()?.let { posts.addAll(it) }
+                }
+              }
+
+              override fun onFailure(call: Call<List<LobstersPost>>, t: Throwable) {
+                TODO("Not yet implemented")
+              }
+            })
+          }
+          LobstersApp(posts)
+          /*
           val itemsDao = database.todoItemsDao()
           val items by itemsDao.getAllItems().collectAsState(initial = emptyList())
           TodoApp(
@@ -59,10 +85,29 @@ class MainActivity : AppCompatActivity() {
             { item -> coroutineScope.launch { itemsDao.insert(item) } },
             { item -> coroutineScope.launch { itemsDao.delete(item) } },
           )
+          */
         }
       }
     }
   }
+}
+
+@Composable
+fun LobstersApp(
+  items: List<LobstersPost>,
+) {
+  val urlLauncher = UrlLauncherAmbient.current
+
+  Scaffold(
+    topBar = { TopAppBar({ Text(text = stringResource(R.string.app_name)) }) },
+    bodyContent = {
+      LazyColumnFor(items) { item ->
+        LobstersItem(item) { post ->
+          urlLauncher.launch(post.url)
+        }
+      }
+    }
+  )
 }
 
 @Composable
@@ -145,6 +190,7 @@ fun ItemAddDialog(
   )
 }
 
+/*
 @Preview
 @Composable
 fun PreviewApp() {
@@ -157,3 +203,4 @@ fun PreviewApp() {
     )
   }
 }
+*/

@@ -6,9 +6,7 @@ plugins {
 dependencies {
     def moshi_version = "1.9.3"
     def retrofit_version = "2.9.0"
-    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
-    implementation "com.squareup.moshi:moshi:$moshi_version"
-    implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
+    implementation project(":model")
     implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     kaptTest "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"

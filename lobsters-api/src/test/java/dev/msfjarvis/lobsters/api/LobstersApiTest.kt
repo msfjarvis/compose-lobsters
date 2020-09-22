@@ -1,6 +1,6 @@
 package dev.msfjarvis.lobsters.api
 
-import dev.msfjarvis.lobsters.api.model.LobstersPost
+import dev.msfjarvis.lobsters.model.LobstersPost
 import okhttp3.mockwebserver.Dispatcher
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -31,17 +31,17 @@ class LobstersApiTest {
 
   @Test
   fun `api gets correct number of items`() {
-    apiClient.getHottestPosts().enqueue(object : Callback<List<LobstersPost>> {
+    apiClient.getHottestPosts().enqueue(object : Callback<List<dev.msfjarvis.lobsters.model.LobstersPost>> {
       override fun onResponse(
-        call: Call<List<LobstersPost>>,
-        response: Response<List<LobstersPost>>
+        call: Call<List<dev.msfjarvis.lobsters.model.LobstersPost>>,
+        response: Response<List<dev.msfjarvis.lobsters.model.LobstersPost>>
       ) {
         val posts = response.body()
         require(posts != null)
         assertEquals(25, posts.size)
       }
 
-      override fun onFailure(call: Call<List<LobstersPost>>, t: Throwable) {
+      override fun onFailure(call: Call<List<dev.msfjarvis.lobsters.model.LobstersPost>>, t: Throwable) {
         fail("Call cannot fail in tests")
       }
     })

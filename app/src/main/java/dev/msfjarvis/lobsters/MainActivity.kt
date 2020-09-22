@@ -34,7 +34,7 @@ import dev.msfjarvis.lobsters.compose.utils.IconResource
 import dev.msfjarvis.lobsters.data.model.TodoItem
 import dev.msfjarvis.lobsters.data.source.TodoDatabase
 import dev.msfjarvis.lobsters.ui.ListContent
-import dev.msfjarvis.lobsters.ui.TodoTheme
+import dev.msfjarvis.lobsters.ui.LobstersTheme
 import dev.msfjarvis.lobsters.urllauncher.UrlLauncher
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContent {
       Providers(UrlLauncherAmbient provides urlLauncher) {
-        TodoTheme {
+        LobstersTheme {
           val coroutineScope = rememberCoroutineScope()
           val itemsDao = database.todoItemsDao()
           val items by itemsDao.getAllItems().collectAsState(initial = emptyList())
@@ -148,7 +148,7 @@ fun ItemAddDialog(
 @Preview
 @Composable
 fun PreviewApp() {
-  TodoTheme {
+  LobstersTheme {
     val items = arrayListOf(TodoItem("Item 1"))
     TodoApp(
       items,

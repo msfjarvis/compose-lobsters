@@ -9,7 +9,7 @@ import androidx.ui.test.onNodeWithText
 import androidx.ui.test.performClick
 import androidx.ui.test.performTextInput
 import dev.msfjarvis.lobsters.data.model.TodoItem
-import dev.msfjarvis.lobsters.ui.TodoTheme
+import dev.msfjarvis.lobsters.ui.LobstersTheme
 import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
@@ -24,7 +24,7 @@ class MainActivityTest {
   fun item_add_dialog_shows_on_fab_click() {
     composeTestRule.apply {
       setContent {
-        TodoTheme {
+        LobstersTheme {
           val items = arrayListOf<TodoItem>()
           TodoApp(
             items,
@@ -43,7 +43,7 @@ class MainActivityTest {
     composeTestRule.apply {
       setContent {
         val items by mutableStateOf(arrayListOf<TodoItem>())
-        TodoTheme {
+        LobstersTheme {
           TodoApp(
             items,
             items::add,
@@ -64,7 +64,7 @@ class MainActivityTest {
     composeTestRule.apply {
       setContent {
         val items by mutableStateOf(arrayListOf<TodoItem>())
-        TodoTheme {
+        LobstersTheme {
           TodoApp(
             items,
             items::add,

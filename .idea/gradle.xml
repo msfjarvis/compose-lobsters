@@ -13,6 +13,8 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/data" />
+            <option value="$PROJECT_DIR$/lobsters-api" />
+            <option value="$PROJECT_DIR$/model" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

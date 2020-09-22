@@ -4,9 +4,10 @@ plugins {
     id 'dagger.hilt.android.plugin'
 }
 
+final def keystorePropertiesFile = rootProject.file("keystore.properties")
 android {
     defaultConfig {
-        applicationId "dev.msfjarvis.todo"
+        applicationId "dev.msfjarvis.lobsters"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -25,6 +26,21 @@ android {
         kotlinCompilerVersion "${kotlin_version}"
         kotlinCompilerExtensionVersion "${compose_version}"
     }
+
+    if (keystorePropertiesFile.exists()) {
+        final def keystoreProperties = new Properties()
+        keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
+        signingConfigs {
+            release {
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+                storeFile rootProject.file(keystoreProperties['storeFile'])
+                storePassword keystoreProperties['storePassword']
+            }
+        }
+        buildTypes.release.signingConfig = signingConfigs.release
+    }
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
@@ -37,7 +53,9 @@ dependencies {
 
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
     implementation(project(":data"))
-    implementation 'androidx.core:core-ktx:1.5.0-alpha02'
+    implementation(project(":lobsters-api"))
+    implementation(project(":model"))
+    implementation 'androidx.core:core-ktx:1.5.0-alpha03'
     implementation 'androidx.appcompat:appcompat:1.3.0-alpha02'
     implementation "androidx.compose.foundation:foundation:$compose_version"
     implementation "androidx.compose.foundation:foundation-layout:$compose_version"

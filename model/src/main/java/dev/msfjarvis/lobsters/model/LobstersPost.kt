@@ -1,11 +1,17 @@
 package dev.msfjarvis.lobsters.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
+@Entity(
+  tableName = "lobsters_posts"
+)
 @JsonClass(generateAdapter = true)
 class LobstersPost(
   @Json(name = "short_id")
+  @PrimaryKey
   val shortId: String,
   @Json(name = "short_id_url")
   val shortIdUrl: String,

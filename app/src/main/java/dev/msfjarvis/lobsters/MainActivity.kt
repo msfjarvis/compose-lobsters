@@ -10,16 +10,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Providers
 import androidx.compose.runtime.ambientOf
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import dev.msfjarvis.lobsters.api.LobstersApi
 import dev.msfjarvis.lobsters.model.LobstersPost
 import dev.msfjarvis.lobsters.ui.LobstersItem
 import dev.msfjarvis.lobsters.ui.LobstersTheme
 import dev.msfjarvis.lobsters.urllauncher.UrlLauncher
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 val UrlLauncherAmbient = ambientOf<UrlLauncher> { error("Needs to be provided") }
@@ -34,10 +35,11 @@ class MainActivity : AppCompatActivity() {
     setContent {
       Providers(UrlLauncherAmbient provides urlLauncher) {
         LobstersTheme {
-          val coroutineScope = rememberCoroutineScope()
           val posts = mutableStateListOf<LobstersPost>()
-          coroutineScope.launch {
-            posts.addAll(apiClient.getHottestPosts(1))
+          lifecycleScope.launchWhenCreated {
+            withContext(Dispatchers.IO) {
+              posts.addAll(apiClient.getHottestPosts(1))
+            }
           }
           LobstersApp(posts)
         }

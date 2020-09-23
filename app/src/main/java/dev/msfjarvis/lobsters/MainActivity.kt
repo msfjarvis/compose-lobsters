@@ -20,9 +20,6 @@ import dev.msfjarvis.lobsters.ui.LobstersItem
 import dev.msfjarvis.lobsters.ui.LobstersTheme
 import dev.msfjarvis.lobsters.urllauncher.UrlLauncher
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import javax.inject.Inject
 
 val UrlLauncherAmbient = ambientOf<UrlLauncher> { error("Needs to be provided") }
@@ -40,20 +37,7 @@ class MainActivity : AppCompatActivity() {
           val coroutineScope = rememberCoroutineScope()
           val posts = mutableStateListOf<LobstersPost>()
           coroutineScope.launch {
-            apiClient.getHottestPosts().enqueue(object : Callback<List<LobstersPost>> {
-              override fun onResponse(
-                call: Call<List<LobstersPost>>,
-                response: Response<List<LobstersPost>>
-              ) {
-                if (response.isSuccessful) {
-                  response.body()?.let { posts.addAll(it) }
-                }
-              }
-
-              override fun onFailure(call: Call<List<LobstersPost>>, t: Throwable) {
-                TODO("Not yet implemented")
-              }
-            })
+            posts.addAll(apiClient.getHottestPosts())
           }
           LobstersApp(posts)
         }

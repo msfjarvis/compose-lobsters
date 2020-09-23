@@ -7,10 +7,11 @@ dependencies {
     def moshi_version = "1.9.3"
     def retrofit_version = "2.9.0"
     implementation project(":model")
-    api "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
     kaptTest "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
     testImplementation 'junit:junit:4.13'
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.9"
     // retrofit uses 3.14.9, so shall we.
     //noinspection GradleDependency
     testImplementation "com.squareup.okhttp3:mockwebserver:3.14.9"

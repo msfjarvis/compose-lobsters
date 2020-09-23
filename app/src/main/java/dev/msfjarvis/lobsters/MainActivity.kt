@@ -19,13 +19,11 @@ import dev.msfjarvis.lobsters.data.LobstersViewModel
 import dev.msfjarvis.lobsters.ui.LobstersItem
 import dev.msfjarvis.lobsters.ui.LobstersTheme
 import dev.msfjarvis.lobsters.urllauncher.UrlLauncher
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
 
 val UrlLauncherAmbient = ambientOf<UrlLauncher> { error("Needs to be provided") }
 
 @AndroidEntryPoint
-@ExperimentalCoroutinesApi
 class MainActivity : AppCompatActivity() {
   @Inject lateinit var urlLauncher: UrlLauncher
   @Inject lateinit var apiClient: LobstersApi
@@ -44,7 +42,6 @@ class MainActivity : AppCompatActivity() {
 }
 
 @Composable
-@ExperimentalCoroutinesApi
 fun LobstersApp(
   viewModel: LobstersViewModel
 ) {

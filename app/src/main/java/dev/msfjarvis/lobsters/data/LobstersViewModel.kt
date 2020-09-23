@@ -5,13 +5,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.msfjarvis.lobsters.api.LobstersApi
 import dev.msfjarvis.lobsters.model.LobstersPost
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 
-@ExperimentalCoroutinesApi
 class LobstersViewModel @ViewModelInject constructor(
   private val lobstersApi: LobstersApi,
 ) : ViewModel() {

@@ -13,7 +13,7 @@ class Submitter(
   val about: String,
   @Json(name = "is_moderator")
   val isModerator: Boolean,
-  val karma: Long,
+  val karma: Long = 0,
   @Json(name = "avatar_url")
   val avatarUrl: String,
   @Json(name = "invited_by_user")

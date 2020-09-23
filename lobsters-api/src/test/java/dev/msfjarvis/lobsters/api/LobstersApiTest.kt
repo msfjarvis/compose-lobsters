@@ -27,7 +27,7 @@ class LobstersApiTest {
 
   @Test
   fun `api gets correct number of items`() = runBlocking {
-    val posts = apiClient.getHottestPosts()
+    val posts = apiClient.getHottestPosts(1)
     assertEquals(25, posts.size)
   }
 

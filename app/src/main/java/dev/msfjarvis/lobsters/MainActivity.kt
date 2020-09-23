@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
           val coroutineScope = rememberCoroutineScope()
           val posts = mutableStateListOf<LobstersPost>()
           coroutineScope.launch {
-            posts.addAll(apiClient.getHottestPosts())
+            posts.addAll(apiClient.getHottestPosts(1))
           }
           LobstersApp(posts)
         }

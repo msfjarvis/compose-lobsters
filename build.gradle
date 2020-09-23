@@ -6,6 +6,7 @@ buildscript {
         dagger_version = '2.29.1'
         hilt_version = '2.29-alpha'
         kotlin_version = '1.4.10'
+        lifecycle_version = '2.3.0-alpha07'
         moshi_version = '1.9.3'
         room_version = '2.3.0-alpha02'
     }

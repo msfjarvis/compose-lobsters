@@ -35,7 +35,7 @@ fun LazyItemScope.LobstersItem(
           text = post.title,
           color = Color(0xFF7395D9),
           fontWeight = FontWeight.Bold,
-          modifier = Modifier.padding(top = 8.dp)
+          modifier = Modifier.padding(top = 4.dp)
         )
         Row(
           modifier = Modifier.padding(vertical = 8.dp),
@@ -52,7 +52,8 @@ fun LazyItemScope.LobstersItem(
           }
         }
         Text(
-          text = "authored by ${post.submitterUser.username}",
+          text = "submitted by ${post.submitterUser.username}",
+          modifier = Modifier.padding(bottom = 4.dp),
         )
       }
     }

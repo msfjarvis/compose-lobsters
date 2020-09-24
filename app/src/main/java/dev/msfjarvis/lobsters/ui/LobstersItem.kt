@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.ui.tooling.preview.Preview
 import dev.msfjarvis.lobsters.model.LobstersPost
 import dev.msfjarvis.lobsters.model.Submitter
 
@@ -61,6 +62,7 @@ fun LazyItemScope.LobstersItem(
 }
 
 @Composable
+@Preview
 fun PreviewLobstersItem() {
   val post = LobstersPost(
     "zqyydb",

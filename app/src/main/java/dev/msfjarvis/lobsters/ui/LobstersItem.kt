@@ -6,7 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ConstraintLayout
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumnFor
@@ -33,15 +33,21 @@ fun LazyItemScope.LobstersItem(
       .fillParentMaxWidth()
       .clickable(onClick = { onClick.invoke(post) }),
     text = {
-      Column {
+      ConstraintLayout {
+        val (title, tags, submitter) = createRefs()
         Text(
           text = post.title,
           color = Color(0xFF7395D9),
           fontWeight = FontWeight.Bold,
-          modifier = Modifier.padding(top = 4.dp)
+          modifier = Modifier.padding(top = 4.dp).constrainAs(title) {
+            top.linkTo(parent.top)
+            start.linkTo(parent.start)
+          }
         )
         Row(
-          modifier = Modifier.padding(vertical = 8.dp),
+          modifier = Modifier.padding(vertical = 8.dp).constrainAs(tags) {
+            top.linkTo(title.bottom)
+          },
           horizontalArrangement = Arrangement.spacedBy(8.dp),
         ) {
           post.tags.forEach { tag ->
@@ -57,7 +63,9 @@ fun LazyItemScope.LobstersItem(
         }
         Text(
           text = "submitted by ${post.submitterUser.username}",
-          modifier = Modifier.padding(bottom = 4.dp),
+          modifier = Modifier.padding(bottom = 4.dp).constrainAs(submitter) {
+            top.linkTo(tags.bottom)
+          },
         )
       }
     }

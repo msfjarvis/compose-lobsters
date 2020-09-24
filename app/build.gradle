@@ -38,6 +38,7 @@ android {
                 storePassword keystoreProperties['storePassword']
             }
         }
+        buildTypes.debug.signingConfig = signingConfigs.release
         buildTypes.release.signingConfig = signingConfigs.release
     }
 }

@@ -1,7 +1,9 @@
 package dev.msfjarvis.lobsters.ui
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -46,8 +48,9 @@ fun LazyItemScope.LobstersItem(
             Text(
               text = tag,
               modifier = Modifier
+                .border(BorderStroke(1.dp, Color.Gray))
                 .background(Color(0xFFFFFCD7), RoundedCornerShape(4.dp))
-                .padding(4.dp),
+                .padding(vertical = 2.dp, horizontal = 4.dp),
               color = Color.DarkGray,
             )
           }

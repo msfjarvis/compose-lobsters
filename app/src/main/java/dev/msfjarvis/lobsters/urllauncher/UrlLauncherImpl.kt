@@ -1,14 +1,22 @@
 package dev.msfjarvis.lobsters.urllauncher
 
 import android.content.Context
-import android.content.Intent
-import android.content.Intent.ACTION_VIEW
 import android.net.Uri
-import android.util.Patterns
+import androidx.browser.customtabs.CustomTabsIntent
+import saschpe.android.customtabs.CustomTabsHelper
+import saschpe.android.customtabs.WebViewFallback
 
 class UrlLauncherImpl(private val context: Context) : UrlLauncher {
   override fun launch(url: String) {
-    if (!Patterns.WEB_URL.matcher(url).matches()) return
-    context.startActivity(Intent(ACTION_VIEW).apply { data = Uri.parse(url) })
+    val customTabsIntent = CustomTabsIntent.Builder()
+      .addDefaultShareMenuItem()
+      .setShowTitle(true)
+      .build()
+    CustomTabsHelper.addKeepAliveExtra(context, customTabsIntent.intent)
+    CustomTabsHelper.openCustomTab(
+      context, customTabsIntent,
+      Uri.parse(url),
+      WebViewFallback()
+    )
   }
 }

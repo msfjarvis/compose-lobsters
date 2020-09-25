@@ -5,6 +5,9 @@ plugins {
 
 final def keystorePropertiesFile = rootProject.file("keystore.properties")
 android {
+    adbOptions {
+        installOptions = ['--user 0']
+    }
     defaultConfig {
         applicationId "dev.msfjarvis.lobsters"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

@@ -25,12 +25,16 @@ import dev.msfjarvis.lobsters.model.Submitter
 fun LazyItemScope.LobstersItem(
   post: LobstersPost,
   modifier: Modifier = Modifier,
-  onClick: (LobstersPost) -> Unit,
+  linkOpenAction: (LobstersPost) -> Unit,
+  commentOpenAction: (LobstersPost) -> Unit,
 ) {
   ListItem(
     modifier = modifier.padding(horizontal = 8.dp)
       .fillParentMaxWidth()
-      .clickable(onClick = { onClick.invoke(post) }),
+      .clickable(
+        onClick = { linkOpenAction.invoke(post) },
+        onLongClick = { commentOpenAction.invoke(post) }
+      ),
     text = {
       Text(
         text = post.title,
@@ -92,7 +96,7 @@ fun PreviewLobstersItem() {
   )
   LobstersTheme {
     LazyColumnFor(items = listOf(post)) { item ->
-      LobstersItem(post = item, onClick = {})
+      LobstersItem(post = item, linkOpenAction = {}, commentOpenAction = {})
     }
   }
 }

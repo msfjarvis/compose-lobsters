@@ -56,9 +56,11 @@ fun LobstersApp(
         if (lastIndex == index) {
           viewModel.getMorePosts()
         }
-        LobstersItem(item) { post ->
-          urlLauncher.launch(post.url)
-        }
+        LobstersItem(
+          item,
+          linkOpenAction = { post -> urlLauncher.launch(post.url) },
+          commentOpenAction = { post -> urlLauncher.launch(post.commentsUrl) },
+        )
       }
     }
   )

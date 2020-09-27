@@ -4,7 +4,6 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import dev.msfjarvis.lobsters.data.model.LobstersEntity
-import dev.msfjarvis.lobsters.model.LobstersPost
 
 @Database(
   entities = [
@@ -15,7 +14,6 @@ import dev.msfjarvis.lobsters.model.LobstersPost
 )
 @TypeConverters(
   LobstersApiTypeConverters::class,
-  DateTimeTypeConverters::class,
 )
 abstract class PostsDatabase : RoomDatabase() {
   abstract fun postsDao(): PostsDao

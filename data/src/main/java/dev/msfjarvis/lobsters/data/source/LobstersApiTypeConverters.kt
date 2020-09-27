@@ -2,10 +2,6 @@ package dev.msfjarvis.lobsters.data.source
 
 import androidx.room.TypeConverter
 import com.squareup.moshi.Moshi
-import dev.msfjarvis.lobsters.model.KeybaseSignature
-import dev.msfjarvis.lobsters.model.KeybaseSignatureJsonAdapter
-import dev.msfjarvis.lobsters.model.LobstersPost
-import dev.msfjarvis.lobsters.model.LobstersPostJsonAdapter
 import dev.msfjarvis.lobsters.model.Submitter
 import dev.msfjarvis.lobsters.model.SubmitterJsonAdapter
 
@@ -23,30 +19,6 @@ object LobstersApiTypeConverters {
   @JvmStatic
   fun fromSubmitterUser(value: Submitter?): String? {
     return value?.let { SubmitterJsonAdapter(moshi).toJson(value) }
-  }
-
-  @TypeConverter
-  @JvmStatic
-  fun toKeybaseSignature(value: String?): KeybaseSignature? {
-    return value?.let { KeybaseSignatureJsonAdapter(moshi).fromJson(value) }
-  }
-
-  @TypeConverter
-  @JvmStatic
-  fun fromKeybaseSignature(value: KeybaseSignature?): String? {
-    return value?.let { KeybaseSignatureJsonAdapter(moshi).toJson(value) }
-  }
-
-  @TypeConverter
-  @JvmStatic
-  fun toLobstersPost(value: String?): LobstersPost? {
-    return value?.let { LobstersPostJsonAdapter(moshi).fromJson(value) }
-  }
-
-  @TypeConverter
-  @JvmStatic
-  fun fromLobstersPost(value: LobstersPost?): String? {
-    return value?.let { LobstersPostJsonAdapter(moshi).toJson(value) }
   }
 
   @TypeConverter

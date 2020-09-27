@@ -71,3 +71,10 @@ subprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+tasks {
+    wrapper {
+        gradleVersion = "6.7-rc-2"
+        distributionType = Wrapper.DistributionType.ALL
+    }
+}

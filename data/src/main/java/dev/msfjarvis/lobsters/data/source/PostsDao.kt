@@ -4,6 +4,8 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Transaction
+import dev.msfjarvis.lobsters.data.model.LobstersEntity
 import dev.msfjarvis.lobsters.model.LobstersPost
 import kotlinx.coroutines.flow.Flow
 
@@ -12,11 +14,21 @@ abstract class PostsDao {
   @Query("SELECT * FROM lobsters_posts")
   abstract fun loadPosts(): Flow<List<LobstersPost>>
 
+  @Transaction
+  open suspend fun insertPosts(vararg posts: LobstersPost) {
+    insertPosts(posts.map { LobstersEntity(it) })
+  }
+
   @Insert
-  abstract suspend fun insertPosts(vararg posts: LobstersPost)
+  protected abstract suspend fun insertPosts(posts: List<LobstersEntity>)
+
+  @Transaction
+  open suspend fun deletePosts(vararg posts: LobstersPost) {
+    deletePosts(posts.map { LobstersEntity(it) })
+  }
 
   @Delete
-  abstract suspend fun deletePosts(vararg posts: LobstersPost)
+  protected abstract suspend fun deletePosts(posts: List<LobstersEntity>)
 
   @Query("DELETE FROM lobsters_posts")
   abstract suspend fun deleteAllPosts()

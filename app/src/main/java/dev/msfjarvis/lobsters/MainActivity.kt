@@ -4,6 +4,9 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Text
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumnForIndexed
 import androidx.compose.material.Scaffold
 import androidx.compose.material.TopAppBar
@@ -11,10 +14,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Providers
 import androidx.compose.runtime.ambientOf
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.res.stringResource
 import dagger.hilt.android.AndroidEntryPoint
 import dev.msfjarvis.lobsters.api.LobstersApi
+import dev.msfjarvis.lobsters.compose.utils.IconResource
 import dev.msfjarvis.lobsters.data.LobstersViewModel
 import dev.msfjarvis.lobsters.ui.LobstersItem
 import dev.msfjarvis.lobsters.ui.LobstersTheme
@@ -52,15 +58,26 @@ fun LobstersApp(
   Scaffold(
     topBar = { TopAppBar({ Text(text = stringResource(R.string.app_name)) }) },
     bodyContent = {
-      LazyColumnForIndexed(state.value) { index, item ->
-        if (lastIndex == index) {
-          viewModel.getMorePosts()
+      if (state.value.isEmpty()) {
+        Column(
+          modifier = Modifier.fillMaxSize(),
+          verticalArrangement = Arrangement.Center,
+          horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+          IconResource(R.drawable.ic_sync_problem_24px)
+          Text(stringResource(R.string.nothing_to_see_here))
         }
-        LobstersItem(
-          item,
-          linkOpenAction = { post -> urlLauncher.launch(post.url) },
-          commentOpenAction = { post -> urlLauncher.launch(post.commentsUrl) },
-        )
+      } else {
+        LazyColumnForIndexed(state.value) { index, item ->
+          if (lastIndex == index) {
+            viewModel.getMorePosts()
+          }
+          LobstersItem(
+            item,
+            linkOpenAction = { post -> urlLauncher.launch(post.url) },
+            commentOpenAction = { post -> urlLauncher.launch(post.commentsUrl) },
+          )
+        }
       }
     }
   )

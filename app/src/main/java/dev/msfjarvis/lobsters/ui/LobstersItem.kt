@@ -42,7 +42,7 @@ fun LazyItemScope.LobstersItem(
         modifier = Modifier.padding(vertical = 8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
       ) {
-        post.tags.forEach { tag ->
+        post.tags.take(4).forEach { tag ->
           Text(
             text = tag,
             modifier = Modifier

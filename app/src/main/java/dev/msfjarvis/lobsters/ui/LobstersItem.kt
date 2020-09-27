@@ -6,7 +6,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumnFor
@@ -26,40 +25,42 @@ import dev.msfjarvis.lobsters.model.Submitter
 fun LazyItemScope.LobstersItem(
   post: LobstersPost,
   modifier: Modifier = Modifier,
-  onClick: (LobstersPost) -> Unit,
+  linkOpenAction: (LobstersPost) -> Unit,
+  commentOpenAction: (LobstersPost) -> Unit,
 ) {
   ListItem(
     modifier = modifier.padding(horizontal = 8.dp)
       .fillParentMaxWidth()
-      .clickable(onClick = { onClick.invoke(post) }),
+      .clickable(
+        onClick = { linkOpenAction.invoke(post) },
+        onLongClick = { commentOpenAction.invoke(post) }
+      ),
     text = {
-      Column {
-        Text(
-          text = post.title,
-          color = Color(0xFF7395D9),
-          fontWeight = FontWeight.Bold,
-          modifier = Modifier.padding(top = 4.dp)
-        )
-        Row(
-          modifier = Modifier.padding(vertical = 8.dp),
-          horizontalArrangement = Arrangement.spacedBy(8.dp),
-        ) {
-          post.tags.forEach { tag ->
-            Text(
-              text = tag,
-              modifier = Modifier
-                .border(BorderStroke(1.dp, Color.Gray))
-                .background(Color(0xFFFFFCD7), RoundedCornerShape(4.dp))
-                .padding(vertical = 2.dp, horizontal = 4.dp),
-              color = Color.DarkGray,
-            )
-          }
+      Text(
+        text = post.title,
+        color = Color(0xFF7395D9),
+        fontWeight = FontWeight.Bold,
+        modifier = Modifier.padding(top = 4.dp)
+      )
+      Row(
+        modifier = Modifier.padding(vertical = 8.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+      ) {
+        post.tags.take(4).forEach { tag ->
+          Text(
+            text = tag,
+            modifier = Modifier
+              .border(BorderStroke(1.dp, Color.Gray))
+              .background(Color(0xFFFFFCD7), RoundedCornerShape(4.dp))
+              .padding(vertical = 2.dp, horizontal = 4.dp),
+            color = Color.DarkGray,
+          )
         }
-        Text(
-          text = "submitted by ${post.submitterUser.username}",
-          modifier = Modifier.padding(bottom = 4.dp),
-        )
       }
+      Text(
+        text = "submitted by ${post.submitterUser.username}",
+        modifier = Modifier.padding(bottom = 4.dp),
+      )
     }
   )
 }
@@ -95,7 +96,7 @@ fun PreviewLobstersItem() {
   )
   LobstersTheme {
     LazyColumnFor(items = listOf(post)) { item ->
-      LobstersItem(post = item, onClick = {})
+      LobstersItem(post = item, linkOpenAction = {}, commentOpenAction = {})
     }
   }
 }

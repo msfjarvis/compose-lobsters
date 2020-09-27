@@ -11,11 +11,11 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Lobsters">
+        android:theme="@style/Theme.MaterialComponents">
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.Lobsters.NoActionBar">
+            android:theme="@style/Theme.MaterialComponents.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

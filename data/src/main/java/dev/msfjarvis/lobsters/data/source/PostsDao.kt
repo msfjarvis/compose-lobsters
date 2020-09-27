@@ -3,6 +3,7 @@ package dev.msfjarvis.lobsters.data.source
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import dev.msfjarvis.lobsters.data.model.LobstersEntity
@@ -19,7 +20,7 @@ abstract class PostsDao {
     insertPosts(posts.map { LobstersEntity(it) })
   }
 
-  @Insert
+  @Insert(onConflict = OnConflictStrategy.IGNORE)
   protected abstract suspend fun insertPosts(posts: List<LobstersEntity>)
 
   @Transaction

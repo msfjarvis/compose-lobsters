@@ -33,13 +33,22 @@ class LobstersViewModel @ViewModelInject constructor(
     viewModelScope.launch {
       dao.loadPosts().collectLatest { _posts.value = it }
     }
-    getMorePosts()
+    getMorePostsInternal(true)
   }
 
   fun getMorePosts() {
+    getMorePostsInternal(false)
+  }
+
+  private fun getMorePostsInternal(firstLoad: Boolean) {
     viewModelScope.launch(coroutineExceptionHandler) {
       val newPosts = lobstersApi.getHottestPosts(apiPage)
-      _posts.value += newPosts
+      if (firstLoad) {
+        _posts.value = newPosts
+        dao.deleteAllPosts()
+      } else {
+        _posts.value += newPosts
+      }
       apiPage += 1
       dao.insertPosts(*_posts.value.toTypedArray())
     }

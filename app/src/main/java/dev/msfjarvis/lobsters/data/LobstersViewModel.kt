@@ -1,6 +1,5 @@
 package dev.msfjarvis.lobsters.data
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.msfjarvis.lobsters.api.LobstersApi
@@ -12,8 +11,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.net.UnknownHostException
+import javax.inject.Inject
 
-class LobstersViewModel @ViewModelInject constructor(
+class LobstersViewModel @Inject constructor(
   private val lobstersApi: LobstersApi,
   database: PostsDatabase,
 ) : ViewModel() {

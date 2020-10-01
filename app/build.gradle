@@ -1,12 +1,12 @@
 plugins {
-    id 'kotlin-kapt'
-    id 'dagger.hilt.android.plugin'
+    id "kotlin-kapt"
+    id "dagger.hilt.android.plugin"
 }
 
 final def keystorePropertiesFile = rootProject.file("keystore.properties")
 android {
     adbOptions {
-        installOptions = ['--user 0']
+        installOptions = ["--user 0"]
     }
     defaultConfig {
         applicationId "dev.msfjarvis.lobsters"
@@ -16,7 +16,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
     }
 
@@ -35,10 +35,10 @@ android {
 
         signingConfigs {
             release {
-                keyAlias keystoreProperties['keyAlias']
-                keyPassword keystoreProperties['keyPassword']
-                storeFile rootProject.file(keystoreProperties['storeFile'])
-                storePassword keystoreProperties['storePassword']
+                keyAlias keystoreProperties["keyAlias"]
+                keyPassword keystoreProperties["keyPassword"]
+                storeFile rootProject.file(keystoreProperties["storeFile"])
+                storePassword keystoreProperties["storePassword"]
             }
         }
         buildTypes.debug.signingConfig = signingConfigs.release
@@ -59,21 +59,21 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
 
 dependencies {
 
-    kapt "com.google.dagger:hilt-android-compiler:$hilt_dagger_version"
+    kapt "com.google.dagger:hilt-compiler:$hilt_dagger_version"
     kapt "androidx.hilt:hilt-compiler:$hilt_androidx_version"
     implementation(project(":data"))
     implementation(project(":lobsters-api"))
     implementation(project(":model"))
-    implementation 'androidx.core:core-ktx:1.5.0-alpha03'
-    implementation 'androidx.activity:activity-ktx:1.2.0-alpha08'
-    implementation 'androidx.appcompat:appcompat:1.3.0-alpha02'
-    implementation "androidx.browser:browser:1.2.0"
+    implementation "androidx.core:core-ktx:1.5.0-alpha04"
+    implementation "androidx.activity:activity-ktx:1.2.0-beta01"
+    implementation "androidx.appcompat:appcompat:1.3.0-alpha02"
+    implementation "androidx.browser:browser:1.3.0-alpha06"
     implementation "androidx.compose.foundation:foundation:$compose_version"
     implementation "androidx.compose.foundation:foundation-layout:$compose_version"
     implementation "androidx.compose.foundation:foundation-text:$compose_version"
     implementation "androidx.compose.runtime:runtime:$compose_version"
     implementation "androidx.compose.material:material:$compose_version"
-    implementation "androidx.compose:compose-compiler:$compose_version"
+    implementation "androidx.compose.compiler:compiler:$compose_version"
     implementation "androidx.compose.ui:ui:$compose_version"
     implementation "androidx.compose.ui:ui-text:$compose_version"
     implementation "androidx.compose.ui:ui-text-android:$compose_version"
@@ -82,12 +82,12 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.ui:ui-tooling:$compose_version"
-    implementation 'com.google.android.material:material:1.3.0-alpha02'
+    implementation "com.google.android.material:material:1.3.0-alpha02"
     implementation "com.google.dagger:hilt-android:$hilt_dagger_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
     implementation "saschpe.android:customtabs:3.0.2"
     androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_dagger_version"
-    testImplementation 'junit:junit:4.13'
+    testImplementation "junit:junit:4.13"
     androidTestImplementation "androidx.ui:ui-test:$compose_version"
     coreLibraryDesugaring "com.android.tools:desugar_jdk_libs:1.0.10"
 }

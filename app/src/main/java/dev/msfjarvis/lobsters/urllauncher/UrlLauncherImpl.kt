@@ -9,7 +9,7 @@ import saschpe.android.customtabs.WebViewFallback
 class UrlLauncherImpl(private val context: Context) : UrlLauncher {
   override fun launch(url: String) {
     val customTabsIntent = CustomTabsIntent.Builder()
-      .addDefaultShareMenuItem()
+      .setShareState(CustomTabsIntent.SHARE_STATE_ON)
       .setShowTitle(true)
       .build()
     CustomTabsHelper.addKeepAliveExtra(context, customTabsIntent.intent)

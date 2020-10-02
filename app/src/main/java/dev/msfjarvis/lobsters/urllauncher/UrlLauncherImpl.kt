@@ -3,8 +3,6 @@ package dev.msfjarvis.lobsters.urllauncher
 import android.content.Context
 import android.net.Uri
 import androidx.browser.customtabs.CustomTabsIntent
-import saschpe.android.customtabs.CustomTabsHelper
-import saschpe.android.customtabs.WebViewFallback
 
 class UrlLauncherImpl(private val context: Context) : UrlLauncher {
   override fun launch(url: String) {
@@ -12,11 +10,6 @@ class UrlLauncherImpl(private val context: Context) : UrlLauncher {
       .setShareState(CustomTabsIntent.SHARE_STATE_ON)
       .setShowTitle(true)
       .build()
-    CustomTabsHelper.addKeepAliveExtra(context, customTabsIntent.intent)
-    CustomTabsHelper.openCustomTab(
-      context, customTabsIntent,
-      Uri.parse(url),
-      WebViewFallback()
-    )
+    customTabsIntent.launchUrl(context, Uri.parse(url))
   }
 }

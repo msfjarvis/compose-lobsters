@@ -7,6 +7,7 @@ import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumnForIndexed
 import androidx.compose.material.Scaffold
 import androidx.compose.material.TopAppBar
@@ -18,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import dagger.hilt.android.AndroidEntryPoint
 import dev.msfjarvis.lobsters.api.LobstersApi
 import dev.msfjarvis.lobsters.compose.utils.IconResource
@@ -68,7 +70,10 @@ fun LobstersApp(
           Text(stringResource(R.string.nothing_to_see_here))
         }
       } else {
-        LazyColumnForIndexed(state.value) { index, item ->
+        LazyColumnForIndexed(
+          items = state.value,
+          modifier = Modifier.padding(horizontal = 8.dp)
+        ) { index, item ->
           if (lastIndex == index) {
             viewModel.getMorePosts()
           }

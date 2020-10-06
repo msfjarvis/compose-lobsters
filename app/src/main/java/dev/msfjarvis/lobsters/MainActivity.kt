@@ -79,7 +79,7 @@ fun LobstersApp(
           }
           LobstersItem(
             item,
-            linkOpenAction = { post -> urlLauncher.launch(post.url) },
+            linkOpenAction = { post -> urlLauncher.launch(post.url.ifEmpty { post.commentsUrl }) },
             commentOpenAction = { post -> urlLauncher.launch(post.commentsUrl) },
           )
         }

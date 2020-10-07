@@ -84,6 +84,7 @@ dependencies {
     implementation "androidx.ui:ui-tooling:$compose_version"
     implementation "com.google.android.material:material:$material_version"
     implementation "com.google.dagger:hilt-android:$hilt_dagger_version"
+    implementation "dev.chrisbanes.accompanist:accompanist-coil:$accompanist_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
     implementation "saschpe.android:customtabs:$customtabs_version"
     androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_dagger_version"

@@ -9,6 +9,7 @@ class UrlLauncherImpl(private val context: Context) : UrlLauncher {
     val customTabsIntent = CustomTabsIntent.Builder()
       .setShareState(CustomTabsIntent.SHARE_STATE_ON)
       .setShowTitle(true)
+      .setColorScheme(CustomTabsIntent.COLOR_SCHEME_DARK)
       .build()
     customTabsIntent.launchUrl(context, Uri.parse(url))
   }

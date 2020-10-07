@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
 class LobstersViewModel @ViewModelInject constructor(
@@ -22,8 +23,8 @@ class LobstersViewModel @ViewModelInject constructor(
   private val dao = database.postsDao()
   private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
     when (throwable) {
-      // Swallow UHE since that happens when there is no internet and we'll just rely on our cache
-      is UnknownHostException -> {}
+      // Swallow known network errors that can be recovered from.
+      is UnknownHostException, is SocketTimeoutException -> {}
       else -> throw throwable
     }
   }

@@ -9,15 +9,21 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.ui.tooling.preview.Preview
+import coil.transform.CircleCropTransformation
+import dev.chrisbanes.accompanist.coil.CoilImage
+import dev.msfjarvis.lobsters.di.ApiModule
 import dev.msfjarvis.lobsters.model.LobstersPost
 import dev.msfjarvis.lobsters.model.Submitter
 
@@ -57,10 +63,22 @@ fun LazyItemScope.LobstersItem(
         )
       }
     }
-    Text(
-      text = "submitted by ${post.submitterUser.username}",
-      modifier = Modifier.padding(bottom = 4.dp),
-    )
+    Row(
+      modifier = Modifier.wrapContentHeight(),
+    ) {
+      CoilImage(
+        data = "${ApiModule.LOBSTERS_URL}/${post.submitterUser.avatarUrl}",
+        fadeIn = true,
+        requestBuilder = {
+          transformations(CircleCropTransformation())
+        },
+        modifier = Modifier.width(30.dp).padding(4.dp).align(Alignment.CenterVertically),
+      )
+      Text(
+        text = "submitted by ${post.submitterUser.username}",
+        modifier = Modifier.padding(bottom = 4.dp).align(Alignment.CenterVertically),
+      )
+    }
   }
 }
 

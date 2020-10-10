@@ -64,7 +64,7 @@ fun LobstersApp(
           horizontalAlignment = Alignment.CenterHorizontally,
         ) {
           IconResource(R.drawable.ic_sync_problem_24px)
-          Text(stringResource(R.string.nothing_to_see_here))
+          Text(stringResource(R.string.loading))
         }
       } else {
         LazyColumnForIndexed(

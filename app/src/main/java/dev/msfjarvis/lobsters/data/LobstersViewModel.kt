@@ -24,21 +24,29 @@ class LobstersViewModel @ViewModelInject constructor(
   private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
     when (throwable) {
       // Swallow known network errors that can be recovered from.
-      is UnknownHostException, is SocketTimeoutException -> {}
+      is UnknownHostException, is SocketTimeoutException -> {
+        if (_posts.value.isEmpty()) {
+          viewModelScope.launch {
+            dao.loadPosts().collectLatest { _posts.value = it }
+          }
+        }
+      }
       else -> throw throwable
     }
   }
   val posts: StateFlow<List<LobstersPost>> get() = _posts
 
   init {
-    viewModelScope.launch {
-      dao.loadPosts().collectLatest { _posts.value = it }
-    }
     getMorePostsInternal(true)
   }
 
   fun getMorePosts() {
     getMorePostsInternal(false)
+  }
+
+  fun refreshPosts() {
+    apiPage = 1
+    getMorePostsInternal(true)
   }
 
   private fun getMorePostsInternal(firstLoad: Boolean) {

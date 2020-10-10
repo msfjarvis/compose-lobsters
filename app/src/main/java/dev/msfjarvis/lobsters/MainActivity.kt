@@ -9,8 +9,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumnForIndexed
+import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Scaffold
-import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Providers
 import androidx.compose.runtime.ambientOf
@@ -21,7 +21,6 @@ import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dagger.hilt.android.AndroidEntryPoint
-import dev.msfjarvis.lobsters.api.LobstersApi
 import dev.msfjarvis.lobsters.compose.utils.IconResource
 import dev.msfjarvis.lobsters.data.LobstersViewModel
 import dev.msfjarvis.lobsters.ui.LobstersItem
@@ -34,7 +33,6 @@ val UrlLauncherAmbient = ambientOf<UrlLauncher> { error("Needs to be provided") 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
   @Inject lateinit var urlLauncher: UrlLauncher
-  @Inject lateinit var apiClient: LobstersApi
   private val viewModel: LobstersViewModel by viewModels()
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,7 +56,6 @@ fun LobstersApp(
   val lastIndex = state.value.lastIndex
 
   Scaffold(
-    topBar = { TopAppBar({ Text(text = stringResource(R.string.app_name)) }) },
     bodyContent = {
       if (state.value.isEmpty()) {
         Column(
@@ -67,7 +64,7 @@ fun LobstersApp(
           horizontalAlignment = Alignment.CenterHorizontally,
         ) {
           IconResource(R.drawable.ic_sync_problem_24px)
-          Text(stringResource(R.string.nothing_to_see_here))
+          Text(stringResource(R.string.loading))
         }
       } else {
         LazyColumnForIndexed(
@@ -84,6 +81,11 @@ fun LobstersApp(
           )
         }
       }
-    }
+    },
+    floatingActionButton = {
+      FloatingActionButton(onClick = { viewModel.refreshPosts() }) {
+        IconResource(resourceId = R.drawable.ic_refresh_24px)
+      }
+    },
   )
 }

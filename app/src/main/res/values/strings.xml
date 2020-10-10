@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">lobste.rs</string>
-    <string name="nothing_to_see_here">Nothing to see here…</string>
+    <string name="loading">Loading posts…</string>
 </resources>

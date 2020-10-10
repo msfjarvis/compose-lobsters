@@ -41,6 +41,11 @@ class LobstersViewModel @ViewModelInject constructor(
     getMorePostsInternal(false)
   }
 
+  fun refreshPosts() {
+    apiPage = 1
+    getMorePostsInternal(true)
+  }
+
   private fun getMorePostsInternal(firstLoad: Boolean) {
     viewModelScope.launch(coroutineExceptionHandler) {
       val newPosts = lobstersApi.getHottestPosts(apiPage)

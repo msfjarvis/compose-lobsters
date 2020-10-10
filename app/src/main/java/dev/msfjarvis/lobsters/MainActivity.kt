@@ -9,8 +9,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumnForIndexed
+import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Scaffold
-import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Providers
 import androidx.compose.runtime.ambientOf
@@ -56,7 +56,6 @@ fun LobstersApp(
   val lastIndex = state.value.lastIndex
 
   Scaffold(
-    topBar = { TopAppBar({ Text(text = stringResource(R.string.app_name)) }) },
     bodyContent = {
       if (state.value.isEmpty()) {
         Column(
@@ -82,6 +81,11 @@ fun LobstersApp(
           )
         }
       }
-    }
+    },
+    floatingActionButton = {
+      FloatingActionButton(onClick = { viewModel.refreshPosts() }) {
+        IconResource(resourceId = R.drawable.ic_refresh_24px)
+      }
+    },
   )
 }

@@ -21,7 +21,6 @@ import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dagger.hilt.android.AndroidEntryPoint
-import dev.msfjarvis.lobsters.api.LobstersApi
 import dev.msfjarvis.lobsters.compose.utils.IconResource
 import dev.msfjarvis.lobsters.data.LobstersViewModel
 import dev.msfjarvis.lobsters.ui.LobstersItem
@@ -34,7 +33,6 @@ val UrlLauncherAmbient = ambientOf<UrlLauncher> { error("Needs to be provided") 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
   @Inject lateinit var urlLauncher: UrlLauncher
-  @Inject lateinit var apiClient: LobstersApi
   private val viewModel: LobstersViewModel by viewModels()
 
   override fun onCreate(savedInstanceState: Bundle?) {

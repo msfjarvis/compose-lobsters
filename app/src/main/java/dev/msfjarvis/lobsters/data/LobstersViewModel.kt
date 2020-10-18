@@ -62,7 +62,7 @@ class LobstersViewModel @ViewModelInject constructor(
   private fun getMorePostsInternal(firstLoad: Boolean) {
     viewModelScope.launch(coroutineExceptionHandler) {
       val newPosts = lobstersApi.getHottestPosts(apiPage)
-        .map { it.apply { isLiked = savedPostsDao.isLiked(shortId) } }
+        .transformLikedFlag()
         .toList()
       if (firstLoad) {
         _posts.value = newPosts
@@ -91,6 +91,11 @@ class LobstersViewModel @ViewModelInject constructor(
     viewModelScope.launch {
       savedPostsDao.deletePostById(post.shortId)
       getSavedPosts()
+      _posts.value = _posts.value.transformLikedFlag().toList()
     }
+  }
+
+  private suspend fun List<LobstersPost>.transformLikedFlag() = map {
+    it.apply { isLiked = savedPostsDao.isLiked(shortId) }
   }
 }

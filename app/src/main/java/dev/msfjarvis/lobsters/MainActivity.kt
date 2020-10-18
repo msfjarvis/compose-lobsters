@@ -3,7 +3,6 @@ package dev.msfjarvis.lobsters
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.Icon
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,9 +17,6 @@ import androidx.compose.material.IconToggleButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.TopAppBar
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Providers
 import androidx.compose.runtime.ambientOf
@@ -156,7 +152,11 @@ private fun EmptyList(showSaved: Boolean) {
     horizontalAlignment = Alignment.CenterHorizontally,
   ) {
     if (showSaved) {
-      Icon(Icons.Default.FavoriteBorder, tint = savedTitleColor, modifier = Modifier.padding(16.dp))
+      IconResource(
+        R.drawable.ic_favorite_border_24px,
+        tint = savedTitleColor,
+        modifier = Modifier.padding(16.dp)
+      )
       Text(stringResource(R.string.no_saved_posts))
     } else {
       IconResource(R.drawable.ic_sync_problem_24px, modifier = Modifier.padding(16.dp))
@@ -179,8 +179,8 @@ private fun LobstersTopAppBar(showSaved: Boolean, toggleAction: () -> Unit) {
         onCheckedChange = { toggleAction.invoke() },
         modifier = Modifier.padding(8.dp).align(Alignment.CenterEnd),
       ) {
-        Icon(
-          asset = if (showSaved) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+        IconResource(
+          resourceId = if (showSaved) R.drawable.ic_favorite_24px else R.drawable.ic_favorite_border_24px,
           tint = savedTitleColor,
         )
       }

@@ -62,6 +62,8 @@ class LobstersViewModel @ViewModelInject constructor(
   private fun getMorePostsInternal(firstLoad: Boolean) {
     viewModelScope.launch(coroutineExceptionHandler) {
       val newPosts = lobstersApi.getHottestPosts(apiPage)
+        .map { it.apply { if (savedPostsDao.isLiked(shortId)) isLiked = true } }
+        .toList()
       if (firstLoad) {
         _posts.value = newPosts
         postsDao.deleteAllPosts()

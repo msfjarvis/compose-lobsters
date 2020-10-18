@@ -36,4 +36,7 @@ abstract class SavedPostsDao {
 
   @Query("DELETE FROM lobsters_saved_posts WHERE shortId LIKE :shortId")
   abstract suspend fun deletePostById(shortId: String)
+
+  @Query("SELECT EXISTS(SELECT 1 FROM lobsters_saved_posts WHERE shortId LIKE :shortId)")
+  abstract suspend fun isLiked(shortId: String): Boolean
 }

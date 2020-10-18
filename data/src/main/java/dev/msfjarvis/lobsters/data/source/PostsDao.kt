@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
+import androidx.room.Update
 import dev.msfjarvis.lobsters.data.model.LobstersEntity
 import dev.msfjarvis.lobsters.model.LobstersPost
 import kotlinx.coroutines.flow.Flow
@@ -14,6 +15,15 @@ import kotlinx.coroutines.flow.Flow
 abstract class PostsDao {
   @Query("SELECT * FROM lobsters_posts")
   abstract fun loadPosts(): Flow<List<LobstersPost>>
+
+  @Update
+  suspend fun updatePost(vararg posts: LobstersPost) {
+    updatePosts(posts.map { LobstersEntity(it) })
+  }
+
+  @Update(onConflict = OnConflictStrategy.IGNORE)
+  protected abstract suspend fun updatePosts(posts: List<LobstersEntity>)
+
 
   @Transaction
   open suspend fun insertPosts(vararg posts: LobstersPost) {

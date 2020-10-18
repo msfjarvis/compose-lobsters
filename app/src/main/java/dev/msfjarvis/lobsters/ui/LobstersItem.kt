@@ -1,5 +1,6 @@
 package dev.msfjarvis.lobsters.ui
 
+import androidx.compose.animation.animate
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -13,6 +14,8 @@ import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,18 +34,27 @@ fun LazyItemScope.LobstersItem(
   modifier: Modifier = Modifier,
   linkOpenAction: (LobstersPost) -> Unit,
   commentOpenAction: (LobstersPost) -> Unit,
+  saveAction: (LobstersPost) -> Unit,
 ) {
+  val liked = remember { mutableStateOf(false) }
+  val titleColor = if (post.isLiked || liked.value) savedTitleColor else titleColor
+
   Column(
     modifier = modifier
       .fillParentMaxWidth()
       .clickable(
         onClick = { linkOpenAction.invoke(post) },
-        onLongClick = { commentOpenAction.invoke(post) }
+        onLongClick = { commentOpenAction.invoke(post) },
+        onDoubleClick = {
+          post.isLiked = true
+          liked.value = true
+          saveAction.invoke(post)
+        },
       ),
   ) {
     Text(
       text = post.title,
-      color = Color(0xFF7395D9),
+      color = titleColor,
       fontWeight = FontWeight.Bold,
       modifier = Modifier.padding(top = 4.dp)
     )
@@ -106,11 +118,15 @@ fun PreviewLobstersItem() {
       null,
       null,
     ),
-    listOf("openbsd")
+    listOf("openbsd"),
   )
   LobstersTheme {
     LazyColumnFor(items = listOf(post)) { item ->
-      LobstersItem(post = item, linkOpenAction = {}, commentOpenAction = {})
+      LobstersItem(
+        post = item,
+        linkOpenAction = {},
+        commentOpenAction = {},
+        saveAction = {})
     }
   }
 }

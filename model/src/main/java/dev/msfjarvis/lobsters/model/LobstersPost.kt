@@ -22,5 +22,6 @@ class LobstersPost(
   val commentsUrl: String,
   @Json(name = "submitter_user")
   val submitterUser: Submitter,
-  val tags: List<String>
+  val tags: List<String>,
+  var isLiked: Boolean = false,
 )

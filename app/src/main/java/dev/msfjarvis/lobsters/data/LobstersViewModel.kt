@@ -20,14 +20,16 @@ class LobstersViewModel @ViewModelInject constructor(
 ) : ViewModel() {
   private var apiPage = 1
   private val _posts = MutableStateFlow<List<LobstersPost>>(emptyList())
-  private val dao = database.postsDao()
+  private val _savedPosts = MutableStateFlow<List<LobstersPost>>(emptyList())
+  private val postsDao = database.postsDao()
+  private val savedPostsDao = database.savedPostsDao()
   private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
     when (throwable) {
       // Swallow known network errors that can be recovered from.
       is UnknownHostException, is SocketTimeoutException -> {
         if (_posts.value.isEmpty()) {
           viewModelScope.launch {
-            dao.loadPosts().collectLatest { _posts.value = it }
+            postsDao.loadPosts().collectLatest { _posts.value = it }
           }
         }
       }
@@ -35,9 +37,17 @@ class LobstersViewModel @ViewModelInject constructor(
     }
   }
   val posts: StateFlow<List<LobstersPost>> get() = _posts
+  val savedPosts: StateFlow<List<LobstersPost>> get() = _savedPosts
 
   init {
     getMorePostsInternal(true)
+    getSavedPosts()
+  }
+
+  private fun getSavedPosts() {
+    viewModelScope.launch {
+      savedPostsDao.loadPosts().collectLatest { _savedPosts.value = it }
+    }
   }
 
   fun getMorePosts() {
@@ -52,14 +62,36 @@ class LobstersViewModel @ViewModelInject constructor(
   private fun getMorePostsInternal(firstLoad: Boolean) {
     viewModelScope.launch(coroutineExceptionHandler) {
       val newPosts = lobstersApi.getHottestPosts(apiPage)
+        .transformLikedFlag()
+        .toList()
       if (firstLoad) {
         _posts.value = newPosts
-        dao.deleteAllPosts()
+        postsDao.deleteAllPosts()
       } else {
         _posts.value += newPosts
       }
       apiPage += 1
-      dao.insertPosts(*_posts.value.toTypedArray())
+      postsDao.insertPosts(*_posts.value.toTypedArray())
     }
+  }
+
+  fun savePost(post: LobstersPost) {
+    viewModelScope.launch {
+      savedPostsDao.insertPosts(post)
+      getSavedPosts()
+      _posts.value = _posts.value.transformLikedFlag().toList()
+    }
+  }
+
+  fun removeSavedPost(post: LobstersPost) {
+    viewModelScope.launch {
+      savedPostsDao.deletePostById(post.shortId)
+      getSavedPosts()
+      _posts.value = _posts.value.transformLikedFlag().toList()
+    }
+  }
+
+  private suspend fun List<LobstersPost>.transformLikedFlag() = map {
+    it.apply { isLiked = savedPostsDao.isLiked(shortId) }
   }
 }

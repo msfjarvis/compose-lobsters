@@ -29,7 +29,7 @@ jobs:
       if: ${{ steps.service-changed.outputs.result == 'true' }}
       run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
 
-    - uses: burrunan/gradle-cache-action@61348edb3ed90fd775bd9738ac6535163f5b8c4b
+    - uses: burrunan/gradle-cache-action@v1
       name: Run unit tests
       with:
         arguments: testDebug

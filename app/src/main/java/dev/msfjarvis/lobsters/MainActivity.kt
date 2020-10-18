@@ -78,7 +78,7 @@ fun LobstersApp(
       if (saved && savedPosts.value.isEmpty()) {
         EmptyList(saved)
       } else if (!saved && posts.value.isEmpty()) {
-        EmptyList(!saved)
+        EmptyList(saved)
       } else {
         LobsterList(
           showSaved.value,

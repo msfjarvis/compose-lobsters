@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Check if relevant files have changed
-      uses: actions/github-script@0.9.0
+      uses: actions/github-script@28e5ebafd79744f2a15dd15e742233b068e0f762
       id: service-changed
       with:
         result-encoding: string
@@ -23,20 +23,20 @@ jobs:
 
     - name: Checkout repository
       if: ${{ steps.service-changed.outputs.result == 'true' }}
-      uses: actions/checkout@v2
+      uses: actions/checkout@c952173edf28a2bd22e1a4926590c1ac39630461
 
     - name: Copy CI gradle.properties
       if: ${{ steps.service-changed.outputs.result == 'true' }}
       run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
 
-    - uses: burrunan/gradle-cache-action@v1
+    - uses: burrunan/gradle-cache-action@61348edb3ed90fd775bd9738ac6535163f5b8c4b
       name: Run unit tests
       with:
         arguments: testDebug
 
     - name: (Fail-only) upload test report
       if: failure()
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@27bce4eee761b5bc643f46a8dfb41b430c8d05f6
       with:
           name: Test report
           path: app/build/reports

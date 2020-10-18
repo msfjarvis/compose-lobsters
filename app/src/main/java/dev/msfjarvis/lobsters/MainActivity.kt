@@ -3,7 +3,6 @@ package dev.msfjarvis.lobsters
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.animation.animate
 import androidx.compose.foundation.Icon
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.Arrangement
@@ -11,7 +10,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumnForIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -24,9 +22,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.Providers
-import androidx.compose.runtime.State
 import androidx.compose.runtime.ambientOf
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
@@ -70,51 +66,58 @@ fun LobstersApp(
   viewModel: LobstersViewModel
 ) {
   val urlLauncher = UrlLauncherAmbient.current
-  val hottestPostsState = viewModel.posts.collectAsState()
-  val savedPostsState = viewModel.savedPosts.collectAsState()
-  val lastIndex = hottestPostsState.value.lastIndex
+  val posts = viewModel.posts.collectAsState()
+  val savedPosts = viewModel.savedPosts.collectAsState()
+  val lastIndex = posts.value.lastIndex
   val showSaved = remember { mutableStateOf(false) }
 
   Scaffold(
-    topBar = { LobsterTopAppbar(showSaved) },
+    topBar = {
+      LobstersTopAppBar(showSaved.value) {
+        showSaved.value = !showSaved.value
+      }
+    },
     bodyContent = {
-      if ((!showSaved.value && hottestPostsState.value.isEmpty()) || (showSaved.value && savedPostsState.value.isEmpty())) {
-        LobsterEmptyList(showSaved)
+      val saved = showSaved.value
+      if (saved && savedPosts.value.isEmpty()) {
+        EmptyList(saved)
+      } else if (!saved && posts.value.isEmpty()) {
+        EmptyList(saved)
       } else {
         LobsterList(
-          showSaved,
-          savedPostsState,
-          hottestPostsState,
+          showSaved.value,
+          savedPosts.value,
+          posts.value,
           lastIndex,
           viewModel,
           urlLauncher
         )
       }
     },
-    floatingActionButton = { LobsterFAB(showSaved, viewModel) },
+    floatingActionButton = { LobstersFAB(showSaved.value, viewModel) },
   )
 }
 
 @Composable
-private fun LobsterFAB(
-  showSaved: MutableState<Boolean>,
+private fun LobstersFAB(
+  showSaved: Boolean,
   viewModel: LobstersViewModel
 ) {
-  val animatedYOffset = animate(if (showSaved.value) 100.dp else 0.dp)
-
-  FloatingActionButton(
-    onClick = { viewModel.refreshPosts() },
-    modifier = Modifier.offset(y = animatedYOffset)
-  ) {
-    IconResource(resourceId = R.drawable.ic_refresh_24px)
+  if (!showSaved) {
+    FloatingActionButton(
+      onClick = { viewModel.refreshPosts() },
+      modifier = Modifier
+    ) {
+      IconResource(resourceId = R.drawable.ic_refresh_24px)
+    }
   }
 }
 
 @Composable
 private fun LobsterList(
-  showSaved: MutableState<Boolean>,
-  savedPostsState: State<List<LobstersPost>>,
-  hottestPostsState: State<List<LobstersPost>>,
+  showSaved: Boolean,
+  savedPosts: List<LobstersPost>,
+  hottestPosts: List<LobstersPost>,
   lastIndex: Int,
   viewModel: LobstersViewModel,
   urlLauncher: UrlLauncher
@@ -123,11 +126,11 @@ private fun LobsterList(
   val savedPostsListState = rememberLazyListState()
 
   LazyColumnForIndexed(
-    items = if (showSaved.value) savedPostsState.value else hottestPostsState.value,
-    state = if (showSaved.value) savedPostsListState else hottestPostsListState,
+    items = if (showSaved) savedPosts else hottestPosts,
+    state = if (showSaved) savedPostsListState else hottestPostsListState,
     modifier = Modifier.padding(horizontal = 8.dp)
   ) { index, item ->
-    if (lastIndex == index && !showSaved.value) {
+    if (lastIndex == index && !showSaved) {
       viewModel.getMorePosts()
     }
     LobstersItem(
@@ -135,7 +138,7 @@ private fun LobsterList(
       linkOpenAction = { post -> urlLauncher.launch(post.url.ifEmpty { post.commentsUrl }) },
       commentOpenAction = { post -> urlLauncher.launch(post.commentsUrl) },
       saveAction = { post ->
-        if (showSaved.value) {
+        if (showSaved) {
           viewModel.removeSavedPost(post)
         } else {
           viewModel.savePost(post)
@@ -146,38 +149,38 @@ private fun LobsterList(
 }
 
 @Composable
-private fun LobsterEmptyList(showSaved: MutableState<Boolean>) {
+private fun EmptyList(showSaved: Boolean) {
   Column(
     modifier = Modifier.fillMaxSize(),
     verticalArrangement = Arrangement.Center,
     horizontalAlignment = Alignment.CenterHorizontally,
   ) {
-    if (!showSaved.value) {
-      IconResource(R.drawable.ic_sync_problem_24px, modifier = Modifier.padding(16.dp))
-      Text(stringResource(R.string.loading))
-    } else {
+    if (showSaved) {
       Icon(Icons.Default.FavoriteBorder, tint = savedTitleColor, modifier = Modifier.padding(16.dp))
       Text(stringResource(R.string.no_saved_posts))
+    } else {
+      IconResource(R.drawable.ic_sync_problem_24px, modifier = Modifier.padding(16.dp))
+      Text(stringResource(R.string.loading))
     }
   }
 }
 
 @Composable
-private fun LobsterTopAppbar(showSaved: MutableState<Boolean>) {
+private fun LobstersTopAppBar(showSaved: Boolean, toggleAction: () -> Unit) {
   TopAppBar {
     Box(modifier = Modifier.fillMaxWidth()) {
       Text(
-        text = if (showSaved.value) "Saved" else "Home",
+        text = if (showSaved) "Saved" else "Home",
         modifier = Modifier.padding(16.dp).align(Alignment.CenterStart),
         style = MaterialTheme.typography.h6,
       )
       IconToggleButton(
-        checked = showSaved.value,
-        onCheckedChange = { showSaved.value = !showSaved.value },
+        checked = showSaved,
+        onCheckedChange = { toggleAction.invoke() },
         modifier = Modifier.padding(8.dp).align(Alignment.CenterEnd),
       ) {
         Icon(
-          asset = if (showSaved.value) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+          asset = if (showSaved) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
           tint = savedTitleColor,
         )
       }

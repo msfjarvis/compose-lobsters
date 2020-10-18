@@ -1,6 +1,5 @@
 package dev.msfjarvis.lobsters.ui
 
-import androidx.compose.animation.animate
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

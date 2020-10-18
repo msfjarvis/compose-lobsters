@@ -6,7 +6,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
-import dev.msfjarvis.lobsters.data.model.LobstersEntity
 import dev.msfjarvis.lobsters.data.model.SavedLobstersEntity
 import dev.msfjarvis.lobsters.model.LobstersPost
 import kotlinx.coroutines.flow.Flow

@@ -11,6 +11,7 @@ import dev.msfjarvis.lobsters.api.LobstersApi
 @Module
 object ApiModule {
   const val LOBSTERS_URL = "https://lobste.rs"
+
   @Provides
   fun provideLobstersApi(): LobstersApi {
     return ApiClient.getClient(LOBSTERS_URL)

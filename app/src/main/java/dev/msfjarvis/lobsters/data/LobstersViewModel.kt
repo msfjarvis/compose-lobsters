@@ -86,4 +86,11 @@ class LobstersViewModel @ViewModelInject constructor(
       getSavedPosts()
     }
   }
+
+  fun removeSavedPost(post: LobstersPost) {
+    viewModelScope.launch {
+      savedPostsDao.deletePostById(post.shortId)
+      getSavedPosts()
+    }
+  }
 }

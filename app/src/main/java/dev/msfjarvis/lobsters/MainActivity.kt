@@ -134,7 +134,13 @@ private fun LobsterList(
       item,
       linkOpenAction = { post -> urlLauncher.launch(post.url.ifEmpty { post.commentsUrl }) },
       commentOpenAction = { post -> urlLauncher.launch(post.commentsUrl) },
-      saveAction = { post -> if (!showSaved.value) viewModel.savePost(post) },
+      saveAction = { post ->
+        if (showSaved.value) {
+          viewModel.removeSavedPost(post)
+        } else {
+          viewModel.savePost(post)
+        }
+      },
     )
   }
 }

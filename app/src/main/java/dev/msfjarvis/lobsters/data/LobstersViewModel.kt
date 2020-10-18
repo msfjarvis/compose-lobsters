@@ -77,13 +77,9 @@ class LobstersViewModel @ViewModelInject constructor(
 
   fun savePost(post: LobstersPost) {
     viewModelScope.launch {
-      val tempList = _posts.value
-      _posts.value = tempList.map {
-        if (it.shortId == post.shortId) it.isLiked = true
-        it
-      }
       savedPostsDao.insertPosts(post)
       getSavedPosts()
+      _posts.value = _posts.value.transformLikedFlag().toList()
     }
   }
 

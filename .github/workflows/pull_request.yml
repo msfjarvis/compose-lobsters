@@ -14,28 +14,10 @@ jobs:
   test-pr:
     runs-on: ubuntu-latest
     steps:
-    - name: Check if relevant files have changed
-      uses: actions/github-script@28e5ebafd79744f2a15dd15e742233b068e0f762
-      id: service-changed
-      with:
-        result-encoding: string
-        script: |
-          const result = await github.pulls.listFiles({
-            owner: context.payload.repository.owner.login,
-            repo: context.payload.repository.name,
-            pull_number: context.payload.number,
-            per_page: 100
-          })
-          const shouldRun = result.data.filter(f => !f.filename.endsWith(".md") || !f.filename.endsWith(".yml")).length > 0
-          console.log(shouldRun)
-          return shouldRun
-
     - name: Checkout repository
-      if: ${{ steps.service-changed.outputs.result == 'true' }}
       uses: actions/checkout@c952173edf28a2bd22e1a4926590c1ac39630461
 
     - name: Copy CI gradle.properties
-      if: ${{ steps.service-changed.outputs.result == 'true' }}
       run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
 
     - uses: burrunan/gradle-cache-action@v1

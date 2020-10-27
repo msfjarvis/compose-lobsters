@@ -1,6 +1,15 @@
-on: [pull_request]
+name: CI
 
-name: Check pull request
+"on":
+  push:
+    branches:
+      - staging
+      - trying
+      - develop
+  pull_request:
+    branches:
+      - "**"
+
 jobs:
   test-pr:
     runs-on: ubuntu-latest

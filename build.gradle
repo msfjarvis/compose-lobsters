@@ -3,7 +3,7 @@ buildscript {
     ext {
         accompanist_version = "0.3.1"
         activity_version = "1.2.0-beta01"
-        agp_version = "4.2.0-alpha14"
+        agp_version = "4.2.0-alpha15"
         appcompat_version = "1.3.0-alpha02"
         browser_version = "1.3.0-alpha06"
         compose_version = "1.0.0-alpha05"

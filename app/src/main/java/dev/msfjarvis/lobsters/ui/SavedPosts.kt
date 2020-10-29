@@ -9,15 +9,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.msfjarvis.lobsters.data.LobstersViewModel
-import dev.msfjarvis.lobsters.urllauncher.UrlLauncher
+import dev.msfjarvis.lobsters.urllauncher.UrlLauncherAmbient
 
 @Composable
 fun SavedPosts(
-  urlLauncher: UrlLauncher,
   viewModel: LobstersViewModel,
+  modifier: Modifier = Modifier,
 ) {
   val posts by viewModel.savedPosts.collectAsState()
   val listState = rememberLazyListState()
+  val urlLauncher = UrlLauncherAmbient.current
 
   if (posts.isEmpty()) {
     EmptyList(saved = true)
@@ -25,7 +26,7 @@ fun SavedPosts(
     LazyColumnFor(
       items = posts,
       state = listState,
-      modifier = Modifier.padding(horizontal = 8.dp)
+      modifier = Modifier.padding(horizontal = 8.dp).then(modifier)
     ) { item ->
       LobstersItem(
         post = item,

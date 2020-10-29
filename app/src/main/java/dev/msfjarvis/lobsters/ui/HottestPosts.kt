@@ -9,16 +9,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.msfjarvis.lobsters.data.LobstersViewModel
-import dev.msfjarvis.lobsters.urllauncher.UrlLauncher
+import dev.msfjarvis.lobsters.urllauncher.UrlLauncherAmbient
 
 @Composable
 fun HottestPosts(
-  lastIndex: Int,
-  urlLauncher: UrlLauncher,
   viewModel: LobstersViewModel,
+  modifier: Modifier = Modifier,
 ) {
   val posts by viewModel.posts.collectAsState()
   val listState = rememberLazyListState()
+  val urlLauncher = UrlLauncherAmbient.current
 
   if (posts.isEmpty()) {
     EmptyList(saved = false)
@@ -26,9 +26,9 @@ fun HottestPosts(
     LazyColumnForIndexed(
       items = posts,
       state = listState,
-      modifier = Modifier.padding(horizontal = 8.dp)
+      modifier = Modifier.padding(horizontal = 8.dp).then(modifier)
     ) { index, item ->
-      if (lastIndex == index) {
+      if (posts.lastIndex == index) {
         viewModel.getMorePosts()
       }
       LobstersItem(

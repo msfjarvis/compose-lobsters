@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Providers
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.setContent
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.KEY_ROUTE
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -47,9 +48,8 @@ class MainActivity : AppCompatActivity() {
 
 @Composable
 fun LobstersApp(
-  viewModel: LobstersViewModel
+  viewModel: LobstersViewModel,
 ) {
-  val urlLauncher = UrlLauncherAmbient.current
   val navController = rememberNavController()
   val destinations = arrayOf(Destination.Hottest, Destination.Saved)
 
@@ -68,7 +68,7 @@ fun LobstersApp(
                 }
               )
             },
-            label = { Text(screen.label) },
+            label = { Text(stringResource(id = screen.labelRes)) },
             selected = currentRoute == screen.route,
             onClick = {
               // This is the equivalent to popUpTo the start destination

@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">lobste.rs</string>
-    <string name="loading">Loading posts…</string>
-    <string name="no_saved_posts">You don\'t have any saved posts</string>
+  <string name="app_name">lobste.rs</string>
+  <string name="loading">Loading posts…</string>
+  <string name="no_saved_posts">You don\'t have any saved posts</string>
+  <string name="hottest_posts">Hottest</string>
+  <string name="saved_posts">Saved</string>
 </resources>

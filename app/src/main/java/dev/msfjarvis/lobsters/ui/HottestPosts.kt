@@ -13,7 +13,6 @@ import dev.msfjarvis.lobsters.urllauncher.UrlLauncher
 
 @Composable
 fun HottestPosts(
-  lastIndex: Int,
   urlLauncher: UrlLauncher,
   viewModel: LobstersViewModel,
 ) {
@@ -28,7 +27,7 @@ fun HottestPosts(
       state = listState,
       modifier = Modifier.padding(horizontal = 8.dp)
     ) { index, item ->
-      if (lastIndex == index) {
+      if (posts.lastIndex == index) {
         viewModel.getMorePosts()
       }
       LobstersItem(

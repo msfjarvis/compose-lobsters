@@ -10,7 +10,6 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Providers
 import androidx.compose.runtime.ambientOf
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.setContent
 import androidx.navigation.compose.KEY_ROUTE
@@ -53,8 +52,6 @@ fun LobstersApp(
   viewModel: LobstersViewModel
 ) {
   val urlLauncher = UrlLauncherAmbient.current
-  val posts = viewModel.posts.collectAsState()
-  val lastIndex = posts.value.lastIndex
   val navController = rememberNavController()
   val destinations = arrayOf(Destination.Hottest, Destination.Saved)
 
@@ -92,7 +89,7 @@ fun LobstersApp(
   ) {
     NavHost(navController, startDestination = Destination.Hottest.route) {
       composable(Destination.Hottest.route) {
-        HottestPosts(lastIndex = lastIndex, urlLauncher = urlLauncher , viewModel = viewModel)
+        HottestPosts(urlLauncher = urlLauncher, viewModel = viewModel)
       }
       composable(Destination.Saved.route) {
         SavedPosts(urlLauncher = urlLauncher, viewModel = viewModel)

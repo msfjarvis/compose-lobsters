@@ -71,12 +71,11 @@ fun LobstersApp(
             label = { Text(stringResource(id = screen.labelRes)) },
             selected = currentRoute == screen.route,
             onClick = {
-              // This is the equivalent to popUpTo the start destination
-              navController.popBackStack(navController.graph.startDestination, false)
-
               // This if check gives us a "singleTop" behavior where we do not create a
               // second instance of the composable if we are already on that destination
               if (currentRoute != screen.route) {
+                // This is the equivalent to popUpTo the start destination
+                navController.popBackStack(navController.graph.startDestination, false)
                 navController.navigate(screen.route)
               }
             }

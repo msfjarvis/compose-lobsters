@@ -47,9 +47,8 @@ class MainActivity : AppCompatActivity() {
 
 @Composable
 fun LobstersApp(
-  viewModel: LobstersViewModel
+  viewModel: LobstersViewModel,
 ) {
-  val urlLauncher = UrlLauncherAmbient.current
   val navController = rememberNavController()
   val destinations = arrayOf(Destination.Hottest, Destination.Saved)
 

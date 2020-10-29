@@ -14,6 +14,7 @@ import dev.msfjarvis.lobsters.urllauncher.UrlLauncherAmbient
 @Composable
 fun SavedPosts(
   viewModel: LobstersViewModel,
+  modifier: Modifier = Modifier,
 ) {
   val posts by viewModel.savedPosts.collectAsState()
   val listState = rememberLazyListState()
@@ -25,7 +26,7 @@ fun SavedPosts(
     LazyColumnFor(
       items = posts,
       state = listState,
-      modifier = Modifier.padding(horizontal = 8.dp)
+      modifier = Modifier.padding(horizontal = 8.dp).then(modifier)
     ) { item ->
       LobstersItem(
         post = item,

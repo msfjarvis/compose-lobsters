@@ -14,6 +14,7 @@ import dev.msfjarvis.lobsters.urllauncher.UrlLauncherAmbient
 @Composable
 fun HottestPosts(
   viewModel: LobstersViewModel,
+  modifier: Modifier = Modifier,
 ) {
   val posts by viewModel.posts.collectAsState()
   val listState = rememberLazyListState()
@@ -25,7 +26,7 @@ fun HottestPosts(
     LazyColumnForIndexed(
       items = posts,
       state = listState,
-      modifier = Modifier.padding(horizontal = 8.dp)
+      modifier = Modifier.padding(horizontal = 8.dp).then(modifier)
     ) { index, item ->
       if (posts.lastIndex == index) {
         viewModel.getMorePosts()

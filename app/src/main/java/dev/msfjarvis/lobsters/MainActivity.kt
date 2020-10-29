@@ -4,37 +4,28 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Text
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumnForIndexed
-import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.IconToggleButton
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material.BottomNavigation
+import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Scaffold
-import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Providers
 import androidx.compose.runtime.ambientOf
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.setContent
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.KEY_ROUTE
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.navigate
+import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import dev.msfjarvis.lobsters.compose.utils.IconResource
 import dev.msfjarvis.lobsters.data.LobstersViewModel
-import dev.msfjarvis.lobsters.model.LobstersPost
-import dev.msfjarvis.lobsters.ui.LobstersItem
+import dev.msfjarvis.lobsters.ui.Destination
+import dev.msfjarvis.lobsters.ui.HottestPosts
 import dev.msfjarvis.lobsters.ui.LobstersTheme
-import dev.msfjarvis.lobsters.ui.savedTitleColor
+import dev.msfjarvis.lobsters.ui.SavedPosts
 import dev.msfjarvis.lobsters.urllauncher.UrlLauncher
 import javax.inject.Inject
 
@@ -63,126 +54,48 @@ fun LobstersApp(
 ) {
   val urlLauncher = UrlLauncherAmbient.current
   val posts = viewModel.posts.collectAsState()
-  val savedPosts = viewModel.savedPosts.collectAsState()
   val lastIndex = posts.value.lastIndex
-  val showSaved = remember { mutableStateOf(false) }
+  val navController = rememberNavController()
+  val destinations = arrayOf(Destination.Hottest, Destination.Saved)
 
   Scaffold(
-    topBar = {
-      LobstersTopAppBar(showSaved.value) {
-        showSaved.value = !showSaved.value
-      }
-    },
-    bodyContent = {
-      val saved = showSaved.value
-      if (saved && savedPosts.value.isEmpty()) {
-        EmptyList(saved)
-      } else if (!saved && posts.value.isEmpty()) {
-        EmptyList(saved)
-      } else {
-        LobsterList(
-          showSaved.value,
-          savedPosts.value,
-          posts.value,
-          lastIndex,
-          viewModel,
-          urlLauncher
-        )
-      }
-    },
-    floatingActionButton = { LobstersFAB(showSaved.value, viewModel) },
-  )
-}
+    bottomBar = {
+      BottomNavigation {
+        val navBackStackEntry by navController.currentBackStackEntryAsState()
+        val currentRoute = navBackStackEntry?.arguments?.getString(KEY_ROUTE)
+        destinations.forEach { screen ->
+          BottomNavigationItem(
+            icon = {
+              IconResource(
+                resourceId = when (screen) {
+                  Destination.Hottest -> R.drawable.ic_whatshot_24px
+                  Destination.Saved -> R.drawable.ic_favorite_24px
+                }
+              )
+            },
+            label = { Text(screen.label) },
+            selected = currentRoute == screen.route,
+            onClick = {
+              // This is the equivalent to popUpTo the start destination
+              navController.popBackStack(navController.graph.startDestination, false)
 
-@Composable
-private fun LobstersFAB(
-  showSaved: Boolean,
-  viewModel: LobstersViewModel
-) {
-  if (!showSaved) {
-    FloatingActionButton(
-      onClick = { viewModel.refreshPosts() },
-      modifier = Modifier
-    ) {
-      IconResource(resourceId = R.drawable.ic_refresh_24px)
-    }
-  }
-}
-
-@Composable
-private fun LobsterList(
-  showSaved: Boolean,
-  savedPosts: List<LobstersPost>,
-  hottestPosts: List<LobstersPost>,
-  lastIndex: Int,
-  viewModel: LobstersViewModel,
-  urlLauncher: UrlLauncher
-) {
-  val hottestPostsListState = rememberLazyListState()
-  val savedPostsListState = rememberLazyListState()
-
-  LazyColumnForIndexed(
-    items = if (showSaved) savedPosts else hottestPosts,
-    state = if (showSaved) savedPostsListState else hottestPostsListState,
-    modifier = Modifier.padding(horizontal = 8.dp)
-  ) { index, item ->
-    if (lastIndex == index && !showSaved) {
-      viewModel.getMorePosts()
-    }
-    LobstersItem(
-      item,
-      linkOpenAction = { post -> urlLauncher.launch(post.url.ifEmpty { post.commentsUrl }) },
-      commentOpenAction = { post -> urlLauncher.launch(post.commentsUrl) },
-      saveAction = { post ->
-        if (showSaved) {
-          viewModel.removeSavedPost(post)
-        } else {
-          viewModel.savePost(post)
+              // This if check gives us a "singleTop" behavior where we do not create a
+              // second instance of the composable if we are already on that destination
+              if (currentRoute != screen.route) {
+                navController.navigate(screen.route)
+              }
+            }
+          )
         }
-      },
-    )
-  }
-}
-
-@Composable
-private fun EmptyList(showSaved: Boolean) {
-  Column(
-    modifier = Modifier.fillMaxSize(),
-    verticalArrangement = Arrangement.Center,
-    horizontalAlignment = Alignment.CenterHorizontally,
+      }
+    },
   ) {
-    if (showSaved) {
-      IconResource(
-        R.drawable.ic_favorite_border_24px,
-        tint = savedTitleColor,
-        modifier = Modifier.padding(16.dp)
-      )
-      Text(stringResource(R.string.no_saved_posts))
-    } else {
-      IconResource(R.drawable.ic_sync_problem_24px, modifier = Modifier.padding(16.dp))
-      Text(stringResource(R.string.loading))
-    }
-  }
-}
-
-@Composable
-private fun LobstersTopAppBar(showSaved: Boolean, toggleAction: () -> Unit) {
-  TopAppBar {
-    Box(modifier = Modifier.fillMaxWidth()) {
-      Text(
-        text = if (showSaved) "Saved" else "Home",
-        modifier = Modifier.padding(16.dp).align(Alignment.CenterStart),
-        style = MaterialTheme.typography.h6,
-      )
-      IconToggleButton(
-        checked = showSaved,
-        onCheckedChange = { toggleAction.invoke() },
-        modifier = Modifier.padding(8.dp).align(Alignment.CenterEnd),
-      ) {
-        IconResource(
-          resourceId = if (showSaved) R.drawable.ic_favorite_24px else R.drawable.ic_favorite_border_24px,
-          tint = savedTitleColor,
-        )
+    NavHost(navController, startDestination = Destination.Hottest.route) {
+      composable(Destination.Hottest.route) {
+        HottestPosts(lastIndex = lastIndex, urlLauncher = urlLauncher , viewModel = viewModel)
+      }
+      composable(Destination.Saved.route) {
+        SavedPosts(urlLauncher = urlLauncher, viewModel = viewModel)
       }
     }
   }

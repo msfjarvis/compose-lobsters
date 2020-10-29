@@ -9,7 +9,6 @@ import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Providers
-import androidx.compose.runtime.ambientOf
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.setContent
 import androidx.navigation.compose.KEY_ROUTE
@@ -26,9 +25,8 @@ import dev.msfjarvis.lobsters.ui.HottestPosts
 import dev.msfjarvis.lobsters.ui.LobstersTheme
 import dev.msfjarvis.lobsters.ui.SavedPosts
 import dev.msfjarvis.lobsters.urllauncher.UrlLauncher
+import dev.msfjarvis.lobsters.urllauncher.UrlLauncherAmbient
 import javax.inject.Inject
-
-val UrlLauncherAmbient = ambientOf<UrlLauncher> { error("Needs to be provided") }
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -89,10 +87,10 @@ fun LobstersApp(
   ) {
     NavHost(navController, startDestination = Destination.Hottest.route) {
       composable(Destination.Hottest.route) {
-        HottestPosts(urlLauncher = urlLauncher, viewModel = viewModel)
+        HottestPosts(viewModel = viewModel)
       }
       composable(Destination.Saved.route) {
-        SavedPosts(urlLauncher = urlLauncher, viewModel = viewModel)
+        SavedPosts(viewModel = viewModel)
       }
     }
   }

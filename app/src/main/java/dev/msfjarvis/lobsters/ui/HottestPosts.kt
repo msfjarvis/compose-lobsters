@@ -9,15 +9,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.msfjarvis.lobsters.data.LobstersViewModel
-import dev.msfjarvis.lobsters.urllauncher.UrlLauncher
+import dev.msfjarvis.lobsters.urllauncher.UrlLauncherAmbient
 
 @Composable
 fun HottestPosts(
-  urlLauncher: UrlLauncher,
   viewModel: LobstersViewModel,
 ) {
   val posts by viewModel.posts.collectAsState()
   val listState = rememberLazyListState()
+  val urlLauncher = UrlLauncherAmbient.current
 
   if (posts.isEmpty()) {
     EmptyList(saved = false)

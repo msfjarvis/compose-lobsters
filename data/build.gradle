@@ -1,12 +1,12 @@
 plugins {
-    id 'kotlin-kapt'
+  id 'kotlin-kapt'
 }
 
 dependencies {
-    implementation project(":model")
-    kapt "androidx.room:room-compiler:$room_version"
-    api "androidx.room:room-runtime:$room_version"
-    implementation "androidx.room:room-ktx:$room_version"
-    implementation "com.squareup.moshi:moshi:$moshi_version"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+  implementation project(":model")
+  kapt "androidx.room:room-compiler:$room_version"
+  api "androidx.room:room-runtime:$room_version"
+  implementation "androidx.room:room-ktx:$room_version"
+  implementation "com.squareup.moshi:moshi:$moshi_version"
+  implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
 }

@@ -62,14 +62,7 @@ fun LobstersApp() {
         val currentRoute = navBackStackEntry?.arguments?.getString(KEY_ROUTE)
         destinations.forEach { screen ->
           BottomNavigationItem(
-            icon = {
-              IconResource(
-                resourceId = when (screen) {
-                  Destination.Hottest -> R.drawable.ic_whatshot_24px
-                  Destination.Saved -> R.drawable.ic_favorite_24px
-                }
-              )
-            },
+            icon = { IconResource(resourceId = screen.badgeRes) },
             label = { Text(stringResource(id = screen.labelRes)) },
             selected = currentRoute == screen.route,
             onClick = {

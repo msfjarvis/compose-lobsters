@@ -4,19 +4,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import dev.msfjarvis.lobsters.data.LobstersViewModel
+import dev.msfjarvis.lobsters.model.LobstersPost
 import dev.msfjarvis.lobsters.urllauncher.UrlLauncherAmbient
 
 @Composable
 fun SavedPosts(
-  viewModel: LobstersViewModel,
+  posts: List<LobstersPost>,
   modifier: Modifier = Modifier,
+  saveAction: (LobstersPost) -> Unit
 ) {
-  val posts by viewModel.savedPosts.collectAsState()
   val listState = rememberLazyListState()
   val urlLauncher = UrlLauncherAmbient.current
 
@@ -32,7 +30,7 @@ fun SavedPosts(
         post = item,
         linkOpenAction = { post -> urlLauncher.launch(post.url.ifEmpty { post.commentsUrl }) },
         commentOpenAction = { post -> urlLauncher.launch(post.commentsUrl) },
-        saveAction = viewModel::removeSavedPost
+        saveAction = saveAction,
       )
     }
   }

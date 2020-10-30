@@ -1,5 +1,6 @@
 package dev.msfjarvis.lobsters.ui
 
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import dev.msfjarvis.lobsters.R
 
@@ -9,7 +10,8 @@ import dev.msfjarvis.lobsters.R
 sealed class Destination(
   val route: String,
   @StringRes val labelRes: Int,
+  @DrawableRes val badgeRes: Int,
 ) {
-  object Hottest : Destination("hottest", R.string.hottest_posts)
-  object Saved : Destination("saved", R.string.saved_posts)
+  object Hottest : Destination("hottest", R.string.hottest_posts, R.drawable.ic_whatshot_24px)
+  object Saved : Destination("saved", R.string.saved_posts, R.drawable.ic_favorite_24px)
 }

@@ -1,17 +1,19 @@
 package dev.msfjarvis.lobsters
 
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Text
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Providers
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.viewinterop.viewModel
 import androidx.navigation.compose.KEY_ROUTE
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -32,14 +34,13 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
   @Inject lateinit var urlLauncher: UrlLauncher
-  private val viewModel: LobstersViewModel by viewModels()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
       Providers(UrlLauncherAmbient provides urlLauncher) {
         LobstersTheme {
-          LobstersApp(viewModel)
+          LobstersApp()
         }
       }
     }
@@ -47,11 +48,12 @@ class MainActivity : AppCompatActivity() {
 }
 
 @Composable
-fun LobstersApp(
-  viewModel: LobstersViewModel,
-) {
+fun LobstersApp() {
+  val viewModel: LobstersViewModel = viewModel()
   val navController = rememberNavController()
   val destinations = arrayOf(Destination.Hottest, Destination.Saved)
+  val hottestPosts by viewModel.posts.collectAsState()
+  val savedPosts by viewModel.savedPosts.collectAsState()
 
   Scaffold(
     bottomBar = {
@@ -60,14 +62,7 @@ fun LobstersApp(
         val currentRoute = navBackStackEntry?.arguments?.getString(KEY_ROUTE)
         destinations.forEach { screen ->
           BottomNavigationItem(
-            icon = {
-              IconResource(
-                resourceId = when (screen) {
-                  Destination.Hottest -> R.drawable.ic_whatshot_24px
-                  Destination.Saved -> R.drawable.ic_favorite_24px
-                }
-              )
-            },
+            icon = { IconResource(resourceId = screen.badgeRes) },
             label = { Text(stringResource(id = screen.labelRes)) },
             selected = currentRoute == screen.route,
             onClick = {
@@ -84,12 +79,21 @@ fun LobstersApp(
       }
     },
   ) {
+    val hottestPostsListState = rememberLazyListState()
     NavHost(navController, startDestination = Destination.Hottest.route) {
       composable(Destination.Hottest.route) {
-        HottestPosts(viewModel = viewModel)
+        HottestPosts(
+          posts = hottestPosts,
+          listState = hottestPostsListState,
+          saveAction = viewModel::savePost,
+          overscrollAction = viewModel::getMorePosts,
+        )
       }
       composable(Destination.Saved.route) {
-        SavedPosts(viewModel = viewModel)
+        SavedPosts(
+          posts = savedPosts,
+          saveAction = viewModel::removeSavedPost,
+        )
       }
     }
   }

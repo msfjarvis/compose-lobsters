@@ -3,6 +3,7 @@ package dev.msfjarvis.lobsters
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Text
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Scaffold
@@ -85,10 +86,12 @@ fun LobstersApp() {
       }
     },
   ) {
+    val hottestPostsListState = rememberLazyListState()
     NavHost(navController, startDestination = Destination.Hottest.route) {
       composable(Destination.Hottest.route) {
         HottestPosts(
           posts = hottestPosts,
+          listState = hottestPostsListState,
           saveAction = viewModel::savePost,
           overscrollAction = viewModel::getMorePosts,
         )

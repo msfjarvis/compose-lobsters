@@ -32,7 +32,6 @@ import dev.msfjarvis.lobsters.injection.ApiModule
 import dev.msfjarvis.lobsters.model.LobstersPost
 import dev.msfjarvis.lobsters.model.Submitter
 import dev.msfjarvis.lobsters.ui.theme.LobstersTheme
-import dev.msfjarvis.lobsters.ui.theme.savedTitleColor
 import dev.msfjarvis.lobsters.ui.theme.titleColor
 
 @Composable
@@ -43,7 +42,6 @@ fun LazyItemScope.LobstersItem(
   commentOpenAction: (LobstersPost) -> Unit,
   saveAction: (LobstersPost) -> Unit,
 ) {
-  val titleColor = if (post.isLiked) savedTitleColor else titleColor
   val width = with(DensityAmbient.current) {
     ConfigurationAmbient.current.screenWidthDp.toDp().toPx()
   }

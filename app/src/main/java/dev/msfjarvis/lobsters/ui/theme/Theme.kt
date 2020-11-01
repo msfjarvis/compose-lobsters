@@ -6,7 +6,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 val titleColor = Color(0xFF7395D9)
-val savedTitleColor = Color(0xFFD97373)
 
 val darkColors = darkColors(
   primary = Color.White,

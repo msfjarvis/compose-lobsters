@@ -8,11 +8,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.msfjarvis.lobsters.R
 import dev.msfjarvis.lobsters.util.IconResource
-import dev.msfjarvis.lobsters.ui.theme.savedTitleColor
 
 @Composable
 fun EmptyList(saved: Boolean) {
@@ -24,7 +24,7 @@ fun EmptyList(saved: Boolean) {
     if (saved) {
       IconResource(
         R.drawable.ic_favorite_border_24px,
-        tint = savedTitleColor,
+        tint = Color(0xFFD97373),
         modifier = Modifier.padding(16.dp)
       )
       Text(stringResource(R.string.no_saved_posts))

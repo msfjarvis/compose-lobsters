@@ -12,7 +12,7 @@ import dev.msfjarvis.lobsters.data.model.SavedLobstersEntity
     SavedLobstersEntity::class
   ],
   version = 2,
-  exportSchema = false,
+  exportSchema = true,
 )
 @TypeConverters(
   LobstersApiTypeConverters::class,

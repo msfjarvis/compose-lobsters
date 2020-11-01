@@ -23,6 +23,7 @@ buildscript {
     okhttp_version = "4.10.0-RC1"
     retrofit_version = "2.9.0"
     room_version = "2.3.0-alpha03"
+    roomigrant_version = "0.2.0"
   }
   repositories {
     google()

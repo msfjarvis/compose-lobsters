@@ -1,4 +1,4 @@
-package dev.msfjarvis.lobsters.ui
+package dev.msfjarvis.lobsters.ui.navigation
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes

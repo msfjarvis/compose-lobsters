@@ -1,4 +1,4 @@
-package dev.msfjarvis.lobsters.urllauncher
+package dev.msfjarvis.lobsters.ui.urllauncher
 
 fun interface UrlLauncher {
   fun launch(url: String)

@@ -1,4 +1,4 @@
-package dev.msfjarvis.lobsters.di
+package dev.msfjarvis.lobsters.injection
 
 import dagger.Module
 import dagger.Provides

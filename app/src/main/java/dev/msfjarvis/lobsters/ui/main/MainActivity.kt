@@ -1,4 +1,4 @@
-package dev.msfjarvis.lobsters
+package dev.msfjarvis.lobsters.ui.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -21,14 +21,14 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import dev.msfjarvis.lobsters.compose.utils.IconResource
-import dev.msfjarvis.lobsters.data.LobstersViewModel
-import dev.msfjarvis.lobsters.ui.Destination
-import dev.msfjarvis.lobsters.ui.HottestPosts
-import dev.msfjarvis.lobsters.ui.LobstersTheme
-import dev.msfjarvis.lobsters.ui.SavedPosts
-import dev.msfjarvis.lobsters.urllauncher.UrlLauncher
-import dev.msfjarvis.lobsters.urllauncher.UrlLauncherAmbient
+import dev.msfjarvis.lobsters.util.IconResource
+import dev.msfjarvis.lobsters.ui.viewmodel.LobstersViewModel
+import dev.msfjarvis.lobsters.ui.navigation.Destination
+import dev.msfjarvis.lobsters.ui.posts.HottestPosts
+import dev.msfjarvis.lobsters.ui.theme.LobstersTheme
+import dev.msfjarvis.lobsters.ui.posts.SavedPosts
+import dev.msfjarvis.lobsters.ui.urllauncher.UrlLauncher
+import dev.msfjarvis.lobsters.ui.urllauncher.UrlLauncherAmbient
 import javax.inject.Inject
 
 @AndroidEntryPoint

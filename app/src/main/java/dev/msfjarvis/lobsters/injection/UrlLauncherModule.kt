@@ -1,4 +1,4 @@
-package dev.msfjarvis.lobsters.di
+package dev.msfjarvis.lobsters.injection
 
 import android.content.Context
 import dagger.Module
@@ -6,8 +6,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.qualifiers.ActivityContext
-import dev.msfjarvis.lobsters.urllauncher.UrlLauncher
-import dev.msfjarvis.lobsters.urllauncher.UrlLauncherImpl
+import dev.msfjarvis.lobsters.ui.urllauncher.UrlLauncher
+import dev.msfjarvis.lobsters.ui.urllauncher.UrlLauncherImpl
 
 @InstallIn(ActivityComponent::class)
 @Module

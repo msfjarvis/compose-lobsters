@@ -62,7 +62,7 @@ dependencies {
 
   kapt "com.google.dagger:hilt-compiler:$hilt_dagger_version"
   kapt "androidx.hilt:hilt-compiler:$hilt_androidx_version"
-  implementation(project(":data"))
+  kapt "androidx.room:room-compiler:$room_version"
   implementation(project(":lobsters-api"))
   implementation(project(":model"))
   implementation "androidx.core:core-ktx:$core_version"
@@ -83,9 +83,12 @@ dependencies {
   implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
   implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
   implementation "androidx.navigation:navigation-compose:$nav_compose_version"
+  implementation "androidx.room:room-runtime:$room_version"
+  implementation "androidx.room:room-ktx:$room_version"
   implementation "androidx.ui:ui-tooling:$compose_version"
   implementation "com.google.android.material:material:$material_version"
   implementation "com.google.dagger:hilt-android:$hilt_dagger_version"
+  implementation "com.squareup.moshi:moshi:$moshi_version"
   implementation "dev.chrisbanes.accompanist:accompanist-coil:$accompanist_version"
   implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
   implementation "saschpe.android:customtabs:$customtabs_version"

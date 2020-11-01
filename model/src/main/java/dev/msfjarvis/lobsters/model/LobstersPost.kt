@@ -23,6 +23,4 @@ class LobstersPost(
   @Json(name = "submitter_user")
   val submitterUser: Submitter,
   val tags: List<String>,
-  @Deprecated("Retained for database compatibility as I am too lazy to write migrations")
-  val isLiked: Boolean = false,
 )

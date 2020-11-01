@@ -1,5 +1,4 @@
 rootProject.name = "lobste.rs"
 include ':app'
-include ':data'
 include ':lobsters-api'
 include ':model'

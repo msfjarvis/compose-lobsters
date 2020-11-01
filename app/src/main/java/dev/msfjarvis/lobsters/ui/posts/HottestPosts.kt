@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.msfjarvis.lobsters.model.LobstersPost
 import dev.msfjarvis.lobsters.ui.urllauncher.UrlLauncherAmbient
+import dev.msfjarvis.lobsters.util.AnimatedSwipeDismiss
 
 @Composable
 fun HottestPosts(
@@ -30,11 +31,17 @@ fun HottestPosts(
       if (posts.lastIndex == index) {
         overscrollAction.invoke()
       }
-      LobstersItem(
-        post = item,
-        linkOpenAction = { post -> urlLauncher.launch(post.url.ifEmpty { post.commentsUrl }) },
-        commentOpenAction = { post -> urlLauncher.launch(post.commentsUrl) },
-        saveAction = saveAction,
+      AnimatedSwipeDismiss(
+        item = item,
+        background = {},
+        content = {
+          LobstersItem(
+            post = item,
+            linkOpenAction = { post -> urlLauncher.launch(post.url.ifEmpty { post.commentsUrl }) },
+            commentOpenAction = { post -> urlLauncher.launch(post.commentsUrl) },
+          )
+        },
+        onDismiss = saveAction,
       )
     }
   }

@@ -13,8 +13,6 @@ import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -36,10 +34,8 @@ fun LazyItemScope.LobstersItem(
   modifier: Modifier = Modifier,
   linkOpenAction: (LobstersPost) -> Unit,
   commentOpenAction: (LobstersPost) -> Unit,
-  saveAction: (LobstersPost) -> Unit,
 ) {
-  val liked = remember { mutableStateOf(false) }
-  val titleColor = if (post.isLiked || liked.value) savedTitleColor else titleColor
+  val titleColor = if (post.isLiked) savedTitleColor else titleColor
 
   Column(
     modifier = modifier
@@ -47,11 +43,6 @@ fun LazyItemScope.LobstersItem(
       .clickable(
         onClick = { linkOpenAction.invoke(post) },
         onLongClick = { commentOpenAction.invoke(post) },
-        onDoubleClick = {
-          post.isLiked = true
-          liked.value = true
-          saveAction.invoke(post)
-        },
       ),
   ) {
     Text(
@@ -128,7 +119,7 @@ fun PreviewLobstersItem() {
         post = item,
         linkOpenAction = {},
         commentOpenAction = {},
-        saveAction = {})
+      )
     }
   }
 }

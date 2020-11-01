@@ -34,6 +34,11 @@ import dev.msfjarvis.lobsters.model.Submitter
 import dev.msfjarvis.lobsters.ui.theme.LobstersTheme
 import dev.msfjarvis.lobsters.ui.theme.titleColor
 
+private enum class SwipeState {
+  NotSwiped,
+  FullySwiped,
+}
+
 @Composable
 fun LazyItemScope.LobstersItem(
   post: LobstersPost,
@@ -45,11 +50,11 @@ fun LazyItemScope.LobstersItem(
   val width = with(DensityAmbient.current) {
     ConfigurationAmbient.current.screenWidthDp.toDp().toPx()
   }
-  val swipeableState = rememberSwipeableState("Not Swiped")
-  val anchors = mapOf(0f to "Not Swiped", width to "Fully Swiped")
+  val swipeableState = rememberSwipeableState(SwipeState.NotSwiped)
+  val anchors = mapOf(0f to SwipeState.NotSwiped, width to SwipeState.FullySwiped)
   if (swipeableState.offset.value >= (width / 2)) {
     saveAction.invoke(post)
-    swipeableState.animateTo("Not Swiped")
+    swipeableState.animateTo(SwipeState.NotSwiped)
   }
 
   Column(

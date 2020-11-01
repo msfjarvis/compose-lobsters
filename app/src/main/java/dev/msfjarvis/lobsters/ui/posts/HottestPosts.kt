@@ -1,4 +1,4 @@
-package dev.msfjarvis.lobsters.ui
+package dev.msfjarvis.lobsters.ui.posts
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumnForIndexed
@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.msfjarvis.lobsters.model.LobstersPost
-import dev.msfjarvis.lobsters.urllauncher.UrlLauncherAmbient
+import dev.msfjarvis.lobsters.ui.urllauncher.UrlLauncherAmbient
 
 @Composable
 fun HottestPosts(

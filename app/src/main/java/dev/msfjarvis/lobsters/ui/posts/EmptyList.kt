@@ -1,4 +1,4 @@
-package dev.msfjarvis.lobsters.ui
+package dev.msfjarvis.lobsters.ui.posts
 
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.Arrangement
@@ -11,7 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.msfjarvis.lobsters.R
-import dev.msfjarvis.lobsters.compose.utils.IconResource
+import dev.msfjarvis.lobsters.util.IconResource
+import dev.msfjarvis.lobsters.ui.theme.savedTitleColor
 
 @Composable
 fun EmptyList(saved: Boolean) {

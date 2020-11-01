@@ -1,4 +1,4 @@
-package dev.msfjarvis.lobsters.urllauncher
+package dev.msfjarvis.lobsters.ui.urllauncher
 
 import android.content.Context
 import android.net.Uri

@@ -1,4 +1,4 @@
-package dev.msfjarvis.lobsters.data
+package dev.msfjarvis.lobsters.ui.viewmodel
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel

@@ -1,4 +1,4 @@
-package dev.msfjarvis.lobsters.ui
+package dev.msfjarvis.lobsters.ui.posts
 
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.background
@@ -23,9 +23,12 @@ import androidx.compose.ui.unit.dp
 import androidx.ui.tooling.preview.Preview
 import coil.transform.CircleCropTransformation
 import dev.chrisbanes.accompanist.coil.CoilImage
-import dev.msfjarvis.lobsters.di.ApiModule
+import dev.msfjarvis.lobsters.injection.ApiModule
 import dev.msfjarvis.lobsters.model.LobstersPost
 import dev.msfjarvis.lobsters.model.Submitter
+import dev.msfjarvis.lobsters.ui.theme.LobstersTheme
+import dev.msfjarvis.lobsters.ui.theme.savedTitleColor
+import dev.msfjarvis.lobsters.ui.theme.titleColor
 
 @Composable
 fun LazyItemScope.LobstersItem(

@@ -1,4 +1,4 @@
-package dev.msfjarvis.lobsters.ui
+package dev.msfjarvis.lobsters.ui.theme
 
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors

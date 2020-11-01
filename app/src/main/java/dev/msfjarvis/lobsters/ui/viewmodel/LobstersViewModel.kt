@@ -54,15 +54,9 @@ class LobstersViewModel @ViewModelInject constructor(
     getMorePostsInternal(false)
   }
 
-  fun refreshPosts() {
-    apiPage = 1
-    getMorePostsInternal(true)
-  }
-
   private fun getMorePostsInternal(firstLoad: Boolean) {
     viewModelScope.launch(coroutineExceptionHandler) {
       val newPosts = lobstersApi.getHottestPosts(apiPage)
-        .transformLikedFlag()
         .toList()
       if (firstLoad) {
         _posts.value = newPosts
@@ -79,7 +73,6 @@ class LobstersViewModel @ViewModelInject constructor(
     viewModelScope.launch {
       savedPostsDao.insertPosts(post)
       getSavedPosts()
-      _posts.value = _posts.value.transformLikedFlag().toList()
     }
   }
 
@@ -87,11 +80,6 @@ class LobstersViewModel @ViewModelInject constructor(
     viewModelScope.launch {
       savedPostsDao.deletePostById(post.shortId)
       getSavedPosts()
-      _posts.value = _posts.value.transformLikedFlag().toList()
     }
-  }
-
-  private suspend fun List<LobstersPost>.transformLikedFlag() = map {
-    it.apply { isLiked = savedPostsDao.isLiked(shortId) }
   }
 }

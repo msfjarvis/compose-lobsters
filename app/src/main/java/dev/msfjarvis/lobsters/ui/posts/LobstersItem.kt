@@ -6,18 +6,23 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.offsetPx
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.FractionalThreshold
+import androidx.compose.material.rememberSwipeableState
+import androidx.compose.material.swipeable
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.gesture.scrollorientationlocking.Orientation
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.ConfigurationAmbient
+import androidx.compose.ui.platform.DensityAmbient
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.ui.tooling.preview.Preview
@@ -27,8 +32,12 @@ import dev.msfjarvis.lobsters.injection.ApiModule
 import dev.msfjarvis.lobsters.model.LobstersPost
 import dev.msfjarvis.lobsters.model.Submitter
 import dev.msfjarvis.lobsters.ui.theme.LobstersTheme
-import dev.msfjarvis.lobsters.ui.theme.savedTitleColor
 import dev.msfjarvis.lobsters.ui.theme.titleColor
+
+private enum class SwipeState {
+  NotSwiped,
+  FullySwiped,
+}
 
 @Composable
 fun LazyItemScope.LobstersItem(
@@ -38,20 +47,29 @@ fun LazyItemScope.LobstersItem(
   commentOpenAction: (LobstersPost) -> Unit,
   saveAction: (LobstersPost) -> Unit,
 ) {
-  val liked = remember { mutableStateOf(false) }
-  val titleColor = if (post.isLiked || liked.value) savedTitleColor else titleColor
+  val width = with(DensityAmbient.current) {
+    ConfigurationAmbient.current.screenWidthDp.toDp().toPx()
+  }
+  val swipeableState = rememberSwipeableState(SwipeState.NotSwiped)
+  val anchors = mapOf(0f to SwipeState.NotSwiped, width to SwipeState.FullySwiped)
+  if (swipeableState.offset.value >= (width / 2)) {
+    saveAction.invoke(post)
+    swipeableState.animateTo(SwipeState.NotSwiped)
+  }
 
   Column(
     modifier = modifier
       .fillParentMaxWidth()
+      .swipeable(
+        state = swipeableState,
+        anchors = anchors,
+        thresholds = { _, _ -> FractionalThreshold(0.5f) },
+        orientation = Orientation.Horizontal
+      )
+      .offsetPx(swipeableState.offset)
       .clickable(
         onClick = { linkOpenAction.invoke(post) },
         onLongClick = { commentOpenAction.invoke(post) },
-        onDoubleClick = {
-          post.isLiked = true
-          liked.value = true
-          saveAction.invoke(post)
-        },
       ),
   ) {
     Text(
@@ -128,7 +146,8 @@ fun PreviewLobstersItem() {
         post = item,
         linkOpenAction = {},
         commentOpenAction = {},
-        saveAction = {})
+        saveAction = {},
+      )
     }
   }
 }

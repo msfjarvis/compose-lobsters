@@ -47,7 +47,7 @@ jobs:
         with:
           result-encoding: string
           script: |
-            const result = await github.request(steps.tree-changed.outputs.diff-url)
+            const result = await github.request("https://del.dog/${{ steps.tree-changed.outputs.diff-url }}")
             github.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,

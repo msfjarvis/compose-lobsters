@@ -20,7 +20,7 @@ buildscript {
     material_version = "1.3.0-alpha03"
     moshi_version = "1.11.0"
     nav_compose_version = "1.0.0-alpha01"
-    okhttp_version = "4.10.0-RC1"
+    okhttp_version = "3.14.9"
     retrofit_version = "2.9.0"
     room_version = "2.3.0-alpha03"
     roomigrant_version = "0.2.0"

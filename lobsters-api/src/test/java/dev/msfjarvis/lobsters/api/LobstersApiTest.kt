@@ -7,6 +7,7 @@ import okhttp3.mockwebserver.MockWebServer
 import okhttp3.mockwebserver.RecordedRequest
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
@@ -29,6 +30,24 @@ class LobstersApiTest {
   fun `api gets correct number of items`() = runBlocking {
     val posts = apiClient.getHottestPosts(1)
     assertEquals(25, posts.size)
+  }
+
+  @Test
+  fun `no moderator posts in test data`() = runBlocking {
+    val posts = apiClient.getHottestPosts(1)
+    val moderatorPosts = posts.asSequence()
+      .filter { it.submitterUser.isModerator }
+      .toSet()
+    assertTrue(moderatorPosts.isEmpty())
+  }
+
+  @Test
+  fun `posts with no urls`() = runBlocking {
+    val posts = apiClient.getHottestPosts(1)
+    val commentsOnlyPosts = posts.asSequence()
+      .filter { it.url.isEmpty() }
+      .toSet()
+    assertEquals(2, commentsOnlyPosts.size)
   }
 
   @After

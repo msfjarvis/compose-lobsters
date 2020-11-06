@@ -1,8 +1,0 @@
-plugins {
-  id 'kotlin-kapt'
-}
-
-dependencies {
-  kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
-  implementation "com.squareup.moshi:moshi:$moshi_version"
-}

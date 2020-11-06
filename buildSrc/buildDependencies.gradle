@@ -1,0 +1,11 @@
+rootProject.ext.versions = [
+  agp: '4.2.0-alpha16',
+  daggerHilt: '2.29.1-alpha',
+  kotlin: '1.4.10',
+]
+
+rootProject.ext.build = [
+  androidGradlePlugin: "com.android.tools.build:gradle:${versions.agp}",
+  daggerGradlePlugin: "com.google.dagger:hilt-android-gradle-plugin:${versions.daggerHilt}",
+  kotlinGradlePlugin: "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}",
+]

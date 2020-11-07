@@ -39,6 +39,7 @@ internal fun Project.configureForAllProjects() {
     google()
     jcenter()
     maven { setUrl("https://jitpack.io") }
+    maven { setUrl("https://dl.bintray.com/kodein-framework/Kodein-DB") }
   }
   tasks.withType<KotlinCompile> {
     kotlinOptions {

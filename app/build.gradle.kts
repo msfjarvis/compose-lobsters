@@ -97,6 +97,8 @@ dependencies {
   implementation(Dependencies.Kotlin.Serialization.json)
   implementation(Dependencies.ThirdParty.accompanist)
   implementation(Dependencies.ThirdParty.customtabs)
+  implementation(Dependencies.ThirdParty.Kodein.dbJvm)
+  implementation(Dependencies.ThirdParty.Kodein.serializerKotlinx)
   implementation(Dependencies.ThirdParty.Roomigrant.runtime)
   testImplementation(Dependencies.Testing.junit)
   testImplementation(Dependencies.Kotlin.Ktor.clientTest)

@@ -88,6 +88,14 @@ object Dependencies {
     const val accompanist = "dev.chrisbanes.accompanist:accompanist-coil:0.3.2"
     const val customtabs = "saschpe.android:customtabs:3.0.2"
 
+    object Kodein {
+
+      private const val version = "0.4.0-beta"
+      const val apiJvm = "org.kodein.db:kodein-db-api-jvm:$version"
+      const val dbJvm = "org.kodein.db:kodein-db-jvm:$version"
+      const val serializerKotlinx = "org.kodein.db:kodein-db-serializer-kotlinx:$version"
+    }
+
     object Roomigrant {
 
       private const val version = "0.2.0"

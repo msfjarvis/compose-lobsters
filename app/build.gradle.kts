@@ -4,6 +4,7 @@ plugins {
   id("com.android.application")
   kotlin("android")
   kotlin("kapt")
+  kotlin("plugin.serialization") version "1.4.10"
   id("dagger.hilt.android.plugin")
   `lobsters-plugin`
   `core-library-desugaring`
@@ -90,9 +91,9 @@ dependencies {
   implementation(Dependencies.ThirdParty.Roomigrant.runtime)
   implementation(Dependencies.AndroidX.material)
   implementation(Dependencies.AndroidX.Hilt.dagger)
-  implementation(Dependencies.ThirdParty.Moshi.lib)
   implementation(Dependencies.ThirdParty.accompanist)
   implementation(Dependencies.Kotlin.Coroutines.android)
+  implementation(Dependencies.Kotlin.Serialization.json)
   implementation(Dependencies.ThirdParty.customtabs)
   androidTestImplementation(Dependencies.Testing.daggerHilt)
   testImplementation(Dependencies.Testing.junit)

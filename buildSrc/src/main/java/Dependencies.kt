@@ -9,11 +9,18 @@ private const val DAGGER_HILT_VERSION = "2.29.1-alpha"
 object Dependencies {
   const val COMPOSE_VERSION = "1.0.0-alpha06"
   object Kotlin {
+
     object Coroutines {
 
       private const val version = "1.4.1"
       const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version"
       const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
+    }
+
+    object Serialization {
+
+      private const val version = "1.0.1"
+      const val json = "org.jetbrains.kotlinx:kotlinx-serialization-json:$version"
     }
   }
 
@@ -70,19 +77,12 @@ object Dependencies {
 
     const val accompanist = "dev.chrisbanes.accompanist:accompanist-coil:0.3.2"
     const val customtabs = "saschpe.android:customtabs:3.0.2"
-
-    object Moshi {
-
-      private const val version = "1.11.0"
-      const val codegen = "com.squareup.moshi:moshi-kotlin-codegen:$version"
-      const val lib = "com.squareup.moshi:moshi:$version"
-    }
+    const val retrofitSerialization = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
 
     object Retrofit {
 
       private const val version = "2.9.0"
       const val lib = "com.squareup.retrofit2:retrofit:$version"
-      const val moshi = "com.squareup.retrofit2:converter-moshi:$version"
     }
 
     object Roomigrant {

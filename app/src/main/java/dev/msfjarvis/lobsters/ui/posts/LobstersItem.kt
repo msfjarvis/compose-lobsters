@@ -136,7 +136,7 @@ fun PreviewLobstersItem() {
       "sevan",
       null,
       null,
-      null,
+      emptyList(),
     ),
     listOf("openbsd"),
   )

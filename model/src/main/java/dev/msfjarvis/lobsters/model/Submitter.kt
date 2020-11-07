@@ -1,27 +1,27 @@
 package dev.msfjarvis.lobsters.model
 
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-@JsonClass(generateAdapter = true)
+@Serializable
 class Submitter(
   val username: String,
-  @Json(name = "created_at")
+  @SerialName("created_at")
   val createdAt: String,
-  @Json(name = "is_admin")
+  @SerialName("is_admin")
   val isAdmin: Boolean,
   val about: String,
-  @Json(name = "is_moderator")
+  @SerialName("is_moderator")
   val isModerator: Boolean,
   val karma: Long = 0,
-  @Json(name = "avatar_url")
+  @SerialName("avatar_url")
   val avatarUrl: String,
-  @Json(name = "invited_by_user")
+  @SerialName("invited_by_user")
   val invitedByUser: String,
-  @Json(name = "github_username")
-  val githubUsername: String?,
-  @Json(name = "twitter_username")
-  val twitterUsername: String?,
-  @Json(name = "keybase_signatures")
-  val keybaseSignatures: List<KeybaseSignature>?
+  @SerialName("github_username")
+  val githubUsername: String? = null,
+  @SerialName("twitter_username")
+  val twitterUsername: String? = null,
+  @SerialName("keybase_signatures")
+  val keybaseSignatures: List<KeybaseSignature> = emptyList()
 )

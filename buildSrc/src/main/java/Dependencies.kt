@@ -79,18 +79,10 @@ object Dependencies {
     const val customtabs = "saschpe.android:customtabs:3.0.2"
     const val retrofitSerialization = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
 
-    object Moshi {
-
-      private const val version = "1.11.0"
-      const val codegen = "com.squareup.moshi:moshi-kotlin-codegen:$version"
-      const val lib = "com.squareup.moshi:moshi:$version"
-    }
-
     object Retrofit {
 
       private const val version = "2.9.0"
       const val lib = "com.squareup.retrofit2:retrofit:$version"
-      const val moshi = "com.squareup.retrofit2:converter-moshi:$version"
     }
 
     object Roomigrant {

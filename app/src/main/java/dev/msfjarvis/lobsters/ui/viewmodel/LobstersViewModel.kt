@@ -5,18 +5,22 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.msfjarvis.lobsters.data.api.LobstersApi
 import dev.msfjarvis.lobsters.data.source.PostsDatabase
+import dev.msfjarvis.lobsters.injection.SavedPostsDB
 import dev.msfjarvis.lobsters.model.LobstersPost
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.kodein.db.DB
+import org.kodein.db.on
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
 class LobstersViewModel @ViewModelInject constructor(
   private val lobstersApi: LobstersApi,
   database: PostsDatabase,
+  @SavedPostsDB private val savedPostsDb: DB
 ) : ViewModel() {
   private var apiPage = 1
   private val _posts = MutableStateFlow<List<LobstersPost>>(emptyList())
@@ -42,6 +46,14 @@ class LobstersViewModel @ViewModelInject constructor(
   init {
     getMorePostsInternal(true)
     getSavedPosts()
+    savedPostsDb.on<LobstersPost>().register {
+      didPut { post ->
+        viewModelScope.launch { _savedPosts.value = _savedPosts.value.plus(post) }
+      }
+      didDeleteIt { post ->
+        viewModelScope.launch { _savedPosts.value = _savedPosts.value.minus(post) }
+      }
+    }
   }
 
   private fun getSavedPosts() {

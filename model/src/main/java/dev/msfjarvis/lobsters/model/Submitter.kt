@@ -2,6 +2,7 @@ package dev.msfjarvis.lobsters.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import org.kodein.db.model.orm.Metadata
 
 @Serializable
 class Submitter(
@@ -24,4 +25,7 @@ class Submitter(
   val twitterUsername: String? = null,
   @SerialName("keybase_signatures")
   val keybaseSignatures: List<KeybaseSignature> = emptyList()
-)
+): Metadata {
+  override val id: Any
+    get() = listOf(username, githubUsername, twitterUsername)
+}

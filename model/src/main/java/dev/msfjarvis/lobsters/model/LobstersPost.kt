@@ -2,6 +2,7 @@ package dev.msfjarvis.lobsters.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import org.kodein.db.model.orm.Metadata
 
 @Serializable
 class LobstersPost(
@@ -23,4 +24,7 @@ class LobstersPost(
   @SerialName("submitter_user")
   val submitterUser: Submitter,
   val tags: List<String>,
-)
+): Metadata {
+  override val id: Any
+    get() = shortId
+}

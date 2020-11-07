@@ -7,4 +7,5 @@ plugins {
 
 dependencies {
   implementation(Dependencies.Kotlin.Serialization.json)
+  api(Dependencies.ThirdParty.Kodein.apiJvm)
 }

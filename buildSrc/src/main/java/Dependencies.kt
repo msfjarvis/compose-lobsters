@@ -24,6 +24,7 @@ object Dependencies {
       const val clientJson = "io.ktor:ktor-client-json:$version"
       const val clientSerialization = "io.ktor:ktor-client-serialization:$version"
       const val clientOkHttp = "io.ktor:ktor-client-okhttp:$version"
+      const val clientTest = "io.ktor:ktor-client-mock:$version"
     }
 
     object Serialization {

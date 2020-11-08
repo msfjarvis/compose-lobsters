@@ -99,6 +99,7 @@ dependencies {
   implementation(Dependencies.ThirdParty.customtabs)
   implementation(Dependencies.ThirdParty.Roomigrant.runtime)
   testImplementation(Dependencies.Testing.junit)
+  testImplementation(Dependencies.Kotlin.Ktor.clientTest)
   androidTestImplementation(Dependencies.Testing.daggerHilt)
   androidTestImplementation(Dependencies.Testing.uiTest)
 }

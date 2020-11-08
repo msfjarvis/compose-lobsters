@@ -1,4 +1,4 @@
-package dev.msfjarvis.lobsters.api
+package dev.msfjarvis.lobsters.util
 
 import java.io.File
 

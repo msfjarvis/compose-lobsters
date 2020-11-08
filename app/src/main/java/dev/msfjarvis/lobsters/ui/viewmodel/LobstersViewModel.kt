@@ -3,7 +3,7 @@ package dev.msfjarvis.lobsters.ui.viewmodel
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dev.msfjarvis.lobsters.api.LobstersApi
+import dev.msfjarvis.lobsters.data.api.LobstersApi
 import dev.msfjarvis.lobsters.data.source.PostsDatabase
 import dev.msfjarvis.lobsters.model.LobstersPost
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -57,7 +57,6 @@ class LobstersViewModel @ViewModelInject constructor(
   private fun getMorePostsInternal(firstLoad: Boolean) {
     viewModelScope.launch(coroutineExceptionHandler) {
       val newPosts = lobstersApi.getHottestPosts(apiPage)
-        .toList()
       if (firstLoad) {
         _posts.value = newPosts
         postsDao.deleteAllPosts()

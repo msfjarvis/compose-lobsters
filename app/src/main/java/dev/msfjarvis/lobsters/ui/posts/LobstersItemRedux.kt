@@ -56,6 +56,12 @@ val TEST_POST = LobstersPost(
   listOf("openbsd", "linux", "containers", "hack the planet", "no thanks"),
 )
 
+/**
+ * A temporary replacement for [LobstersItem] that implements the same functionality backed by
+ * a UI that's built upon [ConstraintLayout] rather than Column and Row. This allows us to add a
+ * dedicated save button without needing to add swipe actions, which have been hard to get right
+ * and thus resulted in a variety of bugs (see https://msfjarvis.dev/g/compose-lobsters/issues/65).
+ */
 @Composable
 fun LobstersItemRedux(
   post: LobstersPost,
@@ -131,7 +137,8 @@ fun LobstersItemRedux(
  * don't know before hand how many items we will have, we generate refs ahead of time, take the
  * first 4 elements from [tags] and map nullable values out of that list. This lets us manually
  * add [Text] elements based on how many tags we actually have. Since we're constraining manually
- * as opposed to using some reflection hack, the resulting code is a lot of copy and pasting.
+ * as opposed to using some reflection hack, we end up going one step further and creating another
+ * nested [Composable] to generate our individual [Tag]s.
  */
 @Composable
 fun ConstraintLayoutScope.TagRow(

@@ -185,7 +185,7 @@ fun ConstraintLayoutScope.Tag(
 @Preview
 fun Preview() {
   LobstersTheme {
-    LazyColumnFor(items = listOf(TEST_POST)) { item ->
+    LazyColumnFor(items = listOf(TEST_POST, TEST_POST, TEST_POST, TEST_POST, TEST_POST)) { item ->
       LobstersItemRedux(
         post = item,
       )

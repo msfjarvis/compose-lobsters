@@ -86,13 +86,6 @@ object Dependencies {
 
     const val accompanist = "dev.chrisbanes.accompanist:accompanist-coil:0.3.2"
     const val customtabs = "saschpe.android:customtabs:3.0.2"
-    const val retrofitSerialization = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
-
-    object Retrofit {
-
-      private const val version = "2.9.0"
-      const val lib = "com.squareup.retrofit2:retrofit:$version"
-    }
 
     object Roomigrant {
 
@@ -107,7 +100,6 @@ object Dependencies {
 
     const val daggerHilt = "com.google.dagger:hilt-android-testing:$DAGGER_HILT_VERSION"
     const val junit = "junit:junit:4.13.1"
-    const val mockWebServer = "com.squareup.okhttp3:mockwebserver:3.14.9"
     const val uiTest = "androidx.ui:ui-test:$COMPOSE_VERSION"
 
     object AndroidX {

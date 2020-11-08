@@ -8,6 +8,7 @@ plugins {
 dependencies {
   implementation(project(":model"))
   implementation(Dependencies.Kotlin.Serialization.json)
+  implementation(Dependencies.ThirdParty.Retrofit.lib)
   implementation(Dependencies.ThirdParty.retrofitSerialization)
   testImplementation(Dependencies.Testing.junit)
   testImplementation(Dependencies.Kotlin.Coroutines.core)

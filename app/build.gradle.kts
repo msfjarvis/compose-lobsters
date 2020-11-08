@@ -65,7 +65,6 @@ dependencies {
   kapt(Dependencies.AndroidX.Hilt.daggerHiltCompiler)
   kapt(Dependencies.AndroidX.Room.compiler)
   kapt(Dependencies.ThirdParty.Roomigrant.compiler)
-  implementation(project(":lobsters-api"))
   implementation(project(":model"))
   implementation(Dependencies.AndroidX.activityKtx)
   implementation(Dependencies.AndroidX.appCompat)

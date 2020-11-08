@@ -1,26 +1,14 @@
 package dev.msfjarvis.lobsters.injection
 
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ApplicationComponent
-import io.ktor.client.HttpClient
-import io.ktor.client.engine.okhttp.OkHttp
-import io.ktor.client.features.json.JsonFeature
-import io.ktor.client.features.json.serializer.KotlinxSerializer
+import dagger.hilt.android.components.ActivityComponent
+import dev.msfjarvis.lobsters.data.api.KtorLobstersApi
+import dev.msfjarvis.lobsters.data.api.LobstersApi
 
 @Module
-@InstallIn(ApplicationComponent::class)
-object KtorApiModule {
-  @Provides
-  fun provideClient() = HttpClient(OkHttp) {
-    install(JsonFeature) {
-      serializer = KotlinxSerializer()
-    }
-    engine {
-      config {
-        followSslRedirects(true)
-      }
-    }
-  }
+@InstallIn(ActivityComponent::class)
+abstract class KtorApiModule {
+  @Binds abstract fun bindLobstersApi(realApi: KtorLobstersApi): LobstersApi
 }

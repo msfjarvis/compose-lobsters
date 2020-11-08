@@ -28,7 +28,6 @@ import androidx.compose.ui.unit.dp
 import androidx.ui.tooling.preview.Preview
 import coil.transform.CircleCropTransformation
 import dev.chrisbanes.accompanist.coil.CoilImage
-import dev.msfjarvis.lobsters.injection.ApiModule
 import dev.msfjarvis.lobsters.model.LobstersPost
 import dev.msfjarvis.lobsters.model.Submitter
 import dev.msfjarvis.lobsters.ui.theme.LobstersTheme
@@ -96,7 +95,7 @@ fun LazyItemScope.LobstersItem(
       modifier = Modifier.wrapContentHeight(),
     ) {
       CoilImage(
-        data = "${ApiModule.LOBSTERS_URL}/${post.submitterUser.avatarUrl}",
+        data = "https://lobste.rs/${post.submitterUser.avatarUrl}",
         fadeIn = true,
         requestBuilder = {
           transformations(CircleCropTransformation())

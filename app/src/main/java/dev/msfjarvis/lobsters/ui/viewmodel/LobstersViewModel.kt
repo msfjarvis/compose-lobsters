@@ -3,9 +3,10 @@ package dev.msfjarvis.lobsters.ui.viewmodel
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import dev.msfjarvis.lobsters.api.LobstersApi
 import dev.msfjarvis.lobsters.data.source.PostsDatabase
 import dev.msfjarvis.lobsters.model.LobstersPost
+import io.ktor.client.HttpClient
+import io.ktor.client.request.get
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,7 +16,7 @@ import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
 class LobstersViewModel @ViewModelInject constructor(
-  private val lobstersApi: LobstersApi,
+  private val client: HttpClient,
   database: PostsDatabase,
 ) : ViewModel() {
   private var apiPage = 1
@@ -56,8 +57,7 @@ class LobstersViewModel @ViewModelInject constructor(
 
   private fun getMorePostsInternal(firstLoad: Boolean) {
     viewModelScope.launch(coroutineExceptionHandler) {
-      val newPosts = lobstersApi.getHottestPosts(apiPage)
-        .toList()
+      val newPosts = client.get<List<LobstersPost>>("https://lobste.rs/hottest.json?page=$apiPage")
       if (firstLoad) {
         _posts.value = newPosts
         postsDao.deleteAllPosts()

@@ -26,7 +26,7 @@ fun SavedPosts(
       state = listState,
       modifier = Modifier.padding(horizontal = 8.dp).then(modifier)
     ) { item ->
-      LobstersItemRedux(
+      LobstersItem(
         post = item,
         onClick = { post -> urlLauncher.launch(post.url.ifEmpty { post.commentsUrl }) },
         onLongClick = { post -> urlLauncher.launch(post.commentsUrl) },

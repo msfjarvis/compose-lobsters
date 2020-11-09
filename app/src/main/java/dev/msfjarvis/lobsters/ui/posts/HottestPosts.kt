@@ -30,7 +30,7 @@ fun HottestPosts(
       if (posts.lastIndex == index) {
         overscrollAction.invoke()
       }
-      LobstersItemRedux(
+      LobstersItem(
         post = item,
         onClick = { post -> urlLauncher.launch(post.url.ifEmpty { post.commentsUrl }) },
         onLongClick = { post -> urlLauncher.launch(post.commentsUrl) },

@@ -13,7 +13,7 @@ import dev.msfjarvis.lobsters.ui.urllauncher.UrlLauncherAmbient
 fun SavedPosts(
   posts: List<LobstersPost>,
   modifier: Modifier = Modifier,
-  saveAction: (LobstersPost) -> Unit
+  saveAction: (LobstersPost) -> Unit,
 ) {
   val listState = rememberLazyListState()
   val urlLauncher = UrlLauncherAmbient.current
@@ -28,9 +28,9 @@ fun SavedPosts(
     ) { item ->
       LobstersItem(
         post = item,
-        linkOpenAction = { post -> urlLauncher.launch(post.url.ifEmpty { post.commentsUrl }) },
-        commentOpenAction = { post -> urlLauncher.launch(post.commentsUrl) },
-        saveAction = saveAction,
+        onClick = { urlLauncher.launch(item.url.ifEmpty { item.commentsUrl }) },
+        onLongClick = { urlLauncher.launch(item.commentsUrl) },
+        onSaveButtonClick = { saveAction.invoke(item) },
       )
     }
   }

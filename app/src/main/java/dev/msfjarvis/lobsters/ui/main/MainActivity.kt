@@ -85,8 +85,8 @@ fun LobstersApp() {
         HottestPosts(
           posts = hottestPosts,
           listState = hottestPostsListState,
-          saveAction = viewModel::savePost,
           overscrollAction = viewModel::getMorePosts,
+          saveAction = viewModel::savePost,
         )
       }
       composable(Destination.Saved.route) {

@@ -14,8 +14,8 @@ fun HottestPosts(
   posts: List<LobstersPost>,
   listState: LazyListState,
   modifier: Modifier = Modifier,
-  saveAction: (LobstersPost) -> Unit,
   overscrollAction: () -> Unit,
+  saveAction: (LobstersPost) -> Unit,
 ) {
   val urlLauncher = UrlLauncherAmbient.current
 
@@ -32,9 +32,9 @@ fun HottestPosts(
       }
       LobstersItem(
         post = item,
-        linkOpenAction = { post -> urlLauncher.launch(post.url.ifEmpty { post.commentsUrl }) },
-        commentOpenAction = { post -> urlLauncher.launch(post.commentsUrl) },
-        saveAction = saveAction,
+        onClick = { urlLauncher.launch(item.url.ifEmpty { item.commentsUrl }) },
+        onLongClick = { urlLauncher.launch(item.commentsUrl) },
+        onSaveButtonClick = { saveAction.invoke(item) },
       )
     }
   }

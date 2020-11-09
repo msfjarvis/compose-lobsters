@@ -3,9 +3,9 @@ package dev.msfjarvis.lobsters.ui.posts
 import androidx.compose.foundation.Text
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.ConstrainedLayoutReference
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ConstraintLayout
-import androidx.compose.foundation.layout.ConstraintLayoutScope
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -14,7 +14,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.material.ripple.RippleIndication
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -132,53 +131,25 @@ fun LobstersItemRedux(
   }
 }
 
-/**
- * This [Composable] function generates a row-like view of tags using [ConstraintLayout]. Since we
- * don't know before hand how many items we will have, we generate refs ahead of time, take the
- * first 4 elements from [tags] and map nullable values out of that list. This lets us manually
- * add [Text] elements based on how many tags we actually have. Since we're constraining manually
- * as opposed to using some reflection hack, we end up going one step further and creating another
- * nested [Composable] to generate our individual [Tag]s.
- */
 @Composable
-fun ConstraintLayoutScope.TagRow(
+fun TagRow(
   tags: List<String>,
   modifier: Modifier = Modifier,
 ) {
-  val (tag1ref, tag2ref, tag3ref, tag4ref) = remember { createRefs() }
-  val clampedTags = remember(tags) { (0..3).map(tags::elementAtOrNull).toList() }
-  clampedTags[0]?.let { tag ->
-    Tag(tag, modifier, tag1ref, null)
+  Row(
+    modifier = Modifier.then(modifier),
+    horizontalArrangement = Arrangement.spacedBy(8.dp),
+  ) {
+    tags.take(3).forEach { tag ->
+      Text(
+        text = tag,
+        modifier = Modifier
+          .background(Color(0xFFFFFCD7), RoundedCornerShape(8.dp))
+          .padding(vertical = 2.dp, horizontal = 6.dp),
+        color = Color.DarkGray,
+      )
+    }
   }
-  clampedTags[1]?.let { tag ->
-    Tag(tag, modifier, tag2ref, tag1ref)
-  }
-  clampedTags[2]?.let { tag ->
-    Tag(tag, modifier, tag3ref, tag2ref)
-  }
-  clampedTags[3]?.let { tag ->
-    Tag(tag, modifier, tag4ref, tag3ref)
-  }
-}
-
-@Composable
-fun ConstraintLayoutScope.Tag(
-  text: String,
-  modifier: Modifier,
-  currentRef: ConstrainedLayoutReference,
-  previousRef: ConstrainedLayoutReference?,
-) {
-  Text(
-    text = text,
-    modifier = Modifier
-      .then(modifier)
-      .constrainAs(currentRef) {
-        start.linkTo(previousRef?.end ?: parent.start)
-      }
-      .background(Color(0xFFFFFCD7), RoundedCornerShape(8.dp))
-      .padding(vertical = 2.dp, horizontal = 6.dp),
-    color = Color.DarkGray,
-  )
 }
 
 @Composable

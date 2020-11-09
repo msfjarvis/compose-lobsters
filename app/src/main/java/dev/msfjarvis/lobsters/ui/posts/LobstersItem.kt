@@ -58,15 +58,15 @@ val TEST_POST = LobstersPost(
 @Composable
 fun LobstersItem(
   post: LobstersPost,
-  onClick: (LobstersPost) -> Unit = {},
-  onLongClick: (LobstersPost) -> Unit = {},
-  onSaveButtonClick: (LobstersPost) -> Unit = {},
+  onClick: () -> Unit,
+  onLongClick: () -> Unit,
+  onSaveButtonClick: () -> Unit,
 ) {
   Surface(
     modifier = Modifier.fillMaxWidth()
       .clickable(
-        onClick = { onClick.invoke(post) },
-        onLongClick = { onLongClick.invoke(post) },
+        onClick = onClick,
+        onLongClick = onLongClick,
       ),
   ) {
     ConstraintLayout(
@@ -112,7 +112,7 @@ fun LobstersItem(
         resourceId = R.drawable.ic_favorite_border_24px,
         modifier = Modifier.padding(8.dp)
           .clickable(
-            onClick = { onSaveButtonClick.invoke(post) },
+            onClick = onSaveButtonClick,
             indication = RippleIndication(),
           )
           .constrainAs(saveButton) {
@@ -153,6 +153,9 @@ fun Preview() {
     LazyColumnFor(items = listOf(TEST_POST, TEST_POST, TEST_POST, TEST_POST, TEST_POST)) { item ->
       LobstersItem(
         post = item,
+        onClick = {},
+        onLongClick = {},
+        onSaveButtonClick = {},
       )
     }
   }

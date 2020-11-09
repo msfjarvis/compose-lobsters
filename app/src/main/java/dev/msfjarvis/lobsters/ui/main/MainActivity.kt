@@ -14,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.viewinterop.viewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.KEY_ROUTE
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -57,26 +58,7 @@ fun LobstersApp() {
 
   Scaffold(
     bottomBar = {
-      BottomNavigation {
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentRoute = navBackStackEntry?.arguments?.getString(KEY_ROUTE)
-        destinations.forEach { screen ->
-          BottomNavigationItem(
-            icon = { IconResource(resourceId = screen.badgeRes) },
-            label = { Text(stringResource(id = screen.labelRes)) },
-            selected = currentRoute == screen.route,
-            onClick = {
-              // This if check gives us a "singleTop" behavior where we do not create a
-              // second instance of the composable if we are already on that destination
-              if (currentRoute != screen.route) {
-                // This is the equivalent to popUpTo the start destination
-                navController.popBackStack(navController.graph.startDestination, false)
-                navController.navigate(screen.route)
-              }
-            }
-          )
-        }
-      }
+      LobstersBottomNav(navController, destinations)
     },
   ) {
     val hottestPostsListState = rememberLazyListState()
@@ -95,6 +77,31 @@ fun LobstersApp() {
           saveAction = viewModel::removeSavedPost,
         )
       }
+    }
+  }
+}
+
+@Composable
+fun LobstersBottomNav(
+  navController: NavHostController,
+  destinations: Array<Destination>,
+) {
+  BottomNavigation {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.arguments?.getString(KEY_ROUTE)
+    destinations.forEach { screen ->
+      BottomNavigationItem(
+        icon = { IconResource(resourceId = screen.badgeRes) },
+        label = { Text(stringResource(id = screen.labelRes)) },
+        selected = currentRoute == screen.route,
+        alwaysShowLabels = false,
+        onClick = {
+          navController.popBackStack(navController.graph.startDestination, false)
+          if (currentRoute != screen.route) {
+            navController.navigate(screen.route)
+          }
+        }
+      )
     }
   }
 }

@@ -3,6 +3,7 @@ package dev.msfjarvis.lobsters.ui.main
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Text
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -11,9 +12,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Providers
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.viewinterop.viewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.KEY_ROUTE
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -57,28 +60,9 @@ fun LobstersApp() {
 
   Scaffold(
     bottomBar = {
-      BottomNavigation {
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentRoute = navBackStackEntry?.arguments?.getString(KEY_ROUTE)
-        destinations.forEach { screen ->
-          BottomNavigationItem(
-            icon = { IconResource(resourceId = screen.badgeRes) },
-            label = { Text(stringResource(id = screen.labelRes)) },
-            selected = currentRoute == screen.route,
-            onClick = {
-              // This if check gives us a "singleTop" behavior where we do not create a
-              // second instance of the composable if we are already on that destination
-              if (currentRoute != screen.route) {
-                // This is the equivalent to popUpTo the start destination
-                navController.popBackStack(navController.graph.startDestination, false)
-                navController.navigate(screen.route)
-              }
-            }
-          )
-        }
-      }
+      LobstersBottomNav(navController, destinations)
     },
-  ) {
+  ) { innerPadding ->
     val hottestPostsListState = rememberLazyListState()
     NavHost(navController, startDestination = Destination.Hottest.route) {
       composable(Destination.Hottest.route) {
@@ -87,14 +71,41 @@ fun LobstersApp() {
           listState = hottestPostsListState,
           overscrollAction = viewModel::getMorePosts,
           saveAction = viewModel::savePost,
+          modifier = Modifier.padding(bottom = innerPadding.bottom),
         )
       }
       composable(Destination.Saved.route) {
         SavedPosts(
           posts = savedPosts,
           saveAction = viewModel::removeSavedPost,
+          modifier = Modifier.padding(bottom = innerPadding.bottom),
         )
       }
+    }
+  }
+}
+
+@Composable
+fun LobstersBottomNav(
+  navController: NavHostController,
+  destinations: Array<Destination>,
+) {
+  BottomNavigation {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.arguments?.getString(KEY_ROUTE)
+    destinations.forEach { screen ->
+      BottomNavigationItem(
+        icon = { IconResource(resourceId = screen.badgeRes) },
+        label = { Text(stringResource(id = screen.labelRes)) },
+        selected = currentRoute == screen.route,
+        alwaysShowLabels = false,
+        onClick = {
+          navController.popBackStack(navController.graph.startDestination, false)
+          if (currentRoute != screen.route) {
+            navController.navigate(screen.route)
+          }
+        }
+      )
     }
   }
 }

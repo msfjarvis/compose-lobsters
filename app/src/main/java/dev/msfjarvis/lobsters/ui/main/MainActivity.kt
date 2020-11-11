@@ -100,8 +100,8 @@ fun LobstersBottomNav(
         selected = currentRoute == screen.route,
         alwaysShowLabels = false,
         onClick = {
-          navController.popBackStack(navController.graph.startDestination, false)
           if (currentRoute != screen.route) {
+            navController.popBackStack(navController.graph.startDestination, false)
             navController.navigate(screen.route)
           }
         }

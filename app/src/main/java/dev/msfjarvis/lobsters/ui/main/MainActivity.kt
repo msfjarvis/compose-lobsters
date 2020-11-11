@@ -2,12 +2,12 @@ package dev.msfjarvis.lobsters.ui.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.Text
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Providers
 import androidx.compose.runtime.collectAsState
@@ -100,8 +100,8 @@ fun LobstersBottomNav(
         selected = currentRoute == screen.route,
         alwaysShowLabels = false,
         onClick = {
-          navController.popBackStack(navController.graph.startDestination, false)
           if (currentRoute != screen.route) {
+            navController.popBackStack(navController.graph.startDestination, false)
             navController.navigate(screen.route)
           }
         }

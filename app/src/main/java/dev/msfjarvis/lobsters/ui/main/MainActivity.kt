@@ -3,6 +3,7 @@ package dev.msfjarvis.lobsters.ui.main
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Text
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -11,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Providers
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.viewinterop.viewModel
@@ -60,7 +62,7 @@ fun LobstersApp() {
     bottomBar = {
       LobstersBottomNav(navController, destinations)
     },
-  ) {
+  ) { innerPadding ->
     val hottestPostsListState = rememberLazyListState()
     NavHost(navController, startDestination = Destination.Hottest.route) {
       composable(Destination.Hottest.route) {
@@ -69,12 +71,14 @@ fun LobstersApp() {
           listState = hottestPostsListState,
           overscrollAction = viewModel::getMorePosts,
           saveAction = viewModel::savePost,
+          modifier = Modifier.padding(bottom = innerPadding.bottom),
         )
       }
       composable(Destination.Saved.route) {
         SavedPosts(
           posts = savedPosts,
           saveAction = viewModel::removeSavedPost,
+          modifier = Modifier.padding(bottom = innerPadding.bottom),
         )
       }
     }

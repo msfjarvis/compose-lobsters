@@ -19,7 +19,7 @@ object Dependencies {
 
     object Ktor {
 
-      private const val version = "1.4.0"
+      private const val version = "1.4.1"
       const val clientCore = "io.ktor:ktor-client-core:$version"
       const val clientJson = "io.ktor:ktor-client-json:$version"
       const val clientSerialization = "io.ktor:ktor-client-serialization:$version"

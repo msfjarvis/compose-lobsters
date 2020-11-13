@@ -7,4 +7,8 @@ plugins {
 
 dependencies {
   implementation(project(":model"))
+  implementation(Dependencies.ThirdParty.Moshi.lib)
+  testImplementation(Dependencies.Kotlin.Coroutines.core)
+  testImplementation(Dependencies.ThirdParty.SQLDelight.jvmDriver)
+  testImplementation(Dependencies.Testing.junit)
 }

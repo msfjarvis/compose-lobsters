@@ -10,10 +10,6 @@ plugins {
   `core-library-desugaring`
 }
 
-repositories {
-  maven { setUrl("https://jitpack.io") }
-}
-
 val keystorePropertiesFile = rootProject.file("keystore.properties")
 
 android {

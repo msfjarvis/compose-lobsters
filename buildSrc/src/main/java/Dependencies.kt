@@ -4,7 +4,7 @@
  */
 
 private const val ANDROIDX_HILT_VERSION = "1.0.0-alpha02"
-private const val DAGGER_HILT_VERSION = "2.29.1-alpha"
+private const val DAGGER_HILT_VERSION = "2.30.1-alpha"
 
 object Dependencies {
   const val COMPOSE_VERSION = "1.0.0-alpha07"
@@ -12,7 +12,7 @@ object Dependencies {
 
     object Coroutines {
 
-      private const val version = "1.4.1"
+      private const val version = "1.4.2"
       const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version"
       const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$version"
     }
@@ -41,7 +41,7 @@ object Dependencies {
     const val browser = "androidx.browser:browser:1.3.0-rc01"
     const val coreKtx = "androidx.core:core-ktx:1.5.0-alpha05"
     const val coreLibraryDesugaring = "com.android.tools:desugar_jdk_libs:1.0.10"
-    const val material = "com.google.android.material:material:1.3.0-alpha03"
+    const val material = "com.google.android.material:material:1.3.0-alpha04"
 
     object Compose {
 

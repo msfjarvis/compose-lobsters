@@ -54,17 +54,16 @@ class MainActivity : AppCompatActivity() {
 fun LobstersApp() {
   val viewModel: LobstersViewModel = viewModel()
   val navController = rememberNavController()
-  val destinations = arrayOf(Destination.Hottest, Destination.Saved)
   val hottestPosts by viewModel.posts.collectAsState()
   val savedPosts by viewModel.savedPosts.collectAsState()
 
   Scaffold(
     bottomBar = {
-      LobstersBottomNav(navController, destinations)
+      LobstersBottomNav(navController)
     },
   ) { innerPadding ->
     val hottestPostsListState = rememberLazyListState()
-    NavHost(navController, startDestination = Destination.Hottest.route) {
+    NavHost(navController, startDestination = Destination.startDestination.route) {
       composable(Destination.Hottest.route) {
         HottestPosts(
           posts = hottestPosts,
@@ -88,20 +87,21 @@ fun LobstersApp() {
 @Composable
 fun LobstersBottomNav(
   navController: NavHostController,
-  destinations: Array<Destination>,
 ) {
   BottomNavigation {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.arguments?.getString(KEY_ROUTE)
-    destinations.forEach { screen ->
+    val currentRoute =
+      navBackStackEntry?.arguments?.getString(KEY_ROUTE) ?: Destination.startDestination.route
+    Destination.values().forEach { screen ->
       BottomNavigationItem(
         icon = { IconResource(resourceId = screen.badgeRes) },
         label = { Text(stringResource(id = screen.labelRes)) },
         selected = currentRoute == screen.route,
         alwaysShowLabels = false,
         onClick = {
-          if (currentRoute != screen.route) {
-            navController.popBackStack(navController.graph.startDestination, false)
+          if (currentRoute == screen.route) return@BottomNavigationItem
+          navController.popBackStack(navController.graph.startDestination, false)
+          if (screen.route != Destination.startDestination.route) {
             navController.navigate(screen.route)
           }
         }

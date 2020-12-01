@@ -7,11 +7,16 @@ import dev.msfjarvis.lobsters.R
 /**
  * Destinations for navigation within the app.
  */
-sealed class Destination(
+enum class Destination(
   val route: String,
   @StringRes val labelRes: Int,
   @DrawableRes val badgeRes: Int,
 ) {
-  object Hottest : Destination("hottest", R.string.hottest_posts, R.drawable.ic_whatshot_24px)
-  object Saved : Destination("saved", R.string.saved_posts, R.drawable.ic_favorite_24px)
+  Hottest("hottest", R.string.hottest_posts, R.drawable.ic_whatshot_24px),
+  Saved("saved", R.string.saved_posts, R.drawable.ic_favorite_24px),
+  ;
+
+  companion object {
+    val startDestination = Hottest
+  }
 }

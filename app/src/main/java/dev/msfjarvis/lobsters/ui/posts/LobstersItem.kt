@@ -12,13 +12,13 @@ import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.material.ripple.RippleIndication
+import androidx.compose.material.ripple.rememberRippleIndication
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.ui.tooling.preview.Preview
 import coil.transform.CircleCropTransformation
 import dev.chrisbanes.accompanist.coil.CoilImage
 import dev.msfjarvis.lobsters.R
@@ -113,7 +113,7 @@ fun LobstersItem(
         modifier = Modifier.padding(8.dp)
           .clickable(
             onClick = onSaveButtonClick,
-            indication = RippleIndication(),
+            indication = rememberRippleIndication(),
           )
           .constrainAs(saveButton) {
             end.linkTo(parent.end)

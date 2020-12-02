@@ -1,4 +1,4 @@
--keepattributes *Annotation*, InnerClasses
+-keepattributes *Annotation*, EnclosingMethod, InnerClasses
 -dontnote kotlinx.serialization.AnnotationsKt # core serialization annotations
 
 -keep,includedescriptorclasses class dev.msfjarvis.lobsters.model.**$$serializer { *; }

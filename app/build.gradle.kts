@@ -4,7 +4,7 @@ plugins {
   id("com.android.application")
   kotlin("android")
   kotlin("kapt")
-  kotlin("plugin.serialization") version "1.4.10"
+  kotlin("plugin.serialization") version "1.4.20"
   id("dagger.hilt.android.plugin")
   `lobsters-plugin`
   `core-library-desugaring`
@@ -34,7 +34,7 @@ android {
   buildFeatures.compose = true
 
   composeOptions {
-    kotlinCompilerVersion = "1.4.10"
+    kotlinCompilerVersion = "1.4.20"
     kotlinCompilerExtensionVersion = Dependencies.COMPOSE_VERSION
   }
 

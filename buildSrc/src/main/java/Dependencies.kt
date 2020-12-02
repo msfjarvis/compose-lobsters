@@ -7,7 +7,7 @@ private const val ANDROIDX_HILT_VERSION = "1.0.0-alpha02"
 private const val DAGGER_HILT_VERSION = "2.30.1-alpha"
 
 object Dependencies {
-  const val COMPOSE_VERSION = "1.0.0-alpha07"
+  const val COMPOSE_VERSION = "1.0.0-alpha08"
   object Kotlin {
 
     object Coroutines {
@@ -19,7 +19,7 @@ object Dependencies {
 
     object Ktor {
 
-      private const val version = "1.4.1"
+      private const val version = "1.4.2"
       const val clientCore = "io.ktor:ktor-client-core:$version"
       const val clientJson = "io.ktor:ktor-client-json:$version"
       const val clientSerialization = "io.ktor:ktor-client-serialization:$version"
@@ -38,7 +38,7 @@ object Dependencies {
 
     const val activityKtx = "androidx.activity:activity-ktx:1.2.0-beta01"
     const val appCompat = "androidx.appcompat:appcompat:1.3.0-alpha02"
-    const val browser = "androidx.browser:browser:1.3.0-rc01"
+    const val browser = "androidx.browser:browser:1.3.0"
     const val coreKtx = "androidx.core:core-ktx:1.5.0-alpha05"
     const val coreLibraryDesugaring = "com.android.tools:desugar_jdk_libs:1.0.10"
     const val material = "com.google.android.material:material:1.3.0-alpha04"
@@ -49,11 +49,11 @@ object Dependencies {
       const val foundation = "androidx.compose.foundation:foundation:$COMPOSE_VERSION"
       const val foundationLayout = "androidx.compose.foundation:foundation-layout:$COMPOSE_VERSION"
       const val material = "androidx.compose.material:material:$COMPOSE_VERSION"
-      const val navigation = "androidx.navigation:navigation-compose:1.0.0-alpha02"
+      const val navigation = "androidx.navigation:navigation-compose:1.0.0-alpha03"
       const val runtime = "androidx.compose.runtime:runtime:$COMPOSE_VERSION"
       const val ui = "androidx.compose.ui:ui:$COMPOSE_VERSION"
       const val uiUnit = "androidx.compose.ui:ui-unit:$COMPOSE_VERSION"
-      const val uiTooling = "androidx.ui:ui-tooling:$COMPOSE_VERSION"
+      const val uiTooling = "androidx.compose.ui:ui-tooling:$COMPOSE_VERSION"
     }
 
     object Hilt {
@@ -82,7 +82,7 @@ object Dependencies {
 
   object ThirdParty {
 
-    const val accompanist = "dev.chrisbanes.accompanist:accompanist-coil:0.3.3.1"
+    const val accompanist = "dev.chrisbanes.accompanist:accompanist-coil:0.4.0"
     const val customtabs = "saschpe.android:customtabs:3.0.2"
 
     object Roomigrant {

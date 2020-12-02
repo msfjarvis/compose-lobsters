@@ -14,6 +14,9 @@ jobs:
   test-pr:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/setup-java@d202f5dbf7256730fb690ec59f6381650114feb2
+      with:
+        java-version: '11'
     - name: Checkout repository
       uses: actions/checkout@c952173edf28a2bd22e1a4926590c1ac39630461
 

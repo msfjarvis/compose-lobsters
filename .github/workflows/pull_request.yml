@@ -20,9 +20,6 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@c952173edf28a2bd22e1a4926590c1ac39630461
 
-    - name: Copy CI gradle.properties
-      run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
-
     - uses: burrunan/gradle-cache-action@v1
       name: Run unit tests
       with:

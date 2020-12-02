@@ -1,5 +1,5 @@
 rootProject.ext.versions = [
-  agp: '4.2.0-alpha16',
+  agp: '7.0.0-alpha01',
   daggerHilt: '2.30.1-alpha',
   kotlin: '1.4.10',
 ]

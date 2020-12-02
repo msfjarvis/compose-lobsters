@@ -31,8 +31,8 @@ fun IconResource(
   tint: Color = AmbientContentColor.current
 ) {
   val deferredResource = loadVectorResource(resourceId)
-  deferredResource.onLoadRun { asset ->
-    Icon(asset = asset, modifier = modifier, tint = tint)
+  deferredResource.onLoadRun { vector ->
+    Icon(imageVector = vector, modifier = modifier, tint = tint)
   }
 }
 

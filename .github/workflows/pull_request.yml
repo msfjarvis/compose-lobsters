@@ -14,16 +14,16 @@ jobs:
   test-pr:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/setup-java@d202f5dbf7256730fb690ec59f6381650114feb2
+      with:
+        java-version: '11'
     - name: Checkout repository
       uses: actions/checkout@c952173edf28a2bd22e1a4926590c1ac39630461
-
-    - name: Copy CI gradle.properties
-      run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
 
     - uses: burrunan/gradle-cache-action@v1
       name: Run unit tests
       with:
-        arguments: testDebug
+        arguments: testDebug --stacktrace
 
     - name: (Fail-only) upload test report
       if: failure()

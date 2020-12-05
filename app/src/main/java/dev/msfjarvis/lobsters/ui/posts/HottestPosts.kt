@@ -1,7 +1,7 @@
 package dev.msfjarvis.lobsters.ui.posts
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumnForIndexed
+import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -14,7 +14,6 @@ fun HottestPosts(
   posts: List<LobstersPost>,
   listState: LazyListState,
   modifier: Modifier = Modifier,
-  overscrollAction: () -> Unit,
   saveAction: (LobstersPost) -> Unit,
 ) {
   val urlLauncher = UrlLauncherAmbient.current
@@ -22,14 +21,11 @@ fun HottestPosts(
   if (posts.isEmpty()) {
     EmptyList(saved = false)
   } else {
-    LazyColumnForIndexed(
+    LazyColumnFor(
       items = posts,
       state = listState,
       modifier = Modifier.padding(horizontal = 8.dp).then(modifier)
-    ) { index, item ->
-      if (posts.lastIndex == index) {
-        overscrollAction.invoke()
-      }
+    ) { item ->
       LobstersItem(
         post = item,
         onClick = { urlLauncher.launch(item.url.ifEmpty { item.commentsUrl }) },

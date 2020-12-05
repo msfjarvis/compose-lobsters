@@ -23,8 +23,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
+import androidx.paging.compose.collectAsLazyPagingItems
 import dagger.hilt.android.AndroidEntryPoint
-import dev.msfjarvis.lobsters.model.LobstersPost
 import dev.msfjarvis.lobsters.util.IconResource
 import dev.msfjarvis.lobsters.ui.viewmodel.LobstersViewModel
 import dev.msfjarvis.lobsters.ui.navigation.Destination
@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
 fun LobstersApp() {
   val viewModel: LobstersViewModel = viewModel()
   val navController = rememberNavController()
-  val hottestPosts = emptyList<LobstersPost>()
+  val hottestPosts = viewModel.posts.collectAsLazyPagingItems()
   val savedPosts by viewModel.savedPosts.collectAsState()
 
   Scaffold(

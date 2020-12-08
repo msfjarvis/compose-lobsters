@@ -36,7 +36,7 @@ object Dependencies {
 
   object AndroidX {
 
-    const val activityKtx = "androidx.activity:activity-ktx:1.2.0-beta01"
+    const val activityKtx = "androidx.activity:activity-ktx:1.2.0-beta02"
     const val appCompat = "androidx.appcompat:appcompat:1.3.0-alpha02"
     const val browser = "androidx.browser:browser:1.3.0"
     const val coreKtx = "androidx.core:core-ktx:1.5.0-alpha05"

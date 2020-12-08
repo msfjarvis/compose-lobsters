@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
-import dev.msfjarvis.lobsters.model.LobstersPost
+import dev.msfjarvis.lobsters.data.local.LobstersPost
 import dev.msfjarvis.lobsters.ui.urllauncher.AmbientUrlLauncher
 
 @Composable
@@ -30,8 +30,8 @@ fun HottestPosts(
         if (item != null) {
           LobstersItem(
             post = item,
-            onClick = { urlLauncher.launch(item.url.ifEmpty { item.commentsUrl }) },
-            onLongClick = { urlLauncher.launch(item.commentsUrl) },
+            onClick = { urlLauncher.launch(item.url.ifEmpty { item.comments_url }) },
+            onLongClick = { urlLauncher.launch(item.comments_url) },
             onSaveButtonClick = { saveAction.invoke(item) },
           )
         }

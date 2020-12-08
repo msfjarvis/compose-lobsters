@@ -24,7 +24,7 @@ import coil.transform.CircleCropTransformation
 import dev.chrisbanes.accompanist.coil.CoilImage
 import dev.msfjarvis.lobsters.R
 import dev.msfjarvis.lobsters.data.api.LobstersApi
-import dev.msfjarvis.lobsters.model.LobstersPost
+import dev.msfjarvis.lobsters.data.local.LobstersPost
 import dev.msfjarvis.lobsters.model.Submitter
 import dev.msfjarvis.lobsters.ui.theme.LobstersTheme
 import dev.msfjarvis.lobsters.ui.theme.titleColor
@@ -55,6 +55,7 @@ val TEST_POST = LobstersPost(
     emptyList(),
   ),
   listOf("openbsd", "linux", "containers", "hack the planet", "no thanks"),
+  0,
 )
 
 @Composable
@@ -96,7 +97,7 @@ fun LobstersItem(
           .padding(vertical = 8.dp),
       )
       CoilImage(
-        data = "${LobstersApi.BASE_URL}/${post.submitterUser.avatarUrl}",
+        data = "${LobstersApi.BASE_URL}/${post.submitter_user.avatarUrl}",
         fadeIn = true,
         requestBuilder = {
           transformations(CircleCropTransformation())
@@ -110,7 +111,7 @@ fun LobstersItem(
           },
       )
       Text(
-        text = stringResource(id = R.string.submitted_by, post.submitterUser.username),
+        text = stringResource(id = R.string.submitted_by, post.submitter_user.username),
         modifier = Modifier
           .padding(4.dp)
           .constrainAs(submitter) {

@@ -4,7 +4,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import dev.msfjarvis.lobsters.model.LobstersPost
+import dev.msfjarvis.lobsters.data.local.LobstersPost
 import dev.msfjarvis.lobsters.ui.urllauncher.AmbientUrlLauncher
 
 @Composable
@@ -26,8 +26,8 @@ fun SavedPosts(
       items(posts) { item ->
         LobstersItem(
           post = item,
-          onClick = { urlLauncher.launch(item.url.ifEmpty { item.commentsUrl }) },
-          onLongClick = { urlLauncher.launch(item.commentsUrl) },
+          onClick = { urlLauncher.launch(item.url.ifEmpty { item.comments_url }) },
+          onLongClick = { urlLauncher.launch(item.comments_url) },
           onSaveButtonClick = { saveAction.invoke(item) },
         )
       }

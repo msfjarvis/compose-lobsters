@@ -49,14 +49,6 @@ object Dependencies {
       const val runtimeKtx = "androidx.lifecycle:lifecycle-runtime-ktx:$version"
       const val viewmodelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:$version"
     }
-
-    object Room {
-
-      private const val version = "2.3.0-beta01"
-      const val compiler = "androidx.room:room-compiler:$version"
-      const val ktx = "androidx.room:room-ktx:$version"
-      const val runtime = "androidx.room:room-runtime:$version"
-    }
   }
 
   object ThirdParty {
@@ -75,13 +67,6 @@ object Dependencies {
       private const val version = "2.9.0"
       const val lib = "com.squareup.retrofit2:retrofit:$version"
       const val moshi = "com.squareup.retrofit2:converter-moshi:$version"
-    }
-
-    object Roomigrant {
-
-      private const val version = "0.2.0"
-      const val compiler = "com.github.MatrixDev.Roomigrant:RoomigrantCompiler:$version"
-      const val runtime = "com.github.MatrixDev.Roomigrant:RoomigrantLib:$version"
     }
 
     object SQLDelight {

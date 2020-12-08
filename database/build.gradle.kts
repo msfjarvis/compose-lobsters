@@ -4,3 +4,7 @@ plugins {
   id("com.squareup.sqldelight")
   `lobsters-plugin`
 }
+
+dependencies {
+  implementation(project(":model"))
+}

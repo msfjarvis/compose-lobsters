@@ -7,6 +7,8 @@ import com.android.build.gradle.TestedExtension
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
 import com.android.build.gradle.internal.plugins.AppPlugin
 import com.android.build.gradle.internal.plugins.LibraryPlugin
+import com.squareup.sqldelight.gradle.SqlDelightExtension
+import com.squareup.sqldelight.gradle.SqlDelightPlugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaLibraryPlugin
@@ -45,6 +47,9 @@ class LobstersPlugin : Plugin<Project> {
         }
         is Kapt3GradleSubplugin -> {
           project.configureKapt()
+        }
+        is SqlDelightPlugin -> {
+          project.extensions.getByType<SqlDelightExtension>().configureLobstersDatabase()
         }
       }
     }

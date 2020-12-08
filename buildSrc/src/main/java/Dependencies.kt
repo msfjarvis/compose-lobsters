@@ -83,6 +83,13 @@ object Dependencies {
       const val compiler = "com.github.MatrixDev.Roomigrant:RoomigrantCompiler:$version"
       const val runtime = "com.github.MatrixDev.Roomigrant:RoomigrantLib:$version"
     }
+
+    object SQLDelight {
+
+      private const val version = "1.4.4"
+      const val jvmDriver = "com.squareup.sqldelight:sqlite-driver:$version"
+      const val androidDriver = "com.squareup.sqldelight:android-driver:$version"
+    }
   }
 
   object Testing {

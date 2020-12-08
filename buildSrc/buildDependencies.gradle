@@ -4,6 +4,7 @@ rootProject.ext.versions = [
   kotlin    : '1.4.21',
   lint      : '30.0.0-alpha05',
   semver    : '0.9.0',
+  sqldelight: '1.4.4',
 ]
 
 rootProject.ext.build = [
@@ -14,4 +15,5 @@ rootProject.ext.build = [
   daggerGradlePlugin              : "com.google.dagger:hilt-android-gradle-plugin:${versions.daggerHilt}",
   kotlinGradlePlugin              : "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}",
   jsemver                         : "com.github.zafarkhaja:java-semver:${versions.semver}",
+  sqldelightGradlePlugin          : "com.squareup.sqldelight:gradle-plugin:${versions.sqldelight}",
 ]

@@ -12,7 +12,7 @@ import androidx.compose.foundation.lazy.LazyColumnFor
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.material.ripple.rememberRippleIndication
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -113,7 +113,7 @@ fun LobstersItem(
         modifier = Modifier.padding(8.dp)
           .clickable(
             onClick = onSaveButtonClick,
-            indication = rememberRippleIndication(),
+            indication = rememberRipple(),
           )
           .constrainAs(saveButton) {
             end.linkTo(parent.end)

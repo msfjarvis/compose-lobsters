@@ -7,7 +7,7 @@ private const val ANDROIDX_HILT_VERSION = "1.0.0-alpha02"
 private const val DAGGER_HILT_VERSION = "2.30.1-alpha"
 
 object Dependencies {
-  const val COMPOSE_VERSION = "1.0.0-alpha08"
+  const val COMPOSE_VERSION = "1.0.0-alpha09"
   object Kotlin {
 
     object Coroutines {
@@ -36,7 +36,7 @@ object Dependencies {
 
   object AndroidX {
 
-    const val activityKtx = "androidx.activity:activity-ktx:1.2.0-beta02"
+    const val activityKtx = "androidx.activity:activity-ktx:1.2.0-rc01"
     const val appCompat = "androidx.appcompat:appcompat:1.3.0-alpha02"
     const val browser = "androidx.browser:browser:1.3.0"
     const val coreKtx = "androidx.core:core-ktx:1.5.0-alpha05"
@@ -49,7 +49,7 @@ object Dependencies {
       const val foundation = "androidx.compose.foundation:foundation:$COMPOSE_VERSION"
       const val foundationLayout = "androidx.compose.foundation:foundation-layout:$COMPOSE_VERSION"
       const val material = "androidx.compose.material:material:$COMPOSE_VERSION"
-      const val navigation = "androidx.navigation:navigation-compose:1.0.0-alpha03"
+      const val navigation = "androidx.navigation:navigation-compose:1.0.0-alpha04"
       const val runtime = "androidx.compose.runtime:runtime:$COMPOSE_VERSION"
       const val ui = "androidx.compose.ui:ui:$COMPOSE_VERSION"
       const val uiUnit = "androidx.compose.ui:ui-unit:$COMPOSE_VERSION"
@@ -66,14 +66,14 @@ object Dependencies {
 
     object Lifecycle {
 
-      private const val version = "2.3.0-beta01"
+      private const val version = "2.3.0-rc01"
       const val runtimeKtx = "androidx.lifecycle:lifecycle-runtime-ktx:$version"
       const val viewmodelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:$version"
     }
 
     object Room {
 
-      private const val version = "2.3.0-alpha03"
+      private const val version = "2.3.0-alpha04"
       const val compiler = "androidx.room:room-compiler:$version"
       const val ktx = "androidx.room:room-ktx:$version"
       const val runtime = "androidx.room:room-runtime:$version"

@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumnFor
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -150,13 +150,15 @@ fun TagRow(
 @Preview
 fun Preview() {
   LobstersTheme {
-    LazyColumnFor(items = listOf(TEST_POST, TEST_POST, TEST_POST, TEST_POST, TEST_POST)) { item ->
-      LobstersItem(
-        post = item,
-        onClick = {},
-        onLongClick = {},
-        onSaveButtonClick = {},
-      )
+    LazyColumn {
+      items(listOf(TEST_POST, TEST_POST, TEST_POST, TEST_POST, TEST_POST)) { item ->
+        LobstersItem(
+          post = item,
+          onClick = {},
+          onLongClick = {},
+          onSaveButtonClick = {},
+        )
+      }
     }
   }
 }

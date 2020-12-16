@@ -1,7 +1,7 @@
 package dev.msfjarvis.lobsters.ui.posts
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumnFor
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -21,17 +21,18 @@ fun SavedPosts(
   if (posts.isEmpty()) {
     EmptyList(saved = true)
   } else {
-    LazyColumnFor(
-      items = posts,
+    LazyColumn(
       state = listState,
       modifier = Modifier.padding(horizontal = 8.dp).then(modifier)
-    ) { item ->
-      LobstersItem(
-        post = item,
-        onClick = { urlLauncher.launch(item.url.ifEmpty { item.commentsUrl }) },
-        onLongClick = { urlLauncher.launch(item.commentsUrl) },
-        onSaveButtonClick = { saveAction.invoke(item) },
-      )
+    ) {
+      items(posts) { item ->
+        LobstersItem(
+          post = item,
+          onClick = { urlLauncher.launch(item.url.ifEmpty { item.commentsUrl }) },
+          onLongClick = { urlLauncher.launch(item.commentsUrl) },
+          onSaveButtonClick = { saveAction.invoke(item) },
+        )
+      }
     }
   }
 }

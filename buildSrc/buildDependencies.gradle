@@ -1,8 +1,8 @@
 rootProject.ext.versions = [
-  agp: '7.0.0-alpha02',
+  agp: '7.0.0-alpha03',
   daggerHilt: '2.30.1-alpha',
   kotlin: '1.4.21',
-  lint: '27.3.0-alpha02',
+  lint: '27.3.0-alpha03',
 ]
 
 rootProject.ext.build = [

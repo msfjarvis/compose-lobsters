@@ -97,7 +97,7 @@ object Dependencies {
     const val daggerHilt = "com.google.dagger:hilt-android-testing:$DAGGER_HILT_VERSION"
     const val junit = "junit:junit:4.13.1"
     const val mockWebServer = "com.squareup.okhttp3:mockwebserver:4.6.0"
-    const val uiTest = "androidx.ui:ui-test:$COMPOSE_VERSION"
+    const val uiTest = "androidx.compose.ui:ui-test:$COMPOSE_VERSION"
 
     object AndroidX {
 

@@ -1,54 +1,47 @@
 package dev.msfjarvis.lobsters.data.api
 
+import dev.msfjarvis.lobsters.injection.ApiModule
+import dev.msfjarvis.lobsters.injection.MoshiModule
 import dev.msfjarvis.lobsters.util.TestUtils
-import io.ktor.client.HttpClient
-import io.ktor.client.engine.mock.MockEngine
-import io.ktor.client.engine.mock.respond
-import io.ktor.client.features.json.JsonFeature
-import io.ktor.client.features.json.serializer.KotlinxSerializer
-import io.ktor.http.fullPath
-import io.ktor.http.headersOf
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import kotlinx.coroutines.runBlocking
+import okhttp3.mockwebserver.Dispatcher
+import okhttp3.mockwebserver.MockResponse
+import okhttp3.mockwebserver.MockWebServer
+import okhttp3.mockwebserver.RecordedRequest
 import org.junit.AfterClass
 import org.junit.BeforeClass
 import org.junit.Test
 
-class KtorLobstersApiTest {
+class LobstersApiTest {
 
   companion object {
-    @JvmStatic
-    private lateinit var client: HttpClient
-    @JvmStatic
-    private lateinit var apiClient: LobstersApi
+    private val webServer = MockWebServer()
+    private val apiData = TestUtils.getJson("hottest.json")
+    private val okHttp = ApiModule.provideClient()
+    private val retrofit = ApiModule.provideRetrofit(
+      { okHttp },
+      { MoshiModule.provideMoshi() },
+      "http://localhost:8080/"
+    )
+    private val apiClient = ApiModule.provideApi(retrofit)
 
     @JvmStatic
     @BeforeClass
     fun setUp() {
-      client = HttpClient(MockEngine) {
-        install(JsonFeature) {
-          serializer = KotlinxSerializer()
-        }
-        engine {
-          addHandler { request ->
-            when (request.url.fullPath) {
-              "/hottest.json?page=1" -> {
-                val responseHeaders = headersOf("Content-Type" to listOf("application/json"))
-                respond(TestUtils.getJson("hottest.json"), headers = responseHeaders)
-              }
-              else -> error("Unhandled ${request.url.fullPath}")
-            }
-          }
+      webServer.start(8080)
+      webServer.dispatcher = object : Dispatcher() {
+        override fun dispatch(request: RecordedRequest): MockResponse {
+          return MockResponse().setBody(apiData).setResponseCode(200)
         }
       }
-      apiClient = KtorLobstersApi(client)
     }
 
     @JvmStatic
     @AfterClass
     fun tearDown() {
-      client.close()
+      webServer.shutdown()
     }
   }
 

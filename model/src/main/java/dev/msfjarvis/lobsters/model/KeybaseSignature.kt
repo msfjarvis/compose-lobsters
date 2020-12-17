@@ -1,12 +1,12 @@
 package dev.msfjarvis.lobsters.model
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-@Serializable
+@JsonClass(generateAdapter = true)
 class KeybaseSignature(
-  @SerialName("kb_username")
+  @Json(name = "kb_username")
   val kbUsername: String,
-  @SerialName("sig_hash")
+  @Json(name = "sig_hash")
   val sigHash: String
 )

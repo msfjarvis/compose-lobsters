@@ -1,26 +1,26 @@
 package dev.msfjarvis.lobsters.model
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-@Serializable
+@JsonClass(generateAdapter = true)
 class LobstersPost(
-  @SerialName("short_id")
+  @Json(name = "short_id")
   val shortId: String,
-  @SerialName("short_id_url")
+  @Json(name = "short_id_url")
   val shortIdUrl: String,
-  @SerialName("created_at")
+  @Json(name = "created_at")
   val createdAt: String,
   val title: String,
   val url: String,
   val score: Long,
   val flags: Long,
-  @SerialName("comment_count")
+  @Json(name = "comment_count")
   val commentCount: Long,
   val description: String,
-  @SerialName("comments_url")
+  @Json(name = "comments_url")
   val commentsUrl: String,
-  @SerialName("submitter_user")
+  @Json(name = "submitter_user")
   val submitterUser: Submitter,
   val tags: List<String>,
 )

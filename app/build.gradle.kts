@@ -2,7 +2,6 @@ plugins {
   id("com.android.application")
   kotlin("android")
   kotlin("kapt")
-  kotlin("plugin.serialization") version "1.4.21"
   id("dagger.hilt.android.plugin")
   `versioning-plugin`
   `lobsters-plugin`
@@ -25,7 +24,8 @@ android {
 dependencies {
 
   kapt(Dependencies.AndroidX.Hilt.daggerCompiler)
-  implementation(project(":model"))
+  implementation(project(":api"))
+  implementation(project(":database"))
   implementation(Dependencies.AndroidX.appCompat)
   implementation(Dependencies.AndroidX.browser)
   implementation(Dependencies.AndroidX.Compose.compiler)

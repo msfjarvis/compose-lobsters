@@ -1,12 +1,10 @@
 package dev.msfjarvis.lobsters.data.local
 
-import com.squareup.moshi.Moshi
-import com.squareup.sqldelight.ColumnAdapter
 import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver
 import dev.msfjarvis.lobsters.database.LobstersDatabase
-
 import dev.msfjarvis.lobsters.model.Submitter
-import dev.msfjarvis.lobsters.model.SubmitterJsonAdapter
+import dev.msfjarvis.lobsters.model.SubmitterAdapter
+import dev.msfjarvis.lobsters.model.TagsAdapter
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -14,27 +12,7 @@ import org.junit.Test
 
 class SqlDelightQueriesTest {
 
-  private val moshi = Moshi.Builder().build()
-  private val submitterJsonAdapter = SubmitterJsonAdapter(moshi)
   private lateinit var postQueries: PostQueries
-  private val submitterAdapter = object : ColumnAdapter<Submitter, String> {
-    override fun decode(databaseValue: String): Submitter {
-      return submitterJsonAdapter.fromJson(databaseValue)!!
-    }
-
-    override fun encode(value: Submitter): String {
-      return submitterJsonAdapter.toJson(value)
-    }
-  }
-  private val tagsAdapter = object : ColumnAdapter<List<String>, String> {
-    override fun decode(databaseValue: String): List<String> {
-      return databaseValue.split(",")
-    }
-
-    override fun encode(value: List<String>): String {
-      return value.joinToString(",")
-    }
-  }
 
   @Before
   fun setUp() {
@@ -42,9 +20,8 @@ class SqlDelightQueriesTest {
     LobstersDatabase.Schema.create(driver)
     val database = LobstersDatabase(
       driver,
-      LobstersPost.Adapter(submitterAdapter, tagsAdapter)
+      LobstersPost.Adapter(SubmitterAdapter(), TagsAdapter())
     )
-
     postQueries = database.postQueries
   }
 

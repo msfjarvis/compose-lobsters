@@ -1,12 +1,13 @@
 plugins {
   id("com.android.library")
   kotlin("android")
+  kotlin("kapt")
   id("com.squareup.sqldelight")
   `lobsters-plugin`
 }
 
 dependencies {
-  implementation(project(":model"))
+  kapt(Dependencies.ThirdParty.Moshi.codegen)
   implementation(Dependencies.ThirdParty.Moshi.lib)
   testImplementation(Dependencies.Kotlin.Coroutines.core)
   testImplementation(Dependencies.ThirdParty.SQLDelight.jvmDriver)

@@ -55,7 +55,7 @@ class LobstersApiTest {
   fun `no moderator posts in test data`() = runBlocking {
     val posts = apiClient.getHottestPosts(1)
     val moderatorPosts = posts.asSequence()
-      .filter { it.submitterUser.isModerator }
+      .filter { it.submitter_user.isModerator }
       .toSet()
     assertTrue(moderatorPosts.isEmpty())
   }

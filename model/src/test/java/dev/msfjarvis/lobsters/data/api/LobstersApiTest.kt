@@ -22,7 +22,8 @@ class LobstersApiTest {
     private val okHttp = ApiModule.provideClient()
     private val retrofit = ApiModule.provideRetrofit(
       { okHttp },
-      { MoshiModule.provideMoshi() }
+      { MoshiModule.provideMoshi() },
+      "http://localhost:8080/"
     )
     private val apiClient = ApiModule.provideApi(retrofit)
 

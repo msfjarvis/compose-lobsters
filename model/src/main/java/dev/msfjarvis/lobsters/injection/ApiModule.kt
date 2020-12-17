@@ -15,6 +15,13 @@ import retrofit2.create
 @Module
 @InstallIn(ActivityComponent::class)
 object ApiModule {
+
+  @Provides
+  @BaseUrlQualifier
+  fun provideBaseUrl(): String {
+    return LobstersApi.BASE_URL
+  }
+
   @Provides
   fun provideClient(): OkHttpClient {
     return OkHttpClient.Builder()
@@ -29,10 +36,11 @@ object ApiModule {
   fun provideRetrofit(
     client: Lazy<OkHttpClient>,
     moshi: Lazy<Moshi>,
+    @BaseUrlQualifier baseUrl: String
   ): Retrofit {
     return Retrofit.Builder()
       .client(client.get())
-      .baseUrl(LobstersApi.BASE_URL)
+      .baseUrl(baseUrl)
       .addConverterFactory(MoshiConverterFactory.create(moshi.get()))
       .build()
   }

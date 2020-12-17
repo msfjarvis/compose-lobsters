@@ -1,24 +1,25 @@
 package dev.msfjarvis.lobsters.data.source
 
 import androidx.room.TypeConverter
+import com.squareup.moshi.Moshi
 import dev.msfjarvis.lobsters.model.Submitter
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+import dev.msfjarvis.lobsters.model.SubmitterJsonAdapter
 
 object LobstersApiTypeConverters {
   private const val SEPARATOR = ","
+  private val moshi = Moshi.Builder().build()
+  private val submitterAdapter = SubmitterJsonAdapter(moshi)
 
   @TypeConverter
   @JvmStatic
   fun toSubmitterUser(value: String?): Submitter? {
-    return value?.let { Json.decodeFromString(value) }
+    return value?.let { submitterAdapter.fromJson(value) }
   }
 
   @TypeConverter
   @JvmStatic
   fun fromSubmitterUser(value: Submitter?): String? {
-    return value?.let { Json.encodeToString(value) }
+    return submitterAdapter.toJson(value)
   }
 
   @TypeConverter

@@ -84,12 +84,11 @@ dependencies {
   implementation(Dependencies.AndroidX.Room.runtime)
   implementation(Dependencies.AndroidX.Room.ktx)
   implementation(Dependencies.Kotlin.Coroutines.android)
-  implementation(Dependencies.Kotlin.Serialization.json)
   implementation(Dependencies.ThirdParty.accompanist)
   implementation(Dependencies.ThirdParty.customtabs)
+  implementation(Dependencies.ThirdParty.Moshi.lib)
   implementation(Dependencies.ThirdParty.Roomigrant.runtime)
   testImplementation(Dependencies.Testing.junit)
-  testImplementation(Dependencies.Kotlin.Ktor.clientTest)
   androidTestImplementation(Dependencies.Testing.daggerHilt)
   androidTestImplementation(Dependencies.Testing.uiTest)
 }

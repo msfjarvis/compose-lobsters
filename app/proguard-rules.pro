@@ -1,1 +1,3 @@
 -keepattributes *Annotation*, EnclosingMethod, InnerClasses
+-dontwarn org.jetbrains.kotlin.**
+-dontwarn androidx.compose.animation.tooling.ComposeAnimation

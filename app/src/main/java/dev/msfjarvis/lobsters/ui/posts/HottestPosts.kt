@@ -1,6 +1,5 @@
 package dev.msfjarvis.lobsters.ui.posts
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
@@ -26,7 +25,7 @@ fun HottestPosts(
   } else {
     LazyColumn(
       state = listState,
-      modifier = Modifier.padding(horizontal = 8.dp).then(modifier),
+      modifier = Modifier.then(modifier),
     ) {
       items(posts) { item ->
         if (item != null) {

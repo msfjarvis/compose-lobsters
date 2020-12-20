@@ -1,5 +1,5 @@
 import dev.msfjarvis.lobsters.model.Submitter;
-import java.lang.Integer;
+import java.lang.Boolean;
 import kotlin.collections.List;
 
 CREATE TABLE IF NOT EXISTS LobstersPost(
@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS LobstersPost(
   comments_url TEXT NOT NULL,
   submitter_user TEXT as Submitter NOT NULL,
   tags TEXT as List<String> NOT NULL,
-  is_saved INTEGER as Integer DEFAULT 0
+  is_saved INTEGER as Boolean DEFAULT 0 NOT NULL
 );
 
 selectAllPosts:

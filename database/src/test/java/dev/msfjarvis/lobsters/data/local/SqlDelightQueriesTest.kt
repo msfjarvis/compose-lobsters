@@ -57,7 +57,7 @@ class SqlDelightQueriesTest {
     postQueries.insertOrReplacePost(post)
 
     // Create a new post and try replacing it
-    val newPost = post.copy(is_saved = 1)
+    val newPost = post.copy(is_saved = true)
     postQueries.insertOrReplacePost(newPost)
 
     // Check post count
@@ -66,7 +66,7 @@ class SqlDelightQueriesTest {
 
     // Check if post is updated
     val postFromDb = postQueries.selectPost(post.short_id).executeAsOne()
-    assertEquals(1, postFromDb.is_saved)
+    assertEquals(true, postFromDb.is_saved)
   }
 
   @Test
@@ -109,7 +109,7 @@ class SqlDelightQueriesTest {
 
     // Get the post and check if is_saved is true
     val postFromDB = postQueries.selectPost(post.short_id).executeAsOne()
-    assertEquals(1, postFromDB.is_saved)
+    assertEquals(true, postFromDB.is_saved)
   }
 
   @Test
@@ -121,13 +121,13 @@ class SqlDelightQueriesTest {
 
     // Get the post and check if is_saved is true
     val postFromDB = postQueries.selectPost(post.short_id).executeAsOne()
-    assertEquals(1, postFromDB.is_saved)
+    assertEquals(true, postFromDB.is_saved)
 
     postQueries.removeSavedPost(post.short_id)
 
     // Get the post and check if is_saved is false
     val updatedPostFromDB = postQueries.selectPost(post.short_id).executeAsOne()
-    assertEquals(0, updatedPostFromDB.is_saved)
+    assertEquals(false, updatedPostFromDB.is_saved)
   }
 
   @Test
@@ -190,7 +190,7 @@ class SqlDelightQueriesTest {
         comments_url = "test_comments_url",
         submitter_user = submitter,
         tags = listOf(),
-        is_saved = 0
+        is_saved = false
       )
 
       posts.add(post)

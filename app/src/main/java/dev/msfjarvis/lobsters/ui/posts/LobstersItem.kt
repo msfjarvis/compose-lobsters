@@ -55,7 +55,7 @@ val TEST_POST = LobstersPost(
     emptyList(),
   ),
   listOf("openbsd", "linux", "containers", "hack the planet", "no thanks"),
-  0,
+  false,
 )
 
 @Composable

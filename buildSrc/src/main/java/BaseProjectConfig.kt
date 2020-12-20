@@ -59,6 +59,7 @@ internal fun Project.configureForAllProjects() {
  */
 @Suppress("UnstableApiUsage")
 internal fun BaseAppModuleExtension.configureAndroidApplicationOptions(project: Project) {
+  val minifySwitch = project.providers.environmentVariable("DISABLE_MINIFY").forUseAtConfigurationTime()
   project.tasks.withType<KotlinCompile> {
     kotlinOptions {
       freeCompilerArgs = freeCompilerArgs + listOf(
@@ -66,6 +67,17 @@ internal fun BaseAppModuleExtension.configureAndroidApplicationOptions(project: 
         "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
         "-Xopt-in=androidx.compose.material.ExperimentalMaterialApi"
       )
+    }
+  }
+  adbOptions.installOptions("--user 0")
+  buildTypes {
+    named("release") {
+      isMinifyEnabled = !minifySwitch.isPresent
+      setProguardFiles(listOf("proguard-android-optimize.txt", "proguard-rules.pro"))
+    }
+    named("debug") {
+      versionNameSuffix = "-debug"
+      isMinifyEnabled = false
     }
   }
 }

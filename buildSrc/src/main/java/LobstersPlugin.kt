@@ -39,6 +39,7 @@ class LobstersPlugin : Plugin<Project> {
         }
         is AppPlugin -> {
           project.extensions.getByType<TestedExtension>().configureCommonAndroidOptions()
+          project.extensions.getByType<BaseAppModuleExtension>().configureBuildSigning(project)
           project.extensions.getByType<BaseAppModuleExtension>().configureAndroidApplicationOptions(project)
         }
         is Kapt3GradleSubplugin -> {

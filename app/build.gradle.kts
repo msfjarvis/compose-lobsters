@@ -1,5 +1,3 @@
-import java.util.Properties
-
 plugins {
   id("com.android.application")
   kotlin("android")
@@ -10,10 +8,7 @@ plugins {
   `core-library-desugaring`
 }
 
-val keystorePropertiesFile = rootProject.file("keystore.properties")
-
 android {
-  adbOptions.installOptions("--user 0")
   defaultConfig {
     applicationId = "dev.msfjarvis.lobsters"
     versionCode = 1
@@ -24,34 +19,11 @@ android {
     }
   }
 
-  buildTypes {
-    named("release") {
-      isMinifyEnabled = true
-      setProguardFiles(listOf("proguard-android-optimize.txt", "proguard-rules.pro"))
-    }
-  }
-
   buildFeatures.compose = true
 
   composeOptions {
     kotlinCompilerVersion = "1.4.21"
     kotlinCompilerExtensionVersion = Dependencies.COMPOSE_VERSION
-  }
-
-  if (keystorePropertiesFile.exists()) {
-    val keystoreProperties = Properties()
-    keystoreProperties.load(keystorePropertiesFile.inputStream())
-    signingConfigs {
-      register("release") {
-        keyAlias = keystoreProperties["keyAlias"] as String
-        keyPassword = keystoreProperties["keyPassword"] as String
-        storeFile = rootProject.file(keystoreProperties["storeFile"] as String)
-        storePassword = keystoreProperties["storePassword"] as String
-      }
-    }
-    listOf("release", "debug").map {
-      buildTypes.getByName(it).signingConfig = signingConfigs.getByName(it)
-    }
   }
 }
 

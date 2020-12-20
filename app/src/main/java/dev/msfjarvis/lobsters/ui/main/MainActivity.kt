@@ -78,14 +78,14 @@ fun LobstersApp() {
         HottestPosts(
           posts = hottestPosts,
           listState = hottestPostsListState,
-          saveAction = viewModel::savePost,
+          saveAction = viewModel::toggleSave,
           modifier = Modifier.padding(bottom = innerPadding.bottom),
         )
       }
       composable(Destination.Saved.route) {
         SavedPosts(
           posts = savedPosts,
-          saveAction = viewModel::removeSavedPost,
+          saveAction = viewModel::toggleSave,
           modifier = Modifier.padding(bottom = innerPadding.bottom),
         )
       }

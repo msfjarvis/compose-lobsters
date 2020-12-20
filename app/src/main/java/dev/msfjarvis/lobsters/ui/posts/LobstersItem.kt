@@ -121,7 +121,7 @@ fun LobstersItem(
           },
       )
       IconResource(
-        resourceId = R.drawable.ic_favorite_border_24px,
+        resourceId = if (post.is_saved == true) R.drawable.ic_favorite_24px else R.drawable.ic_favorite_border_24px,
         modifier = Modifier
           .padding(8.dp)
           .clickable(

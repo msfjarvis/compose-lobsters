@@ -22,6 +22,11 @@ selectAllPosts:
 SELECT *
 FROM LobstersPost;
 
+selectSavedPosts:
+SELECT *
+FROM LobstersPost
+WHERE is_saved = 1;
+
 selectPost:
 SELECT *
 FROM LobstersPost

@@ -25,7 +25,7 @@ object Dependencies {
     const val browser = "androidx.browser:browser:1.3.0"
     const val coreKtx = "androidx.core:core-ktx:1.5.0-alpha05"
     const val coreLibraryDesugaring = "com.android.tools:desugar_jdk_libs:1.0.10"
-    const val material = "com.google.android.material:material:1.3.0-alpha04"
+    const val material = "com.google.android.material:material:1.3.0-beta01"
 
     object Compose {
 
@@ -67,7 +67,7 @@ object Dependencies {
 
   object ThirdParty {
 
-    const val accompanist = "dev.chrisbanes.accompanist:accompanist-coil:0.4.0"
+    const val accompanist = "dev.chrisbanes.accompanist:accompanist-coil:0.4.1"
     const val customtabs = "saschpe.android:customtabs:3.0.2"
 
     object Moshi {

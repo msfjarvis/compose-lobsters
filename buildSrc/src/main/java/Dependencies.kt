@@ -4,7 +4,7 @@
  */
 
 private const val ANDROIDX_HILT_VERSION = "1.0.0-alpha02"
-private const val DAGGER_HILT_VERSION = "2.30.1-alpha"
+private const val DAGGER_HILT_VERSION = "2.31-alpha"
 
 object Dependencies {
   const val COMPOSE_VERSION = "1.0.0-alpha10"

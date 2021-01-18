@@ -4,6 +4,7 @@ plugins {
   kotlin("kapt")
   kotlin("plugin.serialization") version "1.4.21"
   id("dagger.hilt.android.plugin")
+  `versioning-plugin`
   `lobsters-plugin`
   `core-library-desugaring`
 }
@@ -11,8 +12,6 @@ plugins {
 android {
   defaultConfig {
     applicationId = "dev.msfjarvis.lobsters"
-    versionCode = 1
-    versionName = "1.0"
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     javaCompileOptions.annotationProcessorOptions {
       argument("room.schemaLocation", "${projectDir}/schemas")

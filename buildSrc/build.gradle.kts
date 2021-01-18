@@ -24,6 +24,10 @@ gradlePlugin {
       id = "core-library-desugaring"
       implementationClass = "CoreLibraryDesugaringPlugin"
     }
+    register("versioning") {
+      id = "versioning-plugin"
+      implementationClass = "VersioningPlugin"
+    }
   }
 }
 
@@ -34,4 +38,5 @@ dependencies {
   implementation(build.getValue("androidGradlePlugin_builder"))
   implementation(build.getValue("androidGradlePlugin_builderModel"))
   implementation(build.getValue("androidGradlePlugin_lintModel"))
+  implementation(build.getValue("jsemver"))
 }

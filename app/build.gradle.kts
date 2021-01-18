@@ -29,7 +29,6 @@ android {
 dependencies {
 
   kapt(Dependencies.AndroidX.Hilt.daggerCompiler)
-  kapt(Dependencies.AndroidX.Hilt.daggerHiltCompiler)
   kapt(Dependencies.AndroidX.Room.compiler)
   kapt(Dependencies.ThirdParty.Roomigrant.compiler)
   implementation(project(":model"))
@@ -49,7 +48,6 @@ dependencies {
   implementation(Dependencies.AndroidX.Compose.uiTooling)
   implementation(Dependencies.AndroidX.Compose.uiUnit)
   implementation(Dependencies.AndroidX.Hilt.dagger)
-  implementation(Dependencies.AndroidX.Hilt.hiltLifecycleViewmodel)
   implementation(Dependencies.AndroidX.Lifecycle.runtimeKtx)
   implementation(Dependencies.AndroidX.Lifecycle.viewmodelKtx)
   implementation(Dependencies.AndroidX.Room.runtime)

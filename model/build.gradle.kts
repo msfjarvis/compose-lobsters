@@ -7,7 +7,6 @@ plugins {
 
 dependencies {
   kapt(Dependencies.AndroidX.Hilt.daggerCompiler)
-  kapt(Dependencies.AndroidX.Hilt.daggerHiltCompiler)
   kapt(Dependencies.ThirdParty.Moshi.codegen)
   api(Dependencies.ThirdParty.Retrofit.lib)
   implementation(Dependencies.AndroidX.Hilt.dagger)

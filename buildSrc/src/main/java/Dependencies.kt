@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: GPL-3.0-only
  */
 
-private const val ANDROIDX_HILT_VERSION = "1.0.0-alpha02"
-private const val DAGGER_HILT_VERSION = "2.30.1-alpha"
+private const val DAGGER_HILT_VERSION = "2.31-alpha"
 
 object Dependencies {
-  const val COMPOSE_VERSION = "1.0.0-alpha09"
+  const val COMPOSE_VERSION = "1.0.0-alpha10"
+
   object Kotlin {
 
     object Coroutines {
@@ -21,9 +21,9 @@ object Dependencies {
   object AndroidX {
 
     const val activityKtx = "androidx.activity:activity-ktx:1.2.0-rc01"
-    const val appCompat = "androidx.appcompat:appcompat:1.3.0-alpha02"
+    const val appCompat = "androidx.appcompat:appcompat:1.3.0-beta01"
     const val browser = "androidx.browser:browser:1.3.0"
-    const val coreKtx = "androidx.core:core-ktx:1.5.0-alpha05"
+    const val coreKtx = "androidx.core:core-ktx:1.5.0-beta01"
     const val coreLibraryDesugaring = "com.android.tools:desugar_jdk_libs:1.0.10"
     const val material = "com.google.android.material:material:1.3.0-beta01"
 
@@ -33,8 +33,8 @@ object Dependencies {
       const val foundation = "androidx.compose.foundation:foundation:$COMPOSE_VERSION"
       const val foundationLayout = "androidx.compose.foundation:foundation-layout:$COMPOSE_VERSION"
       const val material = "androidx.compose.material:material:$COMPOSE_VERSION"
-      const val navigation = "androidx.navigation:navigation-compose:1.0.0-alpha04"
-      const val paging = "androidx.paging:paging-compose:1.0.0-alpha04"
+      const val navigation = "androidx.navigation:navigation-compose:1.0.0-alpha05"
+      const val paging = "androidx.paging:paging-compose:1.0.0-alpha05"
       const val runtime = "androidx.compose.runtime:runtime:$COMPOSE_VERSION"
       const val ui = "androidx.compose.ui:ui:$COMPOSE_VERSION"
       const val uiUnit = "androidx.compose.ui:ui-unit:$COMPOSE_VERSION"
@@ -44,9 +44,6 @@ object Dependencies {
     object Hilt {
       const val dagger = "com.google.dagger:hilt-android:$DAGGER_HILT_VERSION"
       const val daggerCompiler = "com.google.dagger:hilt-compiler:$DAGGER_HILT_VERSION"
-      const val daggerHiltCompiler = "androidx.hilt:hilt-compiler:$ANDROIDX_HILT_VERSION"
-      const val hiltLifecycleViewmodel =
-        "androidx.hilt:hilt-lifecycle-viewmodel:$ANDROIDX_HILT_VERSION"
     }
 
     object Lifecycle {
@@ -67,7 +64,7 @@ object Dependencies {
 
   object ThirdParty {
 
-    const val accompanist = "dev.chrisbanes.accompanist:accompanist-coil:0.4.1"
+    const val accompanist = "dev.chrisbanes.accompanist:accompanist-coil:0.4.2"
     const val customtabs = "saschpe.android:customtabs:3.0.2"
 
     object Moshi {

@@ -63,7 +63,8 @@ fun LobstersItem(
   onSaveButtonClick: () -> Unit,
 ) {
   Surface(
-    modifier = Modifier.fillMaxWidth()
+    modifier = Modifier
+      .fillMaxWidth()
       .clickable(
         onClick = onClick,
         onLongClick = onLongClick,
@@ -77,7 +78,8 @@ fun LobstersItem(
         text = post.title,
         color = titleColor,
         fontWeight = FontWeight.Bold,
-        modifier = Modifier.padding(top = 4.dp)
+        modifier = Modifier
+          .padding(top = 4.dp)
           .constrainAs(title) {
             top.linkTo(parent.top)
             start.linkTo(parent.start)
@@ -85,9 +87,11 @@ fun LobstersItem(
       )
       TagRow(
         tags = post.tags,
-        modifier = Modifier.constrainAs(tags) {
-          top.linkTo(title.bottom)
-        }.padding(vertical = 8.dp),
+        modifier = Modifier
+          .constrainAs(tags) {
+            top.linkTo(title.bottom)
+          }
+          .padding(vertical = 8.dp),
       )
       CoilImage(
         data = "https://lobste.rs/${post.submitterUser.avatarUrl}",
@@ -95,7 +99,9 @@ fun LobstersItem(
         requestBuilder = {
           transformations(CircleCropTransformation())
         },
-        modifier = Modifier.width(30.dp).padding(4.dp)
+        modifier = Modifier
+          .width(30.dp)
+          .padding(4.dp)
           .constrainAs(avatar) {
             top.linkTo(tags.bottom)
             start.linkTo(parent.start)
@@ -103,14 +109,17 @@ fun LobstersItem(
       )
       Text(
         text = "submitted by ${post.submitterUser.username}",
-        modifier = Modifier.padding(bottom = 4.dp).constrainAs(submitter) {
-          top.linkTo(tags.bottom)
-          start.linkTo(avatar.end)
-        },
+        modifier = Modifier
+          .padding(bottom = 4.dp)
+          .constrainAs(submitter) {
+            top.linkTo(tags.bottom)
+            start.linkTo(avatar.end)
+          },
       )
       IconResource(
         resourceId = R.drawable.ic_favorite_border_24px,
-        modifier = Modifier.padding(8.dp)
+        modifier = Modifier
+          .padding(8.dp)
           .clickable(
             onClick = onSaveButtonClick,
             indication = rememberRipple(),

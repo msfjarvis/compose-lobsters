@@ -1,10 +1,10 @@
 package dev.msfjarvis.lobsters.ui.viewmodel
 
-import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.msfjarvis.lobsters.data.remote.LobstersPagingSource
 import dev.msfjarvis.lobsters.data.source.PostsDatabase
 import dev.msfjarvis.lobsters.model.LobstersPost
@@ -12,8 +12,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LobstersViewModel @ViewModelInject constructor(
+@HiltViewModel
+class LobstersViewModel @Inject constructor(
   private val pagingSource: LobstersPagingSource,
   database: PostsDatabase,
 ) : ViewModel() {

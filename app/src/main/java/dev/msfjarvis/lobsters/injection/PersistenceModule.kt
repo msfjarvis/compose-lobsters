@@ -5,13 +5,13 @@ import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
+import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dev.msfjarvis.lobsters.data.source.PostsDatabase
 import dev.msfjarvis.lobsters.data.source.PostsDatabase_Migrations
 
 @Module
-@InstallIn(ActivityComponent::class)
+@InstallIn(ViewModelComponent::class)
 object PersistenceModule {
 
   @Provides

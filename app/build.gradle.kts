@@ -4,6 +4,7 @@ plugins {
   kotlin("kapt")
   kotlin("plugin.serialization") version "1.4.21"
   id("dagger.hilt.android.plugin")
+  `versioning-plugin`
   `lobsters-plugin`
   `core-library-desugaring`
 }
@@ -11,8 +12,6 @@ plugins {
 android {
   defaultConfig {
     applicationId = "dev.msfjarvis.lobsters"
-    versionCode = 1
-    versionName = "1.0"
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     javaCompileOptions.annotationProcessorOptions {
       argument("room.schemaLocation", "${projectDir}/schemas")
@@ -30,7 +29,6 @@ android {
 dependencies {
 
   kapt(Dependencies.AndroidX.Hilt.daggerCompiler)
-  kapt(Dependencies.AndroidX.Hilt.daggerHiltCompiler)
   kapt(Dependencies.AndroidX.Room.compiler)
   kapt(Dependencies.ThirdParty.Roomigrant.compiler)
   implementation(project(":model"))
@@ -50,7 +48,6 @@ dependencies {
   implementation(Dependencies.AndroidX.Compose.uiTooling)
   implementation(Dependencies.AndroidX.Compose.uiUnit)
   implementation(Dependencies.AndroidX.Hilt.dagger)
-  implementation(Dependencies.AndroidX.Hilt.hiltLifecycleViewmodel)
   implementation(Dependencies.AndroidX.Lifecycle.runtimeKtx)
   implementation(Dependencies.AndroidX.Lifecycle.viewmodelKtx)
   implementation(Dependencies.AndroidX.Room.runtime)

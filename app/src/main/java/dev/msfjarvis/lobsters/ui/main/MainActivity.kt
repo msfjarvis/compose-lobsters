@@ -25,14 +25,14 @@ import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import dagger.hilt.android.AndroidEntryPoint
-import dev.msfjarvis.lobsters.util.IconResource
-import dev.msfjarvis.lobsters.ui.viewmodel.LobstersViewModel
 import dev.msfjarvis.lobsters.ui.navigation.Destination
 import dev.msfjarvis.lobsters.ui.posts.HottestPosts
-import dev.msfjarvis.lobsters.ui.theme.LobstersTheme
 import dev.msfjarvis.lobsters.ui.posts.SavedPosts
+import dev.msfjarvis.lobsters.ui.theme.LobstersTheme
 import dev.msfjarvis.lobsters.ui.urllauncher.UrlLauncher
 import dev.msfjarvis.lobsters.ui.urllauncher.UrlLauncherAmbient
+import dev.msfjarvis.lobsters.ui.viewmodel.LobstersViewModel
+import dev.msfjarvis.lobsters.util.IconResource
 import javax.inject.Inject
 
 @AndroidEntryPoint

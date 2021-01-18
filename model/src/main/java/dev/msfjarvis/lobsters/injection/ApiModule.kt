@@ -1,8 +1,8 @@
 package dev.msfjarvis.lobsters.injection
 
 import com.squareup.moshi.Moshi
-import dagger.Module
 import dagger.Lazy
+import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent

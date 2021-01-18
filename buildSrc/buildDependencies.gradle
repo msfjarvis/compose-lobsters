@@ -1,17 +1,17 @@
 rootProject.ext.versions = [
-  agp: '7.0.0-alpha04',
+  agp       : '7.0.0-alpha04',
   daggerHilt: '2.30.1-alpha',
-  kotlin: '1.4.21',
-  lint: '27.3.0-alpha04',
-  semver: '0.9.0',
+  kotlin    : '1.4.21',
+  lint      : '27.3.0-alpha04',
+  semver    : '0.9.0',
 ]
 
 rootProject.ext.build = [
-  androidGradlePlugin: "com.android.tools.build:gradle:${versions.agp}",
-  androidGradlePlugin_builder: "com.android.tools.build:builder:${versions.agp}",
+  androidGradlePlugin             : "com.android.tools.build:gradle:${versions.agp}",
+  androidGradlePlugin_builder     : "com.android.tools.build:builder:${versions.agp}",
   androidGradlePlugin_builderModel: "com.android.tools.build:builder-model:${versions.agp}",
-  androidGradlePlugin_lintModel: "com.android.tools.lint:lint-model:${versions.lint}",
-  daggerGradlePlugin: "com.google.dagger:hilt-android-gradle-plugin:${versions.daggerHilt}",
-  kotlinGradlePlugin: "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}",
-  jsemver: "com.github.zafarkhaja:java-semver:${versions.semver}",
+  androidGradlePlugin_lintModel   : "com.android.tools.lint:lint-model:${versions.lint}",
+  daggerGradlePlugin              : "com.google.dagger:hilt-android-gradle-plugin:${versions.daggerHilt}",
+  kotlinGradlePlugin              : "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}",
+  jsemver                         : "com.github.zafarkhaja:java-semver:${versions.semver}",
 ]

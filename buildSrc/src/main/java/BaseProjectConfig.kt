@@ -54,12 +54,14 @@ internal fun Project.configureForAllProjects() {
     }
   }
 }
+
 /**
  * Apply configuration options for Android Application projects.
  */
 @Suppress("UnstableApiUsage")
 internal fun BaseAppModuleExtension.configureAndroidApplicationOptions(project: Project) {
-  val minifySwitch = project.providers.environmentVariable("DISABLE_MINIFY").forUseAtConfigurationTime()
+  val minifySwitch =
+    project.providers.environmentVariable("DISABLE_MINIFY").forUseAtConfigurationTime()
   project.tasks.withType<KotlinCompile> {
     kotlinOptions {
       freeCompilerArgs = freeCompilerArgs + listOf(

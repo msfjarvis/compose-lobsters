@@ -6,10 +6,10 @@
 
 import com.android.build.gradle.internal.plugins.AppPlugin
 import com.github.zafarkhaja.semver.Version
-import java.io.OutputStream
-import java.util.Properties
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import java.io.OutputStream
+import java.util.*
 
 private const val VERSIONING_PROP_FILE = "version.properties"
 private const val VERSIONING_PROP_VERSION_NAME = "versioning-plugin.versionName"
@@ -71,9 +71,10 @@ class VersioningPlugin : Plugin<Project> {
       val versionName = requireNotNull(versionProps.getProperty(VERSIONING_PROP_VERSION_NAME)) {
         "version.properties must contain a '$VERSIONING_PROP_VERSION_NAME' property"
       }
-      val versionCode = requireNotNull(versionProps.getProperty(VERSIONING_PROP_VERSION_CODE).toInt()) {
-        "version.properties must contain a '$VERSIONING_PROP_VERSION_CODE' property"
-      }
+      val versionCode =
+        requireNotNull(versionProps.getProperty(VERSIONING_PROP_VERSION_CODE).toInt()) {
+          "version.properties must contain a '$VERSIONING_PROP_VERSION_CODE' property"
+        }
       appPlugin.extension.defaultConfig.versionName = versionName
       appPlugin.extension.defaultConfig.versionCode = versionCode
       afterEvaluate {

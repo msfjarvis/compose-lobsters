@@ -7,10 +7,10 @@ plugins {
 
 dependencies {
   kapt(Dependencies.AndroidX.Hilt.daggerCompiler)
-  kapt(Dependencies.ThirdParty.Moshi.codegen)
   api(Dependencies.ThirdParty.Retrofit.lib)
   implementation(project(":database"))
   implementation(Dependencies.AndroidX.Hilt.dagger)
+  implementation(Dependencies.ThirdParty.Moshi.kotlinReflect)
   implementation(Dependencies.ThirdParty.Retrofit.moshi)
   testImplementation(Dependencies.Kotlin.Coroutines.core)
   testImplementation(Dependencies.Testing.junit)

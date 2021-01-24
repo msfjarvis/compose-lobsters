@@ -20,7 +20,7 @@ class LobstersViewModel @Inject constructor(
 ) : ViewModel() {
   private val _savedPosts = MutableStateFlow<List<LobstersPost>>(emptyList())
   val savedPosts = _savedPosts.asStateFlow()
-  val posts = Pager(PagingConfig(25)) {
+  val posts = Pager(PagingConfig(5)) {
     pagingSource
   }.flow
 
@@ -31,17 +31,25 @@ class LobstersViewModel @Inject constructor(
     }
   }
 
+  fun getSavedPosts() {
+    viewModelScope.launch {
+      lobstersRepository.getSavedPosts().forEach {
+        _savedPosts.value = _savedPosts.value + it
+      }
+    }
+  }
+
   private fun savePost(post: LobstersPost) {
     viewModelScope.launch {
       lobstersRepository.savePost(post)
-      _savedPosts.value = _savedPosts.value + post
+      _savedPosts.value = _savedPosts.value + post.copy(is_saved = true)
     }
   }
 
   private fun removeSavedPost(post: LobstersPost) {
     viewModelScope.launch {
       lobstersRepository.removeSavedPost(post)
-      _savedPosts.value = _savedPosts.value - post
+      _savedPosts.value = _savedPosts.value - post.copy(is_saved = true)
     }
   }
 }

@@ -12,17 +12,20 @@ import dev.msfjarvis.lobsters.data.local.LobstersPost
 import dev.msfjarvis.lobsters.database.LobstersDatabase
 import dev.msfjarvis.lobsters.model.SubmitterAdapter
 import dev.msfjarvis.lobsters.model.TagsAdapter
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
 
   @Provides
+  @Singleton
   fun providesSqlDriver(@ApplicationContext context: Context): SqlDriver {
     return AndroidSqliteDriver(LobstersDatabase.Schema, context)
   }
 
   @Provides
+  @Singleton
   fun providesLobstersDatabase(sqlDriver: SqlDriver): LobstersDatabase {
     return LobstersDatabase(sqlDriver, LobstersPost.Adapter(SubmitterAdapter(), TagsAdapter()))
   }

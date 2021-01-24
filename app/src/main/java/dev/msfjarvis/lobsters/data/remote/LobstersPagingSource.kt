@@ -14,9 +14,17 @@ class LobstersPagingSource @Inject constructor(
   override suspend fun load(params: LoadParams<Int>): LoadResult<Int, LobstersPost> {
     return try {
       val page = params.key ?: 1
-      val savedPosts = lobstersRepository.getCachedPosts()
       val posts = lobstersApi.getHottestPosts(page).map { post ->
-        post.copy(is_saved = savedPosts.contains(post.short_id))
+        // We can replace these two lines below with a getOrInsertPost repository method.
+        val dbPost = lobstersRepository.getPost(post.short_id)
+        return@map if (dbPost == null) {
+          // If db does not contain the post, add it and return the original post
+          lobstersRepository.addPostToDB(post)
+          post
+        } else {
+          // Otherwise return the db post
+          dbPost
+        }
       }
 
       LoadResult.Page(

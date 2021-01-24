@@ -56,6 +56,12 @@ deleteAllPosts:
 DELETE
 FROM LobstersPost;
 
+isPostSaved:
+SELECT *
+FROM LobstersPost
+WHERE short_id = ?
+AND is_saved = 1;
+
 selectCount:
 SELECT COUNT(*)
 FROM LobstersPost;

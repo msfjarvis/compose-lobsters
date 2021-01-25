@@ -3,6 +3,7 @@ package dev.msfjarvis.lobsters.ui.main
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -12,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Providers
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.res.stringResource
@@ -33,6 +35,8 @@ import dev.msfjarvis.lobsters.ui.urllauncher.UrlLauncher
 import dev.msfjarvis.lobsters.ui.urllauncher.UrlLauncherAmbient
 import dev.msfjarvis.lobsters.ui.viewmodel.LobstersViewModel
 import dev.msfjarvis.lobsters.util.IconResource
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -54,16 +58,21 @@ class MainActivity : AppCompatActivity() {
 @Composable
 fun LobstersApp() {
   val viewModel: LobstersViewModel = viewModel()
+  val coroutineScope = rememberCoroutineScope()
   val navController = rememberNavController()
   val hottestPosts = viewModel.posts.collectAsLazyPagingItems()
   val savedPosts by viewModel.savedPosts.collectAsState()
+  val hottestPostsListState = rememberLazyListState()
 
   Scaffold(
     bottomBar = {
-      LobstersBottomNav(navController)
+      LobstersBottomNav(
+        navController,
+        hottestPostsListState,
+        coroutineScope,
+      )
     },
   ) { innerPadding ->
-    val hottestPostsListState = rememberLazyListState()
     NavHost(navController, startDestination = Destination.startDestination.route) {
       composable(Destination.Hottest.route) {
         HottestPosts(
@@ -87,6 +96,8 @@ fun LobstersApp() {
 @Composable
 fun LobstersBottomNav(
   navController: NavHostController,
+  hottestPostsListState: LazyListState,
+  coroutineScope: CoroutineScope,
 ) {
   BottomNavigation {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -99,10 +110,15 @@ fun LobstersBottomNav(
         selected = currentRoute == screen.route,
         alwaysShowLabels = false,
         onClick = {
-          if (currentRoute == screen.route) return@BottomNavigationItem
-          navController.popBackStack(navController.graph.startDestination, false)
-          if (screen.route != Destination.startDestination.route) {
-            navController.navigate(screen.route)
+          if (screen.route != currentRoute) {
+            navController.navigate(screen.route) {
+              launchSingleTop = true
+              popUpTo(navController.graph.startDestination) { inclusive = false }
+            }
+          } else if (screen.route == Destination.Hottest.route) {
+            coroutineScope.launch {
+              hottestPostsListState.snapToItemIndex(0)
+            }
           }
         }
       )

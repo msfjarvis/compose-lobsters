@@ -25,9 +25,9 @@ internal fun Project.configureForRootProject() {
     delete(rootProject.buildDir)
   }
   tasks.withType<Wrapper> {
-    gradleVersion = "6.8"
+    gradleVersion = "6.8.1"
     distributionType = Wrapper.DistributionType.ALL
-    distributionSha256Sum = "a7ca23b3ccf265680f2bfd35f1f00b1424f4466292c7337c85d46c9641b3f053"
+    distributionSha256Sum = "3db89524a3981819ff28c3f979236c1274a726e146ced0c8a2020417f9bc0782"
   }
 }
 

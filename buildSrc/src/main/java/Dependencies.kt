@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: GPL-3.0-only
  */
 
-private const val DAGGER_HILT_VERSION = "2.31-alpha"
+private const val DAGGER_HILT_VERSION = "2.31.2-alpha"
 
 object Dependencies {
   const val COMPOSE_VERSION = "1.0.0-alpha10"
@@ -20,12 +20,9 @@ object Dependencies {
 
   object AndroidX {
 
-    const val activityKtx = "androidx.activity:activity-ktx:1.2.0-rc01"
     const val appCompat = "androidx.appcompat:appcompat:1.3.0-beta01"
     const val browser = "androidx.browser:browser:1.3.0"
-    const val coreKtx = "androidx.core:core-ktx:1.5.0-beta01"
     const val coreLibraryDesugaring = "com.android.tools:desugar_jdk_libs:1.0.10"
-    const val material = "com.google.android.material:material:1.3.0-beta01"
 
     object Compose {
 
@@ -65,7 +62,6 @@ object Dependencies {
   object ThirdParty {
 
     const val accompanist = "dev.chrisbanes.accompanist:accompanist-coil:0.4.2"
-    const val customtabs = "saschpe.android:customtabs:3.0.2"
 
     object Moshi {
 

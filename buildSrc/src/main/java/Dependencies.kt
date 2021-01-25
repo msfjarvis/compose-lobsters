@@ -20,12 +20,9 @@ object Dependencies {
 
   object AndroidX {
 
-    const val activityKtx = "androidx.activity:activity-ktx:1.2.0-rc01"
     const val appCompat = "androidx.appcompat:appcompat:1.3.0-beta01"
     const val browser = "androidx.browser:browser:1.3.0"
-    const val coreKtx = "androidx.core:core-ktx:1.5.0-beta01"
     const val coreLibraryDesugaring = "com.android.tools:desugar_jdk_libs:1.0.10"
-    const val material = "com.google.android.material:material:1.3.0-beta01"
 
     object Compose {
 

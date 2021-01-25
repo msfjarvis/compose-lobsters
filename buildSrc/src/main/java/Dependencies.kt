@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: GPL-3.0-only
  */
 
-private const val DAGGER_HILT_VERSION = "2.31-alpha"
+private const val DAGGER_HILT_VERSION = "2.31.2-alpha"
 
 object Dependencies {
   const val COMPOSE_VERSION = "1.0.0-alpha10"

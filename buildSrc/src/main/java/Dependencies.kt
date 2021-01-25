@@ -62,7 +62,6 @@ object Dependencies {
   object ThirdParty {
 
     const val accompanist = "dev.chrisbanes.accompanist:accompanist-coil:0.4.2"
-    const val customtabs = "saschpe.android:customtabs:3.0.2"
 
     object Moshi {
 

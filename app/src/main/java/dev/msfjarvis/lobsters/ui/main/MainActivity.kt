@@ -32,7 +32,7 @@ import dev.msfjarvis.lobsters.ui.posts.HottestPosts
 import dev.msfjarvis.lobsters.ui.posts.SavedPosts
 import dev.msfjarvis.lobsters.ui.theme.LobstersTheme
 import dev.msfjarvis.lobsters.ui.urllauncher.UrlLauncher
-import dev.msfjarvis.lobsters.ui.urllauncher.UrlLauncherAmbient
+import dev.msfjarvis.lobsters.ui.urllauncher.AmbientUrlLauncher
 import dev.msfjarvis.lobsters.ui.viewmodel.LobstersViewModel
 import dev.msfjarvis.lobsters.util.IconResource
 import kotlinx.coroutines.CoroutineScope
@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
-      Providers(UrlLauncherAmbient provides urlLauncher) {
+      Providers(AmbientUrlLauncher provides urlLauncher) {
         LobstersTheme {
           LobstersApp()
         }

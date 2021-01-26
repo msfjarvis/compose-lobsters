@@ -8,7 +8,7 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
 import dev.msfjarvis.lobsters.model.LobstersPost
-import dev.msfjarvis.lobsters.ui.urllauncher.UrlLauncherAmbient
+import dev.msfjarvis.lobsters.ui.urllauncher.AmbientUrlLauncher
 
 @Composable
 fun HottestPosts(
@@ -17,7 +17,7 @@ fun HottestPosts(
   modifier: Modifier = Modifier,
   saveAction: (LobstersPost) -> Unit,
 ) {
-  val urlLauncher = UrlLauncherAmbient.current
+  val urlLauncher = AmbientUrlLauncher.current
 
   if (posts.loadState.refresh == LoadState.Loading) {
     EmptyList(saved = false)

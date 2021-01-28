@@ -107,6 +107,8 @@ internal fun TestedExtension.configureCommonAndroidOptions() {
     exclude("**/*.txt")
     exclude("**/*.kotlin_module")
     exclude("**/plugin.properties")
+    exclude("META-INF/AL2.0")
+    exclude("META-INF/LGPL2.1")
   }
 
   compileOptions {

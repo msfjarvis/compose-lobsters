@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import coil.transform.CircleCropTransformation
 import dev.chrisbanes.accompanist.coil.CoilImage
 import dev.msfjarvis.lobsters.R
+import dev.msfjarvis.lobsters.data.api.LobstersApi
 import dev.msfjarvis.lobsters.model.LobstersPost
 import dev.msfjarvis.lobsters.model.Submitter
 import dev.msfjarvis.lobsters.ui.theme.LobstersTheme
@@ -94,7 +95,7 @@ fun LobstersItem(
           .padding(vertical = 8.dp),
       )
       CoilImage(
-        data = "https://lobste.rs/${post.submitterUser.avatarUrl}",
+        data = "${LobstersApi.BASE_URL}/${post.submitterUser.avatarUrl}",
         fadeIn = true,
         requestBuilder = {
           transformations(CircleCropTransformation())

@@ -4,4 +4,5 @@
   <string name="no_saved_posts">You don\'t have any saved posts</string>
   <string name="hottest_posts">Hottest</string>
   <string name="saved_posts">Saved</string>
+  <string name="submitted_by">submitted by %1$s</string>
 </resources>

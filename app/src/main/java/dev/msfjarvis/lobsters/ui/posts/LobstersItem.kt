@@ -1,5 +1,6 @@
 package dev.msfjarvis.lobsters.ui.posts
 
+import androidx.annotation.VisibleForTesting
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -33,6 +34,7 @@ import dev.msfjarvis.lobsters.ui.theme.LobstersTheme
 import dev.msfjarvis.lobsters.ui.theme.titleColor
 import dev.msfjarvis.lobsters.util.IconResource
 
+@VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
 val TEST_POST = LobstersPost(
   "zqyydb",
   "https://lobste.rs/s/zqyydb",

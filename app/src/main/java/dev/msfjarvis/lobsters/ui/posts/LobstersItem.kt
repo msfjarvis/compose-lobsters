@@ -110,9 +110,10 @@ fun LobstersItem(
       Text(
         text = "submitted by ${post.submitterUser.username}",
         modifier = Modifier
-          .padding(bottom = 4.dp)
+          .padding(4.dp)
           .constrainAs(submitter) {
-            top.linkTo(tags.bottom)
+            top.linkTo(avatar.top)
+            bottom.linkTo(avatar.bottom)
             start.linkTo(avatar.end)
           },
       )

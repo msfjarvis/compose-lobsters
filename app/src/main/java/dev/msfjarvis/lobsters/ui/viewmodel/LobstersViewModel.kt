@@ -17,12 +17,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LobstersViewModel @Inject constructor(
-  private val pagingSource: LobstersPagingSource,
   private val lobstersRepository: LobstersRepository,
   private val lobstersApi: LobstersApi,
 ) : ViewModel() {
-  private val _savedPosts = MutableStateFlow<List<LobstersPost>>(emptyList())
   private lateinit var source: LobstersPagingSource
+  private val _savedPosts = MutableStateFlow(lobstersRepository.getAllPostsFromCache())
   val savedPosts = _savedPosts.asStateFlow()
   val posts = Pager(PagingConfig(25)) {
     source = LobstersPagingSource(lobstersApi, lobstersRepository)
@@ -37,29 +36,21 @@ class LobstersViewModel @Inject constructor(
     }
   }
 
-  fun getSavedPosts() {
-    viewModelScope.launch {
-      lobstersRepository.getSavedPosts().forEach {
-        _savedPosts.value = _savedPosts.value + it
-      }
-    }
-  }
-
-  fun invalidateSource() {
+  private fun invalidateSource() {
     source.invalidate()
   }
 
   private fun savePost(post: LobstersPost) {
     viewModelScope.launch {
-      lobstersRepository.savePost(post)
-      _savedPosts.value = _savedPosts.value + post.copy(is_saved = true)
+      lobstersRepository.addPost(post)
+      _savedPosts.value = lobstersRepository.getAllPostsFromCache()
     }
   }
 
   private fun removeSavedPost(post: LobstersPost) {
     viewModelScope.launch {
-      lobstersRepository.removeSavedPost(post)
-      _savedPosts.value = _savedPosts.value - post.copy(is_saved = true)
+      lobstersRepository.removePost(post)
+      _savedPosts.value = lobstersRepository.getAllPostsFromCache()
     }
   }
 }

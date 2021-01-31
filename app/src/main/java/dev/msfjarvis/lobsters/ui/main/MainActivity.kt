@@ -64,8 +64,6 @@ fun LobstersApp() {
   val savedPosts by viewModel.savedPosts.collectAsState()
   val hottestPostsListState = rememberLazyListState()
 
-  viewModel.getSavedPosts()
-
   Scaffold(
     bottomBar = {
       LobstersBottomNav(

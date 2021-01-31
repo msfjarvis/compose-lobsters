@@ -1,26 +1,32 @@
 package dev.msfjarvis.lobsters.data.local
 
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.adapter
 import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver
 import dev.msfjarvis.lobsters.database.LobstersDatabase
 import dev.msfjarvis.lobsters.model.Submitter
 import dev.msfjarvis.lobsters.model.SubmitterAdapter
 import dev.msfjarvis.lobsters.model.TagsAdapter
+import dev.zacsweers.moshix.reflect.MetadataKotlinJsonAdapterFactory
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
+@OptIn(ExperimentalStdlibApi::class)
 class SqlDelightQueriesTest {
 
   private lateinit var postQueries: PostQueries
 
   @Before
   fun setUp() {
+    val moshi = Moshi.Builder().add(MetadataKotlinJsonAdapterFactory()).build()
+    val submitterJsonAdapter = moshi.adapter<Submitter>()
     val driver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
     LobstersDatabase.Schema.create(driver)
     val database = LobstersDatabase(
       driver,
-      LobstersPost.Adapter(SubmitterAdapter(), TagsAdapter())
+      LobstersPost.Adapter(SubmitterAdapter(submitterJsonAdapter), TagsAdapter())
     )
     postQueries = database.postQueries
   }

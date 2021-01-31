@@ -11,6 +11,7 @@ import dev.msfjarvis.lobsters.data.remote.LobstersPagingSource
 import dev.msfjarvis.lobsters.data.repo.LobstersRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,11 +20,19 @@ class LobstersViewModel @Inject constructor(
   private val lobstersRepository: LobstersRepository,
   private val pagingSource: LobstersPagingSource,
 ) : ViewModel() {
-  private val _savedPosts = MutableStateFlow(lobstersRepository.getAllPostsFromCache())
+  private val _savedPosts = MutableStateFlow<List<LobstersPost>>(emptyList())
   val savedPosts = _savedPosts.asStateFlow()
   val posts = Pager(PagingConfig(25)) {
     pagingSource
   }.flow.cachedIn(viewModelScope)
+
+  init {
+    viewModelScope.launch {
+      lobstersRepository.isCacheReady.onEach {
+        _savedPosts.value = lobstersRepository.getAllPostsFromCache()
+      }
+    }
+  }
 
   fun toggleSave(post: LobstersPost) {
     viewModelScope.launch {

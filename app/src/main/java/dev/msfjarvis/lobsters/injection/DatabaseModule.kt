@@ -21,7 +21,7 @@ object DatabaseModule {
   @Provides
   @Singleton
   fun providesSqlDriver(@ApplicationContext context: Context): SqlDriver {
-    return AndroidSqliteDriver(LobstersDatabase.Schema, context)
+    return AndroidSqliteDriver(LobstersDatabase.Schema, context, "SavedPosts.db")
   }
 
   @Provides

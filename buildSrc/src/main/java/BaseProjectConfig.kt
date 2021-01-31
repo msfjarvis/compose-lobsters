@@ -66,7 +66,6 @@ internal fun BaseAppModuleExtension.configureAndroidApplicationOptions(project: 
     kotlinOptions {
       freeCompilerArgs = freeCompilerArgs + listOf(
         "-Xopt-in=kotlin.ExperimentalStdlibApi",
-        "-Xopt-in=kotlin.RequiresOptIn",
         "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
         "-Xopt-in=androidx.compose.material.ExperimentalMaterialApi"
       )

@@ -5,5 +5,6 @@
 
 internal val additionalCompilerArgs = listOf(
   "-Xallow-jvm-ir-dependencies",
+  "-Xopt-in=kotlin.RequiresOptIn",
   "-Xskip-prerelease-check"
 )

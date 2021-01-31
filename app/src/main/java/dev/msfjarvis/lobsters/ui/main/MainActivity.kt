@@ -78,6 +78,7 @@ fun LobstersApp() {
         HottestPosts(
           posts = hottestPosts,
           listState = hottestPostsListState,
+          isPostSaved = viewModel::isPostSaved,
           saveAction = viewModel::toggleSave,
           modifier = Modifier.padding(bottom = innerPadding.bottom),
         )

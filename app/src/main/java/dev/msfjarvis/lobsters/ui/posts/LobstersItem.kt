@@ -61,6 +61,7 @@ val TEST_POST = LobstersPost(
 @Composable
 fun LobstersItem(
   post: LobstersPost,
+  isSaved: Boolean,
   onClick: () -> Unit,
   onLongClick: () -> Unit,
   onSaveButtonClick: () -> Unit,
@@ -121,7 +122,7 @@ fun LobstersItem(
           },
       )
       IconResource(
-        resourceId = if (post.is_saved == true) R.drawable.ic_favorite_24px else R.drawable.ic_favorite_border_24px,
+        resourceId = if (isSaved) R.drawable.ic_favorite_24px else R.drawable.ic_favorite_border_24px,
         modifier = Modifier
           .padding(8.dp)
           .clickable(
@@ -167,6 +168,7 @@ fun Preview() {
       items(listOf(TEST_POST, TEST_POST, TEST_POST, TEST_POST, TEST_POST)) { item ->
         LobstersItem(
           post = item,
+          isSaved = false,
           onClick = {},
           onLongClick = {},
           onSaveButtonClick = {},

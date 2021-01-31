@@ -26,6 +26,7 @@ fun SavedPosts(
       items(posts) { item ->
         LobstersItem(
           post = item,
+          isSaved = true,
           onClick = { urlLauncher.launch(item.url.ifEmpty { item.comments_url }) },
           onLongClick = { urlLauncher.launch(item.comments_url) },
           onSaveButtonClick = { saveAction.invoke(item) },

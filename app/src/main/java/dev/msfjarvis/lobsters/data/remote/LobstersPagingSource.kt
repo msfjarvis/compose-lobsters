@@ -1,5 +1,6 @@
 package dev.msfjarvis.lobsters.data.remote
 
+import android.util.Log
 import androidx.paging.PagingSource
 import dev.msfjarvis.lobsters.data.api.LobstersApi
 import dev.msfjarvis.lobsters.data.local.LobstersPost
@@ -14,17 +15,9 @@ class LobstersPagingSource @Inject constructor(
   override suspend fun load(params: LoadParams<Int>): LoadResult<Int, LobstersPost> {
     return try {
       val page = params.key ?: 1
-      val posts = lobstersApi.getHottestPosts(page).map { post ->
-        // We can replace these two lines below with a getOrInsertPost repository method.
-        val dbPost = lobstersRepository.getPost(post.short_id)
-        return@map if (dbPost == null) {
-          // If db does not contain the post, add it and return the original post
-          lobstersRepository.addPostToDB(post)
-          post
-        } else {
-          // Otherwise return the db post
-          dbPost
-        }
+      val posts = lobstersApi.getHottestPosts(page).mapIndexed { index, post ->
+        val isSaved = lobstersRepository.isPostSaved(post.short_id)
+        return@mapIndexed post.copy(is_saved = isSaved)
       }
 
       LoadResult.Page(

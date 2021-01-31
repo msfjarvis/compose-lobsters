@@ -9,7 +9,6 @@ import javax.inject.Inject
 class LobstersRepository @Inject constructor(private val lobstersDatabase: LobstersDatabase) {
 
   fun isPostSaved(postId: String): Boolean {
-    // returns the post if it exists and its is_saved property is true
     val post = lobstersDatabase.postQueries.isPostSaved(postId).executeAsOneOrNull()
     return post != null
   }
@@ -27,9 +26,7 @@ class LobstersRepository @Inject constructor(private val lobstersDatabase: Lobst
   }
 
   suspend fun savePost(post: LobstersPost) = withContext(Dispatchers.IO) {
-    if (!isPostSaved(post.short_id)) {
-      lobstersDatabase.postQueries.savePost(post.short_id)
-    }
+      lobstersDatabase.postQueries.insertOrReplacePost(post.copy(is_saved = true))
   }
 
   suspend fun removeSavedPost(post: LobstersPost) = withContext(Dispatchers.IO) {

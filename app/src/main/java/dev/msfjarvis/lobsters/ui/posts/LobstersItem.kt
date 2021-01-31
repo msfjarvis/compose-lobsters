@@ -14,10 +14,6 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -69,8 +65,6 @@ fun LobstersItem(
   onLongClick: () -> Unit,
   onSaveButtonClick: () -> Unit,
 ) {
-  var isSaved by remember { mutableStateOf(post.is_saved ?: false) }
-
   Surface(
     modifier = Modifier
       .fillMaxWidth()
@@ -127,14 +121,11 @@ fun LobstersItem(
           },
       )
       IconResource(
-        resourceId = if (isSaved) R.drawable.ic_favorite_24px else R.drawable.ic_favorite_border_24px,
+        resourceId = if (post.is_saved == true) R.drawable.ic_favorite_24px else R.drawable.ic_favorite_border_24px,
         modifier = Modifier
           .padding(8.dp)
           .clickable(
-            onClick = {
-              onSaveButtonClick()
-              isSaved = isSaved.not()
-            },
+            onClick = onSaveButtonClick,
             indication = rememberRipple(),
           )
           .constrainAs(saveButton) {

@@ -4,7 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.msfjarvis.lobsters.data.api.LobstersApi
 import dev.msfjarvis.lobsters.data.local.LobstersPost
 import dev.msfjarvis.lobsters.data.remote.LobstersPagingSource
 import dev.msfjarvis.lobsters.data.repo.LobstersRepository
@@ -17,17 +19,21 @@ import javax.inject.Inject
 class LobstersViewModel @Inject constructor(
   private val pagingSource: LobstersPagingSource,
   private val lobstersRepository: LobstersRepository,
+  private val lobstersApi: LobstersApi,
 ) : ViewModel() {
   private val _savedPosts = MutableStateFlow<List<LobstersPost>>(emptyList())
+  private var source: LobstersPagingSource? = null
   val savedPosts = _savedPosts.asStateFlow()
-  val posts = Pager(PagingConfig(5)) {
-    pagingSource
-  }.flow
+  val posts = Pager(PagingConfig(25)) {
+    source = LobstersPagingSource(lobstersApi, lobstersRepository)
+    source!!
+  }.flow.cachedIn(viewModelScope)
 
   fun toggleSave(post: LobstersPost) {
     viewModelScope.launch {
       val isSaved = lobstersRepository.isPostSaved(post.short_id)
       if (isSaved) removeSavedPost(post) else savePost(post)
+      invalidateSource()
     }
   }
 
@@ -37,6 +43,10 @@ class LobstersViewModel @Inject constructor(
         _savedPosts.value = _savedPosts.value + it
       }
     }
+  }
+
+  fun invalidateSource() {
+    source?.invalidate()
   }
 
   private fun savePost(post: LobstersPost) {

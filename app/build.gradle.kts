@@ -44,7 +44,6 @@ dependencies {
   implementation(Dependencies.Kotlin.Coroutines.android)
   implementation(Dependencies.ThirdParty.accompanist)
   implementation(Dependencies.ThirdParty.Moshi.lib)
-  implementation(Dependencies.ThirdParty.SQLDelight.androidDriver)
   testImplementation(Dependencies.Testing.junit)
   androidTestImplementation(Dependencies.Testing.daggerHilt)
   androidTestImplementation(Dependencies.Testing.uiTest)

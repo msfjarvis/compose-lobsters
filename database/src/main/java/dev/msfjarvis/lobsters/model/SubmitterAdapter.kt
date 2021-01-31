@@ -1,14 +1,11 @@
 package dev.msfjarvis.lobsters.model
 
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.adapter
+import com.squareup.moshi.JsonAdapter
 import com.squareup.sqldelight.ColumnAdapter
-import dev.zacsweers.moshix.reflect.MetadataKotlinJsonAdapterFactory
+import javax.inject.Inject
 
-@OptIn(ExperimentalStdlibApi::class)
-class SubmitterAdapter : ColumnAdapter<Submitter, String> {
-  private val moshi = Moshi.Builder().add(MetadataKotlinJsonAdapterFactory()).build()
-  private val submitterJsonAdapter = moshi.adapter<Submitter>()
+class SubmitterAdapter @Inject constructor(private val submitterJsonAdapter: JsonAdapter<Submitter>) :
+  ColumnAdapter<Submitter, String> {
 
   override fun decode(databaseValue: String): Submitter {
     return submitterJsonAdapter.fromJson(databaseValue)!!

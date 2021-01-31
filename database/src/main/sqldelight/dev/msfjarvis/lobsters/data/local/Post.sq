@@ -14,38 +14,22 @@ CREATE TABLE IF NOT EXISTS LobstersPost(
   description TEXT NOT NULL,
   comments_url TEXT NOT NULL,
   submitter_user TEXT as Submitter NOT NULL,
-  tags TEXT as List<String> NOT NULL,
-  is_saved INTEGER as Boolean DEFAULT 0
+  tags TEXT as List<String> NOT NULL
 );
-
-selectAllPosts:
-SELECT *
-FROM LobstersPost;
-
-selectSavedPosts:
-SELECT *
-FROM LobstersPost
-WHERE is_saved = 1;
 
 selectPost:
 SELECT *
 FROM LobstersPost
 WHERE short_id = ?;
 
+selectAllPosts:
+SELECT *
+FROM LobstersPost;
+
 insertOrReplacePost:
 INSERT OR REPLACE
 INTO LobstersPost
 VALUES ?;
-
-savePost:
-UPDATE LobstersPost
-SET is_saved = 1
-WHERE short_id = ?;
-
-removeSavedPost:
-UPDATE LobstersPost
-SET is_saved = 0
-WHERE short_id = ?;
 
 deletePost:
 DELETE
@@ -55,12 +39,6 @@ WHERE short_id = ?;
 deleteAllPosts:
 DELETE
 FROM LobstersPost;
-
-isPostSaved:
-SELECT *
-FROM LobstersPost
-WHERE short_id = ?
-AND is_saved = 1;
 
 selectCount:
 SELECT COUNT(*)

@@ -45,14 +45,14 @@ class LobstersRepository @Inject constructor(private val lobstersDatabase: Lobst
   suspend fun addPost(post: LobstersPost) = withContext(Dispatchers.IO) {
     if (!savedPostsCache.containsKey(post.short_id)) {
       savedPostsCache.putIfAbsent(post.short_id, post)
-      lobstersDatabase.postQueries.insertOrReplacePost(post.copy(is_saved = true))
+      lobstersDatabase.postQueries.insertOrReplacePost(post)
     }
   }
 
   suspend fun removePost(post: LobstersPost) = withContext(Dispatchers.IO) {
     if (savedPostsCache.containsKey(post.short_id)) {
       savedPostsCache.remove(post.short_id)
-      lobstersDatabase.postQueries.removeSavedPost(post.short_id)
+      lobstersDatabase.postQueries.deletePost(post.short_id)
     }
   }
 }

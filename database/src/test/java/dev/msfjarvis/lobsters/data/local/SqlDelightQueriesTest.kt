@@ -63,7 +63,7 @@ class SqlDelightQueriesTest {
     postQueries.insertOrReplacePost(post)
 
     // Create a new post and try replacing it
-    val newPost = post.copy(is_saved = true)
+    val newPost = post.copy(comment_count = 100)
     postQueries.insertOrReplacePost(newPost)
 
     // Check post count
@@ -72,7 +72,7 @@ class SqlDelightQueriesTest {
 
     // Check if post is updated
     val postFromDb = postQueries.selectPost(post.short_id).executeAsOne()
-    assertEquals(true, postFromDb.is_saved)
+    assertEquals(100, postFromDb.comment_count)
   }
 
   @Test
@@ -103,39 +103,6 @@ class SqlDelightQueriesTest {
     }
   }
 
-
-  @Test
-  fun savePost() = runBlocking {
-    // Insert post to DB
-    val post = createTestData(1)[0]
-    postQueries.insertOrReplacePost(post)
-
-    // Update is_saved property of post
-    postQueries.savePost(post.short_id)
-
-    // Get the post and check if is_saved is true
-    val postFromDB = postQueries.selectPost(post.short_id).executeAsOne()
-    assertEquals(true, postFromDB.is_saved)
-  }
-
-  @Test
-  fun removeSavedPost() = runBlocking {
-    val post = createTestData(1)[0]
-    postQueries.insertOrReplacePost(post)
-
-    postQueries.savePost(post.short_id)
-
-    // Get the post and check if is_saved is true
-    val postFromDB = postQueries.selectPost(post.short_id).executeAsOne()
-    assertEquals(true, postFromDB.is_saved)
-
-    postQueries.removeSavedPost(post.short_id)
-
-    // Get the post and check if is_saved is false
-    val updatedPostFromDB = postQueries.selectPost(post.short_id).executeAsOne()
-    assertEquals(false, updatedPostFromDB.is_saved)
-  }
-
   @Test
   fun deletePost() = runBlocking {
     // Create 3 posts and insert them to DB
@@ -155,16 +122,16 @@ class SqlDelightQueriesTest {
 
   @Test
   fun deleteAllPost() = runBlocking {
-    // Create 3 posts and insert them to DB
+    // Create 5 posts and insert them to DB
     val posts = createTestData(5)
     posts.forEach { postQueries.insertOrReplacePost(it) }
 
-    // Delete 2nd post
+    // Delete all posts
     postQueries.deleteAllPosts()
 
     val postsCount = postQueries.selectCount().executeAsOne()
 
-    // Check if size is 2, and only the correct post is deleted
+    // Check if db is empty
     assertEquals(0, postsCount)
   }
 
@@ -196,7 +163,6 @@ class SqlDelightQueriesTest {
         comments_url = "test_comments_url",
         submitter_user = submitter,
         tags = listOf(),
-        is_saved = false
       )
 
       posts.add(post)

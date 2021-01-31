@@ -22,11 +22,11 @@ class LobstersViewModel @Inject constructor(
   private val lobstersApi: LobstersApi,
 ) : ViewModel() {
   private val _savedPosts = MutableStateFlow<List<LobstersPost>>(emptyList())
-  private var source: LobstersPagingSource? = null
+  private lateinit var source: LobstersPagingSource
   val savedPosts = _savedPosts.asStateFlow()
   val posts = Pager(PagingConfig(25)) {
     source = LobstersPagingSource(lobstersApi, lobstersRepository)
-    source!!
+    source
   }.flow.cachedIn(viewModelScope)
 
   fun toggleSave(post: LobstersPost) {

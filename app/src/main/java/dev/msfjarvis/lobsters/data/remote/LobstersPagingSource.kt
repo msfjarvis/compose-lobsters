@@ -2,7 +2,7 @@ package dev.msfjarvis.lobsters.data.remote
 
 import androidx.paging.PagingSource
 import dev.msfjarvis.lobsters.data.api.LobstersApi
-import dev.msfjarvis.lobsters.model.LobstersPost
+import dev.msfjarvis.lobsters.data.local.LobstersPost
 import javax.inject.Inject
 
 class LobstersPagingSource @Inject constructor(

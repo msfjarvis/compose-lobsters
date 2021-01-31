@@ -49,14 +49,6 @@ object Dependencies {
       const val runtimeKtx = "androidx.lifecycle:lifecycle-runtime-ktx:$version"
       const val viewmodelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:$version"
     }
-
-    object Room {
-
-      private const val version = "2.3.0-beta01"
-      const val compiler = "androidx.room:room-compiler:$version"
-      const val ktx = "androidx.room:room-ktx:$version"
-      const val runtime = "androidx.room:room-runtime:$version"
-    }
   }
 
   object ThirdParty {
@@ -66,8 +58,8 @@ object Dependencies {
     object Moshi {
 
       private const val version = "1.11.0"
-      const val codegen = "com.squareup.moshi:moshi-kotlin-codegen:$version"
       const val lib = "com.squareup.moshi:moshi:$version"
+      const val moshiMetadataReflect = "dev.zacsweers.moshix:moshi-metadata-reflect:0.7.1"
     }
 
     object Retrofit {
@@ -77,11 +69,11 @@ object Dependencies {
       const val moshi = "com.squareup.retrofit2:converter-moshi:$version"
     }
 
-    object Roomigrant {
+    object SQLDelight {
 
-      private const val version = "0.2.0"
-      const val compiler = "com.github.MatrixDev.Roomigrant:RoomigrantCompiler:$version"
-      const val runtime = "com.github.MatrixDev.Roomigrant:RoomigrantLib:$version"
+      private const val version = "1.4.4"
+      const val jvmDriver = "com.squareup.sqldelight:sqlite-driver:$version"
+      const val androidDriver = "com.squareup.sqldelight:android-driver:$version"
     }
   }
 

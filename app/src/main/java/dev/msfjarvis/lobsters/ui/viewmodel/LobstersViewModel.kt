@@ -4,49 +4,49 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dev.msfjarvis.lobsters.data.local.LobstersPost
 import dev.msfjarvis.lobsters.data.remote.LobstersPagingSource
-import dev.msfjarvis.lobsters.data.source.PostsDatabase
-import dev.msfjarvis.lobsters.model.LobstersPost
+import dev.msfjarvis.lobsters.data.repo.LobstersRepository
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class LobstersViewModel @Inject constructor(
+  private val lobstersRepository: LobstersRepository,
   private val pagingSource: LobstersPagingSource,
-  database: PostsDatabase,
 ) : ViewModel() {
-  private val _savedPosts = MutableStateFlow<List<LobstersPost>>(emptyList())
-  private val savedPostsDao = database.savedPostsDao()
-  val savedPosts: StateFlow<List<LobstersPost>> get() = _savedPosts
+  private val _savedPosts = MutableStateFlow(lobstersRepository.getAllPostsFromCache())
+  val savedPosts = _savedPosts.asStateFlow()
   val posts = Pager(PagingConfig(25)) {
     pagingSource
-  }.flow
+  }.flow.cachedIn(viewModelScope)
 
-  init {
-    getSavedPosts()
-  }
-
-  private fun getSavedPosts() {
+  fun toggleSave(post: LobstersPost) {
     viewModelScope.launch {
-      savedPostsDao.loadPosts().collectLatest { _savedPosts.value = it }
+      val isSaved = lobstersRepository.isPostSaved(post.short_id)
+      if (isSaved) removeSavedPost(post) else savePost(post)
     }
   }
 
-  fun savePost(post: LobstersPost) {
+  fun isPostSaved(postId: String): Boolean {
+    return lobstersRepository.isPostSaved(postId)
+  }
+
+  private fun savePost(post: LobstersPost) {
     viewModelScope.launch {
-      savedPostsDao.insertPosts(post)
-      getSavedPosts()
+      lobstersRepository.addPost(post)
+      _savedPosts.value = lobstersRepository.getAllPostsFromCache()
     }
   }
 
-  fun removeSavedPost(post: LobstersPost) {
+  private fun removeSavedPost(post: LobstersPost) {
     viewModelScope.launch {
-      savedPostsDao.deletePostById(post.shortId)
-      getSavedPosts()
+      lobstersRepository.removePost(post)
+      _savedPosts.value = lobstersRepository.getAllPostsFromCache()
     }
   }
 }

@@ -1,5 +1,6 @@
 package dev.msfjarvis.lobsters.ui.posts
 
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -10,9 +11,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.IconToggleButton
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -24,7 +25,7 @@ import coil.transform.CircleCropTransformation
 import dev.chrisbanes.accompanist.coil.CoilImage
 import dev.msfjarvis.lobsters.R
 import dev.msfjarvis.lobsters.data.api.LobstersApi
-import dev.msfjarvis.lobsters.model.LobstersPost
+import dev.msfjarvis.lobsters.data.local.LobstersPost
 import dev.msfjarvis.lobsters.model.Submitter
 import dev.msfjarvis.lobsters.ui.theme.LobstersTheme
 import dev.msfjarvis.lobsters.ui.theme.titleColor
@@ -60,6 +61,7 @@ val TEST_POST = LobstersPost(
 @Composable
 fun LobstersItem(
   post: LobstersPost,
+  isSaved: Boolean,
   onClick: () -> Unit,
   onLongClick: () -> Unit,
   onSaveButtonClick: () -> Unit,
@@ -96,7 +98,7 @@ fun LobstersItem(
           .padding(vertical = 8.dp),
       )
       CoilImage(
-        data = "${LobstersApi.BASE_URL}/${post.submitterUser.avatarUrl}",
+        data = "${LobstersApi.BASE_URL}/${post.submitter_user.avatarUrl}",
         fadeIn = true,
         requestBuilder = {
           transformations(CircleCropTransformation())
@@ -110,7 +112,7 @@ fun LobstersItem(
           },
       )
       Text(
-        text = stringResource(id = R.string.submitted_by, post.submitterUser.username),
+        text = stringResource(id = R.string.submitted_by, post.submitter_user.username),
         modifier = Modifier
           .padding(4.dp)
           .constrainAs(submitter) {
@@ -119,20 +121,23 @@ fun LobstersItem(
             start.linkTo(avatar.end)
           },
       )
-      IconResource(
-        resourceId = R.drawable.ic_favorite_border_24px,
+      IconToggleButton(
+        checked = isSaved,
+        onCheckedChange = { onSaveButtonClick.invoke() },
         modifier = Modifier
-          .padding(8.dp)
-          .clickable(
-            onClick = onSaveButtonClick,
-            indication = rememberRipple(),
-          )
           .constrainAs(saveButton) {
             end.linkTo(parent.end)
             centerVerticallyTo(parent)
-          },
-        tint = Color(0xFFD97373),
-      )
+          }
+      ) {
+        Crossfade(current = isSaved) {
+          if (it) {
+            IconResource(resourceId = R.drawable.ic_favorite_24px, tint = Color(0xFFD97373))
+          } else {
+            IconResource(resourceId = R.drawable.ic_favorite_border_24px, tint = Color(0xFFD97373))
+          }
+        }
+      }
     }
   }
 }
@@ -166,6 +171,7 @@ fun Preview() {
       items(listOf(TEST_POST, TEST_POST, TEST_POST, TEST_POST, TEST_POST)) { item ->
         LobstersItem(
           post = item,
+          isSaved = false,
           onClick = {},
           onLongClick = {},
           onSaveButtonClick = {},

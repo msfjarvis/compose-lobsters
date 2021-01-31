@@ -2,7 +2,6 @@ plugins {
   id("com.android.application")
   kotlin("android")
   kotlin("kapt")
-  kotlin("plugin.serialization") version "1.4.21"
   id("dagger.hilt.android.plugin")
   `versioning-plugin`
   `lobsters-plugin`
@@ -13,9 +12,6 @@ android {
   defaultConfig {
     applicationId = "dev.msfjarvis.lobsters"
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    javaCompileOptions.annotationProcessorOptions {
-      argument("room.schemaLocation", "${projectDir}/schemas")
-    }
   }
 
   buildFeatures.compose = true
@@ -28,9 +24,8 @@ android {
 dependencies {
 
   kapt(Dependencies.AndroidX.Hilt.daggerCompiler)
-  kapt(Dependencies.AndroidX.Room.compiler)
-  kapt(Dependencies.ThirdParty.Roomigrant.compiler)
-  implementation(project(":model"))
+  implementation(project(":api"))
+  implementation(project(":database"))
   implementation(Dependencies.AndroidX.appCompat)
   implementation(Dependencies.AndroidX.browser)
   implementation(Dependencies.AndroidX.Compose.compiler)
@@ -46,12 +41,9 @@ dependencies {
   implementation(Dependencies.AndroidX.Hilt.dagger)
   implementation(Dependencies.AndroidX.Lifecycle.runtimeKtx)
   implementation(Dependencies.AndroidX.Lifecycle.viewmodelKtx)
-  implementation(Dependencies.AndroidX.Room.runtime)
-  implementation(Dependencies.AndroidX.Room.ktx)
   implementation(Dependencies.Kotlin.Coroutines.android)
   implementation(Dependencies.ThirdParty.accompanist)
   implementation(Dependencies.ThirdParty.Moshi.lib)
-  implementation(Dependencies.ThirdParty.Roomigrant.runtime)
   testImplementation(Dependencies.Testing.junit)
   androidTestImplementation(Dependencies.Testing.daggerHilt)
   androidTestImplementation(Dependencies.Testing.uiTest)

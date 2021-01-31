@@ -39,4 +39,5 @@ dependencies {
   implementation(build.getValue("androidGradlePlugin_builderModel"))
   implementation(build.getValue("androidGradlePlugin_lintModel"))
   implementation(build.getValue("jsemver"))
+  implementation(build.getValue("sqldelightGradlePlugin"))
 }

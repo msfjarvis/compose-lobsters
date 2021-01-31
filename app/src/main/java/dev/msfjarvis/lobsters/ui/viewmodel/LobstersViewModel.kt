@@ -46,7 +46,7 @@ class LobstersViewModel @Inject constructor(
   }
 
   fun invalidateSource() {
-    source?.invalidate()
+    source.invalidate()
   }
 
   private fun savePost(post: LobstersPost) {

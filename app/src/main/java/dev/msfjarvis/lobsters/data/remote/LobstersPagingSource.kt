@@ -15,9 +15,9 @@ class LobstersPagingSource @Inject constructor(
   override suspend fun load(params: LoadParams<Int>): LoadResult<Int, LobstersPost> {
     return try {
       val page = params.key ?: 1
-      val posts = lobstersApi.getHottestPosts(page).mapIndexed { index, post ->
+      val posts = lobstersApi.getHottestPosts(page).map { post ->
         val isSaved = lobstersRepository.isPostSaved(post.short_id)
-        return@mapIndexed post.copy(is_saved = isSaved)
+        post.copy(is_saved = isSaved)
       }
 
       LoadResult.Page(

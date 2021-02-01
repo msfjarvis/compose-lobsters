@@ -35,8 +35,6 @@ dependencies {
   implementation(build.getValue("kotlinGradlePlugin"))
   implementation(build.getValue("daggerGradlePlugin"))
   implementation(build.getValue("androidGradlePlugin"))
-  implementation(build.getValue("androidGradlePlugin_builder"))
-  implementation(build.getValue("androidGradlePlugin_builderModel"))
   implementation(build.getValue("androidGradlePlugin_lintModel"))
   implementation(build.getValue("jsemver"))
   implementation(build.getValue("sqldelightGradlePlugin"))

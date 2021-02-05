@@ -7,9 +7,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
-class LobstersRepository @Inject constructor(
+class LobstersRepository constructor(
   private val lobstersApi: LobstersApi,
   private val lobstersDatabase: LobstersDatabase,
 ) {
@@ -39,7 +38,7 @@ class LobstersRepository @Inject constructor(
     val posts = getAllPosts()
 
     posts.forEach {
-      savedPostsCache.putIfAbsent(it.short_id, it)
+      savedPostsCache[it.short_id] = it
     }
     _isCacheReady.value = true
   }

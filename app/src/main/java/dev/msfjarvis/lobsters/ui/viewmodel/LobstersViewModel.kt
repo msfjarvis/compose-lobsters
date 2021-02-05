@@ -11,6 +11,7 @@ import dev.msfjarvis.lobsters.data.remote.LobstersPagingSource
 import dev.msfjarvis.lobsters.data.repo.LobstersRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -27,11 +28,11 @@ class LobstersViewModel @Inject constructor(
   }.flow.cachedIn(viewModelScope)
 
   init {
-    viewModelScope.launch {
-      lobstersRepository.isCacheReady.onEach {
+    lobstersRepository.isCacheReady.onEach { ready ->
+      if (ready) {
         _savedPosts.value = lobstersRepository.getAllPostsFromCache()
       }
-    }
+    }.launchIn(viewModelScope)
   }
 
   fun toggleSave(post: LobstersPost) {

@@ -106,7 +106,12 @@ fun LobstersBottomNav(
       navBackStackEntry?.arguments?.getString(KEY_ROUTE) ?: Destination.startDestination.route
     Destination.values().forEach { screen ->
       BottomNavigationItem(
-        icon = { IconResource(resourceId = screen.badgeRes) },
+        icon = {
+          IconResource(
+            resourceId = screen.badgeRes,
+            contentDescription = stringResource(screen.labelRes),
+          )
+        },
         label = { Text(stringResource(id = screen.labelRes)) },
         selected = currentRoute == screen.route,
         alwaysShowLabels = false,

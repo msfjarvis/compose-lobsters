@@ -15,7 +15,7 @@ object Plugins {
 }
 
 object Dependencies {
-  const val COMPOSE_VERSION = "1.0.0-alpha10"
+  const val COMPOSE_VERSION = "1.0.0-alpha11"
 
   object Kotlin {
 

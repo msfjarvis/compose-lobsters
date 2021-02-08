@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.IconToggleButton
 import androidx.compose.material.Surface
@@ -132,9 +133,17 @@ fun LobstersItem(
       ) {
         Crossfade(current = isSaved) {
           if (it) {
-            IconResource(resourceId = R.drawable.ic_favorite_24px, tint = Color(0xFFD97373))
+            IconResource(
+              resourceId = R.drawable.ic_favorite_24px,
+              tint = Color(0xFFD97373),
+              contentDescription = stringResource(R.string.remove_from_saved_posts),
+            )
           } else {
-            IconResource(resourceId = R.drawable.ic_favorite_border_24px, tint = Color(0xFFD97373))
+            IconResource(
+              resourceId = R.drawable.ic_favorite_border_24px,
+              tint = Color(0xFFD97373),
+              contentDescription = stringResource(R.string.add_to_saved_posts),
+            )
           }
         }
       }

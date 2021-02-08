@@ -100,6 +100,10 @@ fun LobstersItem(
       )
       CoilImage(
         data = "${LobstersApi.BASE_URL}/${post.submitter_user.avatarUrl}",
+        contentDescription = stringResource(
+          R.string.avatar_content_description,
+          post.submitter_user.username
+        ),
         fadeIn = true,
         requestBuilder = {
           transformations(CircleCropTransformation())

@@ -39,8 +39,8 @@ object Dependencies {
       const val foundation = "androidx.compose.foundation:foundation:$COMPOSE_VERSION"
       const val foundationLayout = "androidx.compose.foundation:foundation-layout:$COMPOSE_VERSION"
       const val material = "androidx.compose.material:material:$COMPOSE_VERSION"
-      const val navigation = "androidx.navigation:navigation-compose:1.0.0-alpha05"
-      const val paging = "androidx.paging:paging-compose:1.0.0-alpha05"
+      const val navigation = "androidx.navigation:navigation-compose:1.0.0-alpha06"
+      const val paging = "androidx.paging:paging-compose:1.0.0-alpha06"
       const val runtime = "androidx.compose.runtime:runtime:$COMPOSE_VERSION"
       const val ui = "androidx.compose.ui:ui:$COMPOSE_VERSION"
       const val uiUnit = "androidx.compose.ui:ui-unit:$COMPOSE_VERSION"
@@ -62,13 +62,13 @@ object Dependencies {
 
   object ThirdParty {
 
-    const val accompanist = "dev.chrisbanes.accompanist:accompanist-coil:0.4.2"
+    const val accompanist = "dev.chrisbanes.accompanist:accompanist-coil:0.5.0"
 
     object Moshi {
 
       private const val version = "1.11.0"
       const val lib = "com.squareup.moshi:moshi:$version"
-      const val moshiMetadataReflect = "dev.zacsweers.moshix:moshi-metadata-reflect:0.7.1"
+      const val moshiMetadataReflect = "dev.zacsweers.moshix:moshi-metadata-reflect:0.8.0"
     }
 
     object Retrofit {
@@ -90,7 +90,7 @@ object Dependencies {
 
     const val daggerHilt = "com.google.dagger:hilt-android-testing:$DAGGER_HILT_VERSION"
     const val junit = "junit:junit:4.13.1"
-    const val mockWebServer = "com.squareup.okhttp3:mockwebserver:4.6.0"
+    const val mockWebServer = "com.squareup.okhttp3:mockwebserver3-junit4:5.0.0-alpha.2"
     const val uiTest = "androidx.compose.ui:ui-test:$COMPOSE_VERSION"
 
     object AndroidX {

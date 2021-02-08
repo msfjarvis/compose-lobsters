@@ -5,6 +5,7 @@
   <string name="hottest_posts">Hottest</string>
   <string name="saved_posts">Saved</string>
   <string name="submitted_by">submitted by %1$s</string>
+  <string name="avatar_content_description">%1$s\'s avatar</string>
   <string name="add_to_saved_posts">Add to saved posts</string>
   <string name="remove_from_saved_posts">Remove from saved posts</string>
 </resources>

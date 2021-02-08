@@ -1,6 +1,7 @@
 package dev.msfjarvis.lobsters.data.remote
 
 import androidx.paging.PagingSource
+import androidx.paging.PagingState
 import dev.msfjarvis.lobsters.data.local.LobstersPost
 import dev.msfjarvis.lobsters.data.repo.LobstersRepository
 import javax.inject.Inject
@@ -25,5 +26,9 @@ class LobstersPagingSource @Inject constructor(
     } catch (e: Exception) {
       LoadResult.Error(e)
     }
+  }
+
+  override fun getRefreshKey(state: PagingState<Int, LobstersPost>): Int {
+    return state.pages.size + 1
   }
 }

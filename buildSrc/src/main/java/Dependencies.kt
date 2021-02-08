@@ -9,7 +9,7 @@ object Plugins {
   const val androidGradlePlugin = "com.android.tools.build:gradle:7.0.0-alpha05"
   const val androidGradlePlugin_lintModel = "com.android.tools.lint:lint-model:30.0.0-alpha05"
   const val daggerGradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:${DAGGER_HILT_VERSION}"
-  const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.21"
+  const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.21-2"
   const val jsemver = "com.github.zafarkhaja:java-semver:0.9.0"
   const val sqldelightGradlePlugin = "com.squareup.sqldelight:gradle-plugin:1.4.4"
 }

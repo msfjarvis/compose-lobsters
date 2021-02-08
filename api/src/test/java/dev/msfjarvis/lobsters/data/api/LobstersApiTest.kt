@@ -4,10 +4,10 @@ import dev.msfjarvis.lobsters.injection.ApiModule
 import dev.msfjarvis.lobsters.injection.MoshiModule
 import dev.msfjarvis.lobsters.util.TestUtils
 import kotlinx.coroutines.runBlocking
-import okhttp3.mockwebserver.Dispatcher
-import okhttp3.mockwebserver.MockResponse
-import okhttp3.mockwebserver.MockWebServer
-import okhttp3.mockwebserver.RecordedRequest
+import mockwebserver3.Dispatcher
+import mockwebserver3.MockResponse
+import mockwebserver3.MockWebServer
+import mockwebserver3.RecordedRequest
 import org.junit.AfterClass
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue

@@ -25,11 +25,16 @@ fun EmptyList(saved: Boolean) {
       IconResource(
         R.drawable.ic_favorite_border_24px,
         tint = Color(0xFFD97373),
-        modifier = Modifier.padding(16.dp)
+        modifier = Modifier.padding(16.dp),
+        contentDescription = stringResource(R.string.add_to_saved_posts),
       )
       Text(stringResource(R.string.no_saved_posts))
     } else {
-      IconResource(R.drawable.ic_sync_problem_24px, modifier = Modifier.padding(16.dp))
+      IconResource(
+        R.drawable.ic_sync_problem_24px,
+        modifier = Modifier.padding(16.dp),
+        contentDescription = stringResource(R.string.remove_from_saved_posts),
+      )
       Text(stringResource(R.string.loading))
     }
   }

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: GPL-3.0-only
  */
 
-private const val DAGGER_HILT_VERSION = "2.31.2-alpha"
+private const val DAGGER_HILT_VERSION = "2.32-alpha"
 
 object Plugins {
   const val androidGradlePlugin = "com.android.tools.build:gradle:7.0.0-alpha05"

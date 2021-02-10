@@ -20,7 +20,7 @@ enum class Destination(
     val startDestination = Hottest
 
     fun getDestinationFromRoute(route: String): Destination {
-      return values().firstOrNull { it.route == route } ?: error("Incorrect route password")
+      return values().firstOrNull { it.route == route } ?: error("Incorrect route passed")
     }
   }
 }

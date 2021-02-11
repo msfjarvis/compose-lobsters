@@ -6,7 +6,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import dev.msfjarvis.lobsters.data.local.LobstersPost
-import dev.msfjarvis.lobsters.ui.urllauncher.AmbientUrlLauncher
+import dev.msfjarvis.lobsters.ui.urllauncher.LocalUrlLauncher
 
 @Composable
 fun SavedPosts(
@@ -15,7 +15,7 @@ fun SavedPosts(
   saveAction: (LobstersPost) -> Unit,
 ) {
   val listState = rememberLazyListState()
-  val urlLauncher = AmbientUrlLauncher.current
+  val urlLauncher = LocalUrlLauncher.current
 
   if (posts.isEmpty()) {
     EmptyList(saved = true)

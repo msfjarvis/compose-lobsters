@@ -1,6 +1,7 @@
 package dev.msfjarvis.lobsters.ui.main
 
 import android.os.Bundle
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
@@ -15,9 +16,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.setContent
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.viewinterop.viewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.KEY_ROUTE
 import androidx.navigation.compose.NavHost
@@ -32,7 +32,7 @@ import dev.msfjarvis.lobsters.ui.posts.HottestPosts
 import dev.msfjarvis.lobsters.ui.posts.SavedPosts
 import dev.msfjarvis.lobsters.ui.theme.LobstersTheme
 import dev.msfjarvis.lobsters.ui.urllauncher.UrlLauncher
-import dev.msfjarvis.lobsters.ui.urllauncher.AmbientUrlLauncher
+import dev.msfjarvis.lobsters.ui.urllauncher.LocalUrlLauncher
 import dev.msfjarvis.lobsters.ui.viewmodel.LobstersViewModel
 import dev.msfjarvis.lobsters.util.IconResource
 import kotlinx.coroutines.CoroutineScope
@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
-      Providers(AmbientUrlLauncher provides urlLauncher) {
+      Providers(LocalUrlLauncher provides urlLauncher) {
         LobstersTheme {
           LobstersApp()
         }
@@ -80,14 +80,14 @@ fun LobstersApp() {
           listState = hottestPostsListState,
           isPostSaved = viewModel::isPostSaved,
           saveAction = viewModel::toggleSave,
-          modifier = Modifier.padding(bottom = innerPadding.bottom),
+          modifier = Modifier.padding(bottom = innerPadding.calculateBottomPadding()),
         )
       }
       composable(Destination.Saved.route) {
         SavedPosts(
           posts = savedPosts,
           saveAction = viewModel::toggleSave,
-          modifier = Modifier.padding(bottom = innerPadding.bottom),
+          modifier = Modifier.padding(bottom = innerPadding.calculateBottomPadding()),
         )
       }
     }

@@ -1,10 +1,10 @@
 package dev.msfjarvis.lobsters.ui.posts
 
 import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.ConstraintLayout
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -22,6 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
 import coil.transform.CircleCropTransformation
 import dev.chrisbanes.accompanist.coil.CoilImage
 import dev.msfjarvis.lobsters.R
@@ -59,6 +60,7 @@ val TEST_POST = LobstersPost(
   listOf("openbsd", "linux", "containers", "hack the planet", "no thanks"),
 )
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun LobstersItem(
   post: LobstersPost,
@@ -70,7 +72,7 @@ fun LobstersItem(
   Surface(
     modifier = Modifier
       .fillMaxWidth()
-      .clickable(
+      .combinedClickable(
         onClick = onClick,
         onLongClick = onLongClick,
       ),
@@ -135,7 +137,7 @@ fun LobstersItem(
             centerVerticallyTo(parent)
           }
       ) {
-        Crossfade(current = isSaved) {
+        Crossfade(targetState = isSaved) {
           if (it) {
             IconResource(
               resourceId = R.drawable.ic_favorite_24px,

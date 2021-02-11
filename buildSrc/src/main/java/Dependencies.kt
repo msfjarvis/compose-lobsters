@@ -9,13 +9,13 @@ object Plugins {
   const val androidGradlePlugin = "com.android.tools.build:gradle:7.0.0-alpha05"
   const val androidGradlePlugin_lintModel = "com.android.tools.lint:lint-model:30.0.0-alpha05"
   const val daggerGradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:${DAGGER_HILT_VERSION}"
-  const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.21-2"
+  const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.30"
   const val jsemver = "com.github.zafarkhaja:java-semver:0.9.0"
   const val sqldelightGradlePlugin = "com.squareup.sqldelight:gradle-plugin:1.4.4"
 }
 
 object Dependencies {
-  const val COMPOSE_VERSION = "1.0.0-alpha11"
+  const val COMPOSE_VERSION = "1.0.0-alpha12"
 
   object Kotlin {
 
@@ -35,12 +35,15 @@ object Dependencies {
 
     object Compose {
 
+      const val activity = "androidx.activity:activity-compose:1.3.0-alpha02"
       const val compiler = "androidx.compose.compiler:compiler:$COMPOSE_VERSION"
+      const val constraintLayout = "androidx.constraintlayout:constraintlayout-compose:1.0.0-alpha02"
       const val foundation = "androidx.compose.foundation:foundation:$COMPOSE_VERSION"
       const val foundationLayout = "androidx.compose.foundation:foundation-layout:$COMPOSE_VERSION"
+      const val lifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha01"
       const val material = "androidx.compose.material:material:$COMPOSE_VERSION"
-      const val navigation = "androidx.navigation:navigation-compose:1.0.0-alpha06"
-      const val paging = "androidx.paging:paging-compose:1.0.0-alpha06"
+      const val navigation = "androidx.navigation:navigation-compose:1.0.0-alpha07"
+      const val paging = "androidx.paging:paging-compose:1.0.0-alpha07"
       const val runtime = "androidx.compose.runtime:runtime:$COMPOSE_VERSION"
       const val ui = "androidx.compose.ui:ui:$COMPOSE_VERSION"
       const val uiUnit = "androidx.compose.ui:ui-unit:$COMPOSE_VERSION"
@@ -54,7 +57,7 @@ object Dependencies {
 
     object Lifecycle {
 
-      private const val version = "2.3.0-rc01"
+      private const val version = "2.3.0"
       const val runtimeKtx = "androidx.lifecycle:lifecycle-runtime-ktx:$version"
       const val viewmodelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:$version"
     }
@@ -62,7 +65,7 @@ object Dependencies {
 
   object ThirdParty {
 
-    const val accompanist = "dev.chrisbanes.accompanist:accompanist-coil:0.5.0"
+    const val accompanist = "dev.chrisbanes.accompanist:accompanist-coil:0.5.1"
 
     object Moshi {
 

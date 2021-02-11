@@ -1,5 +1,5 @@
 package dev.msfjarvis.lobsters.ui.urllauncher
 
-import androidx.compose.runtime.staticAmbientOf
+import androidx.compose.runtime.staticCompositionLocalOf
 
-val AmbientUrlLauncher = staticAmbientOf<UrlLauncher> { error("Needs to be provided") }
+val LocalUrlLauncher = staticCompositionLocalOf<UrlLauncher> { error("Needs to be provided") }

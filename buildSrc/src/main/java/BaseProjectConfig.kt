@@ -37,8 +37,15 @@ internal fun Project.configureForRootProject() {
 internal fun Project.configureForAllProjects() {
   repositories {
     google()
-    jcenter()
-    maven { setUrl("https://jitpack.io") }
+    mavenCentral()
+    jcenter() {
+        content {
+            // Indirect dependencies
+            // https://youtrack.jetbrains.com/issue/IDEA-261387
+            includeModule("org.jetbrains.trove4j", "trove4j")
+            includeGroup("org.jetbrains.kotlinx")
+        }
+    }
   }
   tasks.withType<KotlinCompile> {
     kotlinOptions {

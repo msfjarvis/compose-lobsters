@@ -9,12 +9,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.msfjarvis.lobsters.data.local.LobstersPost
 import dev.msfjarvis.lobsters.data.remote.LobstersPagingSource
 import dev.msfjarvis.lobsters.data.repo.LobstersRepository
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 class LobstersViewModel @Inject constructor(

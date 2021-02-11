@@ -4,8 +4,8 @@
  */
 
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
-import org.gradle.api.Project
 import java.util.*
+import org.gradle.api.Project
 
 private const val KEYSTORE_CONFIG_PATH = "keystore.properties"
 

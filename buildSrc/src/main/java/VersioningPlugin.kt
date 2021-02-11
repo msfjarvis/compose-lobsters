@@ -6,10 +6,10 @@
 
 import com.android.build.gradle.internal.plugins.AppPlugin
 import com.github.zafarkhaja.semver.Version
-import org.gradle.api.Plugin
-import org.gradle.api.Project
 import java.io.OutputStream
 import java.util.*
+import org.gradle.api.Plugin
+import org.gradle.api.Project
 
 private const val VERSIONING_PROP_FILE = "version.properties"
 private const val VERSIONING_PROP_VERSION_NAME = "versioning-plugin.versionName"

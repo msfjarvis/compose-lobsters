@@ -39,12 +39,12 @@ internal fun Project.configureForAllProjects() {
     google()
     mavenCentral()
     jcenter() {
-        content {
-            // Indirect dependencies
-            // https://youtrack.jetbrains.com/issue/IDEA-261387
-            includeModule("org.jetbrains.trove4j", "trove4j")
-            includeGroup("org.jetbrains.kotlinx")
-        }
+      content {
+        // Indirect dependencies
+        // https://youtrack.jetbrains.com/issue/IDEA-261387
+        includeModule("org.jetbrains.trove4j", "trove4j")
+        includeGroup("org.jetbrains.kotlinx")
+      }
     }
   }
   tasks.withType<KotlinCompile> {

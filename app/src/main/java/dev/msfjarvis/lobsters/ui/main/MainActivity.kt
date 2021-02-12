@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -16,6 +15,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.KEY_ROUTE
@@ -35,7 +35,6 @@ import dev.msfjarvis.lobsters.ui.urllauncher.UrlLauncher
 import dev.msfjarvis.lobsters.ui.viewmodel.LobstersViewModel
 import dev.msfjarvis.lobsters.util.IconResource
 import javax.inject.Inject
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -73,14 +72,18 @@ fun LobstersApp() {
       popUpTo(navController.graph.startDestination) { inclusive = false }
     }
   }
+  val jumpToIndex: (Int) -> Unit = {
+    coroutineScope.launch {
+      hottestPostsListState.snapToItemIndex(it)
+    }
+  }
 
   Scaffold(
     bottomBar = {
       LobstersBottomNav(
-        hottestPostsListState,
-        coroutineScope,
         currentDestination,
         navigateToDestination,
+        jumpToIndex,
       )
     },
   ) { innerPadding ->
@@ -107,12 +110,11 @@ fun LobstersApp() {
 
 @Composable
 fun LobstersBottomNav(
-  hottestPostsListState: LazyListState,
-  coroutineScope: CoroutineScope,
   currentDestination: Destination,
   navigateToDestination: (destination: Destination) -> Unit,
+  jumpToIndex: (index: Int) -> Unit,
 ) {
-  BottomNavigation {
+  BottomNavigation(modifier = Modifier.testTag("LobstersBottomNav")) {
     Destination.values().forEach { screen ->
       BottomNavigationItem(
         icon = {
@@ -128,9 +130,7 @@ fun LobstersBottomNav(
           if (screen != currentDestination) {
             navigateToDestination(screen)
           } else if (screen.route == Destination.Hottest.route) {
-            coroutineScope.launch {
-              hottestPostsListState.snapToItemIndex(0)
-            }
+            jumpToIndex(0)
           }
         }
       )

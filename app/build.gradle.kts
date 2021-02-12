@@ -48,6 +48,7 @@ dependencies {
   implementation(Dependencies.ThirdParty.accompanist)
   implementation(Dependencies.ThirdParty.Moshi.lib)
   testImplementation(Dependencies.Testing.junit)
+  androidTestImplementation(Dependencies.AndroidX.Compose.activity)
   androidTestImplementation(Dependencies.Testing.daggerHilt)
-  androidTestImplementation(Dependencies.Testing.uiTest)
+  androidTestImplementation(Dependencies.Testing.AndroidX.Compose.uiTestJunit4)
 }

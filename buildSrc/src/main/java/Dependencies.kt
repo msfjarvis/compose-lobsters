@@ -8,7 +8,8 @@ private const val DAGGER_HILT_VERSION = "2.32-alpha"
 object Plugins {
   const val androidGradlePlugin = "com.android.tools.build:gradle:7.0.0-alpha05"
   const val androidGradlePlugin_lintModel = "com.android.tools.lint:lint-model:30.0.0-alpha05"
-  const val daggerGradlePlugin = "com.google.dagger:hilt-android-gradle-plugin:${DAGGER_HILT_VERSION}"
+  const val daggerGradlePlugin =
+    "com.google.dagger:hilt-android-gradle-plugin:${DAGGER_HILT_VERSION}"
   const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.30"
   const val jsemver = "com.github.zafarkhaja:java-semver:0.9.0"
   const val sqldelightGradlePlugin = "com.squareup.sqldelight:gradle-plugin:1.4.4"
@@ -37,7 +38,8 @@ object Dependencies {
 
       const val activity = "androidx.activity:activity-compose:1.3.0-alpha02"
       const val compiler = "androidx.compose.compiler:compiler:$COMPOSE_VERSION"
-      const val constraintLayout = "androidx.constraintlayout:constraintlayout-compose:1.0.0-alpha02"
+      const val constraintLayout =
+        "androidx.constraintlayout:constraintlayout-compose:1.0.0-alpha02"
       const val foundation = "androidx.compose.foundation:foundation:$COMPOSE_VERSION"
       const val foundationLayout = "androidx.compose.foundation:foundation-layout:$COMPOSE_VERSION"
       const val lifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha01"
@@ -94,13 +96,16 @@ object Dependencies {
     const val daggerHilt = "com.google.dagger:hilt-android-testing:$DAGGER_HILT_VERSION"
     const val junit = "junit:junit:4.13.1"
     const val mockWebServer = "com.squareup.okhttp3:mockwebserver3-junit4:5.0.0-alpha.2"
-    const val uiTest = "androidx.compose.ui:ui-test:$COMPOSE_VERSION"
 
     object AndroidX {
 
       private const val version = "1.3.1-alpha02"
       const val runner = "androidx.test:runner:$version"
-      const val rules = "androidx.test:rules:$version"
+
+      object Compose {
+
+        const val uiTestJunit4 = "androidx.compose.ui:ui-test-junit4:$COMPOSE_VERSION"
+      }
     }
   }
 }

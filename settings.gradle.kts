@@ -1,3 +1,3 @@
-rootProject.name = "Claw for lobste.rs"
+rootProject.name = "Claw"
 include(":app", ":api", ":database")
 enableFeaturePreview("GRADLE_METADATA")

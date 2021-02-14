@@ -38,7 +38,7 @@ internal fun Project.configureForAllProjects() {
   repositories {
     google()
     mavenCentral()
-    jcenter() {
+    jcenter {
       content {
         // Indirect dependencies
         // https://youtrack.jetbrains.com/issue/IDEA-261387
@@ -102,14 +102,16 @@ internal fun TestedExtension.configureCommonAndroidOptions() {
     targetSdkVersion(30)
   }
 
-  packagingOptions {
-    exclude("**/*.version")
-    exclude("**/*.txt")
-    exclude("**/*.kotlin_module")
-    exclude("**/plugin.properties")
-    exclude("META-INF/AL2.0")
-    exclude("META-INF/LGPL2.1")
-  }
+  packagingOptions.resources.excludes.addAll(
+    setOf(
+      "**/*.version",
+      "**/*.txt",
+      "**/*.kotlin_module",
+      "**/plugin.properties",
+      "META-INF/AL2.0",
+      "META-INF/LGPL2.1"
+    )
+  )
 
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_11

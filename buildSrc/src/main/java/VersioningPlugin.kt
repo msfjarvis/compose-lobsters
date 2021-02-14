@@ -7,7 +7,7 @@
 import com.android.build.gradle.internal.plugins.AppPlugin
 import com.github.zafarkhaja.semver.Version
 import java.io.OutputStream
-import java.util.*
+import java.util.Properties
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 

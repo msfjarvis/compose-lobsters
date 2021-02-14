@@ -6,8 +6,8 @@
 private const val DAGGER_HILT_VERSION = "2.32-alpha"
 
 object Plugins {
-  const val androidGradlePlugin = "com.android.tools.build:gradle:7.0.0-alpha05"
-  const val androidGradlePlugin_lintModel = "com.android.tools.lint:lint-model:30.0.0-alpha05"
+  const val androidGradlePlugin = "com.android.tools.build:gradle:7.0.0-alpha06"
+  const val androidGradlePlugin_lintModel = "com.android.tools.lint:lint-model:30.0.0-alpha06"
   const val daggerGradlePlugin =
     "com.google.dagger:hilt-android-gradle-plugin:${DAGGER_HILT_VERSION}"
   const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.30"

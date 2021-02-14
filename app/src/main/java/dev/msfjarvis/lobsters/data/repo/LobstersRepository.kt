@@ -21,10 +21,6 @@ class LobstersRepository constructor(
     return savedPostsCache.containsKey(postId)
   }
 
-  fun getPostFromCache(postId: String): LobstersPost? {
-    return savedPostsCache[postId]
-  }
-
   fun getAllPostsFromCache(): List<LobstersPost> {
     return savedPostsCache.values.toList()
   }
@@ -41,10 +37,6 @@ class LobstersRepository constructor(
       savedPostsCache[it.short_id] = it
     }
     _isCacheReady.value = true
-  }
-
-  private suspend fun getPost(postId: String): LobstersPost? = withContext(Dispatchers.IO) {
-    return@withContext lobstersDatabase.postQueries.selectPost(postId).executeAsOneOrNull()
   }
 
   private suspend fun getAllPosts(): List<LobstersPost> = withContext(Dispatchers.IO) {

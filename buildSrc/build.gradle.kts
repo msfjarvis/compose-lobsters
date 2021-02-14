@@ -29,10 +29,10 @@ gradlePlugin {
 }
 
 dependencies {
-  implementation(Plugins.androidGradlePlugin)
-  implementation(Plugins.androidGradlePlugin_lintModel)
-  implementation(Plugins.daggerGradlePlugin)
+  implementation(Plugins.android)
+  implementation(Plugins.hilt)
   implementation(Plugins.jsemver)
-  implementation(Plugins.kotlinGradlePlugin)
-  implementation(Plugins.sqldelightGradlePlugin)
+  implementation(Plugins.lintModel)
+  implementation(Plugins.kotlin)
+  implementation(Plugins.sqldelight)
 }

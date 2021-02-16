@@ -3,3 +3,4 @@
 -dontwarn androidx.compose.animation.tooling.ComposeAnimation
 -dontobfuscate
 -dontoptimize
+-keep class dev.msfjarvis.lobsters.model.** { *; }

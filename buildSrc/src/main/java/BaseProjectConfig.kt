@@ -11,6 +11,7 @@ import org.gradle.api.tasks.Delete
 import org.gradle.api.tasks.testing.Test
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.gradle.api.tasks.wrapper.Wrapper
+import org.gradle.kotlin.dsl.register
 import org.gradle.kotlin.dsl.repositories
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -21,7 +22,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
  */
 internal fun Project.configureForRootProject() {
   // register task for cleaning the build directory in the root project
-  tasks.register("clean", Delete::class.java) {
+  tasks.register<Delete>("clean") {
     delete(rootProject.buildDir)
   }
   tasks.withType<Wrapper> {

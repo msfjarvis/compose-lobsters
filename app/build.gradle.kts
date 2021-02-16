@@ -35,7 +35,6 @@ dependencies {
   implementation(Dependencies.AndroidX.Compose.foundationLayout)
   implementation(Dependencies.AndroidX.Compose.lifecycleViewModel)
   implementation(Dependencies.AndroidX.Compose.material)
-  implementation(Dependencies.AndroidX.Compose.navigation)
   implementation(Dependencies.AndroidX.Compose.paging)
   implementation(Dependencies.AndroidX.Compose.runtime)
   implementation(Dependencies.AndroidX.Compose.ui)

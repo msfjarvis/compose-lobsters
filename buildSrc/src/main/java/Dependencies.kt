@@ -6,8 +6,8 @@
 private const val DAGGER_HILT_VERSION = "2.32-alpha"
 
 object Plugins {
-  const val android = "com.android.tools.build:gradle:7.0.0-alpha06"
-  const val lintModel = "com.android.tools.lint:lint-model:30.0.0-alpha06"
+  const val android = "com.android.tools.build:gradle:7.0.0-alpha07"
+  const val lintModel = "com.android.tools.lint:lint-model:30.0.0-alpha07"
   const val hilt = "com.google.dagger:hilt-android-gradle-plugin:${DAGGER_HILT_VERSION}"
   const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.30"
   const val jsemver = "com.github.zafarkhaja:java-semver:0.9.0"
@@ -71,7 +71,7 @@ object Dependencies {
 
       private const val version = "1.11.0"
       const val lib = "com.squareup.moshi:moshi:$version"
-      const val moshiMetadataReflect = "dev.zacsweers.moshix:moshi-metadata-reflect:0.8.0"
+      const val moshiMetadataReflect = "dev.zacsweers.moshix:moshi-metadata-reflect:0.9.1"
     }
 
     object Retrofit {
@@ -92,7 +92,7 @@ object Dependencies {
   object Testing {
 
     const val daggerHilt = "com.google.dagger:hilt-android-testing:$DAGGER_HILT_VERSION"
-    const val junit = "junit:junit:4.13.1"
+    const val junit = "junit:junit:4.13.2"
     const val mockWebServer = "com.squareup.okhttp3:mockwebserver3-junit4:5.0.0-alpha.2"
 
     object AndroidX {

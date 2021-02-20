@@ -43,6 +43,7 @@ object Dependencies {
       const val foundationLayout = "androidx.compose.foundation:foundation-layout:$COMPOSE_VERSION"
       const val lifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha01"
       const val material = "androidx.compose.material:material:$COMPOSE_VERSION"
+      const val navigation = "androidx.navigation:navigation-compose:1.0.0-alpha07"
       const val paging = "androidx.paging:paging-compose:1.0.0-alpha07"
       const val runtime = "androidx.compose.runtime:runtime:$COMPOSE_VERSION"
       const val ui = "androidx.compose.ui:ui:$COMPOSE_VERSION"

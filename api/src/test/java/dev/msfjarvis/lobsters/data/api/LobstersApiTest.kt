@@ -1,31 +1,39 @@
 package dev.msfjarvis.lobsters.data.api
 
-import dev.msfjarvis.lobsters.injection.ApiModule
-import dev.msfjarvis.lobsters.injection.MoshiModule
+import com.squareup.moshi.Moshi
 import dev.msfjarvis.lobsters.util.TestUtils
+import dev.zacsweers.moshix.reflect.MetadataKotlinJsonAdapterFactory
 import kotlinx.coroutines.runBlocking
 import mockwebserver3.Dispatcher
 import mockwebserver3.MockResponse
 import mockwebserver3.MockWebServer
 import mockwebserver3.RecordedRequest
+import okhttp3.OkHttpClient
 import org.junit.AfterClass
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.BeforeClass
 import org.junit.Test
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.create
 
 class LobstersApiTest {
 
   companion object {
     private val webServer = MockWebServer()
     private val apiData = TestUtils.getJson("hottest.json")
-    private val okHttp = ApiModule.provideClient()
-    private val retrofit = ApiModule.provideRetrofit(
-      { okHttp },
-      { MoshiModule.provideMoshi() },
-      "http://localhost:8080/"
-    )
-    private val apiClient = ApiModule.provideApi(retrofit)
+    private val moshi = Moshi.Builder()
+      .add(MetadataKotlinJsonAdapterFactory())
+      .build()
+    private val okHttp = OkHttpClient.Builder()
+      .build()
+    private val retrofit = Retrofit.Builder()
+      .client(okHttp)
+      .baseUrl("http://localhost:8080/")
+      .addConverterFactory(MoshiConverterFactory.create(moshi))
+      .build()
+    private val apiClient = retrofit.create<LobstersApi>()
 
     @JvmStatic
     @BeforeClass

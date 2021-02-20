@@ -1,6 +1,5 @@
 plugins {
-  id("com.android.library")
-  kotlin("android")
+  kotlin("jvm")
   id("com.squareup.sqldelight")
   `lobsters-plugin`
 }

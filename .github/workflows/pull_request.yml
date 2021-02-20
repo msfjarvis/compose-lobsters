@@ -20,7 +20,7 @@ jobs:
     - uses: burrunan/gradle-cache-action@03c71a8ba93d670980695505f48f49daf43704a6
       name: Run unit tests
       with:
-        arguments: testDebug --stacktrace
+        arguments: test --stacktrace
 
     - name: Run instrumentation tests
       uses: reactivecircus/android-emulator-runner@08b092e904025fada32a01b711af1e7ff7b7a4a3

@@ -1,6 +1,5 @@
 plugins {
-  id("com.android.library")
-  kotlin("android")
+  kotlin("jvm")
   `lobsters-plugin`
 }
 

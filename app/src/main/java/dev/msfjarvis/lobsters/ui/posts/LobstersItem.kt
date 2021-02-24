@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -111,7 +111,7 @@ fun LobstersItem(
           transformations(CircleCropTransformation())
         },
         modifier = Modifier
-          .width(30.dp)
+          .requiredWidth(30.dp)
           .padding(4.dp)
           .constrainAs(avatar) {
             top.linkTo(tags.bottom)

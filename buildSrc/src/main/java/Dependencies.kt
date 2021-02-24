@@ -15,7 +15,7 @@ object Plugins {
 }
 
 object Dependencies {
-  const val COMPOSE_VERSION = "1.0.0-alpha12"
+  const val COMPOSE_VERSION = "1.0.0-beta01"
 
   object Kotlin {
 
@@ -35,16 +35,16 @@ object Dependencies {
 
     object Compose {
 
-      const val activity = "androidx.activity:activity-compose:1.3.0-alpha02"
+      const val activity = "androidx.activity:activity-compose:1.3.0-alpha03"
       const val compiler = "androidx.compose.compiler:compiler:$COMPOSE_VERSION"
       const val constraintLayout =
-        "androidx.constraintlayout:constraintlayout-compose:1.0.0-alpha02"
+        "androidx.constraintlayout:constraintlayout-compose:1.0.0-alpha03"
       const val foundation = "androidx.compose.foundation:foundation:$COMPOSE_VERSION"
       const val foundationLayout = "androidx.compose.foundation:foundation-layout:$COMPOSE_VERSION"
-      const val lifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha01"
+      const val lifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha02"
       const val material = "androidx.compose.material:material:$COMPOSE_VERSION"
-      const val navigation = "androidx.navigation:navigation-compose:1.0.0-alpha07"
-      const val paging = "androidx.paging:paging-compose:1.0.0-alpha07"
+      const val navigation = "androidx.navigation:navigation-compose:1.0.0-alpha08"
+      const val paging = "androidx.paging:paging-compose:1.0.0-alpha08"
       const val runtime = "androidx.compose.runtime:runtime:$COMPOSE_VERSION"
       const val ui = "androidx.compose.ui:ui:$COMPOSE_VERSION"
       const val uiUnit = "androidx.compose.ui:ui-unit:$COMPOSE_VERSION"
@@ -66,7 +66,7 @@ object Dependencies {
 
   object ThirdParty {
 
-    const val accompanist = "dev.chrisbanes.accompanist:accompanist-coil:0.5.1"
+    const val accompanist = "dev.chrisbanes.accompanist:accompanist-coil:0.6.0"
 
     object Moshi {
 

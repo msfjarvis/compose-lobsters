@@ -49,7 +49,7 @@ fun LobstersApp() {
   }
   val jumpToIndex: (Int) -> Unit = {
     coroutineScope.launch {
-      hottestPostsListState.snapToItemIndex(it)
+      hottestPostsListState.animateScrollToItem(it)
     }
   }
 
@@ -100,7 +100,7 @@ fun LobstersBottomNav(
         },
         label = { Text(stringResource(id = screen.labelRes)) },
         selected = currentDestination == screen,
-        alwaysShowLabels = false,
+        alwaysShowLabel = false,
         onClick = {
           if (screen != currentDestination) {
             navigateToDestination(screen)

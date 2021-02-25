@@ -3,7 +3,7 @@ package dev.msfjarvis.lobsters.ui.main
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.runtime.Providers
+import androidx.compose.runtime.CompositionLocalProvider
 import dagger.hilt.android.AndroidEntryPoint
 import dev.msfjarvis.lobsters.ui.theme.LobstersTheme
 import dev.msfjarvis.lobsters.ui.urllauncher.LocalUrlLauncher
@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
-      Providers(LocalUrlLauncher provides urlLauncher) {
+      CompositionLocalProvider(LocalUrlLauncher provides urlLauncher) {
         LobstersTheme {
           LobstersApp()
         }

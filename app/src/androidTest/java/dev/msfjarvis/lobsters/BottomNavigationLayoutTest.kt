@@ -48,7 +48,6 @@ class BottomNavigationLayoutTest {
   fun bottomNavItemCountTest() {
     // Test to make sure total items are equal to enum objects present in Destination
     composeTestRule.onNodeWithTag("LobstersBottomNav")
-      .assertExists()
       .assertIsDisplayed()
       .onChildren()
       .assertCountEquals(Destination.values().size)
@@ -58,7 +57,6 @@ class BottomNavigationLayoutTest {
   fun bottomNavItemTest() {
     // Check hottest BottomNavItem is rendered correctly
     composeTestRule.onNodeWithTag("LobstersBottomNav")
-      .assertExists()
       .assertIsDisplayed()
       .onChildAt(0)
       .assertTextEquals("Hottest")
@@ -67,7 +65,6 @@ class BottomNavigationLayoutTest {
 
     // Check saved BottomNavItem is rendered correctly
     composeTestRule.onNodeWithTag("LobstersBottomNav")
-      .assertExists()
       .assertIsDisplayed()
       .onChildAt(1)
       .assertTextEquals("Saved")
@@ -79,7 +76,6 @@ class BottomNavigationLayoutTest {
   fun bottomNavItemSelectedTest() {
     // Check hottest BottomNav item is selected
     composeTestRule.onNodeWithTag("LobstersBottomNav")
-      .assertExists()
       .assertIsDisplayed()
       .onChildAt(0)
       .assertIsSelected()
@@ -87,7 +83,6 @@ class BottomNavigationLayoutTest {
 
     // Check saved BottomNav item is not selected
     composeTestRule.onNodeWithTag("LobstersBottomNav")
-      .assertExists()
       .assertIsDisplayed()
       .onChildAt(1)
       .assertIsNotSelected()
@@ -99,14 +94,12 @@ class BottomNavigationLayoutTest {
 
     // Check hottest BottomNav item is not selected
     composeTestRule.onNodeWithTag("LobstersBottomNav")
-      .assertExists()
       .assertIsDisplayed()
       .onChildAt(0)
       .assertIsNotSelected()
 
     // Check saved BottomNav item is selected
     composeTestRule.onNodeWithTag("LobstersBottomNav")
-      .assertExists()
       .assertIsDisplayed()
       .onChildAt(1)
       .assertIsSelected()

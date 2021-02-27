@@ -37,8 +37,6 @@ object Dependencies {
 
       const val activity = "androidx.activity:activity-compose:1.3.0-alpha03"
       const val compiler = "androidx.compose.compiler:compiler:$COMPOSE_VERSION"
-      const val constraintLayout =
-        "androidx.constraintlayout:constraintlayout-compose:1.0.0-alpha03"
       const val foundation = "androidx.compose.foundation:foundation:$COMPOSE_VERSION"
       const val foundationLayout = "androidx.compose.foundation:foundation-layout:$COMPOSE_VERSION"
       const val lifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha02"

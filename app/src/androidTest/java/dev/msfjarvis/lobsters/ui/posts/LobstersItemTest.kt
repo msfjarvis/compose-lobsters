@@ -5,7 +5,7 @@ import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onRoot
 import com.karumi.shot.ScreenshotTest
-import dev.msfjarvis.lobsters.ui.theme.LobstersTheme
+import dev.msfjarvis.lobsters.ui.DarkTestTheme
 import org.junit.Rule
 import org.junit.Test
 
@@ -17,7 +17,7 @@ class LobstersItemTest : ScreenshotTest {
   @Test
   fun postsAreRenderedCorrectlyOnScreen() {
     composeTestRule.setContent {
-      LobstersTheme {
+      DarkTestTheme {
         LobstersItem(
           post = TEST_POST,
           onClick = { /*TODO*/ },

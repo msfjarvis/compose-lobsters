@@ -64,7 +64,7 @@ object Dependencies {
 
   object ThirdParty {
 
-    const val accompanist = "dev.chrisbanes.accompanist:accompanist-coil:0.6.0"
+    const val accompanist = "dev.chrisbanes.accompanist:accompanist-coil:0.6.1"
 
     object Moshi {
 

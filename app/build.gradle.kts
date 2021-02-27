@@ -3,6 +3,7 @@ plugins {
   kotlin("android")
   kotlin("kapt")
   id("dagger.hilt.android.plugin")
+  id("shot")
   `versioning-plugin`
   `lobsters-plugin`
   `core-library-desugaring`
@@ -18,7 +19,7 @@ repositories {
 android {
   defaultConfig {
     applicationId = "dev.msfjarvis.lobsters"
-    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    testInstrumentationRunner = "com.karumi.shot.ShotTestRunner"
   }
 
   buildFeatures.compose = true

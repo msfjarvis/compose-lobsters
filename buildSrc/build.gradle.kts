@@ -34,5 +34,6 @@ dependencies {
   implementation(Plugins.jsemver)
   implementation(Plugins.lintModel)
   implementation(Plugins.kotlin)
+  implementation(Plugins.shot)
   implementation(Plugins.sqldelight)
 }

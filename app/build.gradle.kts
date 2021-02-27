@@ -30,7 +30,6 @@ dependencies {
   implementation(Dependencies.AndroidX.browser)
   implementation(Dependencies.AndroidX.Compose.activity)
   implementation(Dependencies.AndroidX.Compose.compiler)
-  implementation(Dependencies.AndroidX.Compose.constraintLayout)
   implementation(Dependencies.AndroidX.Compose.foundation)
   implementation(Dependencies.AndroidX.Compose.foundationLayout)
   implementation(Dependencies.AndroidX.Compose.lifecycleViewModel)

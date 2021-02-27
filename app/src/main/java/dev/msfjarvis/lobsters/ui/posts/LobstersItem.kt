@@ -5,10 +5,11 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredWidth
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,13 +17,14 @@ import androidx.compose.material.IconToggleButton
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ConstraintLayout
 import coil.transform.CircleCropTransformation
 import dev.chrisbanes.accompanist.coil.CoilImage
 import dev.msfjarvis.lobsters.R
@@ -71,71 +73,55 @@ fun LobstersItem(
 ) {
   Surface(
     modifier = Modifier
-      .fillMaxWidth()
       .combinedClickable(
         onClick = onClick,
         onLongClick = onLongClick,
       ),
   ) {
-    ConstraintLayout(
+    Row(
       modifier = Modifier.padding(start = 12.dp, end = 12.dp),
+      verticalAlignment = Alignment.CenterVertically,
     ) {
-      val (title, tags, avatar, submitter, saveButton) = createRefs()
-      Text(
-        text = post.title,
-        color = titleColor,
-        fontWeight = FontWeight.Bold,
-        modifier = Modifier
-          .padding(top = 4.dp)
-          .constrainAs(title) {
-            top.linkTo(parent.top)
-            start.linkTo(parent.start)
-          },
-      )
-      TagRow(
-        tags = post.tags,
-        modifier = Modifier
-          .constrainAs(tags) {
-            top.linkTo(title.bottom)
-          }
-          .padding(vertical = 8.dp),
-      )
-      CoilImage(
-        data = "${LobstersApi.BASE_URL}/${post.submitter_user.avatarUrl}",
-        contentDescription = stringResource(
-          R.string.avatar_content_description,
-          post.submitter_user.username
-        ),
-        fadeIn = true,
-        requestBuilder = {
-          transformations(CircleCropTransformation())
-        },
-        modifier = Modifier
-          .requiredWidth(30.dp)
-          .padding(4.dp)
-          .constrainAs(avatar) {
-            top.linkTo(tags.bottom)
-            start.linkTo(parent.start)
-          },
-      )
-      Text(
-        text = stringResource(id = R.string.submitted_by, post.submitter_user.username),
-        modifier = Modifier
-          .padding(4.dp)
-          .constrainAs(submitter) {
-            top.linkTo(avatar.top)
-            bottom.linkTo(avatar.bottom)
-            start.linkTo(avatar.end)
-          },
-      )
+      Column(
+        modifier = Modifier.width(LocalConfiguration.current.screenWidthDp.dp.times(0.9f))
+      ) {
+        Text(
+          text = post.title,
+          color = titleColor,
+          fontWeight = FontWeight.Bold,
+          modifier = Modifier
+            .padding(top = 4.dp),
+        )
+        TagRow(
+          tags = post.tags,
+          modifier = Modifier
+            .padding(vertical = 8.dp),
+        )
+        Row {
+          CoilImage(
+            data = "${LobstersApi.BASE_URL}/${post.submitter_user.avatarUrl}",
+            contentDescription = stringResource(
+              R.string.avatar_content_description,
+              post.submitter_user.username
+            ),
+            fadeIn = true,
+            requestBuilder = {
+              transformations(CircleCropTransformation())
+            },
+            modifier = Modifier
+              .requiredWidth(30.dp)
+              .padding(4.dp),
+          )
+          Text(
+            text = stringResource(id = R.string.submitted_by, post.submitter_user.username),
+            modifier = Modifier
+              .padding(4.dp),
+          )
+        }
+      }
       IconToggleButton(
         checked = isSaved,
         onCheckedChange = { onSaveButtonClick.invoke() },
-        modifier = Modifier
-          .constrainAs(saveButton) {
-            end.linkTo(parent.end)
-            centerVerticallyTo(parent)
-          }
       ) {
         Crossfade(targetState = isSaved) {
           if (it) {

@@ -100,6 +100,7 @@ fun LobstersBottomNav(
         },
         label = { Text(stringResource(id = screen.labelRes)) },
         selected = currentDestination == screen,
+        modifier = Modifier.testTag(screen.name),
         alwaysShowLabel = false,
         onClick = {
           if (screen != currentDestination) {

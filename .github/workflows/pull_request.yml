@@ -21,16 +21,13 @@ jobs:
       with:
         arguments: test --stacktrace
 
-#    - name: Run instrumentation tests
-#      uses: reactivecircus/android-emulator-runner@08b092e904025fada32a01b711af1e7ff7b7a4a3
-#      with:
-#        api-level: 23
-#        target: default
-#        script: |
-#          adb shell settings put global animator_duration_scale 0
-#          adb shell settings put global transition_animation_scale 0
-#          adb shell settings put global window_animation_scale 0
-#          ./gradlew :app:connectedDebugAndroidTest
+    - name: Run instrumentation tests
+      uses: reactivecircus/android-emulator-runner@08b092e904025fada32a01b711af1e7ff7b7a4a3
+      with:
+        api-level: 30
+        target: google_apis
+        script: |
+          ./gradlew :app:connectedDebugAndroidTest
 
     - name: (Fail-only) upload test report
       if: failure()

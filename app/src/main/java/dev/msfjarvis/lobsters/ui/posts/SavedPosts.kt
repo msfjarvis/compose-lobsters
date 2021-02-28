@@ -6,16 +6,16 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import dev.msfjarvis.lobsters.data.local.LobstersPost
+import dev.msfjarvis.lobsters.data.local.SavedPost
 import dev.msfjarvis.lobsters.ui.urllauncher.LocalUrlLauncher
 import dev.msfjarvis.lobsters.util.asZonedDateTime
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SavedPosts(
-  posts: List<LobstersPost>,
+  posts: List<SavedPost>,
   modifier: Modifier = Modifier,
-  saveAction: (LobstersPost) -> Unit,
+  saveAction: (SavedPost) -> Unit,
 ) {
   val listState = rememberLazyListState()
   val urlLauncher = LocalUrlLauncher.current
@@ -27,7 +27,7 @@ fun SavedPosts(
       state = listState,
       modifier = Modifier.then(modifier),
     ) {
-      val grouped = posts.groupBy { it.created_at.asZonedDateTime().month }
+      val grouped = posts.groupBy { it.createdAt.asZonedDateTime().month }
       grouped.forEach { (month, posts) ->
         stickyHeader {
           MonthHeader(month = month)
@@ -36,8 +36,8 @@ fun SavedPosts(
           LobstersItem(
             post = item,
             isSaved = true,
-            onClick = { urlLauncher.launch(item.url.ifEmpty { item.comments_url }) },
-            onLongClick = { urlLauncher.launch(item.comments_url) },
+            onClick = { urlLauncher.launch(item.url.ifEmpty { item.commentsUrl }) },
+            onLongClick = { urlLauncher.launch(item.commentsUrl) },
             onSaveButtonClick = { saveAction.invoke(item) },
           )
         }

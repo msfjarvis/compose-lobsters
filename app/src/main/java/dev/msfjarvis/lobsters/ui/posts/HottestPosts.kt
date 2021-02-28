@@ -11,8 +11,10 @@ import androidx.compose.ui.Modifier
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
-import dev.msfjarvis.lobsters.data.local.LobstersPost
+import dev.msfjarvis.lobsters.data.local.SavedPost
+import dev.msfjarvis.lobsters.model.LobstersPost
 import dev.msfjarvis.lobsters.ui.urllauncher.LocalUrlLauncher
+import dev.msfjarvis.lobsters.util.toDbModel
 
 @Composable
 fun HottestPosts(
@@ -20,7 +22,7 @@ fun HottestPosts(
   listState: LazyListState,
   isPostSaved: (String) -> Boolean,
   modifier: Modifier = Modifier,
-  saveAction: (LobstersPost) -> Unit,
+  saveAction: (SavedPost) -> Unit,
 ) {
   val urlLauncher = LocalUrlLauncher.current
 
@@ -33,13 +35,15 @@ fun HottestPosts(
     ) {
       items(posts) { item ->
         if (item != null) {
-          var isSaved by remember(item.short_id) { mutableStateOf(isPostSaved(item.short_id)) }
+          @Suppress("NAME_SHADOWING")
+          val item = item.toDbModel()
+          var isSaved by remember(item.shortId) { mutableStateOf(isPostSaved(item.shortId)) }
 
           LobstersItem(
             post = item,
             isSaved = isSaved,
-            onClick = { urlLauncher.launch(item.url.ifEmpty { item.comments_url }) },
-            onLongClick = { urlLauncher.launch(item.comments_url) },
+            onClick = { urlLauncher.launch(item.url.ifEmpty { item.commentsUrl }) },
+            onLongClick = { urlLauncher.launch(item.commentsUrl) },
             onSaveButtonClick = {
               isSaved = isSaved.not()
               saveAction.invoke(item)

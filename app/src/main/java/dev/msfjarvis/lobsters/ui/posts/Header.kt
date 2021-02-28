@@ -1,5 +1,6 @@
 package dev.msfjarvis.lobsters.ui.posts
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -21,6 +22,7 @@ fun MonthHeader(month: Month) {
   Box(
     Modifier
       .fillMaxWidth()
+      .background(MaterialTheme.colors.background)
       .wrapContentHeight()
   ) {
     Text(

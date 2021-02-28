@@ -29,43 +29,26 @@ import coil.transform.CircleCropTransformation
 import dev.chrisbanes.accompanist.coil.CoilImage
 import dev.msfjarvis.lobsters.R
 import dev.msfjarvis.lobsters.data.api.LobstersApi
-import dev.msfjarvis.lobsters.data.local.LobstersPost
-import dev.msfjarvis.lobsters.model.Submitter
+import dev.msfjarvis.lobsters.data.local.SavedPost
 import dev.msfjarvis.lobsters.ui.theme.LobstersTheme
 import dev.msfjarvis.lobsters.ui.theme.titleColor
 import dev.msfjarvis.lobsters.util.IconResource
 
-val TEST_POST = LobstersPost(
-  "zqyydb",
-  "https://lobste.rs/s/zqyydb",
-  "2020-09-21T07:11:14.000-05:00",
-  "k2k20 hackathon report: Bob Beck on LibreSSL progress",
-  "https://undeadly.org/cgi?action=article;sid=20200921105847",
-  4,
-  0,
-  0,
-  "",
-  "https://lobste.rs/s/zqyydb/k2k20_hackathon_report_bob_beck_on",
-  Submitter(
-    "Vigdis",
-    "2017-02-27T21:08:14.000-06:00",
-    false,
-    "Alleycat for the fun, sys/net admin for a living and OpenBSD contributions for the pleasure. (Not so) French dude in Montreal\r\n\r\nhttps://chown.me",
-    false,
-    76,
-    "/avatars/Vigdis-100.png",
-    "sevan",
-    null,
-    null,
-    emptyList(),
-  ),
-  listOf("openbsd", "linux", "containers", "hack the planet", "no thanks"),
+val TEST_POST = SavedPost(
+  shortId = "zqyydb",
+  title = "k2k20 hackathon report: Bob Beck on LibreSSL progress",
+  url = "https://undeadly.org/cgi?action=article;sid=20200921105847",
+  createdAt = "2020-09-21T07:11:14.000-05:00",
+  commentsUrl = "https://lobste.rs/s/zqyydb/k2k20_hackathon_report_bob_beck_on",
+  submitterName = "Vigdis",
+  submitterAvatarUrl = "/avatars/Vigdis-100.png",
+  tags = listOf("openbsd", "linux", "containers", "hack the planet", "no thanks"),
 )
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun LobstersItem(
-  post: LobstersPost,
+  post: SavedPost,
   isSaved: Boolean,
   onClick: () -> Unit,
   onLongClick: () -> Unit,
@@ -99,10 +82,10 @@ fun LobstersItem(
         )
         Row {
           CoilImage(
-            data = "${LobstersApi.BASE_URL}/${post.submitter_user.avatarUrl}",
+            data = "${LobstersApi.BASE_URL}/${post.submitterAvatarUrl}",
             contentDescription = stringResource(
               R.string.avatar_content_description,
-              post.submitter_user.username
+              post.submitterName
             ),
             fadeIn = true,
             requestBuilder = {
@@ -113,7 +96,7 @@ fun LobstersItem(
               .padding(4.dp),
           )
           Text(
-            text = stringResource(id = R.string.submitted_by, post.submitter_user.username),
+            text = stringResource(id = R.string.submitted_by, post.submitterName),
             modifier = Modifier
               .padding(4.dp),
           )

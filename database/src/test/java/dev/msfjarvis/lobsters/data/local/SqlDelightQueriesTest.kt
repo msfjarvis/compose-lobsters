@@ -1,13 +1,8 @@
 package dev.msfjarvis.lobsters.data.local
 
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.adapter
 import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver
 import dev.msfjarvis.lobsters.database.LobstersDatabase
-import dev.msfjarvis.lobsters.model.Submitter
-import dev.msfjarvis.lobsters.model.SubmitterAdapter
 import dev.msfjarvis.lobsters.model.TagsAdapter
-import dev.zacsweers.moshix.reflect.MetadataKotlinJsonAdapterFactory
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -16,19 +11,17 @@ import org.junit.Test
 @OptIn(ExperimentalStdlibApi::class)
 class SqlDelightQueriesTest {
 
-  private lateinit var postQueries: PostQueries
+  private lateinit var postQueries: SavedPostQueries
 
   @Before
   fun setUp() {
-    val moshi = Moshi.Builder().add(MetadataKotlinJsonAdapterFactory()).build()
-    val submitterJsonAdapter = moshi.adapter<Submitter>()
     val driver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
     LobstersDatabase.Schema.create(driver)
     val database = LobstersDatabase(
       driver,
-      LobstersPost.Adapter(SubmitterAdapter(submitterJsonAdapter), TagsAdapter())
+      SavedPost.Adapter(TagsAdapter()),
     )
-    postQueries = database.postQueries
+    postQueries = database.savedPostQueries
   }
 
   @Test
@@ -63,7 +56,7 @@ class SqlDelightQueriesTest {
     postQueries.insertOrReplacePost(post)
 
     // Create a new post and try replacing it
-    val newPost = post.copy(comment_count = 100)
+    val newPost = post.copy(submitterName = "Fake name")
     postQueries.insertOrReplacePost(newPost)
 
     // Check post count
@@ -71,8 +64,8 @@ class SqlDelightQueriesTest {
     assertEquals(1, postsCount)
 
     // Check if post is updated
-    val postFromDb = postQueries.selectPost(post.short_id).executeAsOne()
-    assertEquals(100, postFromDb.comment_count)
+    val postFromDb = postQueries.selectPost(post.shortId).executeAsOne()
+    assertEquals("Fake name", postFromDb.submitterName)
   }
 
   @Test
@@ -84,7 +77,7 @@ class SqlDelightQueriesTest {
     postQueries.insertOrReplacePost(post)
 
     val postFromDb = postQueries.selectAllPosts().executeAsOne()
-    assertEquals("test_id_1", postFromDb.short_id)
+    assertEquals("test_id_1", postFromDb.shortId)
   }
 
   @Test
@@ -97,9 +90,9 @@ class SqlDelightQueriesTest {
 
     val postsFromDb = postQueries.selectAllPosts().executeAsList()
 
-    // Check if all posts have correct short_id
+    // Check if all posts have correct shortId
     for (i in 1..5) {
-      assertEquals("test_id_$i", postsFromDb[i - 1].short_id)
+      assertEquals("test_id_$i", postsFromDb[i - 1].shortId)
     }
   }
 
@@ -116,8 +109,8 @@ class SqlDelightQueriesTest {
 
     // Check if size is 2, and only the correct post is deleted
     assertEquals(2, postsFromDB.size)
-    assertEquals("test_id_1", postsFromDB[0].short_id)
-    assertEquals("test_id_3", postsFromDB[1].short_id)
+    assertEquals("test_id_1", postsFromDB[0].shortId)
+    assertEquals("test_id_3", postsFromDB[1].shortId)
   }
 
   @Test
@@ -136,32 +129,18 @@ class SqlDelightQueriesTest {
   }
 
 
-  private fun createTestData(count: Int): ArrayList<LobstersPost> {
-    val posts = arrayListOf<LobstersPost>()
+  private fun createTestData(count: Int): ArrayList<SavedPost> {
+    val posts = arrayListOf<SavedPost>()
 
     for (i in 1..count) {
-      val submitter = Submitter(
-        username = "test_user_$i",
+      val post = SavedPost(
+        shortId = "test_id_$i",
         createdAt = "0",
-        about = "test",
-        avatarUrl = "test_avatar_url",
-        invitedByUser = "test_user",
-        isAdmin = false,
-        isModerator = false
-      )
-
-      val post = LobstersPost(
-        short_id = "test_id_$i",
-        short_id_url = "test_id_url",
-        created_at = "0",
         title = "test",
         url = "test_url",
-        score = 0,
-        flags = 0,
-        comment_count = 0,
-        description = "test",
-        comments_url = "test_comments_url",
-        submitter_user = submitter,
+        commentsUrl = "test_comments_url",
+        submitterName = "test_user_$i",
+        submitterAvatarUrl = "test_avatar_url",
         tags = listOf(),
       )
 

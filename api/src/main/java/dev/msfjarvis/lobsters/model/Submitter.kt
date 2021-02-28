@@ -1,7 +1,9 @@
 package dev.msfjarvis.lobsters.model
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 class Submitter(
   val username: String,
   @Json(name = "created_at")
@@ -21,5 +23,5 @@ class Submitter(
   @Json(name = "twitter_username")
   val twitterUsername: String? = null,
   @Json(name = "keybase_signatures")
-  val keybaseSignatures: List<KeybaseSignature> = emptyList()
+  val keybaseSignatures: List<KeybaseSignature> = emptyList(),
 )

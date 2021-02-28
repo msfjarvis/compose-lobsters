@@ -1,0 +1,39 @@
+import kotlin.collections.List;
+
+CREATE TABLE IF NOT EXISTS SavedPost(
+  shortId TEXT NOT NULL PRIMARY KEY,
+  title TEXT NOT NULL,
+  url TEXT NOT NULL,
+  createdAt TEXT NOT NULL,
+  commentsUrl TEXT NOT NULL,
+  submitterName TEXT NOT NULL,
+  submitterAvatarUrl TEXT NOT NULL,
+  tags TEXT as List<String> NOT NULL
+);
+
+insertOrReplacePost:
+INSERT OR REPLACE
+INTO SavedPost
+VALUES ?;
+
+selectAllPosts:
+SELECT *
+FROM SavedPost;
+
+selectCount:
+SELECT COUNT(*)
+FROM SavedPost;
+
+deleteAllPosts:
+DELETE
+FROM SavedPost;
+
+deletePost:
+DELETE
+FROM SavedPost
+WHERE shortId = ?;
+
+selectPost:
+SELECT *
+FROM SavedPost
+WHERE shortId = ?;

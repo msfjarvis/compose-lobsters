@@ -54,7 +54,6 @@ dependencies {
   implementation(Dependencies.Kotlin.Coroutines.android)
   implementation(Dependencies.ThirdParty.accompanist)
   implementation(Dependencies.ThirdParty.Moshi.lib)
-  implementation(Dependencies.ThirdParty.Moshi.moshiMetadataReflect)
   implementation(Dependencies.ThirdParty.Retrofit.moshi)
   implementation(Dependencies.ThirdParty.SQLDelight.androidDriver)
   testImplementation(Dependencies.Testing.junit)

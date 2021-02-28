@@ -1,6 +1,6 @@
 package dev.msfjarvis.lobsters.data.api
 
-import dev.msfjarvis.lobsters.data.local.LobstersPost
+import dev.msfjarvis.lobsters.model.LobstersPost
 import retrofit2.http.GET
 import retrofit2.http.Query
 

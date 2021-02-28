@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <style name="Platform.Theme.Claw" parent="Theme.AppCompat.NoActionBar">
+    <item name="android:statusBarColor">#FF000000</item>
+    <item name="android:navigationBarColor">#FF000000</item>
+  </style>
+</resources>

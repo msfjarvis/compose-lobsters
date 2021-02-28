@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+  <!-- Backup SQLDelight generated databases so that saved posts can be restored -->
+  <include domain="root" path="databases" />
+</full-backup-content>

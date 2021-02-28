@@ -1,7 +1,9 @@
 package dev.msfjarvis.lobsters.model
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 class LobstersPost(
   @Json(name = "short_id")
   val shortId: String,

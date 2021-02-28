@@ -71,7 +71,7 @@ object Dependencies {
 
       private const val version = "1.11.0"
       const val lib = "com.squareup.moshi:moshi:$version"
-      const val moshiMetadataReflect = "dev.zacsweers.moshix:moshi-metadata-reflect:0.9.1"
+      const val ksp = "dev.zacsweers.moshix:moshi-ksp:0.9.1"
     }
 
     object Retrofit {

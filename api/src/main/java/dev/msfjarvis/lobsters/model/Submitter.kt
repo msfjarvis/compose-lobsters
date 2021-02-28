@@ -1,7 +1,9 @@
 package dev.msfjarvis.lobsters.model
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 class Submitter(
   val username: String,
   @Json(name = "created_at")

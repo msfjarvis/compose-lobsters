@@ -2,7 +2,6 @@ package dev.msfjarvis.lobsters.data.api
 
 import com.squareup.moshi.Moshi
 import dev.msfjarvis.lobsters.util.TestUtils
-import dev.zacsweers.moshix.reflect.MetadataKotlinJsonAdapterFactory
 import kotlinx.coroutines.runBlocking
 import mockwebserver3.Dispatcher
 import mockwebserver3.MockResponse
@@ -24,7 +23,6 @@ class LobstersApiTest {
     private val webServer = MockWebServer()
     private val apiData = TestUtils.getJson("hottest.json")
     private val moshi = Moshi.Builder()
-      .add(MetadataKotlinJsonAdapterFactory())
       .build()
     private val okHttp = OkHttpClient.Builder()
       .build()

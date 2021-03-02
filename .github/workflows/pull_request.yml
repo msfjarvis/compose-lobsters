@@ -31,6 +31,14 @@ jobs:
       with:
         api-level: 30
         target: google_apis
+        print-config-ini: true
+        cores: 2
+        ram-size: 3072
+        vm-heap-size: 512
+        disable-autofill: true
+        disable-spellchecker: true
+        enable-logcat: true
+        enable-hw-keyboard: true
         script: |
           ./gradlew :app:connectedDebugAndroidTest
 

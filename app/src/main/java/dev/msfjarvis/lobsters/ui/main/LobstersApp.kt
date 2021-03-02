@@ -31,7 +31,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun LobstersApp() {
   val viewModel: LobstersViewModel = viewModel()
-  val coroutineScope = rememberCoroutineScope()
   val navController = rememberNavController()
   val hottestPosts = viewModel.posts.collectAsLazyPagingItems()
   val savedPosts by viewModel.savedPosts.collectAsState()
@@ -47,10 +46,8 @@ fun LobstersApp() {
       popUpTo(navController.graph.startDestination) { inclusive = false }
     }
   }
-  val jumpToIndex: (Int) -> Unit = {
-    coroutineScope.launch {
-      hottestPostsListState.animateScrollToItem(it)
-    }
+  val jumpToIndex: suspend (Int) -> Unit = {
+    hottestPostsListState.animateScrollToItem(it)
   }
 
   Scaffold(
@@ -87,8 +84,9 @@ fun LobstersApp() {
 fun LobstersBottomNav(
   currentDestination: Destination,
   navigateToDestination: (destination: Destination) -> Unit,
-  jumpToIndex: (index: Int) -> Unit,
+  jumpToIndex: suspend (index: Int) -> Unit,
 ) {
+  val coroutineScope = rememberCoroutineScope()
   BottomNavigation(modifier = Modifier.testTag("LobstersBottomNav")) {
     Destination.values().forEach { screen ->
       BottomNavigationItem(
@@ -106,7 +104,7 @@ fun LobstersBottomNav(
           if (screen != currentDestination) {
             navigateToDestination(screen)
           } else if (screen.route == Destination.Hottest.route) {
-            jumpToIndex(0)
+            coroutineScope.launch { jumpToIndex(0) }
           }
         }
       )

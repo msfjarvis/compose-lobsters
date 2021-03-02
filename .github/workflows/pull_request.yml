@@ -27,18 +27,11 @@ jobs:
         arguments: test --stacktrace
 
     - name: Run instrumentation tests
-      uses: Doist/android-emulator-runner@cec9a60a93abe9bba2bd0ab71c170a017c0aafee
+      uses: Doist/android-emulator-runner@eca22f71dc1b472bd005c34519167f8f82c7b719
       with:
         api-level: 30
         target: google_apis
-        print-config-ini: true
         cores: 2
-        ram-size: 3072
-        vm-heap-size: 512
-        disable-autofill: true
-        disable-spellchecker: true
-        enable-logcat: true
-        enable-hw-keyboard: true
         script: |
           ./gradlew :app:connectedDebugAndroidTest
 

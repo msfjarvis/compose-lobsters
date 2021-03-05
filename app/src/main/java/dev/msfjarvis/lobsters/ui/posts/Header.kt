@@ -9,10 +9,10 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.msfjarvis.lobsters.ui.theme.LobstersTheme
-import dev.msfjarvis.lobsters.ui.theme.titleColor
 import java.time.Month
 import java.util.Locale
 import java.time.format.TextStyle as JTextStyle
@@ -22,12 +22,16 @@ fun MonthHeader(month: Month) {
   Box(
     Modifier
       .fillMaxWidth()
-      .background(MaterialTheme.colors.background)
+      .background(MaterialTheme.colors.secondary)
       .wrapContentHeight()
+      .padding(4.dp)
   ) {
     Text(
       text = month.getDisplayName(JTextStyle.FULL, Locale.getDefault()),
-      style = MaterialTheme.typography.h4.copy(color = titleColor),
+      style = MaterialTheme.typography.h5.copy(
+        color = MaterialTheme.colors.onSecondary,
+        textAlign = TextAlign.Center,
+      ),
       modifier = Modifier.padding(horizontal = 12.dp),
     )
   }

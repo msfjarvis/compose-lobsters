@@ -27,7 +27,7 @@ jobs:
         arguments: test --stacktrace
 
     - name: Run instrumentation tests
-      uses: reactivecircus/android-emulator-runner@08b092e904025fada32a01b711af1e7ff7b7a4a3
+      uses: reactivecircus/android-emulator-runner@d2799957d660add41c61a5103e2fbb9e2889eb73
       with:
         api-level: 30
         target: google_apis

@@ -19,13 +19,13 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class LobstersViewModel @Inject constructor(
   private val lobstersRepository: LobstersRepository,
-  private val pagingSource: LobstersPagingSource,
 ) : ViewModel() {
   private val _savedPosts = MutableStateFlow<List<SavedPost>>(emptyList())
   val savedPosts = _savedPosts.asStateFlow()
   val posts = Pager(PagingConfig(25)) {
-    pagingSource
+    LobstersPagingSource(lobstersRepository).also { pagingSource = it }
   }.flow.cachedIn(viewModelScope)
+  private var pagingSource: LobstersPagingSource? = null
 
   init {
     lobstersRepository.isCacheReady.onEach { ready ->
@@ -36,7 +36,7 @@ class LobstersViewModel @Inject constructor(
   }
 
   fun reloadPosts() {
-    pagingSource.invalidate()
+    pagingSource?.invalidate()
   }
 
   fun toggleSave(post: SavedPost) {

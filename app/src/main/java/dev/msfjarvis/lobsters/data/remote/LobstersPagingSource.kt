@@ -4,9 +4,8 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import dev.msfjarvis.lobsters.data.repo.LobstersRepository
 import dev.msfjarvis.lobsters.model.LobstersPost
-import javax.inject.Inject
 
-class LobstersPagingSource @Inject constructor(
+class LobstersPagingSource constructor(
   private val lobstersRepository: LobstersRepository,
 ) : PagingSource<Int, LobstersPost>() {
 

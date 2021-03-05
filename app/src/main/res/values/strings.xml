@@ -8,4 +8,5 @@
   <string name="avatar_content_description">%1$s\'s avatar</string>
   <string name="add_to_saved_posts">Add to saved posts</string>
   <string name="remove_from_saved_posts">Remove from saved posts</string>
+  <string name="refresh_posts_content_description">Refresh posts</string>
 </resources>

@@ -35,6 +35,10 @@ class LobstersViewModel @Inject constructor(
     }.launchIn(viewModelScope)
   }
 
+  fun reloadPosts() {
+    pagingSource.invalidate()
+  }
+
   fun toggleSave(post: SavedPost) {
     viewModelScope.launch {
       val isSaved = lobstersRepository.isPostSaved(post.shortId)

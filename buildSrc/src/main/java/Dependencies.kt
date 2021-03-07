@@ -67,6 +67,7 @@ object Dependencies {
 
     const val accompanist = "dev.chrisbanes.accompanist:accompanist-coil:0.6.2"
     const val composeFlowLayout = "com.star-zero:compose-flowlayout:0.0.1"
+    const val pullToRefresh = "com.puculek.pulltorefresh:pull-to-refresh-compose:1.0.0"
 
     object Moshi {
 

@@ -64,9 +64,10 @@ fun LobstersApp() {
         HottestPosts(
           posts = hottestPosts,
           listState = hottestPostsListState,
+          modifier = Modifier.padding(bottom = innerPadding.calculateBottomPadding()),
           isPostSaved = viewModel::isPostSaved,
           saveAction = viewModel::toggleSave,
-          modifier = Modifier.padding(bottom = innerPadding.calculateBottomPadding()),
+          refreshAction = viewModel::reloadPosts,
         )
       }
       composable(Destination.Saved.route) {

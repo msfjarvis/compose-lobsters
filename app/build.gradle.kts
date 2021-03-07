@@ -9,13 +9,6 @@ plugins {
   `core-library-desugaring`
 }
 
-repositories {
-  // kotlinx-collections-immutable-jvm used by Compose is stored here.
-  maven("https://dl.bintray.com/kotlin/kotlinx") {
-    name = "KotlinX Bintray"
-  }
-}
-
 android {
   defaultConfig {
     applicationId = "dev.msfjarvis.lobsters"

@@ -11,6 +11,7 @@ import org.gradle.api.tasks.Delete
 import org.gradle.api.tasks.testing.Test
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.gradle.api.tasks.wrapper.Wrapper
+import org.gradle.kotlin.dsl.maven
 import org.gradle.kotlin.dsl.register
 import org.gradle.kotlin.dsl.repositories
 import org.gradle.kotlin.dsl.withType
@@ -39,6 +40,18 @@ internal fun Project.configureForAllProjects() {
   repositories {
     google()
     mavenCentral()
+    jcenter {
+      content {
+        includeGroup("org.jetbrains.compose.*")
+      }
+    }
+    maven("https://dl.bintray.com/kotlin/kotlinx") {
+      name = "KotlinX Bintray"
+      content {
+        includeModule("org.jetbrains.kotlinx", "kotlinx-collections-immutable")
+        includeModule("org.jetbrains.kotlinx", "kotlinx-collections-immutable-jvm")
+      }
+    }
   }
   tasks.withType<KotlinCompile> {
     kotlinOptions {

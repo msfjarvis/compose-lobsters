@@ -27,7 +27,11 @@ fun HottestPosts(
   val urlLauncher = LocalUrlLauncher.current
 
   if (posts.loadState.refresh == LoadState.Loading) {
-    EmptyList(saved = false)
+    LazyColumn {
+      items(15) {
+        LoadingLobstersItem()
+      }
+    }
   } else {
     LazyColumn(
       state = listState,

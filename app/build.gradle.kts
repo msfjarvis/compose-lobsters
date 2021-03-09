@@ -53,6 +53,7 @@ dependencies {
   implementation(Dependencies.AndroidX.Lifecycle.viewmodelKtx)
   implementation(Dependencies.Kotlin.Coroutines.android)
   implementation(Dependencies.ThirdParty.accompanist)
+  implementation(Dependencies.ThirdParty.composeFlowLayout)
   implementation(Dependencies.ThirdParty.Moshi.lib)
   implementation(Dependencies.ThirdParty.Retrofit.moshi)
   implementation(Dependencies.ThirdParty.SQLDelight.androidDriver)

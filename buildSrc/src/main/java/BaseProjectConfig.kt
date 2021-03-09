@@ -77,6 +77,7 @@ internal fun BaseAppModuleExtension.configureAndroidApplicationOptions(project: 
       setProguardFiles(listOf("proguard-android-optimize.txt", "proguard-rules.pro"))
     }
     named("debug") {
+      applicationIdSuffix = ".debug"
       versionNameSuffix = "-debug"
       isMinifyEnabled = false
     }

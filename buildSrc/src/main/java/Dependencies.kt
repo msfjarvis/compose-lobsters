@@ -66,6 +66,7 @@ object Dependencies {
   object ThirdParty {
 
     const val accompanist = "dev.chrisbanes.accompanist:accompanist-coil:0.6.1"
+    const val composeFlowLayout = "com.star-zero:compose-flowlayout:0.0.1"
 
     object Moshi {
 

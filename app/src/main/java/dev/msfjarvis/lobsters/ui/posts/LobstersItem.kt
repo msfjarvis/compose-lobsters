@@ -30,6 +30,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.transform.CircleCropTransformation
+import com.star_zero.compose.flowlayout.FlowLayout
 import dev.chrisbanes.accompanist.coil.CoilImage
 import dev.msfjarvis.lobsters.R
 import dev.msfjarvis.lobsters.data.api.LobstersApi
@@ -131,11 +132,12 @@ fun TagRow(
   tags: List<String>,
   modifier: Modifier = Modifier,
 ) {
-  Row(
+  FlowLayout(
     modifier = Modifier.then(modifier),
-    horizontalArrangement = Arrangement.spacedBy(8.dp),
+    horizontalSpacing = 8.dp,
+    verticalSpacing = 8.dp,
   ) {
-    tags.take(3).forEach { tag ->
+    tags.forEach { tag ->
       Text(
         text = tag,
         modifier = Modifier

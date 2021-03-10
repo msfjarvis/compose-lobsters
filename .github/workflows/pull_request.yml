@@ -21,18 +21,13 @@ jobs:
     - name: Copy CI gradle.properties
       run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
 
-    - uses: burrunan/gradle-cache-action@03c71a8ba93d670980695505f48f49daf43704a6
-      name: Run unit tests
-      with:
-        arguments: test --stacktrace
-
-    - name: Run instrumentation tests
+    - name: Run unit and instrumentation tests
       uses: reactivecircus/android-emulator-runner@d2799957d660add41c61a5103e2fbb9e2889eb73
       with:
         api-level: 30
         target: google_apis
         script: |
-          ./gradlew :app:connectedDebugAndroidTest
+          ./gradlew test executeScreenshotTests --stacktrace
 
     - name: (Fail-only) upload test report
       if: failure()

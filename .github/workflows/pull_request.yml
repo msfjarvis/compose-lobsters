@@ -26,6 +26,7 @@ jobs:
       with:
         api-level: 30
         target: google_apis
+        profile: pixel_xl
         script: |
           ./gradlew test executeScreenshotTests --stacktrace
 

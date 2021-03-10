@@ -30,6 +30,8 @@ class LobstersRepository constructor(
     return@withContext lobstersApi.getHottestPosts(page)
   }
 
+  // https://issuetracker.google.com/issues/181221325
+  @Suppress("NewApi")
   suspend fun updateCache() {
     if (_isCacheReady.value) return
     val posts = getSavedPosts()

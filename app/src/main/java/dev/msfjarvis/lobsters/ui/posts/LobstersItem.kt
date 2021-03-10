@@ -7,13 +7,10 @@ import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.requiredWidth
-import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -67,7 +64,7 @@ fun LobstersItem(
       ),
   ) {
     Row(
-      modifier = Modifier.padding(start = 12.dp, end = 12.dp),
+      modifier = Modifier.padding(start = 12.dp, end = 24.dp),
       verticalAlignment = Alignment.CenterVertically,
       horizontalArrangement = Arrangement.SpaceBetween,
     ) {
@@ -84,7 +81,7 @@ fun LobstersItem(
         TagRow(
           tags = post.tags,
           modifier = Modifier
-            .padding(vertical = 8.dp),
+            .padding(top = 8.dp, bottom = 8.dp, end = 16.dp),
         )
         Row {
           CoilImage(
@@ -112,8 +109,7 @@ fun LobstersItem(
         checked = isSaved,
         onCheckedChange = { onSaveButtonClick.invoke() },
         modifier = Modifier
-          .requiredSize(24.dp)
-          .absoluteOffset(x = (-24).dp),
+          .requiredSize(24.dp),
       ) {
         Crossfade(targetState = isSaved) { saved ->
           IconResource(

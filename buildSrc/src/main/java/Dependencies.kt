@@ -9,14 +9,14 @@ object Plugins {
   const val android = "com.android.tools.build:gradle:7.0.0-alpha09"
   const val lintModel = "com.android.tools.lint:lint-model:30.0.0-alpha09"
   const val hilt = "com.google.dagger:hilt-android-gradle-plugin:${DAGGER_HILT_VERSION}"
-  const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.30"
+  const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.31"
   const val jsemver = "com.github.zafarkhaja:java-semver:0.9.0"
   const val shot = "com.karumi:shot:5.10.3"
   const val sqldelight = "com.squareup.sqldelight:gradle-plugin:1.4.4"
 }
 
 object Dependencies {
-  const val COMPOSE_VERSION = "1.0.0-beta01"
+  const val COMPOSE_VERSION = "1.0.0-beta02"
 
   object Kotlin {
 
@@ -36,13 +36,13 @@ object Dependencies {
 
     object Compose {
 
-      const val activity = "androidx.activity:activity-compose:1.3.0-alpha03"
+      const val activity = "androidx.activity:activity-compose:1.3.0-alpha04"
       const val compiler = "androidx.compose.compiler:compiler:$COMPOSE_VERSION"
       const val foundation = "androidx.compose.foundation:foundation:$COMPOSE_VERSION"
       const val foundationLayout = "androidx.compose.foundation:foundation-layout:$COMPOSE_VERSION"
-      const val lifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha02"
+      const val lifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha03"
       const val material = "androidx.compose.material:material:$COMPOSE_VERSION"
-      const val navigation = "androidx.navigation:navigation-compose:1.0.0-alpha08"
+      const val navigation = "androidx.navigation:navigation-compose:1.0.0-alpha09"
       const val paging = "androidx.paging:paging-compose:1.0.0-alpha08"
       const val runtime = "androidx.compose.runtime:runtime:$COMPOSE_VERSION"
       const val ui = "androidx.compose.ui:ui:$COMPOSE_VERSION"
@@ -65,7 +65,7 @@ object Dependencies {
 
   object ThirdParty {
 
-    const val accompanist = "dev.chrisbanes.accompanist:accompanist-coil:0.6.1"
+    const val accompanist = "dev.chrisbanes.accompanist:accompanist-coil:0.6.2"
     const val composeFlowLayout = "com.star-zero:compose-flowlayout:0.0.1"
 
     object Moshi {

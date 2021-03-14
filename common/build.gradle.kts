@@ -6,17 +6,7 @@ plugins {
 }
 
 repositories {
-  mavenCentral()
   maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
-  google()
-}
-
-
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-  kotlinOptions {
-    jvmTarget = JavaVersion.VERSION_1_8.toString()
-    useIR = true
-  }
 }
 
 // workaround for https://youtrack.jetbrains.com/issue/KT-43944

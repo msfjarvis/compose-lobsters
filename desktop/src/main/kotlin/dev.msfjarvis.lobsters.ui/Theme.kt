@@ -1,4 +1,5 @@
 @file:Suppress("UNUSED")
+package dev.msfjarvis.lobsters.ui
 
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors

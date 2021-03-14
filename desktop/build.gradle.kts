@@ -23,6 +23,6 @@ dependencies {
 
 compose.desktop {
   application {
-    mainClass = "MainKt"
+    mainClass = "dev.msfjarvis.lobsters.ui.Main"
   }
 }

@@ -1,3 +1,6 @@
+@file:JvmName("Main")
+package dev.msfjarvis.lobsters.ui
+
 import androidx.compose.desktop.Window
 import androidx.compose.foundation.VerticalScrollbar
 import androidx.compose.foundation.layout.Box
@@ -16,6 +19,7 @@ import dev.msfjarvis.lobsters.data.local.SavedPost
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import dev.msfjarvis.lobsters.data.ApiRepository
 import dev.msfjarvis.lobsters.model.LobstersPost
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -1,3 +1,5 @@
+package dev.msfjarvis.lobsters.data
+
 import com.squareup.moshi.Moshi
 import dev.msfjarvis.lobsters.data.api.LobstersApi
 import dev.msfjarvis.lobsters.model.LobstersPost

@@ -1,3 +1,5 @@
+package dev.msfjarvis.lobsters.ui
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -17,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import dev.msfjarvis.lobsters.data.local.SavedPost
+import dev.msfjarvis.lobsters.util.UrlLauncher
 import io.kamel.image.KamelImage
 import io.kamel.image.lazyImageResource
 import java.net.URI

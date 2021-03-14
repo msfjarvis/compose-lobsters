@@ -3,10 +3,15 @@ plugins {
   kotlin("android")
   kotlin("kapt")
   id("dagger.hilt.android.plugin")
+  id("org.jetbrains.compose") version "0.4.0-build173"
   id("shot")
   `versioning-plugin`
   `lobsters-plugin`
   `core-library-desugaring`
+}
+
+repositories {
+  maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
 }
 
 android {
@@ -14,18 +19,13 @@ android {
     applicationId = "dev.msfjarvis.lobsters"
     testInstrumentationRunner = "com.karumi.shot.ShotTestRunner"
   }
-
-  buildFeatures.compose = true
-
-  composeOptions {
-    kotlinCompilerExtensionVersion = Dependencies.COMPOSE_VERSION
-  }
 }
 
 dependencies {
 
   kapt(Dependencies.AndroidX.Hilt.daggerCompiler)
   implementation(project(":api"))
+  implementation(project(":common"))
   implementation(project(":database"))
   implementation(Dependencies.AndroidX.appCompat)
   implementation(Dependencies.AndroidX.browser)

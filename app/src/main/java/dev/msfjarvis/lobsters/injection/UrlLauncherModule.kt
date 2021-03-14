@@ -7,13 +7,13 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.android.qualifiers.ActivityContext
 import dev.msfjarvis.lobsters.ui.urllauncher.UrlLauncher
-import dev.msfjarvis.lobsters.ui.urllauncher.UrlLauncherImpl
+import dev.msfjarvis.lobsters.ui.urllauncher.AndroidUrlLauncherImpl
 
 @Module
 @InstallIn(ActivityComponent::class)
 object UrlLauncherModule {
   @Provides
   fun provideUrlLauncher(@ActivityContext context: Context): UrlLauncher {
-    return UrlLauncherImpl(context)
+    return AndroidUrlLauncherImpl(context)
   }
 }

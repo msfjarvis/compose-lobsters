@@ -12,6 +12,7 @@ repositories {
 
 dependencies {
   implementation(project(":api"))
+  implementation(project(":common"))
   implementation(project(":database"))
   implementation(compose.desktop.currentOs)
   implementation(compose.runtime)

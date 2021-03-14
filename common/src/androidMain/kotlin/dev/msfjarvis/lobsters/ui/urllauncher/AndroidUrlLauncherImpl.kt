@@ -3,8 +3,9 @@ package dev.msfjarvis.lobsters.ui.urllauncher
 import android.content.Context
 import android.net.Uri
 import androidx.browser.customtabs.CustomTabsIntent
+import dev.msfjarvis.lobsters.ui.urllauncher.UrlLauncher
 
-class UrlLauncherImpl(private val context: Context) : UrlLauncher {
+class AndroidUrlLauncherImpl(private val context: Context) : UrlLauncher {
   override fun launch(url: String) {
     val customTabsIntent = CustomTabsIntent.Builder()
       .setShareState(CustomTabsIntent.SHARE_STATE_ON)

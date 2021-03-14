@@ -17,6 +17,8 @@ dependencies {
   implementation(compose.runtime)
   implementation(compose.material)
   implementation(Dependencies.Kotlin.Coroutines.jvmCore)
+  implementation(Dependencies.ThirdParty.kamel)
+  implementation(Dependencies.ThirdParty.Retrofit.moshi)
 }
 
 compose.desktop {

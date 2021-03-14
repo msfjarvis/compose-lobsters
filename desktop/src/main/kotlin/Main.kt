@@ -7,23 +7,31 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.rememberScrollbarAdapter
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Text
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import dev.msfjarvis.lobsters.data.local.SavedPost
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import dev.msfjarvis.lobsters.model.LobstersPost
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-val TEST_POST = SavedPost(
-  shortId = "zqyydb",
-  title = "k2k20 hackathon report: Bob Beck on LibreSSL progress",
-  url = "https://undeadly.org/cgi?action=article;sid=20200921105847",
-  createdAt = "2020-09-21T07:11:14.000-05:00",
-  commentsUrl = "https://lobste.rs/s/zqyydb/k2k20_hackathon_report_bob_beck_on",
-  submitterName = "Vigdis",
-  submitterAvatarUrl = "/avatars/Vigdis-100.png",
-  tags = listOf("openbsd", "linux", "containers", "hack the planet", "no thanks"),
-)
+val repository = ApiRepository()
 
 @OptIn(ExperimentalStdlibApi::class)
 fun main() = Window(title = "Claw for lobste.rs") {
+  val coroutineScope = rememberCoroutineScope()
+  var items by remember { mutableStateOf(emptyList<SavedPost>()) }
+  coroutineScope.launch {
+    withContext(Dispatchers.IO) {
+      items = repository.loadPosts(0).map(::toDbModel)
+    }
+  }
   LobstersTheme {
     Box(
       modifier = Modifier.fillMaxSize(),
@@ -34,9 +42,13 @@ fun main() = Window(title = "Claw for lobste.rs") {
           .fillMaxSize()
           .verticalScroll(stateVertical),
       ) {
-        Column {
-          repeat(50) {
-            LobstersItem(TEST_POST)
+        if (items.isEmpty()) {
+          Text("Loading...")
+        } else {
+          Column {
+            items.forEach {
+              LobstersItem(it)
+            }
           }
         }
       }
@@ -46,4 +58,17 @@ fun main() = Window(title = "Claw for lobste.rs") {
       )
     }
   }
+}
+
+fun toDbModel(post: LobstersPost): SavedPost {
+  return SavedPost(
+    shortId = post.shortId,
+    title = post.title,
+    url = post.url,
+    createdAt = post.createdAt,
+    commentsUrl = post.commentsUrl,
+    submitterName = post.submitterUser.username,
+    submitterAvatarUrl = post.submitterUser.avatarUrl,
+    tags = post.tags,
+  )
 }

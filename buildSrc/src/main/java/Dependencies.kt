@@ -68,6 +68,7 @@ object Dependencies {
 
     const val accompanist = "dev.chrisbanes.accompanist:accompanist-coil:0.6.2"
     const val composeFlowLayout = "com.star-zero:compose-flowlayout:0.0.1"
+    const val kamel = "com.alialbaali.kamel:kamel-image:0.2.0"
     const val pullToRefresh = "com.puculek.pulltorefresh:pull-to-refresh-compose:1.0.0"
 
     object Moshi {
@@ -100,7 +101,6 @@ object Dependencies {
     object AndroidX {
 
       private const val version = "1.3.1-alpha02"
-      const val runner = "androidx.test:runner:$version"
 
       object Compose {
 

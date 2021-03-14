@@ -38,20 +38,20 @@ kotlin {
   sourceSets {
     val androidMain by getting {
       dependencies {
-        implementation(Dependencies.AndroidX.Compose.runtime)
+        implementation(compose.runtime)
         implementation(Dependencies.AndroidX.browser)
       }
     }
 
     val commonMain by getting {
       dependencies {
-        implementation(Dependencies.AndroidX.Compose.runtime)
+        implementation(compose.runtime)
       }
     }
 
     val jvmMain by getting {
       dependencies {
-        implementation(Dependencies.AndroidX.Compose.runtime)
+        implementation(compose.runtime)
       }
     }
   }

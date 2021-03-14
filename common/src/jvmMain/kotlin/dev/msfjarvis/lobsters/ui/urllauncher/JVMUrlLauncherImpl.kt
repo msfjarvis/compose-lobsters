@@ -3,7 +3,7 @@ package dev.msfjarvis.lobsters.ui.urllauncher
 import java.awt.Desktop
 import java.net.URI
 
-class JVMLocalLauncherImpl() : UrlLauncher {
+class JVMUrlLauncherImpl() : UrlLauncher {
   override fun launch(url: String) {
     val desktop = Desktop.getDesktop()
 

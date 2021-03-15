@@ -20,6 +20,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
+import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import dev.msfjarvis.lobsters.ui.navigation.Destination
 import dev.msfjarvis.lobsters.ui.posts.HottestPosts
@@ -47,7 +48,9 @@ fun LobstersApp() {
     }
   }
   val jumpToIndex: suspend (Int) -> Unit = {
-    hottestPostsListState.animateScrollToItem(it)
+    if (hottestPosts.loadState.refresh != LoadState.Loading) {
+      hottestPostsListState.animateScrollToItem(it)
+    }
   }
 
   Scaffold(

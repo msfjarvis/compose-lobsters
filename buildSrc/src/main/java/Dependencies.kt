@@ -6,8 +6,8 @@
 private const val DAGGER_HILT_VERSION = "2.33-beta"
 
 object Plugins {
-  const val android = "com.android.tools.build:gradle:7.0.0-alpha09"
-  const val lintModel = "com.android.tools.lint:lint-model:30.0.0-alpha09"
+  const val android = "com.android.tools.build:gradle:7.0.0-alpha10"
+  const val lintModel = "com.android.tools.lint:lint-model:30.0.0-alpha10"
   const val hilt = "com.google.dagger:hilt-android-gradle-plugin:${DAGGER_HILT_VERSION}"
   const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.31"
   const val jsemver = "com.github.zafarkhaja:java-semver:0.9.0"
@@ -94,18 +94,7 @@ object Dependencies {
 
   object Testing {
 
-    const val daggerHilt = "com.google.dagger:hilt-android-testing:$DAGGER_HILT_VERSION"
     const val junit = "junit:junit:4.13.2"
     const val mockWebServer = "com.squareup.okhttp3:mockwebserver3-junit4:5.0.0-alpha.2"
-
-    object AndroidX {
-
-      private const val version = "1.3.1-alpha02"
-
-      object Compose {
-
-        const val uiTestJunit4 = "androidx.compose.ui:ui-test-junit4:$COMPOSE_VERSION"
-      }
-    }
   }
 }

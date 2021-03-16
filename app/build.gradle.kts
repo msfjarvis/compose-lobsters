@@ -49,5 +49,4 @@ dependencies {
   implementation(Dependencies.ThirdParty.SQLDelight.androidDriver)
   testImplementation(Dependencies.Testing.junit)
   androidTestImplementation(Dependencies.AndroidX.Compose.activity)
-  androidTestImplementation(Dependencies.Testing.daggerHilt)
 }

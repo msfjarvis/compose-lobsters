@@ -1,3 +1,4 @@
 status = [
-  "test-pr"
+  "run-screenshot-tests",
+  "run-unit-tests"
 ]

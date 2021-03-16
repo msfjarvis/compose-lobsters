@@ -7,7 +7,7 @@ on:
       - trying
 
 jobs:
-  test-pr:
+  run-screenshot-tests:
     runs-on: macOS-latest
     steps:
 
@@ -21,14 +21,44 @@ jobs:
     - name: Copy CI gradle.properties
       run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
 
-    - name: Run unit and instrumentation tests
-      uses: reactivecircus/android-emulator-runner@d2799957d660add41c61a5103e2fbb9e2889eb73
+    - name: Boot emulator manually
+      run: |
+        ./scripts/setup_environment.sh
+        ./scripts/boot_emulator.sh &
+        until [ "$(adb shell getprop sys.boot_completed)" == "1" ]
+          do sleep 5
+        done
+
+    - uses: burrunan/gradle-cache-action@03c71a8ba93d670980695505f48f49daf43704a6
+      name: Run screenshot tests
       with:
-        api-level: 30
-        target: google_apis
-        profile: pixel_xl
-        script: |
-          ./gradlew test executeScreenshotTests --stacktrace
+        arguments: executeScreenshotTests --stacktrace
+
+    - name: (Fail-only) upload test report
+      if: failure()
+      uses: actions/upload-artifact@27bce4eee761b5bc643f46a8dfb41b430c8d05f6
+      with:
+          name: Test report
+          path: app/build/reports
+
+  run-unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/setup-java@d202f5dbf7256730fb690ec59f6381650114feb2
+      with:
+        java-version: '11'
+
+    - name: Checkout repository
+      uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f
+
+    - name: Copy CI gradle.properties
+      run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
+
+    - uses: burrunan/gradle-cache-action@03c71a8ba93d670980695505f48f49daf43704a6
+      name: Run unit tests
+      with:
+        arguments: test --stacktrace
 
     - name: (Fail-only) upload test report
       if: failure()

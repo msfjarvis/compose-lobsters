@@ -1,6 +1,7 @@
 -keepattributes *Annotation*, EnclosingMethod, InnerClasses
 -dontwarn org.jetbrains.kotlin.**
 -dontwarn androidx.compose.animation.tooling.ComposeAnimation
+-dontwarn android.view.RenderNode
+-dontwarn android.view.DisplayListCanvas
 -dontobfuscate
 -dontoptimize
--keep class dev.msfjarvis.lobsters.model.** { *; }

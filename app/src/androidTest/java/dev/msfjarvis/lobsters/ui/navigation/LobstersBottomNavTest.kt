@@ -15,8 +15,8 @@ import com.karumi.shot.ScreenshotTest
 import dev.msfjarvis.lobsters.ui.DarkTestTheme
 import dev.msfjarvis.lobsters.ui.main.LobstersBottomNav
 import dev.msfjarvis.lobsters.ui.theme.LobstersTheme
+import kotlin.test.Test
 import org.junit.Rule
-import org.junit.Test
 
 class LobstersBottomNavTest : ScreenshotTest {
 

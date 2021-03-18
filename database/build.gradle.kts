@@ -7,5 +7,5 @@ plugins {
 dependencies {
   testImplementation(Dependencies.Kotlin.Coroutines.core)
   testImplementation(Dependencies.ThirdParty.SQLDelight.jvmDriver)
-  testImplementation(Dependencies.Testing.junit)
+  testImplementation(kotlin("test-junit"))
 }

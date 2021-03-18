@@ -1,8 +1,8 @@
 package dev.msfjarvis.lobsters.util
 
 import java.time.Month
-import org.junit.Assert.*
-import org.junit.Test
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class DateExtensionsTest {
   @Test

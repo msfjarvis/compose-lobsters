@@ -2,6 +2,9 @@ package dev.msfjarvis.lobsters.data.api
 
 import com.squareup.moshi.Moshi
 import dev.msfjarvis.lobsters.util.TestUtils
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 import kotlinx.coroutines.runBlocking
 import mockwebserver3.Dispatcher
 import mockwebserver3.MockResponse
@@ -9,10 +12,7 @@ import mockwebserver3.MockWebServer
 import mockwebserver3.RecordedRequest
 import okhttp3.OkHttpClient
 import org.junit.AfterClass
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
 import org.junit.BeforeClass
-import org.junit.Test
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create

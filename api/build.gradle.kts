@@ -9,6 +9,6 @@ dependencies {
   ksp(Dependencies.ThirdParty.Moshi.ksp)
   implementation(Dependencies.ThirdParty.Retrofit.moshi)
   testImplementation(Dependencies.Kotlin.Coroutines.core)
-  testImplementation(Dependencies.Testing.junit)
+  testImplementation(kotlin("test-junit"))
   testImplementation(Dependencies.Testing.mockWebServer)
 }

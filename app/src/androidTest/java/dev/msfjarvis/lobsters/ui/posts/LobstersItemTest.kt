@@ -6,8 +6,8 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onRoot
 import com.karumi.shot.ScreenshotTest
 import dev.msfjarvis.lobsters.ui.DarkTestTheme
+import kotlin.test.Test
 import org.junit.Rule
-import org.junit.Test
 
 class LobstersItemTest : ScreenshotTest {
 

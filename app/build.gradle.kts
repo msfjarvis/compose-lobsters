@@ -47,6 +47,6 @@ dependencies {
   implementation(Dependencies.ThirdParty.pullToRefresh)
   implementation(Dependencies.ThirdParty.Retrofit.moshi)
   implementation(Dependencies.ThirdParty.SQLDelight.androidDriver)
-  testImplementation(Dependencies.Testing.junit)
-  androidTestImplementation(Dependencies.AndroidX.Compose.activity)
+  testImplementation(kotlin("test-junit"))
+  androidTestImplementation(kotlin("test-junit"))
 }

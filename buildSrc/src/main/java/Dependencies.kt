@@ -94,7 +94,6 @@ object Dependencies {
 
   object Testing {
 
-    const val junit = "junit:junit:4.13.2"
     const val mockWebServer = "com.squareup.okhttp3:mockwebserver3-junit4:5.0.0-alpha.2"
   }
 }

@@ -44,6 +44,25 @@ kotlin {
         implementation(compose.runtime)
       }
     }
+
+    val androidTest by getting {
+      dependencies {
+        implementation(kotlin("test-junit"))
+      }
+    }
+
+    val jvmTest by getting {
+      dependencies {
+        implementation(kotlin("test-junit"))
+      }
+    }
+
+    val commonTest by getting {
+      dependencies {
+        implementation(kotlin("test-common"))
+        implementation(kotlin("test-annotations-common"))
+      }
+    }
   }
 }
 

@@ -3,10 +3,10 @@ package dev.msfjarvis.lobsters.data.local
 import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver
 import dev.msfjarvis.lobsters.database.LobstersDatabase
 import dev.msfjarvis.lobsters.model.TagsAdapter
+import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlinx.coroutines.runBlocking
-import org.junit.Assert.assertEquals
 import org.junit.Before
-import org.junit.Test
 
 @OptIn(ExperimentalStdlibApi::class)
 class SqlDelightQueriesTest {

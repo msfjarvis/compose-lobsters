@@ -13,8 +13,8 @@ import androidx.compose.ui.test.onRoot
 import com.karumi.shot.ScreenshotTest
 import dev.msfjarvis.lobsters.ui.DarkTestTheme
 import java.time.Month
+import kotlin.test.Test
 import org.junit.Rule
-import org.junit.Test
 
 class HeaderTest : ScreenshotTest {
   @get:Rule

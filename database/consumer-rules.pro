@@ -1,0 +1,1 @@
+-keep class dev.msfjarvis.lobsters.model.** { *; }

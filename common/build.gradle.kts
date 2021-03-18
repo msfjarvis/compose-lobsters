@@ -46,3 +46,7 @@ kotlin {
     }
   }
 }
+
+android {
+  sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+}

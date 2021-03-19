@@ -20,9 +20,9 @@ class LobstersItemTest : ScreenshotTest {
       DarkTestTheme {
         LobstersItem(
           post = TEST_POST,
-          onClick = { /*TODO*/ },
-          onLongClick = { /*TODO*/ },
-          onSaveButtonClick = { /*TODO*/ },
+          viewPost = { /*TODO*/ },
+          viewComments = { /*TODO*/ },
+          toggleSave = { /*TODO*/ },
           isSaved = true,
         )
       }

@@ -3,17 +3,17 @@ package dev.msfjarvis.lobsters.ui.posts
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
-import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.IconButton
 import androidx.compose.material.IconToggleButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -52,74 +52,125 @@ val TEST_POST = SavedPost(
 fun LobstersItem(
   post: SavedPost,
   isSaved: Boolean,
-  onClick: () -> Unit,
-  onLongClick: () -> Unit,
-  onSaveButtonClick: () -> Unit,
+  viewPost: () -> Unit,
+  viewComments: () -> Unit,
+  toggleSave: () -> Unit,
 ) {
   Surface(
     modifier = Modifier
-      .combinedClickable(
-        onClick = onClick,
-        onLongClick = onLongClick,
-      ),
+      .clickable { viewPost.invoke() },
   ) {
     Row(
-      modifier = Modifier.padding(start = 12.dp, end = 24.dp),
+      modifier = Modifier.padding(start = 12.dp),
       verticalAlignment = Alignment.CenterVertically,
       horizontalArrangement = Arrangement.SpaceBetween,
     ) {
-      Column(
-        modifier = Modifier.fillMaxWidth(),
+      Box(
+        modifier = Modifier.weight(0.8f),
       ) {
-        Text(
-          text = post.title,
-          color = titleColor,
-          fontWeight = FontWeight.Bold,
-          modifier = Modifier
-            .padding(top = 4.dp),
+        PostDetails(
+          post,
         )
-        TagRow(
-          tags = post.tags,
-          modifier = Modifier
-            .padding(top = 8.dp, bottom = 8.dp, end = 16.dp),
-        )
-        Row {
-          CoilImage(
-            data = "${LobstersApi.BASE_URL}/${post.submitterAvatarUrl}",
-            contentDescription = stringResource(
-              R.string.avatar_content_description,
-              post.submitterName
-            ),
-            fadeIn = true,
-            requestBuilder = {
-              transformations(CircleCropTransformation())
-            },
-            modifier = Modifier
-              .requiredWidth(30.dp)
-              .padding(4.dp),
-          )
-          Text(
-            text = stringResource(id = R.string.submitted_by, post.submitterName),
-            modifier = Modifier
-              .padding(4.dp),
-          )
-        }
       }
-      IconToggleButton(
-        checked = isSaved,
-        onCheckedChange = { onSaveButtonClick.invoke() },
-        modifier = Modifier
-          .requiredSize(24.dp),
+      Box(
+        modifier = Modifier.weight(0.1f),
       ) {
-        Crossfade(targetState = isSaved) { saved ->
-          IconResource(
-            resourceId = if (saved) R.drawable.ic_favorite_24px else R.drawable.ic_favorite_border_24px,
-            tint = MaterialTheme.colors.secondary,
-            contentDescription = stringResource(if (saved) R.string.remove_from_saved_posts else R.string.add_to_saved_posts),
-          )
-        }
+        SaveButton(
+          isSaved,
+          toggleSave,
+        )
+      }
+      Box(
+        modifier = Modifier.weight(0.1f),
+      ) {
+        CommentsButton(
+          onClick = viewComments,
+        )
       }
     }
+  }
+}
+
+@Composable
+fun PostDetails(
+  post: SavedPost,
+) {
+  Column(
+    modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
+  ) {
+    Text(
+      text = post.title,
+      color = titleColor,
+      fontWeight = FontWeight.Bold,
+      modifier = Modifier
+        .padding(bottom = 4.dp),
+    )
+    TagRow(
+      tags = post.tags,
+      modifier = Modifier
+        .padding(bottom = 4.dp),
+    )
+    Row(
+      verticalAlignment = Alignment.CenterVertically,
+    ) {
+      CoilImage(
+        data = "${LobstersApi.BASE_URL}/${post.submitterAvatarUrl}",
+        contentDescription = stringResource(
+          R.string.avatar_content_description,
+          post.submitterName
+        ),
+        fadeIn = true,
+        requestBuilder = {
+          transformations(CircleCropTransformation())
+        },
+        modifier = Modifier
+          .requiredSize(24.dp)
+          .padding(bottom = 4.dp),
+      )
+      Text(
+        text = stringResource(id = R.string.submitted_by, post.submitterName),
+        modifier = Modifier
+          .padding(start = 4.dp),
+      )
+    }
+  }
+}
+
+@Composable
+fun SaveButton(
+  isSaved: Boolean,
+  onSaveButtonClick: () -> Unit,
+) {
+  IconToggleButton(
+    checked = isSaved,
+    onCheckedChange = { onSaveButtonClick.invoke() },
+    modifier = Modifier
+      .requiredSize(24.dp),
+  ) {
+    Crossfade(targetState = isSaved) { saved ->
+      IconResource(
+        resourceId = if (saved) R.drawable.ic_favorite_24px else R.drawable.ic_favorite_border_24px,
+        tint = MaterialTheme.colors.secondary,
+        contentDescription = stringResource(if (saved) R.string.remove_from_saved_posts else R.string.add_to_saved_posts),
+      )
+    }
+  }
+}
+
+@Composable
+fun CommentsButton(
+  onClick: () -> Unit,
+) {
+  IconButton(
+    onClick = onClick,
+    modifier = Modifier
+      .requiredSize(24.dp),
+  ) {
+    IconResource(
+      resourceId = R.drawable.ic_insert_comment_24px,
+      tint = MaterialTheme.colors.secondary,
+      contentDescription = stringResource(R.string.open_comments),
+    )
   }
 }
 
@@ -154,9 +205,9 @@ fun Preview() {
         LobstersItem(
           post = item,
           isSaved = false,
-          onClick = {},
-          onLongClick = {},
-          onSaveButtonClick = {},
+          viewPost = {},
+          viewComments = {},
+          toggleSave = {},
         )
       }
     }

@@ -54,13 +54,13 @@ val TEST_POST = SavedPost(
 fun LobstersItem(
   post: SavedPost,
   isSaved: Boolean,
-  onClick: () -> Unit,
-  onLongClick: () -> Unit,
-  onSaveButtonClick: () -> Unit,
+  viewPost: () -> Unit,
+  viewComments: () -> Unit,
+  toggleSave: () -> Unit,
 ) {
   Surface(
     modifier = Modifier
-      .clickable { onClick.invoke() },
+      .clickable { viewPost.invoke() },
   ) {
     Row(
       modifier = Modifier.padding(start = 12.dp, end = 12.dp),
@@ -79,14 +79,14 @@ fun LobstersItem(
       ) {
         SaveButton(
           isSaved,
-          onSaveButtonClick,
+          toggleSave,
         )
       }
       Box(
         modifier = Modifier.weight(0.1f),
       ) {
         CommentsButton(
-          onClick = onLongClick,
+          onClick = viewComments,
         )
       }
     }
@@ -205,9 +205,9 @@ fun Preview() {
         LobstersItem(
           post = item,
           isSaved = false,
-          onClick = {},
-          onLongClick = {},
-          onSaveButtonClick = {},
+          viewPost = {},
+          viewComments = {},
+          toggleSave = {},
         )
       }
     }

@@ -58,9 +58,9 @@ fun HottestPosts(
             LobstersItem(
               post = item,
               isSaved = isSaved,
-              onClick = { urlLauncher.launch(item.url.ifEmpty { item.commentsUrl }) },
-              onLongClick = { urlLauncher.launch(item.commentsUrl) },
-              onSaveButtonClick = {
+              viewPost = { urlLauncher.launch(item.url.ifEmpty { item.commentsUrl }) },
+              viewComments = { urlLauncher.launch(item.commentsUrl) },
+              toggleSave = {
                 isSaved = isSaved.not()
                 saveAction.invoke(item)
               },

@@ -69,9 +69,13 @@ fun LobstersItem(
       verticalAlignment = Alignment.CenterVertically,
       horizontalArrangement = Arrangement.SpaceBetween,
     ) {
-      PostDetails(
-        post,
-      )
+      Box(
+        modifier = Modifier.weight(1f),
+      ) {
+        PostDetails(
+          post,
+        )
+      }
       SaveButton(
         isSaved,
         onSaveButtonClick,

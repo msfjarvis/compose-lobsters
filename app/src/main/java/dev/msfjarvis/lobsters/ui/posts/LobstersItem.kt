@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -97,19 +96,19 @@ fun PostDetails(
   post: SavedPost,
 ) {
   Column(
-    modifier = Modifier.fillMaxWidth(),
+    modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
   ) {
     Text(
       text = post.title,
       color = titleColor,
       fontWeight = FontWeight.Bold,
       modifier = Modifier
-        .padding(top = 8.dp),
+        .padding(bottom = 4.dp),
     )
     TagRow(
       tags = post.tags,
       modifier = Modifier
-        .padding(top = 4.dp),
+        .padding(bottom = 4.dp),
     )
     Row(
       verticalAlignment = Alignment.CenterVertically,
@@ -126,7 +125,7 @@ fun PostDetails(
         },
         modifier = Modifier
           .requiredSize(24.dp)
-          .padding(top = 4.dp),
+          .padding(bottom = 4.dp),
       )
       Text(
         text = stringResource(id = R.string.submitted_by, post.submitterName),

@@ -5,6 +5,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -68,57 +69,77 @@ fun LobstersItem(
       verticalAlignment = Alignment.CenterVertically,
       horizontalArrangement = Arrangement.SpaceBetween,
     ) {
-      Column(
-        modifier = Modifier.fillMaxWidth(),
-      ) {
-        Text(
-          text = post.title,
-          color = titleColor,
-          fontWeight = FontWeight.Bold,
-          modifier = Modifier
-            .padding(top = 4.dp),
-        )
-        TagRow(
-          tags = post.tags,
-          modifier = Modifier
-            .padding(top = 8.dp, bottom = 8.dp, end = 16.dp),
-        )
-        Row {
-          CoilImage(
-            data = "${LobstersApi.BASE_URL}/${post.submitterAvatarUrl}",
-            contentDescription = stringResource(
-              R.string.avatar_content_description,
-              post.submitterName
-            ),
-            fadeIn = true,
-            requestBuilder = {
-              transformations(CircleCropTransformation())
-            },
-            modifier = Modifier
-              .requiredWidth(30.dp)
-              .padding(4.dp),
-          )
-          Text(
-            text = stringResource(id = R.string.submitted_by, post.submitterName),
-            modifier = Modifier
-              .padding(4.dp),
-          )
-        }
-      }
-      IconToggleButton(
-        checked = isSaved,
-        onCheckedChange = { onSaveButtonClick.invoke() },
+      PostDetails(
+        post,
+      )
+      SaveButton(
+        isSaved,
+        onSaveButtonClick,
+      )
+    }
+  }
+}
+
+@Composable
+fun PostDetails(
+  post: SavedPost,
+) {
+  Column(
+    modifier = Modifier.fillMaxWidth(),
+  ) {
+    Text(
+      text = post.title,
+      color = titleColor,
+      fontWeight = FontWeight.Bold,
+      modifier = Modifier
+        .padding(top = 4.dp),
+    )
+    TagRow(
+      tags = post.tags,
+      modifier = Modifier
+        .padding(top = 8.dp, bottom = 8.dp, end = 16.dp),
+    )
+    Row {
+      CoilImage(
+        data = "${LobstersApi.BASE_URL}/${post.submitterAvatarUrl}",
+        contentDescription = stringResource(
+          R.string.avatar_content_description,
+          post.submitterName
+        ),
+        fadeIn = true,
+        requestBuilder = {
+          transformations(CircleCropTransformation())
+        },
         modifier = Modifier
-          .requiredSize(24.dp),
-      ) {
-        Crossfade(targetState = isSaved) { saved ->
-          IconResource(
-            resourceId = if (saved) R.drawable.ic_favorite_24px else R.drawable.ic_favorite_border_24px,
-            tint = MaterialTheme.colors.secondary,
-            contentDescription = stringResource(if (saved) R.string.remove_from_saved_posts else R.string.add_to_saved_posts),
-          )
-        }
-      }
+          .requiredWidth(30.dp)
+          .padding(4.dp),
+      )
+      Text(
+        text = stringResource(id = R.string.submitted_by, post.submitterName),
+        modifier = Modifier
+          .padding(4.dp),
+      )
+    }
+  }
+}
+
+@Composable
+fun SaveButton(
+  isSaved: Boolean,
+  onSaveButtonClick: () -> Unit,
+) {
+  IconToggleButton(
+    checked = isSaved,
+    onCheckedChange = { onSaveButtonClick.invoke() },
+    modifier = Modifier
+      .requiredSize(24.dp),
+  ) {
+    Crossfade(targetState = isSaved) { saved ->
+      IconResource(
+        resourceId = if (saved) R.drawable.ic_favorite_24px else R.drawable.ic_favorite_border_24px,
+        tint = MaterialTheme.colors.secondary,
+        contentDescription = stringResource(if (saved) R.string.remove_from_saved_posts else R.string.add_to_saved_posts),
+      )
     }
   }
 }

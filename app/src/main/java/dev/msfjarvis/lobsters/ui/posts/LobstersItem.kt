@@ -3,7 +3,7 @@ package dev.msfjarvis.lobsters.ui.posts
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.IconButton
 import androidx.compose.material.IconToggleButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -59,27 +60,35 @@ fun LobstersItem(
 ) {
   Surface(
     modifier = Modifier
-      .combinedClickable(
-        onClick = onClick,
-        onLongClick = onLongClick,
-      ),
+      .clickable { onClick.invoke() },
   ) {
     Row(
-      modifier = Modifier.padding(start = 12.dp, end = 24.dp),
+      modifier = Modifier.padding(start = 12.dp, end = 12.dp),
       verticalAlignment = Alignment.CenterVertically,
       horizontalArrangement = Arrangement.SpaceBetween,
     ) {
       Box(
-        modifier = Modifier.weight(1f),
+        modifier = Modifier.weight(0.8f),
       ) {
         PostDetails(
           post,
         )
       }
-      SaveButton(
-        isSaved,
-        onSaveButtonClick,
-      )
+      Box(
+        modifier = Modifier.weight(0.1f),
+      ) {
+        SaveButton(
+          isSaved,
+          onSaveButtonClick,
+        )
+      }
+      Box(
+        modifier = Modifier.weight(0.1f),
+      ) {
+        CommentsButton(
+          onClick = onLongClick,
+        )
+      }
     }
   }
 }
@@ -145,6 +154,23 @@ fun SaveButton(
         contentDescription = stringResource(if (saved) R.string.remove_from_saved_posts else R.string.add_to_saved_posts),
       )
     }
+  }
+}
+
+@Composable
+fun CommentsButton(
+  onClick: () -> Unit,
+) {
+  IconButton(
+    onClick = onClick,
+    modifier = Modifier
+      .requiredSize(24.dp),
+  ) {
+    IconResource(
+      resourceId = R.drawable.ic_insert_comment_24px,
+      tint = MaterialTheme.colors.secondary,
+      contentDescription = stringResource(R.string.open_comments),
+    )
   }
 }
 

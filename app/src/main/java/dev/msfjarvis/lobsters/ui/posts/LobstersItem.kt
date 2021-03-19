@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
-import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -63,7 +62,7 @@ fun LobstersItem(
       .clickable { viewPost.invoke() },
   ) {
     Row(
-      modifier = Modifier.padding(start = 12.dp, end = 12.dp),
+      modifier = Modifier.padding(start = 12.dp),
       verticalAlignment = Alignment.CenterVertically,
       horizontalArrangement = Arrangement.SpaceBetween,
     ) {
@@ -105,14 +104,16 @@ fun PostDetails(
       color = titleColor,
       fontWeight = FontWeight.Bold,
       modifier = Modifier
-        .padding(top = 4.dp),
+        .padding(top = 8.dp),
     )
     TagRow(
       tags = post.tags,
       modifier = Modifier
-        .padding(top = 8.dp, bottom = 8.dp, end = 16.dp),
+        .padding(top = 4.dp),
     )
-    Row {
+    Row(
+      verticalAlignment = Alignment.CenterVertically,
+    ) {
       CoilImage(
         data = "${LobstersApi.BASE_URL}/${post.submitterAvatarUrl}",
         contentDescription = stringResource(
@@ -124,13 +125,13 @@ fun PostDetails(
           transformations(CircleCropTransformation())
         },
         modifier = Modifier
-          .requiredWidth(30.dp)
-          .padding(4.dp),
+          .requiredSize(24.dp)
+          .padding(top = 4.dp),
       )
       Text(
         text = stringResource(id = R.string.submitted_by, post.submitterName),
         modifier = Modifier
-          .padding(4.dp),
+          .padding(start = 4.dp),
       )
     }
   }

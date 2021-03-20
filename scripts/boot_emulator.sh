@@ -16,7 +16,7 @@ API_LEVEL="${ANDROID_API_LEVEL:-30}"
 
 echo no | "${ANDROID_SDK_ROOT}"/cmdline-tools/latest/bin/avdmanager create avd \
   --force \
-  -n Pixel_XL_API_30 \
+  -n "Pixel_XL_API_${API_LEVEL}" \
   --abi 'google_apis/x86' \
   --package "system-images;android-${API_LEVEL};google_apis;x86" \
   --device 'pixel_xl'

@@ -45,7 +45,7 @@ val TEST_POST = SavedPost(
   createdAt = "2020-09-21T07:11:14.000-05:00",
   commentsUrl = "https://lobste.rs/s/zqyydb/k2k20_hackathon_report_bob_beck_on",
   submitterName = "Vigdis",
-  submitterAvatarUrl = "/avatars/Vigdis-100.png",
+  submitterAvatarUrl = "/404.html",
   tags = listOf("openbsd", "linux", "containers", "hack the planet", "no thanks"),
 )
 

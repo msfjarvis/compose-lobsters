@@ -4,12 +4,14 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -55,97 +57,126 @@ fun LobstersItem(
   viewPost: () -> Unit,
   viewComments: () -> Unit,
   toggleSave: () -> Unit,
+  modifier: Modifier = Modifier,
 ) {
   Surface(
     modifier = Modifier
-      .clickable { viewPost.invoke() },
+      .clickable { viewPost.invoke() }
+      .then(modifier),
   ) {
-    Row(
-      modifier = Modifier.padding(start = 12.dp),
-      verticalAlignment = Alignment.CenterVertically,
-      horizontalArrangement = Arrangement.SpaceBetween,
+    Column(
+      modifier = Modifier
+        .padding(horizontal = 12.dp, vertical = 4.dp),
     ) {
-      Box(
-        modifier = Modifier.weight(0.8f),
+      PostTitle(
+        title = post.title,
+        modifier = Modifier
+          .padding(bottom = 4.dp),
+      )
+      Row(
+        modifier = Modifier
+          .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
       ) {
-        PostDetails(
-          post,
+        TagRow(
+          tags = post.tags,
+          modifier = Modifier.weight(0.65f),
         )
-      }
-      Box(
-        modifier = Modifier.weight(0.1f),
-      ) {
         SaveButton(
-          isSaved,
-          toggleSave,
+          isSaved = isSaved,
+          onClick = toggleSave,
         )
-      }
-      Box(
-        modifier = Modifier.weight(0.1f),
-      ) {
+        Spacer(
+          modifier = Modifier.width(8.dp),
+        )
         CommentsButton(
           onClick = viewComments,
         )
       }
+      SubmitterName(
+        name = post.submitterName,
+        avatarUrl = post.submitterAvatarUrl,
+      )
     }
   }
 }
 
 @Composable
-fun PostDetails(
-  post: SavedPost,
+fun PostTitle(
+  title: String,
+  modifier: Modifier = Modifier,
 ) {
-  Column(
-    modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
+  Text(
+    text = title,
+    color = titleColor,
+    fontWeight = FontWeight.Bold,
+    modifier = Modifier.then(modifier),
+  )
+}
+
+@Composable
+fun SubmitterName(
+  name: String,
+  avatarUrl: String,
+  modifier: Modifier = Modifier,
+) {
+  Row(
+    modifier = Modifier.then(modifier),
+    verticalAlignment = Alignment.CenterVertically,
   ) {
-    Text(
-      text = post.title,
-      color = titleColor,
-      fontWeight = FontWeight.Bold,
-      modifier = Modifier
-        .padding(bottom = 4.dp),
+    SubmitterAvatar(
+      name = name,
+      avatarUrl = avatarUrl,
     )
-    TagRow(
-      tags = post.tags,
-      modifier = Modifier
-        .padding(bottom = 4.dp),
+    SubmitterNameText(
+      name = name,
     )
-    Row(
-      verticalAlignment = Alignment.CenterVertically,
-    ) {
-      CoilImage(
-        data = "${LobstersApi.BASE_URL}/${post.submitterAvatarUrl}",
-        contentDescription = stringResource(
-          R.string.avatar_content_description,
-          post.submitterName
-        ),
-        fadeIn = true,
-        requestBuilder = {
-          transformations(CircleCropTransformation())
-        },
-        modifier = Modifier
-          .requiredSize(24.dp)
-          .padding(bottom = 4.dp),
-      )
-      Text(
-        text = stringResource(id = R.string.submitted_by, post.submitterName),
-        modifier = Modifier
-          .padding(start = 4.dp),
-      )
-    }
   }
+}
+
+@Composable
+fun SubmitterAvatar(
+  name: String,
+  avatarUrl: String,
+) {
+  CoilImage(
+    data = "${LobstersApi.BASE_URL}/$avatarUrl",
+    contentDescription = stringResource(
+      R.string.avatar_content_description,
+      name,
+    ),
+    fadeIn = true,
+    requestBuilder = {
+      transformations(CircleCropTransformation())
+    },
+    modifier = Modifier
+      .requiredSize(24.dp),
+  )
+}
+
+@Composable
+fun SubmitterNameText(
+  name: String,
+) {
+  Text(
+    text = stringResource(id = R.string.submitted_by, name),
+    modifier = Modifier
+      .padding(start = 4.dp),
+  )
 }
 
 @Composable
 fun SaveButton(
   isSaved: Boolean,
-  onSaveButtonClick: () -> Unit,
+  onClick: () -> Unit,
+  modifier: Modifier = Modifier,
 ) {
   IconToggleButton(
     checked = isSaved,
-    onCheckedChange = { onSaveButtonClick.invoke() },
+    onCheckedChange = { onClick.invoke() },
     modifier = Modifier
-      .requiredSize(24.dp),
+      .requiredSize(32.dp)
+      .then(modifier),
   ) {
     Crossfade(targetState = isSaved) { saved ->
       IconResource(
@@ -160,11 +191,13 @@ fun SaveButton(
 @Composable
 fun CommentsButton(
   onClick: () -> Unit,
+  modifier: Modifier = Modifier,
 ) {
   IconButton(
     onClick = onClick,
     modifier = Modifier
-      .requiredSize(24.dp),
+      .requiredSize(32.dp)
+      .then(modifier),
   ) {
     IconResource(
       resourceId = R.drawable.ic_insert_comment_24px,
@@ -179,19 +212,22 @@ fun TagRow(
   tags: List<String>,
   modifier: Modifier = Modifier,
 ) {
-  FlowLayout(
+  Box(
     modifier = Modifier.then(modifier),
-    horizontalSpacing = 8.dp,
-    verticalSpacing = 8.dp,
   ) {
-    tags.forEach { tag ->
-      Text(
-        text = tag,
-        modifier = Modifier
-          .background(Color(0xFFFFFCD7), RoundedCornerShape(8.dp))
-          .padding(vertical = 2.dp, horizontal = 6.dp),
-        color = Color.DarkGray,
-      )
+    FlowLayout(
+      horizontalSpacing = 8.dp,
+      verticalSpacing = 8.dp,
+    ) {
+      tags.forEach { tag ->
+        Text(
+          text = tag,
+          modifier = Modifier
+            .background(Color(0xFFFFFCD7), RoundedCornerShape(8.dp))
+            .padding(vertical = 2.dp, horizontal = 6.dp),
+          color = Color.DarkGray,
+        )
+      }
     }
   }
 }

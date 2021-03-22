@@ -68,5 +68,8 @@ kotlin {
 }
 
 android {
-  sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+  sourceSets["main"].apply {
+    manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    res.srcDir("src/androidMain/res")
+  }
 }

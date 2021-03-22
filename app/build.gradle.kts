@@ -33,6 +33,7 @@ dependencies {
   implementation(compose.ui)
   implementation(Dependencies.AndroidX.appCompat)
   implementation(Dependencies.AndroidX.browser)
+  implementation(Dependencies.AndroidX.datastore)
   implementation(Dependencies.AndroidX.Compose.activity)
   implementation(Dependencies.AndroidX.Compose.lifecycleViewModel)
   implementation(Dependencies.AndroidX.Compose.navigation)

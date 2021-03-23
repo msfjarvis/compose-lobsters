@@ -54,6 +54,12 @@ fun LobstersApp() {
   }
 
   Scaffold(
+    topBar = {
+      LobstersTopAppBar(
+        currentDestination,
+        viewModel::toggleSortOrder,
+      )
+    },
     bottomBar = {
       LobstersBottomNav(
         currentDestination,

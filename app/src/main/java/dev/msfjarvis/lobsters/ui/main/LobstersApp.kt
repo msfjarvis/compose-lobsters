@@ -84,6 +84,7 @@ fun LobstersApp() {
           posts = savedPosts,
           saveAction = viewModel::toggleSave,
           modifier = Modifier.padding(bottom = innerPadding.calculateBottomPadding()),
+          sortReversed = viewModel.getSortOrder(),
         )
       }
     }

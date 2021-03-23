@@ -15,13 +15,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.msfjarvis.lobsters.R
 import dev.msfjarvis.lobsters.data.local.SavedPost
 import dev.msfjarvis.lobsters.ui.urllauncher.LocalUrlLauncher
 import dev.msfjarvis.lobsters.util.IconResource
 import dev.msfjarvis.lobsters.util.asZonedDateTime
+import dev.msfjarvis.lobsters.utils.StringEnum
+import dev.msfjarvis.lobsters.utils.stringValue
 import kotlinx.coroutines.flow.Flow
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -46,9 +47,9 @@ fun SavedPosts(
         R.drawable.ic_favorite_border_24px,
         tint = Color(0xFFD97373),
         modifier = Modifier.padding(16.dp),
-        contentDescription = stringResource(R.string.add_to_saved_posts),
+        contentDescription = stringValue(StringEnum.AddToSavedPosts),
       )
-      Text(stringResource(R.string.no_saved_posts))
+      Text(stringValue(StringEnum.NoSavedPost))
     }
   } else {
     LazyColumn(

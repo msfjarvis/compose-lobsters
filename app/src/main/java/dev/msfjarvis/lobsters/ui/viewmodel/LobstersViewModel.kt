@@ -7,9 +7,11 @@ import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.msfjarvis.lobsters.data.local.SavedPost
+import dev.msfjarvis.lobsters.data.preferences.ClawPreferences
 import dev.msfjarvis.lobsters.data.remote.LobstersPagingSource
 import dev.msfjarvis.lobsters.data.repo.LobstersRepository
 import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
@@ -19,6 +21,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class LobstersViewModel @Inject constructor(
   private val lobstersRepository: LobstersRepository,
+  private val clawPreferences: ClawPreferences,
 ) : ViewModel() {
   private val _savedPosts = MutableStateFlow<List<SavedPost>>(emptyList())
   val savedPosts = _savedPosts.asStateFlow()
@@ -33,6 +36,14 @@ class LobstersViewModel @Inject constructor(
         _savedPosts.value = lobstersRepository.getAllPostsFromCache()
       }
     }.launchIn(viewModelScope)
+  }
+
+  fun getSortOrder(): Flow<Boolean> {
+    return clawPreferences.sortingOrder
+  }
+
+  suspend fun toggleSortOrder() {
+    clawPreferences.toggleSortingOrder()
   }
 
   fun reloadPosts() {

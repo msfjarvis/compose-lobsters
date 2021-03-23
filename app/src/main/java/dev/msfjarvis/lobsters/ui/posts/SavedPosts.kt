@@ -10,6 +10,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,16 +22,19 @@ import dev.msfjarvis.lobsters.data.local.SavedPost
 import dev.msfjarvis.lobsters.ui.urllauncher.LocalUrlLauncher
 import dev.msfjarvis.lobsters.util.IconResource
 import dev.msfjarvis.lobsters.util.asZonedDateTime
+import kotlinx.coroutines.flow.Flow
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SavedPosts(
   posts: List<SavedPost>,
+  sortReversed: Flow<Boolean>,
   modifier: Modifier = Modifier,
   saveAction: (SavedPost) -> Unit,
 ) {
   val listState = rememberLazyListState()
   val urlLauncher = LocalUrlLauncher.current
+  val sortOrder by sortReversed.collectAsState(false)
 
   if (posts.isEmpty()) {
     Column(
@@ -55,6 +60,8 @@ fun SavedPosts(
         stickyHeader {
           MonthHeader(month = month)
         }
+        @Suppress("NAME_SHADOWING")
+        val posts = if (sortOrder) posts.reversed() else posts
         items(posts) { item ->
           LobstersItem(
             post = item,

@@ -10,4 +10,5 @@
   <string name="remove_from_saved_posts">Remove from saved posts</string>
   <string name="refresh_posts_content_description">Refresh posts</string>
   <string name="open_comments">Open comments</string>
+  <string name="change_sorting_order">Change sort order</string>
 </resources>

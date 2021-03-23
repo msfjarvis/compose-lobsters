@@ -34,6 +34,7 @@ object Dependencies {
     const val appCompat = "androidx.appcompat:appcompat:1.3.0-beta01"
     const val browser = "androidx.browser:browser:1.3.0"
     const val coreLibraryDesugaring = "com.android.tools:desugar_jdk_libs:1.0.10"
+    const val datastore = "androidx.datastore:datastore-preferences:1.0.0-alpha08"
 
     object Compose {
 

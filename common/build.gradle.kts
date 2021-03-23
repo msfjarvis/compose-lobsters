@@ -36,6 +36,7 @@ kotlin {
     val commonMain by getting {
       dependencies {
         implementation(compose.runtime)
+        implementation(compose.ui)
       }
     }
 
@@ -67,5 +68,10 @@ kotlin {
 }
 
 android {
-  sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+  buildFeatures { androidResources = true }
+
+  sourceSets["main"].apply {
+    manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    res.srcDir("src/androidMain/res")
+  }
 }

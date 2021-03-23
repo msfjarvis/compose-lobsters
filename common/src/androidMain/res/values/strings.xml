@@ -1,0 +1,13 @@
+<resources>
+  <string name="app_name">Claw</string>
+  <string name="loading">Loading posts…</string>
+  <string name="no_saved_posts">You don\'t have any saved posts</string>
+  <string name="hottest_posts">Hottest</string>
+  <string name="saved_posts">Saved</string>
+  <string name="submitted_by">submitted by %1$s</string>
+  <string name="avatar_content_description">%1$s\'s avatar</string>
+  <string name="add_to_saved_posts">Add to saved posts</string>
+  <string name="remove_from_saved_posts">Remove from saved posts</string>
+  <string name="refresh_posts_content_description">Refresh posts</string>
+  <string name="open_comments">Open comments</string>
+</resources>

@@ -18,6 +18,21 @@ private fun stringEnumMapper(stringEnum: StringEnum): String {
 }
 
 @Composable
-actual fun stringValue(enum: StringEnum, vararg formatArgs: Any): String {
-  return stringEnumMapper(enum).format(formatArgs)
+actual fun stringValue(enum: StringEnum): String {
+  return stringEnumMapper(enum)
+}
+
+@Composable
+actual fun stringValue(enum: StringEnum, arg1: Any): String {
+  return stringEnumMapper(enum).format(arg1)
+}
+
+@Composable
+actual fun stringValue(enum: StringEnum, arg1: Any, arg2: Any): String {
+  return stringEnumMapper(enum).format(arg1, arg2)
+}
+
+@Composable
+actual fun stringValue(enum: StringEnum, arg1: Any, arg2: Any, arg3: Any): String {
+  return stringEnumMapper(enum).format(arg1, arg2, arg3)
 }

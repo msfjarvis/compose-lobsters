@@ -20,6 +20,16 @@ private fun stringEnumMapper(stringEnum: Strings): Int {
 }
 
 @Composable
+actual fun Strings.get(): String {
+  return stringResource(stringEnumMapper(this))
+}
+
+@Composable
+actual fun Strings.get(fmt: Any): String {
+  return stringResource(stringEnumMapper(this), fmt)
+}
+
+@Composable
 actual fun stringValue(enum: Strings): String {
   return stringResource(stringEnumMapper(enum))
 }

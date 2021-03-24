@@ -5,6 +5,10 @@ import androidx.compose.runtime.Composable
 @Composable
 expect fun stringValue(enum: StringEnum): String
 
+/**
+ * Workaround for https://youtrack.jetbrains.com/issue/KT-44499
+ *
+ */
 @Composable
 expect fun stringValue(enum: StringEnum, arg1: Any): String
 

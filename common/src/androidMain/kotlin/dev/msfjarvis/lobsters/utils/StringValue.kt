@@ -24,6 +24,10 @@ actual fun stringValue(enum: StringEnum): String {
   return stringResource(stringEnumMapper(enum))
 }
 
+/**
+ * Workaround for https://youtrack.jetbrains.com/issue/KT-44499
+ *
+ */
 @Composable
 actual fun stringValue(enum: StringEnum, arg1: Any): String {
   return stringResource(stringEnumMapper(enum), arg1)

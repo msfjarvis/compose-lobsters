@@ -1,6 +1,6 @@
 package dev.msfjarvis.lobsters.utils
 
-enum class StringEnum {
+enum class Strings {
   AddToSavedPosts,
   AppName,
   AvatarContentDescription,

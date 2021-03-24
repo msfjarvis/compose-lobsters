@@ -2,23 +2,23 @@ package dev.msfjarvis.lobsters.utils
 
 import androidx.compose.runtime.Composable
 
-private fun stringEnumMapper(stringEnum: StringEnum): String {
+private fun stringEnumMapper(stringEnum: Strings): String {
   return when (stringEnum) {
-    StringEnum.AddToSavedPosts -> "Add to saved posts"
-    StringEnum.AppName -> "Claw"
-    StringEnum.AvatarContentDescription -> "%1s's avatar"
-    StringEnum.HottestPosts -> "Hottest"
-    StringEnum.Loading -> "Loading posts…"
-    StringEnum.NoSavedPost -> "You don't have any saved posts"
-    StringEnum.OpenComments -> "Open comments"
-    StringEnum.RefreshPostsContentDescription -> "Refresh posts"
-    StringEnum.RemoveFromSavedPosts -> "Remove from saved posts"
-    StringEnum.SubmittedBy -> "submitted by %1s"
+    Strings.AddToSavedPosts -> "Add to saved posts"
+    Strings.AppName -> "Claw"
+    Strings.AvatarContentDescription -> "%1s's avatar"
+    Strings.HottestPosts -> "Hottest"
+    Strings.Loading -> "Loading posts…"
+    Strings.NoSavedPost -> "You don't have any saved posts"
+    Strings.OpenComments -> "Open comments"
+    Strings.RefreshPostsContentDescription -> "Refresh posts"
+    Strings.RemoveFromSavedPosts -> "Remove from saved posts"
+    Strings.SubmittedBy -> "submitted by %1s"
   }
 }
 
 @Composable
-actual fun stringValue(enum: StringEnum): String {
+actual fun stringValue(enum: Strings): String {
   return stringEnumMapper(enum)
 }
 
@@ -27,16 +27,16 @@ actual fun stringValue(enum: StringEnum): String {
  *
  */
 @Composable
-actual fun stringValue(enum: StringEnum, arg1: Any): String {
+actual fun stringValue(enum: Strings, arg1: Any): String {
   return stringEnumMapper(enum).format(arg1)
 }
 
 @Composable
-actual fun stringValue(enum: StringEnum, arg1: Any, arg2: Any): String {
+actual fun stringValue(enum: Strings, arg1: Any, arg2: Any): String {
   return stringEnumMapper(enum).format(arg1, arg2)
 }
 
 @Composable
-actual fun stringValue(enum: StringEnum, arg1: Any, arg2: Any, arg3: Any): String {
+actual fun stringValue(enum: Strings, arg1: Any, arg2: Any, arg3: Any): String {
   return stringEnumMapper(enum).format(arg1, arg2, arg3)
 }

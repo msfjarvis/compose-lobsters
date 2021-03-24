@@ -36,7 +36,7 @@ import dev.msfjarvis.lobsters.data.local.SavedPost
 import dev.msfjarvis.lobsters.ui.theme.LobstersTheme
 import dev.msfjarvis.lobsters.ui.theme.titleColor
 import dev.msfjarvis.lobsters.util.IconResource
-import dev.msfjarvis.lobsters.utils.StringEnum
+import dev.msfjarvis.lobsters.utils.Strings
 import dev.msfjarvis.lobsters.utils.stringValue
 
 val TEST_POST = SavedPost(
@@ -143,7 +143,7 @@ fun SubmitterAvatar(
   CoilImage(
     data = "${LobstersApi.BASE_URL}/$avatarUrl",
     contentDescription = stringValue(
-      StringEnum.AvatarContentDescription,
+      Strings.AvatarContentDescription,
       name,
     ),
     fadeIn = true,
@@ -160,7 +160,7 @@ fun SubmitterNameText(
   name: String,
 ) {
   Text(
-    text = stringValue(StringEnum.SubmittedBy, name),
+    text = stringValue(Strings.SubmittedBy, name),
     modifier = Modifier
       .padding(start = 4.dp),
   )
@@ -181,7 +181,7 @@ fun SaveButton(
   ) {
     Crossfade(targetState = isSaved) { saved ->
       // Using if (saved) ... else ... throws an IllegalArgumentException
-      val contentDescriptionEnum = if (saved) StringEnum.RemoveFromSavedPosts else StringEnum.AddToSavedPosts
+      val contentDescriptionEnum = if (saved) Strings.RemoveFromSavedPosts else Strings.AddToSavedPosts
       IconResource(
         resourceId = if (saved) R.drawable.ic_favorite_24px else R.drawable.ic_favorite_border_24px,
         tint = MaterialTheme.colors.secondary,
@@ -205,7 +205,7 @@ fun CommentsButton(
     IconResource(
       resourceId = R.drawable.ic_insert_comment_24px,
       tint = MaterialTheme.colors.secondary,
-      contentDescription = stringValue(StringEnum.OpenComments),
+      contentDescription = stringValue(Strings.OpenComments),
     )
   }
 }

@@ -68,10 +68,14 @@ kotlin {
 }
 
 android {
-  buildFeatures { androidResources = true }
+  buildFeatures {
+    androidResources = true
+  }
 
-  sourceSets["main"].apply {
-    manifest.srcFile("src/androidMain/AndroidManifest.xml")
-    res.srcDir("src/androidMain/res")
+  sourceSets {
+    named("main") {
+      manifest.srcFile("src/androidMain/AndroidManifest.xml")
+      res.srcDirs("src/androidMain/res")
+    }
   }
 }

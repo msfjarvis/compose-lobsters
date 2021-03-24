@@ -1,15 +1,16 @@
 package dev.msfjarvis.lobsters.utils
 
-enum class StringEnum {
+enum class Strings {
   AddToSavedPosts,
   AppName,
   AvatarContentDescription,
+  ChangeSortingOrder,
   HottestPosts,
-  Loading,
   NoSavedPost,
   OpenComments,
   RefreshPostsContentDescription,
   RemoveFromSavedPosts,
+  SavedPosts,
   SubmittedBy,
   ;
 }

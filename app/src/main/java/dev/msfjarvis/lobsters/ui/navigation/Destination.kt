@@ -1,19 +1,19 @@
 package dev.msfjarvis.lobsters.ui.navigation
 
 import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import dev.msfjarvis.lobsters.R
+import dev.msfjarvis.lobsters.utils.Strings
 
 /**
  * Destinations for navigation within the app.
  */
 enum class Destination(
   val route: String,
-  @StringRes val labelRes: Int,
+  val labelRes: Strings,
   @DrawableRes val badgeRes: Int,
 ) {
-  Hottest("hottest", R.string.hottest_posts, R.drawable.ic_whatshot_24px),
-  Saved("saved", R.string.saved_posts, R.drawable.ic_favorite_24px),
+  Hottest("hottest", Strings.HottestPosts, R.drawable.ic_whatshot_24px),
+  Saved("saved", Strings.SavedPosts, R.drawable.ic_favorite_24px),
   ;
 
   companion object {

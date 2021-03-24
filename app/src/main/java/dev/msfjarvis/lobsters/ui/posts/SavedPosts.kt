@@ -22,7 +22,7 @@ import dev.msfjarvis.lobsters.ui.urllauncher.LocalUrlLauncher
 import dev.msfjarvis.lobsters.util.IconResource
 import dev.msfjarvis.lobsters.util.asZonedDateTime
 import dev.msfjarvis.lobsters.utils.Strings
-import dev.msfjarvis.lobsters.utils.stringValue
+import dev.msfjarvis.lobsters.utils.get
 import kotlinx.coroutines.flow.Flow
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -47,9 +47,9 @@ fun SavedPosts(
         R.drawable.ic_favorite_border_24px,
         tint = Color(0xFFD97373),
         modifier = Modifier.padding(16.dp),
-        contentDescription = stringValue(Strings.AddToSavedPosts),
+        contentDescription = Strings.AddToSavedPosts.get(),
       )
-      Text(stringValue(Strings.NoSavedPost))
+      Text(Strings.NoSavedPost.get())
     }
   } else {
     LazyColumn(

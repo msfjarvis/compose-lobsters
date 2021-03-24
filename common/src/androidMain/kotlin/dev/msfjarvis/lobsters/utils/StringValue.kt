@@ -28,27 +28,3 @@ actual fun Strings.get(): String {
 actual fun Strings.get(fmt: Any): String {
   return stringResource(stringEnumMapper(this), fmt)
 }
-
-@Composable
-actual fun stringValue(enum: Strings): String {
-  return stringResource(stringEnumMapper(enum))
-}
-
-/**
- * Workaround for https://youtrack.jetbrains.com/issue/KT-44499
- *
- */
-@Composable
-actual fun stringValue(enum: Strings, arg1: Any): String {
-  return stringResource(stringEnumMapper(enum), arg1)
-}
-
-@Composable
-actual fun stringValue(enum: Strings, arg1: Any, arg2: Any): String {
-  return stringResource(stringEnumMapper(enum), arg1, arg2)
-}
-
-@Composable
-actual fun stringValue(enum: Strings, arg1: Any, arg2: Any, arg3: Any): String {
-  return stringResource(stringEnumMapper(enum), arg1, arg2, arg3)
-}

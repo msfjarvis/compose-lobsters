@@ -4,12 +4,13 @@ enum class Strings {
   AddToSavedPosts,
   AppName,
   AvatarContentDescription,
+  ChangeSortingOrder,
   HottestPosts,
-  Loading,
   NoSavedPost,
   OpenComments,
   RefreshPostsContentDescription,
   RemoveFromSavedPosts,
+  SavedPosts,
   SubmittedBy,
   ;
 }

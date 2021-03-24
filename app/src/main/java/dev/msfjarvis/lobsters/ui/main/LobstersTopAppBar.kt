@@ -13,6 +13,8 @@ import androidx.compose.ui.unit.dp
 import dev.msfjarvis.lobsters.R
 import dev.msfjarvis.lobsters.ui.navigation.Destination
 import dev.msfjarvis.lobsters.util.IconResource
+import dev.msfjarvis.lobsters.utils.Strings
+import dev.msfjarvis.lobsters.utils.get
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -33,7 +35,7 @@ fun LobstersTopAppBar(
       if (currentDestination == Destination.Saved) {
         IconResource(
           resourceId = R.drawable.ic_sort_24px,
-          contentDescription = stringResource(id = R.string.change_sorting_order),
+          contentDescription = Strings.ChangeSortingOrder.get(),
           modifier = Modifier
             .padding(horizontal = 8.dp, vertical = 8.dp)
             .clickable { scope.launch { toggleSortingOrder() } },

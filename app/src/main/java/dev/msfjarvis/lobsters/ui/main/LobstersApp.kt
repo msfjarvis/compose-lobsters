@@ -12,7 +12,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.KEY_ROUTE
 import androidx.navigation.compose.NavHost
@@ -27,6 +26,7 @@ import dev.msfjarvis.lobsters.ui.posts.HottestPosts
 import dev.msfjarvis.lobsters.ui.posts.SavedPosts
 import dev.msfjarvis.lobsters.ui.viewmodel.LobstersViewModel
 import dev.msfjarvis.lobsters.util.IconResource
+import dev.msfjarvis.lobsters.utils.get
 import kotlinx.coroutines.launch
 
 @Composable
@@ -104,10 +104,10 @@ fun LobstersBottomNav(
         icon = {
           IconResource(
             resourceId = screen.badgeRes,
-            contentDescription = stringResource(screen.labelRes),
+            contentDescription = screen.labelRes.get(),
           )
         },
-        label = { Text(stringResource(id = screen.labelRes)) },
+        label = { Text(screen.labelRes.get()) },
         selected = currentDestination == screen,
         modifier = Modifier.testTag(screen.name),
         alwaysShowLabel = false,

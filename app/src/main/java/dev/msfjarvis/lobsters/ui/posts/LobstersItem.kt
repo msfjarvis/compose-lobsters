@@ -28,8 +28,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.transform.CircleCropTransformation
-import com.star_zero.compose.flowlayout.FlowLayout
 import com.google.accompanist.coil.CoilImage
+import com.google.accompanist.flowlayout.FlowRow
 import dev.msfjarvis.lobsters.R
 import dev.msfjarvis.lobsters.data.api.LobstersApi
 import dev.msfjarvis.lobsters.data.local.SavedPost
@@ -213,9 +213,9 @@ fun TagRow(
   Box(
     modifier = Modifier.then(modifier),
   ) {
-    FlowLayout(
-      horizontalSpacing = 8.dp,
-      verticalSpacing = 8.dp,
+    FlowRow(
+      mainAxisSpacing = 8.dp,
+      crossAxisSpacing = 8.dp,
     ) {
       tags.forEach { tag ->
         Text(

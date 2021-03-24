@@ -67,8 +67,9 @@ object Dependencies {
 
   object ThirdParty {
 
-    const val accompanist = "com.google.accompanist:accompanist-coil:0.7.0"
-    const val composeFlowLayout = "com.star-zero:compose-flowlayout:0.0.1"
+    private const val accompanistVersion = "0.7.0"
+    const val accompanistCoil = "com.google.accompanist:accompanist-coil:$accompanistVersion"
+    const val accompanistFlow = "com.google.accompanist:accompanist-flowlayout:$accompanistVersion"
     const val kamel = "com.alialbaali.kamel:kamel-image:0.2.0"
     const val pullToRefresh = "com.puculek.pulltorefresh:pull-to-refresh-compose:1.0.1"
 

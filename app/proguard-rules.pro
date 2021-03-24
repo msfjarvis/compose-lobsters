@@ -3,5 +3,6 @@
 -dontwarn androidx.compose.animation.tooling.ComposeAnimation
 -dontwarn android.view.RenderNode
 -dontwarn android.view.DisplayListCanvas
+-dontwarn sun.misc.Unsafe
 -dontobfuscate
 -dontoptimize

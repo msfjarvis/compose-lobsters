@@ -2,7 +2,7 @@ import org.jetbrains.compose.compose
 
 plugins {
   kotlin("jvm")
-  id("org.jetbrains.compose") version "0.4.0-build175"
+  id("org.jetbrains.compose") version "0.4.0-build177"
   `lobsters-plugin`
 }
 

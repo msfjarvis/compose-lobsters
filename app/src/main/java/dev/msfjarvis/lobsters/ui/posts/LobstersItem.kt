@@ -29,7 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.transform.CircleCropTransformation
 import com.star_zero.compose.flowlayout.FlowLayout
-import dev.chrisbanes.accompanist.coil.CoilImage
+import com.google.accompanist.coil.CoilImage
 import dev.msfjarvis.lobsters.R
 import dev.msfjarvis.lobsters.data.api.LobstersApi
 import dev.msfjarvis.lobsters.data.local.SavedPost

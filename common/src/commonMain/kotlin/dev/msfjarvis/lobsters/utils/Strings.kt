@@ -12,5 +12,6 @@ enum class Strings {
   RemoveFromSavedPosts,
   SavedPosts,
   SubmittedBy,
+  NewestPosts,
   ;
 }

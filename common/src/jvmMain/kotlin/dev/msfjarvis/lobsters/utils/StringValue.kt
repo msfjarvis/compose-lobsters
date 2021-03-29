@@ -15,6 +15,7 @@ private fun stringEnumMapper(stringEnum: Strings): String {
     Strings.RemoveFromSavedPosts -> "Remove from saved posts"
     Strings.SavedPosts -> "Saved"
     Strings.SubmittedBy -> "submitted by %1s"
+    Strings.NewestPosts -> "Newest"
   }
 }
 

@@ -34,9 +34,11 @@ fun LobstersApp() {
   val viewModel: LobstersViewModel = viewModel()
   val navController = rememberNavController()
   val hottestPosts = viewModel.hottestPosts.collectAsLazyPagingItems()
+  val newestPosts = viewModel.newestPosts.collectAsLazyPagingItems()
 
   val savedPosts by viewModel.savedPosts.collectAsState()
   val hottestPostsListState = rememberLazyListState()
+  val newestPostsListState = rememberLazyListState()
 
   val navBackStackEntry by navController.currentBackStackEntryAsState()
   val currentRoute =
@@ -48,9 +50,20 @@ fun LobstersApp() {
       popUpTo(navController.graph.startDestination) { inclusive = false }
     }
   }
-  val jumpToIndex: suspend (Int) -> Unit = {
-    if (hottestPosts.loadState.refresh != LoadState.Loading) {
-      hottestPostsListState.animateScrollToItem(it)
+  val jumpToIndex: suspend (Int, Destination) -> Unit = { index, screen ->
+    when (screen) {
+      Destination.Hottest -> {
+        if (hottestPosts.loadState.refresh != LoadState.Loading) {
+          hottestPostsListState.animateScrollToItem(index)
+        }
+      }
+      Destination.Newest -> {
+        if (newestPosts.loadState.refresh != LoadState.Loading) {
+          newestPostsListState.animateScrollToItem(index)
+        }
+      }
+      else -> {
+      }
     }
   }
 
@@ -80,6 +93,16 @@ fun LobstersApp() {
           refreshAction = viewModel::reloadHottestPosts,
         )
       }
+      composable(Destination.Newest.route) {
+        NetworkPosts(
+          posts = newestPosts,
+          listState = newestPostsListState,
+          modifier = Modifier.padding(bottom = innerPadding.calculateBottomPadding()),
+          isPostSaved = viewModel::isPostSaved,
+          saveAction = viewModel::toggleSave,
+          refreshAction = viewModel::reloadNewestPosts,
+        )
+      }
       composable(Destination.Saved.route) {
         SavedPosts(
           posts = savedPosts,
@@ -96,7 +119,7 @@ fun LobstersApp() {
 fun LobstersBottomNav(
   currentDestination: Destination,
   navigateToDestination: (destination: Destination) -> Unit,
-  jumpToIndex: suspend (index: Int) -> Unit,
+  jumpToIndex: suspend (index: Int, screen: Destination) -> Unit,
 ) {
   val coroutineScope = rememberCoroutineScope()
   BottomNavigation(modifier = Modifier.testTag("LobstersBottomNav")) {
@@ -115,8 +138,8 @@ fun LobstersBottomNav(
         onClick = {
           if (screen != currentDestination) {
             navigateToDestination(screen)
-          } else if (screen.route == Destination.Hottest.route) {
-            coroutineScope.launch { jumpToIndex(0) }
+          } else if (screen.route != Destination.Saved.route) {
+            coroutineScope.launch { jumpToIndex(0, screen) }
           }
         }
       )

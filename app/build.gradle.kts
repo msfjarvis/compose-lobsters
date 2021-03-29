@@ -46,7 +46,6 @@ dependencies {
   implementation(Dependencies.ThirdParty.accompanistCoil)
   implementation(Dependencies.ThirdParty.accompanistFlow)
   implementation(Dependencies.ThirdParty.Moshi.lib)
-  implementation(Dependencies.ThirdParty.pullToRefresh)
   implementation(Dependencies.ThirdParty.Retrofit.moshi)
   implementation(Dependencies.ThirdParty.SQLDelight.androidDriver)
   testImplementation(kotlin("test-junit"))

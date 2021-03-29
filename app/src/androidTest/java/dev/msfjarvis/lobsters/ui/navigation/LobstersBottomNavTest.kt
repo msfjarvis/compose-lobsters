@@ -16,8 +16,10 @@ import dev.msfjarvis.lobsters.ui.DarkTestTheme
 import dev.msfjarvis.lobsters.ui.main.LobstersBottomNav
 import dev.msfjarvis.lobsters.ui.theme.LobstersTheme
 import kotlin.test.Test
+import org.junit.Ignore
 import org.junit.Rule
 
+@Ignore("Shot is broken yet again")
 class LobstersBottomNavTest : ScreenshotTest {
 
   @get:Rule

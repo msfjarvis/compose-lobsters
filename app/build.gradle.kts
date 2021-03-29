@@ -38,6 +38,7 @@ dependencies {
   implementation(Dependencies.AndroidX.Compose.lifecycleViewModel)
   implementation(Dependencies.AndroidX.Compose.navigation)
   implementation(Dependencies.AndroidX.Compose.paging)
+  implementation(Dependencies.AndroidX.Compose.uiTooling)
   implementation(Dependencies.AndroidX.Hilt.dagger)
   implementation(Dependencies.AndroidX.Lifecycle.runtimeKtx)
   implementation(Dependencies.AndroidX.Lifecycle.viewmodelKtx)

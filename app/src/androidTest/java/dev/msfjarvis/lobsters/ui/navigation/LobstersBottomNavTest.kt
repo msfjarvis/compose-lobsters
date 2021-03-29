@@ -30,7 +30,7 @@ class LobstersBottomNavTest : ScreenshotTest {
         LobstersBottomNav(
           currentDestination = Destination.startDestination,
           navigateToDestination = { /*TODO*/ },
-          jumpToIndex = { /*TODO*/ }
+          jumpToIndex = { _, _ -> },
         )
       }
     }
@@ -47,7 +47,7 @@ class LobstersBottomNavTest : ScreenshotTest {
         LobstersBottomNav(
           currentDestination = destination,
           navigateToDestination = { newDestination -> destination = newDestination },
-          jumpToIndex = { /*TODO*/ }
+          jumpToIndex = { _, _ -> },
         )
       }
     }

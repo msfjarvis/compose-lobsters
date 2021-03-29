@@ -12,6 +12,9 @@ interface LobstersApi {
   @GET("hottest.json")
   suspend fun getHottestPosts(@Query("page") page: Int): List<LobstersPost>
 
+  @GET("newest.json")
+  suspend fun getNewestPosts(@Query("page") page: Int): List<LobstersPost>
+
   companion object {
     const val BASE_URL = "https://lobste.rs"
   }

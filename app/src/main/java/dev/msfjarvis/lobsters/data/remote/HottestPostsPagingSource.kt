@@ -5,7 +5,7 @@ import androidx.paging.PagingState
 import dev.msfjarvis.lobsters.data.repo.LobstersRepository
 import dev.msfjarvis.lobsters.model.LobstersPost
 
-class LobstersPagingSource constructor(
+class HottestPostsPagingSource constructor(
   private val lobstersRepository: LobstersRepository,
 ) : PagingSource<Int, LobstersPost>() {
 
@@ -15,7 +15,7 @@ class LobstersPagingSource constructor(
       // Update cache before fetching a list.
       // This is done to make sure that we can update the isSaved status of incoming posts.
       lobstersRepository.updateCache()
-      val posts = lobstersRepository.fetchPosts(page)
+      val posts = lobstersRepository.fetchHottestPosts(page)
 
       LoadResult.Page(
         data = posts,

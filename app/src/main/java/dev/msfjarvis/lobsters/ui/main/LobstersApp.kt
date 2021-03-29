@@ -33,7 +33,8 @@ import kotlinx.coroutines.launch
 fun LobstersApp() {
   val viewModel: LobstersViewModel = viewModel()
   val navController = rememberNavController()
-  val hottestPosts = viewModel.posts.collectAsLazyPagingItems()
+  val hottestPosts = viewModel.hottestPosts.collectAsLazyPagingItems()
+
   val savedPosts by viewModel.savedPosts.collectAsState()
   val hottestPostsListState = rememberLazyListState()
 
@@ -76,7 +77,7 @@ fun LobstersApp() {
           modifier = Modifier.padding(bottom = innerPadding.calculateBottomPadding()),
           isPostSaved = viewModel::isPostSaved,
           saveAction = viewModel::toggleSave,
-          refreshAction = viewModel::reloadPosts,
+          refreshAction = viewModel::reloadHottestPosts,
         )
       }
       composable(Destination.Saved.route) {

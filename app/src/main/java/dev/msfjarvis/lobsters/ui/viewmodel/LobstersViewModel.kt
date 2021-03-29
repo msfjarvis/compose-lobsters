@@ -8,7 +8,7 @@ import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.msfjarvis.lobsters.data.local.SavedPost
 import dev.msfjarvis.lobsters.data.preferences.ClawPreferences
-import dev.msfjarvis.lobsters.data.remote.LobstersPagingSource
+import dev.msfjarvis.lobsters.data.remote.HottestPostsPagingSource
 import dev.msfjarvis.lobsters.data.repo.LobstersRepository
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
@@ -25,10 +25,10 @@ class LobstersViewModel @Inject constructor(
 ) : ViewModel() {
   private val _savedPosts = MutableStateFlow<List<SavedPost>>(emptyList())
   val savedPosts = _savedPosts.asStateFlow()
-  val posts = Pager(PagingConfig(25)) {
-    LobstersPagingSource(lobstersRepository).also { pagingSource = it }
+  val hottestPosts = Pager(PagingConfig(25)) {
+    HottestPostsPagingSource(lobstersRepository).also { hottestPostsPagingSource = it }
   }.flow.cachedIn(viewModelScope)
-  private var pagingSource: LobstersPagingSource? = null
+  private var hottestPostsPagingSource: HottestPostsPagingSource? = null
 
   init {
     lobstersRepository.isCacheReady.onEach { ready ->
@@ -46,8 +46,8 @@ class LobstersViewModel @Inject constructor(
     clawPreferences.toggleSortingOrder()
   }
 
-  fun reloadPosts() {
-    pagingSource?.invalidate()
+  fun reloadHottestPosts() {
+    hottestPostsPagingSource?.invalidate()
   }
 
   fun toggleSave(post: SavedPost) {

@@ -26,7 +26,7 @@ class LobstersRepository constructor(
     return savedPostsCache.values.toList()
   }
 
-  suspend fun fetchPosts(page: Int): List<LobstersPost> = withContext(Dispatchers.IO) {
+  suspend fun fetchHottestPosts(page: Int): List<LobstersPost> = withContext(Dispatchers.IO) {
     return@withContext lobstersApi.getHottestPosts(page)
   }
 

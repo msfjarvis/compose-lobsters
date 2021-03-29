@@ -30,6 +30,10 @@ class LobstersRepository constructor(
     return@withContext lobstersApi.getHottestPosts(page)
   }
 
+  suspend fun fetchNewestPosts(page: Int): List<LobstersPost> = withContext(Dispatchers.IO) {
+    return@withContext lobstersApi.getNewestPosts(page)
+  }
+
   // https://issuetracker.google.com/issues/181221325
   @Suppress("NewApi")
   suspend fun updateCache() {

@@ -9,6 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.msfjarvis.lobsters.data.local.SavedPost
 import dev.msfjarvis.lobsters.data.preferences.ClawPreferences
 import dev.msfjarvis.lobsters.data.remote.HottestPostsPagingSource
+import dev.msfjarvis.lobsters.data.remote.NewestPostsPagingSource
 import dev.msfjarvis.lobsters.data.repo.LobstersRepository
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
@@ -28,7 +29,11 @@ class LobstersViewModel @Inject constructor(
   val hottestPosts = Pager(PagingConfig(25)) {
     HottestPostsPagingSource(lobstersRepository).also { hottestPostsPagingSource = it }
   }.flow.cachedIn(viewModelScope)
+  val newestPosts = Pager(PagingConfig(25)) {
+    NewestPostsPagingSource(lobstersRepository).also { newestPostsPagingSource = it }
+  }.flow.cachedIn(viewModelScope)
   private var hottestPostsPagingSource: HottestPostsPagingSource? = null
+  private var newestPostsPagingSource: NewestPostsPagingSource? = null
 
   init {
     lobstersRepository.isCacheReady.onEach { ready ->
@@ -48,6 +53,10 @@ class LobstersViewModel @Inject constructor(
 
   fun reloadHottestPosts() {
     hottestPostsPagingSource?.invalidate()
+  }
+
+  fun reloadNewestPosts() {
+    newestPostsPagingSource?.invalidate()
   }
 
   fun toggleSave(post: SavedPost) {

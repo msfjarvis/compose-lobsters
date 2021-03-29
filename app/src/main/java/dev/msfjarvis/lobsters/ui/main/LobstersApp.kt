@@ -22,7 +22,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import dev.msfjarvis.lobsters.ui.navigation.Destination
-import dev.msfjarvis.lobsters.ui.posts.HottestPosts
+import dev.msfjarvis.lobsters.ui.posts.NetworkPosts
 import dev.msfjarvis.lobsters.ui.posts.SavedPosts
 import dev.msfjarvis.lobsters.ui.viewmodel.LobstersViewModel
 import dev.msfjarvis.lobsters.util.IconResource
@@ -70,7 +70,7 @@ fun LobstersApp() {
   ) { innerPadding ->
     NavHost(navController, startDestination = Destination.startDestination.route) {
       composable(Destination.Hottest.route) {
-        HottestPosts(
+        NetworkPosts(
           posts = hottestPosts,
           listState = hottestPostsListState,
           modifier = Modifier.padding(bottom = innerPadding.calculateBottomPadding()),

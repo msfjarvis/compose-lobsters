@@ -17,8 +17,11 @@ import dev.msfjarvis.lobsters.model.LobstersPost
 import dev.msfjarvis.lobsters.ui.urllauncher.LocalUrlLauncher
 import dev.msfjarvis.lobsters.util.toDbModel
 
+/**
+ * Composable for rendering a list of [LobstersPost] fetched from the network.
+ */
 @Composable
-fun HottestPosts(
+fun NetworkPosts(
   posts: LazyPagingItems<LobstersPost>,
   listState: LazyListState,
   modifier: Modifier = Modifier,

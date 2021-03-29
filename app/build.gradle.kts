@@ -3,7 +3,7 @@ plugins {
   kotlin("android")
   kotlin("kapt")
   id("dagger.hilt.android.plugin")
-  id("org.jetbrains.compose") version "0.4.0-build173"
+  id("org.jetbrains.compose") version "0.4.0-build177"
   id("shot")
   `versioning-plugin`
   `lobsters-plugin`
@@ -42,8 +42,8 @@ dependencies {
   implementation(Dependencies.AndroidX.Lifecycle.runtimeKtx)
   implementation(Dependencies.AndroidX.Lifecycle.viewmodelKtx)
   implementation(Dependencies.Kotlin.Coroutines.android)
-  implementation(Dependencies.ThirdParty.accompanist)
-  implementation(Dependencies.ThirdParty.composeFlowLayout)
+  implementation(Dependencies.ThirdParty.accompanistCoil)
+  implementation(Dependencies.ThirdParty.accompanistFlow)
   implementation(Dependencies.ThirdParty.Moshi.lib)
   implementation(Dependencies.ThirdParty.pullToRefresh)
   implementation(Dependencies.ThirdParty.Retrofit.moshi)

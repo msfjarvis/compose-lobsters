@@ -16,7 +16,7 @@ object Plugins {
 }
 
 object Dependencies {
-  const val COMPOSE_VERSION = "1.0.0-beta02"
+  const val COMPOSE_VERSION = "1.0.0-beta03"
 
   object Kotlin {
 
@@ -31,14 +31,14 @@ object Dependencies {
 
   object AndroidX {
 
-    const val appCompat = "androidx.appcompat:appcompat:1.3.0-beta01"
+    const val appCompat = "androidx.appcompat:appcompat:1.3.0-rc01"
     const val browser = "androidx.browser:browser:1.3.0"
     const val coreLibraryDesugaring = "com.android.tools:desugar_jdk_libs:1.0.10"
     const val datastore = "androidx.datastore:datastore-preferences:1.0.0-alpha08"
 
     object Compose {
 
-      const val activity = "androidx.activity:activity-compose:1.3.0-alpha04"
+      const val activity = "androidx.activity:activity-compose:1.3.0-alpha05"
       const val compiler = "androidx.compose.compiler:compiler:$COMPOSE_VERSION"
       const val foundation = "androidx.compose.foundation:foundation:$COMPOSE_VERSION"
       const val foundationLayout = "androidx.compose.foundation:foundation-layout:$COMPOSE_VERSION"
@@ -59,7 +59,7 @@ object Dependencies {
 
     object Lifecycle {
 
-      private const val version = "2.3.0"
+      private const val version = "2.4.0-alpha01"
       const val runtimeKtx = "androidx.lifecycle:lifecycle-runtime-ktx:$version"
       const val viewmodelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:$version"
     }
@@ -67,8 +67,9 @@ object Dependencies {
 
   object ThirdParty {
 
-    const val accompanist = "dev.chrisbanes.accompanist:accompanist-coil:0.6.2"
-    const val composeFlowLayout = "com.star-zero:compose-flowlayout:0.0.1"
+    private const val accompanistVersion = "0.7.0"
+    const val accompanistCoil = "com.google.accompanist:accompanist-coil:$accompanistVersion"
+    const val accompanistFlow = "com.google.accompanist:accompanist-flowlayout:$accompanistVersion"
     const val kamel = "com.alialbaali.kamel:kamel-image:0.2.0"
     const val pullToRefresh = "com.puculek.pulltorefresh:pull-to-refresh-compose:1.0.1"
 

@@ -16,6 +16,13 @@ private fun stringEnumMapper(stringEnum: Strings): String {
     Strings.SavedPosts -> "Saved"
     Strings.SubmittedBy -> "submitted by %1s"
     Strings.NewestPosts -> "Newest"
+    Strings.Settings -> "Settings"
+    Strings.SettingsBackup -> "Backup saved posts"
+    Strings.SettingsBackupDescription ->
+      "Export saved posts in a JSON file that can be restored later"
+    Strings.SettingsRestore -> "Restore saved posts"
+    Strings.SettingsRestoreDescription ->
+      "Import a previously exported copy of saved posts. Existing saved posts are not cleared"
   }
 }
 

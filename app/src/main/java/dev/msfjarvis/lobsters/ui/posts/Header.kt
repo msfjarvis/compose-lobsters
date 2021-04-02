@@ -14,24 +14,24 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.msfjarvis.lobsters.ui.theme.LobstersTheme
 import java.time.Month
-import java.util.Locale
 import java.time.format.TextStyle as JTextStyle
+import java.util.Locale
 
 @Composable
 fun MonthHeader(month: Month) {
   Box(
-    Modifier
-      .fillMaxWidth()
+    Modifier.fillMaxWidth()
       .background(MaterialTheme.colors.secondary)
       .wrapContentHeight()
       .padding(4.dp)
   ) {
     Text(
       text = month.getDisplayName(JTextStyle.FULL, Locale.getDefault()),
-      style = MaterialTheme.typography.h5.copy(
-        color = MaterialTheme.colors.onSecondary,
-        textAlign = TextAlign.Center,
-      ),
+      style =
+        MaterialTheme.typography.h5.copy(
+          color = MaterialTheme.colors.onSecondary,
+          textAlign = TextAlign.Center,
+        ),
       modifier = Modifier.padding(horizontal = 12.dp),
     )
   }
@@ -40,7 +40,5 @@ fun MonthHeader(month: Month) {
 @Preview
 @Composable
 fun MonthHeaderPreview() {
-  LobstersTheme {
-    MonthHeader(month = Month.JULY)
-  }
+  LobstersTheme { MonthHeader(month = Month.JULY) }
 }

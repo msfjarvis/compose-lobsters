@@ -6,9 +6,7 @@ plugins {
   `lobsters-plugin`
 }
 
-repositories {
-  maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
-}
+repositories { maven("https://maven.pkg.jetbrains.space/public/p/compose/dev") }
 
 dependencies {
   implementation(project(":api"))
@@ -22,8 +20,4 @@ dependencies {
   implementation(Dependencies.ThirdParty.Retrofit.moshi)
 }
 
-compose.desktop {
-  application {
-    mainClass = "dev.msfjarvis.lobsters.ui.Main"
-  }
-}
+compose.desktop { application { mainClass = "dev.msfjarvis.lobsters.ui.Main" } }

@@ -17,9 +17,7 @@ import dev.msfjarvis.lobsters.model.LobstersPost
 import dev.msfjarvis.lobsters.ui.urllauncher.LocalUrlLauncher
 import dev.msfjarvis.lobsters.util.toDbModel
 
-/**
- * Composable for rendering a list of [LobstersPost] fetched from the network.
- */
+/** Composable for rendering a list of [LobstersPost] fetched from the network. */
 @Composable
 fun NetworkPosts(
   posts: LazyPagingItems<LobstersPost>,
@@ -42,11 +40,7 @@ fun NetworkPosts(
     },
   ) {
     if (posts.loadState.refresh == LoadState.Loading) {
-      LazyColumn {
-        items(15) {
-          LoadingLobstersItem()
-        }
-      }
+      LazyColumn { items(15) { LoadingLobstersItem() } }
     } else {
       LazyColumn(
         state = listState,
@@ -54,8 +48,7 @@ fun NetworkPosts(
       ) {
         items(posts) { item ->
           if (item != null) {
-            @Suppress("NAME_SHADOWING")
-            val item = item.toDbModel()
+            @Suppress("NAME_SHADOWING") val item = item.toDbModel()
             var isSaved by remember(item.shortId) { mutableStateOf(isPostSaved(item.shortId)) }
 
             LobstersItem(

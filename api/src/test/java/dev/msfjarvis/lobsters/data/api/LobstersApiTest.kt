@@ -22,26 +22,26 @@ class LobstersApiTest {
   companion object {
     private val webServer = MockWebServer()
     private val apiData = TestUtils.getJson("hottest.json")
-    private val moshi = Moshi.Builder()
-      .build()
-    private val okHttp = OkHttpClient.Builder()
-      .build()
-    private val retrofit = Retrofit.Builder()
-      .client(okHttp)
-      .baseUrl("http://localhost:8080/")
-      .addConverterFactory(MoshiConverterFactory.create(moshi))
-      .build()
+    private val moshi = Moshi.Builder().build()
+    private val okHttp = OkHttpClient.Builder().build()
+    private val retrofit =
+      Retrofit.Builder()
+        .client(okHttp)
+        .baseUrl("http://localhost:8080/")
+        .addConverterFactory(MoshiConverterFactory.create(moshi))
+        .build()
     private val apiClient = retrofit.create<LobstersApi>()
 
     @JvmStatic
     @BeforeClass
     fun setUp() {
       webServer.start(8080)
-      webServer.dispatcher = object : Dispatcher() {
-        override fun dispatch(request: RecordedRequest): MockResponse {
-          return MockResponse().setBody(apiData).setResponseCode(200)
+      webServer.dispatcher =
+        object : Dispatcher() {
+          override fun dispatch(request: RecordedRequest): MockResponse {
+            return MockResponse().setBody(apiData).setResponseCode(200)
+          }
         }
-      }
     }
 
     @JvmStatic
@@ -60,18 +60,14 @@ class LobstersApiTest {
   @Test
   fun `no moderator posts in test data`() = runBlocking {
     val posts = apiClient.getHottestPosts(1)
-    val moderatorPosts = posts.asSequence()
-      .filter { it.submitterUser.isModerator }
-      .toSet()
+    val moderatorPosts = posts.asSequence().filter { it.submitterUser.isModerator }.toSet()
     assertTrue(moderatorPosts.isEmpty())
   }
 
   @Test
   fun `posts with no urls`() = runBlocking {
     val posts = apiClient.getHottestPosts(1)
-    val commentsOnlyPosts = posts.asSequence()
-      .filter { it.url.isEmpty() }
-      .toSet()
+    val commentsOnlyPosts = posts.asSequence().filter { it.url.isEmpty() }.toSet()
     assertEquals(2, commentsOnlyPosts.size)
   }
 }

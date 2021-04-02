@@ -25,12 +25,10 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 
-
 private const val MAX_OFFSET = 400f
 private const val MIN_REFRESH_OFFSET = 250f
 private const val PERCENT_INDICATOR_PROGRESS_ON_DRAG = 0.85f
 private const val BASE_OFFSET = -48
-
 
 /**
  * A layout composable with [content].
@@ -78,26 +76,30 @@ fun PullToRefresh(
     finishedListener = {
       indicatorOffset = 0f
       isFinishingRefresh = false
-    })
-  val offsetAnimation by animateFloatAsState(
-    targetValue = if (isRefreshing || isFinishingRefresh) {
-      indicatorOffset - minRefreshOffset
-    } else {
-      0f
     }
   )
+  val offsetAnimation by animateFloatAsState(
+    targetValue =
+      if (isRefreshing || isFinishingRefresh) {
+        indicatorOffset - minRefreshOffset
+      } else {
+        0f
+      }
+  )
   val resettingScrollOffsetAnimation by animateFloatAsState(
-    targetValue = if (isResettingScroll) {
-      scrollToReset
-    } else {
-      0f
-    },
+    targetValue =
+      if (isResettingScroll) {
+        scrollToReset
+      } else {
+        0f
+      },
     finishedListener = {
       if (isResettingScroll) {
         indicatorOffset = 0f
         isResettingScroll = false
       }
-    })
+    }
+  )
 
   if (isResettingScroll) {
     indicatorOffset -= resettingScrollOffsetAnimation
@@ -110,100 +112,102 @@ fun PullToRefresh(
     isRefreshingInternal = true
   }
 
-  val nestedScrollConnection = object : NestedScrollConnection {
+  val nestedScrollConnection =
+    object : NestedScrollConnection {
 
-    override fun onPostScroll(
-      consumed: Offset,
-      available: Offset,
-      source: NestedScrollSource
-    ): Offset {
-      if (!isRefreshing && source == NestedScrollSource.Drag) {
-        val diff = if (indicatorOffset + available.y > maxOffset) {
-          available.y - (indicatorOffset + available.y - maxOffset)
-        } else if (indicatorOffset + available.y < 0) {
-          0f
-        } else {
-          available.y
+      override fun onPostScroll(
+        consumed: Offset,
+        available: Offset,
+        source: NestedScrollSource
+      ): Offset {
+        if (!isRefreshing && source == NestedScrollSource.Drag) {
+          val diff =
+            if (indicatorOffset + available.y > maxOffset) {
+              available.y - (indicatorOffset + available.y - maxOffset)
+            } else if (indicatorOffset + available.y < 0) {
+              0f
+            } else {
+              available.y
+            }
+          indicatorOffset += diff
+          return Offset(0f, diff)
         }
-        indicatorOffset += diff
-        return Offset(0f, diff)
+        return super.onPostScroll(consumed, available, source)
       }
-      return super.onPostScroll(consumed, available, source)
-    }
 
-    override fun onPreScroll(
-      available: Offset,
-      source: NestedScrollSource
-    ): Offset {
-      if (!isRefreshing && source == NestedScrollSource.Drag) {
-        if (available.y < 0 && indicatorOffset > 0) {
-          val diff = if (indicatorOffset + available.y < 0) {
-            indicatorOffset = 0f
-            indicatorOffset
-          } else {
-            indicatorOffset += available.y
-            available.y
+      override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
+        if (!isRefreshing && source == NestedScrollSource.Drag) {
+          if (available.y < 0 && indicatorOffset > 0) {
+            val diff =
+              if (indicatorOffset + available.y < 0) {
+                indicatorOffset = 0f
+                indicatorOffset
+              } else {
+                indicatorOffset += available.y
+                available.y
+              }
+            isFinishingRefresh = false
+            return Offset.Zero.copy(y = diff)
           }
-          isFinishingRefresh = false
-          return Offset.Zero.copy(y = diff)
         }
+        return super.onPreScroll(available, source)
       }
-      return super.onPreScroll(available, source)
-    }
 
-    override suspend fun onPostFling(
-      consumed: Velocity,
-      available: Velocity
-    ): Velocity {
-      if (!isRefreshing) {
-        if (indicatorOffset > minRefreshOffset) {
-          onRefresh()
-          isRefreshingInternal = true
-        } else {
-          isResettingScroll = true
-          scrollToReset = indicatorOffset
+      override suspend fun onPostFling(consumed: Velocity, available: Velocity): Velocity {
+        if (!isRefreshing) {
+          if (indicatorOffset > minRefreshOffset) {
+            onRefresh()
+            isRefreshingInternal = true
+          } else {
+            isResettingScroll = true
+            scrollToReset = indicatorOffset
+          }
         }
+        return super.onPostFling(consumed, available)
       }
-      return super.onPostFling(consumed, available)
     }
-  }
 
   Box(
-    modifier = CombinedModifier(
-      inner = Modifier
-        .nestedScroll(nestedScrollConnection)
-        .clip(RectangleShape),
-      outer = modifier
-    )
+    modifier =
+      CombinedModifier(
+        inner = Modifier.nestedScroll(nestedScrollConnection).clip(RectangleShape),
+        outer = modifier
+      )
   ) {
     content()
 
-    val offsetPx = if (isRefreshing || isFinishingRefresh) {
-      offsetAnimation
-    } else {
-      0f
-    }
-    val absoluteOffset = BASE_OFFSET.dp + with(LocalDensity.current) {
-      val diffedOffset = indicatorOffset - offsetPx
-      val calculated = calculateAbsoluteOffset(diffedOffset, MAX_OFFSET)
-      calculated.toDp()
-    }
-    val progressFromOffset = with(LocalDensity.current) {
-      val coeff = MAX_OFFSET / (MAX_OFFSET - BASE_OFFSET)
-      (indicatorOffset - BASE_OFFSET) / maxOffset * coeff
-    }
+    val offsetPx =
+      if (isRefreshing || isFinishingRefresh) {
+        offsetAnimation
+      } else {
+        0f
+      }
+    val absoluteOffset =
+      BASE_OFFSET.dp +
+        with(LocalDensity.current) {
+          val diffedOffset = indicatorOffset - offsetPx
+          val calculated = calculateAbsoluteOffset(diffedOffset, MAX_OFFSET)
+          calculated.toDp()
+        }
+    val progressFromOffset =
+      with(LocalDensity.current) {
+        val coeff = MAX_OFFSET / (MAX_OFFSET - BASE_OFFSET)
+        (indicatorOffset - BASE_OFFSET) / maxOffset * coeff
+      }
     PullToRefreshProgressIndicator(
-      modifier = Modifier
-        .fillMaxWidth()
-        .absoluteOffset(y = absoluteOffset)
-        .scale(scaleAnimation)
-        .rotate(indicatorOffset / MAX_OFFSET * 180 + 110),
+      modifier =
+        Modifier.fillMaxWidth()
+          .absoluteOffset(y = absoluteOffset)
+          .scale(scaleAnimation)
+          .rotate(indicatorOffset / MAX_OFFSET * 180 + 110),
       progressColor = progressColor,
       backgroundColor = backgroundColor,
-      progress = when {
-        !isRefreshing && !isFinishingRefresh -> progressFromOffset * PERCENT_INDICATOR_PROGRESS_ON_DRAG
-        else -> null
-      },
+      progress =
+        when {
+          !isRefreshing && !isFinishingRefresh ->
+            progressFromOffset * PERCENT_INDICATOR_PROGRESS_ON_DRAG
+          else -> null
+        },
     )
   }
 }

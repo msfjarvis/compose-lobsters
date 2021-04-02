@@ -4,9 +4,7 @@ import androidx.annotation.DrawableRes
 import dev.msfjarvis.lobsters.R
 import dev.msfjarvis.lobsters.utils.Strings
 
-/**
- * Destinations for navigation within the app.
- */
+/** Destinations for navigation within the app. */
 enum class Destination(
   val route: String,
   val labelRes: Strings,

@@ -29,16 +29,11 @@ fun LobstersItem(
   post: SavedPost,
 ) {
   Surface(
-    modifier = Modifier
-      .fillMaxWidth()
-      .clickable {
-        UrlLauncher.launch(post.url)
-      }
-      .wrapContentHeight(),
+    modifier =
+      Modifier.fillMaxWidth().clickable { UrlLauncher.launch(post.url) }.wrapContentHeight(),
   ) {
     Row(
-      modifier = Modifier
-        .padding(start = 12.dp, end = 24.dp),
+      modifier = Modifier.padding(start = 12.dp, end = 24.dp),
       verticalAlignment = Alignment.CenterVertically,
       horizontalArrangement = Arrangement.SpaceBetween,
     ) {
@@ -49,26 +44,21 @@ fun LobstersItem(
           text = post.title,
           color = titleColor,
           fontWeight = FontWeight.Bold,
-          modifier = Modifier
-            .padding(top = 4.dp),
+          modifier = Modifier.padding(top = 4.dp),
         )
         TagRow(
           tags = post.tags,
-          modifier = Modifier
-            .padding(top = 8.dp, bottom = 8.dp, end = 16.dp),
+          modifier = Modifier.padding(top = 8.dp, bottom = 8.dp, end = 16.dp),
         )
         Row {
           KamelImage(
             resource = lazyImageResource(data = URI(post.submitterAvatarUrl)),
             contentDescription = "${post.submitterName}'s avatar",
-            modifier = Modifier
-              .requiredWidth(30.dp)
-              .padding(4.dp),
+            modifier = Modifier.requiredWidth(30.dp).padding(4.dp),
           )
           Text(
             text = "Submitted by ${post.submitterName}",
-            modifier = Modifier
-              .padding(4.dp),
+            modifier = Modifier.padding(4.dp),
           )
         }
       }
@@ -87,9 +77,9 @@ fun TagRow(
     tags.forEach { tag ->
       Text(
         text = tag,
-        modifier = Modifier
-          .background(Color(0xFFFFFCD7), RoundedCornerShape(8.dp))
-          .padding(horizontal = 8.dp),
+        modifier =
+          Modifier.background(Color(0xFFFFFCD7), RoundedCornerShape(8.dp))
+            .padding(horizontal = 8.dp),
         color = Color.DarkGray,
       )
     }

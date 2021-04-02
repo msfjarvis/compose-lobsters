@@ -9,9 +9,7 @@ import org.gradle.api.Project
 
 private const val KEYSTORE_CONFIG_PATH = "keystore.properties"
 
-/**
- * Configure signing for all build types.
- */
+/** Configure signing for all build types. */
 @Suppress("UnstableApiUsage")
 internal fun BaseAppModuleExtension.configureBuildSigning(project: Project) {
   with(project) {

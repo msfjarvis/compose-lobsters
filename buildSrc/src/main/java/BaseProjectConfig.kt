@@ -18,14 +18,12 @@ import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 /**
- * Configure root project.
- * Note that classpath dependencies still need to be defined in the `buildscript` block in the top-level build.gradle.kts file.
+ * Configure root project. Note that classpath dependencies still need to be defined in the
+ * `buildscript` block in the top-level build.gradle.kts file.
  */
 internal fun Project.configureForRootProject() {
   // register task for cleaning the build directory in the root project
-  tasks.register<Delete>("clean") {
-    delete(rootProject.buildDir)
-  }
+  tasks.register<Delete>("clean") { delete(rootProject.buildDir) }
   tasks.withType<Wrapper> {
     gradleVersion = "7.0-rc-1"
     distributionType = Wrapper.DistributionType.ALL
@@ -33,18 +31,12 @@ internal fun Project.configureForRootProject() {
   }
 }
 
-/**
- * Configure all projects including the root project
- */
+/** Configure all projects including the root project */
 internal fun Project.configureForAllProjects() {
   repositories {
     google()
     mavenCentral()
-    jcenter {
-      content {
-        includeGroup("org.jetbrains.compose.*")
-      }
-    }
+    jcenter { content { includeGroup("org.jetbrains.compose.*") } }
     maven("https://dl.bintray.com/kotlin/kotlinx") {
       name = "KotlinX Bintray"
       content {
@@ -62,25 +54,23 @@ internal fun Project.configureForAllProjects() {
   }
   tasks.withType<Test> {
     maxParallelForks = Runtime.getRuntime().availableProcessors() * 2
-    testLogging {
-      events(TestLogEvent.PASSED, TestLogEvent.SKIPPED, TestLogEvent.FAILED)
-    }
+    testLogging { events(TestLogEvent.PASSED, TestLogEvent.SKIPPED, TestLogEvent.FAILED) }
   }
 }
 
-/**
- * Apply configuration options for Android Application projects.
- */
+/** Apply configuration options for Android Application projects. */
 @Suppress("UnstableApiUsage")
 internal fun BaseAppModuleExtension.configureAndroidApplicationOptions(project: Project) {
   val minifySwitch =
     project.providers.environmentVariable("DISABLE_MINIFY").forUseAtConfigurationTime()
   project.tasks.withType<KotlinCompile> {
     kotlinOptions {
-      freeCompilerArgs = freeCompilerArgs + listOf(
-        "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
-        "-Xopt-in=androidx.compose.material.ExperimentalMaterialApi"
-      )
+      freeCompilerArgs =
+        freeCompilerArgs +
+          listOf(
+            "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+            "-Xopt-in=androidx.compose.material.ExperimentalMaterialApi"
+          )
     }
   }
   adbOptions.installOptions("--user 0")
@@ -97,9 +87,7 @@ internal fun BaseAppModuleExtension.configureAndroidApplicationOptions(project: 
   }
 }
 
-/**
- * Apply baseline configurations for all Android projects (Application and Library).
- */
+/** Apply baseline configurations for all Android projects (Application and Library). */
 @Suppress("UnstableApiUsage")
 internal fun TestedExtension.configureCommonAndroidOptions() {
   compileSdkVersion(30)

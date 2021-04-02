@@ -29,8 +29,7 @@ class LobstersPlugin : Plugin<Project> {
 
     project.plugins.all {
       when (this) {
-        is JavaPlugin,
-        is JavaLibraryPlugin -> {
+        is JavaPlugin, is JavaLibraryPlugin -> {
           project.tasks.withType<JavaCompile> {
             options.compilerArgs.add("-Xlint:unchecked")
             options.isDeprecation = true
@@ -42,7 +41,9 @@ class LobstersPlugin : Plugin<Project> {
         is AppPlugin -> {
           project.extensions.getByType<TestedExtension>().configureCommonAndroidOptions()
           project.extensions.getByType<BaseAppModuleExtension>().configureBuildSigning(project)
-          project.extensions.getByType<BaseAppModuleExtension>()
+          project
+            .extensions
+            .getByType<BaseAppModuleExtension>()
             .configureAndroidApplicationOptions(project)
         }
         is Kapt3GradleSubplugin -> {
@@ -56,4 +57,5 @@ class LobstersPlugin : Plugin<Project> {
   }
 }
 
-private val Project.isRoot get() = this == this.rootProject
+private val Project.isRoot
+  get() = this == this.rootProject

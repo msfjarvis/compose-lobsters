@@ -17,10 +17,11 @@ class SqlDelightQueriesTest {
   fun setUp() {
     val driver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
     LobstersDatabase.Schema.create(driver)
-    val database = LobstersDatabase(
-      driver,
-      SavedPost.Adapter(TagsAdapter()),
-    )
+    val database =
+      LobstersDatabase(
+        driver,
+        SavedPost.Adapter(TagsAdapter()),
+      )
     postQueries = database.savedPostQueries
   }
 
@@ -128,21 +129,21 @@ class SqlDelightQueriesTest {
     assertEquals(0, postsCount)
   }
 
-
   private fun createTestData(count: Int): ArrayList<SavedPost> {
     val posts = arrayListOf<SavedPost>()
 
     for (i in 1..count) {
-      val post = SavedPost(
-        shortId = "test_id_$i",
-        createdAt = "0",
-        title = "test",
-        url = "test_url",
-        commentsUrl = "test_comments_url",
-        submitterName = "test_user_$i",
-        submitterAvatarUrl = "test_avatar_url",
-        tags = listOf(),
-      )
+      val post =
+        SavedPost(
+          shortId = "test_id_$i",
+          createdAt = "0",
+          title = "test",
+          url = "test_url",
+          commentsUrl = "test_comments_url",
+          submitterName = "test_user_$i",
+          submitterAvatarUrl = "test_avatar_url",
+          tags = listOf(),
+        )
 
       posts.add(post)
     }

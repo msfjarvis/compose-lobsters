@@ -5,9 +5,7 @@ plugins {
   `lobsters-plugin`
 }
 
-repositories {
-  maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
-}
+repositories { maven("https://maven.pkg.jetbrains.space/public/p/compose/dev") }
 
 // workaround for https://youtrack.jetbrains.com/issue/KT-43944
 android {
@@ -40,23 +38,11 @@ kotlin {
       }
     }
 
-    val jvmMain by getting {
-      dependencies {
-        implementation(compose.runtime)
-      }
-    }
+    val jvmMain by getting { dependencies { implementation(compose.runtime) } }
 
-    val androidTest by getting {
-      dependencies {
-        implementation(kotlin("test-junit"))
-      }
-    }
+    val androidTest by getting { dependencies { implementation(kotlin("test-junit")) } }
 
-    val jvmTest by getting {
-      dependencies {
-        implementation(kotlin("test-junit"))
-      }
-    }
+    val jvmTest by getting { dependencies { implementation(kotlin("test-junit")) } }
 
     val commonTest by getting {
       dependencies {
@@ -68,9 +54,7 @@ kotlin {
 }
 
 android {
-  buildFeatures {
-    androidResources = true
-  }
+  buildFeatures { androidResources = true }
 
   sourceSets {
     named("main") {

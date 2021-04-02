@@ -9,7 +9,8 @@ import org.gradle.kotlin.dsl.withType
 /**
  * A plugin that enables Java 8 desugaring for consuming new Java language APIs.
  *
- * Apply this plugin to the build.gradle.kts file in Android Application or Android Library projects:
+ * Apply this plugin to the build.gradle.kts file in Android Application or Android Library
+ * projects:
  * ```
  * plugins {
  *     `core-library-desugaring`

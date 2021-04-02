@@ -32,10 +32,7 @@ object DatabaseModule {
 
   @Provides
   @Singleton
-  fun providesLobstersDatabase(
-    sqlDriver: SqlDriver,
-    tagsAdapter: TagsAdapter
-  ): LobstersDatabase {
+  fun providesLobstersDatabase(sqlDriver: SqlDriver, tagsAdapter: TagsAdapter): LobstersDatabase {
     return LobstersDatabase(
       sqlDriver,
       SavedPost.Adapter(tagsAdapter),

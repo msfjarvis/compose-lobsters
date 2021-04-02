@@ -58,11 +58,8 @@ fun SavedPosts(
     ) {
       val grouped = posts.groupBy { it.createdAt.asZonedDateTime().month }
       grouped.forEach { (month, posts) ->
-        stickyHeader {
-          MonthHeader(month = month)
-        }
-        @Suppress("NAME_SHADOWING")
-        val posts = if (sortOrder) posts.reversed() else posts
+        stickyHeader { MonthHeader(month = month) }
+        @Suppress("NAME_SHADOWING") val posts = if (sortOrder) posts.reversed() else posts
         items(posts) { item ->
           LobstersItem(
             post = item,

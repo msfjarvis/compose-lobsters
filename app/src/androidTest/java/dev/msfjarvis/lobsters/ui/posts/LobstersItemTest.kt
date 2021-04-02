@@ -15,8 +15,7 @@ import org.junit.Rule
 @Ignore("Shot is broken yet again")
 class LobstersItemTest : ScreenshotTest {
 
-  @get:Rule
-  val composeTestRule = createComposeRule()
+  @get:Rule val composeTestRule = createComposeRule()
 
   @Test
   fun singlePost() {
@@ -24,9 +23,9 @@ class LobstersItemTest : ScreenshotTest {
       DarkTestTheme {
         LobstersItem(
           post = TEST_POST,
-          viewPost = { /*TODO*/ },
-          viewComments = { /*TODO*/ },
-          toggleSave = { /*TODO*/ },
+          viewPost = {},
+          viewComments = {},
+          toggleSave = {},
           isSaved = true,
         )
       }
@@ -42,9 +41,9 @@ class LobstersItemTest : ScreenshotTest {
           items(10) {
             LobstersItem(
               post = TEST_POST,
-              viewPost = { /*TODO*/ },
-              viewComments = { /*TODO*/ },
-              toggleSave = { /*TODO*/ },
+              viewPost = {},
+              viewComments = {},
+              toggleSave = {},
               isSaved = true,
             )
           }
@@ -62,9 +61,9 @@ class LobstersItemTest : ScreenshotTest {
           items(10) {
             LobstersItem(
               post = TEST_POST.copy(tags = listOf("openbsd", "linux")),
-              viewPost = { /*TODO*/ },
-              viewComments = { /*TODO*/ },
-              toggleSave = { /*TODO*/ },
+              viewPost = {},
+              viewComments = {},
+              toggleSave = {},
               isSaved = true,
             )
           }

@@ -13,5 +13,4 @@ enum class Strings {
   SavedPosts,
   SubmittedBy,
   NewestPosts,
-  ;
 }

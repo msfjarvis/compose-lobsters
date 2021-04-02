@@ -1,6 +1,4 @@
-plugins {
-  `lobsters-plugin`
-}
+plugins { `lobsters-plugin` }
 
 subprojects {
   configurations.configureEach {

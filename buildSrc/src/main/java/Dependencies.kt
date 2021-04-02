@@ -75,7 +75,7 @@ object Dependencies {
 
     object Moshi {
 
-      const val lib = "com.squareup.moshi:moshi:1.11.0"
+      const val lib = "com.squareup.moshi:moshi:1.12.0"
       const val ksp = "dev.zacsweers.moshix:moshi-ksp:0.9.2"
     }
 

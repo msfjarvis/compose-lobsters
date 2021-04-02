@@ -56,7 +56,16 @@ fun SavedPosts(
       state = listState,
       modifier = Modifier.then(modifier),
     ) {
-      val grouped = posts.groupBy { it.createdAt.asZonedDateTime().month }
+      val grouped =
+        posts.groupBy { it.createdAt.asZonedDateTime().month }.apply {
+          if (sortOrder) {
+            toSortedMap(
+              Comparator { first, second ->
+                return@Comparator if (first > second) -1 else if (first < second) 1 else 0
+              }
+            )
+          }
+        }
       grouped.forEach { (month, posts) ->
         stickyHeader { MonthHeader(month = month) }
         @Suppress("NAME_SHADOWING") val posts = if (sortOrder) posts.reversed() else posts

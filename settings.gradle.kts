@@ -1,5 +1,7 @@
 rootProject.name = "Claw"
+
 include(":app", ":api", ":common", ":database", ":desktop")
+
 pluginManagement {
   repositories {
     google()

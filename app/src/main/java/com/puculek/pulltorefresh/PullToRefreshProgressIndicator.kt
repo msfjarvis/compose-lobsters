@@ -27,10 +27,8 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-
 private val CircularIndicatorDiameter = 40.dp
 private const val strokeWidthPx = 2.5f
-
 
 @Composable
 internal fun PullToRefreshProgressIndicator(
@@ -39,22 +37,15 @@ internal fun PullToRefreshProgressIndicator(
   backgroundColor: Color,
   progress: Float? = null
 ) {
-  Row(
-    modifier = modifier,
-    horizontalArrangement = Arrangement.Center
-  ) {
+  Row(modifier = modifier, horizontalArrangement = Arrangement.Center) {
     Card(
-      modifier = Modifier
-        .width(CircularIndicatorDiameter)
-        .height(CircularIndicatorDiameter),
+      modifier = Modifier.width(CircularIndicatorDiameter).height(CircularIndicatorDiameter),
       shape = CircleShape,
       elevation = 6.dp,
       backgroundColor = backgroundColor,
     ) {
       val padding = Modifier.padding(8.dp)
-      val strokeWidth = with(LocalDensity.current) {
-        (strokeWidthPx * this.density).toDp()
-      }
+      val strokeWidth = with(LocalDensity.current) { (strokeWidthPx * this.density).toDp() }
 
       if (progress == null) {
         CircularProgressIndicator(
@@ -74,7 +65,6 @@ internal fun PullToRefreshProgressIndicator(
   }
 }
 
-
 @Composable
 fun ProgressIndicatorWithArrow(
   progress: Float,
@@ -83,47 +73,41 @@ fun ProgressIndicatorWithArrow(
   strokeWidth: Dp = ProgressIndicatorDefaults.StrokeWidth,
 ) {
 
-  val strokeWidthPx = with(LocalDensity.current) {
-    strokeWidth.toPx()
-  }
+  val strokeWidthPx = with(LocalDensity.current) { strokeWidth.toPx() }
   val arrowWidth = 2.5f * strokeWidthPx * (0.5f + progress * 0.5f)
   val stroke = Stroke(width = strokeWidthPx, cap = StrokeCap.Butt)
   val diameterOffset = stroke.width / 2
 
-  val arrowPath = Path().apply {
-    moveTo(0f, -arrowWidth)
-    lineTo(arrowWidth, 0f)
-    lineTo(0f, arrowWidth)
-    close()
-  }
+  val arrowPath =
+    Path().apply {
+      moveTo(0f, -arrowWidth)
+      lineTo(arrowWidth, 0f)
+      lineTo(0f, arrowWidth)
+      close()
+    }
   Box(modifier = modifier) {
-    Canvas(modifier = Modifier
-      .fillMaxWidth()
-      .fillMaxHeight(), onDraw = {
-      val arcDimen = size.width - 2 * diameterOffset
-      withTransform({
-        translate(top = strokeWidthPx / 2, left = size.width / 2)
-        rotate(
-          degrees = progress * 360,
-          pivot = Offset(x = 0f, y = size.height / 2 - diameterOffset)
-        )
-      }) {
-        drawPath(
-          path = arrowPath,
-          color = color
+    Canvas(
+      modifier = Modifier.fillMaxWidth().fillMaxHeight(),
+      onDraw = {
+        val arcDimen = size.width - 2 * diameterOffset
+        withTransform({
+          translate(top = strokeWidthPx / 2, left = size.width / 2)
+          rotate(
+            degrees = progress * 360,
+            pivot = Offset(x = 0f, y = size.height / 2 - diameterOffset)
+          )
+        }) { drawPath(path = arrowPath, color = color) }
+
+        drawArc(
+          color = color,
+          startAngle = -90f,
+          sweepAngle = 360 * progress,
+          useCenter = false,
+          topLeft = Offset(diameterOffset, diameterOffset),
+          size = Size(arcDimen, arcDimen),
+          style = stroke
         )
       }
-
-      drawArc(
-        color = color,
-        startAngle = -90f,
-        sweepAngle = 360 * progress,
-        useCenter = false,
-        topLeft = Offset(diameterOffset, diameterOffset),
-        size = Size(arcDimen, arcDimen),
-        style = stroke
-      )
-    })
+    )
   }
-
 }

@@ -15,8 +15,7 @@ import org.junit.Test
 @Ignore("Shot is broken yet again")
 class LobstersTopBarTest : ScreenshotTest {
 
-  @get:Rule
-  val composeTestRule = createComposeRule()
+  @get:Rule val composeTestRule = createComposeRule()
 
   @Test
   fun showsRefreshIconWhenOnHottestPostsScreen_DarkTheme() {
@@ -24,7 +23,7 @@ class LobstersTopBarTest : ScreenshotTest {
       DarkTestTheme {
         LobstersTopAppBar(
           currentDestination = Destination.Hottest,
-          toggleSortingOrder = { },
+          toggleSortingOrder = {},
         )
       }
     }
@@ -38,7 +37,7 @@ class LobstersTopBarTest : ScreenshotTest {
       LightTestTheme {
         LobstersTopAppBar(
           currentDestination = Destination.Hottest,
-          toggleSortingOrder = { },
+          toggleSortingOrder = {},
         )
       }
     }
@@ -52,7 +51,7 @@ class LobstersTopBarTest : ScreenshotTest {
       DarkTestTheme {
         LobstersTopAppBar(
           currentDestination = Destination.Saved,
-          toggleSortingOrder = { },
+          toggleSortingOrder = {},
         )
       }
     }
@@ -66,7 +65,7 @@ class LobstersTopBarTest : ScreenshotTest {
       LightTestTheme {
         LobstersTopAppBar(
           currentDestination = Destination.Saved,
-          toggleSortingOrder = { },
+          toggleSortingOrder = {},
         )
       }
     }

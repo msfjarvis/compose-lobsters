@@ -19,21 +19,16 @@ import org.junit.Rule
 
 @Ignore("Shot is broken yet again")
 class HeaderTest : ScreenshotTest {
-  @get:Rule
-  val composeTestRule = createComposeRule()
+  @get:Rule val composeTestRule = createComposeRule()
 
   @Test
   fun headerDoesNotHaveATransparentBackground() {
     composeTestRule.setContent {
       DarkTestTheme {
         Box(
-          modifier = Modifier
-            .background(color = Color(0xffffff))
-            .fillMaxWidth()
-            .wrapContentHeight(),
-        ) {
-          MonthHeader(month = Month.AUGUST)
-        }
+          modifier =
+            Modifier.background(color = Color(0xffffff)).fillMaxWidth().wrapContentHeight(),
+        ) { MonthHeader(month = Month.AUGUST) }
       }
     }
     compareScreenshot(composeTestRule.onRoot().captureToImage().asAndroidBitmap())

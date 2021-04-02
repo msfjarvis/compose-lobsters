@@ -36,9 +36,10 @@ fun LobstersTopAppBar(
         IconResource(
           resourceId = R.drawable.ic_sort_24px,
           contentDescription = Strings.ChangeSortingOrder.get(),
-          modifier = Modifier
-            .padding(horizontal = 8.dp, vertical = 8.dp)
-            .clickable { scope.launch { toggleSortingOrder() } },
+          modifier =
+            Modifier.padding(horizontal = 8.dp, vertical = 8.dp).clickable {
+              scope.launch { toggleSortingOrder() }
+            },
         )
       }
     }

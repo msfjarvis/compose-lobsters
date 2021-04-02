@@ -20,27 +20,38 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 @HiltViewModel
-class LobstersViewModel @Inject constructor(
+class LobstersViewModel
+@Inject
+constructor(
   private val lobstersRepository: LobstersRepository,
   private val clawPreferences: ClawPreferences,
 ) : ViewModel() {
   private val _savedPosts = MutableStateFlow<List<SavedPost>>(emptyList())
   val savedPosts = _savedPosts.asStateFlow()
-  val hottestPosts = Pager(PagingConfig(25)) {
-    HottestPostsPagingSource(lobstersRepository).also { hottestPostsPagingSource = it }
-  }.flow.cachedIn(viewModelScope)
-  val newestPosts = Pager(PagingConfig(25)) {
-    NewestPostsPagingSource(lobstersRepository).also { newestPostsPagingSource = it }
-  }.flow.cachedIn(viewModelScope)
+  val hottestPosts =
+    Pager(PagingConfig(25)) {
+        HottestPostsPagingSource(lobstersRepository).also { hottestPostsPagingSource = it }
+      }
+      .flow
+      .cachedIn(viewModelScope)
+  val newestPosts =
+    Pager(PagingConfig(25)) {
+        NewestPostsPagingSource(lobstersRepository).also { newestPostsPagingSource = it }
+      }
+      .flow
+      .cachedIn(viewModelScope)
   private var hottestPostsPagingSource: HottestPostsPagingSource? = null
   private var newestPostsPagingSource: NewestPostsPagingSource? = null
 
   init {
-    lobstersRepository.isCacheReady.onEach { ready ->
-      if (ready) {
-        _savedPosts.value = lobstersRepository.getAllPostsFromCache()
+    lobstersRepository
+      .isCacheReady
+      .onEach { ready ->
+        if (ready) {
+          _savedPosts.value = lobstersRepository.getAllPostsFromCache()
+        }
       }
-    }.launchIn(viewModelScope)
+      .launchIn(viewModelScope)
   }
 
   fun getSortOrder(): Flow<Boolean> {

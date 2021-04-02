@@ -34,13 +34,15 @@ fun LoadingLobstersItem() {
   val alpha by infiniteTransition.animateFloat(
     initialValue = 0.2f,
     targetValue = 1f,
-    animationSpec = infiniteRepeatable(
-      animation = keyframes {
-        durationMillis = 1000
-        0.7f at 500
-      },
-      repeatMode = RepeatMode.Reverse
-    )
+    animationSpec =
+      infiniteRepeatable(
+        animation =
+          keyframes {
+            durationMillis = 1000
+            0.7f at 500
+          },
+        repeatMode = RepeatMode.Reverse
+      )
   )
   val color = Color.LightGray.copy(alpha = alpha)
   Surface(
@@ -54,29 +56,22 @@ fun LoadingLobstersItem() {
         verticalArrangement = Arrangement.SpaceEvenly,
       ) {
         Box(
-          modifier = Modifier
-            .fillMaxWidth()
-            .requiredHeight(12.dp)
-            .background(color)
-            .padding(8.dp),
+          modifier = Modifier.fillMaxWidth().requiredHeight(12.dp).background(color).padding(8.dp),
         )
         Row(
           verticalAlignment = Alignment.CenterVertically,
           horizontalArrangement = Arrangement.SpaceEvenly,
-          modifier = Modifier
-            .absoluteOffset(y = 12.dp),
+          modifier = Modifier.absoluteOffset(y = 12.dp),
         ) {
           Box(
-            modifier = Modifier
-              .requiredSize(30.dp)
-              .background(color = color, shape = CircleShape),
+            modifier = Modifier.requiredSize(30.dp).background(color = color, shape = CircleShape),
           )
           Box(
-            modifier = Modifier
-              .requiredHeight(12.dp)
-              .requiredWidth(40.dp)
-              .absoluteOffset(x = 12.dp)
-              .background(color),
+            modifier =
+              Modifier.requiredHeight(12.dp)
+                .requiredWidth(40.dp)
+                .absoluteOffset(x = 12.dp)
+                .background(color),
           )
         }
       }
@@ -87,9 +82,5 @@ fun LoadingLobstersItem() {
 @Preview
 @Composable
 fun ShimmerListPreview() {
-  LazyColumn {
-    items(10) {
-      LoadingLobstersItem()
-    }
-  }
+  LazyColumn { items(10) { LoadingLobstersItem() } }
 }

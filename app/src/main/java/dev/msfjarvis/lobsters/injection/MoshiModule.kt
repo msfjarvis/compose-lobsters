@@ -13,7 +13,6 @@ object MoshiModule {
   @Provides
   @Reusable
   fun provideMoshi(): Moshi {
-    return Moshi.Builder()
-      .build()
+    return Moshi.Builder().build()
   }
 }

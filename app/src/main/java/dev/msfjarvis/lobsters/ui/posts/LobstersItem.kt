@@ -39,16 +39,17 @@ import dev.msfjarvis.lobsters.util.IconResource
 import dev.msfjarvis.lobsters.utils.Strings
 import dev.msfjarvis.lobsters.utils.get
 
-val TEST_POST = SavedPost(
-  shortId = "zqyydb",
-  title = "k2k20 hackathon report: Bob Beck on LibreSSL progress",
-  url = "https://undeadly.org/cgi?action=article;sid=20200921105847",
-  createdAt = "2020-09-21T07:11:14.000-05:00",
-  commentsUrl = "https://lobste.rs/s/zqyydb/k2k20_hackathon_report_bob_beck_on",
-  submitterName = "Vigdis",
-  submitterAvatarUrl = "/404.html",
-  tags = listOf("openbsd", "linux", "containers", "hack the planet", "no thanks"),
-)
+val TEST_POST =
+  SavedPost(
+    shortId = "zqyydb",
+    title = "k2k20 hackathon report: Bob Beck on LibreSSL progress",
+    url = "https://undeadly.org/cgi?action=article;sid=20200921105847",
+    createdAt = "2020-09-21T07:11:14.000-05:00",
+    commentsUrl = "https://lobste.rs/s/zqyydb/k2k20_hackathon_report_bob_beck_on",
+    submitterName = "Vigdis",
+    submitterAvatarUrl = "/404.html",
+    tags = listOf("openbsd", "linux", "containers", "hack the planet", "no thanks"),
+  )
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -61,22 +62,17 @@ fun LobstersItem(
   modifier: Modifier = Modifier,
 ) {
   Surface(
-    modifier = Modifier
-      .clickable { viewPost.invoke() }
-      .then(modifier),
+    modifier = Modifier.clickable { viewPost.invoke() }.then(modifier),
   ) {
     Column(
-      modifier = Modifier
-        .padding(horizontal = 12.dp, vertical = 4.dp),
+      modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
     ) {
       PostTitle(
         title = post.title,
-        modifier = Modifier
-          .padding(bottom = 4.dp),
+        modifier = Modifier.padding(bottom = 4.dp),
       )
       Row(
-        modifier = Modifier
-          .fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
       ) {
         TagRow(
@@ -144,11 +140,8 @@ fun SubmitterAvatar(
     data = "${LobstersApi.BASE_URL}/$avatarUrl",
     contentDescription = Strings.AvatarContentDescription.get(name),
     fadeIn = true,
-    requestBuilder = {
-      transformations(CircleCropTransformation())
-    },
-    modifier = Modifier
-      .requiredSize(24.dp),
+    requestBuilder = { transformations(CircleCropTransformation()) },
+    modifier = Modifier.requiredSize(24.dp),
   )
 }
 
@@ -158,8 +151,7 @@ fun SubmitterNameText(
 ) {
   Text(
     text = Strings.SubmittedBy.get(name),
-    modifier = Modifier
-      .padding(start = 4.dp),
+    modifier = Modifier.padding(start = 4.dp),
   )
 }
 
@@ -172,15 +164,14 @@ fun SaveButton(
   IconToggleButton(
     checked = isSaved,
     onCheckedChange = { onClick.invoke() },
-    modifier = Modifier
-      .requiredSize(32.dp)
-      .then(modifier),
+    modifier = Modifier.requiredSize(32.dp).then(modifier),
   ) {
     Crossfade(targetState = isSaved) { saved ->
       IconResource(
         resourceId = if (saved) R.drawable.ic_favorite_24px else R.drawable.ic_favorite_border_24px,
         tint = MaterialTheme.colors.secondary,
-        contentDescription = if (saved) Strings.RemoveFromSavedPosts.get() else Strings.AddToSavedPosts.get(),
+        contentDescription =
+          if (saved) Strings.RemoveFromSavedPosts.get() else Strings.AddToSavedPosts.get(),
       )
     }
   }
@@ -193,9 +184,7 @@ fun CommentsButton(
 ) {
   IconButton(
     onClick = onClick,
-    modifier = Modifier
-      .requiredSize(32.dp)
-      .then(modifier),
+    modifier = Modifier.requiredSize(32.dp).then(modifier),
   ) {
     IconResource(
       resourceId = R.drawable.ic_insert_comment_24px,
@@ -220,9 +209,9 @@ fun TagRow(
       tags.forEach { tag ->
         Text(
           text = tag,
-          modifier = Modifier
-            .background(Color(0xFFFFFCD7), RoundedCornerShape(8.dp))
-            .padding(vertical = 2.dp, horizontal = 6.dp),
+          modifier =
+            Modifier.background(Color(0xFFFFFCD7), RoundedCornerShape(8.dp))
+              .padding(vertical = 2.dp, horizontal = 6.dp),
           color = Color.DarkGray,
         )
       }

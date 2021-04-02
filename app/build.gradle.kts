@@ -10,9 +10,7 @@ plugins {
   `core-library-desugaring`
 }
 
-repositories {
-  maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
-}
+repositories { maven("https://maven.pkg.jetbrains.space/public/p/compose/dev") }
 
 android {
   defaultConfig {
@@ -22,7 +20,6 @@ android {
 }
 
 dependencies {
-
   kapt(Dependencies.AndroidX.Hilt.daggerCompiler)
   implementation(project(":api"))
   implementation(project(":common"))

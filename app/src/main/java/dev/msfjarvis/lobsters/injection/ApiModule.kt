@@ -24,13 +24,12 @@ object ApiModule {
 
   @Provides
   fun provideClient(): OkHttpClient {
-    return OkHttpClient.Builder()
-      .build()
+    return OkHttpClient.Builder().build()
   }
 
   /**
-   * Using [Lazy] here is a trick I picked up from Zac Sweers, which he explained in more
-   * detail here: https://www.zacsweers.dev/dagger-party-tricks-deferred-okhttp-init/
+   * Using [Lazy] here is a trick I picked up from Zac Sweers, which he explained in more detail
+   * here: https://www.zacsweers.dev/dagger-party-tricks-deferred-okhttp-init/
    */
   @Provides
   fun provideRetrofit(

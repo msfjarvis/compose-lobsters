@@ -1,15 +1,11 @@
-plugins {
-  `kotlin-dsl`
-}
+plugins { `kotlin-dsl` }
 
 repositories {
   google()
   gradlePluginPortal()
 }
 
-kotlinDslPluginOptions {
-  experimentalWarning.set(false)
-}
+kotlinDslPluginOptions { experimentalWarning.set(false) }
 
 gradlePlugin {
   plugins {

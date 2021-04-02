@@ -18,9 +18,7 @@ class MainActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContent {
       CompositionLocalProvider(LocalUrlLauncher provides urlLauncher) {
-        LobstersTheme {
-          LobstersApp()
-        }
+        LobstersTheme { LobstersApp() }
       }
     }
   }

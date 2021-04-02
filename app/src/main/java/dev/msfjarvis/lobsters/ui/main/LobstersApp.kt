@@ -62,8 +62,7 @@ fun LobstersApp() {
           newestPostsListState.animateScrollToItem(index)
         }
       }
-      else -> {
-      }
+      else -> {}
     }
   }
 

@@ -3,7 +3,5 @@
  * SPDX-License-Identifier: GPL-3.0-only
  */
 
-internal val additionalCompilerArgs = listOf(
-  "-Xopt-in=kotlin.RequiresOptIn",
-  "-Xskip-prerelease-check"
-)
+internal val additionalCompilerArgs =
+  listOf("-Xopt-in=kotlin.RequiresOptIn", "-Xskip-prerelease-check")

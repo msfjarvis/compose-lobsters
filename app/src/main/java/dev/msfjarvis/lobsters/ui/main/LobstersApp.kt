@@ -1,5 +1,6 @@
 package dev.msfjarvis.lobsters.ui.main
 
+import android.content.Intent
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.BottomNavigation
@@ -11,6 +12,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.KEY_ROUTE
@@ -24,6 +26,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import dev.msfjarvis.lobsters.ui.navigation.Destination
 import dev.msfjarvis.lobsters.ui.posts.NetworkPosts
 import dev.msfjarvis.lobsters.ui.posts.SavedPosts
+import dev.msfjarvis.lobsters.ui.settings.SettingsActivity
 import dev.msfjarvis.lobsters.ui.viewmodel.LobstersViewModel
 import dev.msfjarvis.lobsters.util.IconResource
 import dev.msfjarvis.lobsters.utils.get
@@ -32,6 +35,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun LobstersApp() {
   val viewModel: LobstersViewModel = viewModel()
+  val context = LocalContext.current
   val navController = rememberNavController()
   val hottestPosts = viewModel.hottestPosts.collectAsLazyPagingItems()
   val newestPosts = viewModel.newestPosts.collectAsLazyPagingItems()
@@ -70,7 +74,7 @@ fun LobstersApp() {
       LobstersTopAppBar(
         currentDestination,
         viewModel::toggleSortOrder,
-      )
+      ) { context.startActivity(Intent(context, SettingsActivity::class.java)) }
     },
     bottomBar = {
       LobstersBottomNav(

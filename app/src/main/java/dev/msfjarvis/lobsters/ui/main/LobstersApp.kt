@@ -47,7 +47,6 @@ fun LobstersApp() {
   val navigateToDestination: (destination: Destination) -> Unit = { destination ->
     navController.navigate(destination.route) {
       launchSingleTop = true
-      popUpTo(navController.graph.startDestination) { inclusive = false }
     }
   }
   val jumpToIndex: suspend (Int, Destination) -> Unit = { index, screen ->

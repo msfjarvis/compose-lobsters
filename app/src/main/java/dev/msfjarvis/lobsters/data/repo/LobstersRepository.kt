@@ -9,8 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.withContext
 
-class LobstersRepository
-constructor(
+class LobstersRepository(
   private val lobstersApi: LobstersApi,
   private val lobstersDatabase: LobstersDatabase,
 ) {

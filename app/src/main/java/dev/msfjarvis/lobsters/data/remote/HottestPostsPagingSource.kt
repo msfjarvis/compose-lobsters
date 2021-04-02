@@ -5,8 +5,7 @@ import androidx.paging.PagingState
 import dev.msfjarvis.lobsters.data.repo.LobstersRepository
 import dev.msfjarvis.lobsters.model.LobstersPost
 
-class HottestPostsPagingSource
-constructor(
+class HottestPostsPagingSource(
   private val lobstersRepository: LobstersRepository,
 ) : PagingSource<Int, LobstersPost>() {
 

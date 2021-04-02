@@ -29,7 +29,7 @@ class LobstersBottomNavTest : ScreenshotTest {
       DarkTestTheme {
         LobstersBottomNav(
           currentDestination = Destination.startDestination,
-          navigateToDestination = { /*TODO*/},
+          navigateToDestination = {},
           jumpToIndex = { _, _ -> },
         )
       }

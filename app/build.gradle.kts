@@ -44,7 +44,6 @@ dependencies {
   implementation(Dependencies.ThirdParty.accompanistFlow)
   implementation(Dependencies.ThirdParty.Moshi.lib)
   implementation(Dependencies.ThirdParty.Retrofit.moshi)
-  implementation(Dependencies.ThirdParty.SQLDelight.androidDriver)
   testImplementation(kotlin("test-junit"))
   androidTestImplementation(kotlin("test-junit"))
 }

@@ -24,7 +24,7 @@ fun BackupOption(
       if (uri == null) return@registerForActivityResult
       context.contentResolver.openOutputStream(uri)?.let {
         coroutineScope.launch(Dispatchers.IO) {
-          it.write(backupHandler.exportSavedPosts().toByteArray(Charsets.UTF_8))
+          it.write(backupHandler.exportSavedPosts())
           it.close()
         }
       }
@@ -47,7 +47,7 @@ fun RestoreOption(
       if (uri == null) return@registerForActivityResult
       context.contentResolver.openInputStream(uri)?.let {
         coroutineScope.launch(Dispatchers.IO) {
-          backupHandler.importSavedPosts(it.readBytes().toString(Charsets.UTF_8))
+          backupHandler.importSavedPosts(it.readBytes())
           it.close()
         }
       }

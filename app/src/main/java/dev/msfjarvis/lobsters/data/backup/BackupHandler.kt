@@ -17,15 +17,15 @@ constructor(
 ) {
   private val adapter = moshi.adapter<List<SavedPost>>()
 
-  suspend fun exportSavedPosts(): String {
+  suspend fun exportSavedPosts(): ByteArray {
     val posts =
       withContext(Dispatchers.IO) { database.savedPostQueries.selectAllPosts().executeAsList() }
-    return adapter.toJson(posts)
+    return adapter.toJson(posts).toByteArray(Charsets.UTF_8)
   }
 
-  suspend fun importSavedPosts(json: String) {
+  suspend fun importSavedPosts(json: ByteArray) {
     withContext(Dispatchers.IO) {
-      val posts = requireNotNull(adapter.fromJson(json))
+      val posts = requireNotNull(adapter.fromJson(json.toString(Charsets.UTF_8)))
       database.transaction { posts.forEach { database.savedPostQueries.insertOrReplacePost(it) } }
     }
   }

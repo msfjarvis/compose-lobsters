@@ -22,9 +22,10 @@ fun BackupOption(
   val result =
     registerForActivityResult(ActivityResultContracts.CreateDocument()) { uri ->
       if (uri == null) return@registerForActivityResult
-      context.contentResolver.openOutputStream(uri)?.use {
+      context.contentResolver.openOutputStream(uri)?.let {
         coroutineScope.launch(Dispatchers.IO) {
           it.write(backupHandler.exportSavedPosts().toByteArray(Charsets.UTF_8))
+          it.close()
         }
       }
     }
@@ -44,9 +45,10 @@ fun RestoreOption(
   val result =
     registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
       if (uri == null) return@registerForActivityResult
-      context.contentResolver.openInputStream(uri)?.use {
+      context.contentResolver.openInputStream(uri)?.let {
         coroutineScope.launch(Dispatchers.IO) {
           backupHandler.importSavedPosts(it.readBytes().toString(Charsets.UTF_8))
+          it.close()
         }
       }
     }

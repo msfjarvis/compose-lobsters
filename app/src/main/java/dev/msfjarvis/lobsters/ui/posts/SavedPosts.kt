@@ -35,7 +35,7 @@ fun SavedPosts(
 ) {
   val listState = rememberLazyListState()
   val urlLauncher = LocalUrlLauncher.current
-  val sortOrder by sortReversed.collectAsState(false)
+  val reverseSort by sortReversed.collectAsState(false)
 
   if (posts.isEmpty()) {
     Column(
@@ -56,19 +56,16 @@ fun SavedPosts(
       state = listState,
       modifier = Modifier.then(modifier),
     ) {
-      val grouped =
-        posts.groupBy { it.createdAt.asZonedDateTime().month }.apply {
-          if (sortOrder) {
-            toSortedMap(
-              Comparator { first, second ->
-                return@Comparator if (first > second) -1 else if (first < second) 1 else 0
-              }
-            )
-          }
+      val grouped = posts.groupBy { it.createdAt.asZonedDateTime().month }.toMutableMap()
+      if (reverseSort) {
+        val copy = grouped.toMap()
+        grouped.clear()
+        copy.keys.reversed().forEach { month ->
+          grouped[month] = requireNotNull(copy[month]).reversed()
         }
+      }
       grouped.forEach { (month, posts) ->
         stickyHeader { MonthHeader(month = month) }
-        @Suppress("NAME_SHADOWING") val posts = if (sortOrder) posts.reversed() else posts
         items(posts) { item ->
           LobstersItem(
             post = item,

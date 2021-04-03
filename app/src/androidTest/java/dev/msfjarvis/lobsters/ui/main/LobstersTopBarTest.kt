@@ -24,6 +24,7 @@ class LobstersTopBarTest : ScreenshotTest {
         LobstersTopAppBar(
           currentDestination = Destination.Hottest,
           toggleSortingOrder = {},
+          launchSettings = {},
         )
       }
     }
@@ -38,6 +39,7 @@ class LobstersTopBarTest : ScreenshotTest {
         LobstersTopAppBar(
           currentDestination = Destination.Hottest,
           toggleSortingOrder = {},
+          launchSettings = {},
         )
       }
     }
@@ -52,6 +54,7 @@ class LobstersTopBarTest : ScreenshotTest {
         LobstersTopAppBar(
           currentDestination = Destination.Saved,
           toggleSortingOrder = {},
+          launchSettings = {},
         )
       }
     }
@@ -66,6 +69,7 @@ class LobstersTopBarTest : ScreenshotTest {
         LobstersTopAppBar(
           currentDestination = Destination.Saved,
           toggleSortingOrder = {},
+          launchSettings = {},
         )
       }
     }

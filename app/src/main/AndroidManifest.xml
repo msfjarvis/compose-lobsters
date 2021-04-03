@@ -25,6 +25,14 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
+    <activity
+      android:name=".ui.settings.SettingsActivity"
+      android:theme="@style/Platform.Theme.Claw"
+      android:exported="true">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+      </intent-filter>
+    </activity>
   </application>
 
 </manifest>

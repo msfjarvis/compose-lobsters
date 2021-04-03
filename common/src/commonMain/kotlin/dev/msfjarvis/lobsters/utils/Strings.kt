@@ -13,4 +13,9 @@ enum class Strings {
   SavedPosts,
   SubmittedBy,
   NewestPosts,
+  Settings,
+  SettingsBackup,
+  SettingsBackupDescription,
+  SettingsRestore,
+  SettingsRestoreDescription,
 }

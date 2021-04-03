@@ -1,4 +1,4 @@
-package dev.msfjarvis.lobsters.model
+package dev.msfjarvis.lobsters.data.model
 
 import com.squareup.sqldelight.ColumnAdapter
 

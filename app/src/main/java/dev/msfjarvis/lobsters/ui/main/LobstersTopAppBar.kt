@@ -22,6 +22,7 @@ import kotlinx.coroutines.launch
 fun LobstersTopAppBar(
   currentDestination: Destination,
   toggleSortingOrder: suspend () -> Unit,
+  launchSettings: () -> Unit,
 ) {
   val scope = rememberCoroutineScope()
   TopAppBar(
@@ -42,6 +43,14 @@ fun LobstersTopAppBar(
             },
         )
       }
+      IconResource(
+        resourceId = R.drawable.ic_app_settings_24px,
+        contentDescription = Strings.Settings.get(),
+        modifier =
+          Modifier.padding(horizontal = 8.dp, vertical = 8.dp).clickable {
+            scope.launch { launchSettings() }
+          },
+      )
     }
   )
 }

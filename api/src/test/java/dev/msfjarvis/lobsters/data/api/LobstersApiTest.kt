@@ -5,6 +5,7 @@ import dev.msfjarvis.lobsters.util.TestUtils
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
+import kotlin.test.fail
 import kotlinx.coroutines.runBlocking
 import mockwebserver3.Dispatcher
 import mockwebserver3.MockResponse
@@ -21,7 +22,6 @@ class LobstersApiTest {
 
   companion object {
     private val webServer = MockWebServer()
-    private val apiData = TestUtils.getJson("hottest.json")
     private val moshi = Moshi.Builder().build()
     private val okHttp = OkHttpClient.Builder().build()
     private val retrofit =
@@ -39,7 +39,16 @@ class LobstersApiTest {
       webServer.dispatcher =
         object : Dispatcher() {
           override fun dispatch(request: RecordedRequest): MockResponse {
-            return MockResponse().setBody(apiData).setResponseCode(200)
+            val path = requireNotNull(request.path)
+            return when {
+              path.startsWith("/hottest") ->
+                MockResponse().setBody(TestUtils.getJson("hottest.json")).setResponseCode(200)
+              path.startsWith("/s/") ->
+                MockResponse()
+                  .setBody(TestUtils.getJson("post_details_d9ucpe.json"))
+                  .setResponseCode(200)
+              else -> fail("'$path' unexpected")
+            }
           }
         }
     }
@@ -69,5 +78,12 @@ class LobstersApiTest {
     val posts = apiClient.getHottestPosts(1)
     val commentsOnlyPosts = posts.asSequence().filter { it.url.isEmpty() }.toSet()
     assertEquals(2, commentsOnlyPosts.size)
+  }
+
+  @Test
+  fun `post details with comments`() = runBlocking {
+    val postDetails = apiClient.getPostDetails("d9ucpe")
+    assertEquals(7, postDetails.commentCount)
+    assertEquals(7, postDetails.comments.size)
   }
 }

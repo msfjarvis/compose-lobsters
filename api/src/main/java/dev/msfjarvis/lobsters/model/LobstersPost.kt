@@ -15,6 +15,6 @@ class LobstersPost(
   @Json(name = "comment_count") val commentCount: Long,
   val description: String,
   @Json(name = "comments_url") val commentsUrl: String,
-  @Json(name = "submitter_user") val submitterUser: Submitter,
+  @Json(name = "submitter_user") val submitter: User,
   val tags: List<String>,
 )

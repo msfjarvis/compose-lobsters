@@ -36,7 +36,6 @@ internal fun Project.configureForAllProjects() {
   repositories {
     google()
     mavenCentral()
-    jcenter { content { includeGroup("org.jetbrains.compose.*") } }
     maven("https://dl.bintray.com/kotlin/kotlinx") {
       name = "KotlinX Bintray"
       content {

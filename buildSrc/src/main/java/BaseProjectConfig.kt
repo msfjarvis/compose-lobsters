@@ -25,9 +25,9 @@ internal fun Project.configureForRootProject() {
   // register task for cleaning the build directory in the root project
   tasks.register<Delete>("clean") { delete(rootProject.buildDir) }
   tasks.withType<Wrapper> {
-    gradleVersion = "7.0-rc-1"
+    gradleVersion = "6.8.3"
     distributionType = Wrapper.DistributionType.ALL
-    distributionSha256Sum = "a52ad940d4dd2abdee5c7f4486788b6b3859daa7e260c08c1c18eec8cba297e6"
+    distributionSha256Sum = "9af5c8e7e2cd1a3b0f694a4ac262b9f38c75262e74a9e8b5101af302a6beadd7"
   }
 }
 

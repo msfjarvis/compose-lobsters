@@ -26,7 +26,6 @@ kotlin {
   sourceSets {
     val androidMain by getting {
       dependencies {
-        implementation(compose.runtime)
         implementation(Dependencies.AndroidX.browser)
       }
     }
@@ -37,8 +36,6 @@ kotlin {
         implementation(compose.ui)
       }
     }
-
-    val jvmMain by getting { dependencies { implementation(compose.runtime) } }
 
     val androidTest by getting { dependencies { implementation(kotlin("test-junit")) } }
 

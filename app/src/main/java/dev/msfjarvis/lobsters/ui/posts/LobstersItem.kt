@@ -57,7 +57,7 @@ fun LobstersItem(
   post: SavedPost,
   isSaved: Boolean,
   viewPost: () -> Unit,
-  viewComments: () -> Unit,
+  viewComments: (String) -> Unit,
   toggleSave: () -> Unit,
   modifier: Modifier = Modifier,
 ) {
@@ -87,7 +87,7 @@ fun LobstersItem(
           modifier = Modifier.width(8.dp),
         )
         CommentsButton(
-          onClick = viewComments,
+          onClick = { viewComments(post.shortId) },
         )
       }
       SubmitterName(

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: GPL-3.0-only
  */
 
-private const val DAGGER_HILT_VERSION = "2.33-beta"
+private const val DAGGER_HILT_VERSION = "2.34-beta"
 
 object Plugins {
   const val android = "com.android.tools.build:gradle:7.0.0-alpha13"
@@ -16,7 +16,9 @@ object Plugins {
 }
 
 object Dependencies {
-  const val COMPOSE_VERSION = "1.0.0-beta03"
+  const val COMPOSE_VERSION = "1.0.0-beta04"
+  const val KSP_VERSION = "1.4.32-1.0.0-alpha07"
+  const val JB_COMPOSE_VERSION = "0.4.0-build179"
 
   object Kotlin {
 
@@ -38,13 +40,13 @@ object Dependencies {
 
     object Compose {
 
-      const val activity = "androidx.activity:activity-compose:1.3.0-alpha05"
+      const val activity = "androidx.activity:activity-compose:1.3.0-alpha06"
       const val compiler = "androidx.compose.compiler:compiler:$COMPOSE_VERSION"
       const val foundation = "androidx.compose.foundation:foundation:$COMPOSE_VERSION"
       const val foundationLayout = "androidx.compose.foundation:foundation-layout:$COMPOSE_VERSION"
-      const val lifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha03"
+      const val lifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha04"
       const val material = "androidx.compose.material:material:$COMPOSE_VERSION"
-      const val navigation = "androidx.navigation:navigation-compose:1.0.0-alpha09"
+      const val navigation = "androidx.navigation:navigation-compose:1.0.0-alpha10"
       const val paging = "androidx.paging:paging-compose:1.0.0-alpha08"
       const val runtime = "androidx.compose.runtime:runtime:$COMPOSE_VERSION"
       const val ui = "androidx.compose.ui:ui:$COMPOSE_VERSION"
@@ -67,7 +69,7 @@ object Dependencies {
 
   object ThirdParty {
 
-    private const val accompanistVersion = "0.7.0"
+    private const val accompanistVersion = "0.7.1"
     const val accompanistCoil = "com.google.accompanist:accompanist-coil:$accompanistVersion"
     const val accompanistFlow = "com.google.accompanist:accompanist-flowlayout:$accompanistVersion"
     const val kamel = "com.alialbaali.kamel:kamel-image:0.2.0"

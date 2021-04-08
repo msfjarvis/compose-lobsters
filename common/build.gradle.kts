@@ -1,7 +1,7 @@
 plugins {
   kotlin("multiplatform")
   id("com.android.library")
-  id("org.jetbrains.compose") version "0.4.0-build179"
+  id("org.jetbrains.compose") version Dependencies.JB_COMPOSE_VERSION
   `lobsters-plugin`
 }
 

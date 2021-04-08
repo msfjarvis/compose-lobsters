@@ -1,7 +1,7 @@
 package dev.msfjarvis.lobsters.ui.settings
 
 import android.content.Context
-import androidx.activity.compose.registerForActivityResult
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import dev.msfjarvis.lobsters.data.backup.BackupHandler
@@ -20,8 +20,8 @@ fun BackupOption(
   coroutineScope: CoroutineScope,
 ) {
   val result =
-    registerForActivityResult(ActivityResultContracts.CreateDocument()) { uri ->
-      if (uri == null) return@registerForActivityResult
+    rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument()) { uri ->
+      if (uri == null) return@rememberLauncherForActivityResult
       context.contentResolver.openOutputStream(uri)?.let {
         coroutineScope.launch(Dispatchers.IO) {
           it.write(backupHandler.exportSavedPosts())
@@ -43,8 +43,8 @@ fun RestoreOption(
   coroutineScope: CoroutineScope,
 ) {
   val result =
-    registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-      if (uri == null) return@registerForActivityResult
+    rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+      if (uri == null) return@rememberLauncherForActivityResult
       context.contentResolver.openInputStream(uri)?.let {
         coroutineScope.launch(Dispatchers.IO) {
           backupHandler.importSavedPosts(it.readBytes())

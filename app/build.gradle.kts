@@ -3,7 +3,7 @@ plugins {
   kotlin("android")
   kotlin("kapt")
   id("dagger.hilt.android.plugin")
-  id("org.jetbrains.compose") version "0.4.0-build179"
+  id("org.jetbrains.compose") version Dependencies.JB_COMPOSE_VERSION
   id("shot")
   `versioning-plugin`
   `lobsters-plugin`

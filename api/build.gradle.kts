@@ -1,6 +1,6 @@
 plugins {
   kotlin("jvm")
-  id("com.google.devtools.ksp") version "1.4.31-1.0.0-alpha06"
+  id("com.google.devtools.ksp") version Dependencies.KSP_VERSION
   `lobsters-plugin`
 }
 

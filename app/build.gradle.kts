@@ -26,8 +26,6 @@ dependencies {
   implementation(project(":database"))
   implementation(compose.foundation)
   implementation(compose.material)
-  implementation(compose.runtime)
-  implementation(compose.ui)
   implementation(Dependencies.AndroidX.appCompat)
   implementation(Dependencies.AndroidX.browser)
   implementation(Dependencies.AndroidX.datastore)

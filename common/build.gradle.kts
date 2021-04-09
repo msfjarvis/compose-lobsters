@@ -24,24 +24,24 @@ kotlin {
   android()
 
   sourceSets {
-    val androidMain by getting {
+    named("androidMain") {
       dependencies {
         implementation(Dependencies.AndroidX.browser)
       }
     }
 
-    val commonMain by getting {
+    named("commonMain") {
       dependencies {
-        implementation(compose.runtime)
-        implementation(compose.ui)
+        api(compose.runtime)
+        api(compose.ui)
       }
     }
 
-    val androidTest by getting { dependencies { implementation(kotlin("test-junit")) } }
+    named("androidTest") { dependencies { implementation(kotlin("test-junit")) } }
 
-    val jvmTest by getting { dependencies { implementation(kotlin("test-junit")) } }
+    named("jvmTest") { dependencies { implementation(kotlin("test-junit")) } }
 
-    val commonTest by getting {
+    named("commonTest") {
       dependencies {
         implementation(kotlin("test-common"))
         implementation(kotlin("test-annotations-common"))

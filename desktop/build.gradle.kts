@@ -10,9 +10,7 @@ plugins {
 repositories { maven("https://maven.pkg.jetbrains.space/public/p/compose/dev") }
 
 kotlin {
-  jvm {
-    withJava()
-  }
+  jvm()
   sourceSets {
     named("jvmMain") {
       dependencies {

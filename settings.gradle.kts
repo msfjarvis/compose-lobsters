@@ -6,6 +6,8 @@ include(":common")
 include(":database")
 include(":desktop")
 
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 pluginManagement {
   repositories {
     google()

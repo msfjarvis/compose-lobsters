@@ -1,8 +1,11 @@
 rootProject.name = "Claw"
 
-include(":app", ":api", ":common", ":database", ":desktop")
+include(":api")
+include(":app")
+include(":common")
+include(":database")
+include(":desktop")
 
-enableFeaturePreview("GRADLE_METADATA")
 pluginManagement {
   repositories {
     google()

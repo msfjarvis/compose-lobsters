@@ -10,16 +10,14 @@ plugins {
 repositories { maven("https://maven.pkg.jetbrains.space/public/p/compose/dev") }
 
 kotlin {
-  jvm {
-    withJava()
-  }
+  jvm()
   sourceSets {
     named("jvmMain") {
       dependencies {
         implementation(compose.desktop.currentOs)
-        implementation(project(":api"))
-        implementation(project(":common"))
-        implementation(project(":database"))
+        implementation(projects.api)
+        implementation(projects.common)
+        implementation(projects.database)
         implementation(compose.material)
         implementation(Dependencies.Kotlin.Coroutines.jvmCore)
         implementation(Dependencies.ThirdParty.kamel)

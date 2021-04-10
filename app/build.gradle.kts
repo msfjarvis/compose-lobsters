@@ -21,9 +21,9 @@ android {
 
 dependencies {
   kapt(Dependencies.AndroidX.Hilt.daggerCompiler)
-  implementation(project(":api"))
-  implementation(project(":common"))
-  implementation(project(":database"))
+  implementation(projects.api)
+  implementation(projects.common)
+  implementation(projects.database)
   implementation(compose.foundation)
   implementation(compose.material)
   implementation(Dependencies.AndroidX.appCompat)

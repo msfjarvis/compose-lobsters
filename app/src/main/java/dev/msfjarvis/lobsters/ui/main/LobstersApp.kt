@@ -123,6 +123,7 @@ fun LobstersApp() {
       ) { backStackEntry ->
         CommentsPage(
           postId = requireNotNull(backStackEntry.arguments?.getString("postId")),
+          paddingValues = innerPadding,
           getDetails = viewModel::getPostDetails,
         )
       }

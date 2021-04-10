@@ -6,8 +6,7 @@
 private const val DAGGER_HILT_VERSION = "2.34-beta"
 
 object Plugins {
-  const val android = "com.android.tools.build:gradle:7.0.0-alpha13"
-  const val lintModel = "com.android.tools.lint:lint-model:30.0.0-alpha13"
+  const val android = "com.android.tools.build:gradle:7.0.0-alpha14"
   const val hilt = "com.google.dagger:hilt-android-gradle-plugin:${DAGGER_HILT_VERSION}"
   const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.32"
   const val jsemver = "com.github.zafarkhaja:java-semver:0.9.0"

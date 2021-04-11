@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.api.BaseVariantOutputImpl
+
 plugins {
   id("com.android.application")
   kotlin("android")
@@ -16,6 +18,11 @@ android {
   defaultConfig {
     applicationId = "dev.msfjarvis.lobsters"
     testInstrumentationRunner = "com.karumi.shot.ShotTestRunner"
+  }
+  applicationVariants.all {
+    outputs.all {
+      (this as BaseVariantOutputImpl).outputFileName = "Claw-$versionName.apk"
+    }
   }
 }
 

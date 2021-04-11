@@ -23,7 +23,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -212,9 +211,12 @@ fun TagRow(
         Text(
           text = tag,
           modifier =
-            Modifier.background(Color(0xFFFFFCD7), RoundedCornerShape(8.dp))
+            Modifier.background(
+                MaterialTheme.colors.secondary.copy(alpha = 0.75f),
+                RoundedCornerShape(8.dp)
+              )
               .padding(vertical = 2.dp, horizontal = 6.dp),
-          color = Color.DarkGray,
+          color = MaterialTheme.colors.onSecondary,
         )
       }
     }

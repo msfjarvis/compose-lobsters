@@ -6,16 +6,16 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
 import dev.msfjarvis.lobsters.data.backup.BackupHandler
-import dev.msfjarvis.lobsters.database.LobstersDatabase
+import dev.msfjarvis.lobsters.data.repo.LobstersRepository
 
 @Module
 @InstallIn(ActivityComponent::class)
 object BackupModule {
   @Provides
   fun provideBackupHandler(
-    database: LobstersDatabase,
+    repository: LobstersRepository,
     moshi: Moshi,
   ): BackupHandler {
-    return BackupHandler(database, moshi)
+    return BackupHandler(repository, moshi)
   }
 }

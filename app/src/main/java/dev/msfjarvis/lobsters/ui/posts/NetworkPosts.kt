@@ -26,6 +26,7 @@ fun NetworkPosts(
   isPostSaved: (String) -> Boolean,
   saveAction: (SavedPost) -> Unit,
   refreshAction: () -> Unit,
+  viewComments: (String) -> Unit,
 ) {
   val urlLauncher = LocalUrlLauncher.current
   var isRefreshing by mutableStateOf(false)
@@ -55,7 +56,7 @@ fun NetworkPosts(
               post = item,
               isSaved = isSaved,
               viewPost = { urlLauncher.launch(item.url.ifEmpty { item.commentsUrl }) },
-              viewComments = { urlLauncher.launch(item.commentsUrl) },
+              viewComments = viewComments,
               toggleSave = {
                 isSaved = isSaved.not()
                 saveAction.invoke(item)

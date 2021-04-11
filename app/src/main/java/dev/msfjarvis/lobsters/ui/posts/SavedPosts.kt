@@ -32,6 +32,7 @@ fun SavedPosts(
   sortReversed: Flow<Boolean>,
   modifier: Modifier = Modifier,
   saveAction: (SavedPost) -> Unit,
+  viewComments: (String) -> Unit,
 ) {
   val listState = rememberLazyListState()
   val urlLauncher = LocalUrlLauncher.current
@@ -71,7 +72,7 @@ fun SavedPosts(
             post = item,
             isSaved = true,
             viewPost = { urlLauncher.launch(item.url.ifEmpty { item.commentsUrl }) },
-            viewComments = { urlLauncher.launch(item.commentsUrl) },
+            viewComments = viewComments,
             toggleSave = { saveAction.invoke(item) },
           )
         }

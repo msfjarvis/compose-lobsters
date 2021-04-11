@@ -4,6 +4,7 @@ import dev.msfjarvis.lobsters.data.api.LobstersApi
 import dev.msfjarvis.lobsters.data.local.SavedPost
 import dev.msfjarvis.lobsters.database.LobstersDatabase
 import dev.msfjarvis.lobsters.model.LobstersPost
+import dev.msfjarvis.lobsters.model.LobstersPostDetails
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -34,6 +35,11 @@ class LobstersRepository(
   suspend fun fetchNewestPosts(page: Int): List<LobstersPost> =
     withContext(Dispatchers.IO) {
       return@withContext lobstersApi.getNewestPosts(page)
+    }
+
+  suspend fun fetchPostDetails(postId: String): LobstersPostDetails =
+    withContext(Dispatchers.IO) {
+      return@withContext lobstersApi.getPostDetails(postId)
     }
 
   // https://issuetracker.google.com/issues/181221325

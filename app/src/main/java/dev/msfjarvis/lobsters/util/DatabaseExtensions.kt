@@ -11,8 +11,8 @@ fun LobstersPost.toDbModel(): SavedPost {
     url = url,
     createdAt = createdAt,
     commentsUrl = commentsUrl,
-    submitterName = submitterUser.username,
-    submitterAvatarUrl = submitterUser.avatarUrl,
+    submitterName = submitter.username,
+    submitterAvatarUrl = submitter.avatarUrl,
     tags = tags,
   )
 }

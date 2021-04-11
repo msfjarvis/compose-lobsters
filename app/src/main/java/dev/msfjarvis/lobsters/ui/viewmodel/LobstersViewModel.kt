@@ -11,6 +11,7 @@ import dev.msfjarvis.lobsters.data.preferences.ClawPreferences
 import dev.msfjarvis.lobsters.data.remote.HottestPostsPagingSource
 import dev.msfjarvis.lobsters.data.remote.NewestPostsPagingSource
 import dev.msfjarvis.lobsters.data.repo.LobstersRepository
+import dev.msfjarvis.lobsters.model.LobstersPostDetails
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -60,6 +61,10 @@ constructor(
 
   suspend fun toggleSortOrder() {
     clawPreferences.toggleSortingOrder()
+  }
+
+  suspend fun getPostDetails(postId: String): LobstersPostDetails {
+    return lobstersRepository.fetchPostDetails(postId)
   }
 
   fun reloadHottestPosts() {

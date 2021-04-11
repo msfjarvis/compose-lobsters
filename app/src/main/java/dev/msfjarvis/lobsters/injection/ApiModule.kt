@@ -1,5 +1,6 @@
 package dev.msfjarvis.lobsters.injection
 
+import android.util.Log
 import com.squareup.moshi.Moshi
 import dagger.Lazy
 import dagger.Module
@@ -24,7 +25,13 @@ object ApiModule {
 
   @Provides
   fun provideClient(): OkHttpClient {
-    return OkHttpClient.Builder().build()
+    return OkHttpClient.Builder()
+      .addNetworkInterceptor { chain ->
+        val request = chain.request()
+        Log.d("LobstersApi", "${request.method()}: ${request.url()}")
+        chain.proceed(request)
+      }
+      .build()
   }
 
   /**

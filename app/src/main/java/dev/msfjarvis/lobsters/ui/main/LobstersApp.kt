@@ -15,14 +15,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.KEY_ROUTE
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
+import dev.msfjarvis.lobsters.ui.comments.CommentsPage
 import dev.msfjarvis.lobsters.ui.navigation.Destination
 import dev.msfjarvis.lobsters.ui.posts.NetworkPosts
 import dev.msfjarvis.lobsters.ui.posts.SavedPosts
@@ -49,9 +52,7 @@ fun LobstersApp() {
     navBackStackEntry?.arguments?.getString(KEY_ROUTE) ?: Destination.startDestination.route
   val currentDestination = Destination.getDestinationFromRoute(currentRoute)
   val navigateToDestination: (destination: Destination) -> Unit = { destination ->
-    navController.navigate(destination.route) {
-      launchSingleTop = true
-    }
+    navController.navigate(destination.route) { launchSingleTop = true }
   }
   val jumpToIndex: suspend (Int, Destination) -> Unit = { index, screen ->
     when (screen) {
@@ -93,6 +94,7 @@ fun LobstersApp() {
           isPostSaved = viewModel::isPostSaved,
           saveAction = viewModel::toggleSave,
           refreshAction = viewModel::reloadHottestPosts,
+          viewComments = { navController.navigate("comments/$it") },
         )
       }
       composable(Destination.Newest.route) {
@@ -103,6 +105,7 @@ fun LobstersApp() {
           isPostSaved = viewModel::isPostSaved,
           saveAction = viewModel::toggleSave,
           refreshAction = viewModel::reloadNewestPosts,
+          viewComments = { navController.navigate("comments/$it") },
         )
       }
       composable(Destination.Saved.route) {
@@ -111,6 +114,17 @@ fun LobstersApp() {
           saveAction = viewModel::toggleSave,
           modifier = Modifier.padding(bottom = innerPadding.calculateBottomPadding()),
           sortReversed = viewModel.getSortOrder(),
+          viewComments = { navController.navigate("comments/$it") },
+        )
+      }
+      composable(
+        Destination.Comments.route,
+        listOf(navArgument("postId") { type = NavType.StringType }),
+      ) { backStackEntry ->
+        CommentsPage(
+          postId = requireNotNull(backStackEntry.arguments?.getString("postId")),
+          paddingValues = innerPadding,
+          getDetails = viewModel::getPostDetails,
         )
       }
     }
@@ -125,7 +139,7 @@ fun LobstersBottomNav(
 ) {
   val coroutineScope = rememberCoroutineScope()
   BottomNavigation(modifier = Modifier.testTag("LobstersBottomNav")) {
-    Destination.values().forEach { screen ->
+    Destination.values().filter { it.bottombar }.forEach { screen ->
       BottomNavigationItem(
         icon = {
           IconResource(

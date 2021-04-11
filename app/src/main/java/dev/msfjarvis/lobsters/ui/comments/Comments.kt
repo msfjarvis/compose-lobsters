@@ -30,10 +30,15 @@ import dev.msfjarvis.lobsters.model.LobstersPostDetails
 import dev.msfjarvis.lobsters.ui.posts.PostTitle
 import dev.msfjarvis.lobsters.ui.posts.SubmitterName
 import dev.msfjarvis.lobsters.ui.posts.TagRow
+import dev.msfjarvis.lobsters.utils.Strings
+import dev.msfjarvis.lobsters.utils.get
 
 @Composable
-private fun CommentsPageInternal(details: LobstersPostDetails, bottomPadding: Dp) {
-  LazyColumn(Modifier.padding(bottom = bottomPadding)) {
+private fun CommentsPageInternal(
+  details: LobstersPostDetails,
+  modifier: Modifier = Modifier,
+) {
+  LazyColumn(Modifier.then(modifier)) {
     item { CommentsHeader(postDetails = details) }
 
     item { Spacer(modifier = Modifier.height(8.dp)) }
@@ -58,8 +63,8 @@ fun CommentsPage(
   when (postDetails) {
     is NetworkState.Success<*> -> {
       CommentsPageInternal(
-        (postDetails as NetworkState.Success<LobstersPostDetails>).data,
-        paddingValues.calculateBottomPadding(),
+        details = (postDetails as NetworkState.Success<LobstersPostDetails>).data,
+        modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding()),
       )
     }
     is NetworkState.Error -> TODO("Handle no network scenario")
@@ -94,8 +99,9 @@ private fun CommentsHeader(postDetails: LobstersPostDetails) {
       }
 
       SubmitterName(
-        name = postDetails.submitter.username,
+        text = postDetails.submitter.username,
         avatarUrl = postDetails.submitter.avatarUrl,
+        contentDescription = Strings.AvatarContentDescription.get(postDetails.submitter.username),
       )
     }
   }

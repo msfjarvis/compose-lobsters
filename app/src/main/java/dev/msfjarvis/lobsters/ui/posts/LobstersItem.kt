@@ -91,8 +91,9 @@ fun LobstersItem(
         )
       }
       SubmitterName(
-        name = post.submitterName,
+        text = Strings.SubmittedBy.get(post.submitterName),
         avatarUrl = post.submitterAvatarUrl,
+        contentDescription = Strings.AvatarContentDescription.get(post.submitterName),
       )
     }
   }
@@ -113,8 +114,9 @@ fun PostTitle(
 
 @Composable
 fun SubmitterName(
-  name: String,
+  text: String,
   avatarUrl: String,
+  contentDescription: String,
   modifier: Modifier = Modifier,
 ) {
   Row(
@@ -122,23 +124,23 @@ fun SubmitterName(
     verticalAlignment = Alignment.CenterVertically,
   ) {
     SubmitterAvatar(
-      name = name,
       avatarUrl = avatarUrl,
+      contentDescription = contentDescription,
     )
     SubmitterNameText(
-      name = name,
+      text = text,
     )
   }
 }
 
 @Composable
 fun SubmitterAvatar(
-  name: String,
   avatarUrl: String,
+  contentDescription: String,
 ) {
   CoilImage(
     data = "${LobstersApi.BASE_URL}/$avatarUrl",
-    contentDescription = Strings.AvatarContentDescription.get(name),
+    contentDescription = contentDescription,
     fadeIn = true,
     requestBuilder = { transformations(CircleCropTransformation()) },
     modifier = Modifier.requiredSize(24.dp),
@@ -147,10 +149,10 @@ fun SubmitterAvatar(
 
 @Composable
 fun SubmitterNameText(
-  name: String,
+  text: String,
 ) {
   Text(
-    text = Strings.SubmittedBy.get(name),
+    text = text,
     modifier = Modifier.padding(start = 4.dp),
   )
 }

@@ -5,22 +5,26 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Divider
+import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import dev.msfjarvis.lobsters.model.Comment
-import dev.msfjarvis.lobsters.ui.posts.SubmitterAvatar
+import dev.msfjarvis.lobsters.ui.posts.SubmitterName
+import dev.msfjarvis.lobsters.utils.Strings
+import dev.msfjarvis.lobsters.utils.get
 
 @Composable
 fun CommentEntry(
   comment: Comment,
 ) {
   val indentLevel = comment.indentLevel.toInt() - 1
-  val startPadding = ((10 * indentLevel) + 16).dp
+  val startPadding = ((indentLevel * 8) + 12).dp
 
   Divider(color = Color.Gray.copy(0.4f))
 
@@ -30,15 +34,15 @@ fun CommentEntry(
 
     Column {
       Row {
-        SubmitterAvatar(
-          name = comment.user.username,
-          avatarUrl = comment.user.avatarUrl,
-        )
-        Text(
-          text = comment.user.username,
-          modifier = Modifier.padding(start = 4.dp),
-          style = TextStyle(color = Color.DarkGray, fontWeight = FontWeight.Bold),
-        )
+        CompositionLocalProvider(
+          LocalTextStyle provides TextStyle(color = Color.DarkGray, fontWeight = FontWeight.Bold)
+        ) {
+          SubmitterName(
+            text = comment.user.username,
+            avatarUrl = comment.user.avatarUrl,
+            contentDescription = Strings.AvatarContentDescription.get(comment.user.username),
+          )
+        }
       }
       Text(text = text, modifier = Modifier.padding(top = 8.dp))
     }

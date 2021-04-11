@@ -45,9 +45,8 @@ class LobstersRepository(
   // https://issuetracker.google.com/issues/181221325
   @Suppress("NewApi")
   suspend fun updateCache() {
-    if (_isCacheReady.value) return
+    _isCacheReady.value = false
     val posts = getSavedPosts()
-
     posts.forEach { savedPostsCache[it.shortId] = it }
     _isCacheReady.value = true
   }
@@ -64,6 +63,14 @@ class LobstersRepository(
         lobstersDatabase.savedPostQueries.insertOrReplacePost(post)
       }
     }
+
+  suspend fun addPosts(posts: List<SavedPost>) {
+    withContext(Dispatchers.IO) {
+      lobstersDatabase.transaction {
+        posts.forEach { lobstersDatabase.savedPostQueries.insertOrReplacePost(it) }
+      }
+    }
+  }
 
   suspend fun removePost(post: SavedPost) =
     withContext(Dispatchers.IO) {

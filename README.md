@@ -4,6 +4,10 @@ Unofficial Android app for read-only access to [lobste.rs](https://lobste.rs) co
 
 Requires Android Studio 2020.3.1 Arctic Fox to work.
 
+## Distribution
+
+The app will be published to Google Play soon, in the mean time snapshots from the development branch are available [here](https://dl.msfjarvis.dev/Claw)
+
 ## Licence
 
 ```

@@ -31,6 +31,7 @@ import dev.msfjarvis.lobsters.model.LobstersPostDetails
 import dev.msfjarvis.lobsters.ui.posts.PostTitle
 import dev.msfjarvis.lobsters.ui.posts.SubmitterName
 import dev.msfjarvis.lobsters.ui.posts.TagRow
+import dev.msfjarvis.lobsters.util.toNormalizedHtml
 import dev.msfjarvis.lobsters.utils.Strings
 import dev.msfjarvis.lobsters.utils.get
 
@@ -61,11 +62,12 @@ fun CommentsPage(
   var postDetails: NetworkState by remember { mutableStateOf(NetworkState.Loading) }
 
   LaunchedEffect(postId) {
-    postDetails = try {
-      NetworkState.Success(getDetails(postId))
-    } catch (e: Throwable) {
-      NetworkState.Error(e.message ?: "Failed to load posts")
-    }
+    postDetails =
+      try {
+        NetworkState.Success(getDetails(postId))
+      } catch (e: Throwable) {
+        NetworkState.Error(e.message ?: "Failed to load posts")
+      }
   }
 
   when (postDetails) {
@@ -107,7 +109,7 @@ private fun CommentsHeader(postDetails: LobstersPostDetails) {
 
       if (postDetails.description.isNotEmpty()) {
         Spacer(modifier = Modifier.height(16.dp))
-        Text(text = postDetails.description)
+        Text(text = postDetails.description.toNormalizedHtml())
       } else {
         Spacer(modifier = Modifier.height(12.dp))
       }

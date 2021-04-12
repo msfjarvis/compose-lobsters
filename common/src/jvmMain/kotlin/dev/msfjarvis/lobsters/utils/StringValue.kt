@@ -13,6 +13,7 @@ private fun stringEnumMapper(stringEnum: Strings): String {
     Strings.OpenComments -> "Open comments"
     Strings.RefreshPostsContentDescription -> "Refresh posts"
     Strings.RemoveFromSavedPosts -> "Remove from saved posts"
+    Strings.ReplyButtonContentDescription -> "Reply button"
     Strings.SavedPosts -> "Saved"
     Strings.SubmittedBy -> "submitted by %1s"
     Strings.NewestPosts -> "Newest"

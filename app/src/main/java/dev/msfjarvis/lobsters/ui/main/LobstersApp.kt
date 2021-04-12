@@ -7,6 +7,7 @@ import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -39,6 +40,7 @@ import kotlinx.coroutines.launch
 fun LobstersApp() {
   val viewModel: LobstersViewModel = viewModel()
   val context = LocalContext.current
+  val scaffoldState = rememberScaffoldState()
   val navController = rememberNavController()
   val hottestPosts = viewModel.hottestPosts.collectAsLazyPagingItems()
   val newestPosts = viewModel.newestPosts.collectAsLazyPagingItems()
@@ -71,6 +73,7 @@ fun LobstersApp() {
   }
 
   Scaffold(
+    scaffoldState = scaffoldState,
     topBar = {
       LobstersTopAppBar(
         currentDestination,
@@ -124,6 +127,7 @@ fun LobstersApp() {
         CommentsPage(
           postId = requireNotNull(backStackEntry.arguments?.getString("postId")),
           paddingValues = innerPadding,
+          scaffoldState = scaffoldState,
           getDetails = viewModel::getPostDetails,
         )
       }

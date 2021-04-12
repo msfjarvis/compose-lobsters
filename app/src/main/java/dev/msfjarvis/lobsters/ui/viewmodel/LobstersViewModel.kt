@@ -8,9 +8,9 @@ import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.msfjarvis.lobsters.data.local.SavedPost
 import dev.msfjarvis.lobsters.data.preferences.ClawPreferences
-import dev.msfjarvis.lobsters.data.remote.HottestPostsPagingSource
-import dev.msfjarvis.lobsters.data.remote.NewestPostsPagingSource
+import dev.msfjarvis.lobsters.data.remote.LobstersPagingSource
 import dev.msfjarvis.lobsters.data.repo.LobstersRepository
+import dev.msfjarvis.lobsters.model.LobstersPost
 import dev.msfjarvis.lobsters.model.LobstersPostDetails
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
@@ -31,20 +31,21 @@ constructor(
   val savedPosts = _savedPosts.asStateFlow()
   val hottestPosts =
     Pager(PagingConfig(25)) {
-        HottestPostsPagingSource(lobstersRepository).also { hottestPostsPagingSource = it }
+        LobstersPagingSource(getPostFetcher(hottest = true)).also { hottestPostsPagingSource = it }
       }
       .flow
       .cachedIn(viewModelScope)
   val newestPosts =
     Pager(PagingConfig(25)) {
-        NewestPostsPagingSource(lobstersRepository).also { newestPostsPagingSource = it }
+        LobstersPagingSource(getPostFetcher(newest = true)).also { hottestPostsPagingSource = it }
       }
       .flow
       .cachedIn(viewModelScope)
-  private var hottestPostsPagingSource: HottestPostsPagingSource? = null
-  private var newestPostsPagingSource: NewestPostsPagingSource? = null
+  private var hottestPostsPagingSource: LobstersPagingSource? = null
+  private var newestPostsPagingSource: LobstersPagingSource? = null
 
   init {
+    viewModelScope.launch { lobstersRepository.updateCache() }
     lobstersRepository
       .isCacheReady
       .onEach { ready ->
@@ -84,6 +85,25 @@ constructor(
 
   fun isPostSaved(postId: String): Boolean {
     return lobstersRepository.isPostSaved(postId)
+  }
+
+  /**
+   * Returns a lambda that can be used to fetch the next round of hottest or newest posts. Having a
+   * single paging source makes it significantly easier to make changes to the logic both here and
+   * in [LobstersPagingSource].
+   */
+  private fun getPostFetcher(
+    newest: Boolean = false,
+    hottest: Boolean = false,
+  ): suspend (page: Int) -> List<LobstersPost> {
+    check(newest != hottest) { "Must pick one of newest or hottest" }
+    return { page ->
+      if (newest) {
+        lobstersRepository.fetchNewestPosts(page)
+      } else {
+        lobstersRepository.fetchHottestPosts(page)
+      }
+    }
   }
 
   private fun savePost(post: SavedPost) {

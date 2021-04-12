@@ -5,8 +5,6 @@ import com.squareup.moshi.adapter
 import dev.msfjarvis.lobsters.data.local.SavedPost
 import dev.msfjarvis.lobsters.data.repo.LobstersRepository
 import javax.inject.Inject
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 @OptIn(ExperimentalStdlibApi::class)
 class BackupHandler

@@ -16,6 +16,7 @@ private fun stringEnumMapper(stringEnum: Strings): Int {
     Strings.OpenComments -> R.string.open_comments
     Strings.RefreshPostsContentDescription -> R.string.refresh_posts_content_description
     Strings.RemoveFromSavedPosts -> R.string.remove_from_saved_posts
+    Strings.ReplyButtonContentDescription -> R.string.reply_button_content_description
     Strings.SavedPosts -> R.string.saved_posts
     Strings.SubmittedBy -> R.string.submitted_by
     Strings.Settings -> R.string.settings

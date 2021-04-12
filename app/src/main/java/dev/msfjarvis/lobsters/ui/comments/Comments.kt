@@ -12,9 +12,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Divider
+import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -27,26 +28,41 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.msfjarvis.lobsters.R
 import dev.msfjarvis.lobsters.model.LobstersPostDetails
 import dev.msfjarvis.lobsters.ui.posts.PostTitle
 import dev.msfjarvis.lobsters.ui.posts.SubmitterName
 import dev.msfjarvis.lobsters.ui.posts.TagRow
+import dev.msfjarvis.lobsters.ui.urllauncher.LocalUrlLauncher
+import dev.msfjarvis.lobsters.util.IconResource
+import dev.msfjarvis.lobsters.util.toNormalizedHtml
 import dev.msfjarvis.lobsters.utils.Strings
 import dev.msfjarvis.lobsters.utils.get
 
 @Composable
 private fun CommentsPageInternal(
   details: LobstersPostDetails,
+  paddingValues: PaddingValues,
   modifier: Modifier = Modifier,
 ) {
-  LazyColumn(Modifier.then(modifier)) {
-    item { CommentsHeader(postDetails = details) }
+  val urlLauncher = LocalUrlLauncher.current
+  Scaffold(
+    modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding()),
+    floatingActionButton = {
+      FloatingActionButton(onClick = { urlLauncher.launch(details.commentsUrl) }) {
+        IconResource(resourceId = R.drawable.ic_reply_24dp, contentDescription = Strings.ReplyButtonContentDescription.get())
+      }
+    }
+  ) {
+    LazyColumn(Modifier.then(modifier)) {
+      item { CommentsHeader(postDetails = details) }
 
-    item { Spacer(modifier = Modifier.height(8.dp)) }
+      item { Spacer(modifier = Modifier.height(8.dp)) }
 
-    items(details.comments) { CommentEntry(it) }
+      items(details.comments) { CommentEntry(it) }
 
-    item { Divider(color = Color.Gray.copy(0.4f)) }
+      item { Divider(color = Color.Gray.copy(0.4f)) }
+    }
   }
 }
 
@@ -61,18 +77,19 @@ fun CommentsPage(
   var postDetails: NetworkState by remember { mutableStateOf(NetworkState.Loading) }
 
   LaunchedEffect(postId) {
-    postDetails = try {
-      NetworkState.Success(getDetails(postId))
-    } catch (e: Throwable) {
-      NetworkState.Error(e.message ?: "Failed to load posts")
-    }
+    postDetails =
+      try {
+        NetworkState.Success(getDetails(postId))
+      } catch (e: Throwable) {
+        NetworkState.Error(e.message ?: "Failed to load posts")
+      }
   }
 
   when (postDetails) {
     is NetworkState.Success<*> -> {
       CommentsPageInternal(
         details = (postDetails as NetworkState.Success<LobstersPostDetails>).data,
-        modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding()),
+        paddingValues = paddingValues,
       )
     }
     is NetworkState.Error -> {
@@ -88,36 +105,34 @@ fun CommentsPage(
 
 @Composable
 private fun CommentsHeader(postDetails: LobstersPostDetails) {
-  Surface {
-    Column(
-      modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
-    ) {
-      PostTitle(
-        title = postDetails.title,
-        modifier = Modifier.padding(bottom = 4.dp),
+  Column(
+    modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
+  ) {
+    PostTitle(
+      title = postDetails.title,
+      modifier = Modifier.padding(bottom = 4.dp),
+    )
+    Row {
+      TagRow(
+        tags = postDetails.tags,
       )
-      Row {
-        TagRow(
-          tags = postDetails.tags,
-        )
-        Spacer(
-          modifier = Modifier.weight(1f),
-        )
-      }
-
-      if (postDetails.description.isNotEmpty()) {
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(text = postDetails.description)
-      } else {
-        Spacer(modifier = Modifier.height(12.dp))
-      }
-
-      SubmitterName(
-        text = postDetails.submitter.username,
-        avatarUrl = postDetails.submitter.avatarUrl,
-        contentDescription = Strings.AvatarContentDescription.get(postDetails.submitter.username),
+      Spacer(
+        modifier = Modifier.weight(1f),
       )
     }
+
+    if (postDetails.description.isNotEmpty()) {
+      Spacer(modifier = Modifier.height(16.dp))
+      Text(text = postDetails.description.toNormalizedHtml())
+    } else {
+      Spacer(modifier = Modifier.height(12.dp))
+    }
+
+    SubmitterName(
+      text = postDetails.submitter.username,
+      avatarUrl = postDetails.submitter.avatarUrl,
+      contentDescription = Strings.AvatarContentDescription.get(postDetails.submitter.username),
+    )
   }
 }
 

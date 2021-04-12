@@ -11,6 +11,7 @@
   <string name="open_comments">Open comments</string>
   <string name="change_sorting_order">Change sort order</string>
   <string name="newest_posts">Newest</string>
+  <string name="reply_button_content_description">Reply button</string>
   <string name="settings">Settings</string>
   <string name="settings_backup">Backup saved posts</string>
   <string name="settings_backup_desc">Export saved posts in a JSON file that can be restored later</string>

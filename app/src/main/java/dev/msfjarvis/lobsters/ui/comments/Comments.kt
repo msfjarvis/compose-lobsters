@@ -58,7 +58,13 @@ fun CommentsPage(
 ) {
   var postDetails: NetworkState by remember { mutableStateOf(NetworkState.Loading) }
 
-  LaunchedEffect(postId) { postDetails = NetworkState.Success(getDetails(postId)) }
+  LaunchedEffect(postId) {
+    postDetails = try {
+      NetworkState.Success(getDetails(postId))
+    } catch (e: Throwable) {
+      NetworkState.Error(e.message ?: "Failed to load posts")
+    }
+  }
 
   when (postDetails) {
     is NetworkState.Success<*> -> {

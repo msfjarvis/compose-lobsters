@@ -45,6 +45,7 @@ constructor(
   private var newestPostsPagingSource: LobstersPagingSource? = null
 
   init {
+    viewModelScope.launch { lobstersRepository.updateCache() }
     lobstersRepository
       .isCacheReady
       .onEach { ready ->
@@ -97,7 +98,6 @@ constructor(
   ): suspend (page: Int) -> List<LobstersPost> {
     check(newest != hottest) { "Must pick one of newest or hottest" }
     return { page ->
-      lobstersRepository.updateCache()
       if (newest) {
         lobstersRepository.fetchNewestPosts(page)
       } else {

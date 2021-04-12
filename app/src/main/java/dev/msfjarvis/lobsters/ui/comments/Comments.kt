@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -54,7 +55,8 @@ private fun CommentsPageInternal(
 fun CommentsPage(
   postId: String,
   paddingValues: PaddingValues,
-  getDetails: suspend (String) -> LobstersPostDetails
+  scaffoldState: ScaffoldState,
+  getDetails: suspend (String) -> LobstersPostDetails,
 ) {
   var postDetails: NetworkState by remember { mutableStateOf(NetworkState.Loading) }
 
@@ -73,7 +75,13 @@ fun CommentsPage(
         modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding()),
       )
     }
-    is NetworkState.Error -> TODO("Handle no network scenario")
+    is NetworkState.Error -> {
+      LaunchedEffect(scaffoldState.snackbarHostState) {
+        scaffoldState.snackbarHostState.showSnackbar(
+          message = (postDetails as NetworkState.Error).message,
+        )
+      }
+    }
     NetworkState.Loading -> ProgressBar(paddingValues.calculateBottomPadding())
   }
 }

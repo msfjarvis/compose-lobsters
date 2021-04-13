@@ -17,7 +17,7 @@ object Plugins {
 object Dependencies {
   const val COMPOSE_VERSION = "1.0.0-beta04"
   const val KSP_VERSION = "1.4.32-1.0.0-alpha07"
-  const val JB_COMPOSE_VERSION = "0.4.0-build180"
+  const val JB_COMPOSE_VERSION = "0.4.0-build181"
 
   object Kotlin {
 

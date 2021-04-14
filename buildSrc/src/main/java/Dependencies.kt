@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: GPL-3.0-only
  */
 
-private const val DAGGER_HILT_VERSION = "2.34-beta"
+private const val DAGGER_HILT_VERSION = "2.34.1-beta"
 
 object Plugins {
   const val android = "com.android.tools.build:gradle:7.0.0-alpha14"
@@ -17,7 +17,7 @@ object Plugins {
 object Dependencies {
   const val COMPOSE_VERSION = "1.0.0-beta04"
   const val KSP_VERSION = "1.4.32-1.0.0-alpha07"
-  const val JB_COMPOSE_VERSION = "0.4.0-build181"
+  const val JB_COMPOSE_VERSION = "0.4.0-build182"
 
   object Kotlin {
 

@@ -50,7 +50,10 @@ private fun CommentsPageInternal(
     modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding()),
     floatingActionButton = {
       FloatingActionButton(onClick = { urlLauncher.launch(details.commentsUrl) }) {
-        IconResource(resourceId = R.drawable.ic_reply_24dp, contentDescription = Strings.ReplyButtonContentDescription.get())
+        IconResource(
+          resourceId = R.drawable.ic_reply_24dp,
+          contentDescription = Strings.ReplyButtonContentDescription.get()
+        )
       }
     }
   ) {

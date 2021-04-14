@@ -31,9 +31,7 @@ fun CommentEntry(
   Row(modifier = Modifier.padding(start = startPadding, end = 8.dp, top = 4.dp, bottom = 4.dp)) {
     Column {
       Row {
-        CompositionLocalProvider(
-          LocalTextStyle provides TextStyle(color = Color.DarkGray, fontWeight = FontWeight.Bold)
-        ) {
+        CompositionLocalProvider(LocalTextStyle provides TextStyle(fontWeight = FontWeight.Bold)) {
           SubmitterName(
             text = comment.user.username,
             avatarUrl = comment.user.avatarUrl,

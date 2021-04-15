@@ -229,8 +229,7 @@ inline fun <reified T> getSpanStyleForSpan(span: T): SpanStyle? {
     is BulletSpan -> SpanStyle(textDecoration = TextDecoration.Underline)
     is DrawableMarginSpan -> TODO()
     is IconMarginSpan -> TODO()
-    // TODO: Fix quote span
-    is QuoteSpan -> SpanStyle(background = Color(span.color))
+    is QuoteSpan -> SpanStyle(background = Color.LightGray)
     else -> null
   }
 }

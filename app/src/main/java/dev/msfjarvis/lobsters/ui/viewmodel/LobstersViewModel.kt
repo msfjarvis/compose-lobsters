@@ -37,7 +37,7 @@ constructor(
       .cachedIn(viewModelScope)
   val newestPosts =
     Pager(PagingConfig(25)) {
-        LobstersPagingSource(getPostFetcher(newest = true)).also { hottestPostsPagingSource = it }
+        LobstersPagingSource(getPostFetcher(newest = true)).also { newestPostsPagingSource = it }
       }
       .flow
       .cachedIn(viewModelScope)

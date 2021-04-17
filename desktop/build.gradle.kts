@@ -3,11 +3,9 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
   kotlin("multiplatform")
-  id("org.jetbrains.compose") version Dependencies.JB_COMPOSE_VERSION
+  id("org.jetbrains.compose")
   `lobsters-plugin`
 }
-
-repositories { maven("https://maven.pkg.jetbrains.space/public/p/compose/dev") }
 
 kotlin {
   jvm()
@@ -19,9 +17,9 @@ kotlin {
         implementation(projects.common)
         implementation(projects.database)
         implementation(compose.material)
-        implementation(Dependencies.Kotlin.Coroutines.jvmCore)
-        implementation(Dependencies.ThirdParty.kamel)
-        implementation(Dependencies.ThirdParty.Retrofit.moshi)
+        implementation(libs.kotlin.coroutines.jvm)
+        implementation(libs.thirdparty.kamel)
+        implementation(libs.thirdparty.retrofit.moshiConverter)
       }
     }
   }

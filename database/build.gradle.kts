@@ -26,18 +26,18 @@ kotlin {
     }
     val jvmTest by getting {
       dependencies {
-        implementation(Dependencies.Kotlin.Coroutines.core)
+        implementation(libs.kotlin.coroutines.core)
         implementation(kotlin("test-junit"))
       }
     }
     val jvmMain by getting {
       dependencies {
-        implementation(Dependencies.ThirdParty.SQLDelight.jvmDriver)
+        implementation(libs.thirdparty.sqldelight.jvmDriver)
       }
     }
     val androidMain by getting {
       dependencies {
-        implementation(Dependencies.ThirdParty.SQLDelight.androidDriver)
+        implementation(libs.thirdparty.sqldelight.androidDriver)
       }
     }
   }

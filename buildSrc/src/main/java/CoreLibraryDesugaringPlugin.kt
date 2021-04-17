@@ -30,6 +30,6 @@ class CoreLibraryDesugaringPlugin : Plugin<Project> {
 
   private fun TestedExtension.configure(project: Project) {
     compileOptions.isCoreLibraryDesugaringEnabled = true
-    project.dependencies.add("coreLibraryDesugaring", Dependencies.AndroidX.coreLibraryDesugaring)
+    project.dependencies.add("coreLibraryDesugaring", "com.android.tools:desugar_jdk_libs:1.0.10")
   }
 }

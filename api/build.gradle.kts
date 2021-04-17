@@ -1,14 +1,14 @@
 plugins {
   kotlin("jvm")
-  id("com.google.devtools.ksp") version Dependencies.KSP_VERSION
+  id("com.google.devtools.ksp")
   `lobsters-plugin`
 }
 
 dependencies {
-  api(Dependencies.ThirdParty.Retrofit.lib)
-  ksp(Dependencies.ThirdParty.Moshi.ksp)
-  implementation(Dependencies.ThirdParty.Retrofit.moshi)
-  testImplementation(Dependencies.Kotlin.Coroutines.core)
+  api(libs.thirdparty.retrofit.lib)
+  ksp(libs.thirdparty.moshi.ksp)
+  implementation(libs.thirdparty.retrofit.moshiConverter)
+  testImplementation(libs.kotlin.coroutines.core)
   testImplementation(kotlin("test-junit"))
-  testImplementation(Dependencies.Testing.mockWebServer)
+  testImplementation(libs.testing.mockWebServer)
 }

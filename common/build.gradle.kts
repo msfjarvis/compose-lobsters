@@ -1,7 +1,7 @@
 plugins {
   kotlin("multiplatform")
   id("com.android.library")
-  id("org.jetbrains.compose") version Dependencies.JB_COMPOSE_VERSION
+  id("org.jetbrains.compose")
   `lobsters-plugin`
 }
 
@@ -26,7 +26,7 @@ kotlin {
   sourceSets {
     named("androidMain") {
       dependencies {
-        implementation(Dependencies.AndroidX.browser)
+        implementation(libs.androidx.browser)
       }
     }
 

@@ -4,7 +4,8 @@ subprojects {
   configurations.configureEach {
     resolutionStrategy {
       // Retrofit depends on a very old version of Moshi that causes moshi-ksp to fail
-      force(Dependencies.ThirdParty.Moshi.lib)
+      // Using gradle catalog here prevents compilation
+      force("com.squareup.moshi:moshi:1.12.0")
     }
   }
 }

@@ -48,6 +48,6 @@ dependencies {
   implementation(libs.thirdparty.accompanistFlow)
   implementation(libs.thirdparty.moshi.lib)
   implementation(libs.thirdparty.retrofit.moshiConverter)
-  testImplementation(kotlin("test-junit"))
-  androidTestImplementation(kotlin("test-junit"))
+  testImplementation(libs.testing.kotlintest.junit)
+  androidTestImplementation(libs.testing.kotlintest.junit)
 }

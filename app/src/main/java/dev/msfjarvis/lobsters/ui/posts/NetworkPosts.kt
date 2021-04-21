@@ -30,18 +30,17 @@ fun NetworkPosts(
   viewComments: (String) -> Unit,
 ) {
   val urlLauncher = LocalUrlLauncher.current
-  var isRefreshing by mutableStateOf(false)
+  val isRefreshing = posts.loadState.refresh == LoadState.Loading
 
   SwipeRefresh(
     state = rememberSwipeRefreshState(isRefreshing),
     onRefresh = {
-      if (posts.loadState.refresh != LoadState.Loading) {
+      if (!isRefreshing) {
         refreshAction()
-        isRefreshing = isRefreshing.not()
       }
     },
   ) {
-    if (posts.loadState.refresh == LoadState.Loading) {
+    if (isRefreshing) {
       LazyColumn { items(15) { LoadingLobstersItem() } }
     } else {
       LazyColumn(

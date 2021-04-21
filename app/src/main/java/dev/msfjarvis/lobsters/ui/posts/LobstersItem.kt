@@ -4,6 +4,7 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,7 +28,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.transform.CircleCropTransformation
-import com.google.accompanist.coil.CoilImage
+import com.google.accompanist.coil.rememberCoilPainter
 import com.google.accompanist.flowlayout.FlowRow
 import dev.msfjarvis.lobsters.R
 import dev.msfjarvis.lobsters.data.api.LobstersApi
@@ -137,11 +138,13 @@ fun SubmitterAvatar(
   avatarUrl: String,
   contentDescription: String,
 ) {
-  CoilImage(
-    data = "${LobstersApi.BASE_URL}/$avatarUrl",
+  Image(
+    painter = rememberCoilPainter(
+      request = "${LobstersApi.BASE_URL}/$avatarUrl",
+      requestBuilder = { transformations(CircleCropTransformation()) },
+      fadeIn = true,
+    ),
     contentDescription = contentDescription,
-    fadeIn = true,
-    requestBuilder = { transformations(CircleCropTransformation()) },
     modifier = Modifier.requiredSize(24.dp),
   )
 }

@@ -34,15 +34,8 @@ internal fun Project.configureForRootProject() {
 /** Configure all projects including the root project */
 internal fun Project.configureForAllProjects() {
   repositories {
-    google()
     mavenCentral()
-    maven("https://dl.bintray.com/kotlin/kotlinx") {
-      name = "KotlinX Bintray"
-      content {
-        includeModule("org.jetbrains.kotlinx", "kotlinx-collections-immutable")
-        includeModule("org.jetbrains.kotlinx", "kotlinx-collections-immutable-jvm")
-      }
-    }
+    google()
   }
   tasks.withType<KotlinCompile> {
     kotlinOptions {

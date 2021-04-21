@@ -11,7 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
-import com.puculek.pulltorefresh.PullToRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.google.accompanist.swiperefresh.SwipeRefresh
 import dev.msfjarvis.lobsters.data.local.SavedPost
 import dev.msfjarvis.lobsters.model.LobstersPost
 import dev.msfjarvis.lobsters.ui.urllauncher.LocalUrlLauncher
@@ -31,12 +32,12 @@ fun NetworkPosts(
   val urlLauncher = LocalUrlLauncher.current
   var isRefreshing by mutableStateOf(false)
 
-  PullToRefresh(
-    isRefreshing = isRefreshing,
+  SwipeRefresh(
+    state = rememberSwipeRefreshState(isRefreshing),
     onRefresh = {
       if (posts.loadState.refresh != LoadState.Loading) {
-        isRefreshing = isRefreshing.not()
         refreshAction()
+        isRefreshing = isRefreshing.not()
       }
     },
   ) {

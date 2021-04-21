@@ -1,8 +1,8 @@
 # Centralized versions for dependencies that share versions
 [versions]
-accompanist = "0.7.1"
+accompanist = "0.8.0"
 androidx_test = "1.4.0-alpha05"
-compose = "1.0.0-beta04"
+compose = "1.0.0-beta05"
 coroutines = "1.4.3"
 dagger_hilt = "2.34.1-beta"
 jb_compose = "0.4.0-build184"
@@ -48,8 +48,9 @@ androidx-hilt-dagger = { module = "com.google.dagger:hilt-android", version.ref 
 androidx-hilt-daggerCompiler = { module = "com.google.dagger:hilt-compiler", version.ref = "dagger_hilt" }
 
 # Third-party dependencies
-thirdparty-accompanistCoil = { module = "com.google.accompanist:accompanist-coil", version.ref = "accompanist" }
-thirdparty-accompanistFlow = { module = "com.google.accompanist:accompanist-flowlayout", version.ref = "accompanist" }
+thirdparty-accompanist-coil = { module = "com.google.accompanist:accompanist-coil", version.ref = "accompanist" }
+thirdparty-accompanist-flow = { module = "com.google.accompanist:accompanist-flowlayout", version.ref = "accompanist" }
+thirdparty-accompanist-swiperefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "accompanist" }
 thirdparty-kamel = "com.alialbaali.kamel:kamel-image:0.2.0"
 thirdparty-pullToRefresh = "com.puculek.pulltorefresh:pull-to-refresh-compose:1.0.1"
 

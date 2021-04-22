@@ -2,9 +2,9 @@ package dev.msfjarvis.lobsters.ui.posts
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -139,11 +139,12 @@ fun SubmitterAvatar(
   contentDescription: String,
 ) {
   Image(
-    painter = rememberCoilPainter(
-      request = "${LobstersApi.BASE_URL}/$avatarUrl",
-      requestBuilder = { transformations(CircleCropTransformation()) },
-      fadeIn = true,
-    ),
+    painter =
+      rememberCoilPainter(
+        request = "${LobstersApi.BASE_URL}/$avatarUrl",
+        requestBuilder = { transformations(CircleCropTransformation()) },
+        fadeIn = true,
+      ),
     contentDescription = contentDescription,
     modifier = Modifier.requiredSize(24.dp),
   )

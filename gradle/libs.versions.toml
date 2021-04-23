@@ -9,6 +9,7 @@ jb_compose = "0.4.0-build184"
 kotlin = "1.4.32"
 ksp = "1.4.32-1.0.0-alpha08"
 lifecycle = "2.4.0-alpha01"
+moshix = "0.10.0"
 retrofit = "2.9.0"
 sqldelight = "1.4.4"
 
@@ -56,7 +57,8 @@ thirdparty-pullToRefresh = "com.puculek.pulltorefresh:pull-to-refresh-compose:1.
 
 # Moshi dependencies
 thirdparty-moshi-lib = "com.squareup.moshi:moshi:1.12.0"
-thirdparty-moshi-ksp = "dev.zacsweers.moshix:moshi-ksp:0.10.0"
+thirdparty-moshix-ksp = { module = "dev.zacsweers.moshix:moshi-ksp", version.ref = "moshix" }
+thirdparty-moshix-metadatareflect = { module = "dev.zacsweers.moshix:moshi-metadata-reflect", version.ref = "moshix" }
 
 # Retrofit dependencies
 thirdparty-retrofit-lib = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }

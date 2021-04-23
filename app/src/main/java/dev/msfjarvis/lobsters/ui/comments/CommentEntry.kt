@@ -1,8 +1,12 @@
 package dev.msfjarvis.lobsters.ui.comments
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.Divider
 import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.Text
@@ -24,11 +28,12 @@ fun CommentEntry(
   comment: Comment,
 ) {
   val indentLevel = comment.indentLevel.toInt() - 1
-  val startPadding = ((indentLevel * 8) + 12).dp
 
   Divider(color = Color.Gray.copy(0.4f))
-
-  Row(modifier = Modifier.padding(start = startPadding, end = 8.dp, top = 4.dp, bottom = 4.dp)) {
+  Row(modifier = Modifier.padding(bottom = 4.dp, end = 8.dp, start = 12.dp, top = 4.dp)) {
+    CommentTreeColors(
+      indentLevel = indentLevel,
+    )
     Column {
       Row {
         CompositionLocalProvider(LocalTextStyle provides TextStyle(fontWeight = FontWeight.Bold)) {
@@ -40,6 +45,24 @@ fun CommentEntry(
         }
       }
       Text(text = comment.comment.toNormalizedHtml(), modifier = Modifier.padding(top = 8.dp))
+    }
+  }
+}
+
+@Composable
+private fun CommentTreeColors(
+  indentLevel: Int,
+  modifier: Modifier = Modifier,
+) {
+  Row(modifier = modifier) {
+    for (level in 0..indentLevel) {
+      Box(
+        modifier = Modifier
+          .fillMaxHeight()
+          .width(1.dp)
+          .background(CommentTreeColor[level])
+          .padding(start = (level * 2).dp),
+      )
     }
   }
 }

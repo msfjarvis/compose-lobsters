@@ -6,7 +6,7 @@ plugins {
 
 dependencies {
   api(libs.thirdparty.retrofit.lib)
-  ksp(libs.thirdparty.moshi.ksp)
+  ksp(libs.thirdparty.moshix.ksp)
   implementation(libs.thirdparty.retrofit.moshiConverter)
   testImplementation(libs.kotlin.coroutines.core)
   testImplementation(libs.testing.kotlintest.junit)

@@ -48,6 +48,7 @@ dependencies {
   implementation(libs.thirdparty.accompanist.flow)
   implementation(libs.thirdparty.accompanist.swiperefresh)
   implementation(libs.thirdparty.moshi.lib)
+  implementation(libs.thirdparty.moshix.metadatareflect)
   implementation(libs.thirdparty.retrofit.moshiConverter)
   testImplementation(libs.testing.kotlintest.junit)
   androidTestImplementation(libs.testing.kotlintest.junit)

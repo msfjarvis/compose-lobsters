@@ -30,6 +30,7 @@ dependencies {
   implementation("com.google.devtools.ksp:symbol-processing-gradle-plugin:1.4.32-1.0.0-alpha08")
   implementation("com.github.zafarkhaja:java-semver:0.9.0")
   implementation("com.karumi:shot:5.10.3")
+  implementation("com.diffplug.spotless:spotless-plugin-gradle:5.12.4")
   implementation("com.squareup.sqldelight:gradle-plugin:1.5.0")
   implementation("org.jetbrains.compose:compose-gradle-plugin:0.4.0-build184")
 }

@@ -31,5 +31,5 @@ dependencies {
   implementation("com.github.zafarkhaja:java-semver:0.9.0")
   implementation("com.karumi:shot:5.10.3")
   implementation("com.squareup.sqldelight:gradle-plugin:1.5.0")
-  implementation("org.jetbrains.compose:compose-gradle-plugin:0.4.0-build184")
+  implementation("org.jetbrains.compose:compose-gradle-plugin:0.4.0-build183")
 }

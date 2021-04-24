@@ -6,8 +6,6 @@ repositories {
   maven(url = "https://maven.pkg.jetbrains.space/public/p/compose/dev")
 }
 
-kotlinDslPluginOptions { experimentalWarning.set(false) }
-
 gradlePlugin {
   plugins {
     register("lobsters") {

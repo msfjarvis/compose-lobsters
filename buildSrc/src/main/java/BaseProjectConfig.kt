@@ -7,12 +7,10 @@ import com.android.build.gradle.TestedExtension
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
-import org.gradle.api.tasks.Delete
 import org.gradle.api.tasks.testing.Test
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.gradle.api.tasks.wrapper.Wrapper
 import org.gradle.kotlin.dsl.maven
-import org.gradle.kotlin.dsl.register
 import org.gradle.kotlin.dsl.repositories
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -22,8 +20,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
  * `buildscript` block in the top-level build.gradle.kts file.
  */
 internal fun Project.configureForRootProject() {
-  // register task for cleaning the build directory in the root project
-  tasks.register<Delete>("clean") { delete(rootProject.buildDir) }
   tasks.withType<Wrapper> {
     gradleVersion = "7.0"
     distributionType = Wrapper.DistributionType.ALL

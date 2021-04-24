@@ -7,6 +7,8 @@ import com.android.build.gradle.TestedExtension
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
 import com.android.build.gradle.internal.plugins.AppPlugin
 import com.android.build.gradle.internal.plugins.LibraryPlugin
+import com.diffplug.gradle.spotless.SpotlessExtension
+import com.diffplug.gradle.spotless.SpotlessPlugin
 import com.squareup.sqldelight.gradle.SqlDelightExtension
 import com.squareup.sqldelight.gradle.SqlDelightPlugin
 import org.gradle.api.Plugin
@@ -51,6 +53,9 @@ class LobstersPlugin : Plugin<Project> {
         }
         is SqlDelightPlugin -> {
           project.extensions.getByType<SqlDelightExtension>().configureLobstersDatabase()
+        }
+        is SpotlessPlugin -> {
+          project.extensions.getByType<SpotlessExtension>().configure()
         }
       }
     }

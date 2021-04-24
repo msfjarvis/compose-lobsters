@@ -1,5 +1,7 @@
 plugins { `lobsters-plugin` }
 
+allprojects { apply(plugin = "com.diffplug.spotless") }
+
 subprojects {
   configurations.configureEach {
     resolutionStrategy {

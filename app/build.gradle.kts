@@ -12,8 +12,6 @@ plugins {
   `core-library-desugaring`
 }
 
-repositories { maven("https://maven.pkg.jetbrains.space/public/p/compose/dev") }
-
 android {
   defaultConfig {
     applicationId = "dev.msfjarvis.lobsters"

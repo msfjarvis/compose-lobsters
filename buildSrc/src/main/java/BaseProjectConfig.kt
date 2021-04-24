@@ -11,6 +11,7 @@ import org.gradle.api.tasks.Delete
 import org.gradle.api.tasks.testing.Test
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.gradle.api.tasks.wrapper.Wrapper
+import org.gradle.kotlin.dsl.maven
 import org.gradle.kotlin.dsl.register
 import org.gradle.kotlin.dsl.repositories
 import org.gradle.kotlin.dsl.withType
@@ -35,6 +36,19 @@ internal fun Project.configureForAllProjects() {
   repositories {
     mavenCentral()
     google()
+    maven("https://maven.pkg.jetbrains.space/public/p/compose/dev") {
+      name = "JetBrains Space Compose Repository"
+      content {
+        includeGroup("org.jetbrains.compose.animation")
+        includeGroup("org.jetbrains.compose.compiler")
+        includeGroup("org.jetbrains.compose.desktop")
+        includeGroup("org.jetbrains.compose.foundation")
+        includeGroup("org.jetbrains.compose.material")
+        includeGroup("org.jetbrains.compose.runtime")
+        includeGroup("org.jetbrains.compose.ui")
+        includeGroup("org.jetbrains.skiko")
+      }
+    }
   }
   tasks.withType<KotlinCompile> {
     kotlinOptions {

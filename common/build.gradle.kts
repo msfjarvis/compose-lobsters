@@ -5,8 +5,6 @@ plugins {
   `lobsters-plugin`
 }
 
-repositories { maven("https://maven.pkg.jetbrains.space/public/p/compose/dev") }
-
 // workaround for https://youtrack.jetbrains.com/issue/KT-43944
 android {
   configurations {

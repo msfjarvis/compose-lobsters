@@ -1,4 +1,5 @@
 status = [
 #  "run-screenshot-tests",
-  "run-unit-tests"
+  "run-unit-tests",
+  "stylecheck"
 ]

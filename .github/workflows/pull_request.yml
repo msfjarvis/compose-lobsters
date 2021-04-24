@@ -66,3 +66,24 @@ jobs:
       with:
           name: Test report
           path: app/build/reports
+
+  stylecheck:
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/setup-java@d202f5dbf7256730fb690ec59f6381650114feb2
+      with:
+        java-version: '11'
+
+    - name: Checkout repository
+      uses: actions/checkout@5a4ac9002d0be2fb38bd78e4b4dbde5606d7042f
+      with:
+        fetch-depth: 0
+
+    - name: Copy CI gradle.properties
+      run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
+
+    - uses: burrunan/gradle-cache-action@03c71a8ba93d670980695505f48f49daf43704a6
+      name: Check codestyle with Spotless
+      with:
+        arguments: spotlessCheck

@@ -52,11 +52,11 @@ private fun CommentTreeColors(
   Box(modifier = modifier) {
     for (level in 1..indentLevel) {
       Box(
-        modifier = Modifier
-          .padding(start = (level * 12).dp)
-          .fillMaxHeight()
-          .width(1.dp)
-          .background(CommentTreeColor[level])
+        modifier =
+          Modifier.padding(start = (level * 12).dp)
+            .fillMaxHeight()
+            .width(1.dp)
+            .background(CommentTreeColor[level % CommentTreeColor.size])
       )
     }
   }

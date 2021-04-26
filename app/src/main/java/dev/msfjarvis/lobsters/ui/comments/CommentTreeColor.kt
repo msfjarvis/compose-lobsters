@@ -25,5 +25,7 @@ object CommentTreeColor {
       Color(0xFF1E7145),
     )
 
+  val size = colors.size
+
   operator fun get(idx: Int): Color = colors[idx]
 }

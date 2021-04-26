@@ -62,9 +62,9 @@ private fun CommentsPageInternal(
 
       item { Spacer(modifier = Modifier.height(8.dp)) }
 
-      items(details.comments) { CommentEntry(it) }
-
       item { Divider(color = Color.Gray.copy(0.4f)) }
+
+      items(details.comments) { CommentEntry(it) }
     }
   }
 }

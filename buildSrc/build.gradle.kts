@@ -25,7 +25,7 @@ gradlePlugin {
 
 dependencies {
   implementation("com.android.tools.build:gradle:7.0.0-alpha14")
-  implementation("com.google.dagger:hilt-android-gradle-plugin:2.35")
+  implementation("com.google.dagger:hilt-android-gradle-plugin:2.35.1")
   implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.32")
   implementation("com.google.devtools.ksp:symbol-processing-gradle-plugin:1.4.32-1.0.0-alpha08")
   implementation("com.github.zafarkhaja:java-semver:0.9.0")

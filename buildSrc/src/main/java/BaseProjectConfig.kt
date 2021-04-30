@@ -78,7 +78,7 @@ internal fun BaseAppModuleExtension.configureAndroidApplicationOptions(project: 
   buildTypes {
     named("release") {
       isMinifyEnabled = !minifySwitch.isPresent
-      setProguardFiles(listOf("proguard-android-optimize.txt", "proguard-rules.pro"))
+      proguardFiles("proguard-android-optimize.txt", "proguard-rules.pro")
     }
     named("debug") {
       applicationIdSuffix = ".debug"
@@ -94,8 +94,8 @@ internal fun TestedExtension.configureCommonAndroidOptions() {
   compileSdkVersion(30)
 
   defaultConfig {
-    minSdkVersion(23)
-    targetSdkVersion(30)
+    minSdk = 23
+    targetSdk = 23
   }
 
   packagingOptions.resources.excludes.addAll(

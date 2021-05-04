@@ -4,18 +4,12 @@ plugins {
   kotlin("kapt")
   id("dagger.hilt.android.plugin")
   id("org.jetbrains.compose")
-  id("shot")
   `versioning-plugin`
   `lobsters-plugin`
   `core-library-desugaring`
 }
 
-android {
-  defaultConfig {
-    applicationId = "dev.msfjarvis.lobsters"
-    testInstrumentationRunner = "com.karumi.shot.ShotTestRunner"
-  }
-}
+android { defaultConfig { applicationId = "dev.msfjarvis.lobsters" } }
 
 dependencies {
   kapt(libs.androidx.hilt.daggerCompiler)

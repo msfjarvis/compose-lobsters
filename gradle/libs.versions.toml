@@ -21,7 +21,6 @@ hiltGradlePlugin = { module = "com.google.dagger:hilt-android-gradle-plugin", ve
 jsemverGradlePlugin = "com.github.zafarkhaja:java-semver:0.9.0"
 kotlinGradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 kspGradlePlugin = { module = "com.google.devtools.ksp:symbol-processing-gradle-plugin", version.ref = "ksp" }
-shotGradlePlugin = "com.karumi:shot:5.10.3"
 spotlessGradlePlugin = "com.diffplug.spotless:spotless-plugin-gradle:5.12.4"
 sqldelightGradlePlugin = { module = "com.squareup.sqldelight:gradle-plugin", version.ref = "sqldelight" }
 

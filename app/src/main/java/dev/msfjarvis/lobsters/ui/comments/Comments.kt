@@ -1,5 +1,12 @@
 package dev.msfjarvis.lobsters.ui.comments
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.FastOutLinearInEasing
+import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -25,7 +32,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.msfjarvis.lobsters.R
@@ -39,6 +50,10 @@ import dev.msfjarvis.lobsters.util.toNormalizedHtml
 import dev.msfjarvis.lobsters.utils.Strings
 import dev.msfjarvis.lobsters.utils.get
 
+private const val ScrollDelta = 50
+private const val AnimationDuration = 100
+
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 private fun CommentsPageInternal(
   details: LobstersPostDetails,
@@ -46,18 +61,55 @@ private fun CommentsPageInternal(
   modifier: Modifier = Modifier,
 ) {
   val urlLauncher = LocalUrlLauncher.current
+  var isFabVisible by remember { mutableStateOf(true) }
+
+  val nestedScrollConnection = remember {
+    object : NestedScrollConnection {
+      override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
+        val delta = available.y
+
+        if (delta > ScrollDelta) {
+          isFabVisible = true
+        } else if (delta < -ScrollDelta) {
+          isFabVisible = false
+        }
+
+        // We didn't consume any offset here so return Offset.Zero
+        return Offset.Zero
+      }
+    }
+  }
+
   Scaffold(
     modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding()),
     floatingActionButton = {
-      FloatingActionButton(onClick = { urlLauncher.launch(details.commentsUrl) }) {
-        IconResource(
-          resourceId = R.drawable.ic_reply_24dp,
-          contentDescription = Strings.ReplyButtonContentDescription.get()
-        )
+      AnimatedVisibility(
+        visible = isFabVisible,
+        enter =
+          slideInVertically(
+            // Enters by sliding up from offset 0 to fullHeight.
+            initialOffsetY = { fullHeight -> fullHeight },
+            animationSpec =
+              tween(durationMillis = AnimationDuration, easing = LinearOutSlowInEasing),
+          ),
+        exit =
+          slideOutVertically(
+            // Exits by sliding up from offset 0 to -fullHeight.
+            targetOffsetY = { fullHeight -> fullHeight },
+            animationSpec =
+              tween(durationMillis = AnimationDuration, easing = FastOutLinearInEasing),
+          )
+      ) {
+        FloatingActionButton(onClick = { urlLauncher.launch(details.commentsUrl) }) {
+          IconResource(
+            resourceId = R.drawable.ic_reply_24dp,
+            contentDescription = Strings.ReplyButtonContentDescription.get()
+          )
+        }
       }
     }
   ) {
-    LazyColumn(Modifier.then(modifier)) {
+    LazyColumn(Modifier.nestedScroll(nestedScrollConnection).then(modifier)) {
       item { CommentsHeader(postDetails = details) }
 
       item { Spacer(modifier = Modifier.height(8.dp)) }

@@ -50,6 +50,9 @@ import dev.msfjarvis.lobsters.util.toNormalizedHtml
 import dev.msfjarvis.lobsters.utils.Strings
 import dev.msfjarvis.lobsters.utils.get
 
+private const val ScrollDelta = 50
+private const val AnimationDuration = 100
+
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 private fun CommentsPageInternal(
@@ -65,10 +68,9 @@ private fun CommentsPageInternal(
       override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
         val delta = available.y
 
-        // TODO: use a const for delta
-        if (delta > 50) {
+        if (delta > ScrollDelta) {
           isFabVisible = true
-        } else if (delta < -50) {
+        } else if (delta < -ScrollDelta) {
           isFabVisible = false
         }
 
@@ -87,13 +89,15 @@ private fun CommentsPageInternal(
           slideInVertically(
             // Enters by sliding up from offset 0 to fullHeight.
             initialOffsetY = { fullHeight -> fullHeight },
-            animationSpec = tween(durationMillis = 150, easing = LinearOutSlowInEasing)
+            animationSpec =
+              tween(durationMillis = AnimationDuration, easing = LinearOutSlowInEasing),
           ),
         exit =
           slideOutVertically(
             // Exits by sliding up from offset 0 to -fullHeight.
             targetOffsetY = { fullHeight -> fullHeight },
-            animationSpec = tween(durationMillis = 250, easing = FastOutLinearInEasing)
+            animationSpec =
+              tween(durationMillis = AnimationDuration, easing = FastOutLinearInEasing),
           )
       ) {
         FloatingActionButton(onClick = { urlLauncher.launch(details.commentsUrl) }) {
@@ -117,7 +121,6 @@ private fun CommentsPageInternal(
   }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 @Suppress("UNCHECKED_CAST")
 @Composable
 fun CommentsPage(

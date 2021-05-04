@@ -32,5 +32,5 @@ dependencies {
   implementation("com.karumi:shot:5.10.3")
   implementation("com.diffplug.spotless:spotless-plugin-gradle:5.12.4")
   implementation("com.squareup.sqldelight:gradle-plugin:1.5.0")
-  implementation("org.jetbrains.compose:compose-gradle-plugin:0.4.0-build185")
+  implementation("org.jetbrains.compose:compose-gradle-plugin:0.4.0-build187")
 }

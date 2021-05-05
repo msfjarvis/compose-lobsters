@@ -95,7 +95,7 @@ internal fun TestedExtension.configureCommonAndroidOptions() {
 
   defaultConfig {
     minSdk = 23
-    targetSdk = 23
+    targetSdk = 30
   }
 
   packagingOptions.resources.excludes.addAll(

@@ -11,8 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import dev.msfjarvis.lobsters.data.local.SavedPost
 import dev.msfjarvis.lobsters.model.LobstersPost
 import dev.msfjarvis.lobsters.ui.urllauncher.LocalUrlLauncher
@@ -26,43 +24,33 @@ fun NetworkPosts(
   modifier: Modifier = Modifier,
   isPostSaved: (String) -> Boolean,
   saveAction: (SavedPost) -> Unit,
-  refreshAction: () -> Unit,
   viewComments: (String) -> Unit,
 ) {
   val urlLauncher = LocalUrlLauncher.current
   val isRefreshing = posts.loadState.refresh == LoadState.Loading
 
-  SwipeRefresh(
-    state = rememberSwipeRefreshState(isRefreshing),
-    onRefresh = {
-      if (!isRefreshing) {
-        refreshAction()
-      }
-    },
-  ) {
-    if (isRefreshing) {
-      LazyColumn { items(15) { LoadingLobstersItem() } }
-    } else {
-      LazyColumn(
-        state = listState,
-        modifier = Modifier.then(modifier),
-      ) {
-        items(posts) { item ->
-          if (item != null) {
-            @Suppress("NAME_SHADOWING") val item = item.toDbModel()
-            var isSaved by remember(item.shortId) { mutableStateOf(isPostSaved(item.shortId)) }
+  if (isRefreshing) {
+    LazyColumn { items(15) { LoadingLobstersItem() } }
+  } else {
+    LazyColumn(
+      state = listState,
+      modifier = Modifier.then(modifier),
+    ) {
+      items(posts) { item ->
+        if (item != null) {
+          @Suppress("NAME_SHADOWING") val item = item.toDbModel()
+          var isSaved by remember(item.shortId) { mutableStateOf(isPostSaved(item.shortId)) }
 
-            LobstersItem(
-              post = item,
-              isSaved = isSaved,
-              viewPost = { urlLauncher.launch(item.url.ifEmpty { item.commentsUrl }) },
-              viewComments = viewComments,
-              toggleSave = {
-                isSaved = isSaved.not()
-                saveAction.invoke(item)
-              },
-            )
-          }
+          LobstersItem(
+            post = item,
+            isSaved = isSaved,
+            viewPost = { urlLauncher.launch(item.url.ifEmpty { item.commentsUrl }) },
+            viewComments = viewComments,
+            toggleSave = {
+              isSaved = isSaved.not()
+              saveAction.invoke(item)
+            },
+          )
         }
       }
     }

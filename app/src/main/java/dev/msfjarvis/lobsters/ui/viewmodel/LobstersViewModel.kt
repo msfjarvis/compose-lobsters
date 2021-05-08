@@ -68,14 +68,6 @@ constructor(
     return lobstersRepository.fetchPostDetails(postId)
   }
 
-  fun reloadHottestPosts() {
-    hottestPostsPagingSource?.invalidate()
-  }
-
-  fun reloadNewestPosts() {
-    newestPostsPagingSource?.invalidate()
-  }
-
   fun toggleSave(post: SavedPost) {
     viewModelScope.launch {
       val isSaved = lobstersRepository.isPostSaved(post.shortId)

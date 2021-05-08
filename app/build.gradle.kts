@@ -31,7 +31,6 @@ dependencies {
   implementation(libs.kotlin.coroutines.android)
   implementation(libs.thirdparty.accompanist.coil)
   implementation(libs.thirdparty.accompanist.flow)
-  implementation(libs.thirdparty.accompanist.swiperefresh)
   implementation(libs.thirdparty.moshi.lib)
   implementation(libs.thirdparty.moshix.metadatareflect)
   implementation(libs.thirdparty.retrofit.moshiConverter)

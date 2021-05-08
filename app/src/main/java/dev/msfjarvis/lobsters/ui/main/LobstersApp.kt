@@ -96,7 +96,6 @@ fun LobstersApp() {
           modifier = Modifier.padding(bottom = innerPadding.calculateBottomPadding()),
           isPostSaved = viewModel::isPostSaved,
           saveAction = viewModel::toggleSave,
-          refreshAction = viewModel::reloadHottestPosts,
           viewComments = { navController.navigate("comments/$it") },
         )
       }
@@ -107,7 +106,6 @@ fun LobstersApp() {
           modifier = Modifier.padding(bottom = innerPadding.calculateBottomPadding()),
           isPostSaved = viewModel::isPostSaved,
           saveAction = viewModel::toggleSave,
-          refreshAction = viewModel::reloadNewestPosts,
           viewComments = { navController.navigate("comments/$it") },
         )
       }

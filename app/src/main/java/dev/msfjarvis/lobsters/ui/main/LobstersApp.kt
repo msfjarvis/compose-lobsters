@@ -24,6 +24,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navDeepLink
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import dev.msfjarvis.lobsters.ui.comments.CommentsPage
@@ -89,7 +90,12 @@ fun LobstersApp() {
     },
   ) { innerPadding ->
     NavHost(navController, startDestination = Destination.startDestination.route) {
-      composable(Destination.Hottest.route) {
+      val uri = "https://lobste.rs"
+
+      composable(
+        route = Destination.Hottest.route,
+        deepLinks = listOf(navDeepLink { uriPattern = uri }, navDeepLink { uriPattern = "$uri/" })
+      ) {
         NetworkPosts(
           posts = hottestPosts,
           listState = hottestPostsListState,
@@ -99,7 +105,14 @@ fun LobstersApp() {
           viewComments = { navController.navigate("comments/$it") },
         )
       }
-      composable(Destination.Newest.route) {
+      composable(
+        route = Destination.Newest.route,
+        deepLinks =
+          listOf(
+            navDeepLink { uriPattern = "$uri/recent" },
+            navDeepLink { uriPattern = "$uri/recent/" }
+          )
+      ) {
         NetworkPosts(
           posts = newestPosts,
           listState = newestPostsListState,
@@ -119,8 +132,13 @@ fun LobstersApp() {
         )
       }
       composable(
-        Destination.Comments.route,
-        listOf(navArgument("postId") { type = NavType.StringType }),
+        route = Destination.Comments.route,
+        arguments = listOf(navArgument("postId") { type = NavType.StringType }),
+        deepLinks =
+          listOf(
+            navDeepLink { uriPattern = "$uri/s/{postId}/.*" },
+            navDeepLink { uriPattern = "$uri/s/{postId}" }
+          )
       ) { backStackEntry ->
         CommentsPage(
           postId = requireNotNull(backStackEntry.arguments?.getString("postId")),

@@ -62,7 +62,17 @@
         <data
           android:host="lobste.rs"
           android:scheme="https"
-          android:pathPrefix="/s/" />
+          android:pathPattern="/s/......"/>
+
+        <data
+          android:host="lobste.rs"
+          android:scheme="https"
+          android:pathPattern="/s/....../"/>
+
+        <data
+          android:host="lobste.rs"
+          android:scheme="https"
+          android:pathPattern="/s/....../...*"/>
       </intent-filter>
     </activity>
     <activity

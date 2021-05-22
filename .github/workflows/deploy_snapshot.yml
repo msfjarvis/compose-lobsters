@@ -27,7 +27,7 @@ jobs:
     - name: Build release app
       uses: burrunan/gradle-cache-action@03c71a8ba93d670980695505f48f49daf43704a6
       with:
-        arguments: :app:assembleRelease
+        arguments: :app:assembleDebug
 
     - name: Clean secrets
       run: scripts/signing-cleanup.sh

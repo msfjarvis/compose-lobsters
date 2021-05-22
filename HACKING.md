@@ -15,3 +15,7 @@ The codebase is fairly simple, and the package structure follows [Buffer's](http
 - `:database`: Database layer implemented using SQLDelight to persist saved posts
 
 - `:desktop`: Proof-of-concept desktop client that needs significantly more love than it has received so far
+
+## Handling Compose dependencies
+
+The app currently uses JetBrains' [compose-jb](https://github.com/JetBrains/compose-jb) as the upstream for our builds of Compose, so each Compose-depending library we pull in must be added through the `composeDependency` helper rather than `implementation` directly.

@@ -17,10 +17,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
+import androidx.navigation.compose.KEY_ROUTE
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navArgument
+import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navDeepLink
 import androidx.paging.LoadState
@@ -49,7 +51,8 @@ fun LobstersApp() {
   val newestPostsListState = rememberLazyListState()
 
   val navBackStackEntry by navController.currentBackStackEntryAsState()
-  val currentRoute = navBackStackEntry?.destination?.route ?: Destination.startDestination.route
+  val currentRoute =
+    navBackStackEntry?.arguments?.getString(KEY_ROUTE) ?: Destination.startDestination.route
   val currentDestination = Destination.getDestinationFromRoute(currentRoute)
   val navigateToDestination: (destination: Destination) -> Unit = { destination ->
     navController.navigate(destination.route) { launchSingleTop = true }

@@ -19,4 +19,6 @@ include(":api")
 
 include(":common")
 
+include(":database")
+
 include(":desktop")

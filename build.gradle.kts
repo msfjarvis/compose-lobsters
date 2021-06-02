@@ -1,9 +1,8 @@
 buildscript {
   repositories {
-    gradlePluginPortal()
-    jcenter()
     google()
     mavenCentral()
+    gradlePluginPortal()
   }
   dependencies {
     classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.10")
@@ -18,21 +17,19 @@ version = "1.0"
 
 allprojects {
   repositories {
-    jcenter()
     mavenCentral()
     maven { url = uri("https://maven.pkg.jetbrains.space/public/p/compose/dev") }
+    google()
   }
   apply(plugin = "com.diffplug.spotless")
   configure<com.diffplug.gradle.spotless.SpotlessExtension> {
     kotlin {
       target("**/*.kt")
       targetExclude("**/build/**")
-      ktlint().userData(mapOf("indent_size" to "2", "continuation_indent_size" to "2"))
       ktfmt().googleStyle()
     }
     kotlinGradle {
       target("*.gradle.kts")
-      ktlint().userData(mapOf("indent_size" to "2", "continuation_indent_size" to "2"))
       ktfmt().googleStyle()
     }
     format("xml") {

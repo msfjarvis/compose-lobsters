@@ -26,8 +26,8 @@ kotlin {
     val commonTest by getting { dependencies { implementation(kotlin("test")) } }
     val androidMain by getting {
       dependencies {
-        api("androidx.appcompat:appcompat:1.3.0")
-        api("androidx.core:core-ktx:1.5.0")
+        api("androidx.appcompat:appcompat:1.4.0-alpha02")
+        api("androidx.core:core-ktx:1.6.0-beta02")
       }
     }
     val androidTest by getting { dependencies { implementation("junit:junit:4.13.2") } }

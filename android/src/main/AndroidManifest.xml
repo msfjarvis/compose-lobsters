@@ -5,6 +5,7 @@
 >
     <uses-permission android:name="android.permission.INTERNET" />
     <application
+        android:label="Claw"
         android:allowBackup="false"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"

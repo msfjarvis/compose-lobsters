@@ -6,12 +6,6 @@ plugins {
   id("com.android.library")
 }
 
-group = "dev.msfjarvis.claw"
-
-version = "1.0"
-
-repositories { google() }
-
 kotlin {
   android()
   jvm("desktop") { compilations.all { kotlinOptions.jvmTarget = "11" } }

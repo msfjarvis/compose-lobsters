@@ -1,7 +1,7 @@
-package dev.msfjarvis.lobsters.data.api
+package dev.msfjarvis.claw.api
 
 import com.squareup.moshi.Moshi
-import dev.msfjarvis.lobsters.util.TestUtils
+import dev.msfjarvis.claw.util.TestUtils
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue

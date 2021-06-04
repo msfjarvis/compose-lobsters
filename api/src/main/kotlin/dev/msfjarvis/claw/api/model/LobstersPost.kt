@@ -1,10 +1,10 @@
-package dev.msfjarvis.lobsters.model
+package dev.msfjarvis.claw.api.model
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-class LobstersPostDetails(
+class LobstersPost(
   @Json(name = "short_id") val shortId: String,
   @Json(name = "short_id_url") val shortIdUrl: String,
   @Json(name = "created_at") val createdAt: String,
@@ -17,5 +17,4 @@ class LobstersPostDetails(
   @Json(name = "comments_url") val commentsUrl: String,
   @Json(name = "submitter_user") val submitter: User,
   val tags: List<String>,
-  val comments: List<Comment>,
 )

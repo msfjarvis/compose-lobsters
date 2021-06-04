@@ -1,4 +1,4 @@
-package dev.msfjarvis.lobsters.util
+package dev.msfjarvis.claw.util
 
 import java.io.File
 

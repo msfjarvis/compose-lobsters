@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.IconToggleButton
 import androidx.compose.material.MaterialTheme
@@ -27,6 +28,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.flowlayout.FlowRow
+import dev.msfjarvis.claw.common.res.commentIcon
+import dev.msfjarvis.claw.common.res.heartBorderIcon
+import dev.msfjarvis.claw.common.res.heartIcon
 import dev.msfjarvis.claw.common.theme.titleColor
 import dev.msfjarvis.lobsters.data.local.SavedPost
 import io.kamel.image.KamelImage
@@ -160,12 +164,11 @@ fun SaveButton(
     modifier = Modifier.requiredSize(32.dp).then(modifier),
   ) {
     Crossfade(targetState = isSaved) { saved ->
-      /*IconResource(
-        resourceId = if (saved) R.drawable.ic_favorite_24px else R.drawable.ic_favorite_border_24px,
+      Icon(
+        painter = if (saved) heartIcon else heartBorderIcon,
         tint = MaterialTheme.colors.secondary,
-        contentDescription =
-        if (saved) Strings.RemoveFromSavedPosts.get() else Strings.AddToSavedPosts.get(),
-      )*/
+        contentDescription = if (saved) "Remove from saved posts" else "Add to saved posts",
+      )
     }
   }
 }
@@ -179,11 +182,11 @@ fun CommentsButton(
     onClick = onClick,
     modifier = Modifier.requiredSize(32.dp).then(modifier),
   ) {
-    /*IconResource(
-      resourceId = R.drawable.ic_insert_comment_24px,
+    Icon(
+      painter = commentIcon,
       tint = MaterialTheme.colors.secondary,
-      contentDescription = Strings.OpenComments.get(),
-    )*/
+      contentDescription = "Open comments",
+    )
   }
 }
 

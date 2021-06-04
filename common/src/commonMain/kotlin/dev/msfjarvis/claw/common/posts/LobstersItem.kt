@@ -83,9 +83,9 @@ fun LobstersItem(
         )
       }
       SubmitterName(
-        text = "Submitted by %s".format(post.submitterName),
+        text = "Submitted by ${post.submitterName}",
         avatarUrl = post.submitterAvatarUrl,
-        contentDescription = "Submitted by %s".format(post.submitterName),
+        contentDescription = "Submitted by ${post.submitterName}",
       )
     }
   }

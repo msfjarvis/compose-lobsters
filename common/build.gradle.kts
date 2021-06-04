@@ -21,16 +21,13 @@ kotlin {
         api(compose.runtime)
         api(compose.foundation)
         api(compose.material)
+        api(projects.database)
+        implementation("com.alialbaali.kamel:kamel-image:0.2.1")
       }
     }
     val commonTest by getting { dependencies { implementation(kotlin("test")) } }
-    val androidMain by getting {
-      dependencies {
-        api("androidx.appcompat:appcompat:1.4.0-alpha02")
-        api("androidx.core:core-ktx:1.6.0-beta02")
-      }
-    }
-    val androidTest by getting { dependencies { implementation("junit:junit:4.13.2") } }
+    val androidMain by getting
+    val androidTest by getting
     val desktopMain by getting
     val desktopTest by getting
   }

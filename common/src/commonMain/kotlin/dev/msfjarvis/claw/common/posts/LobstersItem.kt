@@ -22,13 +22,25 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.flowlayout.FlowRow
+import dev.msfjarvis.claw.common.theme.titleColor
 import dev.msfjarvis.lobsters.data.local.SavedPost
 import io.kamel.image.KamelImage
 import io.kamel.image.lazyImageResource
+
+val TEST_POST =
+  SavedPost(
+    shortId = "zqyydb",
+    title = "k2k20 hackathon report: Bob Beck on LibreSSL progress",
+    url = "https://undeadly.org/cgi?action=article;sid=20200921105847",
+    createdAt = "2020-09-21T07:11:14.000-05:00",
+    commentsUrl = "https://lobste.rs/s/zqyydb/k2k20_hackathon_report_bob_beck_on",
+    submitterName = "Vigdis",
+    submitterAvatarUrl = "/404.html",
+    tags = listOf("openbsd", "linux", "containers", "hack the planet", "no thanks"),
+  )
 
 @Composable
 fun LobstersItem(
@@ -84,7 +96,7 @@ fun PostTitle(
 ) {
   Text(
     text = title,
-    color = Color.Black,
+    color = titleColor,
     fontWeight = FontWeight.Bold,
     modifier = Modifier.then(modifier),
   )

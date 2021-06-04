@@ -14,7 +14,9 @@ kotlin {
       dependencies { implementation(libs.thirdparty.sqldelight.androidDriver) }
     }
     val androidTest by getting
-    val desktopMain by getting { dependencies { implementation(libs.thirdparty.sqldelight.jvmDriver) } }
+    val desktopMain by getting {
+      dependencies { implementation(libs.thirdparty.sqldelight.jvmDriver) }
+    }
     val desktopTest by getting {
       dependencies {
         implementation(libs.kotlin.coroutines.core)

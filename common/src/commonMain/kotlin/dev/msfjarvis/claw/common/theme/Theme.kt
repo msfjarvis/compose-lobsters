@@ -1,6 +1,5 @@
-package dev.msfjarvis.claw.android.theme
+package dev.msfjarvis.claw.common.theme
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
@@ -34,9 +33,9 @@ val darkColors =
   )
 
 @Composable
-fun LobstersTheme(children: @Composable () -> Unit) {
+fun LobstersTheme(darkTheme: Boolean, children: @Composable () -> Unit) {
   MaterialTheme(
-    colors = if (isSystemInDarkTheme()) darkColors else lightColors,
+    colors = if (darkTheme) darkColors else lightColors,
     content = children,
   )
 }

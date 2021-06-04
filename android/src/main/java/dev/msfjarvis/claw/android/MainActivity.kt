@@ -3,6 +3,7 @@ package dev.msfjarvis.claw.android
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import dev.msfjarvis.claw.android.theme.LobstersTheme
 import dev.msfjarvis.claw.common.posts.LobstersItem
 import dev.msfjarvis.lobsters.data.local.SavedPost
 
@@ -22,13 +23,15 @@ class MainActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContent {
-      LobstersItem(
-        post = TEST_POST,
-        isSaved = false,
-        {},
-        {},
-        {},
-      )
+      LobstersTheme {
+        LobstersItem(
+          post = TEST_POST,
+          isSaved = false,
+          {},
+          {},
+          {},
+        )
+      }
     }
   }
 }

@@ -4,16 +4,12 @@ plugins {
   kotlin("android")
 }
 
-group = "dev.msfjarvis.claw"
-
-version = "1.0"
-
-repositories { google() }
-
 dependencies {
+  implementation(projects.api)
   implementation(projects.common)
-  implementation("androidx.appcompat:appcompat:1.4.0-alpha02")
   implementation("androidx.activity:activity-compose:1.3.0-beta01")
+  implementation("androidx.appcompat:appcompat:1.4.0-alpha02")
+  implementation("androidx.paging:paging-compose:1.0.0-alpha10")
 }
 
 android {

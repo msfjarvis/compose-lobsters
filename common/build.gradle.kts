@@ -26,7 +26,7 @@ kotlin {
       }
     }
     val commonTest by getting { dependencies { implementation(kotlin("test")) } }
-    val androidMain by getting
+    val androidMain by getting { dependencies { implementation(libs.androidx.browser) } }
     val androidTest by getting
     val desktopMain by getting
     val desktopTest by getting

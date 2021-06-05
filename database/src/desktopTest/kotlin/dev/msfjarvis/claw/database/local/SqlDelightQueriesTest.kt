@@ -1,8 +1,8 @@
-package dev.msfjarvis.lobsters.data.local
+package dev.msfjarvis.claw.database.local
 
 import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver
-import dev.msfjarvis.lobsters.data.model.TagsAdapter
-import dev.msfjarvis.lobsters.database.LobstersDatabase
+import dev.msfjarvis.claw.database.LobstersDatabase
+import dev.msfjarvis.claw.database.model.TagsAdapter
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlinx.coroutines.runBlocking

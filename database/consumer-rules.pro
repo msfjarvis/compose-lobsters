@@ -1,1 +1,1 @@
--keep class dev.msfjarvis.lobsters.model.** { *; }
+-keep class dev.msfjarvis.claw.database.model.** { *; }

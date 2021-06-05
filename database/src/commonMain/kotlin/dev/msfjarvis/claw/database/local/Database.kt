@@ -1,8 +1,8 @@
-package dev.msfjarvis.lobsters.data.local
+package dev.msfjarvis.claw.database.local
 
 import com.squareup.sqldelight.db.SqlDriver
-import dev.msfjarvis.lobsters.data.model.TagsAdapter
-import dev.msfjarvis.lobsters.database.LobstersDatabase
+import dev.msfjarvis.claw.database.LobstersDatabase
+import dev.msfjarvis.claw.database.model.TagsAdapter
 
 internal const val LobstersDatabaseName = "SavedPosts.db"
 

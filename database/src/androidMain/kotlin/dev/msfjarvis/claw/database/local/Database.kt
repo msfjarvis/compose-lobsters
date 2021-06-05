@@ -1,9 +1,9 @@
-package dev.msfjarvis.lobsters.data.local
+package dev.msfjarvis.claw.database.local
 
 import android.content.Context
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import com.squareup.sqldelight.db.SqlDriver
-import dev.msfjarvis.lobsters.database.LobstersDatabase
+import dev.msfjarvis.claw.database.LobstersDatabase
 
 actual class DriverFactory(private val context: Context) {
   actual fun createDriver(): SqlDriver {

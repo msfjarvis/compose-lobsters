@@ -32,7 +32,7 @@ import dev.msfjarvis.claw.common.res.commentIcon
 import dev.msfjarvis.claw.common.res.heartBorderIcon
 import dev.msfjarvis.claw.common.res.heartIcon
 import dev.msfjarvis.claw.common.theme.titleColor
-import dev.msfjarvis.lobsters.data.local.SavedPost
+import dev.msfjarvis.claw.database.local.SavedPost
 import io.kamel.image.KamelImage
 import io.kamel.image.lazyImageResource
 

@@ -6,7 +6,13 @@ plugins {
 
 kotlin {
   android()
-  jvm("desktop") { compilations.all { kotlinOptions.jvmTarget = "11" } }
+  jvm("desktop") {
+    compilations.all {
+      kotlinOptions.jvmTarget = "11"
+      kotlinOptions.freeCompilerArgs =
+        kotlinOptions.freeCompilerArgs + listOf("-Xopt-in=kotlin.RequiresOptIn")
+    }
+  }
   sourceSets {
     // Workaround for:
     //

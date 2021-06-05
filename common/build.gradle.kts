@@ -10,6 +10,17 @@ kotlin {
   android()
   jvm("desktop") { compilations.all { kotlinOptions.jvmTarget = "11" } }
   sourceSets {
+    // Workaround for:
+    //
+    // The Kotlin source set androidAndroidTestRelease was configured but not added to any
+    // Kotlin compilation. You can add a source set to a target's compilation by connecting it
+    // with the compilation's default source set using 'dependsOn'.
+    // See
+    // https://kotlinlang.org/docs/reference/building-mpp-with-gradle.html#connecting-source-sets
+    //
+    // This workaround includes `dependsOn(androidAndroidTestRelease)` in the `androidTest`
+    // sourceSet.
+    val androidAndroidTestRelease by getting
     val commonMain by getting {
       dependencies {
         api(compose.runtime)
@@ -21,7 +32,7 @@ kotlin {
     }
     val commonTest by getting { dependencies { implementation(kotlin("test")) } }
     val androidMain by getting { dependencies { implementation(libs.androidx.browser) } }
-    val androidTest by getting
+    val androidTest by getting { dependsOn(androidAndroidTestRelease) }
     val desktopMain by getting
     val desktopTest by getting
   }

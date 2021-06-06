@@ -27,13 +27,9 @@ kotlin {
     val androidAndroidTestRelease by getting
     val commonMain by getting
     val commonTest by getting
-    val androidMain by getting {
-      dependencies { implementation(libs.thirdparty.sqldelight.androidDriver) }
-    }
+    val androidMain by getting { dependencies { implementation(libs.sqldelight.androidDriver) } }
     val androidTest by getting { dependsOn(androidAndroidTestRelease) }
-    val desktopMain by getting {
-      dependencies { implementation(libs.thirdparty.sqldelight.jvmDriver) }
-    }
+    val desktopMain by getting { dependencies { implementation(libs.sqldelight.jvmDriver) } }
     val desktopTest by getting {
       dependencies {
         implementation(libs.kotlin.coroutines.core)

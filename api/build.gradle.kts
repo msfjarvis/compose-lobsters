@@ -6,10 +6,10 @@ plugins {
 }
 
 dependencies {
-  api(libs.thirdparty.retrofit.lib)
-  ksp(libs.thirdparty.moshix.ksp)
-  implementation(libs.thirdparty.moshi.lib)
-  implementation(libs.thirdparty.retrofit.moshiConverter) { exclude(group = "com.squareup.moshi") }
+  api(libs.retrofit.lib)
+  ksp(libs.moshix.ksp)
+  implementation(libs.moshi.lib)
+  implementation(libs.retrofit.moshiConverter) { exclude(group = "com.squareup.moshi") }
   testImplementation(libs.kotlin.coroutines.core)
   testImplementation(libs.testing.kotlintest.junit)
   testImplementation(libs.testing.mockWebServer)

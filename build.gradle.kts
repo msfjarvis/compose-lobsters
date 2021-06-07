@@ -8,6 +8,7 @@ buildscript {
     classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.10")
     classpath("com.android.tools.build:gradle:4.1.1")
     classpath("com.diffplug.spotless:spotless-plugin-gradle:5.12.5")
+    classpath("com.google.dagger:hilt-android-gradle-plugin:2.36")
   }
 }
 

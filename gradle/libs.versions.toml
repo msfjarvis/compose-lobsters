@@ -1,6 +1,5 @@
 [versions]
 coroutines = "1.5.0"
-kotlin = "1.5.10"
 moshix = "0.11.2"
 retrofit = "2.9.0"
 sqldelight = "1.5.0"
@@ -26,5 +25,4 @@ retrofit-moshiConverter = { module = "com.squareup.retrofit2:converter-moshi", v
 sqldelight-jvmDriver = { module = "com.squareup.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 sqldelight-androidDriver = { module = "com.squareup.sqldelight:android-driver", version.ref = "sqldelight" }
 
-testing-kotlintest-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 testing-mockWebServer = "com.squareup.okhttp3:mockwebserver3-junit4:5.0.0-alpha.2"

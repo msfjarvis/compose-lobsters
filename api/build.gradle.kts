@@ -11,7 +11,7 @@ dependencies {
   implementation(libs.moshi.lib)
   implementation(libs.retrofit.moshiConverter) { exclude(group = "com.squareup.moshi") }
   testImplementation(libs.kotlin.coroutines.core)
-  testImplementation(libs.testing.kotlintest.junit)
+  testImplementation(kotlin("test-junit"))
   testImplementation(libs.testing.mockWebServer)
 }
 

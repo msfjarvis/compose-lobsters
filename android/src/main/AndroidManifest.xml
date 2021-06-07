@@ -8,6 +8,7 @@
     android:label="Claw"
     android:allowBackup="false"
     android:supportsRtl="true"
+    android:name=".ClawApplication"
     android:theme="@style/Theme.AppCompat.Light.NoActionBar"
   >
             <activity android:name=".MainActivity">

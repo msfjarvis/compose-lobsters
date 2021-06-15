@@ -12,8 +12,10 @@ import androidx.compose.ui.Modifier
 import dev.msfjarvis.claw.common.posts.LobstersItem
 import dev.msfjarvis.claw.common.posts.TEST_POST
 import dev.msfjarvis.claw.common.theme.LobstersTheme
+import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 
 fun main() = Window {
+  val urlLauncher = UrlLauncher()
   LobstersTheme(darkTheme = false) {
     Box(
       modifier = Modifier.fillMaxSize(),
@@ -27,9 +29,9 @@ fun main() = Window {
             LobstersItem(
               post = TEST_POST,
               isSaved = false,
-              {},
-              {},
-              {},
+              viewPost = { urlLauncher.launch(TEST_POST.url.ifEmpty { TEST_POST.commentsUrl }) },
+              viewComments = { urlLauncher.launch(TEST_POST.commentsUrl) },
+              toggleSave = {},
             )
           }
         }

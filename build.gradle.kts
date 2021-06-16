@@ -43,7 +43,7 @@ allprojects {
 }
 
 tasks.withType<Wrapper> {
-  gradleVersion = "7.0.2"
+  gradleVersion = "7.1"
   distributionType = Wrapper.DistributionType.ALL
-  distributionSha256Sum = "13bf8d3cf8eeeb5770d19741a59bde9bd966dd78d17f1bbad787a05ef19d1c2d"
+  distributionSha256Sum = "a9e356a21595348b6f04b024ed0b08ac8aea6b2ac37e6c0ef58e51549cd7b9cb"
 }

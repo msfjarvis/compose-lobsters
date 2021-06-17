@@ -3,7 +3,7 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
   kotlin("multiplatform")
-  id("org.jetbrains.compose") version "0.4.0"
+  id("org.jetbrains.compose") version "0.5.0-build225"
 }
 
 group = "dev.msfjarvis.claw"

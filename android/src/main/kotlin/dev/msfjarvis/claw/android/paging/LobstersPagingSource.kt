@@ -3,6 +3,8 @@ package dev.msfjarvis.claw.android.paging
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import dev.msfjarvis.claw.api.model.LobstersPost
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class LobstersPagingSource(
   private val getMorePosts: suspend (Int) -> List<LobstersPost>,
@@ -11,7 +13,7 @@ class LobstersPagingSource(
   override suspend fun load(params: LoadParams<Int>): LoadResult<Int, LobstersPost> {
     return try {
       val page = params.key ?: 1
-      val posts = getMorePosts(page)
+      val posts = withContext(Dispatchers.IO) { getMorePosts(page) }
 
       LoadResult.Page(
         data = posts,

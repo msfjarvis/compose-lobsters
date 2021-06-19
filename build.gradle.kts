@@ -3,12 +3,17 @@ buildscript {
     google()
     mavenCentral()
     gradlePluginPortal()
+    maven {
+      url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+      content { includeModule("me.amanjeet.daggertrack", "dagger-track") }
+    }
   }
   dependencies {
     classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.10")
     classpath("com.android.tools.build:gradle:7.1.0-alpha01")
     classpath("com.diffplug.spotless:spotless-plugin-gradle:5.12.5")
     classpath("com.google.dagger:hilt-android-gradle-plugin:2.37")
+    classpath("me.amanjeet.daggertrack:dagger-track:1.0.6-SNAPSHOT")
   }
 }
 

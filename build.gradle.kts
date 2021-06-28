@@ -32,11 +32,11 @@ allprojects {
     kotlin {
       target("**/*.kt")
       targetExclude("**/build/**")
-      ktfmt("0.25").googleStyle()
+      ktfmt("0.27").googleStyle()
     }
     kotlinGradle {
       target("*.gradle.kts")
-      ktfmt("0.25").googleStyle()
+      ktfmt("0.27").googleStyle()
     }
     format("xml") {
       target("**/*.xml")

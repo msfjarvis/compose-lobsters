@@ -53,7 +53,12 @@ android {
     }
     buildTypes.all { signingConfig = signingConfigs.getByName("release") }
   }
-  buildTypes { getByName("release") { isMinifyEnabled = false } }
+  buildTypes {
+    getByName("release") {
+      isMinifyEnabled = true
+      proguardFiles("proguard-android-optimize.txt", "proguard-rules.pro")
+    }
+  }
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8

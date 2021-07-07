@@ -7,12 +7,17 @@ buildscript {
       url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
       content { includeModule("me.amanjeet.daggertrack", "dagger-track") }
     }
+    maven {
+      url = uri("https://storage.googleapis.com/r8-releases/raw")
+      content { includeModule("com.android.tools", "r8") }
+    }
   }
   dependencies {
     classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.10")
     classpath("com.android.tools.build:gradle:7.1.0-alpha02")
     classpath("com.diffplug.spotless:spotless-plugin-gradle:5.14.0")
     classpath("com.google.dagger:hilt-android-gradle-plugin:2.37")
+    classpath("com.android.tools:r8:3.1.13-dev")
     classpath("me.amanjeet.daggertrack:dagger-track:1.0.6-SNAPSHOT")
   }
 }

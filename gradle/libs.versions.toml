@@ -19,7 +19,6 @@ androidx-paging-compose = "androidx.paging:paging-compose:1.0.0-alpha12"
 dagger-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 dagger-hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 dagger-hilt-core = { module = "com.google.dagger:hilt-core", version.ref = "hilt" }
-dagger-track-clocks = "me.amanjeet.daggertrack:dagger-track-clocks:1.0.6-SNAPSHOT"
 
 moshi-lib = "com.squareup.moshi:moshi:1.12.0"
 moshix-ksp = { module = "dev.zacsweers.moshix:moshi-ksp", version.ref = "moshix" }

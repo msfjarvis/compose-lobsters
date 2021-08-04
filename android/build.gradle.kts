@@ -3,17 +3,9 @@ import java.util.Properties
 plugins {
   id("org.jetbrains.compose") version "1.0.0-alpha2"
   id("com.android.application")
-  id("me.amanjeet.daggertrack")
   kotlin("android")
   kotlin("kapt")
   id("dagger.hilt.android.plugin")
-}
-
-repositories {
-  maven {
-    url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
-    content { includeModule("me.amanjeet.daggertrack", "dagger-track-clocks") }
-  }
 }
 
 dependencies {
@@ -24,7 +16,6 @@ dependencies {
   implementation(libs.androidx.appcompat)
   implementation(libs.androidx.paging.compose)
   implementation(libs.dagger.hilt.android)
-  implementation(libs.dagger.track.clocks)
   implementation(libs.retrofit.moshiConverter)
   implementation(libs.moshix.metadatareflect)
 }
@@ -62,8 +53,5 @@ android {
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
-  }
-  configure<me.amanjeet.daggertrack.DaggerTrackPlugin.DaggerTrackExtension> {
-    applyFor = arrayOf("debug")
   }
 }

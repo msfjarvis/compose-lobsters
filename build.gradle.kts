@@ -13,7 +13,7 @@ buildscript {
     classpath("com.android.tools.build:gradle:7.1.0-alpha06")
     classpath("com.diffplug.spotless:spotless-plugin-gradle:5.14.2")
     classpath("com.google.dagger:hilt-android-gradle-plugin:2.38.1")
-    classpath("com.android.tools:r8:3.1.13-dev")
+    classpath("com.android.tools:r8:3.1.15-dev")
   }
 }
 

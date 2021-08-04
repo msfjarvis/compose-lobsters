@@ -1,7 +1,7 @@
 import java.util.Properties
 
 plugins {
-  id("org.jetbrains.compose") version "0.5.0-build235"
+  id("org.jetbrains.compose") version "1.0.0-alpha2"
   id("com.android.application")
   id("me.amanjeet.daggertrack")
   kotlin("android")

@@ -13,10 +13,10 @@ buildscript {
     }
   }
   dependencies {
-    classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.10")
-    classpath("com.android.tools.build:gradle:7.1.0-alpha03")
-    classpath("com.diffplug.spotless:spotless-plugin-gradle:5.14.0")
-    classpath("com.google.dagger:hilt-android-gradle-plugin:2.37")
+    classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.21")
+    classpath("com.android.tools.build:gradle:7.1.0-alpha06")
+    classpath("com.diffplug.spotless:spotless-plugin-gradle:5.14.2")
+    classpath("com.google.dagger:hilt-android-gradle-plugin:2.38.1")
     classpath("com.android.tools:r8:3.1.13-dev")
     classpath("me.amanjeet.daggertrack:dagger-track:1.0.6-SNAPSHOT")
   }
@@ -53,7 +53,6 @@ allprojects {
 }
 
 tasks.withType<Wrapper> {
-  gradleVersion = "7.1"
-  distributionType = Wrapper.DistributionType.ALL
-  distributionSha256Sum = "a9e356a21595348b6f04b024ed0b08ac8aea6b2ac37e6c0ef58e51549cd7b9cb"
+  gradleVersion = "7.1.1"
+  distributionSha256Sum = "9bb8bc05f562f2d42bdf1ba8db62f6b6fa1c3bf6c392228802cc7cb0578fe7e0"
 }

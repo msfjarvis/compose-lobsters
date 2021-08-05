@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 buildscript {
   repositories {
     google()
@@ -43,6 +45,13 @@ allprojects {
       targetExclude("**/build/**", ".idea/**")
       prettier(mapOf("prettier" to "2.0.5", "@prettier/plugin-xml" to "0.13.0"))
         .config(mapOf("parser" to "xml", "tabWidth" to 2))
+    }
+  }
+  tasks.withType<KotlinCompile>().configureEach {
+    kotlinOptions {
+      jvmTarget = JavaVersion.VERSION_11.toString()
+      languageVersion = "1.5"
+      freeCompilerArgs = freeCompilerArgs + listOf("-Xopt-in=kotlin.RequiresOptIn")
     }
   }
 }

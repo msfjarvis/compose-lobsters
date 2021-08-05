@@ -9,8 +9,6 @@
 # Pull request: https://github.com/square/retrofit/pull/3579.
 -keep,allowobfuscation,allowshrinking class retrofit2.Call
 
-# Retain annotation default values for all annotations.
-# Required until R8 version >= 3.1.12-dev (expected in AGP 7.1.0-alpha4).
--keep,allowobfuscation,allowshrinking @interface *
-
 -keep,allowobfuscation,allowshrinking class dev.msfjarvis.claw.android.** { *; }
+
+-dontobfuscate

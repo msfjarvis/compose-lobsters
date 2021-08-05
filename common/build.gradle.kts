@@ -30,7 +30,7 @@ kotlin {
         implementation("com.alialbaali.kamel:kamel-image:0.2.1")
       }
     }
-    val commonTest by getting { dependencies { implementation(kotlin("test")) } }
+    val commonTest by getting
     val androidMain by getting { dependencies { implementation(libs.androidx.browser) } }
     val androidTest by getting { dependsOn(androidAndroidTestRelease) }
     val desktopMain by getting

@@ -24,11 +24,6 @@ group = "dev.msfjarvis.claw"
 version = "1.0"
 
 allprojects {
-  repositories {
-    mavenCentral()
-    maven { url = uri("https://maven.pkg.jetbrains.space/public/p/compose/dev") }
-    google()
-  }
   apply(plugin = "com.diffplug.spotless")
   configure<com.diffplug.gradle.spotless.SpotlessExtension> {
     kotlin {

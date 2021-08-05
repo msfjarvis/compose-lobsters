@@ -27,13 +27,21 @@ kotlin {
         api(compose.foundation)
         api(compose.material)
         api(projects.database)
-        implementation("com.alialbaali.kamel:kamel-image:0.2.1")
       }
     }
     val commonTest by getting
-    val androidMain by getting { dependencies { implementation(libs.androidx.browser) } }
+    val androidMain by getting {
+      dependencies {
+        implementation(libs.androidx.browser)
+        implementation(libs.coil.compose)
+      }
+    }
     val androidTest by getting { dependsOn(androidAndroidTestRelease) }
-    val desktopMain by getting
+    val desktopMain by getting {
+      dependencies {
+        implementation(libs.kamel.image)
+      }
+    }
     val desktopTest by getting
   }
 }

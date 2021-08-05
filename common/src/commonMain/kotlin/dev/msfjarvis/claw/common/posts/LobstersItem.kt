@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -23,6 +24,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.flowlayout.FlowRow
@@ -30,6 +32,7 @@ import dev.msfjarvis.claw.common.res.commentIcon
 import dev.msfjarvis.claw.common.res.heartBorderIcon
 import dev.msfjarvis.claw.common.res.heartIcon
 import dev.msfjarvis.claw.common.theme.titleColor
+import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.database.local.SavedPost
 
 val TEST_POST =
@@ -84,6 +87,8 @@ fun LobstersItem(
       }
       SubmitterName(
         text = "Submitted by ${post.submitterName}",
+        avatarUrl = post.submitterAvatarUrl,
+        contentDescription = "Submitted by ${post.submitterName}",
       )
     }
   }
@@ -105,24 +110,45 @@ fun PostTitle(
 @Composable
 fun SubmitterName(
   text: String,
+  avatarUrl: String,
+  contentDescription: String,
   modifier: Modifier = Modifier,
 ) {
   Row(
     modifier = Modifier.then(modifier),
     verticalAlignment = Alignment.CenterVertically,
   ) {
+    SubmitterAvatar(
+      avatarUrl = avatarUrl,
+      contentDescription = contentDescription,
+    )
     SubmitterNameText(
       text = text,
+      modifier = Modifier.padding(start = 4.dp),
     )
   }
 }
 
 @Composable
+fun SubmitterAvatar(
+  avatarUrl: String,
+  contentDescription: String,
+) {
+  NetworkImage(
+    url = avatarUrl,
+    contentDescription = contentDescription,
+    modifier = Modifier.requiredSize(24.dp).clip(CircleShape),
+  )
+}
+
+@Composable
 fun SubmitterNameText(
   text: String,
+  modifier: Modifier,
 ) {
   Text(
     text = text,
+    modifier = Modifier.then(modifier),
   )
 }
 

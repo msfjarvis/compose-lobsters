@@ -17,7 +17,6 @@ dependencies {
   implementation(libs.androidx.paging.compose)
   implementation(libs.dagger.hilt.android)
   implementation(libs.retrofit.moshiConverter)
-  implementation(libs.moshix.metadatareflect)
 }
 
 android {

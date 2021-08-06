@@ -25,7 +25,6 @@ dagger-hilt-core = { module = "com.google.dagger:hilt-core", version.ref = "hilt
 
 moshi-lib = "com.squareup.moshi:moshi:1.12.0"
 moshix-ksp = { module = "dev.zacsweers.moshix:moshi-ksp", version.ref = "moshix" }
-moshix-metadatareflect = { module = "dev.zacsweers.moshix:moshi-metadata-reflect", version.ref = "moshix" }
 
 retrofit-lib = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-moshiConverter = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }

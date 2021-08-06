@@ -15,13 +15,14 @@ actual fun NetworkImage(
   modifier: Modifier,
 ) {
   Image(
-    painter = rememberImagePainter(
-      data = url,
-      builder = {
-        transformations(CircleCropTransformation())
-        crossfade(true)
-      },
-    ),
+    painter =
+      rememberImagePainter(
+        data = url,
+        builder = {
+          transformations(CircleCropTransformation())
+          crossfade(true)
+        },
+      ),
     contentDescription = contentDescription,
     modifier = Modifier.then(modifier),
   )

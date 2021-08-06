@@ -37,11 +37,7 @@ kotlin {
       }
     }
     val androidTest by getting { dependsOn(androidAndroidTestRelease) }
-    val desktopMain by getting {
-      dependencies {
-        implementation(libs.kamel.image)
-      }
-    }
+    val desktopMain by getting { dependencies { implementation(libs.kamel.image) } }
     val desktopTest by getting
   }
 }

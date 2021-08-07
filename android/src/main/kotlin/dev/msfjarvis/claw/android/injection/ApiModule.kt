@@ -39,7 +39,7 @@ object ApiModule {
   ): Retrofit {
     return Retrofit.Builder()
       .client(client.get())
-      .baseUrl("https://lobste.rs/")
+      .baseUrl(LobstersApi.BASE_URL)
       .addConverterFactory(MoshiConverterFactory.create(moshi.get()))
       .build()
   }

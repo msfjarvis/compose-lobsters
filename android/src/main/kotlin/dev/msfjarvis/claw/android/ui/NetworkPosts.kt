@@ -16,8 +16,11 @@ import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 fun NetworkPosts(
   items: LazyPagingItems<LobstersPost>,
   urlLauncher: UrlLauncher,
+  modifier: Modifier = Modifier,
 ) {
-  LazyColumn {
+  LazyColumn(
+    modifier = Modifier.then(modifier),
+  ) {
     items(items) { item ->
       if (item != null) {
         LobstersCard(

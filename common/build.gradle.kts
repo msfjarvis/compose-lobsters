@@ -1,4 +1,5 @@
 import org.jetbrains.compose.compose
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
   kotlin("multiplatform")
@@ -40,6 +41,11 @@ kotlin {
     val desktopMain by getting { dependencies { implementation(libs.kamel.image) } }
     val desktopTest by getting
   }
+}
+
+tasks.withType<KotlinCompile> {
+  kotlinOptions.freeCompilerArgs =
+    kotlinOptions.freeCompilerArgs + listOf("-Xopt-in=kotlin.RequiresOptIn")
 }
 
 android {

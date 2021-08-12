@@ -5,6 +5,7 @@ package dev.msfjarvis.claw.common.posts
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,6 +16,8 @@ import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.IconToggleButton
@@ -46,6 +49,55 @@ val TEST_POST =
     submitterAvatarUrl = "https://avatars.githubusercontent.com/u/13348378?v=4",
     tags = listOf("openbsd", "linux", "containers", "hack the planet", "no thanks"),
   )
+
+@Composable
+@OptIn(ExperimentalMaterialApi::class)
+fun LobstersCard(
+  post: SavedPost,
+  isSaved: Boolean,
+  viewPost: () -> Unit,
+  viewComments: (String) -> Unit,
+  toggleSave: () -> Unit,
+  modifier: Modifier = Modifier,
+) {
+  Card(
+    modifier = Modifier.then(modifier),
+    onClick = { viewPost() },
+  ) {
+    Column(
+      modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp).fillMaxWidth(),
+      verticalArrangement = Arrangement.spacedBy(4.dp),
+    ) {
+      PostTitle(
+        title = post.title,
+      )
+      TagRow(
+        tags = post.tags,
+      )
+      SubmitterName(
+        text = "Submitted by ${post.submitterName}",
+        avatarUrl = post.submitterAvatarUrl,
+        contentDescription = "Submitted by ${post.submitterName}",
+      )
+      Row(
+        modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.End,
+      ) {
+        SaveButton(
+          isSaved = isSaved,
+          onClick = toggleSave,
+        )
+        Spacer(
+          modifier = Modifier.width(8.dp),
+        )
+        CommentsButton(
+          onClick = { viewComments(post.shortId) },
+        )
+      }
+    }
+  }
+}
 
 @Composable
 fun LobstersItem(

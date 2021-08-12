@@ -45,7 +45,10 @@ kotlin {
 android {
   buildFeatures { androidResources = true }
   compileSdk = 30
-  sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+  sourceSets["main"].apply {
+    manifest.srcFile("src/androidMain/AndroidManifest.xml")
+    res.srcDirs("src/commonMain/resources")
+  }
   defaultConfig {
     minSdk = 23
     targetSdk = 30

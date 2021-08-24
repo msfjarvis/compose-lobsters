@@ -10,7 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-    - uses: actions/setup-java@d9126d7df2f1b080b603441eaf5810ced3614e78
+    - name: Setup Java 16
+      uses: actions/setup-java@d9126d7df2f1b080b603441eaf5810ced3614e78
       with:
         distribution: 'zulu'
         java-version: '16'
@@ -21,8 +22,8 @@ jobs:
     - name: Copy CI gradle.properties
       run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
 
-    - uses: burrunan/gradle-cache-action@03c71a8ba93d670980695505f48f49daf43704a6
-      name: Run unit tests
+    - name: Run unit tests
+      uses: burrunan/gradle-cache-action@03c71a8ba93d670980695505f48f49daf43704a6
       with:
         arguments: test --stacktrace
 
@@ -37,7 +38,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-    - uses: actions/setup-java@d9126d7df2f1b080b603441eaf5810ced3614e78
+    - name: Setup Java 16
+      uses: actions/setup-java@d9126d7df2f1b080b603441eaf5810ced3614e78
       with:
         distribution: 'zulu'
         java-version: '16'
@@ -50,7 +52,7 @@ jobs:
     - name: Copy CI gradle.properties
       run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
 
-    - uses: burrunan/gradle-cache-action@03c71a8ba93d670980695505f48f49daf43704a6
-      name: Check codestyle with Spotless
+    - name: Check codestyle with Spotless
+      uses: burrunan/gradle-cache-action@03c71a8ba93d670980695505f48f49daf43704a6
       with:
         arguments: spotlessCheck

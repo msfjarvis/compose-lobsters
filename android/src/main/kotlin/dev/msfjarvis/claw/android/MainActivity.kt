@@ -4,10 +4,18 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.paging.LoadState
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -38,11 +46,22 @@ class MainActivity : AppCompatActivity() {
           topBar = { ClawAppBar() },
           modifier = Modifier,
         ) { padding ->
-          NetworkPosts(
-            items = items,
-            urlLauncher = urlLauncher,
-            modifier = Modifier.padding(padding),
-          )
+          if (items.loadState.refresh != LoadState.Loading) {
+            NetworkPosts(
+              items = items,
+              urlLauncher = urlLauncher,
+              modifier = Modifier.padding(padding),
+            )
+          } else {
+            Box(
+              modifier = Modifier.fillMaxSize(),
+            ) {
+              CircularProgressIndicator(
+                modifier = Modifier.size(64.dp).align(Alignment.Center),
+                color = MaterialTheme.colors.secondary,
+              )
+            }
+          }
         }
       }
     }

@@ -23,25 +23,27 @@ group = "dev.msfjarvis.claw"
 
 version = "1.0"
 
-allprojects {
-  apply(plugin = "com.diffplug.spotless")
-  configure<com.diffplug.gradle.spotless.SpotlessExtension> {
-    kotlin {
-      target("**/*.kt")
-      targetExclude("**/build/**")
-      ktfmt("0.28").googleStyle()
-    }
-    kotlinGradle {
-      target("*.gradle.kts")
-      ktfmt("0.28").googleStyle()
-    }
-    format("xml") {
-      target("**/*.xml")
-      targetExclude("**/build/**", ".idea/**")
-      prettier(mapOf("prettier" to "2.0.5", "@prettier/plugin-xml" to "0.13.0"))
-        .config(mapOf("parser" to "xml", "tabWidth" to 2))
-    }
+apply(plugin = "com.diffplug.spotless")
+
+configure<com.diffplug.gradle.spotless.SpotlessExtension> {
+  kotlin {
+    target("**/*.kt")
+    targetExclude("**/build/**")
+    ktfmt("0.28").googleStyle()
   }
+  kotlinGradle {
+    target("**/*.gradle.kts")
+    ktfmt("0.28").googleStyle()
+  }
+  format("xml") {
+    target("**/*.xml")
+    targetExclude("**/build/**", ".idea/**")
+    prettier(mapOf("prettier" to "2.0.5", "@prettier/plugin-xml" to "0.13.0"))
+      .config(mapOf("parser" to "xml", "tabWidth" to 2))
+  }
+}
+
+allprojects {
   tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions {
       jvmTarget = JavaVersion.VERSION_11.toString()

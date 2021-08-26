@@ -24,6 +24,7 @@ import androidx.compose.material.IconToggleButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.primarySurface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -61,7 +62,7 @@ fun LobstersCard(
   modifier: Modifier = Modifier,
 ) {
   Card(
-    modifier = Modifier.then(modifier),
+    modifier = Modifier.background(MaterialTheme.colors.primarySurface).then(modifier),
     onClick = { viewPost() },
   ) {
     Column(

@@ -4,7 +4,6 @@ package dev.msfjarvis.claw.common.posts
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,7 +21,6 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.IconToggleButton
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.primarySurface
 import androidx.compose.runtime.Composable
@@ -96,53 +94,6 @@ fun LobstersCard(
           onClick = { viewComments(post.shortId) },
         )
       }
-    }
-  }
-}
-
-@Composable
-fun LobstersItem(
-  post: SavedPost,
-  isSaved: Boolean,
-  viewPost: () -> Unit,
-  viewComments: (String) -> Unit,
-  toggleSave: () -> Unit,
-  modifier: Modifier = Modifier,
-) {
-  Surface(
-    modifier = Modifier.clickable { viewPost.invoke() }.then(modifier),
-  ) {
-    Column(
-      modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
-    ) {
-      PostTitle(
-        title = post.title,
-        modifier = Modifier.padding(bottom = 4.dp),
-      )
-      Row(
-        modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-      ) {
-        TagRow(
-          tags = post.tags,
-          modifier = Modifier.weight(0.65f),
-        )
-        SaveButton(
-          isSaved = isSaved,
-          onClick = toggleSave,
-        )
-        Spacer(
-          modifier = Modifier.width(8.dp),
-        )
-        CommentsButton(
-          onClick = { viewComments(post.shortId) },
-        )
-      }
-      SubmitterName(
-        text = "Submitted by ${post.submitterName}",
-        avatarUrl = post.submitterAvatarUrl,
-        contentDescription = "Submitted by ${post.submitterName}",
-      )
     }
   }
 }

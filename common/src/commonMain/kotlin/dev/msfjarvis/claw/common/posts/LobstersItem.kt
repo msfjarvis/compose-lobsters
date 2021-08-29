@@ -75,7 +75,7 @@ fun LobstersCard(
       )
       SubmitterName(
         text = "Submitted by ${post.submitterName}",
-        avatarUrl = post.submitterAvatarUrl,
+        avatarUrl = "https://lobste.rs/${post.submitterAvatarUrl}",
         contentDescription = "Submitted by ${post.submitterName}",
       )
       Row(

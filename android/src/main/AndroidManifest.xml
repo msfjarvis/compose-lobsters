@@ -8,6 +8,8 @@
     android:label="Claw"
     android:allowBackup="false"
     android:supportsRtl="true"
+    android:icon="@mipmap/ic_launcher"
+    android:roundIcon="@mipmap/ic_launcher"
     android:name=".ClawApplication"
     android:theme="@style/Theme.AppCompat.Light.NoActionBar"
   >

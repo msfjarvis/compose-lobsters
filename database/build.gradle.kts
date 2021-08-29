@@ -40,11 +40,11 @@ kotlin {
 }
 
 android {
-  compileSdk = 30
+  compileSdk = 31
   sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
   defaultConfig {
     minSdk = 23
-    targetSdk = 30
+    targetSdk = 31
     consumerProguardFiles("consumer-rules.pro")
   }
 }

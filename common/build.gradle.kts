@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
   kotlin("multiplatform")
-  id("org.jetbrains.compose") version "1.0.0-alpha4-build321"
+  id("org.jetbrains.compose") version "1.0.0-alpha4-build328"
   id("com.android.library")
 }
 
@@ -50,13 +50,13 @@ tasks.withType<KotlinCompile> {
 
 android {
   buildFeatures { androidResources = true }
-  compileSdk = 30
+  compileSdk = 31
   sourceSets["main"].apply {
     manifest.srcFile("src/androidMain/AndroidManifest.xml")
     res.srcDirs("src/commonMain/resources")
   }
   defaultConfig {
     minSdk = 23
-    targetSdk = 30
+    targetSdk = 31
   }
 }

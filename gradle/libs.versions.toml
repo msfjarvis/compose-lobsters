@@ -1,7 +1,7 @@
 [versions]
 coroutines = "1.5.1"
 hilt = "2.38.1"
-moshix = "0.12.2"
+moshix = "0.13.0"
 retrofit = "2.9.0"
 sqldelight = "1.5.1"
 

@@ -1,7 +1,7 @@
 import java.util.Properties
 
 plugins {
-  id("org.jetbrains.compose") version "1.0.0-alpha4-build321"
+  id("org.jetbrains.compose") version "1.0.0-alpha4-build328"
   id("com.android.application")
   kotlin("android")
   kotlin("kapt")
@@ -20,11 +20,11 @@ dependencies {
 }
 
 android {
-  compileSdk = 30
+  compileSdk = 31
   defaultConfig {
     applicationId = "dev.msfjarvis.claw.android"
     minSdk = 23
-    targetSdk = 30
+    targetSdk = 31
     versionCode = 1
     versionName = "1.0"
   }
@@ -50,7 +50,7 @@ android {
     }
   }
   compileOptions {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
   }
 }

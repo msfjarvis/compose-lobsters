@@ -3,7 +3,7 @@ package dev.msfjarvis.claw.common.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import io.kamel.image.KamelImage
-import io.kamel.image.lazyImageResource
+import io.kamel.image.lazyPainterResource
 
 @Composable
 actual fun NetworkImage(
@@ -12,7 +12,7 @@ actual fun NetworkImage(
   modifier: Modifier,
 ) {
   KamelImage(
-    resource = lazyImageResource(url),
+    resource = lazyPainterResource(url),
     contentDescription = contentDescription,
     modifier = Modifier.then(modifier),
     crossfade = true,

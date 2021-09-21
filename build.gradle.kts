@@ -12,7 +12,7 @@ buildscript {
   }
   dependencies {
     classpath("com.android.tools:r8:3.1.17-dev")
-    classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.30")
+    classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31")
     classpath("com.android.tools.build:gradle:7.1.0-alpha12")
     classpath("com.diffplug.spotless:spotless-plugin-gradle:5.15.0")
     classpath("com.google.dagger:hilt-android-gradle-plugin:2.38.1")
@@ -48,7 +48,13 @@ allprojects {
     kotlinOptions {
       jvmTarget = JavaVersion.VERSION_11.toString()
       languageVersion = "1.5"
-      freeCompilerArgs = freeCompilerArgs + listOf("-Xopt-in=kotlin.RequiresOptIn")
+      freeCompilerArgs =
+        freeCompilerArgs +
+          listOf(
+            "-Xopt-in=kotlin.RequiresOptIn",
+            "-P",
+            "plugin:androidx.compose.compiler.plugins.kotlin:suppressKotlinVersionCompatibilityCheck=true"
+          )
     }
   }
 }

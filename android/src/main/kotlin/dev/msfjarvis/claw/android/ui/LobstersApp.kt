@@ -18,6 +18,8 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.Pager
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.google.accompanist.insets.ProvideWindowInsets
+import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.msfjarvis.claw.api.model.LobstersPost
 import dev.msfjarvis.claw.common.theme.LobstersTheme
@@ -31,32 +33,34 @@ fun LobstersApp(
   val systemUiController = rememberSystemUiController()
   val scaffoldState = rememberScaffoldState()
   LobstersTheme(darkTheme = isSystemInDarkTheme()) {
-    val useDarkIcons = MaterialTheme.colors.isLight
-    val systemBarsColor = MaterialTheme.colors.primarySurface
+    ProvideWindowInsets {
+      val useDarkIcons = MaterialTheme.colors.isLight
+      val systemBarsColor = MaterialTheme.colors.primarySurface
 
-    SideEffect {
-      systemUiController.setSystemBarsColor(color = systemBarsColor, darkIcons = useDarkIcons)
-    }
-    val items = pager.flow.collectAsLazyPagingItems()
-    Scaffold(
-      scaffoldState = scaffoldState,
-      topBar = { ClawAppBar() },
-      modifier = Modifier,
-    ) { padding ->
-      if (items.loadState.refresh != LoadState.Loading) {
-        NetworkPosts(
-          items = items,
-          urlLauncher = urlLauncher,
-          modifier = Modifier.padding(padding),
-        )
-      } else {
-        Box(
-          modifier = Modifier.fillMaxSize(),
-        ) {
-          CircularProgressIndicator(
-            modifier = Modifier.size(64.dp).align(Alignment.Center),
-            color = MaterialTheme.colors.secondary,
+      SideEffect {
+        systemUiController.setSystemBarsColor(color = systemBarsColor, darkIcons = useDarkIcons)
+      }
+      val items = pager.flow.collectAsLazyPagingItems()
+      Scaffold(
+        scaffoldState = scaffoldState,
+        topBar = { ClawAppBar(modifier = Modifier.statusBarsPadding()) },
+        modifier = Modifier,
+      ) {
+        if (items.loadState.refresh != LoadState.Loading) {
+          NetworkPosts(
+            items = items,
+            urlLauncher = urlLauncher,
+            modifier = Modifier.padding(top = 16.dp),
           )
+        } else {
+          Box(
+            modifier = Modifier.fillMaxSize(),
+          ) {
+            CircularProgressIndicator(
+              modifier = Modifier.size(64.dp).align(Alignment.Center),
+              color = MaterialTheme.colors.secondary,
+            )
+          }
         }
       }
     }

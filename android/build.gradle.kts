@@ -12,6 +12,7 @@ dependencies {
   kapt(libs.dagger.hilt.compiler)
   implementation(projects.api)
   implementation(projects.common)
+  implementation(libs.accompanist.sysuicontroller)
   implementation(libs.androidx.activity.compose)
   implementation(libs.androidx.appcompat)
   implementation(libs.androidx.paging.compose)

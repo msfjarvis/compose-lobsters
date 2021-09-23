@@ -8,14 +8,17 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
+import androidx.compose.material.primarySurface
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.Pager
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.msfjarvis.claw.api.model.LobstersPost
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
@@ -25,8 +28,15 @@ fun LobstersApp(
   pager: Pager<Int, LobstersPost>,
   urlLauncher: UrlLauncher,
 ) {
+  val systemUiController = rememberSystemUiController()
   val scaffoldState = rememberScaffoldState()
   LobstersTheme(darkTheme = isSystemInDarkTheme()) {
+    val useDarkIcons = MaterialTheme.colors.isLight
+    val systemBarsColor = MaterialTheme.colors.primarySurface
+
+    SideEffect {
+      systemUiController.setSystemBarsColor(color = systemBarsColor, darkIcons = useDarkIcons)
+    }
     val items = pager.flow.collectAsLazyPagingItems()
     Scaffold(
       scaffoldState = scaffoldState,

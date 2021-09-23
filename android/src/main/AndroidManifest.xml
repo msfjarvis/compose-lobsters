@@ -6,12 +6,11 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <application
     android:label="Claw"
-    android:allowBackup="false"
     android:supportsRtl="true"
     android:icon="@mipmap/ic_launcher"
     android:roundIcon="@mipmap/ic_launcher"
     android:name=".ClawApplication"
-    android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+    android:theme="@style/Theme.Claw"
   >
             <activity android:name=".MainActivity" android:exported="true">
             <intent-filter>

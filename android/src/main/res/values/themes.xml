@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+
+    <style name="Platform.Theme.Claw" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="Base.Theme.Claw" parent="Platform.Theme.Claw">
+        <item name="android:windowActionModeOverlay">true</item>
+    </style>
+
+    <style name="Theme.Claw" parent="Base.Theme.Claw">
+        <item name="android:windowLightStatusBar">@bool/use_light_status_bar</item>
+    </style>
+</resources>

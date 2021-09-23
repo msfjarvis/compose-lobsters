@@ -1,4 +1,1 @@
-<manifest
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  package="dev.msfjarvis.claw.database"
-/>
+<manifest package="dev.msfjarvis.claw.database" />

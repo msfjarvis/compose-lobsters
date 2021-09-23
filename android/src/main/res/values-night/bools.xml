@@ -1,5 +1,4 @@
-<?xml
-version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <resources>
-    <bool name="use_light_status_bar">false</bool>
+  <bool name="use_light_status_bar">false</bool>
 </resources>

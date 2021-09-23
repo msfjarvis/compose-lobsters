@@ -35,12 +35,6 @@ configure<com.diffplug.gradle.spotless.SpotlessExtension> {
     target("**/*.gradle.kts")
     ktfmt("0.28").googleStyle()
   }
-  format("xml") {
-    target("**/*.xml")
-    targetExclude("**/build/**", ".idea/**")
-    prettier(mapOf("prettier" to "2.3.2", "@prettier/plugin-xml" to "1.0.2"))
-      .config(mapOf("parser" to "xml", "tabWidth" to 2))
-  }
 }
 
 allprojects {

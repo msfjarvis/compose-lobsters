@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<manifest
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  package="dev.msfjarvis.claw.android"
->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <application
-    android:label="Claw"
-    android:supportsRtl="true"
-    android:icon="@mipmap/ic_launcher"
-    android:roundIcon="@mipmap/ic_launcher"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  package="dev.msfjarvis.claw.android">
+
+  <uses-permission android:name="android.permission.INTERNET" />
+  <application
     android:name=".ClawApplication"
-    android:theme="@style/Theme.Claw"
-  >
-            <activity android:name=".MainActivity" android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-    </application>
+    android:icon="@mipmap/ic_launcher"
+    android:label="Claw"
+    android:roundIcon="@mipmap/ic_launcher"
+    android:supportsRtl="true"
+    android:theme="@style/Theme.Claw">
+    <activity
+      android:name=".MainActivity"
+      android:exported="true">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity>
+  </application>
 </manifest>

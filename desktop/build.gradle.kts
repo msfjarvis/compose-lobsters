@@ -16,6 +16,9 @@ kotlin {
     val jvmMain by getting {
       dependencies {
         implementation(projects.common)
+        implementation(libs.aurora.component)
+        implementation(libs.aurora.skin)
+        implementation(libs.aurora.window)
         implementation(compose.desktop.currentOs)
       }
     }

@@ -29,10 +29,15 @@ kotlin {
 compose.desktop {
   application {
     mainClass = "MainKt"
+    jvmArgs += listOf("-Xmx1G")
     nativeDistributions {
       targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-      packageName = "jvm"
+      packageName = "Claw"
       packageVersion = "1.0.0"
+      description = "Desktop client for lobste.rs link aggregation site"
+      copyright = "© 2021 Harsh Shandilya. All rights reserved."
+      vendor = "Harsh Shandilya"
+      includeAllModules = false
     }
   }
 }

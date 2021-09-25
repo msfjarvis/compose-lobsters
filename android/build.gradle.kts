@@ -13,6 +13,7 @@ dependencies {
   implementation(projects.api)
   implementation(projects.common)
   implementation(libs.accompanist.insets)
+  implementation(libs.accompanist.swiperefresh)
   implementation(libs.accompanist.sysuicontroller)
   implementation(libs.androidx.activity.compose)
   implementation(libs.androidx.appcompat)

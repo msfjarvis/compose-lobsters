@@ -4,15 +4,12 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.primarySurface
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -20,6 +17,8 @@ import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.statusBarsPadding
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.common.theme.LobstersTheme
@@ -46,19 +45,18 @@ fun LobstersApp(
         topBar = { ClawAppBar(modifier = Modifier.statusBarsPadding()) },
         modifier = Modifier,
       ) {
-        if (items.loadState.refresh != LoadState.Loading) {
-          NetworkPosts(
-            items = items,
-            launchUrl = urlLauncher::launch,
-            modifier = Modifier.padding(top = 16.dp),
-          )
-        } else {
-          Box(
-            modifier = Modifier.fillMaxSize(),
-          ) {
-            CircularProgressIndicator(
-              modifier = Modifier.size(64.dp).align(Alignment.Center),
-              color = MaterialTheme.colors.secondary,
+        val isRefreshing = items.loadState.refresh == LoadState.Loading
+        SwipeRefresh(
+          state = rememberSwipeRefreshState(isRefreshing),
+          onRefresh = viewModel::reloadPosts,
+        ) {
+          if (items.itemCount == 0) {
+            Box(modifier = Modifier.fillMaxSize())
+          } else {
+            NetworkPosts(
+              items = items,
+              launchUrl = urlLauncher::launch,
+              modifier = Modifier.padding(top = 16.dp),
             )
           }
         }

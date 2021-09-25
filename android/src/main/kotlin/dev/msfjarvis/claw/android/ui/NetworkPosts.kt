@@ -10,7 +10,6 @@ import androidx.paging.compose.items
 import dev.msfjarvis.claw.android.ext.toDbModel
 import dev.msfjarvis.claw.api.model.LobstersPost
 import dev.msfjarvis.claw.common.posts.LobstersCard
-import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 
 @Composable
 fun NetworkPosts(

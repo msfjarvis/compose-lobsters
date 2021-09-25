@@ -9,11 +9,21 @@ import dev.msfjarvis.claw.api.LobstersApi
 import javax.inject.Inject
 
 @HiltViewModel
-class ClawViewModel @Inject constructor(
+class ClawViewModel
+@Inject
+constructor(
   api: LobstersApi,
 ) : ViewModel() {
-  private val pager = Pager(PagingConfig(20)) { LobstersPagingSource(api::getHottestPosts) }
+  var lastPagingSource: LobstersPagingSource? = null
+  private val pager =
+    Pager(PagingConfig(20)) {
+      LobstersPagingSource(api::getHottestPosts).also { lastPagingSource = it }
+    }
 
   val pagerFlow
     get() = pager.flow
+
+  fun reloadPosts() {
+    lastPagingSource?.invalidate()
+  }
 }

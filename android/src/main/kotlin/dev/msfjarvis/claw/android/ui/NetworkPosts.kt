@@ -2,6 +2,7 @@ package dev.msfjarvis.claw.android.ui
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -14,10 +15,12 @@ import dev.msfjarvis.claw.common.posts.LobstersCard
 @Composable
 fun NetworkPosts(
   items: LazyPagingItems<LobstersPost>,
+  listState: LazyListState,
   launchUrl: (String) -> Unit,
   modifier: Modifier = Modifier,
 ) {
   LazyColumn(
+    state = listState,
     modifier = Modifier.then(modifier),
   ) {
     items(items) { item ->

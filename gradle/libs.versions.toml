@@ -20,6 +20,7 @@ androidx-activity-compose = "androidx.activity:activity-compose:1.4.0-alpha02"
 androidx-appcompat = "androidx.appcompat:appcompat:1.4.0-alpha03"
 androidx-browser = "androidx.browser:browser:1.4.0-alpha01"
 androidx-coreKtx = "androidx.core:core-ktx:1.7.0-beta01"
+androidx-lifecycle-compose = "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha07"
 androidx-paging-compose = "androidx.paging:paging-compose:1.0.0-alpha12"
 
 aurora-component = { module = "org.pushing-pixels:aurora-component", version.ref = "aurora" }

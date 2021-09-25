@@ -17,6 +17,7 @@ dependencies {
   implementation(libs.androidx.activity.compose)
   implementation(libs.androidx.appcompat)
   implementation(libs.androidx.coreKtx)
+  implementation(libs.androidx.lifecycle.compose)
   implementation(libs.androidx.paging.compose)
   implementation(libs.dagger.hilt.android)
   implementation(libs.retrofit.moshiConverter)

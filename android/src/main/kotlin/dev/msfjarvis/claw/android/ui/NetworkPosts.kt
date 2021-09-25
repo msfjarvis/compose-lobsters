@@ -15,7 +15,7 @@ import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 @Composable
 fun NetworkPosts(
   items: LazyPagingItems<LobstersPost>,
-  urlLauncher: UrlLauncher,
+  launchUrl: (String) -> Unit,
   modifier: Modifier = Modifier,
 ) {
   LazyColumn(
@@ -26,8 +26,8 @@ fun NetworkPosts(
         LobstersCard(
           post = item.toDbModel(),
           isSaved = false,
-          viewPost = { urlLauncher.launch(item.url.ifEmpty { item.commentsUrl }) },
-          viewComments = { urlLauncher.launch(item.commentsUrl) },
+          viewPost = { launchUrl(item.url.ifEmpty { item.commentsUrl }) },
+          viewComments = { launchUrl(item.commentsUrl) },
           toggleSave = {},
           modifier = Modifier.padding(bottom = 16.dp, start = 16.dp, end = 16.dp),
         )

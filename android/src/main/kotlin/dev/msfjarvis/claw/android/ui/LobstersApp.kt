@@ -15,19 +15,19 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.paging.LoadState
-import androidx.paging.Pager
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import dev.msfjarvis.claw.api.model.LobstersPost
+import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 
 @Composable
 fun LobstersApp(
-  pager: Pager<Int, LobstersPost>,
+  viewModel: ClawViewModel = viewModel(),
   urlLauncher: UrlLauncher,
 ) {
   val systemUiController = rememberSystemUiController()
@@ -40,7 +40,7 @@ fun LobstersApp(
       SideEffect {
         systemUiController.setSystemBarsColor(color = systemBarsColor, darkIcons = useDarkIcons)
       }
-      val items = pager.flow.collectAsLazyPagingItems()
+      val items = viewModel.pagerFlow.collectAsLazyPagingItems()
       Scaffold(
         scaffoldState = scaffoldState,
         topBar = { ClawAppBar(modifier = Modifier.statusBarsPadding()) },
@@ -49,7 +49,7 @@ fun LobstersApp(
         if (items.loadState.refresh != LoadState.Loading) {
           NetworkPosts(
             items = items,
-            urlLauncher = urlLauncher,
+            launchUrl = urlLauncher::launch,
             modifier = Modifier.padding(top = 16.dp),
           )
         } else {

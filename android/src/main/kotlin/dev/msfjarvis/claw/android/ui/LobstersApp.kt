@@ -34,10 +34,11 @@ fun LobstersApp(
   LobstersTheme(darkTheme = isSystemInDarkTheme()) {
     ProvideWindowInsets {
       val useDarkIcons = MaterialTheme.colors.isLight
-      val systemBarsColor = MaterialTheme.colors.primarySurface
+      val statusBarColor = MaterialTheme.colors.primarySurface
 
       SideEffect {
-        systemUiController.setSystemBarsColor(color = systemBarsColor, darkIcons = useDarkIcons)
+        systemUiController.setStatusBarColor(color = statusBarColor, darkIcons = useDarkIcons)
+        systemUiController.setNavigationBarColor(color = Color.Transparent)
       }
       val items = viewModel.pagerFlow.collectAsLazyPagingItems()
       Scaffold(

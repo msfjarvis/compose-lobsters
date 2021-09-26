@@ -36,6 +36,8 @@ dagger-hilt-android = { module = "com.google.dagger:hilt-android", version.ref =
 dagger-hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 dagger-hilt-core = { module = "com.google.dagger:hilt-core", version.ref = "hilt" }
 
+multiplatform-paging = "io.github.kuuuurt:multiplatform-paging-desktop:0.4.4"
+
 retrofit-lib = "com.squareup.retrofit2:retrofit:2.9.0"
 retrofit-kotlinxSerializationConverter = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
 

@@ -16,6 +16,7 @@ dependencyResolutionManagement {
       content { includeGroup("org.pushing-pixels") }
     }
     google()
+    mavenLocal() { content { includeGroup("io.github.kuuuurt") } }
   }
 }
 

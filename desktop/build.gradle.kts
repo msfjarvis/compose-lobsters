@@ -19,6 +19,10 @@ kotlin {
       implementation(libs.aurora.component)
       implementation(libs.aurora.skin)
       implementation(libs.aurora.window)
+      implementation(libs.kotlinx.serialization.json)
+      implementation(libs.multiplatform.paging)
+      implementation(libs.retrofit.lib)
+      implementation(libs.retrofit.kotlinxSerializationConverter)
       implementation(compose.desktop.currentOs)
     }
   }

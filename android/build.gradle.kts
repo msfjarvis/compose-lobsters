@@ -12,6 +12,7 @@ dependencies {
   kapt(libs.dagger.hilt.compiler)
   implementation(projects.api)
   implementation(projects.common)
+  implementation(projects.database)
   implementation(libs.accompanist.insets)
   implementation(libs.accompanist.swiperefresh)
   implementation(libs.accompanist.sysuicontroller)
@@ -21,6 +22,7 @@ dependencies {
   implementation(libs.androidx.lifecycle.compose)
   implementation(libs.androidx.paging.compose)
   implementation(libs.dagger.hilt.android)
+  implementation(libs.sqldelight.extensions.coroutines)
   implementation(libs.retrofit.moshiConverter)
 }
 

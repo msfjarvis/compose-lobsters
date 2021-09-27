@@ -15,6 +15,7 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -35,6 +36,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
+import kotlinx.coroutines.launch
 
 private const val ScrollDelta = 50
 
@@ -47,6 +49,7 @@ fun LobstersApp(
   val systemUiController = rememberSystemUiController()
   val scaffoldState = rememberScaffoldState()
   val listState = rememberLazyListState()
+  val coroutineScope = rememberCoroutineScope()
   var isFabVisible by remember { mutableStateOf(true) }
   val nestedScrollConnection = remember {
     object : NestedScrollConnection {
@@ -97,6 +100,8 @@ fun LobstersApp(
               items = items,
               launchUrl = urlLauncher::launch,
               listState = listState,
+              isSaved = viewModel::isPostSaved,
+              toggleSave = { coroutineScope.launch { viewModel.toggleSave(it) } },
               modifier = Modifier.padding(top = 16.dp).nestedScroll(nestedScrollConnection),
             )
           }

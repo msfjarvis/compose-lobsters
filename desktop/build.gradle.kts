@@ -12,17 +12,15 @@ version = "1.0"
 
 kotlin {
   jvm { compilations.all { kotlinOptions.jvmTarget = "11" } }
-  sourceSets {
-    val jvmMain by getting {
-      dependencies {
-        implementation(projects.common)
-        implementation(libs.aurora.component)
-        implementation(libs.aurora.skin)
-        implementation(libs.aurora.window)
-        implementation(compose.desktop.currentOs)
-      }
+  sourceSets["jvmMain"].apply {
+    dependencies {
+      implementation(projects.api)
+      implementation(projects.common)
+      implementation(libs.aurora.component)
+      implementation(libs.aurora.skin)
+      implementation(libs.aurora.window)
+      implementation(compose.desktop.currentOs)
     }
-    val jvmTest by getting
   }
 }
 

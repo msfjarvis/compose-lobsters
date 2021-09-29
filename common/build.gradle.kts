@@ -8,39 +8,23 @@ plugins {
 }
 
 kotlin {
-  android() { compilations.all { kotlinOptions.jvmTarget = "11" } }
+  android { compilations.all { kotlinOptions.jvmTarget = "11" } }
   jvm("desktop") { compilations.all { kotlinOptions.jvmTarget = "11" } }
-  sourceSets {
-    // Workaround for:
-    //
-    // The Kotlin source set androidAndroidTestRelease was configured but not added to any
-    // Kotlin compilation. You can add a source set to a target's compilation by connecting it
-    // with the compilation's default source set using 'dependsOn'.
-    // See
-    // https://kotlinlang.org/docs/reference/building-mpp-with-gradle.html#connecting-source-sets
-    //
-    // This workaround includes `dependsOn(androidAndroidTestRelease)` in the `androidTest`
-    // sourceSet.
-    val androidAndroidTestRelease by getting
-    val commonMain by getting {
-      dependencies {
-        api(compose.runtime)
-        api(compose.foundation)
-        api(compose.material)
-        api(projects.database)
-      }
+  sourceSets["commonMain"].apply {
+    dependencies {
+      api(compose.runtime)
+      api(compose.foundation)
+      api(compose.material)
+      api(projects.database)
     }
-    val commonTest by getting
-    val androidMain by getting {
-      dependencies {
-        implementation(libs.androidx.browser)
-        implementation(libs.coil.compose)
-      }
-    }
-    val androidTest by getting { dependsOn(androidAndroidTestRelease) }
-    val desktopMain by getting { dependencies { implementation(libs.kamel.image) } }
-    val desktopTest by getting
   }
+  sourceSets["androidMain"].apply {
+    dependencies {
+      implementation(libs.androidx.browser)
+      implementation(libs.coil.compose)
+    }
+  }
+  sourceSets["desktopMain"].apply { dependencies { implementation(libs.kamel.image) } }
 }
 
 tasks.withType<KotlinCompile> {

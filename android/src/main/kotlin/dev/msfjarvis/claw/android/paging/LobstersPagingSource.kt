@@ -2,7 +2,7 @@ package dev.msfjarvis.claw.android.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import dev.msfjarvis.claw.api.model.LobstersPost
+import dev.msfjarvis.claw.model.LobstersPost
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

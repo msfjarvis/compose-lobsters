@@ -12,3 +12,21 @@
 -keep,allowobfuscation,allowshrinking class dev.msfjarvis.claw.android.** { *; }
 
 -dontobfuscate
+
+-keepattributes *Annotation*, InnerClasses
+-dontnote kotlinx.serialization.AnnotationsKt
+
+-keepclassmembers class kotlinx.serialization.json.** {
+    *** Companion;
+}
+-keepclasseswithmembers class kotlinx.serialization.json.** {
+    kotlinx.serialization.KSerializer serializer(...);
+}
+
+-keep,includedescriptorclasses class dev.msfjarvis.claw.model.**$$serializer { *; }
+-keepclassmembers class dev.msfjarvis.claw.model.** {
+    *** Companion;
+}
+-keepclasseswithmembers class dev.msfjarvis.claw.model.** {
+    kotlinx.serialization.KSerializer serializer(...);
+}

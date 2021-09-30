@@ -14,9 +14,9 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
 import dev.msfjarvis.claw.android.ext.toDbModel
-import dev.msfjarvis.claw.api.model.LobstersPost
 import dev.msfjarvis.claw.common.posts.LobstersCard
 import dev.msfjarvis.claw.database.local.SavedPost
+import dev.msfjarvis.claw.model.LobstersPost
 import kotlinx.coroutines.launch
 
 @Composable

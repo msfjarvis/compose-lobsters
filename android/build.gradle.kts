@@ -23,7 +23,8 @@ dependencies {
   implementation(libs.androidx.paging.compose)
   implementation(libs.dagger.hilt.android)
   implementation(libs.sqldelight.extensions.coroutines)
-  implementation(libs.retrofit.moshiConverter)
+  implementation(libs.kotlinx.serialization.json)
+  implementation(libs.retrofit.kotlinxSerializationConverter) { isTransitive = false }
 }
 
 android {

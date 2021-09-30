@@ -1,34 +1,37 @@
 package dev.msfjarvis.claw.api
 
-import com.squareup.moshi.Moshi
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dev.msfjarvis.claw.util.TestUtils
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 import kotlin.test.fail
 import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.json.Json
 import mockwebserver3.Dispatcher
 import mockwebserver3.MockResponse
 import mockwebserver3.MockWebServer
 import mockwebserver3.RecordedRequest
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import org.junit.AfterClass
 import org.junit.BeforeClass
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
 
+@OptIn(ExperimentalSerializationApi::class)
 class LobstersApiTest {
 
   companion object {
+    private val contentType = "application/json".toMediaType()
     private val webServer = MockWebServer()
-    private val moshi = Moshi.Builder().build()
     private val okHttp = OkHttpClient.Builder().build()
     private val retrofit =
       Retrofit.Builder()
         .client(okHttp)
         .baseUrl("http://localhost:8080/")
-        .addConverterFactory(MoshiConverterFactory.create(moshi))
+        .addConverterFactory(Json.asConverterFactory(contentType))
         .build()
     private val apiClient = retrofit.create<LobstersApi>()
 

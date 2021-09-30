@@ -1,6 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
+  val kotlinVersion = "1.5.31"
   repositories {
     google()
     mavenCentral()
@@ -12,7 +13,8 @@ buildscript {
   }
   dependencies {
     classpath("com.android.tools:r8:3.1.17-dev")
-    classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31")
+    classpath(kotlin("gradle-plugin", version = kotlinVersion))
+    classpath(kotlin("serialization", version = kotlinVersion))
     classpath("com.android.tools.build:gradle:7.1.0-alpha12")
     classpath("com.diffplug.spotless:spotless-plugin-gradle:5.15.0")
     classpath("com.google.dagger:hilt-android-gradle-plugin:2.39")

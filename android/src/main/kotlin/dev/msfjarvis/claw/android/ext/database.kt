@@ -1,7 +1,7 @@
 package dev.msfjarvis.claw.android.ext
 
-import dev.msfjarvis.claw.api.model.LobstersPost
 import dev.msfjarvis.claw.database.local.SavedPost
+import dev.msfjarvis.claw.model.LobstersPost
 
 /** Convert a [LobstersPost] object returned by the API into a [SavedPost] for persistence. */
 fun LobstersPost.toDbModel(): SavedPost {

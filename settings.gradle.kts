@@ -34,3 +34,5 @@ include(":common")
 include(":database")
 
 include(":desktop")
+
+include(":model")

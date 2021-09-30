@@ -1,7 +1,7 @@
 package dev.msfjarvis.claw.api
 
-import dev.msfjarvis.claw.api.model.LobstersPost
-import dev.msfjarvis.claw.api.model.LobstersPostDetails
+import dev.msfjarvis.claw.model.LobstersPost
+import dev.msfjarvis.claw.model.LobstersPostDetails
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

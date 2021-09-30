@@ -1,18 +1,21 @@
 package dev.msfjarvis.claw.android.injection
 
 import android.util.Log
-import com.squareup.moshi.Moshi
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Lazy
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dev.msfjarvis.claw.api.LobstersApi
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
 
+@OptIn(ExperimentalSerializationApi::class)
 @Module
 @InstallIn(SingletonComponent::class)
 object ApiModule {
@@ -35,12 +38,12 @@ object ApiModule {
   @Provides
   fun provideRetrofit(
     client: Lazy<OkHttpClient>,
-    moshi: Lazy<Moshi>,
   ): Retrofit {
+    val contentType = MediaType.get("application/json")
     return Retrofit.Builder()
       .client(client.get())
       .baseUrl(LobstersApi.BASE_URL)
-      .addConverterFactory(MoshiConverterFactory.create(moshi.get()))
+      .addConverterFactory(Json.asConverterFactory(contentType))
       .build()
   }
 

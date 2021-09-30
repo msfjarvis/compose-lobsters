@@ -1,14 +1,12 @@
-plugins {
-  kotlin("jvm")
-  id("com.google.devtools.ksp") version "1.5.31-1.0.0"
-}
+plugins { kotlin("jvm") }
 
 dependencies {
+  api(projects.model)
   api(libs.retrofit.lib)
-  ksp(libs.moshix.ksp)
-  implementation(libs.moshi.lib)
-  implementation(libs.retrofit.moshiConverter) { exclude(group = "com.squareup.moshi") }
+  implementation(libs.kotlinx.serialization.core)
+  testImplementation(libs.kotlinx.serialization.json)
   testImplementation(libs.kotlin.coroutines.core)
   testImplementation(kotlin("test-junit"))
+  testImplementation(libs.retrofit.kotlinxSerializationConverter) { isTransitive = false }
   testImplementation(libs.testing.mockWebServer)
 }

@@ -13,10 +13,12 @@ dependencyResolutionManagement {
     mavenCentral()
     maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     maven("https://oss.sonatype.org/content/repositories/snapshots") {
-      content { includeGroup("org.pushing-pixels") }
+      content {
+        includeGroup("org.pushing-pixels")
+        includeGroup("dev.msfjarvis.paging")
+      }
     }
     google()
-    mavenLocal() { content { includeGroup("io.github.kuuuurt") } }
   }
 }
 

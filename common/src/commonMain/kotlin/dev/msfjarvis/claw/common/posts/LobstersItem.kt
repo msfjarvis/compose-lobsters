@@ -55,16 +55,8 @@ fun LobstersCard(
       modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp).fillMaxWidth(),
       verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {
-      PostTitle(
-        title = post.title,
-      )
-      TagRow(
-        tags = post.tags,
-      )
-      SubmitterName(
-        text = "Submitted by ${post.submitterName}",
-        avatarUrl = "https://lobste.rs/${post.submitterAvatarUrl}",
-        contentDescription = "Submitted by ${post.submitterName}",
+      PostDetails(
+        post = post,
       )
       Row(
         modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
@@ -84,6 +76,23 @@ fun LobstersCard(
       }
     }
   }
+}
+
+@Composable
+fun PostDetails(
+  post: SavedPost,
+) {
+  PostTitle(
+    title = post.title,
+  )
+  TagRow(
+    tags = post.tags,
+  )
+  SubmitterName(
+    text = "Submitted by ${post.submitterName}",
+    avatarUrl = "https://lobste.rs/${post.submitterAvatarUrl}",
+    contentDescription = "Submitted by ${post.submitterName}",
+  )
 }
 
 @Composable

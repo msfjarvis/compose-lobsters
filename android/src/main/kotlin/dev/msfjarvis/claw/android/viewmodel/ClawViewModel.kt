@@ -7,19 +7,22 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.database.local.SavedPost
+import dev.msfjarvis.claw.model.LobstersPostDetails
 import javax.inject.Inject
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.withContext
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class ClawViewModel
 @Inject
 constructor(
-  api: LobstersApi,
+  private val api: LobstersApi,
   private val repository: SavedPostsRepository,
 ) : ViewModel() {
   var lastPagingSource: LobstersPagingSource? = null
@@ -45,6 +48,11 @@ constructor(
       repository.savePost(post)
     }
   }
+
+  suspend fun getPostComments(postId: String): LobstersPostDetails =
+    withContext(Dispatchers.IO) {
+      return@withContext api.getPostDetails(postId)
+    }
 
   fun reloadPosts() {
     lastPagingSource?.invalidate()

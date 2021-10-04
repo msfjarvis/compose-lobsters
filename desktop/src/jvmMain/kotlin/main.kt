@@ -14,26 +14,12 @@ import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import dev.msfjarvis.claw.common.posts.LobstersCard
+import dev.msfjarvis.claw.common.posts.toDbModel
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
-import dev.msfjarvis.claw.database.local.SavedPost
-import dev.msfjarvis.claw.model.LobstersPost
 import org.pushingpixels.aurora.component.AuroraVerticalScrollbar
 import org.pushingpixels.aurora.skin.ceruleanSkin
 import org.pushingpixels.aurora.window.AuroraWindow
-
-fun LobstersPost.toDbModel(): SavedPost {
-  return SavedPost(
-    shortId = shortId,
-    title = title,
-    url = url,
-    createdAt = createdAt,
-    commentsUrl = commentsUrl,
-    submitterName = submitter.username,
-    submitterAvatarUrl = submitter.avatarUrl,
-    tags = tags,
-  )
-}
 
 fun main() = application {
   val paging = Paging(rememberCoroutineScope())

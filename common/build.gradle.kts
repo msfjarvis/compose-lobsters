@@ -16,6 +16,7 @@ kotlin {
       api(compose.foundation)
       api(compose.material)
       api(projects.database)
+      api(projects.model)
     }
   }
   sourceSets["androidMain"].apply {

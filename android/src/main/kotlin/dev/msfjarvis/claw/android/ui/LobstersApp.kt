@@ -20,6 +20,9 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.navigationBarsPadding
@@ -40,6 +43,7 @@ fun LobstersApp(
   val systemUiController = rememberSystemUiController()
   val scaffoldState = rememberScaffoldState()
   val listState = rememberLazyListState()
+  val navController = rememberNavController()
   var isFabVisible by remember { mutableStateOf(true) }
   val nestedScrollConnection = remember {
     object : NestedScrollConnection {
@@ -79,15 +83,19 @@ fun LobstersApp(
           )
         },
       ) {
-        HottestPosts(
-          items,
-          listState,
-          viewModel::isPostSaved,
-          viewModel::toggleSave,
-          viewModel::reloadPosts,
-          urlLauncher::launch,
-          Modifier.nestedScroll(nestedScrollConnection),
-        )
+        NavHost(navController, startDestination = "hottest") {
+          composable("hottest") {
+            HottestPosts(
+              items,
+              listState,
+              viewModel::isPostSaved,
+              viewModel::toggleSave,
+              viewModel::reloadPosts,
+              urlLauncher::launch,
+              Modifier.nestedScroll(nestedScrollConnection),
+            )
+          }
+        }
       }
     }
   }

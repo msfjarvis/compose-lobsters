@@ -24,6 +24,7 @@ fun HottestPosts(
   toggleSave: suspend (SavedPost) -> Unit,
   reloadPosts: () -> Unit,
   launchUrl: (String) -> Unit,
+  viewComments: (String) -> Unit,
   modifier: Modifier,
 ) {
   val coroutineScope = rememberCoroutineScope()
@@ -40,6 +41,7 @@ fun HottestPosts(
         launchUrl = launchUrl,
         listState = listState,
         isSaved = isPostSaved,
+        viewComments = viewComments,
         toggleSave = { coroutineScope.launch { toggleSave(it) } },
         modifier = Modifier.padding(top = 16.dp).then(modifier),
       )

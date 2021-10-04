@@ -26,6 +26,7 @@ fun NetworkPosts(
   launchUrl: (String) -> Unit,
   isSaved: suspend (SavedPost) -> Boolean,
   toggleSave: (SavedPost) -> Unit,
+  viewComments: (String) -> Unit,
   modifier: Modifier = Modifier,
 ) {
   val coroutineScope = rememberCoroutineScope()
@@ -42,7 +43,7 @@ fun NetworkPosts(
           post = dbModel,
           isSaved = saved,
           viewPost = { launchUrl(item.url.ifEmpty { item.commentsUrl }) },
-          viewComments = { launchUrl(item.commentsUrl) },
+          viewComments = { viewComments(item.shortId) },
           toggleSave = { toggleSave(dbModel) },
           modifier = Modifier.padding(bottom = 16.dp, start = 16.dp, end = 16.dp),
         )

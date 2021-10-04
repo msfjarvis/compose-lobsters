@@ -28,6 +28,7 @@ import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.navigationBarsPadding
 import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import dev.msfjarvis.claw.android.comments.CommentsPage
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
@@ -92,7 +93,14 @@ fun LobstersApp(
               viewModel::toggleSave,
               viewModel::reloadPosts,
               urlLauncher::launch,
+              { navController.navigate("comments/$it") },
               Modifier.nestedScroll(nestedScrollConnection),
+            )
+          }
+          composable("comments/{postId}") { backStackEntry ->
+            CommentsPage(
+              postId = requireNotNull(backStackEntry.arguments?.getString("postId")),
+              getDetails = viewModel::getPostComments,
             )
           }
         }

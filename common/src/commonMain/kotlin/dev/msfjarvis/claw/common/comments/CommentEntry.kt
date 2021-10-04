@@ -1,10 +1,16 @@
 package dev.msfjarvis.claw.common.comments
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.Divider
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -41,18 +47,38 @@ fun CommentEntry(
 ) {
   val indentLevel = comment.indentLevel.toInt() - 1
   val startPadding = ((10 * indentLevel) + 16).dp
+  val text = parseHtml(comment.comment)
 
   Divider(color = Color.Gray.copy(0.4f))
-
-  Row(modifier = Modifier.padding(start = startPadding, end = 8.dp, top = 4.dp, bottom = 4.dp)) {
-    val text = parseHtml(comment.comment)
-    Column {
+  Row(modifier = Modifier.height(IntrinsicSize.Min)) {
+    CommentTreeColors(indentLevel = indentLevel)
+    Column(
+      modifier = Modifier.padding(start = startPadding, end = 8.dp, top = 4.dp, bottom = 4.dp)
+    ) {
       SubmitterName(
         text = "Submitted by ${comment.user.username}",
         avatarUrl = "https://lobste.rs/${comment.user.avatarUrl}",
         contentDescription = "Submitted by ${comment.user.username}",
       )
       Text(text = text, modifier = Modifier.padding(top = 8.dp))
+    }
+  }
+}
+
+@Composable
+private fun CommentTreeColors(
+  indentLevel: Int,
+  modifier: Modifier = Modifier,
+) {
+  Box(modifier = modifier) {
+    for (level in 1..indentLevel) {
+      Box(
+        modifier =
+          Modifier.padding(start = (level * 12).dp)
+            .fillMaxHeight()
+            .width(1.dp)
+            .background(CommentTreeColor[level])
+      )
     }
   }
 }

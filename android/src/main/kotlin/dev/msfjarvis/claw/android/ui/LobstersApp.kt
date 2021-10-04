@@ -1,5 +1,6 @@
 package dev.msfjarvis.claw.android.ui
 
+import android.text.Html
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -28,8 +29,8 @@ import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.navigationBarsPadding
 import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import dev.msfjarvis.claw.android.comments.CommentsPage
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
+import dev.msfjarvis.claw.common.comments.CommentsPage
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 
@@ -78,12 +79,12 @@ fun LobstersApp(
         topBar = { ClawAppBar(modifier = Modifier.statusBarsPadding()) },
         floatingActionButton = {
           ClawFab(
-            isFabVisible = isFabVisible,
+            isFabVisible = isFabVisible && navController.currentDestination?.route == "hottest",
             listState = listState,
             modifier = Modifier.navigationBarsPadding(),
           )
         },
-      ) {
+      ) { paddingValues ->
         NavHost(navController, startDestination = "hottest") {
           composable("hottest") {
             HottestPosts(
@@ -101,6 +102,8 @@ fun LobstersApp(
             CommentsPage(
               postId = requireNotNull(backStackEntry.arguments?.getString("postId")),
               getDetails = viewModel::getPostComments,
+              parseHtml = { source -> Html.fromHtml(source).toString().trim() },
+              paddingValues = paddingValues,
             )
           }
         }

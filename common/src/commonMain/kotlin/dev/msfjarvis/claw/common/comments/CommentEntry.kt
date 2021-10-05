@@ -4,16 +4,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.Divider
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -43,15 +41,15 @@ fun CommentsHeader(
 @Composable
 fun CommentEntry(
   comment: Comment,
-  parseHtml: (String) -> String,
+  renderMarkdown: @Composable (comment: String, modifier: Modifier) -> Unit,
 ) {
   val indentLevel = comment.indentLevel.toInt() - 1
   val startPadding = ((10 * indentLevel) + 16).dp
-  val text = parseHtml(comment.comment)
 
   Divider(color = Color.Gray.copy(0.4f))
-  Row(modifier = Modifier.height(IntrinsicSize.Min)) {
-    CommentTreeColors(indentLevel = indentLevel)
+  Row(modifier = Modifier.wrapContentHeight()) {
+    // Don't work without IntrinsicSize, which we cannot use with the Android markdown implementation
+    // CommentTreeColors(indentLevel = indentLevel)
     Column(
       modifier = Modifier.padding(start = startPadding, end = 8.dp, top = 4.dp, bottom = 4.dp)
     ) {
@@ -60,7 +58,7 @@ fun CommentEntry(
         avatarUrl = "https://lobste.rs/${comment.user.avatarUrl}",
         contentDescription = "Submitted by ${comment.user.username}",
       )
-      Text(text = text, modifier = Modifier.padding(top = 8.dp))
+      renderMarkdown(comment.comment, Modifier.padding(top = 8.dp))
     }
   }
 }

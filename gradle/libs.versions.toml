@@ -3,6 +3,7 @@ accompanist = "0.19.0"
 aurora = "0.0.54-SNAPSHOT"
 coroutines = "1.5.2"
 hilt = "2.39"
+richtext = "0.8.1"
 serialization = "1.3.0"
 sqldelight = "1.5.1"
 
@@ -36,6 +37,11 @@ kamel-image = "com.alialbaali.kamel:kamel-image:0.2.2"
 dagger-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 dagger-hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 dagger-hilt-core = { module = "com.google.dagger:hilt-core", version.ref = "hilt" }
+
+compose-richtext-ui = { module = "com.halilibo.compose-richtext:richtext-ui", version.ref = "richtext" }
+compose-richtext-material = { module = "com.halilibo.compose-richtext:richtext-ui-material", version.ref = "richtext" }
+compose-richtext-markdown = { module = "com.halilibo.compose-richtext:richtext-commonmark", version.ref = "richtext" }
+copydown = "io.github.furstenheim:copy_down:1.0"
 
 multiplatform-paging = "dev.msfjarvis.paging:multiplatform-paging:0.4.5-SNAPSHOT"
 

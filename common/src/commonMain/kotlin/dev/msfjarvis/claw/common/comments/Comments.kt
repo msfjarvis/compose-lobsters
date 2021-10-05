@@ -28,7 +28,7 @@ import dev.msfjarvis.lobsters.ui.comments.NetworkState
 @Composable
 private fun CommentsPageInternal(
   details: LobstersPostDetails,
-  parseHtml: (String) -> String,
+  renderMarkdown: @Composable (comment: String, modifier: Modifier) -> Unit,
   bottomPadding: Dp,
 ) {
   LazyColumn(Modifier.padding(bottom = bottomPadding)) {
@@ -36,7 +36,7 @@ private fun CommentsPageInternal(
 
     item { Spacer(modifier = Modifier.height(8.dp)) }
 
-    items(details.comments) { item -> CommentEntry(item, parseHtml) }
+    items(details.comments) { item -> CommentEntry(item, renderMarkdown) }
 
     item { Divider(color = Color.Gray.copy(0.4f)) }
   }
@@ -47,7 +47,7 @@ private fun CommentsPageInternal(
 fun CommentsPage(
   postId: String,
   getDetails: suspend (String) -> LobstersPostDetails,
-  parseHtml: (String) -> String,
+  renderMarkdown: @Composable (comment: String, modifier: Modifier) -> Unit,
   paddingValues: PaddingValues,
 ) {
   var postDetails: NetworkState by remember { mutableStateOf(NetworkState.Loading) }
@@ -58,7 +58,7 @@ fun CommentsPage(
     is NetworkState.Success<*> -> {
       CommentsPageInternal(
         (postDetails as NetworkState.Success<LobstersPostDetails>).data,
-        parseHtml,
+        renderMarkdown,
         paddingValues.calculateBottomPadding(),
       )
     }

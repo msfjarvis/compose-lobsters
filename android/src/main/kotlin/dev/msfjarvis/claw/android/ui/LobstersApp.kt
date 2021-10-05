@@ -1,6 +1,5 @@
 package dev.msfjarvis.claw.android.ui
 
-import android.text.Html
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -29,10 +28,13 @@ import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.navigationBarsPadding
 import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.halilibo.richtext.markdown.Markdown
+import com.halilibo.richtext.ui.material.MaterialRichText
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.common.comments.CommentsPage
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
+import io.github.furstenheim.CopyDown
 
 private const val ScrollDelta = 50
 
@@ -42,6 +44,7 @@ fun LobstersApp(
   viewModel: ClawViewModel = viewModel(),
   urlLauncher: UrlLauncher,
 ) {
+  val copydown = remember { CopyDown() }
   val systemUiController = rememberSystemUiController()
   val scaffoldState = rememberScaffoldState()
   val listState = rememberLazyListState()
@@ -102,7 +105,10 @@ fun LobstersApp(
             CommentsPage(
               postId = requireNotNull(backStackEntry.arguments?.getString("postId")),
               getDetails = viewModel::getPostComments,
-              parseHtml = { source -> Html.fromHtml(source).toString().trim() },
+              renderMarkdown = { source, modifier ->
+                val markdown = copydown.convert(source)
+                MaterialRichText(modifier = modifier) { Markdown(markdown) }
+              },
               paddingValues = paddingValues,
             )
           }

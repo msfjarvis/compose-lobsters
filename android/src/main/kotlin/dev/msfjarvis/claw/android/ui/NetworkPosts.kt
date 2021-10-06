@@ -13,8 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
-import dev.msfjarvis.claw.android.ext.toDbModel
 import dev.msfjarvis.claw.common.posts.LobstersCard
+import dev.msfjarvis.claw.common.posts.toDbModel
 import dev.msfjarvis.claw.database.local.SavedPost
 import dev.msfjarvis.claw.model.LobstersPost
 import kotlinx.coroutines.launch
@@ -26,6 +26,7 @@ fun NetworkPosts(
   launchUrl: (String) -> Unit,
   isSaved: suspend (SavedPost) -> Boolean,
   toggleSave: (SavedPost) -> Unit,
+  viewComments: (String) -> Unit,
   modifier: Modifier = Modifier,
 ) {
   val coroutineScope = rememberCoroutineScope()
@@ -42,7 +43,7 @@ fun NetworkPosts(
           post = dbModel,
           isSaved = saved,
           viewPost = { launchUrl(item.url.ifEmpty { item.commentsUrl }) },
-          viewComments = { launchUrl(item.commentsUrl) },
+          viewComments = { viewComments(item.shortId) },
           toggleSave = { toggleSave(dbModel) },
           modifier = Modifier.padding(bottom = 16.dp, start = 16.dp, end = 16.dp),
         )

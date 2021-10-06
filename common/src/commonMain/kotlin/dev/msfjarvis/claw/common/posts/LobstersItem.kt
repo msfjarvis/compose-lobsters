@@ -37,18 +37,6 @@ import dev.msfjarvis.claw.common.theme.titleColor
 import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.database.local.SavedPost
 
-val TEST_POST =
-  SavedPost(
-    shortId = "zqyydb",
-    title = "k2k20 hackathon report: Bob Beck on LibreSSL progress",
-    url = "https://undeadly.org/cgi?action=article;sid=20200921105847",
-    createdAt = "2020-09-21T07:11:14.000-05:00",
-    commentsUrl = "https://lobste.rs/s/zqyydb/k2k20_hackathon_report_bob_beck_on",
-    submitterName = "Vigdis",
-    submitterAvatarUrl = "https://avatars.githubusercontent.com/u/13348378?v=4",
-    tags = listOf("openbsd", "linux", "containers", "hack the planet", "no thanks"),
-  )
-
 @Composable
 @OptIn(ExperimentalMaterialApi::class)
 fun LobstersCard(
@@ -67,16 +55,8 @@ fun LobstersCard(
       modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp).fillMaxWidth(),
       verticalArrangement = Arrangement.spacedBy(4.dp),
     ) {
-      PostTitle(
-        title = post.title,
-      )
-      TagRow(
-        tags = post.tags,
-      )
-      SubmitterName(
-        text = "Submitted by ${post.submitterName}",
-        avatarUrl = "https://lobste.rs/${post.submitterAvatarUrl}",
-        contentDescription = "Submitted by ${post.submitterName}",
+      PostDetails(
+        post = post,
       )
       Row(
         modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
@@ -96,6 +76,23 @@ fun LobstersCard(
       }
     }
   }
+}
+
+@Composable
+fun PostDetails(
+  post: SavedPost,
+) {
+  PostTitle(
+    title = post.title,
+  )
+  TagRow(
+    tags = post.tags,
+  )
+  SubmitterName(
+    text = "Submitted by ${post.submitterName}",
+    avatarUrl = "https://lobste.rs/${post.submitterAvatarUrl}",
+    contentDescription = "Submitted by ${post.submitterName}",
+  )
 }
 
 @Composable

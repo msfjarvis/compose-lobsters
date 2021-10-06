@@ -28,8 +28,7 @@ import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.navigationBarsPadding
 import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.halilibo.richtext.markdown.Markdown
-import com.halilibo.richtext.ui.material.MaterialRichText
+import com.mikepenz.markdown.Markdown
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.common.comments.CommentsPage
 import dev.msfjarvis.claw.common.theme.LobstersTheme
@@ -107,7 +106,7 @@ fun LobstersApp(
               getDetails = viewModel::getPostComments,
               renderMarkdown = { source, modifier ->
                 val markdown = copydown.convert(source)
-                MaterialRichText(modifier = modifier) { Markdown(markdown) }
+                Markdown(markdown, modifier = modifier)
               },
               paddingValues = paddingValues,
             )

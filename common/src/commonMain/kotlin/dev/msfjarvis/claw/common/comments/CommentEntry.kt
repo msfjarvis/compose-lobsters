@@ -45,14 +45,11 @@ fun CommentEntry(
   renderMarkdown: @Composable (comment: String, modifier: Modifier) -> Unit,
 ) {
   val indentLevel = comment.indentLevel.toInt() - 1
-  val startPadding = ((10 * indentLevel) + 16).dp
 
   Divider(color = Color.Gray.copy(0.4f))
   Row(modifier = Modifier.height(IntrinsicSize.Min)) {
     CommentTreeColors(indentLevel = indentLevel)
-    Column(
-      modifier = Modifier.padding(start = startPadding, end = 8.dp, top = 4.dp, bottom = 4.dp)
-    ) {
+    Column(modifier = Modifier.padding(start = 12.dp, end = 8.dp, top = 4.dp, bottom = 4.dp)) {
       SubmitterName(
         text = "Submitted by ${comment.user.username}",
         avatarUrl = "https://lobste.rs/${comment.user.avatarUrl}",
@@ -72,7 +69,7 @@ private fun CommentTreeColors(
     for (level in 1..indentLevel) {
       Box(
         modifier =
-          Modifier.padding(start = (level * 12).dp)
+          Modifier.padding(start = (12 + ((level - 1) * 10)).dp)
             .fillMaxHeight()
             .width(1.dp)
             .background(CommentTreeColor[level])

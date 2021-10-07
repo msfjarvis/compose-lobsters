@@ -40,7 +40,7 @@ dagger-hilt-core = { module = "com.google.dagger:hilt-core", version.ref = "hilt
 multiplatform-markdown-android = "com.mikepenz:multiplatform-markdown-renderer-android:0.0.1"
 copydown = "io.github.furstenheim:copy_down:1.0"
 
-multiplatform-paging = "dev.msfjarvis.paging:multiplatform-paging:0.4.5-SNAPSHOT"
+multiplatform-paging = "io.github.kuuuurt:multiplatform-paging:0.4.5"
 
 retrofit-lib = "com.squareup.retrofit2:retrofit:2.9.0"
 retrofit-kotlinxSerializationConverter = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"

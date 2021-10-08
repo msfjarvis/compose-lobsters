@@ -16,6 +16,7 @@ import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.rememberWindowState
 import dev.msfjarvis.claw.api.LobstersApi
+import dev.msfjarvis.claw.common.paging.Paging
 import dev.msfjarvis.claw.common.posts.LobstersCard
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.posts.toDbModel
@@ -30,7 +31,8 @@ import org.pushingpixels.aurora.window.AuroraWindow
 import org.pushingpixels.aurora.window.auroraApplication
 
 fun main() = auroraApplication {
-  val paging = Paging(rememberCoroutineScope())
+  val api = Api()
+  val paging = Paging(rememberCoroutineScope(), api.api::getHottestPosts)
   val items = paging.pagingData.collectAsLazyPagingItems()
   val urlLauncher = UrlLauncher()
   val state =

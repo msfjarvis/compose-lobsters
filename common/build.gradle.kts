@@ -17,6 +17,7 @@ kotlin {
       api(compose.foundation)
       api(compose.material)
       api(compose.material3)
+      api(libs.multiplatform.paging)
       api(projects.database)
       api(projects.model)
       implementation(libs.compose.richtext.markdown)

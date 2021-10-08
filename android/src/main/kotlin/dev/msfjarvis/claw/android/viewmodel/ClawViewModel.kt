@@ -2,11 +2,9 @@ package dev.msfjarvis.claw.android.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.msfjarvis.claw.android.paging.LobstersPagingSource
 import dev.msfjarvis.claw.api.LobstersApi
+import dev.msfjarvis.claw.common.paging.Paging
 import dev.msfjarvis.claw.database.local.SavedPost
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
@@ -25,13 +23,10 @@ constructor(
   private val repository: SavedPostsRepository,
 ) : ViewModel() {
   private var lastPagingSource: LobstersPagingSource? = null
-  private val pager =
-    Pager(PagingConfig(20)) {
-      LobstersPagingSource(api::getHottestPosts).also { lastPagingSource = it }
-    }
+  private val pager = Paging(viewModelScope, api::getHottestPosts)
 
   val pagerFlow
-    get() = pager.flow
+    get() = pager.pagingData
 
   val savedPosts
     get() = repository.savedPosts
@@ -52,7 +47,5 @@ constructor(
   suspend fun getPostComments(postId: String) =
     withContext(Dispatchers.IO) { api.getPostDetails(postId) }
 
-  fun reloadPosts() {
-    lastPagingSource?.invalidate()
-  }
+  fun reloadPosts() {}
 }

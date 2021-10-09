@@ -9,7 +9,7 @@
     android:label="Claw"
     android:roundIcon="@mipmap/ic_launcher"
     android:supportsRtl="true"
-    android:theme="@style/Theme.Claw">
+    android:theme="@style/Theme.Claw.SplashScreen">
     <activity
       android:name=".MainActivity"
       android:configChanges="colorMode|density|fontScale|keyboard|keyboardHidden|layoutDirection|locale|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"

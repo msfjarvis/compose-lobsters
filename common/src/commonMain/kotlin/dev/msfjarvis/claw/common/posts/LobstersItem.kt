@@ -1,5 +1,3 @@
-@file:Suppress("FunctionName")
-
 package dev.msfjarvis.claw.common.posts
 
 import androidx.compose.animation.Crossfade

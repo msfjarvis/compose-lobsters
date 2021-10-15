@@ -50,6 +50,7 @@ fun LobstersApp(
   val scaffoldState = rememberScaffoldState()
   val listState = rememberLazyListState()
   val navController = rememberNavController()
+  var currentDestination by remember { mutableStateOf(Destinations.Hottest) }
   var isFabVisible by remember { mutableStateOf(true) }
   val nestedScrollConnection = remember {
     object : NestedScrollConnection {
@@ -74,13 +75,16 @@ fun LobstersApp(
       }
 
       override fun viewComments(postId: String) {
-        navController.navigate("comments/$postId")
+        navController.navigate(Destinations.Comments.format(postId))
       }
 
       override fun toggleSave(post: SavedPost) {
         viewModel.toggleSave(post)
       }
     }
+  }
+  navController.addOnDestinationChangedListener { _, destination, _ ->
+    currentDestination = destination.route ?: Destinations.Hottest
   }
   LobstersTheme(darkTheme = isSystemInDarkTheme()) {
     ProvideWindowInsets {
@@ -98,7 +102,7 @@ fun LobstersApp(
         topBar = { ClawAppBar(modifier = Modifier.statusBarsPadding()) },
         floatingActionButton = {
           ClawFab(
-            isFabVisible = isFabVisible && navController.currentDestination?.route == "hottest",
+            isFabVisible = isFabVisible && currentDestination == "hottest",
             listState = listState,
             modifier = Modifier.navigationBarsPadding(),
           )
@@ -115,7 +119,7 @@ fun LobstersApp(
               Modifier.nestedScroll(nestedScrollConnection),
             )
           }
-          composable("comments/{postId}") { backStackEntry ->
+          composable(Destinations.Comments.format("{postId}")) { backStackEntry ->
             CommentsPage(
               postId = requireNotNull(backStackEntry.arguments?.getString("postId")),
               getDetails = viewModel::getPostComments,

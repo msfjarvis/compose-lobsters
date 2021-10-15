@@ -1,6 +1,7 @@
 package dev.msfjarvis.claw.android.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,6 +16,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -39,13 +41,15 @@ constructor(
     return savedPosts.mapLatest { posts -> post in posts }.last()
   }
 
-  suspend fun toggleSave(post: SavedPost) {
-    val saved = isPostSaved(post)
-    println("saved=$saved")
-    if (saved) {
-      repository.removePost(post)
-    } else {
-      repository.savePost(post)
+  fun toggleSave(post: SavedPost) {
+    viewModelScope.launch {
+      val saved = isPostSaved(post)
+      println("saved=$saved")
+      if (saved) {
+        repository.removePost(post)
+      } else {
+        repository.savePost(post)
+      }
     }
   }
 

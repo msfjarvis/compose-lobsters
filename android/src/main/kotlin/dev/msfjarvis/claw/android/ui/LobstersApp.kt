@@ -31,8 +31,10 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.mikepenz.markdown.Markdown
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.common.comments.CommentsPage
+import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
+import dev.msfjarvis.claw.database.local.SavedPost
 import io.github.furstenheim.CopyDown
 
 private const val ScrollDelta = 50
@@ -65,6 +67,21 @@ fun LobstersApp(
       }
     }
   }
+  val postActions = remember {
+    object : PostActions {
+      override fun viewPost(postUrl: String, commentsUrl: String) {
+        urlLauncher.launch(postUrl.ifEmpty { commentsUrl })
+      }
+
+      override fun viewComments(postId: String) {
+        navController.navigate("comments/$postId")
+      }
+
+      override fun toggleSave(post: SavedPost) {
+        viewModel.toggleSave(post)
+      }
+    }
+  }
   LobstersTheme(darkTheme = isSystemInDarkTheme()) {
     ProvideWindowInsets {
       val useDarkIcons = MaterialTheme.colors.isLight
@@ -93,10 +110,8 @@ fun LobstersApp(
               items,
               listState,
               viewModel::isPostSaved,
-              viewModel::toggleSave,
               viewModel::reloadPosts,
-              urlLauncher::launch,
-              { navController.navigate("comments/$it") },
+              postActions,
               Modifier.nestedScroll(nestedScrollConnection),
             )
           }

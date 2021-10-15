@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
 import dev.msfjarvis.claw.common.posts.LobstersCard
+import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.posts.toDbModel
 import dev.msfjarvis.claw.database.local.SavedPost
 import dev.msfjarvis.claw.model.LobstersPost
@@ -23,10 +24,8 @@ import kotlinx.coroutines.launch
 fun NetworkPosts(
   items: LazyPagingItems<LobstersPost>,
   listState: LazyListState,
-  launchUrl: (String) -> Unit,
   isSaved: suspend (SavedPost) -> Boolean,
-  toggleSave: (SavedPost) -> Unit,
-  viewComments: (String) -> Unit,
+  postActions: PostActions,
   modifier: Modifier = Modifier,
 ) {
   val coroutineScope = rememberCoroutineScope()
@@ -42,9 +41,7 @@ fun NetworkPosts(
         LobstersCard(
           post = dbModel,
           isSaved = saved,
-          viewPost = { launchUrl(item.url.ifEmpty { item.commentsUrl }) },
-          viewComments = { viewComments(item.shortId) },
-          toggleSave = { toggleSave(dbModel) },
+          postActions = postActions,
           modifier = Modifier.padding(bottom = 16.dp, start = 16.dp, end = 16.dp),
         )
       }

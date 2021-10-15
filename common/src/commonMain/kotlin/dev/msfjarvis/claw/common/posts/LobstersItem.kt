@@ -40,14 +40,12 @@ import dev.msfjarvis.claw.database.local.SavedPost
 fun LobstersCard(
   post: SavedPost,
   isSaved: Boolean,
-  viewPost: () -> Unit,
-  viewComments: (String) -> Unit,
-  toggleSave: () -> Unit,
+  postActions: PostActions,
   modifier: Modifier = Modifier,
 ) {
   Card(
     modifier = Modifier.background(MaterialTheme.colors.primarySurface).then(modifier),
-    onClick = { viewPost() },
+    onClick = { postActions.viewPost(post.url, post.commentsUrl) },
   ) {
     Column(
       modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp).fillMaxWidth(),
@@ -63,13 +61,13 @@ fun LobstersCard(
       ) {
         SaveButton(
           isSaved = isSaved,
-          onClick = toggleSave,
+          onClick = { postActions.toggleSave(post) },
         )
         Spacer(
           modifier = Modifier.width(8.dp),
         )
         CommentsButton(
-          onClick = { viewComments(post.shortId) },
+          onClick = { postActions.viewComments(post.shortId) },
         )
       }
     }

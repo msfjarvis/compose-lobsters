@@ -31,11 +31,11 @@ configure<com.diffplug.gradle.spotless.SpotlessExtension> {
   kotlin {
     target("**/*.kt")
     targetExclude("**/build/**")
-    ktfmt("0.28").googleStyle()
+    ktfmt("0.29").googleStyle()
   }
   kotlinGradle {
     target("**/*.gradle.kts")
-    ktfmt("0.28").googleStyle()
+    ktfmt("0.29").googleStyle()
   }
 }
 

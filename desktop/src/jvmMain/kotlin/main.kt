@@ -22,7 +22,7 @@ import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 import dev.msfjarvis.claw.database.local.SavedPost
 import org.pushingpixels.aurora.component.AuroraVerticalScrollbar
-import org.pushingpixels.aurora.skin.ceruleanSkin
+import org.pushingpixels.aurora.theming.ceruleanSkin
 import org.pushingpixels.aurora.window.AuroraWindow
 
 fun main() = application {

@@ -17,7 +17,7 @@ kotlin {
       implementation(projects.api)
       implementation(projects.common)
       implementation(libs.aurora.component)
-      implementation(libs.aurora.skin)
+      implementation(libs.aurora.theming)
       implementation(libs.aurora.window)
       implementation(libs.kotlinx.serialization.json)
       implementation(libs.multiplatform.paging)

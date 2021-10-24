@@ -1,7 +1,9 @@
 package dev.msfjarvis.claw.common.posts
 
 import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,7 +18,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.IconToggleButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -36,7 +37,7 @@ import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.database.local.SavedPost
 
 @Composable
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
 fun LobstersCard(
   post: SavedPost,
   isSaved: Boolean,
@@ -67,7 +68,11 @@ fun LobstersCard(
           modifier = Modifier.width(8.dp),
         )
         CommentsButton(
-          onClick = { postActions.viewComments(post.shortId) },
+          modifier =
+            Modifier.combinedClickable(
+              onClick = { postActions.viewComments(post.shortId) },
+              onLongClick = { postActions.viewCommentsPage(post.commentsUrl) },
+            ),
         )
       }
     }
@@ -173,19 +178,14 @@ fun SaveButton(
 
 @Composable
 fun CommentsButton(
-  onClick: () -> Unit,
   modifier: Modifier = Modifier,
 ) {
-  IconButton(
-    onClick = onClick,
-    modifier = modifier.requiredSize(32.dp),
-  ) {
-    Icon(
-      painter = commentIcon,
-      tint = MaterialTheme.colors.secondary,
-      contentDescription = "Open comments",
-    )
-  }
+  Icon(
+    painter = commentIcon,
+    tint = MaterialTheme.colors.secondary,
+    contentDescription = "Open comments",
+    modifier = modifier,
+  )
 }
 
 @Composable

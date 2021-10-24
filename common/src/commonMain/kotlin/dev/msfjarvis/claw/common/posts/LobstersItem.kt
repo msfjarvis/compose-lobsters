@@ -3,6 +3,7 @@ package dev.msfjarvis.claw.common.posts
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,7 +19,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
-import androidx.compose.material.IconToggleButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.primarySurface
@@ -62,7 +62,7 @@ fun LobstersCard(
       ) {
         SaveButton(
           isSaved = isSaved,
-          onClick = { postActions.toggleSave(post) },
+          modifier = Modifier.clickable { postActions.toggleSave(post) },
         )
         Spacer(
           modifier = Modifier.width(8.dp),
@@ -158,21 +158,15 @@ fun SubmitterNameText(
 @Composable
 fun SaveButton(
   isSaved: Boolean,
-  onClick: () -> Unit,
   modifier: Modifier = Modifier,
 ) {
-  IconToggleButton(
-    checked = isSaved,
-    onCheckedChange = { onClick.invoke() },
-    modifier = modifier.requiredSize(32.dp),
-  ) {
-    Crossfade(targetState = isSaved) { saved ->
-      Icon(
-        painter = if (saved) heartIcon else heartBorderIcon,
-        tint = MaterialTheme.colors.secondary,
-        contentDescription = if (saved) "Remove from saved posts" else "Add to saved posts",
-      )
-    }
+  Crossfade(targetState = isSaved) { saved ->
+    Icon(
+      painter = if (saved) heartIcon else heartBorderIcon,
+      tint = MaterialTheme.colors.secondary,
+      contentDescription = if (saved) "Remove from saved posts" else "Add to saved posts",
+      modifier = modifier,
+    )
   }
 }
 

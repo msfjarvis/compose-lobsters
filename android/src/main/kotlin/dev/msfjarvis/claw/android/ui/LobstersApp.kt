@@ -78,6 +78,10 @@ fun LobstersApp(
         navController.navigate(Destinations.Comments.format(postId))
       }
 
+      override fun viewCommentsPage(commentsUrl: String) {
+        urlLauncher.launch(commentsUrl)
+      }
+
       override fun toggleSave(post: SavedPost) {
         viewModel.toggleSave(post)
       }

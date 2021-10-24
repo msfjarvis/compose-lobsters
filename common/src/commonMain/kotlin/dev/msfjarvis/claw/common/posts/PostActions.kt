@@ -5,5 +5,6 @@ import dev.msfjarvis.claw.database.local.SavedPost
 interface PostActions {
   fun viewPost(postUrl: String, commentsUrl: String)
   fun viewComments(postId: String)
+  fun viewCommentsPage(commentsUrl: String)
   fun toggleSave(post: SavedPost)
 }

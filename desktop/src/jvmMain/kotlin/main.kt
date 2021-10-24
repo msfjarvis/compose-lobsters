@@ -44,6 +44,10 @@ fun main() = application {
         urlLauncher.launch("${LobstersApi.BASE_URL}/s/${postId}")
       }
 
+      override fun viewCommentsPage(commentsUrl: String) {
+        urlLauncher.launch(commentsUrl)
+      }
+
       override fun toggleSave(post: SavedPost) {}
     }
   }

@@ -44,7 +44,7 @@ fun LobstersCard(
   modifier: Modifier = Modifier,
 ) {
   Card(
-    modifier = Modifier.background(MaterialTheme.colors.primarySurface).then(modifier),
+    modifier = modifier.background(MaterialTheme.colors.primarySurface),
     onClick = { postActions.viewPost(post.url, post.commentsUrl) },
   ) {
     Column(
@@ -100,7 +100,7 @@ fun PostTitle(
     text = title,
     color = titleColor,
     fontWeight = FontWeight.Bold,
-    modifier = Modifier.then(modifier),
+    modifier = modifier,
   )
 }
 
@@ -112,7 +112,7 @@ fun SubmitterName(
   modifier: Modifier = Modifier,
 ) {
   Row(
-    modifier = Modifier.then(modifier),
+    modifier = modifier,
     verticalAlignment = Alignment.CenterVertically,
   ) {
     SubmitterAvatar(
@@ -130,11 +130,12 @@ fun SubmitterName(
 fun SubmitterAvatar(
   avatarUrl: String,
   contentDescription: String,
+  modifier: Modifier = Modifier,
 ) {
   NetworkImage(
     url = avatarUrl,
     contentDescription = contentDescription,
-    modifier = Modifier.requiredSize(24.dp).clip(CircleShape),
+    modifier = modifier.requiredSize(24.dp).clip(CircleShape),
   )
 }
 
@@ -145,7 +146,7 @@ fun SubmitterNameText(
 ) {
   Text(
     text = text,
-    modifier = Modifier.then(modifier),
+    modifier = modifier,
   )
 }
 
@@ -158,7 +159,7 @@ fun SaveButton(
   IconToggleButton(
     checked = isSaved,
     onCheckedChange = { onClick.invoke() },
-    modifier = Modifier.requiredSize(32.dp).then(modifier),
+    modifier = modifier.requiredSize(32.dp),
   ) {
     Crossfade(targetState = isSaved) { saved ->
       Icon(
@@ -177,7 +178,7 @@ fun CommentsButton(
 ) {
   IconButton(
     onClick = onClick,
-    modifier = Modifier.requiredSize(32.dp).then(modifier),
+    modifier = modifier.requiredSize(32.dp),
   ) {
     Icon(
       painter = commentIcon,
@@ -193,7 +194,7 @@ fun TagRow(
   modifier: Modifier = Modifier,
 ) {
   Box(
-    modifier = Modifier.then(modifier),
+    modifier = modifier,
   ) {
     FlowRow(
       mainAxisSpacing = 8.dp,

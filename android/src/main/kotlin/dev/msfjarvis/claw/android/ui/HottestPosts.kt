@@ -37,7 +37,7 @@ fun HottestPosts(
         listState = listState,
         isSaved = isPostSaved,
         postActions = postActions,
-        modifier = Modifier.padding(top = 16.dp).then(modifier),
+        modifier = modifier.padding(top = 16.dp),
       )
     }
   }

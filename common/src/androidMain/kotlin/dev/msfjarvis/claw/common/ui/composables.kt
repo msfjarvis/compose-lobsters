@@ -24,6 +24,6 @@ actual fun NetworkImage(
         },
       ),
     contentDescription = contentDescription,
-    modifier = Modifier.then(modifier),
+    modifier = modifier,
   )
 }

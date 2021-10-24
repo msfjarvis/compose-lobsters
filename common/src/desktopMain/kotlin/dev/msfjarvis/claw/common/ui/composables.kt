@@ -14,7 +14,7 @@ actual fun NetworkImage(
   KamelImage(
     resource = lazyPainterResource(url),
     contentDescription = contentDescription,
-    modifier = Modifier.then(modifier),
+    modifier = modifier,
     crossfade = true,
   )
 }

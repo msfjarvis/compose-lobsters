@@ -31,7 +31,7 @@ fun NetworkPosts(
   val coroutineScope = rememberCoroutineScope()
   LazyColumn(
     state = listState,
-    modifier = Modifier.then(modifier),
+    modifier = modifier,
   ) {
     items(items) { item ->
       if (item != null) {

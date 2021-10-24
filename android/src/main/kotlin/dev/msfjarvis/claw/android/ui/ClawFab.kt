@@ -41,7 +41,7 @@ fun ClawFab(
         targetOffsetY = { fullHeight -> fullHeight },
         animationSpec = tween(durationMillis = AnimationDuration, easing = FastOutLinearInEasing),
       ),
-    modifier = Modifier.then(modifier),
+    modifier = modifier,
   ) {
     FloatingActionButton(onClick = { coroutineScope.launch { listState.animateScrollToItem(0) } }) {
       Icon(

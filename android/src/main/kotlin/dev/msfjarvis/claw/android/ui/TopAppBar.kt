@@ -22,6 +22,6 @@ fun ClawAppBar(
         modifier = Modifier.padding(horizontal = 16.dp),
       )
     },
-    modifier = Modifier.then(modifier),
+    modifier = modifier,
   )
 }

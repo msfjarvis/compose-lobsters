@@ -28,7 +28,6 @@ import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.navigationBarsPadding
 import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.mikepenz.markdown.Markdown
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.common.comments.CommentsPage
 import dev.msfjarvis.claw.common.posts.PostActions
@@ -127,10 +126,7 @@ fun LobstersApp(
             CommentsPage(
               postId = requireNotNull(backStackEntry.arguments?.getString("postId")),
               getDetails = viewModel::getPostComments,
-              renderMarkdown = { source, modifier ->
-                val markdown = copydown.convert(source)
-                Markdown(markdown, modifier = modifier)
-              },
+              htmlToMarkdown = { source -> copydown.convert(source) },
               paddingValues = paddingValues,
             )
           }

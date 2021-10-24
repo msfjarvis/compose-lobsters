@@ -17,6 +17,7 @@ kotlin {
       api(compose.material)
       api(projects.database)
       api(projects.model)
+      implementation(libs.multiplatform.markdown)
     }
   }
   sourceSets["androidMain"].apply {

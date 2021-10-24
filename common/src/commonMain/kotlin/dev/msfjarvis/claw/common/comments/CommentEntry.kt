@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.mikepenz.markdown.Markdown
 import dev.msfjarvis.claw.common.posts.PostDetails
 import dev.msfjarvis.claw.common.posts.SubmitterName
 import dev.msfjarvis.claw.common.posts.toDbModel
@@ -26,6 +27,7 @@ import dev.msfjarvis.claw.model.LobstersPostDetails
 @Composable
 fun CommentsHeader(
   postDetails: LobstersPostDetails,
+  htmlToMarkdown: (html: String) -> String,
 ) {
   Surface {
     Column(
@@ -35,6 +37,7 @@ fun CommentsHeader(
       PostDetails(
         post = postDetails.toDbModel(),
       )
+      Markdown(htmlToMarkdown(postDetails.description))
     }
   }
 }
@@ -42,7 +45,7 @@ fun CommentsHeader(
 @Composable
 fun CommentEntry(
   comment: Comment,
-  renderMarkdown: @Composable (comment: String, modifier: Modifier) -> Unit,
+  htmlToMarkdown: (html: String) -> String,
 ) {
   val indentLevel = comment.indentLevel.toInt() - 1
 
@@ -55,7 +58,7 @@ fun CommentEntry(
         avatarUrl = "https://lobste.rs/${comment.user.avatarUrl}",
         contentDescription = "Submitted by ${comment.user.username}",
       )
-      renderMarkdown(comment.comment, Modifier.padding(top = 8.dp))
+      Markdown(htmlToMarkdown(comment.comment), Modifier.padding(top = 8.dp))
     }
   }
 }

@@ -32,7 +32,7 @@ aurora-theming = { module = "org.pushing-pixels:aurora-theming", version.ref = "
 aurora-window = { module = "org.pushing-pixels:aurora-window", version.ref = "aurora" }
 
 coil-compose = "io.coil-kt:coil-compose:2.0.0-alpha01"
-kamel-image = "com.alialbaali.kamel:kamel-image:0.2.2"
+kamel-image = "com.alialbaali.kamel:kamel-image:0.3.0"
 
 dagger-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 dagger-hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }

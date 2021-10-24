@@ -4,10 +4,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -18,7 +18,6 @@ import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.posts.toDbModel
 import dev.msfjarvis.claw.database.local.SavedPost
 import dev.msfjarvis.claw.model.LobstersPost
-import kotlinx.coroutines.launch
 
 @Composable
 fun NetworkPosts(
@@ -28,7 +27,6 @@ fun NetworkPosts(
   postActions: PostActions,
   modifier: Modifier = Modifier,
 ) {
-  val coroutineScope = rememberCoroutineScope()
   LazyColumn(
     state = listState,
     modifier = modifier,
@@ -37,7 +35,7 @@ fun NetworkPosts(
       if (item != null) {
         val dbModel = item.toDbModel()
         var saved by remember(dbModel) { mutableStateOf(false) }
-        coroutineScope.launch { saved = isSaved(dbModel) }
+        LaunchedEffect(dbModel) { saved = isSaved(dbModel) }
         LobstersCard(
           post = dbModel,
           isSaved = saved,

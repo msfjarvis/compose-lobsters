@@ -12,7 +12,7 @@ buildscript {
     }
   }
   dependencies {
-    classpath("com.android.tools:r8:3.1.17-dev")
+    classpath("com.android.tools:r8:3.2.16-dev")
     classpath(kotlin("gradle-plugin", version = kotlinVersion))
     classpath(kotlin("serialization", version = kotlinVersion))
     classpath("com.android.tools.build:gradle:7.2.0-alpha02")

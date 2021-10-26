@@ -3,6 +3,7 @@ accompanist = "0.20.0"
 aurora = "0.0.58-SNAPSHOT"
 coroutines = "1.5.2"
 hilt = "2.39.1"
+richtext = "0.8.1"
 serialization = "1.3.0"
 sqldelight = "1.5.2"
 
@@ -34,11 +35,14 @@ aurora-window = { module = "org.pushing-pixels:aurora-window", version.ref = "au
 coil-compose = "io.coil-kt:coil-compose:2.0.0-alpha01"
 kamel-image = "com.alialbaali.kamel:kamel-image:0.3.0"
 
+compose-richtext-ui = { module = "com.halilibo.compose-richtext:richtext-ui", version.ref = "richtext" }
+compose-richtext-material = { module = "com.halilibo.compose-richtext:richtext-ui-material", version.ref = "richtext" }
+compose-richtext-markdown = { module = "com.halilibo.compose-richtext:richtext-commonmark", version.ref = "richtext" }
+
 dagger-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 dagger-hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 dagger-hilt-core = { module = "com.google.dagger:hilt-core", version.ref = "hilt" }
 
-multiplatform-markdown = "com.mikepenz:multiplatform-markdown-renderer:0.1.0"
 copydown = "io.github.furstenheim:copy_down:1.0"
 
 multiplatform-paging = "io.github.kuuuurt:multiplatform-paging:0.4.5"

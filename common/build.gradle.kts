@@ -17,7 +17,9 @@ kotlin {
       api(compose.material)
       api(projects.database)
       api(projects.model)
-      implementation(libs.multiplatform.markdown)
+      implementation(libs.compose.richtext.markdown)
+      implementation(libs.compose.richtext.material)
+      implementation(libs.compose.richtext.ui)
     }
   }
   sourceSets["androidMain"].apply {

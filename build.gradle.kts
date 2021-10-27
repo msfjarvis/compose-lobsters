@@ -48,8 +48,6 @@ allprojects {
         freeCompilerArgs +
           listOf(
             "-Xopt-in=kotlin.RequiresOptIn",
-            "-P",
-            "plugin:androidx.compose.compiler.plugins.kotlin:suppressKotlinVersionCompatibilityCheck=true"
           )
     }
   }

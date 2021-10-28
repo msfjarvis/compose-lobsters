@@ -37,15 +37,15 @@ fun main() = application {
   val postActions = remember {
     object : PostActions {
       override fun viewPost(postUrl: String, commentsUrl: String) {
-        urlLauncher.launch(postUrl.ifEmpty { commentsUrl })
+        urlLauncher.openUri(postUrl.ifEmpty { commentsUrl })
       }
 
       override fun viewComments(postId: String) {
-        urlLauncher.launch("${LobstersApi.BASE_URL}/s/${postId}")
+        urlLauncher.openUri("${LobstersApi.BASE_URL}/s/${postId}")
       }
 
       override fun viewCommentsPage(commentsUrl: String) {
-        urlLauncher.launch(commentsUrl)
+        urlLauncher.openUri(commentsUrl)
       }
 
       override fun toggleSave(post: SavedPost) {}

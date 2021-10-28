@@ -70,7 +70,7 @@ fun LobstersApp(
   val postActions = remember {
     object : PostActions {
       override fun viewPost(postUrl: String, commentsUrl: String) {
-        urlLauncher.launch(postUrl.ifEmpty { commentsUrl })
+        urlLauncher.openUri(postUrl.ifEmpty { commentsUrl })
       }
 
       override fun viewComments(postId: String) {
@@ -78,7 +78,7 @@ fun LobstersApp(
       }
 
       override fun viewCommentsPage(commentsUrl: String) {
-        urlLauncher.launch(commentsUrl)
+        urlLauncher.openUri(commentsUrl)
       }
 
       override fun toggleSave(post: SavedPost) {

@@ -5,6 +5,8 @@ import androidx.compose.material.Typography
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.ProvidedValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 
@@ -37,13 +39,19 @@ val darkColors =
   )
 
 @Composable
-fun LobstersTheme(darkTheme: Boolean, children: @Composable () -> Unit) {
-  MaterialTheme(
-    colors = if (darkTheme) darkColors else lightColors,
-    typography =
-      Typography(
-        defaultFontFamily = manropeFontFamily,
-      ),
-    content = children,
-  )
+fun LobstersTheme(
+  darkTheme: Boolean,
+  providedValues: Array<ProvidedValue<*>> = emptyArray(),
+  children: @Composable () -> Unit
+) {
+  CompositionLocalProvider(*providedValues) {
+    MaterialTheme(
+      colors = if (darkTheme) darkColors else lightColors,
+      typography =
+        Typography(
+          defaultFontFamily = manropeFontFamily,
+        ),
+      content = children,
+    )
+  }
 }

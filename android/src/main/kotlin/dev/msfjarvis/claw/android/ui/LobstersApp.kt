@@ -109,14 +109,14 @@ fun LobstersApp(
         topBar = { ClawAppBar(modifier = Modifier.statusBarsPadding()) },
         floatingActionButton = {
           ClawFab(
-            isFabVisible = isFabVisible && currentDestination == "hottest",
+            isFabVisible = isFabVisible && currentDestination == Destinations.Hottest,
             listState = listState,
             modifier = Modifier.navigationBarsPadding(),
           )
         },
       ) { paddingValues ->
-        NavHost(navController, startDestination = "hottest") {
-          composable("hottest") {
+        NavHost(navController, startDestination = Destinations.Hottest) {
+          composable(Destinations.Hottest) {
             HottestPosts(
               items,
               listState,

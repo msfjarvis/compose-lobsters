@@ -9,6 +9,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.WindowPosition
@@ -58,7 +59,10 @@ fun main() = application {
     undecorated = true,
     onCloseRequest = ::exitApplication,
   ) {
-    LobstersTheme(darkTheme = false) {
+    LobstersTheme(
+      darkTheme = false,
+      providedValues = arrayOf(LocalUriHandler provides urlLauncher),
+    ) {
       Box(
         modifier = Modifier.fillMaxSize(),
       ) {

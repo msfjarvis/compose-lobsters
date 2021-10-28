@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -89,7 +90,10 @@ fun LobstersApp(
   navController.addOnDestinationChangedListener { _, destination, _ ->
     currentDestination = destination.route ?: Destinations.Hottest
   }
-  LobstersTheme(darkTheme = isSystemInDarkTheme()) {
+  LobstersTheme(
+    darkTheme = isSystemInDarkTheme(),
+    providedValues = arrayOf(LocalUriHandler provides urlLauncher),
+  ) {
     ProvideWindowInsets {
       val useDarkIcons = MaterialTheme.colors.isLight
       val statusBarColor = MaterialTheme.colors.primarySurface

@@ -15,7 +15,7 @@ buildscript {
     classpath("com.android.tools:r8:3.2.16-dev")
     classpath(kotlin("gradle-plugin", version = kotlinVersion))
     classpath(kotlin("serialization", version = kotlinVersion))
-    classpath("com.android.tools.build:gradle:7.2.0-alpha03")
+    classpath("com.android.tools.build:gradle:7.2.0-alpha02")
     classpath("com.diffplug.spotless:spotless-plugin-gradle:5.17.1")
     classpath("com.google.dagger:hilt-android-gradle-plugin:2.39.1")
   }
@@ -54,5 +54,6 @@ allprojects {
 }
 
 tasks.withType<Wrapper> {
-  gradleVersion = "7.3-rc-3"
+  gradleVersion = "7.2"
+  distributionSha256Sum = "f581709a9c35e9cb92e16f585d2c4bc99b2b1a5f85d2badbd3dc6bff59e1e6dd"
 }

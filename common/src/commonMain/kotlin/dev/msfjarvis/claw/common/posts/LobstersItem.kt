@@ -21,6 +21,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -44,6 +48,7 @@ fun LobstersCard(
   postActions: PostActions,
   modifier: Modifier = Modifier,
 ) {
+  var localSavedState by remember(isSaved) { mutableStateOf(isSaved) }
   Box(modifier = modifier.clickable { postActions.viewPost(post.url, post.commentsUrl) }) {
     Column(
       modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp).fillMaxWidth(),
@@ -58,8 +63,12 @@ fun LobstersCard(
         horizontalArrangement = Arrangement.End,
       ) {
         SaveButton(
-          isSaved = isSaved,
-          modifier = Modifier.clickable { postActions.toggleSave(post) },
+          isSaved = localSavedState,
+          modifier =
+            Modifier.clickable {
+              localSavedState = localSavedState.not()
+              postActions.toggleSave(post)
+            },
         )
         Spacer(
           modifier = Modifier.width(8.dp),

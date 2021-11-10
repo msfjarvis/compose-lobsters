@@ -51,7 +51,7 @@ fun LobstersApp(
   val listState = rememberLazyListState()
   val navController = rememberNavController()
   var currentDestination by remember { mutableStateOf(Destinations.Hottest) }
-  var isFabVisible by remember { mutableStateOf(true) }
+  var isFabVisible by remember { mutableStateOf(false) }
   val nestedScrollConnection = remember {
     object : NestedScrollConnection {
       override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {

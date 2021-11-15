@@ -15,9 +15,9 @@ buildscript {
     classpath("com.android.tools:r8:3.2.16-dev")
     classpath(kotlin("gradle-plugin", version = kotlinVersion))
     classpath(kotlin("serialization", version = kotlinVersion))
-    classpath("com.android.tools.build:gradle:7.2.0-alpha03")
-    classpath("com.diffplug.spotless:spotless-plugin-gradle:5.17.1")
-    classpath("com.google.dagger:hilt-android-gradle-plugin:2.39.1")
+    classpath("com.android.tools.build:gradle:7.0.3")
+    classpath("com.diffplug.spotless:spotless-plugin-gradle:6.0.0")
+    classpath("com.google.dagger:hilt-android-gradle-plugin:2.40.1")
   }
 }
 

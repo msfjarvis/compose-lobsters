@@ -11,10 +11,10 @@ class Comment(
   @SerialName("updated_at") val updatedAt: String,
   @SerialName("is_deleted") val isDeleted: Boolean,
   @SerialName("is_moderated") val isModerated: Boolean,
-  val score: Long,
-  val flags: Long,
+  val score: Int,
+  val flags: Int,
   val comment: String,
   val url: String,
-  @SerialName("indent_level") val indentLevel: Long,
+  @SerialName("indent_level") val indentLevel: Int,
   @SerialName("commenting_user") val user: User,
 )

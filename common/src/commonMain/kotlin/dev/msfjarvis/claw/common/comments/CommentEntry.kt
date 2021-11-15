@@ -45,7 +45,15 @@ fun CommentEntry(
   val htmlConverter = LocalHTMLConverter.current
   Divider(color = Color.Gray.copy(0.4f))
   Row(modifier = Modifier.wrapContentHeight()) {
-    Column(modifier = Modifier.padding(start = 12.dp, end = 8.dp, top = 4.dp, bottom = 4.dp)) {
+    Column(
+      modifier =
+        Modifier.padding(
+          start = (comment.indentLevel * 12).dp,
+          end = 8.dp,
+          top = 4.dp,
+          bottom = 4.dp
+        )
+    ) {
       SubmitterName(
         text = comment.user.username,
         avatarUrl = "https://lobste.rs/${comment.user.avatarUrl}",

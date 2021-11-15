@@ -1,11 +1,9 @@
 package dev.msfjarvis.claw.common.comments
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
@@ -20,7 +18,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.msfjarvis.claw.model.LobstersPostDetails
 import dev.msfjarvis.lobsters.ui.comments.NetworkState
@@ -28,9 +25,9 @@ import dev.msfjarvis.lobsters.ui.comments.NetworkState
 @Composable
 private fun CommentsPageInternal(
   details: LobstersPostDetails,
-  bottomPadding: Dp,
+  modifier: Modifier = Modifier,
 ) {
-  LazyColumn(Modifier.padding(bottom = bottomPadding)) {
+  LazyColumn(modifier) {
     item { CommentsHeader(postDetails = details) }
 
     item { Spacer(modifier = Modifier.height(8.dp)) }
@@ -46,7 +43,7 @@ private fun CommentsPageInternal(
 fun CommentsPage(
   postId: String,
   getDetails: suspend (String) -> LobstersPostDetails,
-  paddingValues: PaddingValues,
+  modifier: Modifier = Modifier,
 ) {
   var postDetails: NetworkState by remember { mutableStateOf(NetworkState.Loading) }
 
@@ -56,18 +53,19 @@ fun CommentsPage(
     is NetworkState.Success<*> -> {
       CommentsPageInternal(
         (postDetails as NetworkState.Success<LobstersPostDetails>).data,
-        paddingValues.calculateBottomPadding(),
+        modifier,
       )
     }
     is NetworkState.Error -> TODO("Handle no network scenario")
-    NetworkState.Loading -> ProgressBar(paddingValues.calculateBottomPadding())
+    NetworkState.Loading -> ProgressBar(modifier)
   }
 }
 
 @Composable
-private fun ProgressBar(bottomPadding: Dp) {
-  Box(
-    modifier = Modifier.padding(bottom = bottomPadding).fillMaxSize(),
-    contentAlignment = Alignment.Center
-  ) { CircularProgressIndicator(color = MaterialTheme.colors.secondary) }
+private fun ProgressBar(
+  modifier: Modifier,
+) {
+  Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+    CircularProgressIndicator(color = MaterialTheme.colors.secondary)
+  }
 }

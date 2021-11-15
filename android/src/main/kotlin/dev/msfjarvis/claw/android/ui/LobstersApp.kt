@@ -120,7 +120,7 @@ fun LobstersApp(
             modifier = Modifier.navigationBarsPadding(),
           )
         },
-      ) { paddingValues ->
+      ) {
         NavHost(navController, startDestination = Destinations.Hottest) {
           composable(Destinations.Hottest) {
             setWebUri("https://lobste.rs/")
@@ -139,7 +139,7 @@ fun LobstersApp(
             CommentsPage(
               postId = postId,
               getDetails = viewModel::getPostComments,
-              paddingValues = paddingValues,
+              modifier = Modifier.navigationBarsPadding(),
             )
           }
         }

@@ -13,7 +13,6 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.WindowPlacement
 import androidx.compose.ui.window.WindowPosition
-import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.common.posts.LobstersCard
@@ -25,8 +24,9 @@ import dev.msfjarvis.claw.database.local.SavedPost
 import org.pushingpixels.aurora.component.AuroraVerticalScrollbar
 import org.pushingpixels.aurora.theming.ceruleanSkin
 import org.pushingpixels.aurora.window.AuroraWindow
+import org.pushingpixels.aurora.window.auroraApplication
 
-fun main() = application {
+fun main() = auroraApplication {
   val paging = Paging(rememberCoroutineScope())
   val items = paging.pagingData.collectAsLazyPagingItems()
   val urlLauncher = UrlLauncher()

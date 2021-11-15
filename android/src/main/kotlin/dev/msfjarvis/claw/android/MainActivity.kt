@@ -9,6 +9,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import dagger.hilt.android.AndroidEntryPoint
 import dev.msfjarvis.claw.android.ui.LobstersApp
+import dev.msfjarvis.claw.common.comments.HTMLConverter
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 import javax.inject.Inject
 
@@ -16,6 +17,7 @@ import javax.inject.Inject
 class MainActivity : ComponentActivity() {
 
   @Inject lateinit var urlLauncher: UrlLauncher
+  @Inject lateinit var htmlConverter: HTMLConverter
   private var webUri: String? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +27,7 @@ class MainActivity : ComponentActivity() {
     setContent {
       LobstersApp(
         urlLauncher = urlLauncher,
+        htmlConverter = htmlConverter,
       ) { url -> webUri = url }
     }
   }

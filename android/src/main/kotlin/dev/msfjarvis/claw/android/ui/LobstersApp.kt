@@ -31,11 +31,12 @@ import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.common.comments.CommentsPage
+import dev.msfjarvis.claw.common.comments.HTMLConverter
+import dev.msfjarvis.claw.common.comments.LocalHTMLConverter
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 import dev.msfjarvis.claw.database.local.SavedPost
-import io.github.furstenheim.CopyDown
 
 private const val ScrollDelta = 50
 
@@ -44,9 +45,9 @@ private const val ScrollDelta = 50
 fun LobstersApp(
   viewModel: ClawViewModel = viewModel(),
   urlLauncher: UrlLauncher,
+  htmlConverter: HTMLConverter,
   setWebUri: (String) -> Unit,
 ) {
-  val copydown = remember { CopyDown() }
   val systemUiController = rememberSystemUiController()
   val scaffoldState = rememberScaffoldState()
   val listState = rememberLazyListState()
@@ -93,7 +94,11 @@ fun LobstersApp(
   }
   LobstersTheme(
     darkTheme = isSystemInDarkTheme(),
-    providedValues = arrayOf(LocalUriHandler provides urlLauncher),
+    providedValues =
+      arrayOf(
+        LocalUriHandler provides urlLauncher,
+        LocalHTMLConverter provides htmlConverter,
+      ),
   ) {
     ProvideWindowInsets {
       val useDarkIcons = MaterialTheme.colors.isLight
@@ -134,7 +139,6 @@ fun LobstersApp(
             CommentsPage(
               postId = postId,
               getDetails = viewModel::getPostComments,
-              htmlToMarkdown = { source -> copydown.convert(source) },
               paddingValues = paddingValues,
             )
           }

@@ -23,8 +23,8 @@ import dev.msfjarvis.claw.model.LobstersPostDetails
 @Composable
 fun CommentsHeader(
   postDetails: LobstersPostDetails,
-  htmlToMarkdown: (html: String) -> String,
 ) {
+  val htmlConverter = LocalHTMLConverter.current
   Surface {
     Column(
       modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp).fillMaxWidth(),
@@ -33,7 +33,7 @@ fun CommentsHeader(
       PostDetails(
         post = postDetails.toDbModel(),
       )
-      MaterialRichText { Markdown(htmlToMarkdown(postDetails.description)) }
+      MaterialRichText { Markdown(htmlConverter.convertHTMLToMarkdown(postDetails.description)) }
     }
   }
 }
@@ -41,8 +41,8 @@ fun CommentsHeader(
 @Composable
 fun CommentEntry(
   comment: Comment,
-  htmlToMarkdown: (html: String) -> String,
 ) {
+  val htmlConverter = LocalHTMLConverter.current
   Divider(color = Color.Gray.copy(0.4f))
   Row(modifier = Modifier.wrapContentHeight()) {
     Column(modifier = Modifier.padding(start = 12.dp, end = 8.dp, top = 4.dp, bottom = 4.dp)) {
@@ -52,7 +52,7 @@ fun CommentEntry(
         contentDescription = "User avatar for ${comment.user.username}",
       )
       MaterialRichText(modifier = Modifier.padding(top = 8.dp)) {
-        Markdown(htmlToMarkdown(comment.comment))
+        Markdown(htmlConverter.convertHTMLToMarkdown(comment.comment))
       }
     }
   }

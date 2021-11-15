@@ -92,7 +92,7 @@ fun PostDetails(
   SubmitterName(
     text = "Submitted by ${post.submitterName}",
     avatarUrl = "https://lobste.rs/${post.submitterAvatarUrl}",
-    contentDescription = "Submitted by ${post.submitterName}",
+    contentDescription = "User avatar for ${post.submitterName}",
   )
 }
 

@@ -54,9 +54,9 @@ fun CommentEntry(
     CommentTreeColors(indentLevel = indentLevel)
     Column(modifier = Modifier.padding(start = 12.dp, end = 8.dp, top = 4.dp, bottom = 4.dp)) {
       SubmitterName(
-        text = "Submitted by ${comment.user.username}",
+        text = comment.user.username,
         avatarUrl = "https://lobste.rs/${comment.user.avatarUrl}",
-        contentDescription = "Submitted by ${comment.user.username}",
+        contentDescription = "User avatar for ${comment.user.username}",
       )
       MaterialRichText(modifier = Modifier.padding(top = 8.dp)) {
         Markdown(htmlToMarkdown(comment.comment))

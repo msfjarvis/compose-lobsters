@@ -44,6 +44,7 @@ private const val ScrollDelta = 50
 fun LobstersApp(
   viewModel: ClawViewModel = viewModel(),
   urlLauncher: UrlLauncher,
+  setWebUri: (String) -> Unit,
 ) {
   val copydown = remember { CopyDown() }
   val systemUiController = rememberSystemUiController()
@@ -117,6 +118,7 @@ fun LobstersApp(
       ) { paddingValues ->
         NavHost(navController, startDestination = Destinations.Hottest) {
           composable(Destinations.Hottest) {
+            setWebUri("https://lobste.rs/")
             HottestPosts(
               items,
               listState,
@@ -127,8 +129,10 @@ fun LobstersApp(
             )
           }
           composable(Destinations.Comments.format("{postId}")) { backStackEntry ->
+            val postId = requireNotNull(backStackEntry.arguments?.getString("postId"))
+            setWebUri("https://lobste.rs/s/$postId")
             CommentsPage(
-              postId = requireNotNull(backStackEntry.arguments?.getString("postId")),
+              postId = postId,
               getDetails = viewModel::getPostComments,
               htmlToMarkdown = { source -> copydown.convert(source) },
               paddingValues = paddingValues,

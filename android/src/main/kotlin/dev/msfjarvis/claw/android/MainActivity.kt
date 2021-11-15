@@ -1,5 +1,7 @@
 package dev.msfjarvis.claw.android
 
+import android.app.assist.AssistContent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -14,6 +16,7 @@ import javax.inject.Inject
 class MainActivity : ComponentActivity() {
 
   @Inject lateinit var urlLauncher: UrlLauncher
+  private var webUri: String? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -22,7 +25,12 @@ class MainActivity : ComponentActivity() {
     setContent {
       LobstersApp(
         urlLauncher = urlLauncher,
-      )
+      ) { url -> webUri = url }
     }
+  }
+
+  override fun onProvideAssistContent(outContent: AssistContent?) {
+    super.onProvideAssistContent(outContent)
+    webUri?.let { outContent?.webUri = Uri.parse(it) }
   }
 }

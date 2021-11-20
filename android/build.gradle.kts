@@ -1,7 +1,7 @@
 import java.util.Properties
 
 plugins {
-  id("org.jetbrains.compose") version "1.0.0-beta6-dev462"
+  id("org.jetbrains.compose") version "1.0.0-beta6-dev474"
   id("com.android.application")
   kotlin("android")
   kotlin("kapt")

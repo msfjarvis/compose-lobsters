@@ -1,5 +1,5 @@
 [versions]
-accompanist = "0.21.2-beta"
+accompanist = "0.21.3-beta"
 aurora = "1.0.0-beta1"
 coroutines = "1.5.2"
 hilt = "2.40.1"
@@ -20,7 +20,7 @@ accompanist-swiperefresh = { module = "com.google.accompanist:accompanist-swiper
 accompanist-sysuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
 
 androidx-activity-compose = "androidx.activity:activity-compose:1.4.0"
-androidx-appcompat = "androidx.appcompat:appcompat:1.4.0-rc01"
+androidx-appcompat = "androidx.appcompat:appcompat:1.4.0"
 androidx-browser = "androidx.browser:browser:1.4.0"
 androidx-core-ktx = "androidx.core:core-ktx:1.7.0"
 androidx-core-splashscreen = "androidx.core:core-splashscreen:1.0.0-alpha02"

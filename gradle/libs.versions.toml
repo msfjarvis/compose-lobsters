@@ -1,11 +1,11 @@
 [versions]
 accompanist = "0.21.3-beta"
-aurora = "1.0.0-beta1"
+aurora = "1.0.0-beta2"
 coroutines = "1.5.2"
-hilt = "2.40.1"
-richtext = "0.8.1"
+hilt = "2.40.2"
+richtext = "0.9.0"
 serialization = "1.3.1"
-sqldelight = "1.5.2"
+sqldelight = "1.5.3"
 
 [libraries]
 
@@ -54,4 +54,4 @@ sqldelight-jvmDriver = { module = "com.squareup.sqldelight:sqlite-driver", versi
 sqldelight-androidDriver = { module = "com.squareup.sqldelight:android-driver", version.ref = "sqldelight" }
 sqldelight-extensions-coroutines = { module = "com.squareup.sqldelight:coroutines-extensions-jvm", version.ref = "sqldelight" }
 
-testing-mockWebServer = "com.squareup.okhttp3:mockwebserver3-junit4:5.0.0-alpha.2"
+testing-mockWebServer = "com.squareup.okhttp3:mockwebserver3-junit4:5.0.0-alpha.3"

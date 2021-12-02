@@ -6,7 +6,7 @@ pluginManagement {
     google()
   }
   plugins {
-    id("org.jetbrains.compose") version "1.0.0-rc4" apply false
+    id("org.jetbrains.compose") version "1.0.0" apply false
   }
 }
 

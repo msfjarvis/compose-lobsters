@@ -1,6 +1,6 @@
 [versions]
 accompanist = "0.21.3-beta"
-aurora = "1.0.0-beta2"
+aurora = "1.0.0-beta5"
 coroutines = "1.5.2"
 hilt = "2.40.2"
 richtext = "0.9.0"

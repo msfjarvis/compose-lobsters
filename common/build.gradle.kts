@@ -8,8 +8,8 @@ plugins {
 }
 
 kotlin {
-  android { compilations.all { kotlinOptions.jvmTarget = "11" } }
-  jvm("desktop") { compilations.all { kotlinOptions.jvmTarget = "11" } }
+  android()
+  jvm("desktop")
   sourceSets["commonMain"].apply {
     dependencies {
       api(compose.runtime)
@@ -29,11 +29,6 @@ kotlin {
     }
   }
   sourceSets["desktopMain"].apply { dependencies { implementation(libs.kamel.image) } }
-}
-
-tasks.withType<KotlinCompile> {
-  kotlinOptions.freeCompilerArgs =
-    kotlinOptions.freeCompilerArgs + listOf("-Xopt-in=kotlin.RequiresOptIn")
 }
 
 android {

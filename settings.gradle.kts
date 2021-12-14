@@ -5,7 +5,7 @@ pluginManagement {
     maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     google()
   }
-  plugins { id("org.jetbrains.compose") version "1.0.0" apply false }
+  plugins { id("org.jetbrains.compose") version "1.0.1-rc2" apply false }
 }
 
 dependencyResolutionManagement {
@@ -13,9 +13,6 @@ dependencyResolutionManagement {
   repositories {
     mavenCentral()
     maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
-    maven("https://oss.sonatype.org/content/repositories/snapshots") {
-      content { includeGroup("org.pushing-pixels") }
-    }
     google()
   }
 }

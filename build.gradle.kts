@@ -2,7 +2,7 @@ import org.gradle.api.tasks.compile.JavaCompile
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
-  val kotlinVersion = "1.5.31"
+  val kotlinVersion = "1.6.10"
   repositories {
     google()
     mavenCentral()
@@ -16,13 +16,12 @@ buildscript {
     classpath("com.android.tools:r8:3.2.28-dev")
     classpath(kotlin("gradle-plugin", version = kotlinVersion))
     classpath(kotlin("serialization", version = kotlinVersion))
-    classpath("com.android.tools.build:gradle:7.0.3")
-    classpath("com.diffplug.spotless:spotless-plugin-gradle:6.0.0")
-    classpath("com.google.dagger:hilt-android-gradle-plugin:2.40.2")
+    classpath("com.android.tools.build:gradle:7.0.4")
+    classpath("com.google.dagger:hilt-android-gradle-plugin:2.40.5")
   }
 }
 
-plugins { id("com.diffplug.spotless") version "6.0.0" }
+plugins { id("com.diffplug.spotless") version "6.0.4" }
 
 group = "dev.msfjarvis.claw"
 

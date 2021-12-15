@@ -4,7 +4,6 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
 import dev.msfjarvis.claw.util.TestUtils
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 import kotlin.test.fail
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -71,13 +70,6 @@ class LobstersApiTest {
   }
 
   @Test
-  fun `no moderator posts in test data`() = runBlocking {
-    val posts = apiClient.getHottestPosts(1)
-    val moderatorPosts = posts.asSequence().filter { it.submitter.isModerator }.toSet()
-    assertTrue(moderatorPosts.isEmpty())
-  }
-
-  @Test
   fun `posts with no urls`() = runBlocking {
     val posts = apiClient.getHottestPosts(1)
     val commentsOnlyPosts = posts.asSequence().filter { it.url.isEmpty() }.toSet()
@@ -87,7 +79,6 @@ class LobstersApiTest {
   @Test
   fun `post details with comments`() = runBlocking {
     val postDetails = apiClient.getPostDetails("d9ucpe")
-    assertEquals(7, postDetails.commentCount)
     assertEquals(7, postDetails.comments.size)
   }
 }

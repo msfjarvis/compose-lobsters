@@ -6,13 +6,9 @@ import kotlinx.serialization.Serializable
 @Serializable
 class LobstersPostDetails(
   @SerialName("short_id") val shortId: String,
-  @SerialName("short_id_url") val shortIdUrl: String,
   @SerialName("created_at") val createdAt: String,
   val title: String,
   val url: String,
-  val score: Int,
-  val flags: Int,
-  @SerialName("comment_count") val commentCount: Int,
   val description: String,
   @SerialName("comments_url") val commentsUrl: String,
   @SerialName("submitter_user") val submitter: User,

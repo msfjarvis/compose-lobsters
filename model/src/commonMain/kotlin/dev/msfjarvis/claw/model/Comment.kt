@@ -5,14 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 class Comment(
-  @SerialName("short_id") val shortId: String,
-  @SerialName("short_id_url") val shortIdUrl: String,
-  @SerialName("created_at") val createdAt: String,
-  @SerialName("updated_at") val updatedAt: String,
-  @SerialName("is_deleted") val isDeleted: Boolean,
-  @SerialName("is_moderated") val isModerated: Boolean,
-  val score: Int,
-  val flags: Int,
   val comment: String,
   val url: String,
   @SerialName("indent_level") val indentLevel: Int,

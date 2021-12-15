@@ -38,17 +38,23 @@ object ApiModule {
   @Provides
   fun provideRetrofit(
     client: Lazy<OkHttpClient>,
+    json: Lazy<Json>,
   ): Retrofit {
     val contentType = "application/json".toMediaType()
     return Retrofit.Builder()
       .client(client.get())
       .baseUrl(LobstersApi.BASE_URL)
-      .addConverterFactory(Json.asConverterFactory(contentType))
+      .addConverterFactory(json.get().asConverterFactory(contentType))
       .build()
   }
 
   @Provides
   fun provideApi(retrofit: Retrofit): LobstersApi {
     return retrofit.create()
+  }
+
+  @Provides
+  fun provideJsonSerializer(): Json {
+    return Json { ignoreUnknownKeys = true }
   }
 }

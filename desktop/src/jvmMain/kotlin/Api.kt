@@ -9,6 +9,8 @@ import retrofit2.create
 
 @OptIn(ExperimentalSerializationApi::class)
 class Api {
+  private val json = Json { ignoreUnknownKeys = true }
+
   private fun getOkHttpClient(): OkHttpClient {
     return OkHttpClient.Builder()
       .addNetworkInterceptor { chain ->
@@ -26,7 +28,7 @@ class Api {
     return Retrofit.Builder()
       .client(okHttpClient)
       .baseUrl(LobstersApi.BASE_URL)
-      .addConverterFactory(Json.asConverterFactory(contentType))
+      .addConverterFactory(json.asConverterFactory(contentType))
       .build()
   }
 

@@ -27,11 +27,12 @@ class LobstersApiTest {
     private val contentType = "application/json".toMediaType()
     private val webServer = MockWebServer()
     private val okHttp = OkHttpClient.Builder().build()
+    private val json = Json { ignoreUnknownKeys = true }
     private val retrofit =
       Retrofit.Builder()
         .client(okHttp)
         .baseUrl("http://localhost:8080/")
-        .addConverterFactory(Json.asConverterFactory(contentType))
+        .addConverterFactory(json.asConverterFactory(contentType))
         .build()
     private val apiClient = retrofit.create<LobstersApi>()
 

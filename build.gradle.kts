@@ -21,7 +21,7 @@ buildscript {
   }
 }
 
-plugins { id("com.diffplug.spotless") version "6.0.5" }
+plugins { id("com.diffplug.spotless") version "6.1.0" }
 
 group = "dev.msfjarvis.claw"
 

@@ -27,7 +27,7 @@ group = "dev.msfjarvis.claw"
 
 version = "1.0"
 
-configure<com.diffplug.gradle.spotless.SpotlessExtension> {
+spotless {
   kotlin {
     target("**/*.kt")
     targetExclude("**/build/**")

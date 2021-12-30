@@ -1,4 +1,4 @@
-@file:JvmName("DesktopTheme")
+@file:JvmName("DesktopType")
 
 package dev.msfjarvis.claw.common.theme
 

@@ -1,4 +1,4 @@
-@file:JvmName("AndroidTheme")
+@file:JvmName("AndroidType")
 
 package dev.msfjarvis.claw.common.theme
 

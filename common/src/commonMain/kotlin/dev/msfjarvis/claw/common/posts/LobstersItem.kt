@@ -18,10 +18,10 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.primarySurface
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,7 +37,11 @@ import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.database.local.SavedPost
 
 @Composable
-@OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
+@OptIn(
+  ExperimentalMaterial3Api::class,
+  ExperimentalMaterialApi::class,
+  ExperimentalFoundationApi::class,
+)
 fun LobstersCard(
   post: SavedPost,
   isSaved: Boolean,
@@ -45,7 +49,7 @@ fun LobstersCard(
   modifier: Modifier = Modifier,
 ) {
   Card(
-    modifier = modifier.background(MaterialTheme.colors.primarySurface),
+    modifier = modifier.background(MaterialTheme.colorScheme.background),
     onClick = { postActions.viewPost(post.url, post.commentsUrl) },
   ) {
     Column(
@@ -163,7 +167,7 @@ fun SaveButton(
   Crossfade(targetState = isSaved) { saved ->
     Icon(
       painter = if (saved) heartIcon else heartBorderIcon,
-      tint = MaterialTheme.colors.secondary,
+      tint = MaterialTheme.colorScheme.secondary,
       contentDescription = if (saved) "Remove from saved posts" else "Add to saved posts",
       modifier = modifier,
     )
@@ -176,7 +180,7 @@ fun CommentsButton(
 ) {
   Icon(
     painter = commentIcon,
-    tint = MaterialTheme.colors.secondary,
+    tint = MaterialTheme.colorScheme.secondary,
     contentDescription = "Open comments",
     modifier = modifier,
   )
@@ -199,11 +203,11 @@ fun TagRow(
           text = tag,
           modifier =
             Modifier.background(
-                MaterialTheme.colors.secondary.copy(alpha = 0.75f),
+                MaterialTheme.colorScheme.secondary.copy(alpha = 0.75f),
                 RoundedCornerShape(8.dp)
               )
               .padding(vertical = 2.dp, horizontal = 6.dp),
-          color = MaterialTheme.colors.onSecondary,
+          color = MaterialTheme.colorScheme.onSecondary,
         )
       }
     }

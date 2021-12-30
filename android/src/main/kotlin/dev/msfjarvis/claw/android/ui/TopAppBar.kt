@@ -1,8 +1,8 @@
 package dev.msfjarvis.claw.android.ui
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material3.SmallTopAppBar
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -14,7 +14,7 @@ import dev.msfjarvis.claw.android.R
 fun ClawAppBar(
   modifier: Modifier = Modifier,
 ) {
-  TopAppBar(
+  SmallTopAppBar(
     title = {
       Text(
         text = stringResource(R.string.app_name),

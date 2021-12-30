@@ -1,3 +1,5 @@
+@file:OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
+
 import java.util.Properties
 
 plugins {
@@ -13,6 +15,7 @@ dependencies {
   implementation(projects.api)
   implementation(projects.common)
   implementation(projects.database)
+  implementation(compose.material3)
   implementation(libs.accompanist.insets)
   implementation(libs.accompanist.swiperefresh)
   implementation(libs.accompanist.sysuicontroller)

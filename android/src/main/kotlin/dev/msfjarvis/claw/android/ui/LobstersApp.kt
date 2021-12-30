@@ -1,12 +1,11 @@
 package dev.msfjarvis.claw.android.ui
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.primarySurface
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
@@ -40,7 +39,7 @@ import dev.msfjarvis.claw.database.local.SavedPost
 
 private const val ScrollDelta = 50
 
-@OptIn(ExperimentalAnimationApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LobstersApp(
   viewModel: ClawViewModel = viewModel(),
@@ -101,11 +100,10 @@ fun LobstersApp(
       ),
   ) {
     ProvideWindowInsets {
-      val useDarkIcons = MaterialTheme.colors.isLight
-      val statusBarColor = MaterialTheme.colors.primarySurface
+      val statusBarColor = MaterialTheme.colorScheme.background
 
       SideEffect {
-        systemUiController.setStatusBarColor(color = statusBarColor, darkIcons = useDarkIcons)
+        systemUiController.setStatusBarColor(color = statusBarColor)
         systemUiController.setNavigationBarColor(color = Color.Transparent)
       }
       val items = viewModel.pagerFlow.collectAsLazyPagingItems()

@@ -1,3 +1,5 @@
+@file:OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
+
 import org.jetbrains.compose.compose
 
 plugins {
@@ -14,6 +16,7 @@ kotlin {
       api(compose.runtime)
       api(compose.foundation)
       api(compose.material)
+      api(compose.material3)
       api(projects.database)
       api(projects.model)
       implementation(libs.compose.richtext.markdown)

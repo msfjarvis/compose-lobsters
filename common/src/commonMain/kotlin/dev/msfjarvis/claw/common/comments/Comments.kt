@@ -8,7 +8,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -66,6 +66,6 @@ private fun ProgressBar(
   modifier: Modifier,
 ) {
   Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-    CircularProgressIndicator(color = MaterialTheme.colors.secondary)
+    CircularProgressIndicator(color = MaterialTheme.colorScheme.secondary)
   }
 }

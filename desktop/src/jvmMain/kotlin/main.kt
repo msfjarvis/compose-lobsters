@@ -1,3 +1,4 @@
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,6 +19,8 @@ import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.common.posts.LobstersCard
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.posts.toDbModel
+import dev.msfjarvis.claw.common.theme.DarkThemeColors
+import dev.msfjarvis.claw.common.theme.LightThemeColors
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 import dev.msfjarvis.claw.database.local.SavedPost
@@ -59,8 +62,14 @@ fun main() = auroraApplication {
     undecorated = true,
     onCloseRequest = ::exitApplication,
   ) {
+    val colorScheme =
+      if (isSystemInDarkTheme()) {
+        DarkThemeColors
+      } else {
+        LightThemeColors
+      }
     LobstersTheme(
-      darkTheme = false,
+      colorScheme = colorScheme,
       providedValues = arrayOf(LocalUriHandler provides urlLauncher),
     ) {
       Box(

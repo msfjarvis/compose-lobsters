@@ -1,6 +1,5 @@
 package dev.msfjarvis.claw.android.ui
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -18,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
@@ -92,12 +92,12 @@ fun LobstersApp(
     currentDestination = destination.route ?: Destinations.Hottest
   }
   LobstersTheme(
-    darkTheme = isSystemInDarkTheme(),
     providedValues =
       arrayOf(
         LocalUriHandler provides urlLauncher,
         LocalHTMLConverter provides htmlConverter,
       ),
+    colorScheme = decideColorScheme(LocalContext.current),
   ) {
     ProvideWindowInsets {
       val statusBarColor = MaterialTheme.colorScheme.background

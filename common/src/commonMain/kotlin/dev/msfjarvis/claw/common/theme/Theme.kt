@@ -1,6 +1,6 @@
 package dev.msfjarvis.claw.common.theme
 
-import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.Color
 
 val titleColor = Color(0xFF7395D9)
 
-private val LightThemeColors =
+val LightThemeColors =
   lightColorScheme(
     primary = md_theme_light_primary,
     onPrimary = md_theme_light_onPrimary,
@@ -40,7 +40,7 @@ private val LightThemeColors =
     inverseSurface = md_theme_light_inverseSurface,
   )
 
-private val DarkThemeColors =
+val DarkThemeColors =
   darkColorScheme(
     primary = md_theme_dark_primary,
     onPrimary = md_theme_dark_onPrimary,
@@ -71,17 +71,11 @@ private val DarkThemeColors =
 
 @Composable
 fun LobstersTheme(
-  darkTheme: Boolean = isSystemInDarkTheme(),
   providedValues: Array<ProvidedValue<*>> = emptyArray(),
+  colorScheme: ColorScheme,
   content: @Composable () -> Unit,
 ) {
-  val colors =
-    if (!darkTheme) {
-      LightThemeColors
-    } else {
-      DarkThemeColors
-    }
   CompositionLocalProvider(*providedValues) {
-    MaterialTheme(colorScheme = colors, typography = AppTypography, content = content)
+    MaterialTheme(colorScheme = colorScheme, typography = AppTypography, content = content)
   }
 }

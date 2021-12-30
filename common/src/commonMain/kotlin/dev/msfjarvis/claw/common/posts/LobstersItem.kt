@@ -16,8 +16,6 @@ import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -39,7 +37,6 @@ import dev.msfjarvis.claw.database.local.SavedPost
 @Composable
 @OptIn(
   ExperimentalMaterial3Api::class,
-  ExperimentalMaterialApi::class,
   ExperimentalFoundationApi::class,
 )
 fun LobstersCard(
@@ -48,10 +45,7 @@ fun LobstersCard(
   postActions: PostActions,
   modifier: Modifier = Modifier,
 ) {
-  Card(
-    modifier = modifier.background(MaterialTheme.colorScheme.background),
-    onClick = { postActions.viewPost(post.url, post.commentsUrl) },
-  ) {
+  Box(modifier = modifier.clickable { postActions.viewPost(post.url, post.commentsUrl) }) {
     Column(
       modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp).fillMaxWidth(),
       verticalArrangement = Arrangement.spacedBy(4.dp),

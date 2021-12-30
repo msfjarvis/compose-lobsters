@@ -1,6 +1,5 @@
 package dev.msfjarvis.claw.android.ui
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
@@ -10,7 +9,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
 import dev.msfjarvis.claw.common.posts.LobstersCard
@@ -40,7 +38,7 @@ fun NetworkPosts(
           post = dbModel,
           isSaved = saved,
           postActions = postActions,
-          modifier = Modifier.padding(bottom = 16.dp, start = 16.dp, end = 16.dp),
+          modifier = Modifier,
         )
       }
     }

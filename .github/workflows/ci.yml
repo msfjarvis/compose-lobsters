@@ -13,87 +13,88 @@ jobs:
   run-unit-tests:
     runs-on: ubuntu-latest
     steps:
-      - name: Setup Java 17
-        uses: actions/setup-java@a12e082d834968c1847f782019214fadd20719f6
-        with:
-          distribution: 'zulu'
-          java-version: '17'
+    - name: Set up JDK
+      uses: actions/setup-java@v2.4.0
+      with:
+        distribution: 'zulu'
+        java-version: '17'
+        cache: 'gradle'
 
-      - name: Checkout repository
-        uses: actions/checkout@230611dbd0eb52da1e1f4f7bc8bb0c3a339fc8b7
+    - name: Checkout repository
+      uses: actions/checkout@v2.4.0
 
-      - name: Copy CI gradle.properties
-        run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
+    - name: Copy CI gradle.properties
+      run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
 
-      - name: Run unit tests
-        uses: gradle/gradle-build-action@42faf281e611575a323584d89cc18967608d1c9d
-        with:
-          arguments: test --stacktrace
+    - name: Run unit tests
+      uses: gradle/gradle-build-action@v2.1.0
+      with:
+        arguments: test --stacktrace
 
-      - name: (Fail-only) upload test report
-        if: failure()
-        uses: actions/upload-artifact@82c141cc518b40d92cc801eee768e7aafc9c2fa2
-        with:
+    - name: (Fail-only) Upload test report
+      if: failure()
+      uses: actions/upload-artifact@v2.3.1
+      with:
           name: Test report
-          path: app/build/reports
+          path: android/build/reports
 
   stylecheck:
     runs-on: ubuntu-latest
     steps:
-      - name: Setup Java 17
-        uses: actions/setup-java@a12e082d834968c1847f782019214fadd20719f6
-        with:
-          distribution: 'zulu'
-          java-version: '17'
+    - name: Set up JDK
+      uses: actions/setup-java@v2.4.0
+      with:
+        distribution: 'zulu'
+        java-version: '17'
+        cache: 'gradle'
 
-      - name: Checkout repository
-        uses: actions/checkout@230611dbd0eb52da1e1f4f7bc8bb0c3a339fc8b7
-        with:
-          fetch-depth: 0
+    - name: Checkout repository
+      uses: actions/checkout@v2.4.0
 
-      - name: Copy CI gradle.properties
-        run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
+    - name: Copy CI gradle.properties
+      run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
 
-      - name: Check codestyle with Spotless
-        uses: gradle/gradle-build-action@42faf281e611575a323584d89cc18967608d1c9d
-        with:
-          arguments: spotlessCheck
+    - name: Check codestyle with Spotless
+      uses: gradle/gradle-build-action@v2.1.0
+      with:
+        arguments: spotlessCheck
+
   deploy-release-snapshot:
     runs-on: ubuntu-latest
     if: "github.event_name == 'push'"
     needs: [ "run-unit-tests", "stylecheck" ]
     steps:
+    - name: Set up JDK
+      uses: actions/setup-java@v2.4.0
+      with:
+        distribution: 'zulu'
+        java-version: '17'
+        cache: 'gradle'
 
-      - name: Setup Java 17
-        uses: actions/setup-java@a12e082d834968c1847f782019214fadd20719f6
-        with:
-          distribution: 'zulu'
-          java-version: '17'
+    - name: Checkout repository
+      uses: actions/checkout@v2.4.0
 
-      - name: Checkout repository
-        uses: actions/checkout@230611dbd0eb52da1e1f4f7bc8bb0c3a339fc8b7
+    - name: Copy CI gradle.properties
+      run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
 
-      - name: Copy CI gradle.properties
-        run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
+    - name: Decrypt secrets
+      run: scripts/signing-setup.sh "$ENCRYPT_KEY"
+      env:
+        ENCRYPT_KEY: ${{ secrets.ENCRYPT_KEY }}
 
-      - name: Decrypt secrets
-        run: scripts/signing-setup.sh "$ENCRYPT_KEY"
-        env:
-          ENCRYPT_KEY: ${{ secrets.ENCRYPT_KEY }}
+    - name: Build release app
+      uses: gradle/gradle-build-action@v2.1.0
+      with:
+        arguments: :android:assembleRelease
 
-      - name: Build release app
-        uses: gradle/gradle-build-action@42faf281e611575a323584d89cc18967608d1c9d
-        with:
-          arguments: :android:assembleRelease
+    - name: Clean secrets
+      run: scripts/signing-cleanup.sh
 
-      - name: Clean secrets
-        run: scripts/signing-cleanup.sh
-
-      - name: Deploy snapshot
-        run: scripts/deploy-snapshot.sh
-        env:
-          ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-          SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
-          SERVER_ADDRESS: ${{ secrets.SERVER_ADDRESS }}
-          SERVER_DESTINATION: ${{ secrets.SERVER_DESTINATION }}
-          SSH_PORT: ${{ secrets.SSH_PORT }}
+    - name: Deploy snapshot
+      run: scripts/deploy-snapshot.sh
+      env:
+        ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+        SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
+        SERVER_ADDRESS: ${{ secrets.SERVER_ADDRESS }}
+        SERVER_DESTINATION: ${{ secrets.SERVER_DESTINATION }}
+        SSH_PORT: ${{ secrets.SSH_PORT }}

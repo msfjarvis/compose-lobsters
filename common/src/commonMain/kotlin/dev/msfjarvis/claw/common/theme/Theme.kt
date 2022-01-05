@@ -9,8 +9,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ProvidedValue
 import androidx.compose.ui.graphics.Color
 
-val titleColor = Color(0xFF7395D9)
-
 val LightThemeColors =
   lightColorScheme(
     primary = md_theme_light_primary,

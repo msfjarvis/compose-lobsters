@@ -30,7 +30,6 @@ import com.google.accompanist.flowlayout.FlowRow
 import dev.msfjarvis.claw.common.res.commentIcon
 import dev.msfjarvis.claw.common.res.heartBorderIcon
 import dev.msfjarvis.claw.common.res.heartIcon
-import dev.msfjarvis.claw.common.theme.titleColor
 import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.database.local.SavedPost
 
@@ -101,7 +100,6 @@ fun PostTitle(
 ) {
   Text(
     text = title,
-    color = titleColor,
     fontWeight = FontWeight.Bold,
     modifier = modifier,
   )

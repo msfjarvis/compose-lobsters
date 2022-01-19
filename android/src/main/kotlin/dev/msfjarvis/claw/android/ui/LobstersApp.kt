@@ -51,7 +51,7 @@ fun LobstersApp(
   val scaffoldState = rememberScaffoldState()
   val listState = rememberLazyListState()
   val navController = rememberNavController()
-  var currentDestination by remember { mutableStateOf(Destinations.Hottest) }
+  var currentDestination by remember { mutableStateOf(Destinations.Hottest.getRoute()) }
   var isFabVisible by remember { mutableStateOf(false) }
   val nestedScrollConnection = remember {
     object : NestedScrollConnection {
@@ -76,7 +76,7 @@ fun LobstersApp(
       }
 
       override fun viewComments(postId: String) {
-        navController.navigate(Destinations.Comments.format(postId))
+        navController.navigate(Destinations.Comments.getRoute(postId))
       }
 
       override fun viewCommentsPage(commentsUrl: String) {
@@ -89,7 +89,7 @@ fun LobstersApp(
     }
   }
   navController.addOnDestinationChangedListener { _, destination, _ ->
-    currentDestination = destination.route ?: Destinations.Hottest
+    currentDestination = destination.route ?: Destinations.Hottest.getRoute()
   }
   LobstersTheme(
     providedValues =
@@ -113,14 +113,14 @@ fun LobstersApp(
         topBar = { ClawAppBar(modifier = Modifier.statusBarsPadding()) },
         floatingActionButton = {
           ClawFab(
-            isFabVisible = isFabVisible && currentDestination == Destinations.Hottest,
+            isFabVisible = isFabVisible && currentDestination == Destinations.Hottest.getRoute(),
             listState = listState,
             modifier = Modifier.navigationBarsPadding(),
           )
         },
       ) {
-        NavHost(navController, startDestination = Destinations.Hottest) {
-          composable(Destinations.Hottest) {
+        NavHost(navController, startDestination = Destinations.Hottest.getRoute()) {
+          composable(Destinations.Hottest.getRoute()) {
             setWebUri("https://lobste.rs/")
             HottestPosts(
               items,
@@ -131,7 +131,7 @@ fun LobstersApp(
               Modifier.nestedScroll(nestedScrollConnection),
             )
           }
-          composable(Destinations.Comments.format("{postId}")) { backStackEntry ->
+          composable(Destinations.Comments.getRoute("{postId}")) { backStackEntry ->
             val postId = requireNotNull(backStackEntry.arguments?.getString("postId"))
             setWebUri("https://lobste.rs/s/$postId")
             CommentsPage(

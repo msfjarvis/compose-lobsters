@@ -88,11 +88,8 @@ fun LobstersApp(
     }
   }
   LobstersTheme(
-    providedValues =
-      arrayOf(
-        LocalUriHandler provides urlLauncher,
-        LocalHTMLConverter provides htmlConverter,
-      ),
+    LocalUriHandler provides urlLauncher,
+    LocalHTMLConverter provides htmlConverter,
     colorScheme = decideColorScheme(LocalContext.current),
   ) {
     ProvideWindowInsets {

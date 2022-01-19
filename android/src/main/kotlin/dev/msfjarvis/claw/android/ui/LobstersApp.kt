@@ -51,7 +51,6 @@ fun LobstersApp(
   val scaffoldState = rememberScaffoldState()
   val listState = rememberLazyListState()
   val navController = rememberNavController()
-  var currentDestination by remember { mutableStateOf(Destinations.Hottest.getRoute()) }
   var isFabVisible by remember { mutableStateOf(false) }
   val nestedScrollConnection = remember {
     object : NestedScrollConnection {
@@ -88,9 +87,6 @@ fun LobstersApp(
       }
     }
   }
-  navController.addOnDestinationChangedListener { _, destination, _ ->
-    currentDestination = destination.route ?: Destinations.Hottest.getRoute()
-  }
   LobstersTheme(
     providedValues =
       arrayOf(
@@ -113,7 +109,9 @@ fun LobstersApp(
         topBar = { ClawAppBar(modifier = Modifier.statusBarsPadding()) },
         floatingActionButton = {
           ClawFab(
-            isFabVisible = isFabVisible && currentDestination == Destinations.Hottest.getRoute(),
+            isFabVisible =
+              isFabVisible &&
+                navController.currentDestination?.route == Destinations.Hottest.getRoute(),
             listState = listState,
             modifier = Modifier.navigationBarsPadding(),
           )

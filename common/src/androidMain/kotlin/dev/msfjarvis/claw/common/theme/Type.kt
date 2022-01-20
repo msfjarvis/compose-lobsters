@@ -7,7 +7,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import dev.msfjarvis.claw.common.R
 
-actual val Manrope =
+actual fun createFontFamily() =
   FontFamily(
     Font(R.font.manrope_bold, FontWeight.Bold),
     Font(R.font.manrope_extrabold, FontWeight.ExtraBold),

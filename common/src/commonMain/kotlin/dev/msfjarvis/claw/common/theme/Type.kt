@@ -6,7 +6,9 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
-expect val Manrope: FontFamily
+expect fun createFontFamily(): FontFamily
+
+private val Manrope = createFontFamily()
 
 val AppTypography =
   Typography(

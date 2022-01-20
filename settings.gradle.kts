@@ -5,7 +5,7 @@ pluginManagement {
     maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     google()
   }
-  plugins { id("org.jetbrains.compose") version "1.0.1" apply false }
+  plugins { id("org.jetbrains.compose") version "1.1.0-alpha1-dev550" apply false }
 }
 
 dependencyResolutionManagement {

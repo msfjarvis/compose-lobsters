@@ -27,7 +27,7 @@ jobs:
       run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
 
     - name: Run unit tests
-      uses: gradle/gradle-build-action@v2.1.0
+      uses: gradle/gradle-build-action@v2.1.1
       with:
         arguments: test --stacktrace
 
@@ -55,7 +55,7 @@ jobs:
       run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
 
     - name: Check codestyle with Spotless
-      uses: gradle/gradle-build-action@v2.1.0
+      uses: gradle/gradle-build-action@v2.1.1
       with:
         arguments: spotlessCheck
 
@@ -83,7 +83,7 @@ jobs:
         ENCRYPT_KEY: ${{ secrets.ENCRYPT_KEY }}
 
     - name: Build release app
-      uses: gradle/gradle-build-action@v2.1.0
+      uses: gradle/gradle-build-action@v2.1.1
       with:
         arguments: :android:assembleRelease
 

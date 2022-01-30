@@ -4,7 +4,6 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
@@ -48,7 +47,6 @@ fun LobstersApp(
   setWebUri: (String) -> Unit,
 ) {
   val systemUiController = rememberSystemUiController()
-  val scaffoldState = rememberScaffoldState()
   val listState = rememberLazyListState()
   val navController = rememberNavController()
   var isFabVisible by remember { mutableStateOf(false) }
@@ -102,7 +100,6 @@ fun LobstersApp(
       val items = viewModel.pagerFlow.collectAsLazyPagingItems()
 
       Scaffold(
-        scaffoldState = scaffoldState,
         topBar = { ClawAppBar(modifier = Modifier.statusBarsPadding()) },
         floatingActionButton = {
           ClawFab(

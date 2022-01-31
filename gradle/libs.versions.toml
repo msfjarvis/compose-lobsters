@@ -32,7 +32,7 @@ aurora-component = { module = "org.pushing-pixels:aurora-component", version.ref
 aurora-theming = { module = "org.pushing-pixels:aurora-theming", version.ref = "aurora" }
 aurora-window = { module = "org.pushing-pixels:aurora-window", version.ref = "aurora" }
 
-coil-compose = "io.coil-kt:coil-compose:2.0.0-alpha06"
+coil-compose = "io.coil-kt:coil-compose:2.0.0-alpha07"
 kamel-image = "com.alialbaali.kamel:kamel-image:0.3.0"
 
 compose-richtext-ui = { module = "com.halilibo.compose-richtext:richtext-ui", version.ref = "richtext" }

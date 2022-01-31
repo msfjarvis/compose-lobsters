@@ -49,6 +49,9 @@ fun LobstersApp(
   val systemUiController = rememberSystemUiController()
   val listState = rememberLazyListState()
   val navController = rememberNavController()
+  // The destination needs to be tracked here rather than used directly since
+  // `NavController#currentDestination` is not a Composable state.
+  var currentDestination by remember { mutableStateOf(Destinations.Hottest.getRoute()) }
   var isFabVisible by remember { mutableStateOf(false) }
   val nestedScrollConnection = remember {
     object : NestedScrollConnection {
@@ -85,6 +88,9 @@ fun LobstersApp(
       }
     }
   }
+  navController.addOnDestinationChangedListener { _, destination, _ ->
+    currentDestination = destination.route ?: Destinations.Hottest.getRoute()
+  }
   LobstersTheme(
     LocalUriHandler provides urlLauncher,
     LocalHTMLConverter provides htmlConverter,
@@ -103,9 +109,7 @@ fun LobstersApp(
         topBar = { ClawAppBar(modifier = Modifier.statusBarsPadding()) },
         floatingActionButton = {
           ClawFab(
-            isFabVisible =
-              isFabVisible &&
-                navController.currentDestination?.route == Destinations.Hottest.getRoute(),
+            isFabVisible = isFabVisible && currentDestination == Destinations.Hottest.getRoute(),
             listState = listState,
             modifier = Modifier.navigationBarsPadding(),
           )

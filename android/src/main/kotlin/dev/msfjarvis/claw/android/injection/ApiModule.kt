@@ -10,7 +10,7 @@ import dagger.hilt.components.SingletonComponent
 import dev.msfjarvis.claw.api.LobstersApi
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
-import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.create
@@ -25,7 +25,7 @@ object ApiModule {
     return OkHttpClient.Builder()
       .addNetworkInterceptor { chain ->
         val request = chain.request()
-        Log.d("LobstersApi", "${request.method}: ${request.url}")
+        Log.d("LobstersApi", "${request.method()}: ${request.url()}")
         chain.proceed(request)
       }
       .build()
@@ -40,7 +40,7 @@ object ApiModule {
     client: Lazy<OkHttpClient>,
     json: Lazy<Json>,
   ): Retrofit {
-    val contentType = "application/json".toMediaType()
+    val contentType = MediaType.get("application/json")
     return Retrofit.Builder()
       .client(client.get())
       .baseUrl(LobstersApi.BASE_URL)

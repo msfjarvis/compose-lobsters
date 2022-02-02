@@ -62,7 +62,7 @@ jobs:
 
   deploy-release-snapshot:
     runs-on: ubuntu-latest
-    if: "github.event_name == 'push'"
+    if: "github.event_name == 'push' && github.event.ref == 'refs/heads/main'"
     needs: [ "run-unit-tests", "stylecheck" ]
     steps:
     - name: Checkout repository

@@ -16,7 +16,7 @@ buildscript {
     classpath("com.android.tools:r8:3.3.7-dev")
     classpath(kotlin("gradle-plugin", version = kotlinVersion))
     classpath(kotlin("serialization", version = kotlinVersion))
-    classpath("com.android.tools.build:gradle:7.1.0")
+    classpath("com.android.tools.build:gradle:7.1.1")
     classpath("com.google.dagger:hilt-android-gradle-plugin:2.40.5")
   }
 }

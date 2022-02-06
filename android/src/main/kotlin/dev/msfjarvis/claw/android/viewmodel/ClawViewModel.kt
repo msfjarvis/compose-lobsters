@@ -8,13 +8,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.database.local.SavedPost
-import dev.msfjarvis.claw.model.LobstersPostDetails
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -27,7 +26,7 @@ constructor(
   private val api: LobstersApi,
   private val repository: SavedPostsRepository,
 ) : ViewModel() {
-  var lastPagingSource: LobstersPagingSource? = null
+  private var lastPagingSource: LobstersPagingSource? = null
   private val savedPosts = flow { repository.savedPosts.collect { emit(it) } }
   private val pager =
     Pager(PagingConfig(20)) {
@@ -37,14 +36,11 @@ constructor(
   val pagerFlow
     get() = pager.flow
 
-  suspend fun isPostSaved(post: SavedPost): Boolean {
-    return savedPosts.mapLatest { posts -> post in posts }.last()
-  }
+  suspend fun isPostSaved(post: SavedPost) = savedPosts.mapLatest { posts -> post in posts }.first()
 
   fun toggleSave(post: SavedPost) {
     viewModelScope.launch {
       val saved = isPostSaved(post)
-      println("saved=$saved")
       if (saved) {
         repository.removePost(post)
       } else {
@@ -53,10 +49,8 @@ constructor(
     }
   }
 
-  suspend fun getPostComments(postId: String): LobstersPostDetails =
-    withContext(Dispatchers.IO) {
-      return@withContext api.getPostDetails(postId)
-    }
+  suspend fun getPostComments(postId: String) =
+    withContext(Dispatchers.IO) { api.getPostDetails(postId) }
 
   fun reloadPosts() {
     lastPagingSource?.invalidate()

@@ -1,14 +1,12 @@
-# Claw for [lobste.rs](https://lobste.rs)
+# Claw for [lobste.rs](https://lobste.rs) [![CI](https://github.com/msfjarvis/compose-lobsters/actions/workflows/ci.yml/badge.svg)](https://github.com/msfjarvis/compose-lobsters/actions/workflows/ci.yml)
 
 Unofficial Android and Desktop app for read-only access to [lobste.rs](https://lobste.rs) community, built with [Jetpack Compose](https://developer.android.com/jetpack/compose).
-
-Requires at least Android Studio 2021.1.1 Bumblebee for development.
 
 ## Distribution
 
 The app will eventually be published to Google Play, in the mean time snapshots for the Android app from the development branch are available [here](https://dl.msfjarvis.dev/Claw).
 
-## Licence
+## License
 
 ```
 Copyright (c) 2021 Harsh Shandilya

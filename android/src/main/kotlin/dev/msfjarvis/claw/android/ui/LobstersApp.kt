@@ -32,10 +32,8 @@ import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.common.comments.CommentsPage
 import dev.msfjarvis.claw.common.comments.HTMLConverter
 import dev.msfjarvis.claw.common.comments.LocalHTMLConverter
-import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
-import dev.msfjarvis.claw.database.local.SavedPost
 
 private const val ScrollDelta = 50
 
@@ -51,6 +49,7 @@ fun LobstersApp(
   val networkListState = rememberLazyListState()
   val savedListState = rememberLazyListState()
   val navController = rememberNavController()
+  val postActions = rememberPostActions(urlLauncher, navController, viewModel)
   // The destination needs to be tracked here rather than used directly since
   // `NavController#currentDestination` is not a Composable state.
   var currentDestination by remember { mutableStateOf<String?>(null) }
@@ -68,25 +67,6 @@ fun LobstersApp(
 
         // We didn't consume any offset here so return Offset.Zero
         return Offset.Zero
-      }
-    }
-  }
-  val postActions = remember {
-    object : PostActions {
-      override fun viewPost(postUrl: String, commentsUrl: String) {
-        urlLauncher.openUri(postUrl.ifEmpty { commentsUrl })
-      }
-
-      override fun viewComments(postId: String) {
-        navController.navigate(Destinations.Comments.getRoute(postId))
-      }
-
-      override fun viewCommentsPage(commentsUrl: String) {
-        urlLauncher.openUri(commentsUrl)
-      }
-
-      override fun toggleSave(post: SavedPost) {
-        viewModel.toggleSave(post)
       }
     }
   }

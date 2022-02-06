@@ -12,10 +12,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
-import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
@@ -35,8 +32,6 @@ import dev.msfjarvis.claw.common.comments.LocalHTMLConverter
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 
-private const val ScrollDelta = 50
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LobstersApp(
@@ -45,34 +40,19 @@ fun LobstersApp(
   htmlConverter: HTMLConverter,
   setWebUri: (String) -> Unit,
 ) {
+  var isFabVisible by remember { mutableStateOf(false) }
+
   val systemUiController = rememberSystemUiController()
   val networkListState = rememberLazyListState()
   val savedListState = rememberLazyListState()
   val navController = rememberNavController()
   val postActions = rememberPostActions(urlLauncher, navController, viewModel)
-  // The destination needs to be tracked here rather than used directly since
-  // `NavController#currentDestination` is not a Composable state.
-  var currentDestination by remember { mutableStateOf<String?>(null) }
-  var isFabVisible by remember { mutableStateOf(false) }
-  val nestedScrollConnection = remember {
-    object : NestedScrollConnection {
-      override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
-        val delta = available.y
+  val currentDestination by currentNavigationDestination(navController)
+  val nestedScrollConnection = rememberNestedScrollConnection { isFabVisible = it }
 
-        if (delta > ScrollDelta) {
-          isFabVisible = true
-        } else if (delta < -ScrollDelta) {
-          isFabVisible = false
-        }
+  val networkPosts = viewModel.pagerFlow.collectAsLazyPagingItems()
+  val savedPosts by viewModel.savedPosts.collectAsState(emptyList())
 
-        // We didn't consume any offset here so return Offset.Zero
-        return Offset.Zero
-      }
-    }
-  }
-  navController.addOnDestinationChangedListener { _, destination, _ ->
-    currentDestination = destination.route ?: Destinations.Hottest.getRoute()
-  }
   LobstersTheme(
     LocalUriHandler provides urlLauncher,
     LocalHTMLConverter provides htmlConverter,
@@ -85,8 +65,6 @@ fun LobstersApp(
         systemUiController.setStatusBarColor(color = statusBarColor)
         systemUiController.setNavigationBarColor(color = Color.Transparent)
       }
-      val networkPosts = viewModel.pagerFlow.collectAsLazyPagingItems()
-      val savedPosts by viewModel.savedPosts.collectAsState(emptyList())
 
       Scaffold(
         topBar = { ClawAppBar(modifier = Modifier.statusBarsPadding()) },

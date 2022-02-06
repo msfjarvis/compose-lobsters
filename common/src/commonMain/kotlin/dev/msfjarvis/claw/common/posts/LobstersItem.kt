@@ -91,9 +91,11 @@ fun PostDetails(
 ) {
   PostTitle(
     title = post.title,
+    modifier = Modifier.padding(bottom = 4.dp),
   )
   TagRow(
     tags = post.tags,
+    modifier = Modifier.padding(bottom = 4.dp),
   )
   SubmitterName(
     text = "Submitted by ${post.submitterName}",

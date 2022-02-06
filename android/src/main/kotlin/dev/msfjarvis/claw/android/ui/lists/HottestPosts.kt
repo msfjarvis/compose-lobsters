@@ -2,11 +2,9 @@ package dev.msfjarvis.claw.android.ui.lists
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.google.accompanist.swiperefresh.SwipeRefresh
@@ -22,7 +20,7 @@ fun HottestPosts(
   isPostSaved: suspend (SavedPost) -> Boolean,
   reloadPosts: () -> Unit,
   postActions: PostActions,
-  modifier: Modifier,
+  modifier: Modifier = Modifier,
 ) {
   val isRefreshing = items.loadState.refresh == LoadState.Loading
   SwipeRefresh(
@@ -37,7 +35,7 @@ fun HottestPosts(
         listState = listState,
         isSaved = isPostSaved,
         postActions = postActions,
-        modifier = modifier.padding(top = 16.dp),
+        modifier = modifier,
       )
     }
   }

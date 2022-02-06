@@ -45,7 +45,7 @@ fun ClawFab(
   ) {
     FloatingActionButton(onClick = { coroutineScope.launch { listState.animateScrollToItem(0) } }) {
       Icon(
-        painter = painterResource(R.drawable.ic_arrow_upward_24),
+        painter = painterResource(R.drawable.ic_arrow_upward_24dp),
         contentDescription = null,
       )
     }

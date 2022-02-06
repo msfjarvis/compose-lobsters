@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.res.painterResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -25,12 +26,16 @@ import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.navigationBarsPadding
 import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import dev.msfjarvis.claw.android.R
 import dev.msfjarvis.claw.android.ui.decorations.ClawAppBar
 import dev.msfjarvis.claw.android.ui.decorations.ClawFab
+import dev.msfjarvis.claw.android.ui.decorations.ClawNavigationBar
+import dev.msfjarvis.claw.android.ui.decorations.NavigationItem
 import dev.msfjarvis.claw.android.ui.lists.DatabasePosts
 import dev.msfjarvis.claw.android.ui.lists.HottestPosts
 import dev.msfjarvis.claw.android.ui.navigation.Destinations
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
+import dev.msfjarvis.claw.common.R as commonR
 import dev.msfjarvis.claw.common.comments.CommentsPage
 import dev.msfjarvis.claw.common.comments.HTMLConverter
 import dev.msfjarvis.claw.common.comments.LocalHTMLConverter
@@ -52,8 +57,8 @@ fun LobstersApp(
   val savedListState = rememberLazyListState()
   val navController = rememberNavController()
   val postActions = rememberPostActions(urlLauncher, navController, viewModel)
-  val currentDestination by currentNavigationDestination(navController)
   val nestedScrollConnection = rememberNestedScrollConnection { isFabVisible = it }
+  val currentDestination by currentNavigationDestination(navController)
 
   val networkPosts = viewModel.pagerFlow.collectAsLazyPagingItems()
   val savedPosts by viewModel.savedPosts.collectAsState(emptyList())
@@ -71,12 +76,33 @@ fun LobstersApp(
         systemUiController.setNavigationBarColor(color = Color.Transparent)
       }
 
+      val navItems =
+        listOf(
+          NavigationItem(
+            label = "Hottest",
+            route = Destinations.Hottest.getRoute(),
+            icon = painterResource(R.drawable.ic_whatshot_24dp),
+          ),
+          NavigationItem(
+            label = "Saved",
+            route = Destinations.Saved.getRoute(),
+            icon = painterResource(commonR.drawable.ic_favorite_24dp),
+          ),
+        )
+
       Scaffold(
         topBar = { ClawAppBar(modifier = Modifier.statusBarsPadding()) },
         floatingActionButton = {
           ClawFab(
             isFabVisible = isFabVisible && currentDestination == Destinations.Hottest.getRoute(),
             listState = networkListState,
+            modifier = Modifier.navigationBarsPadding(),
+          )
+        },
+        bottomBar = {
+          ClawNavigationBar(
+            navController = navController,
+            items = navItems,
             modifier = Modifier.navigationBarsPadding(),
           )
         },

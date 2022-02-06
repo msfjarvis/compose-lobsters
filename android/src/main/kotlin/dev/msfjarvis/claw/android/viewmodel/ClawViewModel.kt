@@ -11,7 +11,6 @@ import dev.msfjarvis.claw.database.local.SavedPost
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.mapLatest
@@ -27,7 +26,6 @@ constructor(
   private val repository: SavedPostsRepository,
 ) : ViewModel() {
   private var lastPagingSource: LobstersPagingSource? = null
-  private val savedPosts = flow { repository.savedPosts.collect { emit(it) } }
   private val pager =
     Pager(PagingConfig(20)) {
       LobstersPagingSource(api::getHottestPosts).also { lastPagingSource = it }
@@ -35,6 +33,9 @@ constructor(
 
   val pagerFlow
     get() = pager.flow
+
+  val savedPosts
+    get() = repository.savedPosts
 
   suspend fun isPostSaved(post: SavedPost) = savedPosts.mapLatest { posts -> post in posts }.first()
 

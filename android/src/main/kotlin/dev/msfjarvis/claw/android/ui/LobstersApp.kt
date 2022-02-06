@@ -6,6 +6,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -47,7 +48,8 @@ fun LobstersApp(
   setWebUri: (String) -> Unit,
 ) {
   val systemUiController = rememberSystemUiController()
-  val listState = rememberLazyListState()
+  val networkListState = rememberLazyListState()
+  val savedListState = rememberLazyListState()
   val navController = rememberNavController()
   // The destination needs to be tracked here rather than used directly since
   // `NavController#currentDestination` is not a Composable state.
@@ -103,14 +105,15 @@ fun LobstersApp(
         systemUiController.setStatusBarColor(color = statusBarColor)
         systemUiController.setNavigationBarColor(color = Color.Transparent)
       }
-      val items = viewModel.pagerFlow.collectAsLazyPagingItems()
+      val networkPosts = viewModel.pagerFlow.collectAsLazyPagingItems()
+      val savedPosts by viewModel.savedPosts.collectAsState(emptyList())
 
       Scaffold(
         topBar = { ClawAppBar(modifier = Modifier.statusBarsPadding()) },
         floatingActionButton = {
           ClawFab(
             isFabVisible = isFabVisible && currentDestination == Destinations.Hottest.getRoute(),
-            listState = listState,
+            listState = networkListState,
             modifier = Modifier.navigationBarsPadding(),
           )
         },
@@ -119,12 +122,21 @@ fun LobstersApp(
           composable(Destinations.Hottest.getRoute()) {
             setWebUri("https://lobste.rs/")
             HottestPosts(
-              items,
-              listState,
-              viewModel::isPostSaved,
-              viewModel::reloadPosts,
-              postActions,
-              Modifier.nestedScroll(nestedScrollConnection),
+              items = networkPosts,
+              listState = networkListState,
+              isPostSaved = viewModel::isPostSaved,
+              reloadPosts = viewModel::reloadPosts,
+              postActions = postActions,
+              modifier = Modifier.nestedScroll(nestedScrollConnection),
+            )
+          }
+          composable(Destinations.Saved.getRoute()) {
+            DatabasePosts(
+              items = savedPosts,
+              listState = savedListState,
+              isSaved = viewModel::isPostSaved,
+              postActions = postActions,
+              modifier = Modifier.nestedScroll(nestedScrollConnection),
             )
           }
           composable(Destinations.Comments.getRoute("{postId}")) { backStackEntry ->

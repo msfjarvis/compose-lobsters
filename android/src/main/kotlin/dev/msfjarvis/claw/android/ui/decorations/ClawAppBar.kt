@@ -1,4 +1,4 @@
-package dev.msfjarvis.claw.android.ui
+package dev.msfjarvis.claw.android.ui.decorations
 
 import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.material3.Text

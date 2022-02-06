@@ -1,4 +1,4 @@
-package dev.msfjarvis.claw.android.ui
+package dev.msfjarvis.claw.android.ui.lists
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState

@@ -1,4 +1,4 @@
-package dev.msfjarvis.claw.android.ui
+package dev.msfjarvis.claw.android.ui.decorations
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi

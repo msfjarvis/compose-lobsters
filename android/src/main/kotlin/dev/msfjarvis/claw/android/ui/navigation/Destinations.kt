@@ -1,4 +1,4 @@
-package dev.msfjarvis.claw.android.ui
+package dev.msfjarvis.claw.android.ui.navigation
 
 sealed class Destinations(internal val route: String) {
   object Hottest : Destinations("hottest") {

@@ -1,4 +1,4 @@
-package dev.msfjarvis.claw.android.ui
+package dev.msfjarvis.claw.android.ui.lists
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

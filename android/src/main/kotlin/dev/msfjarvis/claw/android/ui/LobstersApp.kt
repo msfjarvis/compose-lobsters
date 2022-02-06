@@ -53,7 +53,7 @@ fun LobstersApp(
   val navController = rememberNavController()
   // The destination needs to be tracked here rather than used directly since
   // `NavController#currentDestination` is not a Composable state.
-  var currentDestination by remember { mutableStateOf(Destinations.Hottest.getRoute()) }
+  var currentDestination by remember { mutableStateOf<String?>(null) }
   var isFabVisible by remember { mutableStateOf(false) }
   val nestedScrollConnection = remember {
     object : NestedScrollConnection {

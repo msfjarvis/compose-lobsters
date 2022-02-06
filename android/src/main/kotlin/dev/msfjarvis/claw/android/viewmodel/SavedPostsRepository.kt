@@ -1,5 +1,6 @@
 package dev.msfjarvis.claw.android.viewmodel
 
+import android.util.Log
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
 import dev.msfjarvis.claw.database.LobstersDatabase
@@ -17,12 +18,12 @@ constructor(
   val savedPosts = savedPostQueries.selectAllPosts().asFlow().mapToList()
 
   suspend fun savePost(post: SavedPost) {
-    println("Saving post: ${post.shortId}")
+    Log.d("SavedPostsRepository", "Saving post: ${post.shortId}")
     withContext(Dispatchers.IO) { savedPostQueries.insertOrReplacePost(post) }
   }
 
   suspend fun removePost(post: SavedPost) {
-    println("Removing post: ${post.shortId}")
+    Log.d("SavedPostsRepository", "Removing post: ${post.shortId}")
     withContext(Dispatchers.IO) { savedPostQueries.deletePost(post.shortId) }
   }
 }

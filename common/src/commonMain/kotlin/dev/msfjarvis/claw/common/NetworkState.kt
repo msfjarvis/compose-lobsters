@@ -1,4 +1,4 @@
-package dev.msfjarvis.lobsters.ui.comments
+package dev.msfjarvis.claw.common
 
 sealed class NetworkState {
   class Success<T>(val data: T) : NetworkState()

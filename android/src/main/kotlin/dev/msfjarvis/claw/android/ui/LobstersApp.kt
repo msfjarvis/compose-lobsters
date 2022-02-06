@@ -12,7 +12,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
@@ -69,11 +68,11 @@ fun LobstersApp(
     colorScheme = decideColorScheme(LocalContext.current),
   ) {
     ProvideWindowInsets {
-      val statusBarColor = MaterialTheme.colorScheme.background
+      val systemBarsColor = MaterialTheme.colorScheme.surfaceColorAtNavigationBarElevation()
 
       SideEffect {
-        systemUiController.setStatusBarColor(color = statusBarColor)
-        systemUiController.setNavigationBarColor(color = Color.Transparent)
+        systemUiController.setStatusBarColor(color = systemBarsColor)
+        systemUiController.setNavigationBarColor(color = systemBarsColor)
       }
 
       val navItems =
@@ -91,19 +90,22 @@ fun LobstersApp(
         )
 
       Scaffold(
-        topBar = { ClawAppBar(modifier = Modifier.statusBarsPadding()) },
+        topBar = {
+          ClawAppBar(
+            backgroundColor = systemBarsColor,
+            modifier = Modifier.statusBarsPadding(),
+          )
+        },
         floatingActionButton = {
           ClawFab(
             isFabVisible = isFabVisible && currentDestination == Destinations.Hottest.getRoute(),
             listState = networkListState,
-            modifier = Modifier.navigationBarsPadding(),
           )
         },
         bottomBar = {
           ClawNavigationBar(
             navController = navController,
             items = navItems,
-            modifier = Modifier.navigationBarsPadding(),
           )
         },
       ) {

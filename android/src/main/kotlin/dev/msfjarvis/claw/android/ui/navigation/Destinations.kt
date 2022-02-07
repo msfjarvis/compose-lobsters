@@ -12,4 +12,9 @@ sealed class Destinations(internal val route: String) {
   object Comments : Destinations("comments/%s") {
     fun getRoute(postId: String) = route.format(postId)
   }
+
+  companion object {
+    val startDestination
+      get() = Hottest
+  }
 }

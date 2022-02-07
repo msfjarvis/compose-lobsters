@@ -122,7 +122,7 @@ fun LobstersApp(
       ) {
         NavHost(
           navController,
-          startDestination = Destinations.Hottest.getRoute(),
+          startDestination = Destinations.startDestination.getRoute(),
           modifier = Modifier.padding(top = 8.dp),
         ) {
           composable(Destinations.Hottest.getRoute()) {

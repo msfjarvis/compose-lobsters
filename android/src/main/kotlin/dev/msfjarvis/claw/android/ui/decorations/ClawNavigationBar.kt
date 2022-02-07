@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.navigation.NavController
 import dev.msfjarvis.claw.android.ui.AnimationDuration
+import dev.msfjarvis.claw.android.ui.navigation.Destinations
 
 @Composable
 fun ClawNavigationBar(
@@ -53,7 +54,11 @@ fun ClawNavigationBar(
           selected = selectedIndex == index,
           onClick = {
             selectedIndex = index
-            navController.navigate(navItem.route)
+            if (navController.currentDestination?.route == navItem.route) return@NavigationBarItem
+            navController.popBackStack(navController.graph.startDestinationRoute!!, false)
+            if (navItem.route != Destinations.startDestination.getRoute()) {
+              navController.navigate(navItem.route)
+            }
           }
         )
       }

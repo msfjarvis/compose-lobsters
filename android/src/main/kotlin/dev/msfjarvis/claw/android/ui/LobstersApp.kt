@@ -16,6 +16,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
@@ -72,6 +73,7 @@ fun LobstersApp(
     colorScheme = decideColorScheme(LocalContext.current),
   ) {
     ProvideWindowInsets {
+      val currentUiMode = LocalConfiguration.current.uiMode
       val systemBarsColor = MaterialTheme.colorScheme.surfaceColorAtNavigationBarElevation()
       val navItems =
         listOf(
@@ -89,7 +91,8 @@ fun LobstersApp(
 
       SideEffect { systemUiController.setStatusBarColor(color = systemBarsColor) }
 
-      LaunchedEffect(currentDestination) {
+      // Track UI mode as a key to force a navbar color update when dark theme is toggled
+      LaunchedEffect(currentDestination, currentUiMode) {
         val color =
           if (currentDestination !in navItems.map { it.route }) {
             Color.Transparent

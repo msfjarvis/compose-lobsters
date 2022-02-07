@@ -11,10 +11,6 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.navigation.NavController
@@ -28,8 +24,6 @@ fun ClawNavigationBar(
   isVisible: Boolean,
   modifier: Modifier = Modifier,
 ) {
-  var selectedIndex by remember { mutableStateOf(0) }
-
   AnimatedVisibility(
     visible = isVisible,
     enter =
@@ -47,13 +41,12 @@ fun ClawNavigationBar(
     modifier = Modifier,
   ) {
     NavigationBar(modifier = modifier) {
-      items.forEachIndexed { index, navItem ->
+      items.forEach { navItem ->
         NavigationBarItem(
           icon = { Icon(painter = navItem.icon, contentDescription = navItem.label) },
           label = { Text(text = navItem.label) },
-          selected = selectedIndex == index,
+          selected = navController.currentDestination?.route == navItem.route,
           onClick = {
-            selectedIndex = index
             if (navController.currentDestination?.route == navItem.route) return@NavigationBarItem
             navController.popBackStack(navController.graph.startDestinationRoute!!, false)
             if (navItem.route != Destinations.startDestination.getRoute()) {

@@ -1,5 +1,6 @@
 package dev.msfjarvis.claw.android.ui
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -18,6 +19,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -118,7 +120,11 @@ fun LobstersApp(
           )
         },
       ) {
-        NavHost(navController, startDestination = Destinations.Hottest.getRoute()) {
+        NavHost(
+          navController,
+          startDestination = Destinations.Hottest.getRoute(),
+          modifier = Modifier.padding(top = 8.dp),
+        ) {
           composable(Destinations.Hottest.getRoute()) {
             setWebUri("https://lobste.rs/")
             HottestPosts(

@@ -1,11 +1,6 @@
 package dev.msfjarvis.claw.android.ui.decorations
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.FastOutLinearInEasing
-import androidx.compose.animation.core.LinearOutSlowInEasing
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -14,8 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.navigation.NavController
-import dev.msfjarvis.claw.android.ui.AnimationDuration
 import dev.msfjarvis.claw.android.ui.navigation.Destinations
+import dev.msfjarvis.claw.android.ui.slideInAnimation
+import dev.msfjarvis.claw.android.ui.slideOutAnimation
 
 @Composable
 fun ClawNavigationBar(
@@ -26,18 +22,8 @@ fun ClawNavigationBar(
 ) {
   AnimatedVisibility(
     visible = isVisible,
-    enter =
-      slideInVertically(
-        // Enters by sliding up from offset 0 to fullHeight.
-        initialOffsetY = { fullHeight -> fullHeight },
-        animationSpec = tween(durationMillis = AnimationDuration, easing = LinearOutSlowInEasing),
-      ),
-    exit =
-      slideOutVertically(
-        // Exits by sliding up from offset 0 to -fullHeight.
-        targetOffsetY = { fullHeight -> fullHeight },
-        animationSpec = tween(durationMillis = AnimationDuration, easing = FastOutLinearInEasing),
-      ),
+    enter = slideInAnimation(),
+    exit = slideOutAnimation(),
     modifier = Modifier,
   ) {
     NavigationBar(modifier = modifier) {

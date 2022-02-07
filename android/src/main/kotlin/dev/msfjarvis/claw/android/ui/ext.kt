@@ -2,6 +2,13 @@ package dev.msfjarvis.claw.android.ui
 
 import android.content.Context
 import android.os.Build
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.core.FastOutLinearInEasing
+import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.LocalAbsoluteTonalElevation
@@ -27,7 +34,23 @@ import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 import dev.msfjarvis.claw.database.local.SavedPost
 import kotlin.math.ln
 
-const val AnimationDuration = 100
+private const val AnimationDuration = 100
+
+fun slideInAnimation(): EnterTransition {
+  return slideInVertically(
+    // Enters by sliding up from offset 0 to fullHeight.
+    initialOffsetY = { fullHeight -> fullHeight },
+    animationSpec = tween(durationMillis = AnimationDuration, easing = LinearOutSlowInEasing),
+  )
+}
+
+fun slideOutAnimation(): ExitTransition {
+  return slideOutVertically(
+    // Exits by sliding up from offset 0 to -fullHeight.
+    targetOffsetY = { fullHeight -> fullHeight },
+    animationSpec = tween(durationMillis = AnimationDuration, easing = FastOutLinearInEasing),
+  )
+}
 
 // The destination needs to be tracked like this rather than used directly since
 // `NavController#currentDestination` is not a Composable state.

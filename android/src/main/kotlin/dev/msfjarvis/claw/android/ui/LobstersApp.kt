@@ -5,6 +5,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -12,6 +13,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
@@ -69,12 +71,6 @@ fun LobstersApp(
   ) {
     ProvideWindowInsets {
       val systemBarsColor = MaterialTheme.colorScheme.surfaceColorAtNavigationBarElevation()
-
-      SideEffect {
-        systemUiController.setStatusBarColor(color = systemBarsColor)
-        systemUiController.setNavigationBarColor(color = systemBarsColor)
-      }
-
       val navItems =
         listOf(
           NavigationItem(
@@ -88,6 +84,18 @@ fun LobstersApp(
             icon = painterResource(commonR.drawable.ic_favorite_24dp),
           ),
         )
+
+      SideEffect { systemUiController.setStatusBarColor(color = systemBarsColor) }
+
+      LaunchedEffect(currentDestination) {
+        val color =
+          if (currentDestination !in navItems.map { it.route }) {
+            Color.Transparent
+          } else {
+            systemBarsColor
+          }
+        systemUiController.setNavigationBarColor(color = color)
+      }
 
       Scaffold(
         topBar = {

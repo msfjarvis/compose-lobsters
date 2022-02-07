@@ -27,6 +27,8 @@ import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 import dev.msfjarvis.claw.database.local.SavedPost
 import kotlin.math.ln
 
+const val AnimationDuration = 100
+
 // The destination needs to be tracked like this rather than used directly since
 // `NavController#currentDestination` is not a Composable state.
 @Composable

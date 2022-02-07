@@ -15,9 +15,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import dev.msfjarvis.claw.android.R
+import dev.msfjarvis.claw.android.ui.AnimationDuration
 import kotlinx.coroutines.launch
-
-private const val AnimationDuration = 100
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable

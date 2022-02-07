@@ -106,6 +106,7 @@ fun LobstersApp(
           ClawNavigationBar(
             navController = navController,
             items = navItems,
+            isVisible = navItems.any { it.route == currentDestination },
           )
         },
       ) {

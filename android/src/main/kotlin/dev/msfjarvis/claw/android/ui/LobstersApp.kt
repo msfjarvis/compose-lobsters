@@ -51,7 +51,7 @@ fun LobstersApp(
   viewModel: ClawViewModel = viewModel(),
   urlLauncher: UrlLauncher,
   htmlConverter: HTMLConverter,
-  setWebUri: (String) -> Unit,
+  setWebUri: (String?) -> Unit,
 ) {
   var isFabVisible by remember { mutableStateOf(false) }
 
@@ -140,6 +140,7 @@ fun LobstersApp(
             )
           }
           composable(Destinations.Saved.getRoute()) {
+            setWebUri(null)
             DatabasePosts(
               items = savedPosts,
               listState = savedListState,

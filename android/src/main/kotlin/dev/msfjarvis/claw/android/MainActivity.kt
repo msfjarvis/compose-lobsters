@@ -32,6 +32,12 @@ class MainActivity : ComponentActivity() {
 
   override fun onProvideAssistContent(outContent: AssistContent?) {
     super.onProvideAssistContent(outContent)
-    webUri?.let { outContent?.webUri = Uri.parse(it) }
+    if (outContent != null) {
+      if (webUri != null) {
+        outContent.webUri = Uri.parse(webUri)
+      } else {
+        outContent.webUri = null
+      }
+    }
   }
 }

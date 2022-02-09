@@ -32,7 +32,6 @@ import androidx.paging.PagingData
 import androidx.paging.PagingDataDiffer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 
 /**
@@ -43,7 +42,7 @@ import kotlinx.coroutines.flow.collectLatest
  *
  * @param T the type of value used by [PagingData].
  */
-public class LazyPagingItems<T : Any>
+class LazyPagingItems<T : Any>
 internal constructor(
   /** the [Flow] object which contains a stream of [PagingData] elements. */
   private val flow: Flow<PagingData<T>>
@@ -157,7 +156,7 @@ internal constructor(
   }
 
   /** A [CombinedLoadStates] object which represents the current loading state. */
-  public var loadState: CombinedLoadStates by
+  var loadState: CombinedLoadStates by
     mutableStateOf(
       CombinedLoadStates(
         refresh = InitialLoadStates.refresh,
@@ -189,7 +188,7 @@ private val InitialLoadStates =
  * @sample androidx.paging.compose.samples.PagingBackendSample
  */
 @Composable
-public fun <T : Any> Flow<PagingData<T>>.collectAsLazyPagingItems(): LazyPagingItems<T> {
+fun <T : Any> Flow<PagingData<T>>.collectAsLazyPagingItems(): LazyPagingItems<T> {
   val lazyPagingItems = remember(this) { LazyPagingItems(this) }
 
   LaunchedEffect(lazyPagingItems) { lazyPagingItems.collectPagingData() }
@@ -216,7 +215,7 @@ public fun <T : Any> Flow<PagingData<T>>.collectAsLazyPagingItems(): LazyPagingI
  * [itemContent] method should handle the logic of displaying a placeholder instead of the main
  * content displayed by an item which is not `null`.
  */
-public fun <T : Any> LazyListScope.items(
+fun <T : Any> LazyListScope.items(
   items: LazyPagingItems<T>,
   key: ((item: T) -> Any)? = null,
   itemContent: @Composable LazyItemScope.(value: T?) -> Unit
@@ -256,7 +255,7 @@ public fun <T : Any> LazyListScope.items(
  * [itemContent] method should handle the logic of displaying a placeholder instead of the main
  * content displayed by an item which is not `null`.
  */
-public fun <T : Any> LazyListScope.itemsIndexed(
+fun <T : Any> LazyListScope.itemsIndexed(
   items: LazyPagingItems<T>,
   key: ((index: Int, item: T) -> Any)? = null,
   itemContent: @Composable LazyItemScope.(index: Int, value: T?) -> Unit

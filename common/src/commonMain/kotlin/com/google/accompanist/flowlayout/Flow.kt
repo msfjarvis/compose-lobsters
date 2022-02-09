@@ -44,7 +44,7 @@ import kotlin.math.max
  * @param lastLineMainAxisAlignment Overrides the main axis alignment of the last row.
  */
 @Composable
-public fun FlowRow(
+fun FlowRow(
   modifier: Modifier = Modifier,
   mainAxisSize: SizeMode = SizeMode.Wrap,
   mainAxisAlignment: FlowMainAxisAlignment = FlowMainAxisAlignment.Start,
@@ -82,7 +82,7 @@ public fun FlowRow(
  * @param lastLineMainAxisAlignment Overrides the main axis alignment of the last column.
  */
 @Composable
-public fun FlowColumn(
+fun FlowColumn(
   modifier: Modifier = Modifier,
   mainAxisSize: SizeMode = SizeMode.Wrap,
   mainAxisAlignment: FlowMainAxisAlignment = FlowMainAxisAlignment.Start,
@@ -106,7 +106,7 @@ public fun FlowColumn(
 }
 
 /** Used to specify the alignment of a layout's children, in cross axis direction. */
-public enum class FlowCrossAxisAlignment {
+enum class FlowCrossAxisAlignment {
   /** Place children such that their center is in the middle of the cross axis. */
   Center,
   /** Place children such that their start edge is aligned to the start edge of the cross axis. */
@@ -115,7 +115,7 @@ public enum class FlowCrossAxisAlignment {
   End,
 }
 
-public typealias FlowMainAxisAlignment = MainAxisAlignment
+typealias FlowMainAxisAlignment = MainAxisAlignment
 
 /** Layout model that arranges its children in a horizontal or vertical flow. */
 @Composable
@@ -259,7 +259,7 @@ private fun Flow(
 
 /** Used to specify how a layout chooses its own size when multiple behaviors are possible. */
 // TODO(popam): remove this when Flow is reworked
-public enum class SizeMode {
+enum class SizeMode {
   /**
    * Minimize the amount of free space by wrapping the children, subject to the incoming layout
    * constraints.
@@ -273,7 +273,7 @@ public enum class SizeMode {
 }
 
 /** Used to specify the alignment of a layout's children, in main axis direction. */
-public enum class MainAxisAlignment(internal val arrangement: Arrangement.Vertical) {
+enum class MainAxisAlignment(internal val arrangement: Arrangement.Vertical) {
   // TODO(soboleva) support RTl in Flow
   // workaround for now - use Arrangement that equals to previous Arrangement
   /** Place children such that they are as close as possible to the middle of the main axis. */

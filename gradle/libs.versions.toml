@@ -3,7 +3,7 @@ accompanist = "0.24.0-alpha"
 aurora = "1.0.1"
 coroutines = "1.6.0"
 hilt = "2.40.5"
-richtext = "0.10.0"
+richtext = "0.11.0"
 serialization = "1.3.2"
 sqldelight = "1.5.3"
 

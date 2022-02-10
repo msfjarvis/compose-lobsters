@@ -122,7 +122,7 @@ fun LobstersApp(
             isVisible = navItems.any { it.route == currentDestination },
           )
         },
-      ) {
+      ) { paddingValues ->
         NavHost(
           navController,
           startDestination = Destinations.startDestination.getRoute(),
@@ -146,7 +146,9 @@ fun LobstersApp(
               listState = savedListState,
               isSaved = viewModel::isPostSaved,
               postActions = postActions,
-              modifier = Modifier.nestedScroll(nestedScrollConnection),
+              modifier =
+                Modifier.nestedScroll(nestedScrollConnection)
+                  .padding(bottom = paddingValues.calculateBottomPadding()),
             )
           }
           composable(Destinations.Comments.getRoute("{postId}")) { backStackEntry ->

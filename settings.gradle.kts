@@ -4,7 +4,7 @@ pluginManagement {
     mavenCentral()
     google()
   }
-  plugins { id("org.jetbrains.compose") version "1.1.0-alpha03" apply false }
+  plugins { id("org.jetbrains.compose") version "1.1.0-alpha04" apply false }
 }
 
 dependencyResolutionManagement {

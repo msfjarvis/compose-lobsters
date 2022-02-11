@@ -47,5 +47,7 @@ constructor(
   suspend fun getPostComments(postId: String) =
     withContext(Dispatchers.IO) { api.getPostDetails(postId) }
 
-  fun reloadPosts() {}
+  fun reloadPosts() {
+    pager.refresh()
+  }
 }

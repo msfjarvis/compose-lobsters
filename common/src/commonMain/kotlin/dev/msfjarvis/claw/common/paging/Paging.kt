@@ -31,4 +31,8 @@ class Paging(
     )
   val pagingData
     get() = pager.pagingData.cachedIn(coroutineScope)
+
+  fun refresh() {
+    pager.refresh()
+  }
 }

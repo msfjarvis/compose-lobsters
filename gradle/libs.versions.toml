@@ -45,7 +45,7 @@ dagger-hilt-core = { module = "com.google.dagger:hilt-core", version.ref = "hilt
 
 copydown = "io.github.furstenheim:copy_down:1.0"
 
-multiplatform-paging = "io.github.kuuuurt:multiplatform-paging:0.4.7"
+multiplatform-paging = "io.github.kuuuurt:multiplatform-paging:0.4.8-alpha02"
 
 retrofit-lib = "com.squareup.retrofit2:retrofit:2.9.0"
 retrofit-kotlinxSerializationConverter = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"

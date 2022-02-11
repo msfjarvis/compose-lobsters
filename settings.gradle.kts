@@ -20,6 +20,11 @@ dependencyResolutionManagement {
       content { includeGroupByRegex("org\\.jetbrains\\.compose.*") }
     }
     google()
+    mavenLocal() {
+      content {
+        includeGroup("io.github.kuuuurt")
+      }
+    }
   }
 }
 

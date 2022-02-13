@@ -10,11 +10,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
@@ -31,7 +28,6 @@ import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.msfjarvis.claw.android.R
 import dev.msfjarvis.claw.android.ui.decorations.ClawAppBar
-import dev.msfjarvis.claw.android.ui.decorations.ClawFab
 import dev.msfjarvis.claw.android.ui.decorations.ClawNavigationBar
 import dev.msfjarvis.claw.android.ui.decorations.NavigationItem
 import dev.msfjarvis.claw.android.ui.lists.DatabasePosts
@@ -44,6 +40,7 @@ import dev.msfjarvis.claw.common.comments.HTMLConverter
 import dev.msfjarvis.claw.common.comments.LocalHTMLConverter
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -53,14 +50,12 @@ fun LobstersApp(
   htmlConverter: HTMLConverter,
   setWebUri: (String?) -> Unit,
 ) {
-  var isFabVisible by remember { mutableStateOf(false) }
-
   val systemUiController = rememberSystemUiController()
   val networkListState = rememberLazyListState()
   val savedListState = rememberLazyListState()
   val navController = rememberNavController()
+  val coroutineScope = rememberCoroutineScope()
   val postActions = rememberPostActions(urlLauncher, navController, viewModel)
-  val nestedScrollConnection = rememberNestedScrollConnection { isFabVisible = it }
   val currentDestination by currentNavigationDestination(navController)
 
   val networkPosts = viewModel.pagerFlow.collectAsLazyPagingItems()
@@ -81,12 +76,12 @@ fun LobstersApp(
             label = "Hottest",
             route = Destinations.Hottest.getRoute(),
             icon = painterResource(R.drawable.ic_whatshot_24dp),
-          ),
+          ) { coroutineScope.launch { networkListState.animateScrollToItem(index = 0) } },
           NavigationItem(
             label = "Saved",
             route = Destinations.Saved.getRoute(),
             icon = painterResource(commonR.drawable.ic_favorite_24dp),
-          ),
+          ) { coroutineScope.launch { savedListState.animateScrollToItem(index = 0) } },
         )
 
       SideEffect { systemUiController.setStatusBarColor(color = systemBarsColor) }
@@ -107,12 +102,6 @@ fun LobstersApp(
           ClawAppBar(
             backgroundColor = systemBarsColor,
             modifier = Modifier.statusBarsPadding(),
-          )
-        },
-        floatingActionButton = {
-          ClawFab(
-            isFabVisible = isFabVisible && currentDestination == Destinations.Hottest.getRoute(),
-            listState = networkListState,
           )
         },
         bottomBar = {
@@ -136,7 +125,6 @@ fun LobstersApp(
               isPostSaved = viewModel::isPostSaved,
               reloadPosts = viewModel::reloadPosts,
               postActions = postActions,
-              modifier = Modifier.nestedScroll(nestedScrollConnection),
             )
           }
           composable(Destinations.Saved.getRoute()) {
@@ -146,9 +134,7 @@ fun LobstersApp(
               listState = savedListState,
               isSaved = viewModel::isPostSaved,
               postActions = postActions,
-              modifier =
-                Modifier.nestedScroll(nestedScrollConnection)
-                  .padding(bottom = paddingValues.calculateBottomPadding()),
+              modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding()),
             )
           }
           composable(Destinations.Comments.getRoute("{postId}")) { backStackEntry ->

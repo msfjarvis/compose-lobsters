@@ -18,11 +18,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.compositeOver
-import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
-import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import dev.msfjarvis.claw.android.ui.navigation.Destinations
@@ -103,28 +100,6 @@ fun rememberPostActions(
 
       override fun toggleSave(post: SavedPost) {
         viewModel.toggleSave(post)
-      }
-    }
-  }
-}
-
-private const val ScrollDelta = 50
-
-@Composable
-fun rememberNestedScrollConnection(setVisibility: (Boolean) -> Unit): NestedScrollConnection {
-  return remember {
-    object : NestedScrollConnection {
-      override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
-        val delta = available.y
-
-        if (delta > ScrollDelta) {
-          setVisibility(true)
-        } else if (delta < -ScrollDelta) {
-          setVisibility(false)
-        }
-
-        // We didn't consume any offset here so return Offset.Zero
-        return Offset.Zero
       }
     }
   }

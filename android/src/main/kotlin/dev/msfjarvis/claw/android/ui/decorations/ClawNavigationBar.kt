@@ -33,7 +33,10 @@ fun ClawNavigationBar(
           label = { Text(text = navItem.label) },
           selected = navController.currentDestination?.route == navItem.route,
           onClick = {
-            if (navController.currentDestination?.route == navItem.route) return@NavigationBarItem
+            if (navController.currentDestination?.route == navItem.route) {
+              navItem.listStateResetCallback()
+              return@NavigationBarItem
+            }
             navController.popBackStack(navController.graph.startDestinationRoute!!, false)
             if (navItem.route != Destinations.startDestination.getRoute()) {
               navController.navigate(navItem.route)
@@ -49,4 +52,5 @@ class NavigationItem(
   val label: String,
   val route: String,
   val icon: Painter,
+  val listStateResetCallback: () -> Unit,
 )

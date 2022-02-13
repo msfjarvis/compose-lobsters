@@ -4,7 +4,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.DismissDirection
-import androidx.compose.material.DismissValue
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.SwipeToDismiss
 import androidx.compose.material.rememberDismissState
@@ -30,7 +29,7 @@ fun DatabasePosts(
       val dismissState =
         rememberDismissState(
           confirmStateChange = {
-            if (it == DismissValue.DismissedToStart) postActions.toggleSave(item)
+            postActions.toggleSave(item)
             true
           }
         )

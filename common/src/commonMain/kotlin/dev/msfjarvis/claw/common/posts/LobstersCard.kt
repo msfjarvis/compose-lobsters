@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -38,10 +37,7 @@ import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.database.local.SavedPost
 
 @Composable
-@OptIn(
-  ExperimentalMaterial3Api::class,
-  ExperimentalFoundationApi::class,
-)
+@OptIn(ExperimentalFoundationApi::class)
 fun LobstersCard(
   post: SavedPost,
   isSaved: Boolean,

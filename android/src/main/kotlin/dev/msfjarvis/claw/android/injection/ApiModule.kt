@@ -1,15 +1,18 @@
 package dev.msfjarvis.claw.android.injection
 
+import android.content.Context
 import android.util.Log
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Lazy
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.msfjarvis.claw.api.LobstersApi
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
+import okhttp3.Cache
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -21,8 +24,14 @@ import retrofit2.create
 object ApiModule {
 
   @Provides
-  fun provideClient(): OkHttpClient {
+  fun provideCache(@ApplicationContext context: Context): Cache {
+    return Cache(context.cacheDir, 10 * 1024 * 1024)
+  }
+
+  @Provides
+  fun provideClient(cache: Lazy<Cache>): OkHttpClient {
     return OkHttpClient.Builder()
+      .cache(cache.get())
       .addNetworkInterceptor { chain ->
         val request = chain.request()
         Log.d("LobstersApi", "${request.method}: ${request.url}")

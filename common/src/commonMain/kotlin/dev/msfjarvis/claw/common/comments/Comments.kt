@@ -10,11 +10,8 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -45,9 +42,10 @@ fun CommentsPage(
   getDetails: suspend (String) -> LobstersPostDetails,
   modifier: Modifier = Modifier,
 ) {
-  var postDetails: NetworkState by remember { mutableStateOf(NetworkState.Loading) }
-
-  LaunchedEffect(postId) { postDetails = NetworkState.Success(getDetails(postId)) }
+  val postDetails by
+    produceState<NetworkState>(NetworkState.Loading) {
+      value = NetworkState.Success(getDetails(postId))
+    }
 
   when (postDetails) {
     is NetworkState.Success<*> -> {

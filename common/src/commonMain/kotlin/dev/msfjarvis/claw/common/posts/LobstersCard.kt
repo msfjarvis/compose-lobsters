@@ -62,7 +62,7 @@ fun LobstersCard(
           isSaved = localSavedState,
           modifier =
             Modifier.clickable {
-              localSavedState = localSavedState.not()
+              localSavedState = !localSavedState
               postActions.toggleSave(post)
             },
         )

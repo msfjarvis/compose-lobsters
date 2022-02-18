@@ -8,7 +8,7 @@ pluginManagement {
     }
     google()
   }
-  plugins { id("org.jetbrains.compose") version "1.1.0-alpha04" apply false }
+  plugins { id("org.jetbrains.compose") version "1.1.0-alpha05" apply false }
 }
 
 dependencyResolutionManagement {

@@ -139,6 +139,7 @@ class SqlDelightQueriesTest {
           createdAt = "0",
           title = "test",
           url = "test_url",
+          commentCount = 0,
           commentsUrl = "test_comments_url",
           submitterName = "test_user_$i",
           submitterAvatarUrl = "test_avatar_url",

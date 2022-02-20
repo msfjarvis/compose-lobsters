@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS SavedPost(
   title TEXT NOT NULL,
   url TEXT NOT NULL,
   createdAt TEXT NOT NULL,
+  commentCount INTEGER AS Int NOT NULL,
   commentsUrl TEXT NOT NULL,
   submitterName TEXT NOT NULL,
   submitterAvatarUrl TEXT NOT NULL,

@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ripple.rememberRipple
@@ -77,25 +78,25 @@ fun LobstersCard(
         SaveButton(
           isSaved = localSavedState,
           modifier =
-            Modifier.clickable(
-              role = Role.Button,
-              indication = rememberRipple(bounded = false, radius = 24.dp),
-              interactionSource = remember { MutableInteractionSource() },
-            ) {
-              localSavedState = !localSavedState
-              postActions.toggleSave(post)
-            },
+          Modifier.clickable(
+            role = Role.Button,
+            indication = rememberRipple(bounded = false, radius = 24.dp),
+            interactionSource = remember { MutableInteractionSource() },
+          ) {
+            localSavedState = !localSavedState
+            postActions.toggleSave(post)
+          },
         )
-        Divider()
+        Divider(modifier = Modifier.width(48.dp))
         CommentsButton(
           modifier =
-            Modifier.combinedClickable(
-              role = Role.Button,
-              indication = rememberRipple(bounded = false, radius = 24.dp),
-              interactionSource = remember { MutableInteractionSource() },
-              onClick = { postActions.viewComments(post.shortId) },
-              onLongClick = { postActions.viewCommentsPage(post.commentsUrl) },
-            ),
+          Modifier.combinedClickable(
+            role = Role.Button,
+            indication = rememberRipple(bounded = false, radius = 24.dp),
+            interactionSource = remember { MutableInteractionSource() },
+            onClick = { postActions.viewComments(post.shortId) },
+            onLongClick = { postActions.viewCommentsPage(post.commentsUrl) },
+          ),
         )
       }
     }
@@ -202,9 +203,9 @@ fun TagText(
   Text(
     text = tag,
     modifier =
-      Modifier.background(MaterialTheme.colorScheme.tertiaryContainer, RoundedCornerShape(50))
-        .padding(vertical = 4.dp, horizontal = 12.dp)
-        .then(modifier),
+    Modifier.background(MaterialTheme.colorScheme.tertiaryContainer, RoundedCornerShape(50))
+      .padding(vertical = 4.dp, horizontal = 12.dp)
+      .then(modifier),
     color = MaterialTheme.colorScheme.onTertiaryContainer,
     style = MaterialTheme.typography.labelLarge
   )

@@ -5,17 +5,19 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Divider
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -27,6 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.flowlayout.FlowRow
@@ -46,35 +49,44 @@ fun LobstersCard(
 ) {
   var localSavedState by remember(post, isSaved) { mutableStateOf(isSaved) }
   Box(modifier = modifier.clickable { postActions.viewPost(post.url, post.commentsUrl) }) {
-    Column(
-      modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp).fillMaxWidth(),
-      verticalArrangement = Arrangement.spacedBy(4.dp),
+    Row(
+      modifier = Modifier
+        .fillMaxWidth()
+        .padding(16.dp),
+      horizontalArrangement = Arrangement.spacedBy(8.dp),
+      verticalAlignment = Alignment.CenterVertically
     ) {
       PostDetails(
+        modifier = Modifier.weight(1f),
         post = post,
       )
-      Row(
-        modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.End,
+      Column(
+        modifier = Modifier
+          .weight(0.15f)
+          .fillMaxHeight(),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
       ) {
         SaveButton(
           isSaved = localSavedState,
-          modifier =
-            Modifier.clickable {
-              localSavedState = !localSavedState
-              postActions.toggleSave(post)
-            },
+          modifier = Modifier.clickable(
+            role = Role.Button,
+            indication = rememberRipple(bounded = false, radius = 24.dp),
+            interactionSource = remember { MutableInteractionSource() }
+          ) {
+            localSavedState = !localSavedState
+            postActions.toggleSave(post)
+          },
         )
-        Spacer(
-          modifier = Modifier.width(8.dp),
-        )
+        Divider()
         CommentsButton(
-          modifier =
-            Modifier.combinedClickable(
-              onClick = { postActions.viewComments(post.shortId) },
-              onLongClick = { postActions.viewCommentsPage(post.commentsUrl) },
-            ),
+          modifier = Modifier.combinedClickable(
+            role = Role.Button,
+            indication = rememberRipple(bounded = false, radius = 24.dp),
+            interactionSource = remember { MutableInteractionSource() },
+            onClick = { postActions.viewComments(post.shortId) },
+            onLongClick = { postActions.viewCommentsPage(post.commentsUrl) },
+          ),
         )
       }
     }
@@ -84,20 +96,20 @@ fun LobstersCard(
 @Composable
 fun PostDetails(
   post: SavedPost,
+  modifier: Modifier = Modifier
 ) {
-  PostTitle(
-    title = post.title,
-    modifier = Modifier.padding(bottom = 4.dp),
-  )
-  TagRow(
-    tags = post.tags,
-    modifier = Modifier.padding(bottom = 4.dp),
-  )
-  SubmitterName(
-    text = "Submitted by ${post.submitterName}",
-    avatarUrl = "https://lobste.rs/${post.submitterAvatarUrl}",
-    contentDescription = "User avatar for ${post.submitterName}",
-  )
+  Column(
+    modifier = modifier,
+    verticalArrangement = Arrangement.spacedBy(8.dp)
+  ) {
+    PostTitle(title = post.title)
+    TagRow(tags = post.tags)
+    Submitter(
+      text = "Submitted by ${post.submitterName}",
+      avatarUrl = "https://lobste.rs/${post.submitterAvatarUrl}",
+      contentDescription = "User avatar for ${post.submitterName}",
+    )
+  }
 }
 
 @Composable
@@ -107,8 +119,9 @@ fun PostTitle(
 ) {
   Text(
     text = title,
-    fontWeight = FontWeight.Bold,
     modifier = modifier,
+    style = MaterialTheme.typography.titleMedium,
+    fontWeight = FontWeight.Bold
   )
 }
 
@@ -122,40 +135,20 @@ fun Submitter(
   Row(
     modifier = modifier,
     verticalAlignment = Alignment.CenterVertically,
+    horizontalArrangement = Arrangement.spacedBy(4.dp)
   ) {
-    SubmitterAvatar(
-      avatarUrl = avatarUrl,
+    NetworkImage(
+      url = avatarUrl,
       contentDescription = contentDescription,
+      modifier = modifier.requiredSize(24.dp).clip(CircleShape),
     )
-    SubmitterNameText(
+
+    Text(
       text = text,
-      modifier = Modifier.padding(start = 4.dp),
+      modifier = modifier,
+      style = MaterialTheme.typography.bodyMedium
     )
   }
-}
-
-@Composable
-fun SubmitterAvatar(
-  avatarUrl: String,
-  contentDescription: String,
-  modifier: Modifier = Modifier,
-) {
-  NetworkImage(
-    url = avatarUrl,
-    contentDescription = contentDescription,
-    modifier = modifier.requiredSize(24.dp).clip(CircleShape),
-  )
-}
-
-@Composable
-fun SubmitterNameText(
-  text: String,
-  modifier: Modifier,
-) {
-  Text(
-    text = text,
-    modifier = modifier,
-  )
 }
 
 @Composable
@@ -168,7 +161,7 @@ fun SaveButton(
       painter = if (saved) heartIcon else heartBorderIcon,
       tint = MaterialTheme.colorScheme.secondary,
       contentDescription = if (saved) "Remove from saved posts" else "Add to saved posts",
-      modifier = modifier,
+      modifier = modifier.padding(12.dp),
     )
   }
 }
@@ -181,7 +174,7 @@ fun CommentsButton(
     painter = commentIcon,
     tint = MaterialTheme.colorScheme.secondary,
     contentDescription = "Open comments",
-    modifier = modifier,
+    modifier = modifier.padding(12.dp),
   )
 }
 
@@ -190,25 +183,32 @@ fun TagRow(
   tags: List<String>,
   modifier: Modifier = Modifier,
 ) {
-  Box(
+  FlowRow(
     modifier = modifier,
+    mainAxisSpacing = 8.dp,
+    crossAxisSpacing = 8.dp,
   ) {
-    FlowRow(
-      mainAxisSpacing = 8.dp,
-      crossAxisSpacing = 8.dp,
-    ) {
-      tags.forEach { tag ->
-        Text(
-          text = tag,
-          modifier =
-            Modifier.background(
-                MaterialTheme.colorScheme.secondary.copy(alpha = 0.75f),
-                RoundedCornerShape(8.dp)
-              )
-              .padding(vertical = 2.dp, horizontal = 6.dp),
-          color = MaterialTheme.colorScheme.onSecondary,
-        )
-      }
+    tags.forEach { tag ->
+      TagText(tag)
     }
   }
+}
+
+@Composable
+fun TagText(
+  tag: String,
+  modifier: Modifier = Modifier,
+) {
+  Text(
+    text = tag,
+    modifier = Modifier
+      .background(
+        MaterialTheme.colorScheme.tertiaryContainer,
+        RoundedCornerShape(50)
+      )
+      .padding(vertical = 4.dp, horizontal = 12.dp)
+      .then(modifier),
+    color = MaterialTheme.colorScheme.onTertiaryContainer,
+    style = MaterialTheme.typography.labelLarge
+  )
 }

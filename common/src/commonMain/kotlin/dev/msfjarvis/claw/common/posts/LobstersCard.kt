@@ -50,9 +50,18 @@ fun LobstersCard(
   modifier: Modifier = Modifier,
 ) {
   var localSavedState by remember(post, isSaved) { mutableStateOf(isSaved) }
-  Box(modifier = modifier.clickable { postActions.viewPost(post.url, post.commentsUrl) }) {
+  Box(
+    modifier = modifier
+      .fillMaxWidth()
+      .clickable { postActions.viewPost(post.url, post.commentsUrl) }
+      .padding(
+        start = 16.dp,
+        top = 16.dp,
+        end = 4.dp,
+        bottom = 16.dp
+      ),
+  ) {
     Row(
-      modifier = Modifier.fillMaxWidth().padding(16.dp),
       horizontalArrangement = Arrangement.spacedBy(8.dp),
       verticalAlignment = Alignment.CenterVertically,
     ) {

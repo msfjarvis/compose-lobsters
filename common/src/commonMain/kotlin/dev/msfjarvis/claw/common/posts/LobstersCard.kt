@@ -52,15 +52,11 @@ fun LobstersCard(
 ) {
   var localSavedState by remember(post, isSaved) { mutableStateOf(isSaved) }
   Box(
-    modifier = modifier
-      .fillMaxWidth()
-      .clickable { postActions.viewPost(post.url, post.commentsUrl) }
-      .padding(
-        start = 16.dp,
-        top = 16.dp,
-        end = 4.dp,
-        bottom = 16.dp
-      ),
+    modifier =
+      modifier
+        .fillMaxWidth()
+        .clickable { postActions.viewPost(post.url, post.commentsUrl) }
+        .padding(start = 16.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
   ) {
     Row(
       horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -78,25 +74,25 @@ fun LobstersCard(
         SaveButton(
           isSaved = localSavedState,
           modifier =
-          Modifier.clickable(
-            role = Role.Button,
-            indication = rememberRipple(bounded = false, radius = 24.dp),
-            interactionSource = remember { MutableInteractionSource() },
-          ) {
-            localSavedState = !localSavedState
-            postActions.toggleSave(post)
-          },
+            Modifier.clickable(
+              role = Role.Button,
+              indication = rememberRipple(bounded = false, radius = 24.dp),
+              interactionSource = remember { MutableInteractionSource() },
+            ) {
+              localSavedState = !localSavedState
+              postActions.toggleSave(post)
+            },
         )
         Divider(modifier = Modifier.width(48.dp))
         CommentsButton(
           modifier =
-          Modifier.combinedClickable(
-            role = Role.Button,
-            indication = rememberRipple(bounded = false, radius = 24.dp),
-            interactionSource = remember { MutableInteractionSource() },
-            onClick = { postActions.viewComments(post.shortId) },
-            onLongClick = { postActions.viewCommentsPage(post.commentsUrl) },
-          ),
+            Modifier.combinedClickable(
+              role = Role.Button,
+              indication = rememberRipple(bounded = false, radius = 24.dp),
+              interactionSource = remember { MutableInteractionSource() },
+              onClick = { postActions.viewComments(post.shortId) },
+              onLongClick = { postActions.viewCommentsPage(post.commentsUrl) },
+            ),
         )
       }
     }
@@ -203,9 +199,9 @@ fun TagText(
   Text(
     text = tag,
     modifier =
-    Modifier.background(MaterialTheme.colorScheme.tertiaryContainer, RoundedCornerShape(50))
-      .padding(vertical = 4.dp, horizontal = 12.dp)
-      .then(modifier),
+      Modifier.background(MaterialTheme.colorScheme.tertiaryContainer, RoundedCornerShape(50))
+        .padding(vertical = 4.dp, horizontal = 12.dp)
+        .then(modifier),
     color = MaterialTheme.colorScheme.onTertiaryContainer,
     style = MaterialTheme.typography.labelLarge
   )

@@ -151,7 +151,7 @@ fun LobstersApp(
               isPostSaved = viewModel::isPostSaved,
               reloadPosts = viewModel::reloadPosts,
               postActions = postActions,
-              modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding())
+              modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding()),
             )
           }
           composable(Destinations.Saved.getRoute()) {

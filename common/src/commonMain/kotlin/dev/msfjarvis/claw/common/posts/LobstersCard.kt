@@ -157,12 +157,14 @@ fun SaveButton(
   modifier: Modifier = Modifier,
 ) {
   Crossfade(targetState = isSaved) { saved ->
-    Icon(
-      painter = if (saved) heartIcon else heartBorderIcon,
-      tint = MaterialTheme.colorScheme.secondary,
-      contentDescription = if (saved) "Remove from saved posts" else "Add to saved posts",
-      modifier = modifier.padding(12.dp),
-    )
+    Box(modifier = modifier.padding(12.dp)) {
+      Icon(
+        painter = if (saved) heartIcon else heartBorderIcon,
+        tint = MaterialTheme.colorScheme.secondary,
+        contentDescription = if (saved) "Remove from saved posts" else "Add to saved posts",
+        modifier = Modifier.align(Alignment.Center)
+      )
+    }
   }
 }
 
@@ -170,12 +172,14 @@ fun SaveButton(
 fun CommentsButton(
   modifier: Modifier = Modifier,
 ) {
-  Icon(
-    painter = commentIcon,
-    tint = MaterialTheme.colorScheme.secondary,
-    contentDescription = "Open comments",
-    modifier = modifier.padding(12.dp),
-  )
+  Box(modifier = modifier.padding(12.dp)) {
+    Icon(
+      painter = commentIcon,
+      tint = MaterialTheme.colorScheme.secondary,
+      contentDescription = "Open comments",
+      modifier = Modifier.align(Alignment.Center),
+    )
+  }
 }
 
 @Composable

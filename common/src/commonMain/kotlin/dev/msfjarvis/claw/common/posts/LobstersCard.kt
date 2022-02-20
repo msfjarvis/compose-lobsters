@@ -18,7 +18,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Divider
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -38,6 +37,7 @@ import com.google.accompanist.flowlayout.FlowRow
 import dev.msfjarvis.claw.common.res.commentIcon
 import dev.msfjarvis.claw.common.res.heartBorderIcon
 import dev.msfjarvis.claw.common.res.heartIcon
+import dev.msfjarvis.claw.common.ui.Divider
 import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.database.local.SavedPost
 

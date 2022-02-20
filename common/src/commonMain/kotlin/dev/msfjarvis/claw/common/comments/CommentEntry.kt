@@ -20,7 +20,7 @@ import com.halilibo.richtext.markdown.Markdown
 import com.halilibo.richtext.ui.RichTextScope
 import com.halilibo.richtext.ui.material.MaterialRichText
 import dev.msfjarvis.claw.common.posts.PostDetails
-import dev.msfjarvis.claw.common.posts.SubmitterName
+import dev.msfjarvis.claw.common.posts.Submitter
 import dev.msfjarvis.claw.common.posts.toDbModel
 import dev.msfjarvis.claw.model.Comment
 import dev.msfjarvis.claw.model.LobstersPostDetails
@@ -70,7 +70,7 @@ fun CommentEntry(
           bottom = 4.dp
         )
     ) {
-      SubmitterName(
+      Submitter(
         text = comment.user.username,
         avatarUrl = "https://lobste.rs/${comment.user.avatarUrl}",
         contentDescription = "User avatar for ${comment.user.username}",

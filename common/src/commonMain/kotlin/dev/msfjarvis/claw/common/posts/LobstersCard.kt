@@ -113,7 +113,7 @@ fun PostTitle(
 }
 
 @Composable
-fun SubmitterName(
+fun Submitter(
   text: String,
   avatarUrl: String,
   contentDescription: String,

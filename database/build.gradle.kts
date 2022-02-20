@@ -33,9 +33,11 @@ android {
   }
 }
 
-configure<com.squareup.sqldelight.gradle.SqlDelightExtension> {
+sqldelight {
   database("LobstersDatabase") {
     packageName = "dev.msfjarvis.claw.database"
     sourceFolders = listOf("sqldelight")
+    schemaOutputDirectory = file("src/commonMain/sqldelight/databases")
+    verifyMigrations = true
   }
 }

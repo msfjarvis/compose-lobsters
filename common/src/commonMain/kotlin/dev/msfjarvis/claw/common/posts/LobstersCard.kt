@@ -10,8 +10,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.shape.CircleShape
@@ -96,6 +98,7 @@ fun PostDetails(post: SavedPost, modifier: Modifier = Modifier) {
   Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
     PostTitle(title = post.title)
     TagRow(tags = post.tags)
+    Spacer(Modifier.height(4.dp))
     Submitter(
       text = "Submitted by ${post.submitterName}",
       avatarUrl = "https://lobste.rs/${post.submitterAvatarUrl}",

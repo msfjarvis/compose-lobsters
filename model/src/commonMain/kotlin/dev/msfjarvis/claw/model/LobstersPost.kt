@@ -10,6 +10,7 @@ class LobstersPost(
   val title: String,
   val url: String,
   val description: String,
+  @SerialName("comment_count") val commentCount: Int,
   @SerialName("comments_url") val commentsUrl: String,
   @SerialName("submitter_user") val submitter: User,
   val tags: List<String>,

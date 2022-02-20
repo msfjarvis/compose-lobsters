@@ -106,7 +106,7 @@ fun LobstersApp(
           ClawAppBar(
             modifier = Modifier.statusBarsPadding(),
             backgroundColor = systemBarsColor,
-            scrollBehavior = scrollBehavior
+            scrollBehavior = scrollBehavior,
           )
         },
         bottomBar = {

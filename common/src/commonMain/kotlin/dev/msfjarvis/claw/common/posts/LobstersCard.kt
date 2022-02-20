@@ -54,7 +54,7 @@ fun LobstersCard(
     Row(
       modifier = Modifier.fillMaxWidth().padding(16.dp),
       horizontalArrangement = Arrangement.spacedBy(8.dp),
-      verticalAlignment = Alignment.CenterVertically
+      verticalAlignment = Alignment.CenterVertically,
     ) {
       PostDetails(
         modifier = Modifier.weight(1f),
@@ -63,7 +63,7 @@ fun LobstersCard(
       Column(
         modifier = Modifier.weight(0.15f).fillMaxHeight(),
         verticalArrangement = Arrangement.spacedBy(8.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
       ) {
         SaveButton(
           isSaved = localSavedState,
@@ -71,7 +71,7 @@ fun LobstersCard(
             Modifier.clickable(
               role = Role.Button,
               indication = rememberRipple(bounded = false, radius = 24.dp),
-              interactionSource = remember { MutableInteractionSource() }
+              interactionSource = remember { MutableInteractionSource() },
             ) {
               localSavedState = !localSavedState
               postActions.toggleSave(post)
@@ -130,7 +130,7 @@ fun Submitter(
   Row(
     modifier = modifier,
     verticalAlignment = Alignment.CenterVertically,
-    horizontalArrangement = Arrangement.spacedBy(4.dp)
+    horizontalArrangement = Arrangement.spacedBy(4.dp),
   ) {
     NetworkImage(
       url = avatarUrl,

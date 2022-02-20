@@ -15,6 +15,7 @@ import dev.msfjarvis.claw.android.R
 fun ClawAppBar(
   backgroundColor: Color,
   scrollBehavior: TopAppBarScrollBehavior? = null,
+  navigationIcon: @Composable () -> Unit = {},
   modifier: Modifier = Modifier,
 ) {
   SmallTopAppBar(
@@ -27,5 +28,6 @@ fun ClawAppBar(
     modifier = modifier,
     colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = backgroundColor),
     scrollBehavior = scrollBehavior,
+    navigationIcon = navigationIcon
   )
 }

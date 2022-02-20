@@ -70,7 +70,7 @@ fun LobstersCard(
         post = post,
       )
       Column(
-        modifier = Modifier.weight(0.15f).fillMaxHeight(),
+        modifier = Modifier.fillMaxHeight(),
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
       ) {

@@ -36,13 +36,13 @@ import dev.msfjarvis.claw.android.ui.lists.DatabasePosts
 import dev.msfjarvis.claw.android.ui.lists.HottestPosts
 import dev.msfjarvis.claw.android.ui.navigation.Destinations
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
+import dev.msfjarvis.claw.common.R as commonR
 import dev.msfjarvis.claw.common.comments.CommentsPage
 import dev.msfjarvis.claw.common.comments.HTMLConverter
 import dev.msfjarvis.claw.common.comments.LocalHTMLConverter
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 import kotlinx.coroutines.launch
-import dev.msfjarvis.claw.common.R as commonR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

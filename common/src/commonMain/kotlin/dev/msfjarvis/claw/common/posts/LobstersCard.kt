@@ -50,9 +50,7 @@ fun LobstersCard(
   var localSavedState by remember(post, isSaved) { mutableStateOf(isSaved) }
   Box(modifier = modifier.clickable { postActions.viewPost(post.url, post.commentsUrl) }) {
     Row(
-      modifier = Modifier
-        .fillMaxWidth()
-        .padding(16.dp),
+      modifier = Modifier.fillMaxWidth().padding(16.dp),
       horizontalArrangement = Arrangement.spacedBy(8.dp),
       verticalAlignment = Alignment.CenterVertically
     ) {
@@ -61,32 +59,32 @@ fun LobstersCard(
         post = post,
       )
       Column(
-        modifier = Modifier
-          .weight(0.15f)
-          .fillMaxHeight(),
+        modifier = Modifier.weight(0.15f).fillMaxHeight(),
         verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
       ) {
         SaveButton(
           isSaved = localSavedState,
-          modifier = Modifier.clickable(
-            role = Role.Button,
-            indication = rememberRipple(bounded = false, radius = 24.dp),
-            interactionSource = remember { MutableInteractionSource() }
-          ) {
-            localSavedState = !localSavedState
-            postActions.toggleSave(post)
-          },
+          modifier =
+            Modifier.clickable(
+              role = Role.Button,
+              indication = rememberRipple(bounded = false, radius = 24.dp),
+              interactionSource = remember { MutableInteractionSource() }
+            ) {
+              localSavedState = !localSavedState
+              postActions.toggleSave(post)
+            },
         )
         Divider()
         CommentsButton(
-          modifier = Modifier.combinedClickable(
-            role = Role.Button,
-            indication = rememberRipple(bounded = false, radius = 24.dp),
-            interactionSource = remember { MutableInteractionSource() },
-            onClick = { postActions.viewComments(post.shortId) },
-            onLongClick = { postActions.viewCommentsPage(post.commentsUrl) },
-          ),
+          modifier =
+            Modifier.combinedClickable(
+              role = Role.Button,
+              indication = rememberRipple(bounded = false, radius = 24.dp),
+              interactionSource = remember { MutableInteractionSource() },
+              onClick = { postActions.viewComments(post.shortId) },
+              onLongClick = { postActions.viewCommentsPage(post.commentsUrl) },
+            ),
         )
       }
     }
@@ -94,14 +92,8 @@ fun LobstersCard(
 }
 
 @Composable
-fun PostDetails(
-  post: SavedPost,
-  modifier: Modifier = Modifier
-) {
-  Column(
-    modifier = modifier,
-    verticalArrangement = Arrangement.spacedBy(8.dp)
-  ) {
+fun PostDetails(post: SavedPost, modifier: Modifier = Modifier) {
+  Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
     PostTitle(title = post.title)
     TagRow(tags = post.tags)
     Submitter(
@@ -143,11 +135,7 @@ fun Submitter(
       modifier = modifier.requiredSize(24.dp).clip(CircleShape),
     )
 
-    Text(
-      text = text,
-      modifier = modifier,
-      style = MaterialTheme.typography.bodyMedium
-    )
+    Text(text = text, modifier = modifier, style = MaterialTheme.typography.bodyMedium)
   }
 }
 
@@ -187,11 +175,7 @@ fun TagRow(
     modifier = modifier,
     mainAxisSpacing = 8.dp,
     crossAxisSpacing = 8.dp,
-  ) {
-    tags.forEach { tag ->
-      TagText(tag)
-    }
-  }
+  ) { tags.forEach { tag -> TagText(tag) } }
 }
 
 @Composable
@@ -201,13 +185,10 @@ fun TagText(
 ) {
   Text(
     text = tag,
-    modifier = Modifier
-      .background(
-        MaterialTheme.colorScheme.tertiaryContainer,
-        RoundedCornerShape(50)
-      )
-      .padding(vertical = 4.dp, horizontal = 12.dp)
-      .then(modifier),
+    modifier =
+      Modifier.background(MaterialTheme.colorScheme.tertiaryContainer, RoundedCornerShape(50))
+        .padding(vertical = 4.dp, horizontal = 12.dp)
+        .then(modifier),
     color = MaterialTheme.colorScheme.onTertiaryContainer,
     style = MaterialTheme.typography.labelLarge
   )

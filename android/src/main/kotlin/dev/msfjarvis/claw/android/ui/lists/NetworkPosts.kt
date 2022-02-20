@@ -2,6 +2,7 @@ package dev.msfjarvis.claw.android.ui.lists
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
@@ -31,6 +32,8 @@ fun NetworkPosts(
           isSaved = isSaved,
           postActions = postActions,
         )
+
+        Divider()
       }
     }
   }

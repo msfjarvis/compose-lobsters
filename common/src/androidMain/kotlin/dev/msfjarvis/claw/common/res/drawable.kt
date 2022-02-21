@@ -10,3 +10,5 @@ actual val heartIcon
   @Composable get() = painterResource(R.drawable.ic_favorite_24dp)
 actual val heartBorderIcon
   @Composable get() = painterResource(R.drawable.ic_favorite_border_24dp)
+actual val webIcon
+  @Composable get() = painterResource(R.drawable.ic_web_24dp)

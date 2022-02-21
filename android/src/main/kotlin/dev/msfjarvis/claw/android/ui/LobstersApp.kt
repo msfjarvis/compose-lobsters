@@ -165,6 +165,7 @@ fun LobstersApp(
               postId = postId,
               getDetails = viewModel::getPostComments,
               modifier = Modifier.navigationBarsPadding(),
+              postActions = postActions
             )
           }
         }

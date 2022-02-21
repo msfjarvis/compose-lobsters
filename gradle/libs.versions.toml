@@ -54,4 +54,4 @@ sqldelight-jvmDriver = { module = "com.squareup.sqldelight:sqlite-driver", versi
 sqldelight-androidDriver = { module = "com.squareup.sqldelight:android-driver", version.ref = "sqldelight" }
 sqldelight-extensions-coroutines = { module = "com.squareup.sqldelight:coroutines-extensions-jvm", version.ref = "sqldelight" }
 
-testing-mockWebServer = "com.squareup.okhttp3:mockwebserver3-junit4:5.0.0-alpha.4"
+testing-mockWebServer = "com.squareup.okhttp3:mockwebserver3-junit4:5.0.0-alpha.5"

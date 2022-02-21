@@ -36,7 +36,12 @@ constructor(
   val savedPosts
     get() = repository.savedPosts
 
-  suspend fun isPostSaved(post: SavedPost) = savedPosts.mapLatest { posts -> post in posts }.first()
+  suspend fun isPostSaved(post: SavedPost): Boolean {
+    return savedPosts
+      .mapLatest { posts -> posts.map { it.shortId } }
+      .mapLatest { shortIds -> post.shortId in shortIds }
+      .first()
+  }
 
   fun toggleSave(post: SavedPost) {
     viewModelScope.launch {

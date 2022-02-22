@@ -17,7 +17,10 @@ dependencyResolutionManagement {
     mavenCentral()
     maven("https://maven.pkg.jetbrains.space/public/p/compose/dev") {
       name = "JetBrains Compose Dev Repository"
-      content { includeGroupByRegex("org\\.jetbrains\\.compose.*") }
+      content {
+        includeGroupByRegex("org\\.jetbrains\\.compose.*")
+        includeGroup("org.jetbrains.skiko")
+      }
     }
     google()
   }

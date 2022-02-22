@@ -30,7 +30,7 @@ jobs:
     - name: Run unit tests
       uses: gradle/gradle-build-action@v2.1.3
       with:
-        arguments: test --stacktrace
+        arguments: check --stacktrace
 
     - name: (Fail-only) Upload test report
       if: failure()

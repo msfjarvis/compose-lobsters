@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -20,6 +21,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ripple.rememberRipple
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -85,6 +88,7 @@ fun LobstersCard(
         )
         Divider(modifier = Modifier.width(48.dp))
         CommentsButton(
+          commentCount = post.commentCount,
           modifier =
             Modifier.combinedClickable(
               role = Role.Button,
@@ -167,9 +171,26 @@ fun SaveButton(
 
 @Composable
 fun CommentsButton(
+  commentCount: Int?,
   modifier: Modifier = Modifier,
 ) {
-  Box(modifier = modifier.padding(12.dp)) {
+  BadgedBox(
+    modifier = modifier.padding(12.dp),
+    badge = {
+      if (commentCount != null) {
+        Badge(
+          modifier = Modifier.absoluteOffset(x = (-8).dp),
+          containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+        ) {
+          Text(
+            text = commentCount.toString(),
+            color = MaterialTheme.colorScheme.onTertiaryContainer,
+            style = MaterialTheme.typography.labelMedium,
+          )
+        }
+      }
+    },
+  ) {
     Icon(
       painter = commentIcon,
       tint = MaterialTheme.colorScheme.secondary,
@@ -203,6 +224,6 @@ fun TagText(
         .padding(vertical = 4.dp, horizontal = 12.dp)
         .then(modifier),
     color = MaterialTheme.colorScheme.onTertiaryContainer,
-    style = MaterialTheme.typography.labelLarge
+    style = MaterialTheme.typography.labelLarge,
   )
 }

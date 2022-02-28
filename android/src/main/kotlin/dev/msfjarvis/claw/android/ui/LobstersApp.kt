@@ -2,9 +2,14 @@ package dev.msfjarvis.claw.android.ui
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
@@ -16,6 +21,8 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -101,6 +108,21 @@ fun LobstersApp(
           ClawAppBar(
             modifier = Modifier.statusBarsPadding(),
             backgroundColor = systemBarsColor,
+            navigationIcon = {
+              if (navItems.none { it.route == currentDestination }) {
+                IconButton(onClick = { navController.popBackStack() }) {
+                  Icon(
+                    imageVector = Icons.Filled.ArrowBack,
+                    contentDescription = "Go back to previous screen",
+                  )
+                }
+              }
+            },
+            title = {
+              if (navItems.any { it.route == currentDestination }) {
+                Text(text = stringResource(R.string.app_name), fontWeight = FontWeight.Bold)
+              }
+            },
           )
         },
         bottomBar = {

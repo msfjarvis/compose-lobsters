@@ -64,7 +64,7 @@ fun CommentsHeader(
         PostLink(
           link = postDetails.url,
           modifier =
-            Modifier.clickable { postActions.viewPost(postDetails.url, postDetails.commentsUrl) }
+            Modifier.clickable { postActions.viewPost(postDetails.url, postDetails.commentsUrl) },
         )
         Spacer(Modifier.height(4.dp))
       }
@@ -90,14 +90,14 @@ fun PostLink(
   Box(
     modifier.background(
       color = MaterialTheme.colorScheme.secondary,
-      shape = RoundedCornerShape(8.dp)
+      shape = RoundedCornerShape(8.dp),
     )
   ) {
     Row(modifier = Modifier.padding(16.dp), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
       Icon(
         painter = webIcon,
         contentDescription = null,
-        tint = MaterialTheme.colorScheme.onSecondary
+        tint = MaterialTheme.colorScheme.onSecondary,
       )
       Text(
         text = link,

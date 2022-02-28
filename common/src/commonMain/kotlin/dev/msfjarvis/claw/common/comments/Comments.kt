@@ -39,7 +39,7 @@ private fun CommentsPageInternal(
           Text(
             text = "Comments",
             style = MaterialTheme.typography.labelLarge,
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
           )
         }
 
@@ -56,7 +56,7 @@ private fun CommentsPageInternal(
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.fillMaxWidth().padding(16.dp),
             fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
           )
         }
       }

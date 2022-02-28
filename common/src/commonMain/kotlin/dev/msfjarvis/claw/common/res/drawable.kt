@@ -9,3 +9,5 @@ expect val heartIcon: Painter
   @Composable get
 expect val heartBorderIcon: Painter
   @Composable get
+expect val webIcon: Painter
+  @Composable get

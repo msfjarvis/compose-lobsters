@@ -1,36 +1,66 @@
 package dev.msfjarvis.claw.common.comments
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Surface
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import dev.msfjarvis.claw.common.NetworkState
+import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.ui.Divider
 import dev.msfjarvis.claw.model.LobstersPostDetails
 
 @Composable
 private fun CommentsPageInternal(
   details: LobstersPostDetails,
+  postActions: PostActions,
   modifier: Modifier = Modifier,
 ) {
-  LazyColumn(modifier) {
-    item { CommentsHeader(postDetails = details) }
+  Surface(color = MaterialTheme.colorScheme.surfaceVariant) {
+    LazyColumn(modifier = modifier, contentPadding = PaddingValues(bottom = 24.dp)) {
+      item { CommentsHeader(postDetails = details, postActions = postActions) }
 
-    item { Spacer(modifier = Modifier.height(8.dp)) }
+      if (details.commentCount > 0) {
+        item {
+          Text(
+            text = "Comments",
+            style = MaterialTheme.typography.labelLarge,
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
+          )
+        }
 
-    items(details.comments) { item -> CommentEntry(item) }
-
-    item { Divider() }
+        itemsIndexed(details.comments) { index, item ->
+          if (index != 0) {
+            Divider()
+          }
+          CommentEntry(item)
+        }
+      } else {
+        item {
+          Text(
+            text = "No Comments",
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center
+          )
+        }
+      }
+    }
   }
 }
 
@@ -39,6 +69,7 @@ private fun CommentsPageInternal(
 fun CommentsPage(
   postId: String,
   getDetails: suspend (String) -> LobstersPostDetails,
+  postActions: PostActions,
   modifier: Modifier = Modifier,
 ) {
   val postDetails by
@@ -50,7 +81,8 @@ fun CommentsPage(
     is NetworkState.Success<*> -> {
       CommentsPageInternal(
         (postDetails as NetworkState.Success<LobstersPostDetails>).data,
-        modifier,
+        postActions,
+        modifier.fillMaxSize(),
       )
     }
     is NetworkState.Error -> TODO("Handle no network scenario")

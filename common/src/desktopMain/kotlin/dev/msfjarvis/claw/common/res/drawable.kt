@@ -9,3 +9,5 @@ actual val heartIcon
   @Composable get() = painterResource("favorite_black_24dp.svg")
 actual val heartBorderIcon
   @Composable get() = painterResource("favorite_border_black_24dp.svg")
+actual val webIcon
+  @Composable get() = painterResource("web_black_24dp.svg")

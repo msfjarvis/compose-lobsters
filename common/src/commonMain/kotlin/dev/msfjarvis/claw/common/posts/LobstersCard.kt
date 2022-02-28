@@ -140,7 +140,7 @@ fun Submitter(
   Row(
     modifier = modifier,
     verticalAlignment = Alignment.CenterVertically,
-    horizontalArrangement = Arrangement.spacedBy(4.dp),
+    horizontalArrangement = Arrangement.spacedBy(8.dp),
   ) {
     NetworkImage(
       url = avatarUrl,

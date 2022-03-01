@@ -24,9 +24,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import androidx.navigation.navDeepLink
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.navigationBarsPadding
@@ -40,6 +43,7 @@ import dev.msfjarvis.claw.android.ui.lists.DatabasePosts
 import dev.msfjarvis.claw.android.ui.lists.HottestPosts
 import dev.msfjarvis.claw.android.ui.navigation.Destinations
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
+import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.common.R as commonR
 import dev.msfjarvis.claw.common.comments.CommentsPage
 import dev.msfjarvis.claw.common.comments.HTMLConverter
@@ -137,7 +141,12 @@ fun LobstersApp(
           navController,
           startDestination = Destinations.startDestination.getRoute(),
         ) {
-          composable(Destinations.Hottest.getRoute()) {
+          val uri = LobstersApi.BASE_URL
+          composable(
+            route = Destinations.Hottest.getRoute(),
+            deepLinks =
+              listOf(navDeepLink { uriPattern = uri }, navDeepLink { uriPattern = "$uri/" }),
+          ) {
             setWebUri("https://lobste.rs/")
             HottestPosts(
               items = networkPosts,
@@ -158,7 +167,15 @@ fun LobstersApp(
               modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding()),
             )
           }
-          composable(Destinations.Comments.getRoute("{postId}")) { backStackEntry ->
+          composable(
+            route = Destinations.Comments.getRoute("{postId}"),
+            arguments = listOf(navArgument("postId") { type = NavType.StringType }),
+            deepLinks =
+              listOf(
+                navDeepLink { uriPattern = "$uri/s/{postId}/.*" },
+                navDeepLink { uriPattern = "$uri/s/{postId}" },
+              ),
+          ) { backStackEntry ->
             val postId = requireNotNull(backStackEntry.arguments?.getString("postId"))
             setWebUri("https://lobste.rs/s/$postId")
             CommentsPage(

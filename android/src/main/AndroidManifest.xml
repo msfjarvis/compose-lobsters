@@ -18,6 +18,43 @@
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+
+        <data
+            android:ssp="//lobste.rs"
+            android:scheme="https" />
+
+        <data
+            android:host="lobste.rs"
+            android:scheme="https"
+            android:path="/"/>
+      </intent-filter>
+
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+
+        <data
+            android:host="lobste.rs"
+            android:scheme="https"
+            android:pathPattern="/s/......"/>
+
+        <data
+            android:host="lobste.rs"
+            android:scheme="https"
+            android:pathPattern="/s/....../"/>
+
+        <data
+            android:host="lobste.rs"
+            android:scheme="https"
+            android:pathPattern="/s/....../...*"/>
+      </intent-filter>
     </activity>
   </application>
 </manifest>

@@ -61,10 +61,21 @@ fun CommentsHeader(
       Spacer(Modifier.height(4.dp))
 
       if (postDetails.url.isNotBlank()) {
+        // Post links from lobste.rs are of the form $baseUrl/s/$postId/$postTitle
+        // Interestingly, lobste.rs does not actually care for the value of $postTitle, and will
+        // happily accept both a missing as well as a completely arbitrary $postTitle. We
+        // leverage this to create a new URL format which looks like
+        // $baseUrl/s/$postId/$postTitle/r, and does not trigger our deeplinks,
+        // instead opening in the custom tab as we want it to.
         PostLink(
           link = postDetails.url,
           modifier =
-            Modifier.clickable { postActions.viewPost(postDetails.url, postDetails.commentsUrl) },
+            Modifier.clickable {
+              postActions.viewPost(
+                postDetails.url,
+                postDetails.commentsUrl.replaceAfterLast('/', "r")
+              )
+            },
         )
         Spacer(Modifier.height(4.dp))
       }

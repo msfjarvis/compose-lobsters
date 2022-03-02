@@ -84,12 +84,12 @@ fun LobstersApp(
         listOf(
           NavigationItem(
             label = "Hottest",
-            route = Destinations.Hottest.getRoute(),
+            route = Destinations.Hottest.route,
             icon = painterResource(R.drawable.ic_whatshot_24dp),
           ) { coroutineScope.launch { networkListState.animateScrollToItem(index = 0) } },
           NavigationItem(
             label = "Saved",
-            route = Destinations.Saved.getRoute(),
+            route = Destinations.Saved.route,
             icon = painterResource(commonR.drawable.ic_favorite_24dp),
           ) { coroutineScope.launch { savedListState.animateScrollToItem(index = 0) } },
         )
@@ -139,11 +139,11 @@ fun LobstersApp(
       ) { paddingValues ->
         NavHost(
           navController,
-          startDestination = Destinations.startDestination.getRoute(),
+          startDestination = Destinations.startDestination.route,
         ) {
           val uri = LobstersApi.BASE_URL
           composable(
-            route = Destinations.Hottest.getRoute(),
+            route = Destinations.Hottest.route,
             deepLinks =
               listOf(navDeepLink { uriPattern = uri }, navDeepLink { uriPattern = "$uri/" }),
           ) {
@@ -157,7 +157,7 @@ fun LobstersApp(
               modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding()),
             )
           }
-          composable(Destinations.Saved.getRoute()) {
+          composable(Destinations.Saved.route) {
             setWebUri(null)
             DatabasePosts(
               items = savedPosts,
@@ -168,7 +168,7 @@ fun LobstersApp(
             )
           }
           composable(
-            route = Destinations.Comments.getRoute("{postId}"),
+            route = Destinations.Comments.route,
             arguments = listOf(navArgument("postId") { type = NavType.StringType }),
             deepLinks =
               listOf(

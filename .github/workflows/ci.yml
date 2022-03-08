@@ -86,7 +86,7 @@ jobs:
     - name: Build release app
       uses: gradle/gradle-build-action@v2.1.3
       with:
-        arguments: :android:assembleRelease --no-configuration-cache
+        arguments: collectReleaseApks --no-configuration-cache
 
     - name: Clean secrets
       run: scripts/signing-cleanup.sh

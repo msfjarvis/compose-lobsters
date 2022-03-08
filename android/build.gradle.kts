@@ -1,6 +1,20 @@
 @file:OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
 
+import com.android.build.api.artifact.SingleArtifact
+import com.android.build.api.variant.BuiltArtifactsLoader
+import java.nio.file.Files
+import java.nio.file.Paths
+import java.nio.file.StandardCopyOption
 import java.util.Properties
+import org.gradle.api.DefaultTask
+import org.gradle.api.file.DirectoryProperty
+import org.gradle.api.provider.Property
+import org.gradle.api.tasks.CacheableTask
+import org.gradle.api.tasks.InputFiles
+import org.gradle.api.tasks.Internal
+import org.gradle.api.tasks.PathSensitive
+import org.gradle.api.tasks.PathSensitivity
+import org.gradle.api.tasks.TaskAction
 
 plugins {
   id("org.jetbrains.compose")
@@ -8,6 +22,30 @@ plugins {
   kotlin("android")
   kotlin("kapt")
   id("dagger.hilt.android.plugin")
+}
+
+@CacheableTask
+abstract class CollectApksTask : DefaultTask() {
+
+  @get:InputFiles @get:PathSensitive(PathSensitivity.NONE) abstract val apkFolder: DirectoryProperty
+  @get:Input abstract val variantName: Property<String>
+  @get:Internal abstract val builtArtifactsLoader: Property<BuiltArtifactsLoader>
+  @get:OutputDirectory abstract val outputDirectory: DirectoryProperty
+
+  @TaskAction
+  fun taskAction() {
+    val outputDir = outputDirectory.asFile.get()
+    outputDir.mkdirs()
+    val builtArtifacts =
+      builtArtifactsLoader.get().load(apkFolder.get()) ?: throw RuntimeException("Cannot load APKs")
+    builtArtifacts.elements.forEach { artifact ->
+      Files.copy(
+        Paths.get(artifact.outputFile),
+        outputDir.resolve("Claw-${variantName.get()}-${artifact.versionName}.apk").toPath(),
+        StandardCopyOption.REPLACE_EXISTING,
+      )
+    }
+  }
 }
 
 dependencies {
@@ -71,5 +109,16 @@ android {
   dependenciesInfo {
     includeInBundle = false
     includeInApk = false
+  }
+}
+
+androidComponents {
+  onVariants { variant ->
+    project.tasks.register<CollectApksTask>("collect${variant.name.capitalize()}Apks") {
+      variantName.set(variant.name)
+      apkFolder.set(variant.artifacts.get(SingleArtifact.APK))
+      builtArtifactsLoader.set(variant.artifacts.getBuiltArtifactsLoader())
+      outputDirectory.set(project.layout.projectDirectory.dir("outputs"))
+    }
   }
 }

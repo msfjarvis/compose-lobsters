@@ -124,7 +124,7 @@ fun LobstersApp(
             },
             title = {
               if (navItems.any { it.route == currentDestination }) {
-                Text(text = stringResource(R.string.app_name), fontWeight = FontWeight.Bold)
+                Text(text = stringResource(commonR.string.app_name), fontWeight = FontWeight.Bold)
               }
             },
           )

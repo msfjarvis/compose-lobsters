@@ -30,7 +30,7 @@ jobs:
     - name: Run unit tests
       uses: gradle/gradle-build-action@v2.1.3
       with:
-        arguments: check --stacktrace
+        arguments: check --stacktrace --no-configuration-cache
 
     - name: (Fail-only) Upload test report
       if: failure()
@@ -58,7 +58,7 @@ jobs:
     - name: Check codestyle with Spotless
       uses: gradle/gradle-build-action@v2.1.3
       with:
-        arguments: spotlessCheck
+        arguments: spotlessCheck --no-configuration-cache
 
   deploy-release-snapshot:
     runs-on: ubuntu-latest
@@ -86,7 +86,7 @@ jobs:
     - name: Build release app
       uses: gradle/gradle-build-action@v2.1.3
       with:
-        arguments: :android:assembleRelease
+        arguments: :android:assembleRelease --no-configuration-cache
 
     - name: Clean secrets
       run: scripts/signing-cleanup.sh

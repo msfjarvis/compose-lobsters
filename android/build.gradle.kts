@@ -44,7 +44,7 @@ android {
   }
   val keystoreConfigFile = rootProject.layout.projectDirectory.file("keystore.properties")
   if (keystoreConfigFile.asFile.exists()) {
-    val contents = providers.fileContents(keystoreConfigFile).asText.forUseAtConfigurationTime()
+    val contents = providers.fileContents(keystoreConfigFile).asText
     val keystoreProperties = Properties()
     keystoreProperties.load(contents.get().byteInputStream())
     signingConfigs {
@@ -57,14 +57,19 @@ android {
     }
     buildTypes.all { signingConfig = signingConfigs.getByName("release") }
   }
+  buildFeatures { buildConfig = true }
   buildTypes {
-    getByName("release") {
-      isMinifyEnabled = true
-      proguardFiles("proguard-android-optimize.txt", "proguard-rules.pro")
+    named("release") {
+      isMinifyEnabled = false
+      setProguardFiles(listOf("proguard-android-optimize.txt", "proguard-rules.pro"))
     }
   }
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
+  }
+  dependenciesInfo {
+    includeInBundle = false
+    includeInApk = false
   }
 }

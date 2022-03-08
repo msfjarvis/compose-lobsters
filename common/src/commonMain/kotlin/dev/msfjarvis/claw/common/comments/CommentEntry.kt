@@ -1,5 +1,10 @@
 package dev.msfjarvis.claw.common.comments
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.animation.with
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -19,6 +24,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -110,14 +119,17 @@ fun PostLink(
   }
 }
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun CommentEntry(
   comment: Comment,
 ) {
+  var expanded by remember(comment) { mutableStateOf(true) }
   val htmlConverter = LocalHTMLConverter.current
   Box(
     modifier =
       Modifier.fillMaxWidth()
+        .clickable { expanded = !expanded }
         .background(MaterialTheme.colorScheme.background)
         .padding(start = (comment.indentLevel * 16).dp, end = 16.dp, top = 16.dp, bottom = 16.dp),
   ) {
@@ -127,8 +139,15 @@ fun CommentEntry(
         avatarUrl = "https://lobste.rs/${comment.user.avatarUrl}",
         contentDescription = "User avatar for ${comment.user.username}",
       )
-      ThemedRichText(modifier = Modifier.padding(top = 8.dp)) {
-        Markdown(htmlConverter.convertHTMLToMarkdown(comment.comment))
+      AnimatedContent(
+        targetState = expanded,
+        transitionSpec = { expandVertically() with shrinkVertically() },
+      ) { expandedState ->
+        if (expandedState) {
+          ThemedRichText(modifier = Modifier.padding(top = 8.dp)) {
+            Markdown(htmlConverter.convertHTMLToMarkdown(comment.comment))
+          }
+        }
       }
     }
   }

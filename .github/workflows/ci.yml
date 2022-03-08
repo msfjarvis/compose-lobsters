@@ -94,8 +94,4 @@ jobs:
     - name: Deploy snapshot
       run: scripts/deploy-snapshot.sh
       env:
-        ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-        SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
-        SERVER_ADDRESS: ${{ secrets.SERVER_ADDRESS }}
-        SERVER_DESTINATION: ${{ secrets.SERVER_DESTINATION }}
-        SSH_PORT: ${{ secrets.SSH_PORT }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

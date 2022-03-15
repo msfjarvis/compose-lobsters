@@ -19,6 +19,7 @@ kotlin {
       api(compose.material3)
       api(projects.database)
       api(projects.model)
+      implementation(libs.kotlin.coroutines.core)
       implementation(libs.compose.richtext.markdown)
       implementation(libs.compose.richtext.material)
       implementation(libs.compose.richtext.ui)

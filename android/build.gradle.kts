@@ -67,6 +67,7 @@ dependencies {
   implementation(libs.copydown)
   implementation(libs.dagger.hilt.android)
   implementation(libs.sqldelight.extensions.coroutines)
+  implementation(libs.kotlin.coroutines.core)
   implementation(libs.kotlinx.serialization.json)
   implementation(libs.retrofit.kotlinxSerializationConverter) { isTransitive = false }
 }

@@ -4,7 +4,7 @@ Unofficial Android and Desktop app for read-only access to [lobste.rs](https://l
 
 ## Distribution
 
-The app will eventually be published to Google Play, in the mean time snapshots for the Android app from the development branch are available [here](https://dl.msfjarvis.dev/Claw).
+The app will eventually be published to Google Play, in the mean time snapshots for the Android app from the development branch are available [here](https://github.com/msfjarvis/compose-lobsters/releases/latest).
 
 ## License
 

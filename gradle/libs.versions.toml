@@ -22,7 +22,7 @@ androidx-paging-compose = "androidx.paging:paging-compose:1.0.0-alpha14"
 aurora-component = { module = "org.pushing-pixels:aurora-component", version.ref = "aurora" }
 aurora-theming = { module = "org.pushing-pixels:aurora-theming", version.ref = "aurora" }
 aurora-window = { module = "org.pushing-pixels:aurora-window", version.ref = "aurora" }
-coil-compose = "io.coil-kt:coil-compose:2.0.0-rc01"
+coil-compose = "io.coil-kt:coil-compose:2.0.0-rc02"
 compose-richtext-markdown = { module = "com.halilibo.compose-richtext:richtext-commonmark", version.ref = "richtext" }
 compose-richtext-material = { module = "com.halilibo.compose-richtext:richtext-ui-material", version.ref = "richtext" }
 compose-richtext-ui = { module = "com.halilibo.compose-richtext:richtext-ui", version.ref = "richtext" }

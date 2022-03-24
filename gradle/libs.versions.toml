@@ -11,7 +11,7 @@ sqldelight = "1.5.3"
 accompanist-insets = { module = "com.google.accompanist:accompanist-insets", version.ref = "accompanist" }
 accompanist-swiperefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "accompanist" }
 accompanist-sysuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
-androidx-activity-compose = "androidx.activity:activity-compose:1.5.0-alpha03"
+androidx-activity-compose = "androidx.activity:activity-compose:1.5.0-alpha04"
 androidx-appcompat = "androidx.appcompat:appcompat:1.6.0-alpha01"
 androidx-browser = "androidx.browser:browser:1.4.0"
 androidx-core-ktx = "androidx.core:core-ktx:1.9.0-alpha01"

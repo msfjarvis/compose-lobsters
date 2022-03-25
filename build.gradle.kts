@@ -39,10 +39,6 @@ tasks.withType<DependencyUpdatesTask>().configureEach {
   reportfileName = "report"
 }
 
-group = "dev.msfjarvis.claw"
-
-version = "1.0"
-
 spotless {
   kotlin {
     target("**/*.kt")

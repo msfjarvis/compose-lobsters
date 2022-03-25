@@ -1,4 +1,5 @@
 @file:OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
+@file:Suppress("DSL_SCOPE_VIOLATION", "UnstableApiUsage")
 
 import com.android.build.api.artifact.SingleArtifact
 import com.android.build.api.variant.BuiltArtifactsLoader
@@ -17,11 +18,11 @@ import org.gradle.api.tasks.PathSensitivity
 import org.gradle.api.tasks.TaskAction
 
 plugins {
-  id("org.jetbrains.compose")
-  id("com.android.application")
-  kotlin("android")
-  kotlin("kapt")
-  id("dagger.hilt.android.plugin")
+  alias(libs.plugins.android.application)
+  alias(libs.plugins.kotlin.android)
+  alias(libs.plugins.kotlin.kapt)
+  alias(libs.plugins.compose)
+  alias(libs.plugins.hilt)
 }
 
 @CacheableTask

@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 pluginManagement {
   repositories {
     gradlePluginPortal()
@@ -8,7 +10,6 @@ pluginManagement {
     }
     google()
   }
-  plugins { id("org.jetbrains.compose") version "1.2.0-alpha01-dev640" apply false }
 }
 
 dependencyResolutionManagement {

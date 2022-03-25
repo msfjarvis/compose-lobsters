@@ -1,30 +1,19 @@
-import org.gradle.api.tasks.compile.JavaCompile
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+@file:Suppress("DSL_SCOPE_VIOLATION", "UnstableApiUsage")
 
 buildscript {
-  val kotlinVersion = "1.6.10"
   repositories {
-    google()
-    mavenCentral()
-    gradlePluginPortal()
     maven {
       url = uri("https://storage.googleapis.com/r8-releases/raw")
       content { includeModule("com.android.tools", "r8") }
     }
   }
-  dependencies {
-    classpath("com.android.tools:r8:3.3.14-dev")
-    classpath(kotlin("gradle-plugin", version = kotlinVersion))
-    classpath(kotlin("serialization", version = kotlinVersion))
-    classpath("com.android.tools.build:gradle:7.0.4")
-    classpath("com.google.dagger:hilt-android-gradle-plugin:2.41")
-  }
+  dependencies { classpath(libs.r8) }
 }
 
 plugins {
-  id("com.diffplug.spotless") version "6.3.0"
-  id("com.github.ben-manes.versions") version "0.42.0"
-  id("nl.littlerobots.version-catalog-update") version "0.3.1"
+  alias(libs.plugins.spotless)
+  alias(libs.plugins.versions)
+  alias(libs.plugins.vcu)
 }
 
 group = "dev.msfjarvis.claw"
@@ -40,23 +29,5 @@ spotless {
   kotlinGradle {
     target("**/*.gradle.kts")
     ktfmt("0.35").googleStyle()
-  }
-}
-
-allprojects {
-  tasks.withType<JavaCompile>().configureEach {
-    sourceCompatibility = JavaVersion.VERSION_11.toString()
-    targetCompatibility = JavaVersion.VERSION_11.toString()
-  }
-  tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions {
-      jvmTarget = JavaVersion.VERSION_11.toString()
-      languageVersion = "1.5"
-      freeCompilerArgs =
-        freeCompilerArgs +
-          listOf(
-            "-Xopt-in=kotlin.RequiresOptIn",
-          )
-    }
   }
 }

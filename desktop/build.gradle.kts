@@ -1,9 +1,11 @@
+@file:Suppress("DSL_SCOPE_VIOLATION", "UnstableApiUsage")
+
 import org.jetbrains.compose.compose
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
-  kotlin("multiplatform")
-  id("org.jetbrains.compose")
+  alias(libs.plugins.kotlin.multiplatform)
+  alias(libs.plugins.compose)
 }
 
 group = "dev.msfjarvis.claw"

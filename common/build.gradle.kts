@@ -1,11 +1,12 @@
 @file:OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
+@file:Suppress("DSL_SCOPE_VIOLATION", "UnstableApiUsage")
 
 import org.jetbrains.compose.compose
 
 plugins {
-  kotlin("multiplatform")
-  id("org.jetbrains.compose")
-  id("com.android.library")
+  alias(libs.plugins.kotlin.multiplatform)
+  alias(libs.plugins.android.library)
+  alias(libs.plugins.compose)
 }
 
 kotlin {

@@ -1,4 +1,6 @@
-plugins { kotlin("jvm") }
+@file:Suppress("DSL_SCOPE_VIOLATION", "UnstableApiUsage")
+
+plugins { alias(libs.plugins.kotlin.jvm) }
 
 dependencies {
   api(projects.model)

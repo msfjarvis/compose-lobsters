@@ -1,6 +1,6 @@
 [versions]
+accompanist = "0.24.5-alpha"
 agp = "7.0.4"
-accompanist = "0.24.3-alpha"
 aurora = "1.1.0"
 coroutines = "1.6.0"
 hilt = "2.41"
@@ -9,26 +9,11 @@ richtext = "0.11.0"
 serialization = "1.3.2"
 sqldelight = "1.5.3"
 
-[plugins]
-android-application = { id = "com.android.application", version.ref = "agp" }
-android-library = { id = "com.android.library", version.ref = "agp" }
-compose = { id = "org.jetbrains.compose", version = "1.1.1" }
-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
-kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-spotless = { id = "com.diffplug.spotless", version = "6.3.0" }
-sqldelight = { id = "com.squareup.sqldelight", version = "1.5.3" }
-versions = { id = "com.github.ben-manes.versions", version = "0.42.0" }
-vcu = { id = "nl.littlerobots.version-catalog-update", version = "0.3.1" }
-
 [libraries]
 accompanist-insets = { module = "com.google.accompanist:accompanist-insets", version.ref = "accompanist" }
 accompanist-swiperefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "accompanist" }
 accompanist-sysuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
-androidx-activity-compose = "androidx.activity:activity-compose:1.5.0-alpha04"
+androidx-activity-compose = "androidx.activity:activity-compose:1.6.0-alpha01"
 androidx-appcompat = "androidx.appcompat:appcompat:1.6.0-alpha01"
 androidx-browser = "androidx.browser:browser:1.4.0"
 androidx-core-ktx = "androidx.core:core-ktx:1.9.0-alpha02"
@@ -51,10 +36,25 @@ kotlin-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-co
 kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "serialization" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
 multiplatform-paging = "io.github.kuuuurt:multiplatform-paging:0.4.7"
-r8 = "com.android.tools:r8:3.3.14-dev"
+r8 = "com.android.tools:r8:3.1.51"
 retrofit-kotlinxSerializationConverter = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
 retrofit-lib = "com.squareup.retrofit2:retrofit:2.9.0"
 sqldelight-androidDriver = { module = "com.squareup.sqldelight:android-driver", version.ref = "sqldelight" }
 sqldelight-extensions-coroutines = { module = "com.squareup.sqldelight:coroutines-extensions-jvm", version.ref = "sqldelight" }
 sqldelight-jvmDriver = { module = "com.squareup.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 testing-mockWebServer = "com.squareup.okhttp3:mockwebserver3-junit4:5.0.0-alpha.6"
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+compose = "org.jetbrains.compose:1.1.1"
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+spotless = "com.diffplug.spotless:6.3.0"
+sqldelight = "com.squareup.sqldelight:1.5.3"
+vcu = "nl.littlerobots.version-catalog-update:0.3.1"
+versions = "com.github.ben-manes.versions:0.42.0"

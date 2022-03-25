@@ -11,7 +11,10 @@
     },
     {
       "managers": ["gradle"],
-      "packagePatterns": ["^com.android.tools.build"],
+      "packagePatterns": [
+        "^com.android.application",
+        "^com.android.library"
+      ],
       "enabled": false
     }
   ]

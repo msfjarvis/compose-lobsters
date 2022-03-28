@@ -55,7 +55,6 @@ dependencies {
   implementation(projects.common)
   implementation(projects.database)
   implementation(compose.material3)
-  implementation(libs.accompanist.insets)
   implementation(libs.accompanist.swiperefresh)
   implementation(libs.accompanist.sysuicontroller)
   implementation(libs.androidx.activity.compose)

@@ -53,7 +53,7 @@ kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-spotless = "com.diffplug.spotless:6.4.0"
+spotless = "com.diffplug.spotless:6.4.1"
 sqldelight = "com.squareup.sqldelight:1.5.3"
 vcu = "nl.littlerobots.version-catalog-update:0.3.1"
 versions = "com.github.ben-manes.versions:0.42.0"

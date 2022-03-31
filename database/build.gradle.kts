@@ -15,7 +15,10 @@ kotlin {
         kotlinOptions.freeCompilerArgs + listOf("-Xopt-in=kotlin.RequiresOptIn")
     }
   }
-  sourceSets["androidMain"].apply { dependencies { implementation(libs.sqldelight.androidDriver) } }
+  sourceSets["androidMain"].apply {
+    dependencies { implementation(libs.sqldelight.androidDriver) }
+    dependsOn(sourceSets["androidAndroidTestRelease"])
+  }
   sourceSets["desktopMain"].apply { dependencies { implementation(libs.sqldelight.jvmDriver) } }
   sourceSets["desktopTest"].apply {
     dependencies {

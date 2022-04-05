@@ -1,6 +1,9 @@
 @file:Suppress("DSL_SCOPE_VIOLATION", "UnstableApiUsage")
 
-plugins { alias(libs.plugins.kotlin.jvm) }
+plugins {
+  kotlin("jvm")
+  id("dev.msfjarvis.claw.kotlin-library")
+}
 
 dependencies {
   api(projects.model)

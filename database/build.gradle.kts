@@ -1,20 +1,15 @@
 @file:Suppress("DSL_SCOPE_VIOLATION", "UnstableApiUsage")
 
 plugins {
-  alias(libs.plugins.kotlin.multiplatform)
-  alias(libs.plugins.android.library)
+  kotlin("multiplatform")
   alias(libs.plugins.sqldelight)
+  id("dev.msfjarvis.claw.kotlin-common")
+  id("dev.msfjarvis.claw.android-library")
 }
 
 kotlin {
   android()
-  jvm("desktop") {
-    compilations.all {
-      kotlinOptions.jvmTarget = "11"
-      kotlinOptions.freeCompilerArgs =
-        kotlinOptions.freeCompilerArgs + listOf("-Xopt-in=kotlin.RequiresOptIn")
-    }
-  }
+  jvm("desktop")
   sourceSets["androidMain"].apply {
     dependencies { implementation(libs.sqldelight.androidDriver) }
     dependsOn(sourceSets["androidAndroidTestRelease"])
@@ -28,15 +23,7 @@ kotlin {
   }
 }
 
-android {
-  compileSdk = 31
-  sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-  defaultConfig {
-    minSdk = 23
-    targetSdk = 31
-    consumerProguardFiles("consumer-rules.pro")
-  }
-}
+android { sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml") }
 
 sqldelight {
   database("LobstersDatabase") {

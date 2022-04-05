@@ -1,6 +1,5 @@
 [versions]
 accompanist = "0.24.5-alpha"
-agp = "7.0.4"
 aurora = "1.1.0"
 coroutines = "1.6.1"
 hilt = "2.41"
@@ -23,6 +22,12 @@ androidx-paging-compose = "androidx.paging:paging-compose:1.0.0-alpha14"
 aurora-component = { module = "org.pushing-pixels:aurora-component", version.ref = "aurora" }
 aurora-theming = { module = "org.pushing-pixels:aurora-theming", version.ref = "aurora" }
 aurora-window = { module = "org.pushing-pixels:aurora-window", version.ref = "aurora" }
+build-agp = "com.android.tools.build:gradle:7.0.4"
+build-kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+build-kotlin-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
+build-spotless = "com.diffplug.spotless:spotless-plugin-gradle:6.4.1"
+build-vcu = "nl.littlerobots.version-catalog-update:nl.littlerobots.version-catalog-update.gradle.plugin:0.3.1"
+build-versions = "com.github.ben-manes:gradle-versions-plugin:0.42.0"
 coil-compose = "io.coil-kt:coil-compose:2.0.0-rc02"
 compose-richtext-markdown = { module = "com.halilibo.compose-richtext:richtext-commonmark", version.ref = "richtext" }
 compose-richtext-material = { module = "com.halilibo.compose-richtext:richtext-ui-material", version.ref = "richtext" }
@@ -30,6 +35,7 @@ compose-richtext-ui = { module = "com.halilibo.compose-richtext:richtext-ui", ve
 copydown = "io.github.furstenheim:copy_down:1.0"
 dagger-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 dagger-hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
+javapoet = "com.squareup:javapoet:1.13.0"
 kamel-image = "com.alialbaali.kamel:kamel-image:0.3.0"
 kotlin-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "serialization" }
@@ -44,16 +50,6 @@ sqldelight-jvmDriver = { module = "com.squareup.sqldelight:sqlite-driver", versi
 testing-mockWebServer = "com.squareup.okhttp3:mockwebserver3-junit4:5.0.0-alpha.6"
 
 [plugins]
-android-application = { id = "com.android.application", version.ref = "agp" }
-android-library = { id = "com.android.library", version.ref = "agp" }
 compose = "org.jetbrains.compose:1.1.1"
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
-kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-spotless = "com.diffplug.spotless:6.4.1"
 sqldelight = "com.squareup.sqldelight:1.5.3"
-vcu = "nl.littlerobots.version-catalog-update:0.3.1"
-versions = "com.github.ben-manes.versions:0.42.0"

@@ -4,8 +4,9 @@ import org.jetbrains.compose.compose
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
-  alias(libs.plugins.kotlin.multiplatform)
+  kotlin("multiplatform")
   alias(libs.plugins.compose)
+  id("dev.msfjarvis.claw.kotlin-common")
 }
 
 group = "dev.msfjarvis.claw"

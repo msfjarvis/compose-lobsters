@@ -4,9 +4,10 @@
 import org.jetbrains.compose.compose
 
 plugins {
-  alias(libs.plugins.kotlin.multiplatform)
-  alias(libs.plugins.android.library)
+  kotlin("multiplatform")
   alias(libs.plugins.compose)
+  id("dev.msfjarvis.claw.kotlin-common")
+  id("dev.msfjarvis.claw.android-library")
 }
 
 kotlin {
@@ -38,13 +39,8 @@ kotlin {
 
 android {
   buildFeatures { androidResources = true }
-  compileSdk = 31
   sourceSets["main"].apply {
     manifest.srcFile("src/androidMain/AndroidManifest.xml")
     res.srcDirs("src/commonMain/resources")
-  }
-  defaultConfig {
-    minSdk = 23
-    targetSdk = 31
   }
 }

@@ -20,6 +20,7 @@ android {
 
 dependencies {
   kapt(libs.dagger.hilt.compiler)
+  kapt(libs.androidx.hilt.compiler)
   implementation(projects.api)
   implementation(projects.common)
   implementation(projects.database)
@@ -30,6 +31,7 @@ dependencies {
   implementation(libs.androidx.appcompat)
   implementation(libs.androidx.core.ktx)
   implementation(libs.androidx.core.splashscreen)
+  implementation(libs.androidx.hilt.work)
   implementation(libs.androidx.lifecycle.compose)
   implementation(libs.androidx.navigation.compose)
   implementation(libs.androidx.paging.compose)
@@ -39,4 +41,5 @@ dependencies {
   implementation(libs.kotlin.coroutines.core)
   implementation(libs.kotlinx.serialization.json)
   implementation(libs.retrofit.kotlinxSerializationConverter) { isTransitive = false }
+  implementation(libs.androidx.work.runtime.ktx)
 }

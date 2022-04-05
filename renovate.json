@@ -8,14 +8,6 @@
       "matchPackagePatterns": ["*"],
       "automerge": true,
       "automergeType": "branch"
-    },
-    {
-      "managers": ["gradle"],
-      "packagePatterns": [
-        "^com.android.application",
-        "^com.android.library"
-      ],
-      "enabled": false
     }
   ]
 }

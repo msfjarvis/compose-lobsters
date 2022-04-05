@@ -22,7 +22,7 @@ androidx-paging-compose = "androidx.paging:paging-compose:1.0.0-alpha14"
 aurora-component = { module = "org.pushing-pixels:aurora-component", version.ref = "aurora" }
 aurora-theming = { module = "org.pushing-pixels:aurora-theming", version.ref = "aurora" }
 aurora-window = { module = "org.pushing-pixels:aurora-window", version.ref = "aurora" }
-build-agp = "com.android.tools.build:gradle:7.0.4"
+build-agp = "com.android.tools.build:gradle:7.1.2"
 build-kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 build-kotlin-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
 build-spotless = "com.diffplug.spotless:spotless-plugin-gradle:6.4.1"

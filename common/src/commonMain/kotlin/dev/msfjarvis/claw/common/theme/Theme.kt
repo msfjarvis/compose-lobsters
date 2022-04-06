@@ -68,7 +68,7 @@ val DarkThemeColors =
 
 @Composable
 fun LobstersTheme(
-  vararg providedValues: ProvidedValue<*> = emptyArray(),
+  providedValues: Array<ProvidedValue<*>> = emptyArray(),
   colorScheme: ColorScheme,
   content: @Composable () -> Unit,
 ) {

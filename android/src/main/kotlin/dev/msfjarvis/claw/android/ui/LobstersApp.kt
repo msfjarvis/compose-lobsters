@@ -70,8 +70,11 @@ fun LobstersApp(
   val savedPosts by viewModel.savedPosts.collectAsState(emptyList())
 
   LobstersTheme(
-    LocalUriHandler provides urlLauncher,
-    LocalHTMLConverter provides htmlConverter,
+    providedValues =
+      arrayOf(
+        LocalUriHandler provides urlLauncher,
+        LocalHTMLConverter provides htmlConverter,
+      ),
     colorScheme = decideColorScheme(LocalContext.current),
   ) {
     val currentUiMode = LocalConfiguration.current.uiMode

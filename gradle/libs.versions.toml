@@ -8,7 +8,7 @@ kotlin = "1.6.10"
 richtext = "0.11.0"
 serialization = "1.3.2"
 sqldelight = "1.5.3"
-workmanager = "2.8.0-alpha01"
+workmanager = "2.8.0-alpha02"
 
 [libraries]
 accompanist-swiperefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "accompanist" }

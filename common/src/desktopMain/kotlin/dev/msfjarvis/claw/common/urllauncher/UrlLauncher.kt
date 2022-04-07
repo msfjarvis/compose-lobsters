@@ -2,6 +2,7 @@ package dev.msfjarvis.claw.common.urllauncher
 
 import androidx.compose.ui.platform.UriHandler
 import java.awt.Desktop
+import java.io.IOException
 import java.net.URI
 
 class UrlLauncher : UriHandler {
@@ -9,7 +10,11 @@ class UrlLauncher : UriHandler {
     if (Desktop.isDesktopSupported()) {
       val desktop = Desktop.getDesktop()
       if (desktop.isSupported(Desktop.Action.BROWSE)) {
-        desktop.browse(URI(uri))
+        try {
+          desktop.browse(URI(uri))
+        } catch (e: IOException) {
+          println("Failed to open URL: $uri")
+        }
       }
     }
   }

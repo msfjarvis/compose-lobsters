@@ -48,7 +48,7 @@ internal constructor(
   /** the [Flow] object which contains a stream of [PagingData] elements. */
   private val flow: Flow<PagingData<T>>
 ) {
-  private val mainDispatcher = Dispatchers.Main
+  private val mainDispatcher = Dispatchers.Default
 
   /**
    * Contains the immutable [ItemSnapshotList] of currently presented items, including any

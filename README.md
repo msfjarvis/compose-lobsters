@@ -2,6 +2,8 @@
 
 Unofficial Android and Desktop app for read-only access to [lobste.rs](https://lobste.rs) community, built with [Jetpack Compose](https://developer.android.com/jetpack/compose).
 
+![Screenshots](./.github/readme_feature.png)
+
 ## Distribution
 
 The app will eventually be published to Google Play, in the mean time snapshots for the Android app from the development branch are available [here](https://github.com/msfjarvis/compose-lobsters/releases/latest).

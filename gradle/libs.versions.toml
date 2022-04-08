@@ -51,6 +51,7 @@ kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
 material_motion-core = { module = "io.github.fornewid:material-motion-compose-core", version.ref = "material_motion" }
 material_motion-navigation = { module = "io.github.fornewid:material-motion-compose-navigation", version.ref = "material_motion" }
+moko-paging = "dev.icerock.moko:paging:0.6.0"
 multiplatform-paging = "io.github.kuuuurt:multiplatform-paging:0.4.7"
 napier = "io.github.aakira:napier:2.6.1"
 retrofit-kotlinxSerializationConverter = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"

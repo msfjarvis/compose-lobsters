@@ -35,6 +35,7 @@ kotlin {
       api(projects.database)
       api(projects.model)
       api(libs.napier)
+      implementation(libs.moko.paging)
       implementation(libs.kotlin.coroutines.core)
       implementation(libs.compose.richtext.markdown)
       implementation(libs.compose.richtext.material)

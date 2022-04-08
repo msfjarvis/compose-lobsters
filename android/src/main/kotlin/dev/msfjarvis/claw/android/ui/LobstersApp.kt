@@ -17,7 +17,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
@@ -28,7 +32,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
-import androidx.paging.compose.collectAsLazyPagingItems
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.msfjarvis.claw.android.R
 import dev.msfjarvis.claw.android.ui.decorations.ClawAppBar
@@ -42,10 +45,12 @@ import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.common.comments.CommentsPage
 import dev.msfjarvis.claw.common.comments.HTMLConverter
 import dev.msfjarvis.claw.common.comments.LocalHTMLConverter
+import dev.msfjarvis.claw.common.paging.LobstersPagingResult
 import dev.msfjarvis.claw.common.res.ClawIcons
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 import dev.msfjarvis.claw.common.user.UserProfile
+import dev.msfjarvis.claw.model.LobstersPost
 import kotlinx.coroutines.launch
 import soup.compose.material.motion.navigation.MaterialMotionNavHost
 import soup.compose.material.motion.navigation.composable
@@ -68,9 +73,41 @@ fun LobstersApp(
   val postActions = rememberPostActions(urlLauncher, navController, viewModel)
   val currentDestination by currentNavigationDestination(navController)
 
-  val hottestPosts = viewModel.hottestPosts.collectAsLazyPagingItems()
-  val newestPosts = viewModel.newestPosts.collectAsLazyPagingItems()
+  val hottestPostsState by viewModel.hottestPosts.collectAsState(LobstersPagingResult.Loading)
+  val newestPostsState by viewModel.newestPosts.collectAsState(LobstersPagingResult.Loading)
+  var hottestPosts by remember { mutableStateOf(emptyList<LobstersPost>()) }
+  var newestPosts by remember { mutableStateOf(emptyList<LobstersPost>()) }
   val savedPosts by viewModel.savedPosts.collectAsState(emptyMap())
+
+  LaunchedEffect(hottestPostsState) {
+    if (hottestPostsState is LobstersPagingResult.Success) {
+      hottestPosts = (hottestPostsState as LobstersPagingResult.Success).list
+    }
+  }
+
+  LaunchedEffect(hottestListState) {
+    snapshotFlow { hottestListState.firstVisibleItemIndex }.collect { index ->
+      // If only 10 posts are left, load new posts
+      if (hottestPosts.isNotEmpty() && index > hottestPosts.size - 10) {
+        viewModel.loadHottestPosts()
+      }
+    }
+  }
+
+  LaunchedEffect(newestPostsState) {
+    if (newestPostsState is LobstersPagingResult.Success) {
+      newestPosts = (newestPostsState as LobstersPagingResult.Success).list
+    }
+  }
+
+  LaunchedEffect(newestListState) {
+    snapshotFlow { newestListState.firstVisibleItemIndex }.collect { index ->
+      // If only 10 posts are left, load new posts
+      if (newestPosts.isNotEmpty() && index > newestPosts.size - 10) {
+        viewModel.loadNewestPosts()
+      }
+    }
+  }
 
   LobstersTheme(
     providedValues =
@@ -157,6 +194,7 @@ fun LobstersApp(
           setWebUri("https://lobste.rs/")
           NetworkPosts(
             items = hottestPosts,
+            isRefreshing = hottestPostsState is LobstersPagingResult.Loading && hottestPosts.isEmpty(),
             listState = hottestListState,
             isPostSaved = viewModel::isPostSaved,
             reloadPosts = viewModel::refreshHottestPosts,
@@ -170,6 +208,7 @@ fun LobstersApp(
           setWebUri("https://lobste.rs/")
           NetworkPosts(
             items = newestPosts,
+            isRefreshing = newestPostsState is LobstersPagingResult.Loading && newestPosts.isEmpty(),
             listState = newestListState,
             isPostSaved = viewModel::isPostSaved,
             reloadPosts = viewModel::refreshNewestPosts,

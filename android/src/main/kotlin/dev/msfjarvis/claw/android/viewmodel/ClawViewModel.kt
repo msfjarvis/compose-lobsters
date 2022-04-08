@@ -2,12 +2,10 @@ package dev.msfjarvis.claw.android.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.msfjarvis.claw.android.paging.LobstersPagingSource
 import dev.msfjarvis.claw.android.ui.asZonedDateTime
 import dev.msfjarvis.claw.api.LobstersApi
+import dev.msfjarvis.claw.common.paging.LobstersPagination
 import dev.msfjarvis.claw.database.local.SavedPost
 import java.time.Month
 import javax.inject.Inject
@@ -24,28 +22,36 @@ constructor(
   private val api: LobstersApi,
   private val repository: SavedPostsRepository,
 ) : ViewModel() {
-  private var hottestPostsPagingSource: LobstersPagingSource? = null
-  private var newestPostsPagingSource: LobstersPagingSource? = null
+  private companion object {
+    const val LobstersPageSize = 25
+  }
   private val hottestPostsPager =
-    Pager(PagingConfig(20)) {
-      LobstersPagingSource(api::getHottestPosts).also { hottestPostsPagingSource = it }
+    LobstersPagination(viewModelScope, emptyList()) { currentList ->
+      val currentPage = currentList.size / LobstersPageSize
+      api.getHottestPosts(currentPage + 1)
     }
   private val newestPostsPager =
-    Pager(PagingConfig(20)) {
-      LobstersPagingSource(api::getNewestPosts).also { newestPostsPagingSource = it }
+    LobstersPagination(viewModelScope, emptyList()) { currentList ->
+      val currentPage = currentList.size / LobstersPageSize
+      api.getNewestPosts(currentPage + 1)
     }
 
   val hottestPosts
-    get() = hottestPostsPager.flow
+    get() = hottestPostsPager.pagingResultFlow
 
   val newestPosts
-    get() = newestPostsPager.flow
+    get() = newestPostsPager.pagingResultFlow
 
   private val savedPostsFlow
     get() = repository.savedPosts
 
   val savedPosts
     get() = savedPostsFlow.map(::mapSavedPosts)
+
+  init {
+    hottestPostsPager.loadFirstPage()
+    newestPostsPager.loadFirstPage()
+  }
 
   private fun mapSavedPosts(items: List<SavedPost>): Map<Month, List<SavedPost>> {
     val sorted = items.sortedByDescending { post -> post.createdAt.asZonedDateTime() }
@@ -74,10 +80,18 @@ constructor(
     withContext(Dispatchers.IO) { api.getUser(username) }
 
   fun refreshHottestPosts() {
-    hottestPostsPagingSource?.invalidate()
+    hottestPostsPager.refresh()
   }
 
   fun refreshNewestPosts() {
-    newestPostsPagingSource?.invalidate()
+    newestPostsPager.refresh()
+  }
+
+  fun loadHottestPosts() {
+    hottestPostsPager.loadNextPage()
+  }
+
+  fun loadNewestPosts() {
+    newestPostsPager.loadNextPage()
   }
 }

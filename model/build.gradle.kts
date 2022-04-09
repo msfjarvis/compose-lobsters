@@ -10,6 +10,12 @@ plugins {
 kotlin {
   android()
   jvm()
+  sourceSets["androidMain"].apply {
+    dependsOn(sourceSets["androidAndroidTestRelease"])
+    dependsOn(sourceSets["androidTestFixtures"])
+    dependsOn(sourceSets["androidTestFixturesDebug"])
+    dependsOn(sourceSets["androidTestFixturesRelease"])
+  }
   sourceSets["commonMain"].apply {
     dependencies { implementation(libs.kotlinx.serialization.core) }
   }

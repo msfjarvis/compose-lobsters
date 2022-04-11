@@ -33,7 +33,7 @@ build-kotlin-serialization = { module = "org.jetbrains.kotlin:kotlin-serializati
 build-spotless = "com.diffplug.spotless:spotless-plugin-gradle:6.4.2"
 build-vcu = "nl.littlerobots.version-catalog-update:nl.littlerobots.version-catalog-update.gradle.plugin:0.3.1"
 build-versions = "com.github.ben-manes:gradle-versions-plugin:0.42.0"
-coil-compose = "io.coil-kt:coil-compose:2.0.0-rc02"
+coil-compose = "io.coil-kt:coil-compose:2.0.0-rc03"
 compose-richtext-markdown = { module = "com.halilibo.compose-richtext:richtext-commonmark", version.ref = "richtext" }
 compose-richtext-material = { module = "com.halilibo.compose-richtext:richtext-ui-material", version.ref = "richtext" }
 compose-richtext-ui = { module = "com.halilibo.compose-richtext:richtext-ui", version.ref = "richtext" }

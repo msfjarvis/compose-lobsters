@@ -17,6 +17,9 @@ kotlin {
     dependsOn(sourceSets["androidTestFixturesDebug"])
     dependsOn(sourceSets["androidTestFixturesRelease"])
   }
+  sourceSets["commonMain"].apply {
+    dependencies { implementation(libs.sqldelight.primitiveAdapters) }
+  }
   sourceSets["desktopMain"].apply { dependencies { implementation(libs.sqldelight.jvmDriver) } }
   sourceSets["desktopTest"].apply {
     dependencies {

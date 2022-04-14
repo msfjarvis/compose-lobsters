@@ -1,6 +1,7 @@
 package dev.msfjarvis.claw.database.local
 
-import com.squareup.sqldelight.db.SqlDriver
+import app.cash.sqldelight.adapter.primitive.IntColumnAdapter
+import app.cash.sqldelight.db.SqlDriver
 import dev.msfjarvis.claw.database.LobstersDatabase
 import dev.msfjarvis.claw.database.model.TagsAdapter
 
@@ -14,5 +15,5 @@ private fun getTagsAdapter() = TagsAdapter()
 
 fun createDatabase(driverFactory: DriverFactory): LobstersDatabase {
   val driver = driverFactory.createDriver()
-  return LobstersDatabase(driver, SavedPost.Adapter(getTagsAdapter()))
+  return LobstersDatabase(driver, SavedPost.Adapter(IntColumnAdapter, getTagsAdapter()))
 }

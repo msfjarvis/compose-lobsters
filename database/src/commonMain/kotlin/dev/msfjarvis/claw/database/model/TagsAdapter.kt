@@ -1,6 +1,6 @@
 package dev.msfjarvis.claw.database.model
 
-import com.squareup.sqldelight.ColumnAdapter
+import app.cash.sqldelight.ColumnAdapter
 
 class TagsAdapter : ColumnAdapter<List<String>, String> {
   override fun decode(databaseValue: String): List<String> {

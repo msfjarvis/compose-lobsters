@@ -1,8 +1,8 @@
 package dev.msfjarvis.claw.android.viewmodel
 
 import android.util.Log
-import com.squareup.sqldelight.runtime.coroutines.asFlow
-import com.squareup.sqldelight.runtime.coroutines.mapToList
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
 import dev.msfjarvis.claw.database.LobstersDatabase
 import dev.msfjarvis.claw.database.local.SavedPost
 import javax.inject.Inject

@@ -1,3 +1,5 @@
+import kotlin.Int;
+import kotlin.String;
 import kotlin.collections.List;
 
 ALTER TABLE SavedPost RENAME TO SavedPost_Old;

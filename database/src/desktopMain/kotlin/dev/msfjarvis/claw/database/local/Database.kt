@@ -1,7 +1,7 @@
 package dev.msfjarvis.claw.database.local
 
-import com.squareup.sqldelight.db.SqlDriver
-import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver
+import app.cash.sqldelight.db.SqlDriver
+import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import dev.msfjarvis.claw.database.LobstersDatabase
 import java.io.File
 

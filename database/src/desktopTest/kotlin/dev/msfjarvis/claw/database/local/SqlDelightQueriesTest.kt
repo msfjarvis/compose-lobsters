@@ -1,6 +1,7 @@
 package dev.msfjarvis.claw.database.local
 
-import com.squareup.sqldelight.sqlite.driver.JdbcSqliteDriver
+import app.cash.sqldelight.adapter.primitive.IntColumnAdapter
+import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import dev.msfjarvis.claw.database.LobstersDatabase
 import dev.msfjarvis.claw.database.model.TagsAdapter
 import kotlin.test.Test
@@ -20,7 +21,7 @@ class SqlDelightQueriesTest {
     val database =
       LobstersDatabase(
         driver,
-        SavedPost.Adapter(TagsAdapter()),
+        SavedPost.Adapter(IntColumnAdapter, TagsAdapter()),
       )
     postQueries = database.savedPostQueries
   }

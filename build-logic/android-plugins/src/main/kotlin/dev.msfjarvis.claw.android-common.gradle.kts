@@ -9,7 +9,7 @@ import com.android.build.gradle.TestedExtension
 extensions.configure<TestedExtension> {
   setCompileSdkVersion(31)
   defaultConfig {
-    minSdk = 23
+    minSdk = 26
     targetSdk = 31
   }
 

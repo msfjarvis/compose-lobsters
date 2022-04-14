@@ -11,9 +11,7 @@ expect class DriverFactory {
   fun createDriver(): SqlDriver
 }
 
-private fun getTagsAdapter() = TagsAdapter()
-
 fun createDatabase(driverFactory: DriverFactory): LobstersDatabase {
   val driver = driverFactory.createDriver()
-  return LobstersDatabase(driver, SavedPost.Adapter(IntColumnAdapter, getTagsAdapter()))
+  return LobstersDatabase(driver, SavedPost.Adapter(IntColumnAdapter, TagsAdapter()))
 }

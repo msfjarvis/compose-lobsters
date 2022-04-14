@@ -5,6 +5,7 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import dev.msfjarvis.claw.android.ui.asZonedDateTime
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.ui.Divider
 import dev.msfjarvis.claw.database.local.SavedPost
@@ -21,7 +22,7 @@ fun DatabasePosts(
     state = listState,
     modifier = modifier,
   ) {
-    items(items) { item ->
+    items(items.sortedBy { post -> post.createdAt.asZonedDateTime() }) { item ->
       ListItem(
         item = item,
         isSaved = isSaved,

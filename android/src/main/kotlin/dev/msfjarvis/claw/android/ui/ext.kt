@@ -29,6 +29,10 @@ import dev.msfjarvis.claw.common.theme.DarkThemeColors
 import dev.msfjarvis.claw.common.theme.LightThemeColors
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 import dev.msfjarvis.claw.database.local.SavedPost
+import java.text.SimpleDateFormat
+import java.time.ZoneId
+import java.time.ZonedDateTime
+import java.util.Locale
 import kotlin.math.ln
 
 private const val AnimationDuration = 100
@@ -47,6 +51,16 @@ fun slideOutAnimation(): ExitTransition {
     targetOffsetY = { fullHeight -> fullHeight },
     animationSpec = tween(durationMillis = AnimationDuration, easing = FastOutLinearInEasing),
   )
+}
+
+/**
+ * Parses a given [String] into a [ZonedDateTime]. This method only works on dates in the format
+ * returned by the Lobsters API, and is not a general purpose parsing solution.
+ */
+fun String.asZonedDateTime(): ZonedDateTime {
+  val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US)
+  val date = checkNotNull(sdf.parse(this))
+  return date.toInstant().atZone(ZoneId.systemDefault())
 }
 
 // The destination needs to be tracked like this rather than used directly since

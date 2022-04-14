@@ -4,10 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.painterResource
 
 actual val commentIcon
-  @Composable get() = painterResource("comment_black_24dp.svg")
+  @Composable get() = painterResource("ic_insert_comment_24dp.xml")
 actual val heartIcon
-  @Composable get() = painterResource("favorite_black_24dp.svg")
+  @Composable get() = painterResource("ic_favorite_24dp.xml")
 actual val heartBorderIcon
-  @Composable get() = painterResource("favorite_border_black_24dp.svg")
+  @Composable get() = painterResource("ic_favorite_border_24dp.xml")
 actual val webIcon
-  @Composable get() = painterResource("web_black_24dp.svg")
+  @Composable get() = painterResource("ic_web_24dp.xml")

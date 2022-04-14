@@ -37,7 +37,10 @@ kotlin {
     dependsOn(sourceSets["androidTestFixturesDebug"])
     dependsOn(sourceSets["androidTestFixturesRelease"])
   }
-  sourceSets["desktopMain"].apply { dependencies { implementation(libs.kamel.image) } }
+  sourceSets["desktopMain"].apply {
+    resources.srcDir("src/androidMain/res/drawable/")
+    dependencies { implementation(libs.kamel.image) }
+  }
 }
 
 android {

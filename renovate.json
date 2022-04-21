@@ -8,6 +8,13 @@
       "matchPackagePatterns": ["*"],
       "automerge": true,
       "automergeType": "branch"
+    },
+    {
+      "managers": ["gradle"],
+      "packagePatterns": [
+        "^org.jetbrains.compose"
+      ],
+      "enabled": false
     }
   ]
 }

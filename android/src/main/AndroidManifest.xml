@@ -26,13 +26,13 @@
         <category android:name="android.intent.category.BROWSABLE" />
 
         <data
-            android:ssp="//lobste.rs"
-            android:scheme="https" />
+          android:scheme="https"
+          android:ssp="//lobste.rs" />
 
         <data
-            android:host="lobste.rs"
-            android:scheme="https"
-            android:path="/"/>
+          android:host="lobste.rs"
+          android:path="/"
+          android:scheme="https" />
       </intent-filter>
 
       <intent-filter>
@@ -42,19 +42,97 @@
         <category android:name="android.intent.category.BROWSABLE" />
 
         <data
-            android:host="lobste.rs"
-            android:scheme="https"
-            android:pathPattern="/s/......"/>
+          android:host="lobste.rs"
+          android:pathPattern="/s/......"
+          android:scheme="https" />
+      </intent-filter>
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
 
         <data
-            android:host="lobste.rs"
-            android:scheme="https"
-            android:pathPattern="/s/....../"/>
+          android:host="lobste.rs"
+          android:pathPattern="/s/....../"
+          android:scheme="https" />
+      </intent-filter>
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
 
         <data
-            android:host="lobste.rs"
-            android:scheme="https"
-            android:pathPattern="/s/....../...*"/>
+          android:host="lobste.rs"
+          android:pathPattern="/s/....../...*"
+          android:scheme="https" />
+      </intent-filter>
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+
+        <data
+          android:host="lobste.rs"
+          android:pathPattern="/s/......"
+          android:scheme="https" />
+      </intent-filter>
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+
+        <data
+          android:host="lobste.rs"
+          android:pathPattern="/s/....../"
+          android:scheme="https" />
+      </intent-filter>
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+
+        <data
+          android:host="lobste.rs"
+          android:pathPattern="/s/....../...*"
+          android:scheme="https" />
+      </intent-filter>
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+
+        <data
+          android:host="lobste.rs"
+          android:pathPattern="/s/......"
+          android:scheme="https" />
+      </intent-filter>
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+
+        <data
+          android:host="lobste.rs"
+          android:pathPattern="/s/....../"
+          android:scheme="https" />
+      </intent-filter>
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+
+        <data
+          android:host="lobste.rs"
+          android:pathPattern="/s/....../...*"
+          android:scheme="https" />
       </intent-filter>
     </activity>
     <provider

@@ -24,14 +24,22 @@ constructor(
   private val api: LobstersApi,
   private val repository: SavedPostsRepository,
 ) : ViewModel() {
-  private var lastPagingSource: LobstersPagingSource? = null
-  private val pager =
+  private var hottestPostsPagingSource: LobstersPagingSource? = null
+  private var newestPostsPagingSource: LobstersPagingSource? = null
+  private val hottestPostsPager =
     Pager(PagingConfig(20)) {
-      LobstersPagingSource(api::getHottestPosts).also { lastPagingSource = it }
+      LobstersPagingSource(api::getHottestPosts).also { hottestPostsPagingSource = it }
+    }
+  private val newestPostsPager =
+    Pager(PagingConfig(20)) {
+      LobstersPagingSource(api::getNewestPosts).also { newestPostsPagingSource = it }
     }
 
-  val pagerFlow
-    get() = pager.flow
+  val hottestPosts
+    get() = hottestPostsPager.flow
+
+  val newestPosts
+    get() = newestPostsPager.flow
 
   val savedPosts
     get() = repository.savedPosts
@@ -57,7 +65,11 @@ constructor(
   suspend fun getPostComments(postId: String) =
     withContext(Dispatchers.IO) { api.getPostDetails(postId) }
 
-  fun reloadPosts() {
-    lastPagingSource?.invalidate()
+  fun refreshHottestPosts() {
+    hottestPostsPagingSource?.invalidate()
+  }
+
+  fun refreshNewestPosts() {
+    newestPostsPagingSource?.invalidate()
   }
 }

@@ -5,6 +5,10 @@ sealed class Destinations(internal val route: String) {
     fun getRoute() = route
   }
 
+  object Newest : Destinations("newest") {
+    fun getRoute() = route
+  }
+
   object Saved : Destinations("saved") {
     fun getRoute() = route
   }

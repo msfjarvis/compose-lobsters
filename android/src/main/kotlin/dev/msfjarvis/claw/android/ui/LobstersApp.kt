@@ -58,14 +58,16 @@ fun LobstersApp(
   setWebUri: (String?) -> Unit,
 ) {
   val systemUiController = rememberSystemUiController()
-  val networkListState = rememberLazyListState()
+  val hottestListState = rememberLazyListState()
+  val newestListState = rememberLazyListState()
   val savedListState = rememberLazyListState()
   val navController = rememberNavController()
   val coroutineScope = rememberCoroutineScope()
   val postActions = rememberPostActions(urlLauncher, navController, viewModel)
   val currentDestination by currentNavigationDestination(navController)
 
-  val networkPosts = viewModel.pagerFlow.collectAsLazyPagingItems()
+  val hottestPosts = viewModel.hottestPosts.collectAsLazyPagingItems()
+  val newestPosts = viewModel.newestPosts.collectAsLazyPagingItems()
   val savedPosts by viewModel.savedPosts.collectAsState(emptyList())
 
   LobstersTheme(
@@ -85,7 +87,12 @@ fun LobstersApp(
           label = "Hottest",
           route = Destinations.Hottest.getRoute(),
           icon = ClawIcons.Flame,
-        ) { coroutineScope.launch { networkListState.animateScrollToItem(index = 0) } },
+        ) { coroutineScope.launch { hottestListState.animateScrollToItem(index = 0) } },
+        NavigationItem(
+          label = "Newest",
+          route = Destinations.Newest.getRoute(),
+          icon = ClawIcons.New,
+        ) { coroutineScope.launch { newestListState.animateScrollToItem(index = 0) } },
         NavigationItem(
           label = "Saved",
           route = Destinations.Saved.getRoute(),
@@ -147,10 +154,23 @@ fun LobstersApp(
         ) {
           setWebUri("https://lobste.rs/")
           NetworkPosts(
-            items = networkPosts,
-            listState = networkListState,
+            items = hottestPosts,
+            listState = hottestListState,
             isPostSaved = viewModel::isPostSaved,
-            reloadPosts = viewModel::reloadPosts,
+            reloadPosts = viewModel::refreshHottestPosts,
+            postActions = postActions,
+            modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding()),
+          )
+        }
+        composable(
+          route = Destinations.Newest.getRoute(),
+        ) {
+          setWebUri("https://lobste.rs/")
+          NetworkPosts(
+            items = newestPosts,
+            listState = newestListState,
+            isPostSaved = viewModel::isPostSaved,
+            reloadPosts = viewModel::refreshNewestPosts,
             postActions = postActions,
             modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding()),
           )

@@ -4,6 +4,7 @@ import dev.msfjarvis.claw.common.res.clawicons.commentIcon
 import dev.msfjarvis.claw.common.res.clawicons.flameIcon
 import dev.msfjarvis.claw.common.res.clawicons.heartBorderIcon
 import dev.msfjarvis.claw.common.res.clawicons.heartIcon
+import dev.msfjarvis.claw.common.res.clawicons.newIcon
 import dev.msfjarvis.claw.common.res.clawicons.webIcon
 
 object ClawIcons {
@@ -14,6 +15,8 @@ object ClawIcons {
   val Heart = heartIcon
 
   val HeartBorder = heartBorderIcon
+
+  val New = newIcon
 
   val Web = webIcon
 }

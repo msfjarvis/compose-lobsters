@@ -21,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -42,10 +41,10 @@ import dev.msfjarvis.claw.android.ui.lists.HottestPosts
 import dev.msfjarvis.claw.android.ui.navigation.Destinations
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.api.LobstersApi
-import dev.msfjarvis.claw.common.R as commonR
 import dev.msfjarvis.claw.common.comments.CommentsPage
 import dev.msfjarvis.claw.common.comments.HTMLConverter
 import dev.msfjarvis.claw.common.comments.LocalHTMLConverter
+import dev.msfjarvis.claw.common.res.ClawIcons
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 import kotlinx.coroutines.launch
@@ -85,12 +84,12 @@ fun LobstersApp(
         NavigationItem(
           label = "Hottest",
           route = Destinations.Hottest.getRoute(),
-          icon = painterResource(R.drawable.ic_whatshot_24dp),
+          icon = ClawIcons.Flame,
         ) { coroutineScope.launch { networkListState.animateScrollToItem(index = 0) } },
         NavigationItem(
           label = "Saved",
           route = Destinations.Saved.getRoute(),
-          icon = painterResource(commonR.drawable.ic_favorite_24dp),
+          icon = ClawIcons.Heart,
         ) { coroutineScope.launch { savedListState.animateScrollToItem(index = 0) } },
       )
 

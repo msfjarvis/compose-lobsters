@@ -38,7 +38,7 @@ import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.posts.PostTitle
 import dev.msfjarvis.claw.common.posts.Submitter
 import dev.msfjarvis.claw.common.posts.TagRow
-import dev.msfjarvis.claw.common.res.webIcon
+import dev.msfjarvis.claw.common.res.ClawIcons
 import dev.msfjarvis.claw.model.Comment
 import dev.msfjarvis.claw.model.LobstersPostDetails
 
@@ -104,7 +104,7 @@ fun PostLink(
   ) {
     Row(modifier = Modifier.padding(16.dp), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
       Icon(
-        painter = webIcon,
+        imageVector = ClawIcons.Web,
         contentDescription = null,
         tint = MaterialTheme.colorScheme.onSecondary,
       )

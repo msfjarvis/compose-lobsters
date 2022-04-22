@@ -38,9 +38,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.flowlayout.FlowRow
-import dev.msfjarvis.claw.common.res.commentIcon
-import dev.msfjarvis.claw.common.res.heartBorderIcon
-import dev.msfjarvis.claw.common.res.heartIcon
+import dev.msfjarvis.claw.common.res.ClawIcons
 import dev.msfjarvis.claw.common.ui.Divider
 import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.database.local.SavedPost
@@ -160,7 +158,7 @@ fun SaveButton(
   Crossfade(targetState = isSaved) { saved ->
     Box(modifier = modifier.padding(12.dp)) {
       Icon(
-        painter = if (saved) heartIcon else heartBorderIcon,
+        imageVector = if (saved) ClawIcons.Heart else ClawIcons.HeartBorder,
         tint = MaterialTheme.colorScheme.secondary,
         contentDescription = if (saved) "Remove from saved posts" else "Add to saved posts",
         modifier = Modifier.align(Alignment.Center)
@@ -192,7 +190,7 @@ fun CommentsButton(
     },
   ) {
     Icon(
-      painter = commentIcon,
+      imageVector = ClawIcons.Comment,
       tint = MaterialTheme.colorScheme.secondary,
       contentDescription = "Open comments",
       modifier = Modifier.align(Alignment.Center),

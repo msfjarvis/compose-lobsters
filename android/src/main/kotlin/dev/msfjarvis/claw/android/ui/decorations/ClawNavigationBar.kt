@@ -7,7 +7,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavController
 import dev.msfjarvis.claw.android.ui.navigation.Destinations
 import dev.msfjarvis.claw.android.ui.slideInAnimation
@@ -29,7 +29,7 @@ fun ClawNavigationBar(
     NavigationBar(modifier = modifier) {
       items.forEach { navItem ->
         NavigationBarItem(
-          icon = { Icon(painter = navItem.icon, contentDescription = navItem.label) },
+          icon = { Icon(imageVector = navItem.icon, contentDescription = navItem.label) },
           label = { Text(text = navItem.label) },
           selected = navController.currentDestination?.route == navItem.route,
           onClick = {
@@ -51,6 +51,6 @@ fun ClawNavigationBar(
 class NavigationItem(
   val label: String,
   val route: String,
-  val icon: Painter,
+  val icon: ImageVector,
   val listStateResetCallback: () -> Unit,
 )

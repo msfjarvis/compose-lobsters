@@ -33,9 +33,6 @@ kotlin {
       implementation(libs.coil.compose)
     }
     dependsOn(sourceSets["androidAndroidTestRelease"])
-    dependsOn(sourceSets["androidTestFixtures"])
-    dependsOn(sourceSets["androidTestFixturesDebug"])
-    dependsOn(sourceSets["androidTestFixturesRelease"])
   }
   sourceSets["desktopMain"].apply {
     resources.srcDir("src/androidMain/res/drawable/")

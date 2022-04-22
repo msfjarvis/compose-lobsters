@@ -37,7 +37,7 @@ import dev.msfjarvis.claw.android.ui.decorations.ClawAppBar
 import dev.msfjarvis.claw.android.ui.decorations.ClawNavigationBar
 import dev.msfjarvis.claw.android.ui.decorations.NavigationItem
 import dev.msfjarvis.claw.android.ui.lists.DatabasePosts
-import dev.msfjarvis.claw.android.ui.lists.HottestPosts
+import dev.msfjarvis.claw.android.ui.lists.NetworkPosts
 import dev.msfjarvis.claw.android.ui.navigation.Destinations
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.api.LobstersApi
@@ -146,7 +146,7 @@ fun LobstersApp(
             listOf(navDeepLink { uriPattern = uri }, navDeepLink { uriPattern = "$uri/" }),
         ) {
           setWebUri("https://lobste.rs/")
-          HottestPosts(
+          NetworkPosts(
             items = networkPosts,
             listState = networkListState,
             isPostSaved = viewModel::isPostSaved,

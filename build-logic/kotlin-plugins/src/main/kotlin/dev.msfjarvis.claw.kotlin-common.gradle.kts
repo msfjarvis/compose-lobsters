@@ -24,7 +24,8 @@ tasks.withType<JavaCompile>().configureEach {
 
 tasks.withType<KotlinCompile>().configureEach {
   kotlinOptions {
-    allWarningsAsErrors = true
+    // TODO: Re-enable once warnings from Aurora-generated code are fixed
+    allWarningsAsErrors = false
     jvmTarget = JavaVersion.VERSION_11.toString()
     freeCompilerArgs = freeCompilerArgs + additionalCompilerArgs
     languageVersion = "1.5"

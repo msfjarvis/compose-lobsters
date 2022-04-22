@@ -9,6 +9,7 @@ buildscript {
   }
   dependencies {
     classpath(libs.r8)
+    classpath(libs.svg.transcoder)
     classpath(libs.javapoet)
   }
 }

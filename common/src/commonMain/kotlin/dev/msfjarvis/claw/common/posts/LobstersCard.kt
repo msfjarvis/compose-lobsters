@@ -158,7 +158,7 @@ fun SaveButton(
   Crossfade(targetState = isSaved) { saved ->
     Box(modifier = modifier.padding(12.dp)) {
       Icon(
-        imageVector = if (saved) ClawIcons.Heart else ClawIcons.HeartBorder,
+        painter = if (saved) ClawIcons.Heart else ClawIcons.HeartBorder,
         tint = MaterialTheme.colorScheme.secondary,
         contentDescription = if (saved) "Remove from saved posts" else "Add to saved posts",
         modifier = Modifier.align(Alignment.Center)
@@ -190,7 +190,7 @@ fun CommentsButton(
     },
   ) {
     Icon(
-      imageVector = ClawIcons.Comment,
+      painter = ClawIcons.Comment,
       tint = MaterialTheme.colorScheme.secondary,
       contentDescription = "Open comments",
       modifier = Modifier.align(Alignment.Center),

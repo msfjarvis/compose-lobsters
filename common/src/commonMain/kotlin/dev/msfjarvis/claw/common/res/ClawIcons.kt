@@ -1,22 +1,22 @@
 package dev.msfjarvis.claw.common.res
 
-import dev.msfjarvis.claw.common.res.clawicons.commentIcon
-import dev.msfjarvis.claw.common.res.clawicons.flameIcon
-import dev.msfjarvis.claw.common.res.clawicons.heartBorderIcon
-import dev.msfjarvis.claw.common.res.clawicons.heartIcon
-import dev.msfjarvis.claw.common.res.clawicons.newIcon
-import dev.msfjarvis.claw.common.res.clawicons.webIcon
+import dev.msfjarvis.claw.common.res.clawicons.comment_black_24dp
+import dev.msfjarvis.claw.common.res.clawicons.favorite_black_24dp
+import dev.msfjarvis.claw.common.res.clawicons.favorite_border_black_24dp
+import dev.msfjarvis.claw.common.res.clawicons.new_releases_black_24dp
+import dev.msfjarvis.claw.common.res.clawicons.public_black_24dp
+import dev.msfjarvis.claw.common.res.clawicons.whatshot_black_24dp
 
 object ClawIcons {
-  val Comment = commentIcon
+  val Comment = comment_black_24dp()
 
-  val Flame = flameIcon
+  val Flame = whatshot_black_24dp()
 
-  val Heart = heartIcon
+  val Heart = favorite_black_24dp()
 
-  val HeartBorder = heartBorderIcon
+  val HeartBorder = favorite_border_black_24dp()
 
-  val New = newIcon
+  val New = new_releases_black_24dp()
 
-  val Web = webIcon
+  val Web = public_black_24dp()
 }

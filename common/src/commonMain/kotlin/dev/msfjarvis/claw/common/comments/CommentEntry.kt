@@ -104,7 +104,7 @@ fun PostLink(
   ) {
     Row(modifier = Modifier.padding(16.dp), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
       Icon(
-        imageVector = ClawIcons.Web,
+        painter = ClawIcons.Web,
         contentDescription = null,
         tint = MaterialTheme.colorScheme.onSecondary,
       )

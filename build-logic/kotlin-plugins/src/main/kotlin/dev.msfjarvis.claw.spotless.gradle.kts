@@ -11,7 +11,7 @@ spotless {
   kotlin {
     ktfmt(KTFMT_VERSION).googleStyle()
     target("**/*.kt")
-    targetExclude("**/build/")
+    targetExclude("**/build/", "**/gen/")
   }
   kotlinGradle {
     ktfmt(KTFMT_VERSION).googleStyle()

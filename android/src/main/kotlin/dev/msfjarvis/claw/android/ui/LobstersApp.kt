@@ -96,7 +96,7 @@ fun LobstersApp(
         NavigationItem(
           label = "Saved",
           route = Destinations.Saved.getRoute(),
-          icon = ClawIcons.Heart,
+          icon = ClawIcons.HeartBorder,
         ) { coroutineScope.launch { savedListState.animateScrollToItem(index = 0) } },
       )
 

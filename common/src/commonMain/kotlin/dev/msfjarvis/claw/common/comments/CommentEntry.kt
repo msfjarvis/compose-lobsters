@@ -2,9 +2,6 @@ package dev.msfjarvis.claw.common.comments
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.shrinkVertically
-import androidx.compose.animation.with
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -139,10 +136,7 @@ fun CommentEntry(
         avatarUrl = "https://lobste.rs/${comment.user.avatarUrl}",
         contentDescription = "User avatar for ${comment.user.username}",
       )
-      AnimatedContent(
-        targetState = expanded,
-        transitionSpec = { expandVertically() with shrinkVertically() },
-      ) { expandedState ->
+      AnimatedContent(targetState = expanded) { expandedState ->
         if (expandedState) {
           ThemedRichText(modifier = Modifier.padding(top = 8.dp)) {
             Markdown(htmlConverter.convertHTMLToMarkdown(comment.comment))

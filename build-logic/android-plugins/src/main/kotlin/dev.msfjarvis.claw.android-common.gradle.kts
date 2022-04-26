@@ -7,10 +7,10 @@
 import com.android.build.gradle.TestedExtension
 
 extensions.configure<TestedExtension> {
-  setCompileSdkVersion(31)
+  compileSdkVersion = "android-Tiramisu"
   defaultConfig {
     minSdk = 26
-    targetSdk = 31
+    targetSdkPreview = "Tiramisu"
   }
 
   sourceSets {

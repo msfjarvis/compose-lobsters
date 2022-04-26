@@ -1,5 +1,5 @@
 [versions]
-accompanist = "0.24.6-alpha"
+accompanist = "0.24.7-alpha"
 aurora = "1.1.0"
 coroutines = "1.6.1"
 dagger = "2.41"

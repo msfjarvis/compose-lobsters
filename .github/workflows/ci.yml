@@ -30,7 +30,7 @@ jobs:
     - name: Run unit tests
       uses: gradle/gradle-build-action@v2.1.5
       with:
-        arguments: check --stacktrace --no-configuration-cache
+        arguments: testDebug --stacktrace --no-configuration-cache
 
     - name: (Fail-only) Upload test report
       if: failure()

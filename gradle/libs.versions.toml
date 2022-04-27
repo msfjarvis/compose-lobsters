@@ -13,7 +13,7 @@ workmanager = "2.8.0-alpha02"
 [libraries]
 accompanist-swiperefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "accompanist" }
 accompanist-sysuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
-androidx-activity-compose = "androidx.activity:activity-compose:1.6.0-alpha01"
+androidx-activity-compose = "androidx.activity:activity-compose:1.4.0"
 androidx-appcompat = "androidx.appcompat:appcompat:1.6.0-alpha01"
 androidx-browser = "androidx.browser:browser:1.4.0"
 androidx-core-ktx = "androidx.core:core-ktx:1.9.0-alpha02"

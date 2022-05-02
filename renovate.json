@@ -13,11 +13,6 @@
       "managers": ["gradle"],
       "packagePatterns": ["^com.android.tools.build"],
       "enabled": false
-    },
-    {
-      "managers": ["gradle"],
-      "packagePatterns": ["^androidx.activity"],
-      "enabled": false
     }
   ]
 }

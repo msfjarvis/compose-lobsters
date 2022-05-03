@@ -46,6 +46,7 @@ kotlin-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-co
 kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "serialization" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
 multiplatform-paging = "io.github.kuuuurt:multiplatform-paging:0.4.7"
+napier = "io.github.aakira:napier:2.5.0"
 r8 = "com.android.tools:r8:3.3.28"
 retrofit-kotlinxSerializationConverter = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
 retrofit-lib = "com.squareup.retrofit2:retrofit:2.9.0"

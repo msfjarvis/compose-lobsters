@@ -1,7 +1,6 @@
 package dev.msfjarvis.claw.android.injection
 
 import android.content.Context
-import android.util.Log
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Lazy
 import dagger.Module
@@ -10,6 +9,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.msfjarvis.claw.api.LobstersApi
+import io.github.aakira.napier.Napier
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import okhttp3.Cache
@@ -34,7 +34,7 @@ object ApiModule {
       .cache(cache.get())
       .addNetworkInterceptor { chain ->
         val request = chain.request()
-        Log.d("LobstersApi", "${request.method}: ${request.url}")
+        Napier.d(tag = "LobstersApi") { "${request.method}: ${request.url}" }
         chain.proceed(request)
       }
       .build()

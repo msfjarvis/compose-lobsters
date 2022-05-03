@@ -1,5 +1,6 @@
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dev.msfjarvis.claw.api.LobstersApi
+import io.github.aakira.napier.Napier
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType
@@ -15,7 +16,7 @@ class Api {
     return OkHttpClient.Builder()
       .addNetworkInterceptor { chain ->
         val request = chain.request()
-        println("LobstersApi: ${request.method()}: ${request.url()}")
+        Napier.d(tag = "LobstersApi") { "${request.method()}: ${request.url()}" }
         chain.proceed(request)
       }
       .build()

@@ -57,6 +57,6 @@ sqldelight-primitiveAdapters = { module = "app.cash.sqldelight:primitive-adapter
 testing-mockWebServer = "com.squareup.okhttp3:mockwebserver3-junit4:5.0.0-alpha.7"
 
 [plugins]
-compose = "org.jetbrains.compose:1.2.0-alpha01-dev675"
+compose = "org.jetbrains.compose:1.2.0-alpha01-dev679"
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }

@@ -22,15 +22,7 @@ android {
   buildFeatures { buildConfig = true }
 
   buildTypes {
-    named("release") {
-      setProguardFiles(
-        listOf(
-          "proguard-android-optimize.txt",
-          "proguard-rules.pro",
-          "proguard-rules-missing-classes.pro",
-        )
-      )
-    }
+    named("release") { isMinifyEnabled = false }
     named("debug") {
       applicationIdSuffix = ".debug"
       versionNameSuffix = "-debug"

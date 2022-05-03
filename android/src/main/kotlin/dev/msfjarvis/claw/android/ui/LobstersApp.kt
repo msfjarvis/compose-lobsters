@@ -1,5 +1,6 @@
 package dev.msfjarvis.claw.android.ui
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -25,9 +26,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -48,8 +46,15 @@ import dev.msfjarvis.claw.common.res.ClawIcons
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 import kotlinx.coroutines.launch
+import soup.compose.material.motion.materialElevationScaleIn
+import soup.compose.material.motion.materialElevationScaleOut
+import soup.compose.material.motion.navigation.MaterialMotionNavHost
+import soup.compose.material.motion.navigation.composable
+import soup.compose.material.motion.navigation.rememberMaterialMotionNavController
+import soup.compose.material.motion.translateXIn
+import soup.compose.material.motion.translateXOut
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 @Composable
 fun LobstersApp(
   viewModel: ClawViewModel = viewModel(),
@@ -61,7 +66,7 @@ fun LobstersApp(
   val hottestListState = rememberLazyListState()
   val newestListState = rememberLazyListState()
   val savedListState = rememberLazyListState()
-  val navController = rememberNavController()
+  val navController = rememberMaterialMotionNavController()
   val coroutineScope = rememberCoroutineScope()
   val postActions = rememberPostActions(urlLauncher, navController, viewModel)
   val currentDestination by currentNavigationDestination(navController)
@@ -142,7 +147,7 @@ fun LobstersApp(
         )
       },
     ) { paddingValues ->
-      NavHost(
+      MaterialMotionNavHost(
         navController,
         startDestination = Destinations.startDestination.getRoute(),
       ) {
@@ -193,6 +198,10 @@ fun LobstersApp(
               navDeepLink { uriPattern = "$uri/s/{postId}/.*" },
               navDeepLink { uriPattern = "$uri/s/{postId}" },
             ),
+          enterMotionSpec = { translateXIn { it } },
+          exitMotionSpec = { materialElevationScaleOut() },
+          popEnterMotionSpec = { materialElevationScaleIn() },
+          popExitMotionSpec = { translateXOut { it } },
         ) { backStackEntry ->
           val postId = requireNotNull(backStackEntry.arguments?.getString("postId"))
           setWebUri("https://lobste.rs/s/$postId")

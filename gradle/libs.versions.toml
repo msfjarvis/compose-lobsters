@@ -5,6 +5,7 @@ coroutines = "1.6.1"
 dagger = "2.41"
 hilt = "1.0.0"
 kotlin = "1.6.10"
+material_motion = "0.8.4"
 richtext = "0.11.0"
 serialization = "1.3.2"
 sqldelight = "2.0.0-alpha02"
@@ -45,6 +46,8 @@ kamel-image = "com.alialbaali.kamel:kamel-image:0.3.0"
 kotlin-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "serialization" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
+material_motion-core = { module = "io.github.fornewid:material-motion-compose-core", version.ref = "material_motion" }
+material_motion-navigation = { module = "io.github.fornewid:material-motion-compose-navigation", version.ref = "material_motion" }
 multiplatform-paging = "io.github.kuuuurt:multiplatform-paging:0.4.7"
 napier = "io.github.aakira:napier:2.5.0"
 r8 = "com.android.tools:r8:3.3.28"

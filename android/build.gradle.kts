@@ -37,6 +37,8 @@ dependencies {
   implementation(libs.androidx.paging.compose)
   implementation(libs.copydown)
   implementation(libs.dagger.hilt.android)
+  implementation(libs.material.motion.core)
+  implementation(libs.material.motion.navigation)
   implementation(libs.sqldelight.extensions.coroutines)
   implementation(libs.kotlin.coroutines.core)
   implementation(libs.kotlinx.serialization.json)

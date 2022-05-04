@@ -21,7 +21,7 @@ fun DatabasePosts(
   postActions: PostActions,
   modifier: Modifier = Modifier,
 ) {
-  val sorted = items.sortedBy { post -> post.createdAt.asZonedDateTime() }
+  val sorted = items.sortedByDescending { post -> post.createdAt.asZonedDateTime() }
   val grouped = sorted.groupBy { post -> post.createdAt.asZonedDateTime().month }
   LazyColumn(
     state = listState,

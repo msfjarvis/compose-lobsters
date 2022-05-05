@@ -1,20 +1,20 @@
 package dev.msfjarvis.claw.android.ui.navigation
 
-sealed class Destinations(internal val route: String) {
-  object Hottest : Destinations("hottest") {
-    fun getRoute() = route
+sealed class Destinations {
+  object Hottest : Destinations() {
+    fun getRoute() = "hottest"
   }
 
-  object Newest : Destinations("newest") {
-    fun getRoute() = route
+  object Newest : Destinations() {
+    fun getRoute() = "newest"
   }
 
-  object Saved : Destinations("saved") {
-    fun getRoute() = route
+  object Saved : Destinations() {
+    fun getRoute() = "saved"
   }
 
-  object Comments : Destinations("comments/%s") {
-    fun getRoute(postId: String) = route.format(postId)
+  object Comments : Destinations() {
+    fun getRoute(postId: String) = "comments/$postId"
   }
 
   companion object {

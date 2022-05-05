@@ -134,6 +134,17 @@
           android:pathPattern="/s/....../...*"
           android:scheme="https" />
       </intent-filter>
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+
+        <data
+            android:host="lobste.rs"
+            android:pathPattern="/u/......*"
+            android:scheme="https" />
+      </intent-filter>
     </activity>
     <provider
       android:name="androidx.startup.InitializationProvider"

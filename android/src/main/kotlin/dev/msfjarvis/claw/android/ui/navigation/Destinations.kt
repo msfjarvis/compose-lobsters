@@ -17,6 +17,10 @@ sealed class Destinations {
     fun getRoute(postId: String) = "comments/$postId"
   }
 
+  object User : Destinations() {
+    fun getRoute(username: String) = "user/$username"
+  }
+
   companion object {
     val startDestination
       get() = Hottest

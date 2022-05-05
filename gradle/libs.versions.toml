@@ -6,6 +6,7 @@ dagger = "2.41"
 hilt = "1.0.0"
 kotlin = "1.6.10"
 material_motion = "0.8.4"
+retrofit = "2.9.0"
 richtext = "0.11.0"
 serialization = "1.3.2"
 sqldelight = "2.0.0-alpha02"
@@ -52,13 +53,13 @@ multiplatform-paging = "io.github.kuuuurt:multiplatform-paging:0.4.7"
 napier = "io.github.aakira:napier:2.5.0"
 r8 = "com.android.tools:r8:3.3.28"
 retrofit-kotlinxSerializationConverter = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
-retrofit-lib = "com.squareup.retrofit2:retrofit:2.9.0"
+retrofit-lib = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+retrofit-mock = { module = "com.squareup.retrofit2:retrofit-mock", version.ref = "retrofit" }
 svg-transcoder = "org.pushing-pixels:aurora-tools-svg-transcoder-gradle-plugin:1.1.0"
 sqldelight-androidDriver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
 sqldelight-extensions-coroutines = { module = "app.cash.sqldelight:coroutines-extensions-jvm", version.ref = "sqldelight" }
 sqldelight-jvmDriver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 sqldelight-primitiveAdapters = { module = "app.cash.sqldelight:primitive-adapters", version.ref = "sqldelight" }
-testing-mockWebServer = "com.squareup.okhttp3:mockwebserver3-junit4:5.0.0-alpha.7"
 
 [plugins]
 compose = "org.jetbrains.compose:1.1.1"

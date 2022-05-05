@@ -22,7 +22,8 @@ fun isNonStable(version: String): Boolean {
 tasks.withType<DependencyUpdatesTask>().configureEach {
   rejectVersionIf {
     when (candidate.group) {
-      "com.android.application", "com.android.library" -> true
+      "com.android.application",
+      "com.android.library" -> true
       else -> isNonStable(candidate.version) && !isNonStable(currentVersion)
     }
   }

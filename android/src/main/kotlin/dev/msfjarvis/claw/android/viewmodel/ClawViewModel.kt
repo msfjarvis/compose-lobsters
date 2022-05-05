@@ -76,6 +76,9 @@ constructor(
   suspend fun getPostComments(postId: String) =
     withContext(Dispatchers.IO) { api.getPostDetails(postId) }
 
+  suspend fun getUserProfile(username: String) =
+    withContext(Dispatchers.IO) { api.getUser(username) }
+
   fun refreshHottestPosts() {
     hottestPostsPagingSource?.invalidate()
   }

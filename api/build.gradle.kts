@@ -12,6 +12,6 @@ dependencies {
   testImplementation(libs.kotlinx.serialization.json)
   testImplementation(libs.kotlin.coroutines.core)
   testImplementation(kotlin("test-junit"))
-  testImplementation(libs.retrofit.kotlinxSerializationConverter) { isTransitive = false }
-  testImplementation(libs.testing.mockWebServer)
+  testImplementation(libs.retrofit.kotlinxSerializationConverter)
+  testImplementation(libs.retrofit.mock)
 }

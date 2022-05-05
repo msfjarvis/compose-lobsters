@@ -12,6 +12,7 @@ class FakeApi(private val delegate: BehaviorDelegate<LobstersApi>) : LobstersApi
   private val hottest: List<LobstersPost> = json.decodeFromString(getJson("hottest.json"))
   private val postDetails: LobstersPostDetails =
     json.decodeFromString(getJson("post_details_d9ucpe.json"))
+  private val user: User = json.decodeFromString(getJson("msfjarvis.json"))
 
   override suspend fun getHottestPosts(page: Int): List<LobstersPost> {
     return delegate.returningResponse(hottest).getHottestPosts(page)
@@ -23,5 +24,9 @@ class FakeApi(private val delegate: BehaviorDelegate<LobstersApi>) : LobstersApi
 
   override suspend fun getPostDetails(postId: String): LobstersPostDetails {
     return delegate.returningResponse(postDetails).getPostDetails(postId)
+  }
+
+  override suspend fun getUser(username: String): User {
+    return delegate.returningResponse(user).getUser(username)
   }
 }

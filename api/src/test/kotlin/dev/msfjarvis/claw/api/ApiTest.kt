@@ -29,4 +29,10 @@ class ApiTest {
     val postDetails = api.getPostDetails("d9ucpe")
     assertEquals(7, postDetails.comments.size)
   }
+
+  @Test
+  fun `get user details`() = runBlocking {
+    val user = api.getUser("msfjarvis")
+    assertEquals("msfjarvis", user.username)
+  }
 }

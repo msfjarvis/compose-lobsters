@@ -35,6 +35,7 @@ dependencies {
   implementation(libs.androidx.lifecycle.compose)
   implementation(libs.androidx.navigation.compose)
   implementation(libs.androidx.paging.compose)
+  implementation(libs.coil)
   implementation(libs.copydown)
   implementation(libs.dagger.hilt.android)
   implementation(libs.material.motion.core)

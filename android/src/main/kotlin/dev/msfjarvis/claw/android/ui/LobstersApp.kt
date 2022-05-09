@@ -73,7 +73,7 @@ fun LobstersApp(
 
   val hottestPosts = viewModel.hottestPosts.collectAsLazyPagingItems()
   val newestPosts = viewModel.newestPosts.collectAsLazyPagingItems()
-  val savedPosts by viewModel.savedPosts.collectAsState(emptyList())
+  val savedPosts by viewModel.savedPosts.collectAsState(emptyMap())
 
   LobstersTheme(
     providedValues =

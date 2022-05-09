@@ -6,12 +6,15 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource
+import dev.msfjarvis.claw.android.ui.asZonedDateTime
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.database.local.SavedPost
+import java.time.Month
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -41,11 +44,19 @@ constructor(
   val newestPosts
     get() = newestPostsPager.flow
 
-  val savedPosts
+  private val savedPostsFlow
     get() = repository.savedPosts
 
+  val savedPosts
+    get() = savedPostsFlow.map(::mapSavedPosts)
+
+  private fun mapSavedPosts(items: List<SavedPost>): Map<Month, List<SavedPost>> {
+    val sorted = items.sortedByDescending { post -> post.createdAt.asZonedDateTime() }
+    return sorted.groupBy { post -> post.createdAt.asZonedDateTime().month }
+  }
+
   suspend fun isPostSaved(post: SavedPost): Boolean {
-    return savedPosts
+    return savedPostsFlow
       .mapLatest { posts -> posts.map { it.shortId } }
       .mapLatest { shortIds -> post.shortId in shortIds }
       .first()

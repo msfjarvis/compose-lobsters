@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import dev.msfjarvis.claw.common.NetworkState
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.ui.Divider
+import dev.msfjarvis.claw.common.ui.NetworkError
 import dev.msfjarvis.claw.common.ui.ProgressBar
 import dev.msfjarvis.claw.model.LobstersPostDetails
 
@@ -83,7 +84,9 @@ fun CommentsPage(
         modifier.fillMaxSize(),
       )
     }
-    is NetworkState.Error -> TODO("Handle no network scenario")
+    is NetworkState.Error -> {
+      NetworkError((postDetails as NetworkState.Error).message)
+    }
     NetworkState.Loading -> ProgressBar(modifier)
   }
 }

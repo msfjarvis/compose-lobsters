@@ -45,6 +45,7 @@ import dev.msfjarvis.claw.common.comments.LocalHTMLConverter
 import dev.msfjarvis.claw.common.res.ClawIcons
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
+import dev.msfjarvis.claw.common.user.UserProfile
 import kotlinx.coroutines.launch
 import soup.compose.material.motion.materialElevationScaleIn
 import soup.compose.material.motion.materialElevationScaleOut
@@ -210,6 +211,22 @@ fun LobstersApp(
             getDetails = viewModel::getPostComments,
             modifier = Modifier.navigationBarsPadding(),
             postActions = postActions,
+          )
+        }
+        composable(
+          route = Destinations.User.getRoute("{username}"),
+          arguments = listOf(navArgument("username") { type = NavType.StringType }),
+          deepLinks = listOf(navDeepLink { uriPattern = "$uri/u/{username}" }),
+          enterMotionSpec = { translateXIn { it } },
+          exitMotionSpec = { materialElevationScaleOut() },
+          popEnterMotionSpec = { materialElevationScaleIn() },
+          popExitMotionSpec = { translateXOut { it } },
+        ) { backStackEntry ->
+          val username = requireNotNull(backStackEntry.arguments?.getString("username"))
+          UserProfile(
+            username = username,
+            getProfile = viewModel::getUserProfile,
+            modifier = Modifier.navigationBarsPadding(),
           )
         }
       }

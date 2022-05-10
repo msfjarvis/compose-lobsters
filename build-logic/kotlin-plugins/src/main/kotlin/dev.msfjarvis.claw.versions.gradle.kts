@@ -23,7 +23,9 @@ tasks.withType<DependencyUpdatesTask>().configureEach {
   rejectVersionIf {
     when (candidate.group) {
       "com.android.application",
-      "com.android.library" -> true
+      "com.android.library",
+      "com.google.accompanist",
+      "org.jetbrains.kotlin" -> true
       else -> isNonStable(candidate.version) && !isNonStable(currentVersion)
     }
   }

@@ -26,6 +26,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.halilibo.richtext.markdown.Markdown
@@ -56,6 +57,7 @@ fun CommentsHeader(
   postActions: PostActions,
 ) {
   val htmlConverter = LocalHTMLConverter.current
+  val uriHandler = LocalUriHandler.current
 
   Surface(color = MaterialTheme.colorScheme.background) {
     Column(
@@ -83,6 +85,10 @@ fun CommentsHeader(
         text = "Submitted by ${postDetails.submitter.username}",
         avatarUrl = "https://lobste.rs/${postDetails.submitter.avatarUrl}",
         contentDescription = "User avatar for ${postDetails.submitter.username}",
+        modifier =
+          Modifier.clickable {
+            uriHandler.openUri("https://lobste.rs/u/${postDetails.submitter.username}")
+          },
       )
     }
   }
@@ -123,6 +129,7 @@ fun CommentEntry(
 ) {
   var expanded by remember(comment) { mutableStateOf(true) }
   val htmlConverter = LocalHTMLConverter.current
+  val uriHandler = LocalUriHandler.current
   Box(
     modifier =
       Modifier.fillMaxWidth()
@@ -135,6 +142,8 @@ fun CommentEntry(
         text = comment.user.username,
         avatarUrl = "https://lobste.rs/${comment.user.avatarUrl}",
         contentDescription = "User avatar for ${comment.user.username}",
+        modifier =
+          Modifier.clickable { uriHandler.openUri("https://lobste.rs/u/${comment.user.username}") },
       )
       AnimatedContent(targetState = expanded) { expandedState ->
         if (expandedState) {

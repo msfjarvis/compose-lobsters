@@ -186,7 +186,6 @@ fun LobstersApp(
           DatabasePosts(
             items = savedPosts,
             listState = savedListState,
-            isSaved = viewModel::isPostSaved,
             postActions = postActions,
             modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding()),
           )

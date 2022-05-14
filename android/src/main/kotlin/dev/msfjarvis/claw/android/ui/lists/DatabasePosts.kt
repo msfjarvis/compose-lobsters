@@ -17,7 +17,6 @@ import java.time.Month
 fun DatabasePosts(
   items: Map<Month, List<SavedPost>>,
   listState: LazyListState,
-  isSaved: suspend (SavedPost) -> Boolean,
   postActions: PostActions,
   modifier: Modifier = Modifier,
 ) {
@@ -30,7 +29,7 @@ fun DatabasePosts(
       items(posts) { item ->
         ListItem(
           item = item,
-          isSaved = isSaved,
+          isSaved = { true },
           postActions = postActions,
         )
 

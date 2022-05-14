@@ -57,7 +57,7 @@ constructor(
   }
 
   fun toggleSave(post: SavedPost) {
-    viewModelScope.launch {
+    viewModelScope.launch(Dispatchers.IO) {
       val saved = isPostSaved(post)
       if (saved) {
         repository.removePost(post)

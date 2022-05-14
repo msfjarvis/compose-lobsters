@@ -12,14 +12,11 @@ import dev.msfjarvis.claw.database.local.SavedPost
 import java.time.Month
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class ClawViewModel
 @Inject
@@ -56,10 +53,7 @@ constructor(
   }
 
   suspend fun isPostSaved(post: SavedPost): Boolean {
-    return savedPostsFlow
-      .mapLatest { posts -> posts.map { it.shortId } }
-      .mapLatest { shortIds -> post.shortId in shortIds }
-      .first()
+    return savedPostsFlow.first().any { savedPost -> savedPost.shortId == post.shortId }
   }
 
   fun toggleSave(post: SavedPost) {

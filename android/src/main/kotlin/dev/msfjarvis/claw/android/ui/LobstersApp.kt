@@ -47,13 +47,9 @@ import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 import dev.msfjarvis.claw.common.user.UserProfile
 import kotlinx.coroutines.launch
-import soup.compose.material.motion.materialElevationScaleIn
-import soup.compose.material.motion.materialElevationScaleOut
 import soup.compose.material.motion.navigation.MaterialMotionNavHost
 import soup.compose.material.motion.navigation.composable
 import soup.compose.material.motion.navigation.rememberMaterialMotionNavController
-import soup.compose.material.motion.translateXIn
-import soup.compose.material.motion.translateXOut
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 @Composable
@@ -198,10 +194,6 @@ fun LobstersApp(
               navDeepLink { uriPattern = "$uri/s/{postId}/.*" },
               navDeepLink { uriPattern = "$uri/s/{postId}" },
             ),
-          enterMotionSpec = { translateXIn { it } },
-          exitMotionSpec = { materialElevationScaleOut() },
-          popEnterMotionSpec = { materialElevationScaleIn() },
-          popExitMotionSpec = { translateXOut { it } },
         ) { backStackEntry ->
           val postId = requireNotNull(backStackEntry.arguments?.getString("postId"))
           setWebUri("https://lobste.rs/s/$postId")
@@ -216,10 +208,6 @@ fun LobstersApp(
           route = Destinations.User.getRoute("{username}"),
           arguments = listOf(navArgument("username") { type = NavType.StringType }),
           deepLinks = listOf(navDeepLink { uriPattern = "$uri/u/{username}" }),
-          enterMotionSpec = { translateXIn { it } },
-          exitMotionSpec = { materialElevationScaleOut() },
-          popEnterMotionSpec = { materialElevationScaleIn() },
-          popExitMotionSpec = { translateXOut { it } },
         ) { backStackEntry ->
           val username = requireNotNull(backStackEntry.arguments?.getString("username"))
           UserProfile(

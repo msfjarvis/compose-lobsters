@@ -43,6 +43,6 @@ dependencies {
   implementation(libs.sqldelight.extensions.coroutines)
   implementation(libs.kotlin.coroutines.core)
   implementation(libs.kotlinx.serialization.json)
-  implementation(libs.retrofit.kotlinxSerializationConverter) { isTransitive = false }
+  implementation(libs.retrofit.kotlinxSerializationConverter)
   implementation(libs.androidx.work.runtime.ktx)
 }

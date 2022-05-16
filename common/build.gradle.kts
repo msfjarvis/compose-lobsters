@@ -10,7 +10,7 @@ plugins {
   alias(libs.plugins.compose)
   id("dev.msfjarvis.claw.kotlin-common")
   id("dev.msfjarvis.claw.android-library")
-  id("org.pushing-pixels.aurora.tools.svgtranscoder.gradle")
+  alias(libs.plugins.aurora.svg.transcoder)
 }
 
 val transcodeTask =

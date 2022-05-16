@@ -8,11 +8,28 @@ rootProject.name = "build-logic"
 
 dependencyResolutionManagement {
   repositories {
-    google()
-    mavenCentral()
-    gradlePluginPortal() {
-      content { includeModule("com.github.ben-manes", "gradle-versions-plugin") }
+    exclusiveContent {
+      forRepository(::google)
+      filter {
+        includeGroup("androidx.databinding")
+        includeGroup("com.android")
+        includeGroup("com.android.tools")
+        includeGroup("com.android.tools.analytics-library")
+        includeGroup("com.android.tools.build")
+        includeGroup("com.android.tools.build.jetifier")
+        includeGroup("com.android.databinding")
+        includeGroup("com.android.tools.ddms")
+        includeGroup("com.android.tools.layoutlib")
+        includeGroup("com.android.tools.lint")
+        includeGroup("com.android.tools.utp")
+        includeGroup("com.google.testing.platform")
+      }
     }
+    exclusiveContent {
+      forRepository(::gradlePluginPortal)
+      filter { includeModule("com.github.ben-manes", "gradle-versions-plugin") }
+    }
+    mavenCentral()
   }
   versionCatalogs { create("libs") { from(files("../gradle/libs.versions.toml")) } }
 }

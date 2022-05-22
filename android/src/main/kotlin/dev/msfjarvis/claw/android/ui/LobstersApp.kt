@@ -86,12 +86,13 @@ fun LobstersApp(
   }
 
   LaunchedEffect(hottestListState) {
-    snapshotFlow { hottestListState.firstVisibleItemIndex }.collect { index ->
-      // If only 10 posts are left, load new posts
-      if (hottestPosts.isNotEmpty() && index > hottestPosts.size - 10) {
-        viewModel.loadHottestPosts()
+    snapshotFlow { hottestListState.firstVisibleItemIndex }
+      .collect { index ->
+        // If only 10 posts are left, load new posts
+        if (hottestPosts.isNotEmpty() && index > hottestPosts.size - 10) {
+          viewModel.loadHottestPosts()
+        }
       }
-    }
   }
 
   LaunchedEffect(newestPostsState) {
@@ -101,12 +102,13 @@ fun LobstersApp(
   }
 
   LaunchedEffect(newestListState) {
-    snapshotFlow { newestListState.firstVisibleItemIndex }.collect { index ->
-      // If only 10 posts are left, load new posts
-      if (newestPosts.isNotEmpty() && index > newestPosts.size - 10) {
-        viewModel.loadNewestPosts()
+    snapshotFlow { newestListState.firstVisibleItemIndex }
+      .collect { index ->
+        // If only 10 posts are left, load new posts
+        if (newestPosts.isNotEmpty() && index > newestPosts.size - 10) {
+          viewModel.loadNewestPosts()
+        }
       }
-    }
   }
 
   LobstersTheme(
@@ -194,7 +196,8 @@ fun LobstersApp(
           setWebUri("https://lobste.rs/")
           NetworkPosts(
             items = hottestPosts,
-            isRefreshing = hottestPostsState is LobstersPagingResult.Loading && hottestPosts.isEmpty(),
+            isRefreshing =
+              hottestPostsState is LobstersPagingResult.Loading && hottestPosts.isEmpty(),
             listState = hottestListState,
             isPostSaved = viewModel::isPostSaved,
             reloadPosts = viewModel::refreshHottestPosts,
@@ -208,7 +211,8 @@ fun LobstersApp(
           setWebUri("https://lobste.rs/")
           NetworkPosts(
             items = newestPosts,
-            isRefreshing = newestPostsState is LobstersPagingResult.Loading && newestPosts.isEmpty(),
+            isRefreshing =
+              newestPostsState is LobstersPagingResult.Loading && newestPosts.isEmpty(),
             listState = newestListState,
             isPostSaved = viewModel::isPostSaved,
             reloadPosts = viewModel::refreshNewestPosts,

@@ -4,13 +4,30 @@
  */
 @file:Suppress("UnstableApiUsage")
 
+import com.android.build.api.variant.ApplicationAndroidComponentsExtension
+import com.android.build.api.variant.LibraryAndroidComponentsExtension
 import com.android.build.gradle.TestedExtension
+import org.gradle.kotlin.dsl.findByType
 
 extensions.configure<TestedExtension> {
   compileSdkVersion = "android-Tiramisu"
   defaultConfig {
     minSdk = 26
     targetSdkPreview = "Tiramisu"
+  }
+
+  extensions.findByType<LibraryAndroidComponentsExtension>()?.run {
+    beforeVariants(selector().withBuildType("release")) {
+      it.enableUnitTest = false
+      it.enableAndroidTest = false
+    }
+  }
+
+  extensions.findByType<ApplicationAndroidComponentsExtension>()?.run {
+    beforeVariants(selector().withBuildType("release")) {
+      it.enableUnitTest = false
+      it.enableAndroidTest = false
+    }
   }
 
   sourceSets {

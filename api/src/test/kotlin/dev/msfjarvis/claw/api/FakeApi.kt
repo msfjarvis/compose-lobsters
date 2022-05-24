@@ -2,6 +2,7 @@ package dev.msfjarvis.claw.api
 
 import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.LobstersPostDetails
+import dev.msfjarvis.claw.model.User
 import dev.msfjarvis.claw.util.TestUtils.getJson
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json

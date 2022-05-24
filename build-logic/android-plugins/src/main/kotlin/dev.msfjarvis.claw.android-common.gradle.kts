@@ -10,10 +10,10 @@ import com.android.build.gradle.TestedExtension
 import org.gradle.kotlin.dsl.findByType
 
 extensions.configure<TestedExtension> {
-  compileSdkVersion = "android-Tiramisu"
+  setCompileSdkVersion(31)
   defaultConfig {
     minSdk = 26
-    targetSdkPreview = "Tiramisu"
+    targetSdk = 31
   }
 
   extensions.findByType<LibraryAndroidComponentsExtension>()?.run {

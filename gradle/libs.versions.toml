@@ -16,10 +16,10 @@ workmanager = "2.8.0-alpha02"
 [libraries]
 accompanist-swiperefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "accompanist" }
 accompanist-sysuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
-androidx-activity-compose = "androidx.activity:activity-compose:1.6.0-alpha03"
-androidx-appcompat = "androidx.appcompat:appcompat:1.6.0-alpha03"
+androidx-activity-compose = "androidx.activity:activity-compose:1.4.0"
+androidx-appcompat = "androidx.appcompat:appcompat:1.4.0"
 androidx-browser = "androidx.browser:browser:1.4.0"
-androidx-core-ktx = "androidx.core:core-ktx:1.9.0-alpha03"
+androidx-core-ktx = "androidx.core:core-ktx:1.7.0"
 androidx-core-splashscreen = "androidx.core:core-splashscreen:1.0.0-beta02"
 androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hilt" }
 androidx-hilt-work = { module = "androidx.hilt:hilt-work", version.ref = "hilt" }

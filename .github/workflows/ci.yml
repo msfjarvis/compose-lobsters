@@ -11,7 +11,7 @@ on:
       - main
 
 jobs:
-  run-unit-tests:
+  check:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repository
@@ -30,7 +30,7 @@ jobs:
     - name: Run unit tests
       uses: gradle/gradle-build-action@v2.1.6
       with:
-        arguments: testDebug --stacktrace --no-configuration-cache
+        arguments: check --stacktrace --no-configuration-cache
 
     - name: (Fail-only) Upload test report
       if: failure()
@@ -39,31 +39,10 @@ jobs:
           name: Test report
           path: android/build/reports
 
-  stylecheck:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3.0.2
-
-    - name: Set up JDK
-      uses: actions/setup-java@v3.3.0
-      with:
-        distribution: 'zulu'
-        java-version: '17'
-        cache: 'gradle'
-
-    - name: Copy CI gradle.properties
-      run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
-
-    - name: Check codestyle with Spotless
-      uses: gradle/gradle-build-action@v2.1.6
-      with:
-        arguments: spotlessCheck --no-configuration-cache
-
   deploy-release-snapshot:
     runs-on: ubuntu-latest
     if: "github.event_name == 'push' && github.event.ref == 'refs/heads/main'"
-    needs: [ "run-unit-tests", "stylecheck" ]
+    needs: [ "check" ]
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3.0.2

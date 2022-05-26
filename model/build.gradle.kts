@@ -16,4 +16,7 @@ kotlin {
   }
 }
 
-android { sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml") }
+android {
+  namespace = "dev.msfjarvis.claw.model"
+  sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+}

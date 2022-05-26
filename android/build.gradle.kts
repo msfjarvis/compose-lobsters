@@ -11,6 +11,7 @@ plugins {
 }
 
 android {
+  namespace = "dev.msfjarvis.claw.android"
   defaultConfig {
     applicationId = "dev.msfjarvis.claw.android"
     versionCode = 1

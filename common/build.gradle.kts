@@ -57,6 +57,7 @@ kotlin {
 
 android {
   buildFeatures { androidResources = true }
+  namespace = "dev.msfjarvis.claw.common"
   sourceSets["main"].apply {
     manifest.srcFile("src/androidMain/AndroidManifest.xml")
     res.srcDirs("src/commonMain/resources")

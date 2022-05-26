@@ -26,7 +26,10 @@ kotlin {
   }
 }
 
-android { sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml") }
+android {
+  namespace = "dev.msfjarvis.claw.database"
+  sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+}
 
 sqldelight {
   database("LobstersDatabase") {

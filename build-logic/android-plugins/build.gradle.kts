@@ -17,7 +17,27 @@ afterEvaluate {
   }
 
   tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions { jvmTarget = JavaVersion.VERSION_11.toString() }
+    kotlinOptions {
+      jvmTarget = JavaVersion.VERSION_11.toString()
+      freeCompilerArgs = freeCompilerArgs + "-Xsam-conversions=class"
+    }
+  }
+}
+
+gradlePlugin {
+  plugins {
+    register("android-application") {
+      id = "dev.msfjarvis.claw.android-application"
+      implementationClass = "dev.msfjarvis.aps.gradle.ApplicationPlugin"
+    }
+    register("android-library") {
+      id = "dev.msfjarvis.claw.android-library"
+      implementationClass = "dev.msfjarvis.aps.gradle.LibraryPlugin"
+    }
+    register("rename-artifacts") {
+      id = "dev.msfjarvis.claw.rename-artifacts"
+      implementationClass = "dev.msfjarvis.aps.gradle.RenameArtifactsPlugin"
+    }
   }
 }
 

@@ -207,7 +207,9 @@ fun TagRow(
     modifier = modifier,
     mainAxisSpacing = 8.dp,
     crossAxisSpacing = 8.dp,
-  ) { tags.forEach { tag -> TagText(tag) } }
+  ) {
+    tags.forEach { tag -> TagText(tag) }
+  }
 }
 
 @Composable

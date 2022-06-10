@@ -89,17 +89,23 @@ fun LobstersApp(
           label = "Hottest",
           route = Destinations.Hottest.getRoute(),
           icon = ClawIcons.Flame,
-        ) { coroutineScope.launch { hottestListState.animateScrollToItem(index = 0) } },
+        ) {
+          coroutineScope.launch { hottestListState.animateScrollToItem(index = 0) }
+        },
         NavigationItem(
           label = "Newest",
           route = Destinations.Newest.getRoute(),
           icon = ClawIcons.New,
-        ) { coroutineScope.launch { newestListState.animateScrollToItem(index = 0) } },
+        ) {
+          coroutineScope.launch { newestListState.animateScrollToItem(index = 0) }
+        },
         NavigationItem(
           label = "Saved",
           route = Destinations.Saved.getRoute(),
           icon = ClawIcons.HeartBorder,
-        ) { coroutineScope.launch { savedListState.animateScrollToItem(index = 0) } },
+        ) {
+          coroutineScope.launch { savedListState.animateScrollToItem(index = 0) }
+        },
       )
 
     SideEffect { systemUiController.setStatusBarColor(color = systemBarsColor) }

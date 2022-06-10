@@ -3,13 +3,12 @@
  * SPDX-License-Identifier: GPL-3.0-only
  */
 
-package signing
+package dev.msfjarvis.aps.gradle.signing
 
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
 import java.util.Properties
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.provideDelegate
 
 private const val KEYSTORE_CONFIG_PATH = "keystore.properties"
 

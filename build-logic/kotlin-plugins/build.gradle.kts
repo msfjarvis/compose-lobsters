@@ -17,7 +17,35 @@ afterEvaluate {
   }
 
   tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions { jvmTarget = JavaVersion.VERSION_11.toString() }
+    kotlinOptions {
+      jvmTarget = JavaVersion.VERSION_11.toString()
+      freeCompilerArgs = freeCompilerArgs + "-Xsam-conversions=class"
+    }
+  }
+}
+
+gradlePlugin {
+  plugins {
+    register("kotlin-android") {
+      id = "dev.msfjarvis.claw.kotlin-android"
+      implementationClass = "dev.msfjarvis.aps.gradle.KotlinAndroidPlugin"
+    }
+    register("kotlin-common") {
+      id = "dev.msfjarvis.claw.kotlin-common"
+      implementationClass = "dev.msfjarvis.aps.gradle.KotlinCommonPlugin"
+    }
+    register("kotlin-kapt") {
+      id = "dev.msfjarvis.claw.kotlin-kapt"
+      implementationClass = "dev.msfjarvis.aps.gradle.KotlinKaptPlugin"
+    }
+    register("kotlin-library") {
+      id = "dev.msfjarvis.claw.kotlin-library"
+      implementationClass = "dev.msfjarvis.aps.gradle.KotlinLibraryPlugin"
+    }
+    register("spotless") {
+      id = "dev.msfjarvis.claw.spotless"
+      implementationClass = "dev.msfjarvis.aps.gradle.SpotlessPlugin"
+    }
   }
 }
 
@@ -26,6 +54,4 @@ dependencies {
   implementation(libs.build.kotlin.gradle)
   implementation(libs.build.kotlin.serialization)
   implementation(libs.build.spotless)
-  implementation(libs.build.vcu)
-  implementation(libs.build.versions)
 }

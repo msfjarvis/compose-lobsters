@@ -48,7 +48,9 @@ fun ThemedRichText(
   CompositionLocalProvider(
     LocalTextStyle provides MaterialTheme.typography.bodyLarge,
     LocalContentColor provides MaterialTheme.colorScheme.onBackground,
-  ) { MaterialRichText(modifier) { content() } }
+  ) {
+    MaterialRichText(modifier) { content() }
+  }
 }
 
 @Composable

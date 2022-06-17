@@ -10,7 +10,7 @@ material_motion = "0.8.4"
 retrofit = "2.9.0"
 richtext = "0.12.0"
 serialization = "1.3.2"
-sqldelight = "2.0.0-alpha02"
+sqldelight = "2.0.0-alpha03"
 workmanager = "2.8.0-alpha02"
 
 [libraries]

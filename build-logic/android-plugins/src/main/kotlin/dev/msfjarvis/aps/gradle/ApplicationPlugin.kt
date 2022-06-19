@@ -31,10 +31,10 @@ class ApplicationPlugin : Plugin<Project> {
 
       buildTypes {
         named("release") {
-          isMinifyEnabled = false
+          isMinifyEnabled = true
           setProguardFiles(
             listOf(
-              "proguard-android-optimize.txt",
+              "proguard-android-optimize.pro",
               "proguard-rules.pro",
               "proguard-rules-missing-classes.pro",
             )

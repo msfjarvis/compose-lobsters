@@ -4,8 +4,6 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -129,7 +127,7 @@ fun LobstersApp(
             if (navItems.none { it.route == currentDestination }) {
               IconButton(onClick = { navController.popBackStack() }) {
                 Icon(
-                  imageVector = Icons.Filled.ArrowBack,
+                  painter = ClawIcons.ArrowBack,
                   contentDescription = "Go back to previous screen",
                 )
               }

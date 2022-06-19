@@ -29,7 +29,6 @@ dependencies {
   implementation(libs.accompanist.swiperefresh)
   implementation(libs.accompanist.sysuicontroller)
   implementation(libs.androidx.activity.compose)
-  implementation(libs.androidx.core.ktx)
   implementation(libs.androidx.core.splashscreen)
   implementation(libs.androidx.hilt.work)
   implementation(libs.androidx.lifecycle.compose)

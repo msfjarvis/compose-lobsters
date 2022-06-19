@@ -31,7 +31,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.halilibo.richtext.markdown.Markdown
 import com.halilibo.richtext.ui.RichTextScope
-import com.halilibo.richtext.ui.material.MaterialRichText
+import com.halilibo.richtext.ui.material3.Material3RichText
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.posts.PostTitle
 import dev.msfjarvis.claw.common.posts.Submitter
@@ -49,7 +49,7 @@ fun ThemedRichText(
     LocalTextStyle provides MaterialTheme.typography.bodyLarge,
     LocalContentColor provides MaterialTheme.colorScheme.onBackground,
   ) {
-    MaterialRichText(modifier) { content() }
+    Material3RichText(modifier) { content() }
   }
 }
 

@@ -37,7 +37,7 @@ build-spotless = "com.diffplug.spotless:spotless-plugin-gradle:6.7.2"
 coil = { module = "io.coil-kt:coil", version.ref = "coil" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 compose-richtext-markdown = { module = "com.halilibo.compose-richtext:richtext-commonmark", version.ref = "richtext" }
-compose-richtext-material = { module = "com.halilibo.compose-richtext:richtext-ui-material", version.ref = "richtext" }
+compose-richtext-material3 = { module = "com.halilibo.compose-richtext:richtext-ui-material3", version.ref = "richtext" }
 compose-richtext-ui = { module = "com.halilibo.compose-richtext:richtext-ui", version.ref = "richtext" }
 copydown = "io.github.furstenheim:copy_down:1.0"
 dagger-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "dagger" }

@@ -37,7 +37,7 @@ kotlin {
       api(libs.napier)
       implementation(libs.kotlin.coroutines.core)
       implementation(libs.compose.richtext.markdown)
-      implementation(libs.compose.richtext.material)
+      implementation(libs.compose.richtext.material3)
       implementation(libs.compose.richtext.ui)
     }
     kotlin.srcDir("src/gen/kotlin/")

@@ -15,7 +15,7 @@ class ApplicationPlugin : Plugin<Project> {
 
   override fun apply(project: Project) {
     project.pluginManager.apply(AppPlugin::class)
-    AndroidCommon.configure(project)
+    project.pluginManager.apply(AndroidCommonPlugin::class)
     project.extensions.getByType<BaseAppModuleExtension>().run {
       adbOptions.installOptions("--user 0")
 

@@ -10,6 +10,6 @@ class LibraryPlugin : Plugin<Project> {
 
   override fun apply(project: Project) {
     project.pluginManager.apply(LibraryPlugin::class)
-    AndroidCommon.configure(project)
+    project.pluginManager.apply(AndroidCommonPlugin::class)
   }
 }

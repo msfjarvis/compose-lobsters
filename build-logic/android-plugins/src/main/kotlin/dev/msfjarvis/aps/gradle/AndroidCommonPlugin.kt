@@ -1,14 +1,16 @@
 package dev.msfjarvis.aps.gradle
 
+import com.android.build.api.dsl.TestExtension
 import com.android.build.gradle.TestedExtension
 import org.gradle.api.JavaVersion
+import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.findByType
 
 @Suppress("UnstableApiUsage")
-object AndroidCommon {
-  fun configure(project: Project) {
-    project.extensions.configure<TestedExtension> {
+class AndroidCommonPlugin : Plugin<Project> {
+  override fun apply(project: Project) {
+    project.extensions.findByType<TestedExtension>()?.run {
       setCompileSdkVersion(31)
       defaultConfig {
         minSdk = 26
@@ -30,6 +32,22 @@ object AndroidCommon {
         resources.excludes.add("**/META-INF/LGPL2.1")
       }
 
+      compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+      }
+
+      testOptions {
+        animationsDisabled = true
+        unitTests.isReturnDefaultValues = true
+      }
+    }
+    project.extensions.findByType<TestExtension>()?.run {
+      compileSdk = 31
+      defaultConfig {
+        minSdk = 26
+        targetSdk = 31
+      }
       compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11

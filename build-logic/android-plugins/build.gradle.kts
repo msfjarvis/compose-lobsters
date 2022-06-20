@@ -30,6 +30,10 @@ gradlePlugin {
       id = "dev.msfjarvis.claw.android-application"
       implementationClass = "dev.msfjarvis.aps.gradle.ApplicationPlugin"
     }
+    register("android-common") {
+      id = "dev.msfjarvis.claw.android-common"
+      implementationClass = "dev.msfjarvis.aps.gradle.AndroidCommonPlugin"
+    }
     register("android-library") {
       id = "dev.msfjarvis.claw.android-library"
       implementationClass = "dev.msfjarvis.aps.gradle.LibraryPlugin"

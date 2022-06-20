@@ -12,7 +12,6 @@
     {
       "managers": ["gradle"],
       "packagePatterns": [
-        "^com.android.tools.build",
         "^org.jetbrains.kotlin",
         "^com.google.accompanist"
       ],

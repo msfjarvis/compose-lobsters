@@ -29,7 +29,7 @@ fun ClawNavigationBar(
     NavigationBar(modifier = modifier) {
       items.forEach { navItem ->
         NavigationBarItem(
-          icon = { Icon(painter = navItem.icon, contentDescription = navItem.label) },
+          icon = { Icon(painter = navItem.icon, contentDescription = navItem.label.uppercase()) },
           label = { Text(text = navItem.label) },
           selected = navController.currentDestination?.route == navItem.route,
           onClick = {

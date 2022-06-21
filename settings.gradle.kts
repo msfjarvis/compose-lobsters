@@ -17,6 +17,7 @@ pluginManagement {
         includeGroup("com.android.tools.lint")
         includeGroup("com.android.tools.utp")
         includeGroup("com.google.testing.platform")
+        includeModule("com.android.test", "com.android.test.gradle.plugin")
       }
     }
     exclusiveContent {
@@ -43,11 +44,14 @@ dependencyResolutionManagement {
         includeGroup("com.android.tools.analytics-library")
         includeGroup("com.android.tools.build")
         includeGroup("com.android.tools.ddms")
+        includeGroup("com.android.tools.emulator")
         includeGroup("com.android.tools.external.com-intellij")
         includeGroup("com.android.tools.external.org-jetbrains")
         includeGroup("com.android.tools.layoutlib")
         includeGroup("com.android.tools.lint")
+        includeGroup("com.android.tools.utp")
         includeGroup("com.google.android.gms")
+        includeGroup("com.google.testing.platform")
         includeModule("com.google.android.material", "material")
         includeGroupByRegex("androidx.*")
       }
@@ -70,6 +74,8 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(":android")
 
 include(":api")
+
+include(":benchmark")
 
 include(":common")
 

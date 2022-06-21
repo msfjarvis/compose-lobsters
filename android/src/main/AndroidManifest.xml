@@ -10,6 +10,9 @@
     android:roundIcon="@mipmap/ic_launcher"
     android:supportsRtl="true"
     android:theme="@style/Theme.Claw.SplashScreen">
+    <profileable
+        android:shell="true"
+        tools:targetApi="29" />
     <activity
       android:name=".MainActivity"
       android:configChanges="colorMode|density|fontScale|keyboard|keyboardHidden|layoutDirection|locale|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"

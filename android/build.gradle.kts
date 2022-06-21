@@ -17,6 +17,20 @@ android {
     versionCode = 1
     versionName = "1.0"
   }
+  buildTypes {
+    create("benchmark") {
+      signingConfig = signingConfigs.getByName("debug")
+      matchingFallbacks += listOf("release")
+      isDebuggable = false
+      setProguardFiles(
+        listOf(
+          "proguard-android-optimize.pro",
+          "proguard-rules.pro",
+          "proguard-rules-missing-classes.pro",
+        )
+      )
+    }
+  }
 }
 
 dependencies {

@@ -5,17 +5,33 @@
   ],
   "packageRules": [
     {
-      "matchPackagePatterns": ["*"],
+      "matchPackagePatterns": [
+        "*"
+      ],
       "automerge": true,
       "automergeType": "branch"
     },
     {
-      "managers": ["gradle"],
+      "managers": [
+        "gradle"
+      ],
       "packagePatterns": [
         "^org.jetbrains.kotlin",
         "^com.google.accompanist"
       ],
       "enabled": false
+    }
+  ],
+  "regexManagers": [
+    {
+      "fileMatch": [
+        ".kt$"
+      ],
+      "matchStrings": [
+        "KTFMT_VERSION = \"(?<currentValue>.*)\""
+      ],
+      "datasourceTemplate": "maven",
+      "depNameTemplate": "com.facebook:ktfmt"
     }
   ]
 }

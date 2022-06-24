@@ -24,9 +24,6 @@ jobs:
         java-version: '17'
         cache: 'gradle'
 
-    - name: Copy CI gradle.properties
-      run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
-
     - name: Run unit tests
       uses: gradle/gradle-build-action@v2.2.1
       with:
@@ -53,9 +50,6 @@ jobs:
         distribution: 'zulu'
         java-version: '17'
         cache: 'gradle'
-
-    - name: Copy CI gradle.properties
-      run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
 
     - name: Decrypt secrets
       run: scripts/signing-setup.sh "$ENCRYPT_KEY"

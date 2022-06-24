@@ -15,10 +15,6 @@ import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import dev.msfjarvis.claw.common.NetworkState
 import dev.msfjarvis.claw.common.NetworkState.Loading
@@ -26,6 +22,7 @@ import dev.msfjarvis.claw.common.NetworkState.Success
 import dev.msfjarvis.claw.common.ui.NetworkError
 import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.common.ui.ProgressBar
+import dev.msfjarvis.claw.common.ui.ThemedRichText
 import dev.msfjarvis.claw.model.User
 
 @Suppress("UNCHECKED_CAST")
@@ -67,19 +64,11 @@ private fun UserProfileInternal(
         text = user.username,
         style = MaterialTheme.typography.displaySmall,
       )
-      Text(
+      ThemedRichText(
         text = user.about,
-        style = MaterialTheme.typography.bodyLarge,
       )
-      Text(
-        text =
-          buildAnnotatedString {
-            append("Invited by ")
-            withStyle(style = SpanStyle(textDecoration = TextDecoration.Underline)) {
-              append(user.invitedBy)
-            }
-          },
-        style = MaterialTheme.typography.bodyLarge,
+      ThemedRichText(
+        text = "Invited by [${user.invitedBy}](https://lobste.rs/u/${user.invitedBy})",
       )
     }
   }

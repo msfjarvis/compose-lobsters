@@ -13,14 +13,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.LocalContentColor
-import androidx.compose.material.LocalTextStyle
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,29 +26,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.halilibo.richtext.markdown.Markdown
-import com.halilibo.richtext.ui.RichTextScope
-import com.halilibo.richtext.ui.material3.Material3RichText
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.posts.PostTitle
 import dev.msfjarvis.claw.common.posts.Submitter
 import dev.msfjarvis.claw.common.posts.TagRow
 import dev.msfjarvis.claw.common.res.ClawIcons
+import dev.msfjarvis.claw.common.ui.ThemedRichText
 import dev.msfjarvis.claw.model.Comment
 import dev.msfjarvis.claw.model.LobstersPostDetails
-
-@Composable
-fun ThemedRichText(
-  modifier: Modifier = Modifier,
-  content: @Composable RichTextScope.() -> Unit,
-) {
-  CompositionLocalProvider(
-    LocalTextStyle provides MaterialTheme.typography.bodyLarge,
-    LocalContentColor provides MaterialTheme.colorScheme.onBackground,
-  ) {
-    Material3RichText(modifier) { content() }
-  }
-}
 
 @Composable
 fun CommentsHeader(
@@ -80,7 +62,7 @@ fun CommentsHeader(
       }
 
       if (postDetails.description.isNotBlank()) {
-        ThemedRichText { Markdown(htmlConverter.convertHTMLToMarkdown(postDetails.description)) }
+        ThemedRichText(htmlConverter.convertHTMLToMarkdown(postDetails.description))
         Spacer(Modifier.height(4.dp))
       }
       Submitter(
@@ -149,9 +131,10 @@ fun CommentEntry(
       )
       AnimatedContent(targetState = expanded) { expandedState ->
         if (expandedState) {
-          ThemedRichText(modifier = Modifier.padding(top = 8.dp)) {
-            Markdown(htmlConverter.convertHTMLToMarkdown(comment.comment))
-          }
+          ThemedRichText(
+            text = htmlConverter.convertHTMLToMarkdown(comment.comment),
+            modifier = Modifier.padding(top = 8.dp)
+          )
         }
       }
     }

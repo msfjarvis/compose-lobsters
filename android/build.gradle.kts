@@ -22,13 +22,6 @@ android {
       signingConfig = signingConfigs.getByName("debug")
       matchingFallbacks += listOf("release")
       isDebuggable = false
-      setProguardFiles(
-        listOf(
-          "proguard-android-optimize.pro",
-          "proguard-rules.pro",
-          "proguard-rules-missing-classes.pro",
-        )
-      )
     }
   }
 }

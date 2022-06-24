@@ -29,6 +29,11 @@ class BaselineProfileBenchmark {
   }
 
   @Test
+  fun startupBaselineFullyCompiled() {
+    startup(CompilationMode.Full())
+  }
+
+  @Test
   fun startupBaselineProfile() {
     startup(CompilationMode.Partial(baselineProfileMode = BaselineProfileMode.Require))
   }

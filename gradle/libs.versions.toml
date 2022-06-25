@@ -73,3 +73,4 @@ compose = "org.jetbrains.compose:1.1.1"
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 aurora-svg-transcoder = { id = "org.pushing-pixels.aurora.tools.svgtranscoder.gradle", version.ref = "aurora" }
+paparazzi = { id = "app.cash.paparazzi", version = "1.0.0" }

@@ -84,3 +84,5 @@ include(":database")
 include(":desktop")
 
 include(":model")
+
+include(":paparazzi-tests")

@@ -16,6 +16,7 @@ android {
 dependencies {
   testImplementation(kotlin("test-junit"))
   testImplementation(libs.kotlinx.datetime)
+  testImplementation(libs.testparameterinjector)
   testImplementation(projects.common)
 }
 

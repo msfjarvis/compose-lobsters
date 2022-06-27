@@ -15,10 +15,8 @@ android {
 
 dependencies {
   testImplementation(kotlin("test-junit"))
-  testImplementation(projects.android)
+  testImplementation(libs.kotlinx.datetime)
   testImplementation(projects.common)
-  testImplementation(projects.model)
-  testImplementation(projects.database)
 }
 
 tasks.withType<Test>().configureEach {

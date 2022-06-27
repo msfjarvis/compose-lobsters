@@ -48,6 +48,7 @@ dependencies {
   implementation(libs.material.motion.navigation)
   implementation(libs.sqldelight.extensions.coroutines)
   implementation(libs.kotlin.coroutines.core)
+  implementation(libs.kotlinx.datetime)
   implementation(libs.kotlinx.serialization.json)
   implementation(libs.retrofit.kotlinxSerializationConverter)
   implementation(libs.androidx.work.runtime.ktx)

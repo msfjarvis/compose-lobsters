@@ -1,4 +1,4 @@
-package dev.msfjarvis.claw.android.ui.decorations
+package dev.msfjarvis.claw.common.ui.decorations
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -9,11 +9,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.capitalize
+import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.unit.dp
-import dev.msfjarvis.claw.android.ui.surfaceColorAtNavigationBarElevation
-import java.time.Month
-import java.time.format.TextStyle as JTextStyle
-import java.util.Locale
+import dev.msfjarvis.claw.common.ui.surfaceColorAtNavigationBarElevation
+import kotlinx.datetime.Month
 
 @Composable
 fun MonthHeader(month: Month) {
@@ -23,7 +23,7 @@ fun MonthHeader(month: Month) {
       .background(MaterialTheme.colorScheme.surfaceColorAtNavigationBarElevation())
   ) {
     Text(
-      text = month.getDisplayName(JTextStyle.FULL, Locale.getDefault()),
+      text = month.name.lowercase().capitalize(Locale.current),
       style = MaterialTheme.typography.headlineSmall,
       modifier = Modifier.padding(horizontal = 12.dp, vertical = 12.dp),
     )

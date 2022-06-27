@@ -36,6 +36,7 @@ kotlin {
       api(projects.model)
       api(libs.napier)
       implementation(libs.kotlin.coroutines.core)
+      implementation(libs.kotlinx.datetime)
       implementation(libs.compose.richtext.markdown)
       implementation(libs.compose.richtext.material3)
       implementation(libs.compose.richtext.ui)

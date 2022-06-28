@@ -39,6 +39,7 @@ aurora-component = { module = "org.pushing-pixels:aurora-component", version.ref
 aurora-theming = { module = "org.pushing-pixels:aurora-theming", version.ref = "aurora" }
 aurora-window = { module = "org.pushing-pixels:aurora-window", version.ref = "aurora" }
 build-agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }
+build-cachefix = "org.gradle.android.cache-fix:org.gradle.android.cache-fix.gradle.plugin:2.5.5"
 build-kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 build-kotlin-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
 build-spotless = "com.diffplug.spotless:spotless-plugin-gradle:6.7.2"

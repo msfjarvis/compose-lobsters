@@ -45,4 +45,7 @@ gradlePlugin {
   }
 }
 
-dependencies { implementation(libs.build.agp) }
+dependencies {
+  implementation(libs.build.agp)
+  implementation(libs.build.cachefix)
+}

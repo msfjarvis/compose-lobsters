@@ -2,14 +2,17 @@ package dev.msfjarvis.aps.gradle
 
 import com.android.build.api.dsl.TestExtension
 import com.android.build.gradle.TestedExtension
+import org.gradle.android.AndroidCacheFixPlugin
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.findByType
 
 @Suppress("UnstableApiUsage")
 class AndroidCommonPlugin : Plugin<Project> {
   override fun apply(project: Project) {
+    project.pluginManager.apply(AndroidCacheFixPlugin::class)
     project.extensions.findByType<TestedExtension>()?.run {
       setCompileSdkVersion(31)
       defaultConfig {

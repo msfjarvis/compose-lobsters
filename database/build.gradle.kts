@@ -10,10 +10,7 @@ plugins {
 kotlin {
   android()
   jvm("desktop")
-  sourceSets["androidMain"].apply {
-    dependencies { implementation(libs.sqldelight.androidDriver) }
-    dependsOn(sourceSets["androidAndroidTestRelease"])
-  }
+  sourceSets["androidMain"].apply { dependencies { implementation(libs.sqldelight.androidDriver) } }
   sourceSets["commonMain"].apply {
     dependencies { implementation(libs.sqldelight.primitiveAdapters) }
   }

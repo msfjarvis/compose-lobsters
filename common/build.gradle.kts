@@ -48,7 +48,6 @@ kotlin {
       implementation(libs.androidx.browser)
       implementation(libs.coil.compose)
     }
-    dependsOn(sourceSets["androidAndroidTestRelease"])
   }
   sourceSets["desktopMain"].apply {
     resources.srcDir("src/androidMain/res/drawable/")

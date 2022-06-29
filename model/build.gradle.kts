@@ -10,7 +10,6 @@ plugins {
 kotlin {
   android()
   jvm()
-  sourceSets["androidMain"].apply { dependsOn(sourceSets["androidAndroidTestRelease"]) }
   sourceSets["commonMain"].apply {
     dependencies { implementation(libs.kotlinx.serialization.core) }
   }

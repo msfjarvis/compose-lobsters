@@ -16,8 +16,6 @@ class MonthHeaderTest {
 
   @Test
   fun verify(@TestParameter theme: Theme) {
-    paparazzi.snapshot(name = theme.name) {
-      MaterialTheme(colorScheme = theme.colors) { MonthHeader(Month.APRIL) }
-    }
+    paparazzi.snapshot { MaterialTheme(colorScheme = theme.colors) { MonthHeader(Month.APRIL) } }
   }
 }

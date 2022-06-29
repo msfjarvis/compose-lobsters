@@ -1,19 +1,12 @@
 package dev.msfjarvis.claw.android.tests
 
 import androidx.compose.material3.MaterialTheme
-import app.cash.paparazzi.Paparazzi
-import com.google.testing.junit.testparameterinjector.TestParameter
-import com.google.testing.junit.testparameterinjector.TestParameterInjector
 import dev.msfjarvis.claw.common.posts.LobstersCard
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.database.local.SavedPost
-import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 
-@RunWith(TestParameterInjector::class)
-class LobstersCardTest {
-  @get:Rule val paparazzi = Paparazzi()
+class LobstersCardTest : BasePaparazziTest() {
   companion object {
     private val post =
       SavedPost(
@@ -40,7 +33,7 @@ class LobstersCardTest {
   }
 
   @Test
-  fun verify(@TestParameter theme: Theme) {
+  fun verify() {
     paparazzi.snapshot {
       MaterialTheme(colorScheme = theme.colors) { LobstersCard(post, false, postActions) }
     }

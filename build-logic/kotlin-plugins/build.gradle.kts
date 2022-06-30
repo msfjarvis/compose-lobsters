@@ -46,6 +46,10 @@ gradlePlugin {
       id = "dev.msfjarvis.claw.spotless"
       implementationClass = "dev.msfjarvis.aps.gradle.SpotlessPlugin"
     }
+    register("versions") {
+      id = "dev.msfjarvis.claw.versions"
+      implementationClass = "dev.msfjarvis.aps.gradle.DependencyUpdatesPlugin"
+    }
   }
 }
 
@@ -54,4 +58,6 @@ dependencies {
   implementation(libs.build.kotlin.gradle)
   implementation(libs.build.kotlin.serialization)
   implementation(libs.build.spotless)
+  implementation(libs.build.vcu)
+  implementation(libs.build.versions)
 }

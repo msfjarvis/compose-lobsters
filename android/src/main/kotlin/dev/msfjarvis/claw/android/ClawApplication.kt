@@ -10,6 +10,8 @@ import coil.ImageLoaderFactory
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
 import dagger.hilt.android.HiltAndroidApp
+import io.github.aakira.napier.DebugAntilog
+import io.github.aakira.napier.Napier
 import javax.inject.Inject
 
 @HiltAndroidApp
@@ -22,6 +24,7 @@ class ClawApplication : Application(), Configuration.Provider, ImageLoaderFactor
       StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder().detectAll().penaltyLog().build())
       StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build())
     }
+    Napier.base(DebugAntilog())
   }
 
   override fun getWorkManagerConfiguration(): Configuration {

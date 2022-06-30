@@ -8,8 +8,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import dev.msfjarvis.claw.android.interceptors.NapierLoggingInterceptor
+import dev.msfjarvis.claw.android.interceptors.UserAgentInterceptor
 import dev.msfjarvis.claw.api.LobstersApi
-import io.github.aakira.napier.Napier
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import okhttp3.Cache
@@ -32,11 +33,8 @@ object ApiModule {
   fun provideClient(cache: Lazy<Cache>): OkHttpClient {
     return OkHttpClient.Builder()
       .cache(cache.get())
-      .addNetworkInterceptor { chain ->
-        val request = chain.request()
-        Napier.d(tag = "LobstersApi") { "${request.method}: ${request.url}" }
-        chain.proceed(request)
-      }
+      .addNetworkInterceptor(UserAgentInterceptor())
+      .addNetworkInterceptor(NapierLoggingInterceptor())
       .build()
   }
 

@@ -1,7 +1,6 @@
 package dev.msfjarvis.claw.android.ui
 
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -205,7 +204,7 @@ fun LobstersApp(
           CommentsPage(
             postId = postId,
             getDetails = viewModel::getPostComments,
-            modifier = Modifier.navigationBarsPadding(),
+            modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding()),
             postActions = postActions,
           )
         }
@@ -218,7 +217,7 @@ fun LobstersApp(
           UserProfile(
             username = username,
             getProfile = viewModel::getUserProfile,
-            modifier = Modifier.navigationBarsPadding(),
+            modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding()),
           )
         }
       }

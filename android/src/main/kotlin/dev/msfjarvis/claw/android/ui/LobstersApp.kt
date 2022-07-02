@@ -87,6 +87,7 @@ fun LobstersApp(
           label = "Hottest",
           route = Destinations.Hottest.getRoute(),
           icon = ClawIcons.Flame,
+          selectedIcon = ClawIcons.FlameFilled,
         ) {
           coroutineScope.launch { hottestListState.animateScrollToItem(index = 0) }
         },
@@ -94,6 +95,7 @@ fun LobstersApp(
           label = "Newest",
           route = Destinations.Newest.getRoute(),
           icon = ClawIcons.New,
+          selectedIcon = ClawIcons.NewFilled,
         ) {
           coroutineScope.launch { newestListState.animateScrollToItem(index = 0) }
         },
@@ -101,6 +103,7 @@ fun LobstersApp(
           label = "Saved",
           route = Destinations.Saved.getRoute(),
           icon = ClawIcons.HeartBorder,
+          selectedIcon = ClawIcons.Heart,
         ) {
           coroutineScope.launch { savedListState.animateScrollToItem(index = 0) }
         },

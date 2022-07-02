@@ -1,6 +1,7 @@
 package dev.msfjarvis.claw.android.ui.decorations
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.Crossfade
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -28,12 +29,20 @@ fun ClawNavigationBar(
   ) {
     NavigationBar(modifier = modifier) {
       items.forEach { navItem ->
+        val isCurrentDestination = navController.currentDestination?.route == navItem.route
         NavigationBarItem(
-          icon = { Icon(painter = navItem.icon, contentDescription = navItem.label.uppercase()) },
+          icon = {
+            Crossfade(isCurrentDestination) {
+              Icon(
+                painter = if (it) navItem.selectedIcon else navItem.icon,
+                contentDescription = navItem.label.uppercase()
+              )
+            }
+          },
           label = { Text(text = navItem.label) },
-          selected = navController.currentDestination?.route == navItem.route,
+          selected = isCurrentDestination,
           onClick = {
-            if (navController.currentDestination?.route == navItem.route) {
+            if (isCurrentDestination) {
               navItem.listStateResetCallback()
               return@NavigationBarItem
             }
@@ -52,5 +61,6 @@ class NavigationItem(
   val label: String,
   val route: String,
   val icon: Painter,
+  val selectedIcon: Painter,
   val listStateResetCallback: () -> Unit,
 )

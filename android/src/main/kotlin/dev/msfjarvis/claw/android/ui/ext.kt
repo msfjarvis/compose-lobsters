@@ -1,7 +1,9 @@
 package dev.msfjarvis.claw.android.ui
 
 import android.content.Context
+import android.content.ContextWrapper
 import android.os.Build
+import androidx.activity.ComponentActivity
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.FastOutLinearInEasing
@@ -46,6 +48,14 @@ fun slideOutAnimation(): ExitTransition {
     targetOffsetY = { fullHeight -> fullHeight },
     animationSpec = tween(durationMillis = AnimationDuration, easing = FastOutLinearInEasing),
   )
+}
+
+fun Context.getActivity(): ComponentActivity? {
+  return when (this) {
+    is ComponentActivity -> this
+    is ContextWrapper -> baseContext.getActivity()
+    else -> null
+  }
 }
 
 /**

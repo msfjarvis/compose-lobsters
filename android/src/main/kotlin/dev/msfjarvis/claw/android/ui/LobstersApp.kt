@@ -65,6 +65,7 @@ fun LobstersApp(
   val coroutineScope = rememberCoroutineScope()
   val postActions = rememberPostActions(urlLauncher, navController, viewModel)
   val currentDestination by currentNavigationDestination(navController)
+  val context = LocalContext.current
 
   val hottestPosts = viewModel.hottestPosts.collectAsLazyPagingItems()
   val newestPosts = viewModel.newestPosts.collectAsLazyPagingItems()
@@ -128,7 +129,9 @@ fun LobstersApp(
           backgroundColor = systemBarsColor,
           navigationIcon = {
             if (navItems.none { it.route == currentDestination }) {
-              IconButton(onClick = { navController.popBackStack() }) {
+              IconButton(
+                onClick = { if (!navController.popBackStack()) context.getActivity()?.finish() }
+              ) {
                 Icon(
                   painter = ClawIcons.ArrowBack,
                   contentDescription = "Go back to previous screen",

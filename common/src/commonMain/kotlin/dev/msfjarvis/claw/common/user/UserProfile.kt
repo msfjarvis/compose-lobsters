@@ -53,7 +53,7 @@ private fun UserProfileInternal(
     Column(
       horizontalAlignment = Alignment.CenterHorizontally,
       verticalArrangement = Arrangement.spacedBy(8.dp),
-      modifier = Modifier.fillMaxSize().padding(top = 8.dp),
+      modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp, vertical = 8.dp),
     ) {
       NetworkImage(
         url = "https://lobste.rs/${user.avatarUrl}",

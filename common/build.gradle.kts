@@ -28,14 +28,14 @@ kotlin {
   jvm("desktop")
   sourceSets["commonMain"].apply {
     dependencies {
-      api(compose.runtime)
       api(compose.foundation)
       api(compose.material)
       api(compose.material3)
+      api(compose.runtime)
+      api(libs.napier)
       api(projects.database)
       api(projects.model)
-      api(libs.napier)
-      implementation(libs.kotlin.coroutines.core)
+      implementation(libs.kotlinx.coroutines.core)
       implementation(libs.kotlinx.datetime)
       implementation(libs.compose.richtext.markdown)
       implementation(libs.compose.richtext.material3)

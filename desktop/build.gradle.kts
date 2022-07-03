@@ -17,17 +17,17 @@ kotlin {
   jvm { compilations.all { kotlinOptions.jvmTarget = "11" } }
   sourceSets["jvmMain"].apply {
     dependencies {
+      implementation(compose.desktop.currentOs)
       implementation(projects.api)
       implementation(projects.common)
       implementation(libs.aurora.component)
       implementation(libs.aurora.theming)
       implementation(libs.aurora.window)
-      implementation(libs.kotlin.coroutines.core)
+      implementation(libs.kotlinx.coroutines.core)
       implementation(libs.kotlinx.serialization.json)
       implementation(libs.multiplatform.paging)
       implementation(libs.retrofit.lib)
       implementation(libs.retrofit.kotlinxSerializationConverter)
-      implementation(compose.desktop.currentOs)
     }
   }
 }

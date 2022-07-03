@@ -17,7 +17,7 @@ kotlin {
   sourceSets["desktopMain"].apply { dependencies { implementation(libs.sqldelight.jvmDriver) } }
   sourceSets["desktopTest"].apply {
     dependencies {
-      implementation(libs.kotlin.coroutines.core)
+      implementation(libs.kotlinx.coroutines.core)
       implementation(kotlin("test-junit"))
     }
   }

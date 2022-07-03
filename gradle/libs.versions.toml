@@ -63,6 +63,7 @@ material_motion-core = { module = "io.github.fornewid:material-motion-compose-co
 material_motion-navigation = { module = "io.github.fornewid:material-motion-compose-navigation", version.ref = "material_motion" }
 multiplatform-paging = "io.github.kuuuurt:multiplatform-paging:0.4.7"
 napier = "io.github.aakira:napier:2.6.1"
+okhttp-loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:3.14.9"
 retrofit-kotlinxSerializationConverter = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
 retrofit-lib = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-mock = { module = "com.squareup.retrofit2:retrofit-mock", version.ref = "retrofit" }

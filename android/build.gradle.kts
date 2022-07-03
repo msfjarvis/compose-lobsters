@@ -50,6 +50,7 @@ dependencies {
   implementation(libs.kotlinx.serialization.json)
   implementation(libs.material.motion.core)
   implementation(libs.material.motion.navigation)
+  implementation(libs.okhttp.loggingInterceptor)
   implementation(libs.retrofit.kotlinxSerializationConverter)
   implementation(libs.sqldelight.extensions.coroutines)
 }

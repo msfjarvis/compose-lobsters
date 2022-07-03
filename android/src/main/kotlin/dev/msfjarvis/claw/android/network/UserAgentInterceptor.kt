@@ -1,10 +1,12 @@
-package dev.msfjarvis.claw.android.interceptors
+package dev.msfjarvis.claw.android.network
 
 import dev.msfjarvis.claw.android.BuildConfig
+import javax.inject.Inject
 import okhttp3.Interceptor
 import okhttp3.Response
 
-class UserAgentInterceptor : Interceptor {
+/** An OkHttp [Interceptor] that adds a recognizable User-Agent header to all network requests. */
+class UserAgentInterceptor @Inject constructor() : Interceptor {
   override fun intercept(chain: Interceptor.Chain): Response {
     return chain.proceed(
       chain

@@ -48,7 +48,7 @@ class MainActivity : ComponentActivity() {
       WorkManager.getInstance(this@MainActivity)
         .enqueueUniquePeriodicWork(
           "updateSavedPosts",
-          ExistingPeriodicWorkPolicy.REPLACE,
+          ExistingPeriodicWorkPolicy.KEEP,
           postUpdateWorkRequest,
         )
     }

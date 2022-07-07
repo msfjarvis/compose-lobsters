@@ -19,9 +19,8 @@ class DependencyUpdatesPlugin : Plugin<Project> {
     project.tasks.withType<DependencyUpdatesTask>().configureEach {
       rejectVersionIf {
         when (candidate.group) {
-          "com.android.application",
-          "com.android.library",
           "com.google.accompanist",
+          "com.squareup.okhttp3",
           "org.jetbrains.kotlin" -> true
           else -> isNonStable(candidate.version) && !isNonStable(currentVersion)
         }

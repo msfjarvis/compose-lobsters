@@ -1,16 +1,10 @@
 {
   "extends": [
     "config:base",
-    ":dependencyDashboard"
+    ":dependencyDashboard",
+    "github>msfjarvis/shared-workflows//renovate/automerge"
   ],
   "packageRules": [
-    {
-      "matchPackagePatterns": [
-        "*"
-      ],
-      "automerge": true,
-      "automergeType": "branch"
-    },
     {
       "managers": [
         "gradle"

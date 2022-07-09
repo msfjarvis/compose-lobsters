@@ -17,6 +17,10 @@ android {
     versionCode = 1
     versionName = "1.0"
   }
+  composeOptions {
+    useLiveLiterals = false
+    kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
+  }
   buildTypes {
     create("benchmark") {
       signingConfig = signingConfigs.getByName("debug")

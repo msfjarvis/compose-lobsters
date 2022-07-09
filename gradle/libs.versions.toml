@@ -2,7 +2,7 @@
 accompanist = "0.24.6-alpha"
 agp = "7.4.0-alpha08"
 androidXTest = "1.4.0"
-aurora = "1.1.0"
+aurora = "1.2-SNAPSHOT"
 coil = "2.1.0"
 # @keep This is used by paparazzi-tests and Renovate
 composeCompiler = "1.2.0"

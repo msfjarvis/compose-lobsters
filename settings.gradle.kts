@@ -22,7 +22,10 @@ pluginManagement {
     }
     exclusiveContent {
       forRepository { maven("https://maven.pkg.jetbrains.space/public/p/compose/dev") }
-      filter { includeGroup("org.jetbrains.compose") }
+      filter {
+        includeGroupByRegex("org\\.jetbrains\\.compose.*")
+        includeGroup("org.jetbrains.skiko")
+      }
     }
     exclusiveContent {
       forRepository(::gradlePluginPortal)
@@ -30,6 +33,13 @@ pluginManagement {
         includeModule("com.github.ben-manes", "gradle-versions-plugin")
         includeModule("org.gradle.android.cache-fix", "org.gradle.android.cache-fix.gradle.plugin")
         includeModule("gradle.plugin.org.gradle.android", "android-cache-fix-gradle-plugin")
+      }
+    }
+    exclusiveContent {
+      forRepository { maven("https://oss.sonatype.org/content/repositories/snapshots/") }
+      filter {
+        includeGroup("org.pushing-pixels")
+        includeGroup("org.pushing-pixels.aurora.tools.svgtranscoder.gradle")
       }
     }
     includeBuild("build-logic")
@@ -73,6 +83,10 @@ dependencyResolutionManagement {
         includeModule("org.gradle.android.cache-fix", "org.gradle.android.cache-fix.gradle.plugin")
         includeModule("gradle.plugin.org.gradle.android", "android-cache-fix-gradle-plugin")
       }
+    }
+    exclusiveContent {
+      forRepository { maven("https://oss.sonatype.org/content/repositories/snapshots/") }
+      filter { includeGroup("org.pushing-pixels") }
     }
     mavenCentral()
   }

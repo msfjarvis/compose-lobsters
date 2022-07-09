@@ -11,6 +11,10 @@ androidComponents { beforeVariants(selector().all()) { it.enable = it.buildType 
 android {
   namespace = "dev.msfjarvis.claw.android.tests"
   buildFeatures { compose = true }
+  composeOptions {
+    useLiveLiterals = false
+    kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
+  }
 }
 
 dependencies {

@@ -1,6 +1,6 @@
 [versions]
 accompanist = "0.24.6-alpha"
-agp = "7.4.0-alpha08"
+agp = "7.2.1"
 androidXTest = "1.4.0"
 aurora = "1.2-SNAPSHOT"
 coil = "2.1.0"

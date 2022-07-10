@@ -15,7 +15,7 @@ val AppTypography =
     displayLarge =
       TextStyle(
         fontFamily = Manrope,
-        fontWeight = FontWeight.W400,
+        fontWeight = FontWeight.Normal,
         fontSize = 57.sp,
         lineHeight = 64.sp,
         letterSpacing = (-0.25).sp,
@@ -23,7 +23,7 @@ val AppTypography =
     displayMedium =
       TextStyle(
         fontFamily = Manrope,
-        fontWeight = FontWeight.W400,
+        fontWeight = FontWeight.Normal,
         fontSize = 45.sp,
         lineHeight = 52.sp,
         letterSpacing = 0.sp,
@@ -31,7 +31,7 @@ val AppTypography =
     displaySmall =
       TextStyle(
         fontFamily = Manrope,
-        fontWeight = FontWeight.W400,
+        fontWeight = FontWeight.Normal,
         fontSize = 36.sp,
         lineHeight = 44.sp,
         letterSpacing = 0.sp,
@@ -39,7 +39,7 @@ val AppTypography =
     headlineLarge =
       TextStyle(
         fontFamily = Manrope,
-        fontWeight = FontWeight.W400,
+        fontWeight = FontWeight.Normal,
         fontSize = 32.sp,
         lineHeight = 40.sp,
         letterSpacing = 0.sp,
@@ -47,7 +47,7 @@ val AppTypography =
     headlineMedium =
       TextStyle(
         fontFamily = Manrope,
-        fontWeight = FontWeight.W400,
+        fontWeight = FontWeight.Normal,
         fontSize = 28.sp,
         lineHeight = 36.sp,
         letterSpacing = 0.sp,
@@ -55,7 +55,7 @@ val AppTypography =
     headlineSmall =
       TextStyle(
         fontFamily = Manrope,
-        fontWeight = FontWeight.W400,
+        fontWeight = FontWeight.Normal,
         fontSize = 24.sp,
         lineHeight = 32.sp,
         letterSpacing = 0.sp,
@@ -63,7 +63,7 @@ val AppTypography =
     titleLarge =
       TextStyle(
         fontFamily = Manrope,
-        fontWeight = FontWeight.W400,
+        fontWeight = FontWeight.Normal,
         fontSize = 22.sp,
         lineHeight = 28.sp,
         letterSpacing = 0.sp,
@@ -95,7 +95,7 @@ val AppTypography =
     bodyLarge =
       TextStyle(
         fontFamily = Manrope,
-        fontWeight = FontWeight.W400,
+        fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.5.sp,
@@ -103,7 +103,7 @@ val AppTypography =
     bodyMedium =
       TextStyle(
         fontFamily = Manrope,
-        fontWeight = FontWeight.W400,
+        fontWeight = FontWeight.Normal,
         fontSize = 14.sp,
         lineHeight = 20.sp,
         letterSpacing = 0.25.sp,
@@ -111,7 +111,7 @@ val AppTypography =
     bodySmall =
       TextStyle(
         fontFamily = Manrope,
-        fontWeight = FontWeight.W400,
+        fontWeight = FontWeight.Normal,
         fontSize = 12.sp,
         lineHeight = 16.sp,
         letterSpacing = 0.4.sp,

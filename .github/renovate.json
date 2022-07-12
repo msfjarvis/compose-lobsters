@@ -4,6 +4,9 @@
     ":dependencyDashboard",
     "github>msfjarvis/shared-workflows//renovate/automerge"
   ],
+  "allowedPostUpgradeCommands": [
+    "./gradlew dependencyGuardBaseline"
+  ],
   "packageRules": [
     {
       "managers": [
@@ -15,6 +18,20 @@
         "^com.google.accompanist"
       ],
       "enabled": false
+    },
+    {
+      "managers": [
+        "gradle"
+      ],
+      "postUpgradeTasks": {
+        "commands": [
+          "./gradlew dependencyGuardBaseline"
+        ],
+        "fileFilters": [
+          "**/dependencies/**"
+        ],
+        "executionMode": "update"
+      }
     }
   ],
   "regexManagers": [

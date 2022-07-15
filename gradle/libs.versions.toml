@@ -6,7 +6,7 @@ aurora = "1.2-SNAPSHOT"
 coil = "2.1.0"
 # @keep This is used by paparazzi-tests and Renovate
 composeCompiler = "1.2.0"
-coroutines = "1.6.3"
+coroutines = "1.6.4"
 dagger = "2.42"
 hilt = "1.0.0"
 kotlin = "1.7.0"

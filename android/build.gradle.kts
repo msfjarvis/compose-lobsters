@@ -8,14 +8,6 @@ plugins {
   id("dev.msfjarvis.claw.kotlin-kapt")
   alias(libs.plugins.compose)
   alias(libs.plugins.hilt)
-  alias(libs.plugins.dependencyguard)
-}
-
-dependencyGuard {
-  configuration("releaseRuntimeClasspath") {
-    modules = false
-    tree = true
-  }
 }
 
 android {

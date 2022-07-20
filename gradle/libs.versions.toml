@@ -13,7 +13,7 @@ kotlin = "1.7.0"
 material_motion = "0.8.4"
 retrofit = "2.9.0"
 richtext = "0.13.0"
-serialization = "1.3.3"
+serialization = "1.4.0-RC"
 sqldelight = "2.0.0-alpha03"
 workmanager = "2.8.0-alpha02"
 

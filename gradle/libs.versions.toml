@@ -78,7 +78,7 @@ testparameterinjector = "com.google.testparameterinjector:test-parameter-injecto
 [plugins]
 android-test = { id = "com.android.test", version.ref = "agp" }
 aurora-svg-transcoder = { id = "org.pushing-pixels.aurora.tools.svgtranscoder.gradle", version.ref = "aurora" }
-compose = "org.jetbrains.compose:1.2.0-alpha01-dev748"
+compose = "org.jetbrains.compose:1.2.0-alpha01-dev750"
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
 paparazzi = "app.cash.paparazzi:1.0.0"
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }

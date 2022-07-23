@@ -12,7 +12,7 @@ class FakeApi(private val delegate: BehaviorDelegate<LobstersApi>) : LobstersApi
   private val json = Json { ignoreUnknownKeys = true }
   private val hottest: List<LobstersPost> = json.decodeFromString(getJson("hottest.json"))
   private val postDetails: LobstersPostDetails =
-    json.decodeFromString(getJson("post_details_d9ucpe.json"))
+    json.decodeFromString(getJson("post_details_tdfoqh.json"))
   private val user: User = json.decodeFromString(getJson("msfjarvis.json"))
 
   override suspend fun getHottestPosts(page: Int): List<LobstersPost> {

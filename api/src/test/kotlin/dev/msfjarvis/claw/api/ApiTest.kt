@@ -40,7 +40,7 @@ class ApiTest {
 
   @Test
   fun `post details with comments`() = runBlocking {
-    val postDetails = api.getPostDetails("d9ucpe")
+    val postDetails = api.getPostDetails("tdfoqh")
     assertEquals(7, postDetails.comments.size)
   }
 

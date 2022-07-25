@@ -61,6 +61,7 @@ kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-c
 kotlinx-datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.4.0"
 kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "serialization" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
+ktor-client-java = "io.ktor:ktor-client-java:2.0.3"
 material_motion-core = { module = "io.github.fornewid:material-motion-compose-core", version.ref = "material_motion" }
 material_motion-navigation = { module = "io.github.fornewid:material-motion-compose-navigation", version.ref = "material_motion" }
 multiplatform-paging = "io.github.kuuuurt:multiplatform-paging:0.4.7"

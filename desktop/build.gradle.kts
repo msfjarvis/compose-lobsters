@@ -25,6 +25,7 @@ kotlin {
       implementation(libs.aurora.window)
       implementation(libs.kotlinx.coroutines.core)
       implementation(libs.kotlinx.serialization.json)
+      implementation(libs.ktor.client.java)
       implementation(libs.multiplatform.paging)
       implementation(libs.retrofit.lib)
       implementation(libs.retrofit.kotlinxSerializationConverter)

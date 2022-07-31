@@ -20,10 +20,8 @@ class ClawApplication : Application(), Configuration.Provider, ImageLoaderFactor
 
   override fun onCreate() {
     super.onCreate()
-    if (BuildConfig.DEBUG) {
-      StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder().detectAll().penaltyLog().build())
-      StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build())
-    }
+    StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder().detectAll().penaltyLog().build())
+    StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build())
     Napier.base(DebugAntilog())
   }
 

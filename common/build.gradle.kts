@@ -49,17 +49,11 @@ kotlin {
       implementation(libs.coil.compose)
     }
   }
-  sourceSets["desktopMain"].apply {
-    resources.srcDir("src/androidMain/res/drawable/")
-    dependencies { implementation(libs.kamel.image) }
-  }
+  sourceSets["desktopMain"].apply { dependencies { implementation(libs.kamel.image) } }
 }
 
 android {
   buildFeatures { androidResources = true }
   namespace = "dev.msfjarvis.claw.common"
-  sourceSets["main"].apply {
-    manifest.srcFile("src/androidMain/AndroidManifest.xml")
-    res.srcDirs("src/commonMain/resources")
-  }
+  sourceSets["main"].apply { manifest.srcFile("src/androidMain/AndroidManifest.xml") }
 }

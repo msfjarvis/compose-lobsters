@@ -7,7 +7,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.msfjarvis.claw.database.LobstersDatabase
-import dev.msfjarvis.claw.database.local.DriverFactory
 import dev.msfjarvis.claw.database.local.createDatabase
 
 @Module
@@ -15,12 +14,7 @@ import dev.msfjarvis.claw.database.local.createDatabase
 object DatabaseModule {
 
   @Provides
-  fun provideDriverFactory(@ApplicationContext context: Context): DriverFactory {
-    return DriverFactory(context)
-  }
-
-  @Provides
-  fun provideDatabase(factory: DriverFactory): LobstersDatabase {
-    return createDatabase(factory)
+  fun provideDatabase(@ApplicationContext context: Context): LobstersDatabase {
+    return createDatabase(context)
   }
 }

@@ -1,19 +1,20 @@
 package dev.msfjarvis.claw.common.ui
 
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import io.kamel.image.KamelImage
-import io.kamel.image.lazyPainterResource
+import androidx.compose.ui.draw.clip
+import coil.compose.AsyncImage
 
 @Composable
-actual fun NetworkImage(
+fun NetworkImage(
   url: String,
   contentDescription: String,
   modifier: Modifier,
 ) {
-  KamelImage(
-    resource = lazyPainterResource(url),
+  AsyncImage(
+    model = url,
     contentDescription = contentDescription,
-    modifier = modifier,
+    modifier = modifier.clip(CircleShape)
   )
 }

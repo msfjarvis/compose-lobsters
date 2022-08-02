@@ -98,6 +98,7 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 include(
   "api",
+  "common",
   "database",
   "model",
 )

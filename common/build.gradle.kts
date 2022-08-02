@@ -1,13 +1,10 @@
-@file:OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
 @file:Suppress("DSL_SCOPE_VIOLATION", "UnstableApiUsage")
 
-import org.jetbrains.compose.compose
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.pushingpixels.aurora.tools.svgtranscoder.gradle.TranscodeTask
 
 plugins {
-  kotlin("multiplatform")
-  alias(libs.plugins.compose)
+  kotlin("android")
   id("dev.msfjarvis.claw.kotlin-common")
   id("dev.msfjarvis.claw.android-library")
   alias(libs.plugins.aurora.svg.transcoder)
@@ -15,7 +12,7 @@ plugins {
 
 val transcodeTask =
   tasks.register<TranscodeTask>("transcodeSvgs") {
-    inputDirectory = file("src/commonMain/svgs/")
+    inputDirectory = file("svgs")
     outputDirectory = file("src/gen/kotlin/dev/msfjarvis/claw/common/res/clawicons")
     outputPackageName = "dev.msfjarvis.claw.common.res.clawicons"
     transcode()
@@ -23,37 +20,35 @@ val transcodeTask =
 
 tasks.withType<KotlinCompile>().configureEach { dependsOn(transcodeTask) }
 
-kotlin {
-  android()
-  jvm("desktop")
-  sourceSets["commonMain"].apply {
-    dependencies {
-      api(compose.foundation)
-      api(compose.material)
-      api(compose.material3)
-      api(compose.runtime)
-      api(libs.napier)
-      api(projects.database)
-      api(projects.model)
-      implementation(libs.kotlinx.coroutines.core)
-      implementation(libs.kotlinx.datetime)
-      implementation(libs.compose.richtext.markdown)
-      implementation(libs.compose.richtext.material3)
-      implementation(libs.compose.richtext.ui)
-    }
-    kotlin.srcDir("src/gen/kotlin/")
-  }
-  sourceSets["androidMain"].apply {
-    dependencies {
-      implementation(libs.androidx.browser)
-      implementation(libs.coil.compose)
-    }
-  }
-  sourceSets["desktopMain"].apply { dependencies { implementation(libs.kamel.image) } }
+dependencies {
+  implementation(libs.androidx.compose.animation)
+  implementation(libs.androidx.compose.foundation)
+  implementation(libs.androidx.compose.material)
+  implementation(libs.androidx.compose.material3)
+  implementation(libs.androidx.compose.runtime)
+  implementation(libs.androidx.compose.ui.ui.text)
+  api(libs.napier)
+  implementation(projects.database)
+  implementation(projects.model)
+  implementation(libs.accompanist.flowlayout)
+  implementation(libs.androidx.browser)
+  implementation(libs.coil.compose)
+  implementation(libs.compose.richtext.markdown)
+  implementation(libs.compose.richtext.material3)
+  implementation(libs.compose.richtext.ui)
+  implementation(libs.kotlinx.coroutines.core)
+  implementation(libs.kotlinx.datetime)
 }
 
 android {
-  buildFeatures { androidResources = true }
+  buildFeatures {
+    androidResources = true
+    compose = true
+  }
+  composeOptions {
+    useLiveLiterals = false
+    kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
+  }
   namespace = "dev.msfjarvis.claw.common"
-  sourceSets["main"].apply { manifest.srcFile("src/androidMain/AndroidManifest.xml") }
+  sourceSets { getByName("main") { kotlin.srcDir("src/gen/kotlin") } }
 }

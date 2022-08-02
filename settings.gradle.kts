@@ -94,8 +94,10 @@ dependencyResolutionManagement {
 
 rootProject.name = "Claw"
 
-enableFeaturePreview(
-  "TYPESAFE_PROJECT_ACCESSORS"
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
+include(
+  "model",
 )
 
 // include(":android")

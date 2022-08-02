@@ -155,8 +155,9 @@ fun LobstersApp(
       },
     ) { paddingValues ->
       MaterialMotionNavHost(
-        navController,
+        navController = navController,
         startDestination = Destinations.startDestination.getRoute(),
+        modifier = Modifier.padding(paddingValues),
       ) {
         val uri = LobstersApi.BASE_URL
         composable(
@@ -171,7 +172,6 @@ fun LobstersApp(
             isPostSaved = viewModel::isPostSaved,
             reloadPosts = viewModel::refreshHottestPosts,
             postActions = postActions,
-            modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding()),
           )
         }
         composable(
@@ -184,7 +184,6 @@ fun LobstersApp(
             isPostSaved = viewModel::isPostSaved,
             reloadPosts = viewModel::refreshNewestPosts,
             postActions = postActions,
-            modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding()),
           )
         }
         composable(Destinations.Saved.getRoute()) {
@@ -193,7 +192,6 @@ fun LobstersApp(
             items = savedPosts,
             listState = savedListState,
             postActions = postActions,
-            modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding()),
           )
         }
         composable(
@@ -210,7 +208,6 @@ fun LobstersApp(
           CommentsPage(
             postId = postId,
             getDetails = viewModel::getPostComments,
-            modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding()),
             postActions = postActions,
           )
         }
@@ -223,7 +220,6 @@ fun LobstersApp(
           UserProfile(
             username = username,
             getProfile = viewModel::getUserProfile,
-            modifier = Modifier.padding(bottom = paddingValues.calculateBottomPadding()),
           )
         }
       }

@@ -45,6 +45,6 @@ class BaselineProfileBenchmark {
       iterations = 10,
       startupMode = StartupMode.COLD,
       compilationMode = compilationMode
-    ) { tapNavigationDestinations(device) }
+    ) { exploreUI(device) }
   }
 }

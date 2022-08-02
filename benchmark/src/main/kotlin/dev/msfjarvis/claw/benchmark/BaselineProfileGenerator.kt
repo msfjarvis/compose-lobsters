@@ -23,7 +23,5 @@ class BaselineProfileGenerator {
 
   @Test
   fun startup() =
-    baselineProfileRule.collectBaselineProfile(packageName = PACKAGE_NAME) {
-      tapNavigationDestinations(device)
-    }
+    baselineProfileRule.collectBaselineProfile(packageName = PACKAGE_NAME) { exploreUI(device) }
 }

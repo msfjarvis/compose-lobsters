@@ -1,4 +1,3 @@
-@file:OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
 @file:Suppress("DSL_SCOPE_VIOLATION", "UnstableApiUsage")
 
 plugins {
@@ -6,7 +5,6 @@ plugins {
   id("dev.msfjarvis.claw.rename-artifacts")
   id("dev.msfjarvis.claw.kotlin-android")
   id("dev.msfjarvis.claw.kotlin-kapt")
-  alias(libs.plugins.compose)
   alias(libs.plugins.hilt)
 }
 
@@ -17,6 +15,7 @@ android {
     versionCode = 1
     versionName = "1.0"
   }
+  buildFeatures { compose = true }
   composeOptions {
     useLiveLiterals = false
     kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
@@ -33,13 +32,13 @@ android {
 dependencies {
   kapt(libs.androidx.hilt.compiler)
   kapt(libs.dagger.hilt.compiler)
-  implementation(compose.material3)
   implementation(projects.api)
   implementation(projects.common)
   implementation(projects.database)
   implementation(libs.accompanist.swiperefresh)
   implementation(libs.accompanist.sysuicontroller)
   implementation(libs.androidx.activity.compose)
+  implementation(libs.androidx.compose.material3)
   implementation(libs.androidx.core.splashscreen)
   implementation(libs.androidx.hilt.work)
   implementation(libs.androidx.lifecycle.compose)

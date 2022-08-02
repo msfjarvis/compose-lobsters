@@ -97,6 +97,7 @@ rootProject.name = "Claw"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 include(
+  "api",
   "model",
 )
 

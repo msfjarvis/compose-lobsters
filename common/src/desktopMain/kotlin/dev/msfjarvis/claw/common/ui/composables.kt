@@ -15,6 +15,5 @@ actual fun NetworkImage(
     resource = lazyPainterResource(url),
     contentDescription = contentDescription,
     modifier = modifier,
-    crossfade = true,
   )
 }

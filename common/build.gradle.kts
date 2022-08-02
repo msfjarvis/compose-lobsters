@@ -8,6 +8,7 @@ plugins {
   id("dev.msfjarvis.claw.kotlin-common")
   id("dev.msfjarvis.claw.android-library")
   alias(libs.plugins.aurora.svg.transcoder)
+  alias(libs.plugins.paparazzi)
 }
 
 val transcodeTask =
@@ -38,6 +39,12 @@ dependencies {
   implementation(libs.compose.richtext.ui)
   implementation(libs.kotlinx.coroutines.core)
   implementation(libs.kotlinx.datetime)
+  testImplementation(kotlin("test-junit"))
+  testImplementation(libs.testparameterinjector)
+}
+
+tasks.withType<Test>().configureEach {
+  javaLauncher.set(javaToolchains.launcherFor { languageVersion.set(JavaLanguageVersion.of(11)) })
 }
 
 android {

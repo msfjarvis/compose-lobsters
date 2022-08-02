@@ -2,7 +2,6 @@
 accompanist = "0.26.0-alpha"
 agp = "7.2.1"
 androidXTest = "1.4.0"
-aurora = "1.2-SNAPSHOT"
 coil = "2.1.0"
 # @keep This is used by paparazzi-tests and Renovate
 composeCompiler = "1.3.0-rc01"
@@ -47,9 +46,6 @@ androidx-test-rules = { module = "androidx.test:rules", version.ref = "androidXT
 androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidXTest" }
 androidx-test-uiautomator = "androidx.test.uiautomator:uiautomator:2.2.0"
 androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "workmanager" }
-aurora-component = { module = "org.pushing-pixels:aurora-component", version.ref = "aurora" }
-aurora-theming = { module = "org.pushing-pixels:aurora-theming", version.ref = "aurora" }
-aurora-window = { module = "org.pushing-pixels:aurora-window", version.ref = "aurora" }
 build-agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 build-cachefix = "org.gradle.android.cache-fix:org.gradle.android.cache-fix.gradle.plugin:2.5.5"
 build-kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
@@ -66,15 +62,12 @@ copydown = "io.github.furstenheim:copy_down:1.0"
 dagger-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "dagger" }
 dagger-hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "dagger" }
 javapoet = "com.squareup:javapoet:1.13.0"
-kamel-image = "com.alialbaali.kamel:kamel-image:0.4.1"
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx-datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.4.0"
 kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "serialization" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
-ktor-client-java = "io.ktor:ktor-client-java:2.0.3"
 material_motion-core = { module = "io.github.fornewid:material-motion-compose-core", version.ref = "material_motion" }
 material_motion-navigation = { module = "io.github.fornewid:material-motion-compose-navigation", version.ref = "material_motion" }
-multiplatform-paging = "io.github.kuuuurt:multiplatform-paging:0.4.7"
 napier = "io.github.aakira:napier:2.6.1"
 okhttp-loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:3.14.9"
 retrofit-kotlinxSerializationConverter = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
@@ -88,8 +81,7 @@ testparameterinjector = "com.google.testparameterinjector:test-parameter-injecto
 
 [plugins]
 android-test = { id = "com.android.test", version.ref = "agp" }
-aurora-svg-transcoder = { id = "org.pushing-pixels.aurora.tools.svgtranscoder.gradle", version.ref = "aurora" }
-compose = "org.jetbrains.compose:1.2.0-alpha01-dev753"
+aurora-svg-transcoder = "org.pushing-pixels.aurora.tools.svgtranscoder.gradle:1.2-SNAPSHOT"
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
 paparazzi = "app.cash.paparazzi:1.0.0"
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }

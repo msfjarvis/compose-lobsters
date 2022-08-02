@@ -94,20 +94,22 @@ dependencyResolutionManagement {
 
 rootProject.name = "Claw"
 
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+enableFeaturePreview(
+  "TYPESAFE_PROJECT_ACCESSORS"
+)
 
-include(":android")
-
-include(":api")
-
-include(":benchmark")
-
-include(":common")
-
-include(":database")
-
-include(":desktop")
-
-include(":model")
-
-include(":paparazzi-tests")
+// include(":android")
+//
+// include(":api")
+//
+// include(":benchmark")
+//
+// include(":common")
+//
+// include(":database")
+//
+// include(":desktop")
+//
+// include(":model")
+//
+// include(":paparazzi-tests")

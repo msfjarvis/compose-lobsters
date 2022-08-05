@@ -6,8 +6,8 @@ plugins {
 }
 
 dependencies {
+  api(libs.crux)
   implementation(projects.model)
-  implementation(libs.crux)
   implementation(libs.dagger.hilt.core)
   implementation(libs.jsoup)
   implementation(libs.kotlinx.coroutines.core)

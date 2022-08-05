@@ -42,6 +42,8 @@ dependencies {
   implementation(projects.api)
   implementation(projects.common)
   implementation(projects.database)
+  implementation(projects.metadataExtractor)
+  implementation(projects.model)
   implementation(libs.accompanist.swiperefresh)
   implementation(libs.accompanist.sysuicontroller)
   implementation(libs.androidx.activity.compose)

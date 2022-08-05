@@ -33,11 +33,11 @@ import dev.msfjarvis.claw.common.posts.TagRow
 import dev.msfjarvis.claw.common.res.ClawIcons
 import dev.msfjarvis.claw.common.ui.ThemedRichText
 import dev.msfjarvis.claw.model.Comment
-import dev.msfjarvis.claw.model.LobstersPostDetails
+import dev.msfjarvis.claw.model.ExtendedPostDetails
 
 @Composable
 fun CommentsHeader(
-  postDetails: LobstersPostDetails,
+  postDetails: ExtendedPostDetails,
   postActions: PostActions,
 ) {
   val htmlConverter = LocalHTMLConverter.current
@@ -52,11 +52,13 @@ fun CommentsHeader(
       TagRow(tags = postDetails.tags)
       Spacer(Modifier.height(4.dp))
 
-      if (postDetails.url.isNotBlank()) {
+      if (postDetails.linkMetadata.url.isNotBlank()) {
         PostLink(
-          link = postDetails.url,
+          link = postDetails.linkMetadata.url,
           modifier =
-            Modifier.clickable { postActions.viewPost(postDetails.url, postDetails.commentsUrl) },
+            Modifier.clickable {
+              postActions.viewPost(postDetails.linkMetadata.url, postDetails.commentsUrl)
+            },
         )
         Spacer(Modifier.height(4.dp))
       }

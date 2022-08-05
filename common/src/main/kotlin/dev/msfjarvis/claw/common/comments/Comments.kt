@@ -21,11 +21,11 @@ import dev.msfjarvis.claw.common.NetworkState
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.ui.NetworkError
 import dev.msfjarvis.claw.common.ui.ProgressBar
-import dev.msfjarvis.claw.model.LobstersPostDetails
+import dev.msfjarvis.claw.model.ExtendedPostDetails
 
 @Composable
 private fun CommentsPageInternal(
-  details: LobstersPostDetails,
+  details: ExtendedPostDetails,
   postActions: PostActions,
   modifier: Modifier = Modifier,
 ) {
@@ -33,7 +33,7 @@ private fun CommentsPageInternal(
     LazyColumn(modifier = modifier, contentPadding = PaddingValues(bottom = 24.dp)) {
       item { CommentsHeader(postDetails = details, postActions = postActions) }
 
-      if (details.commentCount > 0) {
+      if (details.comments.isNotEmpty()) {
         item {
           Text(
             text = "Comments",
@@ -67,7 +67,7 @@ private fun CommentsPageInternal(
 @Composable
 fun CommentsPage(
   postId: String,
-  getDetails: suspend (String) -> LobstersPostDetails,
+  getDetails: suspend (String) -> ExtendedPostDetails,
   postActions: PostActions,
   modifier: Modifier = Modifier,
 ) {
@@ -79,7 +79,7 @@ fun CommentsPage(
   when (postDetails) {
     is NetworkState.Success<*> -> {
       CommentsPageInternal(
-        (postDetails as NetworkState.Success<LobstersPostDetails>).data,
+        (postDetails as NetworkState.Success<ExtendedPostDetails>).data,
         postActions,
         modifier.fillMaxSize(),
       )

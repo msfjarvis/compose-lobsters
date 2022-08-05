@@ -22,7 +22,8 @@ class ClawViewModel
 @Inject
 constructor(
   private val api: LobstersApi,
-  private val repository: SavedPostsRepository,
+  private val savedPostsRepository: SavedPostsRepository,
+  private val postDetailsRepository: PostDetailsRepository,
 ) : ViewModel() {
   private var hottestPostsPagingSource: LobstersPagingSource? = null
   private var newestPostsPagingSource: LobstersPagingSource? = null
@@ -42,7 +43,7 @@ constructor(
     get() = newestPostsPager.flow
 
   private val savedPostsFlow
-    get() = repository.savedPosts
+    get() = savedPostsRepository.savedPosts
 
   val savedPosts
     get() = savedPostsFlow.map(::mapSavedPosts)
@@ -60,15 +61,19 @@ constructor(
     viewModelScope.launch(Dispatchers.IO) {
       val saved = isPostSaved(post)
       if (saved) {
-        repository.removePost(post)
+        savedPostsRepository.removePost(post)
       } else {
-        repository.savePost(post)
+        savedPostsRepository.savePost(post)
       }
     }
   }
 
   suspend fun getPostComments(postId: String) =
-    withContext(Dispatchers.IO) { api.getPostDetails(postId) }
+    withContext(Dispatchers.IO) {
+      val details = api.getPostDetails(postId)
+      val extendedDetails = postDetailsRepository.getExtendedDetails(details)
+      extendedDetails
+    }
 
   suspend fun getUserProfile(username: String) =
     withContext(Dispatchers.IO) { api.getUser(username) }

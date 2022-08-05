@@ -9,6 +9,7 @@ dagger = "2.43.2"
 hilt = "1.0.0"
 kotlin = "1.7.10"
 material_motion = "0.9.1"
+okhttp = "3.14.9"
 retrofit = "2.9.0"
 richtext = "0.13.0"
 serialization = "1.4.0-RC"
@@ -58,9 +59,12 @@ compose-richtext-markdown = { module = "com.halilibo.compose-richtext:richtext-c
 compose-richtext-material3 = { module = "com.halilibo.compose-richtext:richtext-ui-material3", version.ref = "richtext" }
 compose-richtext-ui = { module = "com.halilibo.compose-richtext:richtext-ui", version.ref = "richtext" }
 copydown = "io.github.furstenheim:copy_down:1.1"
+crux = "com.chimbori.crux:crux:3.9.0"
 dagger-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "dagger" }
 dagger-hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "dagger" }
+dagger-hilt-core = { module = "com.google.dagger:hilt-core", version.ref = "dagger" }
 javapoet = "com.squareup:javapoet:1.13.0"
+jsoup = "org.jsoup:jsoup:1.15.2"
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx-datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.4.0"
 kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "serialization" }
@@ -68,7 +72,8 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 material_motion-core = { module = "io.github.fornewid:material-motion-compose-core", version.ref = "material_motion" }
 material_motion-navigation = { module = "io.github.fornewid:material-motion-compose-navigation", version.ref = "material_motion" }
 napier = "io.github.aakira:napier:2.6.1"
-okhttp-loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:3.14.9"
+okhttp-core = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
+okhttp-loggingInterceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
 retrofit-kotlinxSerializationConverter = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
 retrofit-lib = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-mock = { module = "com.squareup.retrofit2:retrofit-mock", version.ref = "retrofit" }

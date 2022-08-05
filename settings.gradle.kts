@@ -107,5 +107,6 @@ include(
   "benchmark",
   "common",
   "database",
+  "metadata-extractor",
   "model",
 )

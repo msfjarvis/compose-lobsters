@@ -3,6 +3,7 @@ package dev.msfjarvis.claw.metadata
 import com.chimbori.crux.Crux
 import com.chimbori.crux.api.Fields.DURATION_MS
 import com.chimbori.crux.api.Fields.FAVICON_URL
+import dev.msfjarvis.claw.model.LinkMetadata
 import javax.inject.Inject
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.OkHttpClient

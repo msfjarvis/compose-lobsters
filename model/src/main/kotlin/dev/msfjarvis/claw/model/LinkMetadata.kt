@@ -1,4 +1,4 @@
-package dev.msfjarvis.claw.metadata
+package dev.msfjarvis.claw.model
 
 data class LinkMetadata(
   val url: String,

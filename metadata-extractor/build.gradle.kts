@@ -6,6 +6,7 @@ plugins {
 }
 
 dependencies {
+  implementation(projects.model)
   implementation(libs.crux)
   implementation(libs.dagger.hilt.core)
   implementation(libs.jsoup)

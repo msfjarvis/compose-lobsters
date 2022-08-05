@@ -40,6 +40,7 @@ pluginManagement {
       filter {
         includeGroup("org.pushing-pixels")
         includeGroup("org.pushing-pixels.aurora.tools.svgtranscoder.gradle")
+        includeGroup("app.cash.paparazzi")
       }
     }
     includeBuild("build-logic")
@@ -86,7 +87,11 @@ dependencyResolutionManagement {
     }
     exclusiveContent {
       forRepository { maven("https://oss.sonatype.org/content/repositories/snapshots/") }
-      filter { includeGroup("org.pushing-pixels") }
+      filter {
+        includeGroup("org.pushing-pixels")
+        includeModule("app.cash.paparazzi", "paparazzi")
+        includeModule("app.cash.paparazzi", "paparazzi-agent")
+      }
     }
     mavenCentral()
   }

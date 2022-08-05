@@ -83,5 +83,5 @@ testparameterinjector = "com.google.testparameterinjector:test-parameter-injecto
 android-test = { id = "com.android.test", version.ref = "agp" }
 aurora-svg-transcoder = "org.pushing-pixels.aurora.tools.svgtranscoder.gradle:1.2-SNAPSHOT"
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
-paparazzi = "app.cash.paparazzi:1.0.0"
+paparazzi = "app.cash.paparazzi:1.1.0-SNAPSHOT"
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }

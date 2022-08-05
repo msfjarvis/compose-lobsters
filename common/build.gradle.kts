@@ -43,10 +43,6 @@ dependencies {
   testImplementation(libs.testparameterinjector)
 }
 
-tasks.withType<Test>().configureEach {
-  javaLauncher.set(javaToolchains.launcherFor { languageVersion.set(JavaLanguageVersion.of(11)) })
-}
-
 android {
   buildFeatures {
     androidResources = true

@@ -27,6 +27,13 @@ android {
       isDebuggable = false
     }
   }
+  lint {
+    abortOnError = true
+    checkReleaseBuilds = false
+    warningsAsErrors = true
+    disable.add("DialogFragmentCallbacksDetector")
+    baseline = file("lint-baseline.xml")
+  }
 }
 
 dependencies {

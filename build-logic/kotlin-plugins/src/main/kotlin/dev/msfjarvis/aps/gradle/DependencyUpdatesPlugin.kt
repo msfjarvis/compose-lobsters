@@ -2,7 +2,6 @@ package dev.msfjarvis.aps.gradle
 
 import com.github.benmanes.gradle.versions.VersionsPlugin
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
-import java.util.Locale
 import nl.littlerobots.vcu.plugin.VersionCatalogUpdateExtension
 import nl.littlerobots.vcu.plugin.VersionCatalogUpdatePlugin
 import org.gradle.api.Plugin

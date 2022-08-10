@@ -8,8 +8,9 @@ plugins {
   id("dev.msfjarvis.claw.kotlin-common")
   id("dev.msfjarvis.claw.android-library")
   alias(libs.plugins.aurora.svg.transcoder)
-  alias(libs.plugins.paparazzi)
 }
+
+androidComponents { beforeVariants { it.enableUnitTest = false } }
 
 val transcodeTask =
   tasks.register<TranscodeTask>("transcodeSvgs") {

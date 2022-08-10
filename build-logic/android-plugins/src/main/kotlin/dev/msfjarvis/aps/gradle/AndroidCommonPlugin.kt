@@ -14,10 +14,10 @@ class AndroidCommonPlugin : Plugin<Project> {
   override fun apply(project: Project) {
     project.pluginManager.apply(AndroidCacheFixPlugin::class)
     project.extensions.findByType<TestedExtension>()?.run {
-      setCompileSdkVersion(32)
+      setCompileSdkVersion(33)
       defaultConfig {
         minSdk = 26
-        targetSdk = 32
+        targetSdk = 33
       }
 
       sourceSets {

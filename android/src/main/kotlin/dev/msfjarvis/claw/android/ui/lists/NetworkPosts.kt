@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
@@ -16,7 +17,6 @@ import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.posts.toDbModel
-import dev.msfjarvis.claw.common.ui.Divider
 import dev.msfjarvis.claw.database.local.SavedPost
 import dev.msfjarvis.claw.model.LobstersPost
 

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -18,7 +19,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import dev.msfjarvis.claw.common.NetworkState
 import dev.msfjarvis.claw.common.posts.PostActions
-import dev.msfjarvis.claw.common.ui.Divider
 import dev.msfjarvis.claw.common.ui.NetworkError
 import dev.msfjarvis.claw.common.ui.ProgressBar
 import dev.msfjarvis.claw.model.LobstersPostDetails

@@ -1,5 +1,5 @@
 [versions]
-accompanist = "0.26.0-alpha"
+accompanist = "0.26.1-alpha"
 agp = "7.4.0-alpha09"
 coil = "2.1.0"
 # @keep This is used by paparazzi-tests and Renovate

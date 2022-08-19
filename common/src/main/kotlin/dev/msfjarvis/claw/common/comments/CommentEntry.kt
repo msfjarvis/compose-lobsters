@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -31,9 +32,11 @@ import dev.msfjarvis.claw.common.posts.PostTitle
 import dev.msfjarvis.claw.common.posts.Submitter
 import dev.msfjarvis.claw.common.posts.TagRow
 import dev.msfjarvis.claw.common.res.ClawIcons
+import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.common.ui.ThemedRichText
 import dev.msfjarvis.claw.model.Comment
 import dev.msfjarvis.claw.model.ExtendedPostDetails
+import dev.msfjarvis.claw.model.LinkMetadata
 
 @Composable
 fun CommentsHeader(
@@ -54,7 +57,7 @@ fun CommentsHeader(
 
       if (postDetails.linkMetadata.url.isNotBlank()) {
         PostLink(
-          link = postDetails.linkMetadata.url,
+          linkMetadata = postDetails.linkMetadata,
           modifier =
             Modifier.clickable {
               postActions.viewPost(postDetails.linkMetadata.url, postDetails.commentsUrl)
@@ -82,7 +85,7 @@ fun CommentsHeader(
 
 @Composable
 fun PostLink(
-  link: String,
+  linkMetadata: LinkMetadata,
   modifier: Modifier = Modifier,
 ) {
   Box(
@@ -92,13 +95,22 @@ fun PostLink(
     )
   ) {
     Row(modifier = Modifier.padding(16.dp), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-      Icon(
-        painter = ClawIcons.Web,
-        contentDescription = null,
-        tint = MaterialTheme.colorScheme.onSecondary,
-      )
+      if (linkMetadata.faviconUrl != null) {
+        NetworkImage(
+          url = linkMetadata.faviconUrl!!,
+          placeholder = ClawIcons.Web,
+          contentDescription = "",
+          modifier = Modifier.size(24.dp),
+        )
+      } else {
+        Icon(
+          painter = ClawIcons.Web,
+          contentDescription = null,
+          tint = MaterialTheme.colorScheme.onSecondary,
+        )
+      }
       Text(
-        text = link,
+        text = linkMetadata.url,
         overflow = TextOverflow.Ellipsis,
         maxLines = 1,
         color = MaterialTheme.colorScheme.onSecondary,

@@ -143,6 +143,7 @@ fun Submitter(
   ) {
     NetworkImage(
       url = avatarUrl,
+      placeholder = ClawIcons.Account,
       contentDescription = contentDescription,
       modifier = modifier.requiredSize(24.dp).clip(CircleShape),
     )

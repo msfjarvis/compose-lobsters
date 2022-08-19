@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import dev.msfjarvis.claw.common.NetworkState
 import dev.msfjarvis.claw.common.NetworkState.Loading
 import dev.msfjarvis.claw.common.NetworkState.Success
+import dev.msfjarvis.claw.common.res.ClawIcons
 import dev.msfjarvis.claw.common.ui.NetworkError
 import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.common.ui.ProgressBar
@@ -57,6 +58,7 @@ private fun UserProfileInternal(
     ) {
       NetworkImage(
         url = "https://lobste.rs/${user.avatarUrl}",
+        placeholder = ClawIcons.Account,
         contentDescription = "Avatar of ${user.username}",
         modifier = Modifier.requiredSize(120.dp).clip(CircleShape),
       )

@@ -1,5 +1,6 @@
 package dev.msfjarvis.claw.common.res
 
+import dev.msfjarvis.claw.common.res.clawicons.account_circle_black_24dp
 import dev.msfjarvis.claw.common.res.clawicons.arrow_back_black_24dp
 import dev.msfjarvis.claw.common.res.clawicons.comment_black_24dp
 import dev.msfjarvis.claw.common.res.clawicons.favorite_black_24dp
@@ -11,6 +12,8 @@ import dev.msfjarvis.claw.common.res.clawicons.whatshot_black_24dp
 import dev.msfjarvis.claw.common.res.clawicons.whatshot_filled_black_24dp
 
 object ClawIcons {
+
+  val Account = account_circle_black_24dp()
 
   val ArrowBack = arrow_back_black_24dp()
 

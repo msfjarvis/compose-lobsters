@@ -3,7 +3,7 @@
 pluginManagement {
   repositories {
     exclusiveContent {
-      forRepository(::google)
+      forRepository { google() }
       filter {
         includeGroup("androidx.databinding")
         includeGroup("com.android")
@@ -28,7 +28,7 @@ pluginManagement {
       }
     }
     exclusiveContent {
-      forRepository(::gradlePluginPortal)
+      forRepository { gradlePluginPortal() }
       filter {
         includeModule("com.github.ben-manes", "gradle-versions-plugin")
         includeModule("org.gradle.android.cache-fix", "org.gradle.android.cache-fix.gradle.plugin")
@@ -52,7 +52,7 @@ dependencyResolutionManagement {
   repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
   repositories {
     exclusiveContent {
-      forRepository(::google)
+      forRepository { google() }
       filter {
         includeGroup("com.android")
         includeGroup("com.android.tools")
@@ -79,7 +79,7 @@ dependencyResolutionManagement {
       }
     }
     exclusiveContent {
-      forRepository(::gradlePluginPortal)
+      forRepository { gradlePluginPortal() }
       filter {
         includeModule("org.gradle.android.cache-fix", "org.gradle.android.cache-fix.gradle.plugin")
         includeModule("gradle.plugin.org.gradle.android", "android-cache-fix-gradle-plugin")

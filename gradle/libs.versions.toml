@@ -51,7 +51,7 @@ build-cachefix = "org.gradle.android.cache-fix:org.gradle.android.cache-fix.grad
 build-kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 build-kotlin-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
 build-spotless = "com.diffplug.spotless:spotless-plugin-gradle:6.9.1"
-build-vcu = "nl.littlerobots.version-catalog-update:nl.littlerobots.version-catalog-update.gradle.plugin:0.5.3"
+build-vcu = "nl.littlerobots.version-catalog-update:nl.littlerobots.version-catalog-update.gradle.plugin:0.6.0"
 build-versions = "com.github.ben-manes:gradle-versions-plugin:0.42.0"
 coil = { module = "io.coil-kt:coil", version.ref = "coil" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }

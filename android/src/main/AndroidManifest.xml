@@ -9,8 +9,7 @@
     android:label="@string/app_name"
     android:roundIcon="@mipmap/ic_launcher"
     android:supportsRtl="true"
-    android:theme="@style/Theme.Claw.SplashScreen"
-    android:enableOnBackInvokedCallback="true">
+    android:theme="@style/Theme.Claw.SplashScreen">
     <profileable
         android:shell="true"
         tools:targetApi="29" />

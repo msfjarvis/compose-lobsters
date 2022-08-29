@@ -24,7 +24,7 @@ jobs:
         java-version: 18
 
     - name: Run unit tests
-      uses: gradle/gradle-build-action@v2.2.5
+      uses: gradle/gradle-build-action@v2.3.0
       with:
         arguments: check --stacktrace --no-configuration-cache
 
@@ -55,7 +55,7 @@ jobs:
         ENCRYPT_KEY: ${{ secrets.ENCRYPT_KEY }}
 
     - name: Build release app
-      uses: gradle/gradle-build-action@v2.2.5
+      uses: gradle/gradle-build-action@v2.3.0
       with:
         arguments: collectReleaseApks --no-configuration-cache
 

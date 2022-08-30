@@ -27,6 +27,7 @@ jobs:
       uses: gradle/gradle-build-action@v2.3.0
       with:
         arguments: check --stacktrace --no-configuration-cache
+        gradle-home-cache-cleanup: true
 
     - name: (Fail-only) Upload test report
       if: failure()
@@ -58,6 +59,7 @@ jobs:
       uses: gradle/gradle-build-action@v2.3.0
       with:
         arguments: collectReleaseApks --no-configuration-cache
+        gradle-home-cache-cleanup: true
 
     - name: Clean secrets
       run: scripts/signing-cleanup.sh

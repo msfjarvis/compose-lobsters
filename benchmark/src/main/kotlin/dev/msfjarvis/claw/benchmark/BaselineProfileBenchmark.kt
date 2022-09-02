@@ -45,6 +45,8 @@ class BaselineProfileBenchmark {
       iterations = 10,
       startupMode = StartupMode.COLD,
       compilationMode = compilationMode
-    ) { exploreUI(device) }
+    ) {
+      exploreUI(device)
+    }
   }
 }

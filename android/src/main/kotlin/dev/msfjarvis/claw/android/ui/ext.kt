@@ -4,13 +4,6 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.os.Build
 import androidx.activity.ComponentActivity
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.core.FastOutLinearInEasing
-import androidx.compose.animation.core.LinearOutSlowInEasing
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
@@ -31,24 +24,6 @@ import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
-
-private const val AnimationDuration = 100
-
-fun slideInAnimation(): EnterTransition {
-  return slideInVertically(
-    // Enters by sliding up from offset 0 to fullHeight.
-    initialOffsetY = { fullHeight -> fullHeight },
-    animationSpec = tween(durationMillis = AnimationDuration, easing = LinearOutSlowInEasing),
-  )
-}
-
-fun slideOutAnimation(): ExitTransition {
-  return slideOutVertically(
-    // Exits by sliding up from offset 0 to -fullHeight.
-    targetOffsetY = { fullHeight -> fullHeight },
-    animationSpec = tween(durationMillis = AnimationDuration, easing = FastOutLinearInEasing),
-  )
-}
 
 fun Context.getActivity(): ComponentActivity? {
   return when (this) {

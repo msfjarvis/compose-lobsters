@@ -64,7 +64,7 @@ fun LobstersApp(
   val navController = rememberMaterialMotionNavController()
   val coroutineScope = rememberCoroutineScope()
   val postActions = rememberPostActions(urlLauncher, navController, viewModel)
-  val currentDestination by currentNavigationDestination(navController)
+  val currentDestination = currentNavigationDestination(navController)
   val context = LocalContext.current
 
   val hottestPosts = viewModel.hottestPosts.collectAsLazyPagingItems()

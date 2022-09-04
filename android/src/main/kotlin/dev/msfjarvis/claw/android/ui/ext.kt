@@ -9,10 +9,10 @@ import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import dev.msfjarvis.claw.android.ui.navigation.Destinations
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.common.posts.PostActions
@@ -41,15 +41,10 @@ fun String.toLocalDateTime(): LocalDateTime {
   return Instant.parse(this).toLocalDateTime(TimeZone.currentSystemDefault())
 }
 
-// The destination needs to be tracked like this rather than used directly since
-// `NavController#currentDestination` is not a Composable state.
 @Composable
-fun currentNavigationDestination(navController: NavController): State<String?> {
-  val currentDestination = remember { mutableStateOf<String?>(null) }
-  navController.addOnDestinationChangedListener { _, destination, _ ->
-    currentDestination.value = destination.route
-  }
-  return currentDestination
+fun currentNavigationDestination(navController: NavController): String? {
+  val backStackEntry by navController.currentBackStackEntryAsState()
+  return backStackEntry?.destination?.route
 }
 
 @Composable

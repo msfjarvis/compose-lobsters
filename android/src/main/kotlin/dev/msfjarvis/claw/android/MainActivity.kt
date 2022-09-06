@@ -6,7 +6,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.lifecycle.lifecycleScope
 import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
@@ -33,25 +32,23 @@ class MainActivity : ComponentActivity() {
     setContent {
       LobstersApp(urlLauncher = urlLauncher, htmlConverter = htmlConverter) { url -> webUri = url }
     }
-    lifecycleScope.launchWhenCreated {
-      val postUpdateWorkRequest =
-        PeriodicWorkRequestBuilder<SavedPostUpdaterWorker>(24, TimeUnit.HOURS)
-          .setConstraints(
-            Constraints.Builder()
-              .setRequiresCharging(false)
-              .setRequiresBatteryNotLow(true)
-              .setRequiredNetworkType(NetworkType.CONNECTED)
-              .setRequiresDeviceIdle(true)
-              .build()
-          )
-          .build()
-      WorkManager.getInstance(this@MainActivity)
-        .enqueueUniquePeriodicWork(
-          "updateSavedPosts",
-          ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE,
-          postUpdateWorkRequest,
+    val postUpdateWorkRequest =
+      PeriodicWorkRequestBuilder<SavedPostUpdaterWorker>(24, TimeUnit.HOURS)
+        .setConstraints(
+          Constraints.Builder()
+            .setRequiresCharging(false)
+            .setRequiresBatteryNotLow(true)
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .setRequiresDeviceIdle(true)
+            .build()
         )
-    }
+        .build()
+    WorkManager.getInstance(this@MainActivity)
+      .enqueueUniquePeriodicWork(
+        "updateSavedPosts",
+        ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE,
+        postUpdateWorkRequest,
+      )
   }
 
   override fun onProvideAssistContent(outContent: AssistContent?) {

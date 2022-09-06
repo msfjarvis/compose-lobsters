@@ -9,10 +9,8 @@ import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.navigation.NavController
-import androidx.navigation.compose.currentBackStackEntryAsState
 import dev.msfjarvis.claw.android.ui.navigation.Destinations
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.common.posts.PostActions
@@ -39,12 +37,6 @@ fun Context.getActivity(): ComponentActivity? {
  */
 fun String.toLocalDateTime(): LocalDateTime {
   return Instant.parse(this).toLocalDateTime(TimeZone.currentSystemDefault())
-}
-
-@Composable
-fun currentNavigationDestination(navController: NavController): String? {
-  val backStackEntry by navController.currentBackStackEntryAsState()
-  return backStackEntry?.destination?.route
 }
 
 @Composable

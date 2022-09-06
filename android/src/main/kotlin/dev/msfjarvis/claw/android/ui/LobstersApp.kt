@@ -23,6 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -64,7 +65,8 @@ fun LobstersApp(
   val navController = rememberMaterialMotionNavController()
   val coroutineScope = rememberCoroutineScope()
   val postActions = rememberPostActions(urlLauncher, navController, viewModel)
-  val currentDestination = currentNavigationDestination(navController)
+  val backStackEntry by navController.currentBackStackEntryAsState()
+  val currentDestination = backStackEntry?.destination?.route
   val context = LocalContext.current
 
   val hottestPosts = viewModel.hottestPosts.collectAsLazyPagingItems()

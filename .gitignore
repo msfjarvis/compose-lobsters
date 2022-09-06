@@ -1,4 +1,3 @@
-
 # Created by https://www.toptal.com/developers/gitignore/api/android,intellij
 # Edit at https://www.toptal.com/developers/gitignore?templates=android,intellij
 
@@ -43,7 +42,7 @@ captures/
 
 # IntelliJ
 *.iml
-.idea/
+!.idea/codeInsightSettings.xml
 
 # Keystore files
 # Uncomment the following lines if you do not want to check your keystore files in.
@@ -99,6 +98,7 @@ output.json
 
 # Generated files
 .idea/**/contentModel.xml
+.idea/artifacts/**
 
 # Sensitive or high-churn files
 .idea/**/dataSources/
@@ -117,14 +117,14 @@ output.json
 # When using Gradle or Maven with auto-import, you should exclude module files,
 # since they will be recreated, and may cause churn.  Uncomment if using
 # auto-import.
-# .idea/artifacts
-# .idea/compiler.xml
-# .idea/jarRepositories.xml
-# .idea/modules.xml
-# .idea/*.iml
-# .idea/modules
-# *.iml
-# *.ipr
+.idea/artifacts
+.idea/compiler.xml
+.idea/jarRepositories.xml
+.idea/modules.xml
+.idea/*.iml
+.idea/modules
+*.iml
+*.ipr
 
 # CMake
 cmake-build-*/
@@ -187,5 +187,11 @@ fabric.properties
 # CodeStream plugin
 # https://plugins.jetbrains.com/plugin/12206-codestream
 .idea/codestream.xml
+
+.idea/misc.xml
+.idea/kotlinc.xml
+.idea/ghactions-toolbar.xml
+.idea/codeStyles/**
+.idea/.name
 
 # End of https://www.toptal.com/developers/gitignore/api/android,intellij

@@ -1,7 +1,7 @@
 package dev.msfjarvis.claw.common.ui.decorations
 
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.SmallTopAppBar
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -15,7 +15,7 @@ fun ClawAppBar(
   navigationIcon: @Composable () -> Unit = {},
   title: @Composable () -> Unit = {},
 ) {
-  SmallTopAppBar(
+  TopAppBar(
     title = title,
     modifier = modifier,
     colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = backgroundColor),

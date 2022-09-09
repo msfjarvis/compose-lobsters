@@ -41,6 +41,7 @@ dependencies {
   kapt(libs.dagger.hilt.compiler)
   implementation(projects.api)
   implementation(projects.common)
+  implementation(projects.coroutineUtils)
   implementation(projects.database)
   implementation(projects.metadataExtractor)
   implementation(projects.model)

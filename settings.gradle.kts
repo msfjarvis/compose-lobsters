@@ -106,6 +106,7 @@ include(
   "api",
   "benchmark",
   "common",
+  "coroutine-utils",
   "database",
   "metadata-extractor",
   "model",

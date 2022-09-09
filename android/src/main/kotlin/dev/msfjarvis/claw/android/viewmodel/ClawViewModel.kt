@@ -25,19 +25,18 @@ constructor(
   private val api: LobstersApi,
   private val savedPostsRepository: SavedPostsRepository,
   private val postDetailsRepository: PostDetailsRepository,
+  private val pagingSourceFactory: LobstersPagingSource.Factory,
   @IODispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
   private var hottestPostsPagingSource: LobstersPagingSource? = null
   private var newestPostsPagingSource: LobstersPagingSource? = null
   private val hottestPostsPager =
     Pager(PagingConfig(20)) {
-      LobstersPagingSource(api::getHottestPosts, ioDispatcher).also {
-        hottestPostsPagingSource = it
-      }
+      pagingSourceFactory.create(api::getHottestPosts).also { hottestPostsPagingSource = it }
     }
   private val newestPostsPager =
     Pager(PagingConfig(20)) {
-      LobstersPagingSource(api::getNewestPosts, ioDispatcher).also { newestPostsPagingSource = it }
+      pagingSourceFactory.create(api::getHottestPosts).also { newestPostsPagingSource = it }
     }
 
   val hottestPosts

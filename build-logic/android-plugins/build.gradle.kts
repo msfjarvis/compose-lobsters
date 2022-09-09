@@ -42,10 +42,15 @@ gradlePlugin {
       id = "dev.msfjarvis.claw.rename-artifacts"
       implementationClass = "dev.msfjarvis.aps.gradle.RenameArtifactsPlugin"
     }
+    register("versioning") {
+      id = "dev.msfjarvis.claw.versioning-plugin"
+      implementationClass = "dev.msfjarvis.aps.gradle.versioning.VersioningPlugin"
+    }
   }
 }
 
 dependencies {
   implementation(libs.build.agp)
   implementation(libs.build.cachefix)
+  implementation(libs.build.semver)
 }

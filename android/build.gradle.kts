@@ -5,16 +5,13 @@ plugins {
   id("dev.msfjarvis.claw.rename-artifacts")
   id("dev.msfjarvis.claw.kotlin-android")
   id("dev.msfjarvis.claw.kotlin-kapt")
+  id("dev.msfjarvis.claw.versioning-plugin")
   alias(libs.plugins.hilt)
 }
 
 android {
   namespace = "dev.msfjarvis.claw.android"
-  defaultConfig {
-    applicationId = "dev.msfjarvis.claw.android"
-    versionCode = 1
-    versionName = "1.0"
-  }
+  defaultConfig { applicationId = "dev.msfjarvis.claw.android" }
   buildFeatures { compose = true }
   composeOptions {
     useLiveLiterals = false

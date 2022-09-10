@@ -19,6 +19,7 @@ constructor(
 
   suspend fun getExtractedMetadata(url: String): LinkMetadata {
     val parsedUrl = url.toHttpUrlOrNull() ?: return makeDefault(url)
+    if (!parsedUrl.isHttps) return makeDefault(url)
     val request = Request.Builder().url(parsedUrl).build()
     val htmlContent =
       okHttpClient.newCall(request).execute().use { response ->

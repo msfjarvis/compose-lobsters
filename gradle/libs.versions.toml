@@ -12,7 +12,7 @@ material_motion = "0.9.1"
 # @pin Needs to be aligned with Retrofit
 okhttp = "3.14.9"
 retrofit = "2.9.0"
-richtext = "0.13.0"
+richtext = "0.14.1"
 serialization = "1.4.0-RC"
 sqldelight = "2.0.0-alpha03"
 workmanager = "2.8.0-alpha04"

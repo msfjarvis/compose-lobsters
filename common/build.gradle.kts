@@ -17,19 +17,18 @@ val transcodeTask =
     inputDirectory = file("svgs")
     outputDirectory = file("src/gen/kotlin/dev/msfjarvis/claw/common/res/clawicons")
     outputPackageName = "dev.msfjarvis.claw.common.res.clawicons"
-    transcode()
   }
 
 tasks.withType<KotlinCompile>().configureEach { dependsOn(transcodeTask) }
 
 dependencies {
+  api(libs.napier)
   implementation(libs.androidx.compose.animation)
   implementation(libs.androidx.compose.foundation)
   implementation(libs.androidx.compose.material)
   implementation(libs.androidx.compose.material3)
   implementation(libs.androidx.compose.runtime)
   implementation(libs.androidx.compose.ui.text)
-  api(libs.napier)
   implementation(projects.database)
   implementation(projects.model)
   implementation(libs.accompanist.flowlayout)

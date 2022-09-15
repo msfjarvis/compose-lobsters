@@ -30,9 +30,8 @@ androidx-compose-foundation = "androidx.compose.foundation:foundation:1.3.0-beta
 androidx-compose-material = "androidx.compose.material:material:1.3.0-beta02"
 androidx-compose-material3 = "androidx.compose.material3:material3:1.0.0-beta02"
 androidx-compose-runtime = "androidx.compose.runtime:runtime:1.3.0-beta02"
-androidx-compose-ui-ui = { module = "androidx.compose.ui:ui", version.ref = "composeUi" }
-androidx-compose-ui-ui-text = { module = "androidx.compose.ui:ui-text", version.ref = "composeUi" }
-androidx-compose-ui-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "composeUi" }
+androidx-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "composeUi" }
+androidx-compose-ui-text = { module = "androidx.compose.ui:ui-text", version.ref = "composeUi" }
 androidx-core-splashscreen = "androidx.core:core-splashscreen:1.0.0"
 androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hilt" }
 androidx-hilt-work = { module = "androidx.hilt:hilt-work", version.ref = "hilt" }

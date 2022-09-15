@@ -28,7 +28,7 @@ dependencies {
   implementation(libs.androidx.compose.material)
   implementation(libs.androidx.compose.material3)
   implementation(libs.androidx.compose.runtime)
-  implementation(libs.androidx.compose.ui.ui.text)
+  implementation(libs.androidx.compose.ui.text)
   api(libs.napier)
   implementation(projects.database)
   implementation(projects.model)

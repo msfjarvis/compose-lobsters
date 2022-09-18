@@ -50,8 +50,8 @@ build-agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 build-cachefix = "org.gradle.android.cache-fix:org.gradle.android.cache-fix.gradle.plugin:2.5.6"
 build-kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 build-kotlin-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin" }
-build-spotless = "com.diffplug.spotless:spotless-plugin-gradle:6.11.0"
 build-semver = "com.vdurmont:semver4j:3.1.0"
+build-spotless = "com.diffplug.spotless:spotless-plugin-gradle:6.11.0"
 build-vcu = "nl.littlerobots.version-catalog-update:nl.littlerobots.version-catalog-update.gradle.plugin:0.6.1"
 build-versions = "com.github.ben-manes:gradle-versions-plugin:0.42.0"
 coil = { module = "io.coil-kt:coil", version.ref = "coil" }
@@ -86,6 +86,5 @@ testparameterinjector = "com.google.testparameterinjector:test-parameter-injecto
 
 [plugins]
 android-test = { id = "com.android.test", version.ref = "agp" }
-aurora-svg-transcoder = "org.pushing-pixels.aurora.tools.svgtranscoder.gradle:1.2-SNAPSHOT"
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }

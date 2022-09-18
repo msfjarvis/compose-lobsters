@@ -1,5 +1,5 @@
 [versions]
-accompanist = "0.26.2-beta"
+accompanist = "0.26.2-SNAPSHOT"
 agp = "7.4.0-alpha10"
 coil = "2.2.1"
 composeCompiler = "1.3.1"

@@ -35,14 +35,6 @@ pluginManagement {
         includeModule("gradle.plugin.org.gradle.android", "android-cache-fix-gradle-plugin")
       }
     }
-    exclusiveContent {
-      forRepository { maven("https://oss.sonatype.org/content/repositories/snapshots/") }
-      filter {
-        includeGroup("org.pushing-pixels")
-        includeGroup("org.pushing-pixels.aurora.tools.svgtranscoder.gradle")
-        /*includeGroup("app.cash.paparazzi")*/
-      }
-    }
     includeBuild("build-logic")
     mavenCentral()
   }
@@ -83,14 +75,6 @@ dependencyResolutionManagement {
       filter {
         includeModule("org.gradle.android.cache-fix", "org.gradle.android.cache-fix.gradle.plugin")
         includeModule("gradle.plugin.org.gradle.android", "android-cache-fix-gradle-plugin")
-      }
-    }
-    exclusiveContent {
-      forRepository { maven("https://oss.sonatype.org/content/repositories/snapshots/") }
-      filter {
-        includeGroup("org.pushing-pixels")
-        /*includeModule("app.cash.paparazzi", "paparazzi")*/
-        /*includeModule("app.cash.paparazzi", "paparazzi-agent")*/
       }
     }
     mavenCentral()

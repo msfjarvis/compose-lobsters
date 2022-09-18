@@ -1,25 +1,12 @@
 @file:Suppress("DSL_SCOPE_VIOLATION", "UnstableApiUsage")
 
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.pushingpixels.aurora.tools.svgtranscoder.gradle.TranscodeTask
-
 plugins {
   kotlin("android")
   id("dev.msfjarvis.claw.kotlin-common")
   id("dev.msfjarvis.claw.android-library")
-  alias(libs.plugins.aurora.svg.transcoder)
 }
 
 androidComponents { beforeVariants { it.enableUnitTest = false } }
-
-val transcodeTask =
-  tasks.register<TranscodeTask>("transcodeSvgs") {
-    inputDirectory = file("svgs")
-    outputDirectory = file("src/gen/kotlin/dev/msfjarvis/claw/common/res/clawicons")
-    outputPackageName = "dev.msfjarvis.claw.common.res.clawicons"
-  }
-
-tasks.withType<KotlinCompile>().configureEach { dependsOn(transcodeTask) }
 
 dependencies {
   api(libs.napier)
@@ -53,5 +40,4 @@ android {
     kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
   }
   namespace = "dev.msfjarvis.claw.common"
-  sourceSets { getByName("main") { kotlin.srcDir("src/gen/kotlin") } }
 }

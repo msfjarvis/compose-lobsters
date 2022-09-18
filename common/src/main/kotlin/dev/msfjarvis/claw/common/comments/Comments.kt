@@ -18,6 +18,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import dev.msfjarvis.claw.common.NetworkState
+import dev.msfjarvis.claw.common.NetworkState.Error
+import dev.msfjarvis.claw.common.NetworkState.Loading
+import dev.msfjarvis.claw.common.NetworkState.Success
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.ui.NetworkError
 import dev.msfjarvis.claw.common.ui.ProgressBar
@@ -72,25 +75,25 @@ fun CommentsPage(
   modifier: Modifier = Modifier,
 ) {
   val postDetails by
-    produceState<NetworkState>(NetworkState.Loading) {
+    produceState<NetworkState>(Loading) {
       runCatching { getDetails(postId) }
         .fold(
-          onSuccess = { details -> value = NetworkState.Success(details) },
-          onFailure = { value = NetworkState.Error("Failed to load comments") }
+          onSuccess = { details -> value = Success(details) },
+          onFailure = { value = Error("Failed to load comments") }
         )
     }
 
   when (postDetails) {
-    is NetworkState.Success<*> -> {
+    is Success<*> -> {
       CommentsPageInternal(
-        (postDetails as NetworkState.Success<ExtendedPostDetails>).data,
+        (postDetails as Success<ExtendedPostDetails>).data,
         postActions,
         modifier.fillMaxSize(),
       )
     }
-    is NetworkState.Error -> {
-      NetworkError((postDetails as NetworkState.Error).message)
+    is Error -> {
+      NetworkError((postDetails as Error).message)
     }
-    NetworkState.Loading -> ProgressBar(modifier)
+    Loading -> ProgressBar(modifier)
   }
 }

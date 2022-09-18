@@ -73,7 +73,11 @@ fun CommentsPage(
 ) {
   val postDetails by
     produceState<NetworkState>(NetworkState.Loading) {
-      value = NetworkState.Success(getDetails(postId))
+      runCatching { getDetails(postId) }
+        .fold(
+          onSuccess = { details -> value = NetworkState.Success(details) },
+          onFailure = { value = NetworkState.Error("Failed to load comments") }
+        )
     }
 
   when (postDetails) {

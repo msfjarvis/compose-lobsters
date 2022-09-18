@@ -11,8 +11,7 @@
       ],
       "packagePatterns": [
         "^org.jetbrains.kotlin",
-        "^com.squareup.okhttp3",
-        "^com.google.accompanist"
+        "^com.squareup.okhttp3"
       ],
       "enabled": false
     }

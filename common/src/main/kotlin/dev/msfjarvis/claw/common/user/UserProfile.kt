@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import dev.msfjarvis.claw.common.NetworkState
+import dev.msfjarvis.claw.common.NetworkState.Error
 import dev.msfjarvis.claw.common.NetworkState.Loading
 import dev.msfjarvis.claw.common.NetworkState.Success
 import dev.msfjarvis.claw.common.res.ClawIcons
@@ -33,13 +34,20 @@ fun UserProfile(
   getProfile: suspend (username: String) -> User,
   modifier: Modifier = Modifier,
 ) {
-  val user by produceState<NetworkState>(Loading) { value = Success(getProfile(username)) }
+  val user by
+    produceState<NetworkState>(Loading) {
+      runCatching { getProfile(username) }
+        .fold(
+          onSuccess = { profile -> value = Success(profile) },
+          onFailure = { value = Error("Failed to load profile for $username") }
+        )
+    }
   when (user) {
     is Success<*> -> {
       UserProfileInternal((user as Success<User>).data)
     }
-    is NetworkState.Error -> {
-      NetworkError((user as NetworkState.Error).message)
+    is Error -> {
+      NetworkError((user as Error).message)
     }
     Loading -> ProgressBar(modifier)
   }

@@ -4,9 +4,15 @@ Unofficial Android app for read-only access to [lobste.rs](https://lobste.rs), b
 
 ![Screenshots](./.github/readme_feature.png)
 
-## Distribution
+## Download
 
-The app will eventually be published to Google Play, in the mean time snapshots from the development branch are available [here](https://github.com/msfjarvis/compose-lobsters/releases/latest).
+<a href="https://play.google.com/store/apps/details?id=dev.msfjarvis.claw.android">
+  <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+       alt="Get it on Google Play"
+       height="80" />
+</a>
+
+Snapshots from the development branch can be obtained [here](https://github.com/msfjarvis/compose-lobsters/releases/latest).
 
 ## License
 

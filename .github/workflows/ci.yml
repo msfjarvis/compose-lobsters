@@ -26,7 +26,7 @@ jobs:
     - name: Run unit tests
       uses: gradle/gradle-build-action@v2.3.0
       with:
-        arguments: check -PslimTests --stacktrace --no-configuration-cache
+        arguments: check -PslimTests
         gradle-home-cache-cleanup: true
 
     - name: (Fail-only) Upload test report
@@ -58,7 +58,7 @@ jobs:
     - name: Build release app
       uses: gradle/gradle-build-action@v2.3.0
       with:
-        arguments: collectReleaseApks --no-configuration-cache
+        arguments: collectReleaseApks
         gradle-home-cache-cleanup: true
 
     - name: Clean secrets

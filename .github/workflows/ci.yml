@@ -26,7 +26,7 @@ jobs:
     - name: Run unit tests
       uses: gradle/gradle-build-action@v2.3.0
       with:
-        arguments: check --stacktrace --no-configuration-cache
+        arguments: check -PslimTests --stacktrace --no-configuration-cache
         gradle-home-cache-cleanup: true
 
     - name: (Fail-only) Upload test report

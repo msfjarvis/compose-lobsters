@@ -1,6 +1,8 @@
 package dev.msfjarvis.aps.gradle
 
 import com.android.build.api.dsl.TestExtension
+import com.android.build.api.variant.ApplicationAndroidComponentsExtension
+import com.android.build.api.variant.LibraryAndroidComponentsExtension
 import com.android.build.gradle.TestedExtension
 import org.gradle.android.AndroidCacheFixPlugin
 import org.gradle.api.JavaVersion
@@ -9,9 +11,12 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.findByType
 
+private const val SLIM_TESTS_PROPERTY = "slimTests"
+
 @Suppress("UnstableApiUsage")
 class AndroidCommonPlugin : Plugin<Project> {
   override fun apply(project: Project) {
+    project.configureSlimTests()
     project.pluginManager.apply(AndroidCacheFixPlugin::class)
     project.extensions.findByType<TestedExtension>()?.run {
       setCompileSdkVersion(33)
@@ -59,6 +64,34 @@ class AndroidCommonPlugin : Plugin<Project> {
       testOptions {
         animationsDisabled = true
         unitTests.isReturnDefaultValues = true
+      }
+    }
+  }
+}
+
+/**
+ * When the "slimTests" project property is provided, disable the unit test tasks on `release` build
+ * type and `nonFree` product flavor to avoid running the same tests repeatedly in different build
+ * variants.
+ *
+ * Examples: `./gradlew test -PslimTests` will run unit tests for `nonFreeDebug` and `debug` build
+ * variants in Android App and Library projects, and all tests in JVM projects.
+ */
+internal fun Project.configureSlimTests() {
+  if (providers.gradleProperty(SLIM_TESTS_PROPERTY).isPresent) {
+    // Disable unit test tasks on the release build type for Android Library projects
+    extensions.findByType<LibraryAndroidComponentsExtension>()?.run {
+      beforeVariants(selector().withBuildType("release")) {
+        it.enableUnitTest = false
+        it.enableAndroidTest = false
+      }
+    }
+
+    // Disable unit test tasks on the release build type for Android Application projects.
+    extensions.findByType<ApplicationAndroidComponentsExtension>()?.run {
+      beforeVariants(selector().withBuildType("release")) {
+        it.enableUnitTest = false
+        it.enableAndroidTest = false
       }
     }
   }

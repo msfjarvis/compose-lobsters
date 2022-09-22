@@ -23,12 +23,6 @@ function delete_release() {
   gh release delete --yes "${LATEST_TAG}"
 }
 
-function create_rev_file() {
-  pushd "${ASSET_DIRECTORY}" || return
-  echo "${CURRENT_REV}" | tee rev-hash.txt
-  popd || return
-}
-
 function create_release() {
   local CHANGELOG_FILE
   CHANGELOG_FILE="$(mktemp)"
@@ -43,8 +37,6 @@ overwrite_local_tag
 if [[ "$(has_release)" -eq 0 ]]; then
   delete_release
 fi
-
-create_rev_file
 
 overwrite_remote_tag
 

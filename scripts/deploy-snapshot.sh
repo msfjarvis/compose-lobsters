@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -ex
+set -euxo pipefail
 
 LATEST_TAG="latest"
 CURRENT_REV="$(git rev-parse --short HEAD)"

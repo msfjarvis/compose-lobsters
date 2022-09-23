@@ -13,14 +13,14 @@ import kotlinx.coroutines.withContext
 class LobstersPagingSource
 @AssistedInject
 constructor(
-  @Assisted private val getMorePosts: suspend (Int) -> List<LobstersPost>,
+  @Assisted private val remoteFetcher: RemoteFetcher<LobstersPost>,
   @IODispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : PagingSource<Int, LobstersPost>() {
 
   override suspend fun load(params: LoadParams<Int>): LoadResult<Int, LobstersPost> {
     return try {
       val page = params.key ?: 1
-      val posts = withContext(ioDispatcher) { getMorePosts(page) }
+      val posts = withContext(ioDispatcher) { remoteFetcher.getItemsAtPage(page) }
 
       LoadResult.Page(
         data = posts,
@@ -38,6 +38,6 @@ constructor(
 
   @AssistedFactory
   interface Factory {
-    fun create(getMorePosts: suspend (Int) -> List<LobstersPost>): LobstersPagingSource
+    fun create(remoteFetcher: RemoteFetcher<LobstersPost>): LobstersPagingSource
   }
 }

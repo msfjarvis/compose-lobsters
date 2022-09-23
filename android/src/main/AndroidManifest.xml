@@ -11,8 +11,8 @@
     android:supportsRtl="true"
     android:theme="@style/Theme.Claw.SplashScreen">
     <profileable
-        android:shell="true"
-        tools:targetApi="29" />
+      android:shell="true"
+      tools:targetApi="29" />
     <activity
       android:name=".MainActivity"
       android:configChanges="colorMode|density|fontScale|keyboard|keyboardHidden|layoutDirection|locale|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"
@@ -141,10 +141,10 @@
       android:authorities="${applicationId}.androidx-startup"
       android:exported="false"
       tools:node="merge">
-        <meta-data
-          android:name="androidx.work.WorkManagerInitializer"
-          android:value="androidx.startup"
-          tools:node="remove" />
+      <meta-data
+        android:name="androidx.work.WorkManagerInitializer"
+        android:value="androidx.startup"
+        tools:node="remove" />
     </provider>
   </application>
 </manifest>

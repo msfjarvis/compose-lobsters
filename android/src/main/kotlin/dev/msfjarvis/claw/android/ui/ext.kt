@@ -18,10 +18,8 @@ import dev.msfjarvis.claw.common.theme.DarkThemeColors
 import dev.msfjarvis.claw.common.theme.LightThemeColors
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 import dev.msfjarvis.claw.database.local.SavedPost
-import kotlinx.datetime.Instant
-import kotlinx.datetime.LocalDateTime
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 fun Context.getActivity(): ComponentActivity? {
   return when (this) {
@@ -36,7 +34,7 @@ fun Context.getActivity(): ComponentActivity? {
  * in the format returned by the Lobsters API, and is not a general purpose parsing solution.
  */
 fun String.toLocalDateTime(): LocalDateTime {
-  return Instant.parse(this).toLocalDateTime(TimeZone.currentSystemDefault())
+  return LocalDateTime.from(DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(this))
 }
 
 @Composable

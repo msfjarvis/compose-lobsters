@@ -66,7 +66,6 @@ dagger-hilt-core = { module = "com.google.dagger:hilt-core", version.ref = "dagg
 javapoet = "com.squareup:javapoet:1.13.0"
 jsoup = "org.jsoup:jsoup:1.15.3"
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
-kotlinx-datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.4.0"
 kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "serialization" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
 material_motion-core = { module = "io.github.fornewid:material-motion-compose-core", version.ref = "material_motion" }

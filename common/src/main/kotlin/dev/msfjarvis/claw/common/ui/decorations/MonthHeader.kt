@@ -13,7 +13,7 @@ import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.unit.dp
 import dev.msfjarvis.claw.common.ui.surfaceColorAtNavigationBarElevation
-import kotlinx.datetime.Month
+import java.time.Month
 
 @Composable
 fun MonthHeader(month: Month) {

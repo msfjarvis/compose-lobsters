@@ -25,7 +25,6 @@ dependencies {
   implementation(libs.compose.richtext.material3)
   implementation(libs.compose.richtext.ui)
   implementation(libs.kotlinx.coroutines.core)
-  implementation(libs.kotlinx.datetime)
   testImplementation(kotlin("test-junit"))
   testImplementation(libs.testparameterinjector)
 }

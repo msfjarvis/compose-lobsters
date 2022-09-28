@@ -56,7 +56,6 @@ dependencies {
   implementation(libs.copydown)
   implementation(libs.dagger.hilt.android)
   implementation(libs.kotlinx.coroutines.core)
-  implementation(libs.kotlinx.datetime)
   implementation(libs.kotlinx.serialization.json)
   implementation(libs.material.motion.core)
   implementation(libs.material.motion.navigation)

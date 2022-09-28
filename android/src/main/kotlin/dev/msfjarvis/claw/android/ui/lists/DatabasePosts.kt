@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.ui.decorations.MonthHeader
 import dev.msfjarvis.claw.database.local.SavedPost
-import kotlinx.datetime.Month
+import java.time.Month
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

@@ -12,7 +12,7 @@ Unofficial Android app for read-only access to [lobste.rs](https://lobste.rs), b
        height="80" />
 </a>
 
-Snapshots from the development branch can be obtained [here](https://github.com/msfjarvis/compose-lobsters/releases/latest).
+Snapshots from the development branch can be obtained [here](https://github.com/msfjarvis/compose-lobsters/releases/tag/nightly).
 
 ## License
 

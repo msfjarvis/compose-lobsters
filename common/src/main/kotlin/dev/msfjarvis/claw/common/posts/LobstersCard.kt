@@ -37,6 +37,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.flowlayout.FlowRow
@@ -109,7 +110,7 @@ fun PostDetails(post: SavedPost, modifier: Modifier = Modifier) {
     TagRow(tags = post.tags)
     Spacer(Modifier.height(4.dp))
     Submitter(
-      text = "Submitted by ${post.submitterName}",
+      text = AnnotatedString("Submitted by ${post.submitterName}"),
       avatarUrl = "https://lobste.rs/${post.submitterAvatarUrl}",
       contentDescription = "User avatar for ${post.submitterName}",
     )
@@ -131,7 +132,7 @@ fun PostTitle(
 
 @Composable
 fun Submitter(
-  text: String,
+  text: AnnotatedString,
   avatarUrl: String,
   contentDescription: String,
   modifier: Modifier = Modifier,

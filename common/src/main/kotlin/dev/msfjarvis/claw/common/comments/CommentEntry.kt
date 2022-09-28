@@ -27,6 +27,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.msfjarvis.claw.common.posts.PostActions
@@ -73,7 +74,7 @@ fun CommentsHeader(
         Spacer(Modifier.height(4.dp))
       }
       Submitter(
-        text = "Submitted by ${postDetails.submitter.username}",
+        text = AnnotatedString("Submitted by ${postDetails.submitter.username}"),
         avatarUrl = "https://lobste.rs/${postDetails.submitter.avatarUrl}",
         contentDescription = "User avatar for ${postDetails.submitter.username}",
         modifier =
@@ -140,7 +141,7 @@ fun CommentEntry(
   ) {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
       Submitter(
-        text = comment.user.username,
+        text = AnnotatedString(comment.user.username),
         avatarUrl = "https://lobste.rs/${comment.user.avatarUrl}",
         contentDescription = "User avatar for ${comment.user.username}",
         modifier =

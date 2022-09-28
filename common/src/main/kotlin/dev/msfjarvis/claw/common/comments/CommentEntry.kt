@@ -1,5 +1,6 @@
 package dev.msfjarvis.claw.common.comments
 
+import android.text.format.DateUtils
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
@@ -28,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.msfjarvis.claw.common.posts.PostActions
@@ -40,6 +42,8 @@ import dev.msfjarvis.claw.common.ui.ThemedRichText
 import dev.msfjarvis.claw.model.Comment
 import dev.msfjarvis.claw.model.ExtendedPostDetails
 import dev.msfjarvis.claw.model.LinkMetadata
+import java.time.Instant
+import java.time.temporal.TemporalAccessor
 
 @Composable
 fun CommentsHeader(
@@ -141,7 +145,13 @@ fun CommentEntry(
   ) {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
       Submitter(
-        text = AnnotatedString(comment.user.username),
+        text =
+          buildCommenterString(
+            commenterName = comment.user.username,
+            score = comment.score,
+            createdAt = comment.createdAt,
+            updatedAt = comment.updatedAt,
+          ),
         avatarUrl = "https://lobste.rs/${comment.user.avatarUrl}",
         contentDescription = "User avatar for ${comment.user.username}",
         modifier =
@@ -155,6 +165,53 @@ fun CommentEntry(
           )
         }
       }
+    }
+  }
+}
+
+@Composable
+fun buildCommenterString(
+  commenterName: String,
+  score: Int,
+  createdAt: TemporalAccessor,
+  updatedAt: TemporalAccessor,
+): AnnotatedString {
+  val now = System.currentTimeMillis()
+  val createdRelative =
+    remember(createdAt) {
+      DateUtils.getRelativeTimeSpanString(
+        Instant.from(createdAt).toEpochMilli(),
+        now,
+        DateUtils.MINUTE_IN_MILLIS,
+      )
+    }
+  val updatedRelative =
+    remember(updatedAt) {
+      DateUtils.getRelativeTimeSpanString(
+        Instant.from(updatedAt).toEpochMilli(),
+        now,
+        DateUtils.MINUTE_IN_MILLIS,
+      )
+    }
+  return buildAnnotatedString {
+    append(commenterName)
+    append(' ')
+    append('•')
+    append(' ')
+    append("$score points")
+    append(' ')
+    append('•')
+    append(' ')
+    if (updatedRelative != createdRelative) {
+      append(createdRelative.toString())
+      append(' ')
+      append('(')
+      append("Updated")
+      append(' ')
+      append(updatedRelative.toString())
+      append(')')
+    } else {
+      append(createdRelative.toString())
     }
   }
 }

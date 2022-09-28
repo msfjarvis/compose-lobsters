@@ -202,16 +202,14 @@ fun buildCommenterString(
     append(' ')
     append('•')
     append(' ')
+    append(createdRelative.toString())
     if (updatedRelative != createdRelative) {
-      append(createdRelative.toString())
       append(' ')
       append('(')
       append("Updated")
       append(' ')
       append(updatedRelative.toString())
       append(')')
-    } else {
-      append(createdRelative.toString())
     }
   }
 }

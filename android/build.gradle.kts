@@ -1,13 +1,18 @@
 @file:Suppress("DSL_SCOPE_VIOLATION", "UnstableApiUsage")
 
+import dagger.hilt.android.plugin.HiltExtension
+
 plugins {
   id("dev.msfjarvis.claw.android-application")
   id("dev.msfjarvis.claw.rename-artifacts")
   id("dev.msfjarvis.claw.kotlin-android")
-  id("dev.msfjarvis.claw.kotlin-kapt")
   id("dev.msfjarvis.claw.versioning-plugin")
   alias(libs.plugins.hilt)
+  alias(libs.plugins.napt)
 }
+
+// Hilt's aggregating task fails with NAPT
+extensions.getByType<HiltExtension>().enableAggregatingTask = false
 
 android {
   namespace = "dev.msfjarvis.claw.android"
@@ -34,8 +39,8 @@ android {
 }
 
 dependencies {
-  kapt(libs.androidx.hilt.compiler)
-  kapt(libs.dagger.hilt.compiler)
+  annotationProcessor(libs.androidx.hilt.compiler)
+  annotationProcessor(libs.dagger.hilt.compiler)
   implementation(projects.api)
   implementation(projects.common)
   implementation(projects.coroutineUtils)

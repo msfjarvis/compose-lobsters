@@ -7,7 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import com.halilibo.richtext.markdown.Markdown
-import com.halilibo.richtext.ui.material3.Material3RichText
+import com.halilibo.richtext.ui.RichText
+import com.halilibo.richtext.ui.RichTextStyle
 
 @Composable
 fun ThemedRichText(
@@ -18,6 +19,11 @@ fun ThemedRichText(
     LocalTextStyle provides MaterialTheme.typography.bodyLarge,
     LocalContentColor provides MaterialTheme.colorScheme.onBackground,
   ) {
-    Material3RichText(modifier) { Markdown(text) }
+    RichText(
+      modifier = modifier,
+      style = RichTextStyle.Default,
+    ) {
+      Markdown(text)
+    }
   }
 }

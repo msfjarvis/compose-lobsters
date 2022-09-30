@@ -9,7 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun ProgressBar(modifier: Modifier) {
+fun ProgressBar(modifier: Modifier = Modifier) {
   Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
     CircularProgressIndicator(color = MaterialTheme.colorScheme.secondary)
   }

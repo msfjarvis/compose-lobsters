@@ -95,6 +95,6 @@ fun CommentsPage(
       val error = postDetails as Error
       NetworkError(label = error.description, error = error.error)
     }
-    Loading -> ProgressBar(modifier)
+    Loading -> ProgressBar()
   }
 }

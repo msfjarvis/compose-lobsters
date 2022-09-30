@@ -56,7 +56,7 @@ fun UserProfile(
       val error = user as Error
       NetworkError(label = error.description, error = error.error)
     }
-    Loading -> ProgressBar(modifier)
+    Loading -> ProgressBar()
   }
 }
 

@@ -49,7 +49,11 @@ fun NetworkPosts(
     if (items.itemCount == 0) {
       Box(modifier = Modifier.fillMaxSize()) {
         if (loadState is LoadState.Error) {
-          LoadError(data = loadState, modifier = Modifier.align(Alignment.Center))
+          LoadError(
+            label = "Failed to load posts",
+            error = loadState.error,
+            modifier = Modifier.align(Alignment.Center),
+          )
         }
       }
     } else {

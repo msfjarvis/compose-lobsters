@@ -17,17 +17,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
-import androidx.paging.LoadState
 
 @Composable
 fun LoadError(
-  data: LoadState.Error,
+  label: String,
+  error: Throwable,
   modifier: Modifier = Modifier,
 ) {
   var showDialog by remember { mutableStateOf(false) }
   Column(verticalArrangement = Arrangement.spacedBy(4.dp), modifier = modifier) {
     Text(
-      text = "Failed to load posts",
+      text = label,
       style = MaterialTheme.typography.bodyLarge,
       modifier = Modifier.align(Alignment.CenterHorizontally),
     )
@@ -47,14 +47,14 @@ fun LoadError(
           text = "Copy stacktrace",
           modifier =
             Modifier.clickable {
-              clipboard.setText(AnnotatedString(data.error.stackTraceToString()))
+              clipboard.setText(AnnotatedString(error.stackTraceToString()))
               showDialog = false
             }
         )
       },
       text = {
         Text(
-          text = "${data.error.message}",
+          text = "${error.message}",
           style = MaterialTheme.typography.bodyLarge,
         )
       }

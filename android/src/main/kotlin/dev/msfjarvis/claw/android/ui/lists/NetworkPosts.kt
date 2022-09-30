@@ -16,9 +16,9 @@ import androidx.paging.compose.items
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import dev.msfjarvis.claw.android.ui.LoadError
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.posts.toDbModel
+import dev.msfjarvis.claw.common.ui.NetworkError
 import dev.msfjarvis.claw.database.local.SavedPost
 import dev.msfjarvis.claw.model.LobstersPost
 
@@ -49,7 +49,7 @@ fun NetworkPosts(
     if (items.itemCount == 0) {
       Box(modifier = Modifier.fillMaxSize()) {
         if (loadState is LoadState.Error) {
-          LoadError(
+          NetworkError(
             label = "Failed to load posts",
             error = loadState.error,
             modifier = Modifier.align(Alignment.Center),

@@ -13,6 +13,8 @@ import com.halilibo.richtext.markdown.Markdown
 import com.halilibo.richtext.ui.RichText
 import com.halilibo.richtext.ui.RichTextStyle
 import com.halilibo.richtext.ui.string.RichTextStringStyle
+import dev.msfjarvis.claw.common.theme.LobstersTheme
+import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
 
 @Composable
 fun ThemedRichText(
@@ -38,4 +40,27 @@ fun ThemedRichText(
       Markdown(text)
     }
   }
+}
+
+@ThemePreviews
+@Composable
+fun ThemedRichTextPreview() {
+  val text =
+    """
+      ### Heading
+      This is a paragraph body
+
+      ```
+      This is a code block
+      ```
+
+      This is an `inline code block`
+
+      [This is a link](https://github.com/msfjarvis/compose-lobsters)
+
+      ![Image](https://avatars.githubusercontent.com/u/13348378?v=4)
+  """
+      .trimIndent()
+
+  LobstersTheme { ThemedRichText(text = text) }
 }

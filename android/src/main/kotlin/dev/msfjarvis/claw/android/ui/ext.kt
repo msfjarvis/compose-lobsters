@@ -2,20 +2,13 @@ package dev.msfjarvis.claw.android.ui
 
 import android.content.Context
 import android.content.ContextWrapper
-import android.os.Build
 import androidx.activity.ComponentActivity
-import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.ColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.NavController
 import dev.msfjarvis.claw.android.ui.navigation.Destinations
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.common.posts.PostActions
-import dev.msfjarvis.claw.common.theme.DarkThemeColors
-import dev.msfjarvis.claw.common.theme.LightThemeColors
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 import dev.msfjarvis.claw.database.local.SavedPost
 import java.time.LocalDateTime
@@ -35,24 +28,6 @@ fun Context.getActivity(): ComponentActivity? {
  */
 fun String.toLocalDateTime(): LocalDateTime {
   return LocalDateTime.from(DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(this))
-}
-
-@Composable
-fun decideColorScheme(context: Context): ColorScheme {
-  val isDarkTheme = isSystemInDarkTheme()
-  return if (Build.VERSION.SDK_INT >= 31) {
-    if (isDarkTheme) {
-      dynamicDarkColorScheme(context)
-    } else {
-      dynamicLightColorScheme(context)
-    }
-  } else {
-    if (isDarkTheme) {
-      DarkThemeColors
-    } else {
-      LightThemeColors
-    }
-  }
 }
 
 @Composable

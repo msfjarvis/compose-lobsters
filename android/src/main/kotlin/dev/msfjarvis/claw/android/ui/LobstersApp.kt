@@ -74,12 +74,12 @@ fun LobstersApp(
   val savedPosts by viewModel.savedPosts.collectAsState(emptyMap())
 
   LobstersTheme(
+    dynamicColor = true,
     providedValues =
       arrayOf(
         LocalUriHandler provides urlLauncher,
         LocalHTMLConverter provides htmlConverter,
       ),
-    colorScheme = decideColorScheme(LocalContext.current),
   ) {
     val currentUiMode = LocalConfiguration.current.uiMode
     val systemBarsColor = MaterialTheme.colorScheme.surfaceColorAtNavigationBarElevation()

@@ -1,15 +1,19 @@
 package dev.msfjarvis.claw.common.theme
 
-import androidx.compose.material3.ColorScheme
+import android.os.Build
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ProvidedValue
+import androidx.compose.ui.platform.LocalContext
 import com.halilibo.richtext.ui.material3.SetupMaterial3RichText
 
-val LightThemeColors =
+internal val LightThemeColors =
   lightColorScheme(
     primary = md_theme_light_primary,
     onPrimary = md_theme_light_onPrimary,
@@ -38,7 +42,7 @@ val LightThemeColors =
     inverseSurface = md_theme_light_inverseSurface,
   )
 
-val DarkThemeColors =
+internal val DarkThemeColors =
   darkColorScheme(
     primary = md_theme_dark_primary,
     onPrimary = md_theme_dark_onPrimary,
@@ -69,10 +73,23 @@ val DarkThemeColors =
 
 @Composable
 fun LobstersTheme(
+  darkTheme: Boolean = isSystemInDarkTheme(),
+  dynamicColor: Boolean = false,
   providedValues: Array<ProvidedValue<*>> = emptyArray(),
-  colorScheme: ColorScheme,
   content: @Composable () -> Unit,
 ) {
+  val colorScheme =
+    when {
+      dynamicColor && Build.VERSION.SDK_INT >= 31 -> {
+        val context = LocalContext.current
+        if (darkTheme) {
+          dynamicDarkColorScheme(context)
+        } else {
+          dynamicLightColorScheme(context)
+        }
+      }
+      else -> if (darkTheme) DarkThemeColors else LightThemeColors
+    }
   CompositionLocalProvider(*providedValues) {
     MaterialTheme(colorScheme = colorScheme, typography = AppTypography) {
       SetupMaterial3RichText { content() }

@@ -12,6 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.unit.dp
+import dev.msfjarvis.claw.common.theme.LobstersTheme
+import dev.msfjarvis.claw.common.ui.preview.DevicePreviews
+import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
 import dev.msfjarvis.claw.common.ui.surfaceColorAtNavigationBarElevation
 import java.time.Month
 
@@ -28,4 +31,11 @@ fun MonthHeader(month: Month) {
       modifier = Modifier.padding(horizontal = 12.dp, vertical = 12.dp),
     )
   }
+}
+
+@DevicePreviews
+@ThemePreviews
+@Composable
+fun MonthHeaderPreview() {
+  LobstersTheme { MonthHeader(month = Month.APRIL) }
 }

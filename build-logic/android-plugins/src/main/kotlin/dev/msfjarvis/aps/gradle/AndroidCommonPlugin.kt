@@ -15,14 +15,20 @@ private const val SLIM_TESTS_PROPERTY = "slimTests"
 
 @Suppress("UnstableApiUsage")
 class AndroidCommonPlugin : Plugin<Project> {
+
+  private companion object {
+    const val COMPILE_SDK = 33
+    const val MIN_SDK = 26
+    const val TARGET_SDK = 33
+  }
   override fun apply(project: Project) {
     project.configureSlimTests()
     project.pluginManager.apply(AndroidCacheFixPlugin::class)
     project.extensions.findByType<TestedExtension>()?.run {
-      setCompileSdkVersion(33)
+      compileSdkVersion(COMPILE_SDK)
       defaultConfig {
-        minSdk = 26
-        targetSdk = 33
+        minSdk = MIN_SDK
+        targetSdk = TARGET_SDK
       }
 
       sourceSets {
@@ -51,10 +57,10 @@ class AndroidCommonPlugin : Plugin<Project> {
       }
     }
     project.extensions.findByType<TestExtension>()?.run {
-      compileSdk = 32
+      compileSdk = COMPILE_SDK
       defaultConfig {
-        minSdk = 26
-        targetSdk = 32
+        minSdk = MIN_SDK
+        targetSdk = TARGET_SDK
       }
       compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11

@@ -79,7 +79,7 @@ fun CommentsPage(
       runCatching { getDetails(postId) }
         .fold(
           onSuccess = { details -> value = Success(details) },
-          onFailure = { value = Error("Failed to load comments") }
+          onFailure = { value = Error(error = it, description = "Failed to load comments") }
         )
     }
 
@@ -92,7 +92,8 @@ fun CommentsPage(
       )
     }
     is Error -> {
-      NetworkError((postDetails as Error).message)
+      val error = postDetails as Error
+      NetworkError(label = error.description, error = error.error)
     }
     Loading -> ProgressBar(modifier)
   }

@@ -39,7 +39,13 @@ fun UserProfile(
       runCatching { getProfile(username) }
         .fold(
           onSuccess = { profile -> value = Success(profile) },
-          onFailure = { value = Error("Failed to load profile for $username") }
+          onFailure = {
+            value =
+              Error(
+                error = it,
+                description = "Failed to load profile for $username",
+              )
+          }
         )
     }
   when (user) {
@@ -47,7 +53,8 @@ fun UserProfile(
       UserProfileInternal((user as Success<User>).data)
     }
     is Error -> {
-      NetworkError((user as Error).message)
+      val error = user as Error
+      NetworkError(label = error.description, error = error.error)
     }
     Loading -> ProgressBar(modifier)
   }

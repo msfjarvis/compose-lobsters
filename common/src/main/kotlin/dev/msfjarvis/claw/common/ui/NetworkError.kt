@@ -9,8 +9,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun NetworkError(message: String, modifier: Modifier = Modifier) {
+fun NetworkError(label: String, error: Throwable, modifier: Modifier = Modifier) {
   Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-    Text(text = message, style = MaterialTheme.typography.displayMedium)
+    Text(text = label, style = MaterialTheme.typography.displayMedium)
   }
 }

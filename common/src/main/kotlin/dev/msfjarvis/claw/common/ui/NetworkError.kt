@@ -17,6 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
+import dev.msfjarvis.claw.common.theme.LobstersTheme
+import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
 
 @Composable
 fun NetworkError(
@@ -60,4 +62,10 @@ fun NetworkError(
       }
     )
   }
+}
+
+@ThemePreviews
+@Composable
+fun NetworkErrorPreview() {
+  LobstersTheme { NetworkError(label = "Failed to load posts", error = Throwable()) }
 }

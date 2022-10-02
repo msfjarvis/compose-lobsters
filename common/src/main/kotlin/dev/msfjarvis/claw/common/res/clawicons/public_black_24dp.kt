@@ -1,3 +1,12 @@
+@file:Suppress(
+  "ClassNaming",
+  "FunctionNaming",
+  "FunctionOnlyReturningConstant",
+  "LongMethod",
+  "MagicNumber",
+  "WildcardImport",
+)
+
 package dev.msfjarvis.claw.common.res.clawicons
 
 import androidx.compose.ui.geometry.*

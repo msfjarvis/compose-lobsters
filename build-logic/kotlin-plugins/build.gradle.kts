@@ -51,6 +51,7 @@ gradlePlugin {
 
 dependencies {
   implementation(libs.build.agp)
+  implementation(libs.build.detekt)
   implementation(libs.build.kotlin.gradle)
   implementation(libs.build.kotlin.serialization)
   implementation(libs.build.spotless)

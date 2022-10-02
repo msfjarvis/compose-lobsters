@@ -26,6 +26,16 @@
       ],
       "datasourceTemplate": "maven",
       "depNameTemplate": "com.facebook:ktfmt"
+    },
+    {
+      "fileMatch": [
+        ".kt$"
+      ],
+      "matchStrings": [
+        "TWITTER_RULES_VERSION = \"(?<currentValue>.*)\""
+      ],
+      "datasourceTemplate": "maven",
+      "depNameTemplate": "com.twitter.compose.rules:detekt"
     }
   ]
 }

@@ -712,3 +712,38 @@ style:
     excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
     excludeImports:
       - 'java.util.*'
+
+TwitterCompose:
+  CompositionLocalAllowlist:
+    active: true
+    # allowedCompositionLocals: LocalSomething,LocalSomethingElse
+  CompositionLocalNaming:
+    active: true
+  ContentEmitterReturningValues:
+    active: true
+    # contentEmitters: MyComposable,MyOtherComposable
+  ModifierComposable:
+    active: true
+  ModifierMissing:
+    active: true
+  ModifierReused:
+    active: true
+  ModifierWithoutDefault:
+    active: true
+  MultipleEmitters:
+    active: true
+    # contentEmitters: MyComposable,MyOtherComposable
+  MutableParams:
+    active: true
+  ComposableNaming:
+    active: true
+  ComposableParamOrder:
+    active: true
+  PreviewPublic:
+    active: true
+  RememberMissing:
+    active: true
+  ViewModelForwarding:
+    active: true
+  ViewModelInjection:
+    active: true

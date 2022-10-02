@@ -7,7 +7,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dev.msfjarvis.claw.util.coroutines.DefaultDispatcherProvider
 import dev.msfjarvis.claw.util.coroutines.DispatcherProvider
-import javax.inject.Qualifier
 import kotlinx.coroutines.CoroutineDispatcher
 
 @Module
@@ -33,9 +32,3 @@ abstract class CoroutineDispatcherModule {
     }
   }
 }
-
-@Qualifier @Retention(AnnotationRetention.RUNTIME) annotation class DatabaseDispatcher
-
-@Qualifier @Retention(AnnotationRetention.RUNTIME) annotation class MainDispatcher
-
-@Qualifier @Retention(AnnotationRetention.RUNTIME) annotation class IODispatcher

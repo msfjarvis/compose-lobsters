@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>ReturnCount:MetadataExtractor.kt$MetadataExtractor$suspend fun getExtractedMetadata(url: String): LinkMetadata</ID>
+  </CurrentIssues>
+</SmellBaseline>

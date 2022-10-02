@@ -1,0 +1,575 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>ClassNaming:account_circle_black_24dp.kt$account_circle_black_24dp : Painter</ID>
+    <ID>ClassNaming:arrow_back_black_24dp.kt$arrow_back_black_24dp : Painter</ID>
+    <ID>ClassNaming:comment_black_24dp.kt$comment_black_24dp : Painter</ID>
+    <ID>ClassNaming:favorite_black_24dp.kt$favorite_black_24dp : Painter</ID>
+    <ID>ClassNaming:favorite_border_black_24dp.kt$favorite_border_black_24dp : Painter</ID>
+    <ID>ClassNaming:new_releases_black_24dp.kt$new_releases_black_24dp : Painter</ID>
+    <ID>ClassNaming:new_releases_filled_black_24dp.kt$new_releases_filled_black_24dp : Painter</ID>
+    <ID>ClassNaming:public_black_24dp.kt$public_black_24dp : Painter</ID>
+    <ID>ClassNaming:whatshot_black_24dp.kt$whatshot_black_24dp : Painter</ID>
+    <ID>ClassNaming:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp : Painter</ID>
+    <ID>EmptyFunctionBlock:LobstersCardTest.kt$LobstersCardTest.Companion.&lt;no name provided&gt;${}</ID>
+    <ID>FunctionNaming:ClawAppBar.kt$@Composable @OptIn(ExperimentalMaterial3Api::class) fun ClawAppBar( backgroundColor: Color, modifier: Modifier = Modifier, navigationIcon: @Composable () -&gt; Unit = {}, title: @Composable () -&gt; Unit = {}, )</ID>
+    <ID>FunctionNaming:ClawAppBar.kt$@DevicePreviews @ThemePreviews @Composable fun ClawAppBarPreview()</ID>
+    <ID>FunctionNaming:CommentEntry.kt$@Composable fun CommentsHeader( postDetails: ExtendedPostDetails, postActions: PostActions, )</ID>
+    <ID>FunctionNaming:CommentEntry.kt$@Composable fun PostLink( linkMetadata: LinkMetadata, modifier: Modifier = Modifier, )</ID>
+    <ID>FunctionNaming:CommentEntry.kt$@OptIn(ExperimentalAnimationApi::class) @Composable fun CommentEntry( comment: Comment, )</ID>
+    <ID>FunctionNaming:Comments.kt$@Composable private fun CommentsPageInternal( details: ExtendedPostDetails, postActions: PostActions, modifier: Modifier = Modifier, )</ID>
+    <ID>FunctionNaming:Comments.kt$@Suppress("UNCHECKED_CAST") @Composable fun CommentsPage( postId: String, getDetails: suspend (String) -&gt; ExtendedPostDetails, postActions: PostActions, modifier: Modifier = Modifier, )</ID>
+    <ID>FunctionNaming:LobstersCard.kt$@Composable @OptIn(ExperimentalFoundationApi::class) fun LobstersCard( post: SavedPost, isSaved: Boolean, postActions: PostActions, modifier: Modifier = Modifier, )</ID>
+    <ID>FunctionNaming:LobstersCard.kt$@Composable @OptIn(ExperimentalMaterial3Api::class) fun CommentsButton( commentCount: Int?, modifier: Modifier = Modifier, )</ID>
+    <ID>FunctionNaming:LobstersCard.kt$@Composable fun PostDetails(post: SavedPost, modifier: Modifier = Modifier)</ID>
+    <ID>FunctionNaming:LobstersCard.kt$@Composable fun PostTitle( title: String, modifier: Modifier = Modifier, )</ID>
+    <ID>FunctionNaming:LobstersCard.kt$@Composable fun SaveButton( isSaved: Boolean, modifier: Modifier = Modifier, )</ID>
+    <ID>FunctionNaming:LobstersCard.kt$@Composable fun Submitter( text: AnnotatedString, avatarUrl: String, contentDescription: String, modifier: Modifier = Modifier, )</ID>
+    <ID>FunctionNaming:LobstersCard.kt$@Composable fun TagRow( tags: List&lt;String&gt;, modifier: Modifier = Modifier, )</ID>
+    <ID>FunctionNaming:LobstersCard.kt$@Composable fun TagText( tag: String, modifier: Modifier = Modifier, )</ID>
+    <ID>FunctionNaming:Markdown.kt$@Composable fun ThemedRichText( text: String, modifier: Modifier = Modifier, )</ID>
+    <ID>FunctionNaming:Markdown.kt$@ThemePreviews @Composable fun ThemedRichTextPreview()</ID>
+    <ID>FunctionNaming:MonthHeader.kt$@Composable fun MonthHeader(month: Month)</ID>
+    <ID>FunctionNaming:MonthHeader.kt$@DevicePreviews @ThemePreviews @Composable fun MonthHeaderPreview()</ID>
+    <ID>FunctionNaming:NetworkError.kt$@Composable fun NetworkError( label: String, error: Throwable, modifier: Modifier = Modifier, )</ID>
+    <ID>FunctionNaming:NetworkError.kt$@ThemePreviews @Composable fun NetworkErrorPreview()</ID>
+    <ID>FunctionNaming:NetworkImage.kt$@Composable fun NetworkImage( url: String, placeholder: Painter, contentDescription: String, modifier: Modifier = Modifier, )</ID>
+    <ID>FunctionNaming:ProgressBar.kt$@Composable fun ProgressBar(modifier: Modifier = Modifier)</ID>
+    <ID>FunctionNaming:Theme.kt$@Composable fun LobstersTheme( darkTheme: Boolean = isSystemInDarkTheme(), dynamicColor: Boolean = false, providedValues: Array&lt;ProvidedValue&lt;*&gt;&gt; = emptyArray(), content: @Composable () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:UserProfile.kt$@Composable private fun UserProfileInternal( user: User, modifier: Modifier = Modifier, )</ID>
+    <ID>FunctionNaming:UserProfile.kt$@Suppress("UNCHECKED_CAST") @Composable fun UserProfile( username: String, getProfile: suspend (username: String) -&gt; User, modifier: Modifier = Modifier, )</ID>
+    <ID>FunctionNaming:account_circle_black_24dp.kt$account_circle_black_24dp$private fun _paint0(drawScope: DrawScope)</ID>
+    <ID>FunctionNaming:arrow_back_black_24dp.kt$arrow_back_black_24dp$private fun _paint0(drawScope: DrawScope)</ID>
+    <ID>FunctionNaming:comment_black_24dp.kt$comment_black_24dp$private fun _paint0(drawScope: DrawScope)</ID>
+    <ID>FunctionNaming:favorite_black_24dp.kt$favorite_black_24dp$private fun _paint0(drawScope: DrawScope)</ID>
+    <ID>FunctionNaming:favorite_border_black_24dp.kt$favorite_border_black_24dp$private fun _paint0(drawScope: DrawScope)</ID>
+    <ID>FunctionNaming:new_releases_black_24dp.kt$new_releases_black_24dp$private fun _paint0(drawScope: DrawScope)</ID>
+    <ID>FunctionNaming:new_releases_filled_black_24dp.kt$new_releases_filled_black_24dp$private fun _paint0(drawScope: DrawScope)</ID>
+    <ID>FunctionNaming:public_black_24dp.kt$public_black_24dp$private fun _paint0(drawScope: DrawScope)</ID>
+    <ID>FunctionNaming:whatshot_black_24dp.kt$whatshot_black_24dp$private fun _paint0(drawScope: DrawScope)</ID>
+    <ID>FunctionNaming:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$private fun _paint0(drawScope: DrawScope)</ID>
+    <ID>FunctionOnlyReturningConstant:account_circle_black_24dp.kt$account_circle_black_24dp.Companion$fun getOrigHeight(): Double</ID>
+    <ID>FunctionOnlyReturningConstant:account_circle_black_24dp.kt$account_circle_black_24dp.Companion$fun getOrigWidth(): Double</ID>
+    <ID>FunctionOnlyReturningConstant:account_circle_black_24dp.kt$account_circle_black_24dp.Companion$fun getOrigX(): Double</ID>
+    <ID>FunctionOnlyReturningConstant:account_circle_black_24dp.kt$account_circle_black_24dp.Companion$fun getOrigY(): Double</ID>
+    <ID>FunctionOnlyReturningConstant:arrow_back_black_24dp.kt$arrow_back_black_24dp.Companion$fun getOrigHeight(): Double</ID>
+    <ID>FunctionOnlyReturningConstant:arrow_back_black_24dp.kt$arrow_back_black_24dp.Companion$fun getOrigWidth(): Double</ID>
+    <ID>FunctionOnlyReturningConstant:arrow_back_black_24dp.kt$arrow_back_black_24dp.Companion$fun getOrigX(): Double</ID>
+    <ID>FunctionOnlyReturningConstant:arrow_back_black_24dp.kt$arrow_back_black_24dp.Companion$fun getOrigY(): Double</ID>
+    <ID>FunctionOnlyReturningConstant:comment_black_24dp.kt$comment_black_24dp.Companion$fun getOrigHeight(): Double</ID>
+    <ID>FunctionOnlyReturningConstant:comment_black_24dp.kt$comment_black_24dp.Companion$fun getOrigWidth(): Double</ID>
+    <ID>FunctionOnlyReturningConstant:comment_black_24dp.kt$comment_black_24dp.Companion$fun getOrigX(): Double</ID>
+    <ID>FunctionOnlyReturningConstant:comment_black_24dp.kt$comment_black_24dp.Companion$fun getOrigY(): Double</ID>
+    <ID>FunctionOnlyReturningConstant:favorite_black_24dp.kt$favorite_black_24dp.Companion$fun getOrigHeight(): Double</ID>
+    <ID>FunctionOnlyReturningConstant:favorite_black_24dp.kt$favorite_black_24dp.Companion$fun getOrigWidth(): Double</ID>
+    <ID>FunctionOnlyReturningConstant:favorite_black_24dp.kt$favorite_black_24dp.Companion$fun getOrigX(): Double</ID>
+    <ID>FunctionOnlyReturningConstant:favorite_black_24dp.kt$favorite_black_24dp.Companion$fun getOrigY(): Double</ID>
+    <ID>FunctionOnlyReturningConstant:favorite_border_black_24dp.kt$favorite_border_black_24dp.Companion$fun getOrigHeight(): Double</ID>
+    <ID>FunctionOnlyReturningConstant:favorite_border_black_24dp.kt$favorite_border_black_24dp.Companion$fun getOrigWidth(): Double</ID>
+    <ID>FunctionOnlyReturningConstant:favorite_border_black_24dp.kt$favorite_border_black_24dp.Companion$fun getOrigX(): Double</ID>
+    <ID>FunctionOnlyReturningConstant:favorite_border_black_24dp.kt$favorite_border_black_24dp.Companion$fun getOrigY(): Double</ID>
+    <ID>FunctionOnlyReturningConstant:new_releases_black_24dp.kt$new_releases_black_24dp.Companion$fun getOrigHeight(): Double</ID>
+    <ID>FunctionOnlyReturningConstant:new_releases_black_24dp.kt$new_releases_black_24dp.Companion$fun getOrigWidth(): Double</ID>
+    <ID>FunctionOnlyReturningConstant:new_releases_black_24dp.kt$new_releases_black_24dp.Companion$fun getOrigX(): Double</ID>
+    <ID>FunctionOnlyReturningConstant:new_releases_black_24dp.kt$new_releases_black_24dp.Companion$fun getOrigY(): Double</ID>
+    <ID>FunctionOnlyReturningConstant:new_releases_filled_black_24dp.kt$new_releases_filled_black_24dp.Companion$fun getOrigHeight(): Double</ID>
+    <ID>FunctionOnlyReturningConstant:new_releases_filled_black_24dp.kt$new_releases_filled_black_24dp.Companion$fun getOrigWidth(): Double</ID>
+    <ID>FunctionOnlyReturningConstant:new_releases_filled_black_24dp.kt$new_releases_filled_black_24dp.Companion$fun getOrigX(): Double</ID>
+    <ID>FunctionOnlyReturningConstant:new_releases_filled_black_24dp.kt$new_releases_filled_black_24dp.Companion$fun getOrigY(): Double</ID>
+    <ID>FunctionOnlyReturningConstant:public_black_24dp.kt$public_black_24dp.Companion$fun getOrigHeight(): Double</ID>
+    <ID>FunctionOnlyReturningConstant:public_black_24dp.kt$public_black_24dp.Companion$fun getOrigWidth(): Double</ID>
+    <ID>FunctionOnlyReturningConstant:public_black_24dp.kt$public_black_24dp.Companion$fun getOrigX(): Double</ID>
+    <ID>FunctionOnlyReturningConstant:public_black_24dp.kt$public_black_24dp.Companion$fun getOrigY(): Double</ID>
+    <ID>FunctionOnlyReturningConstant:whatshot_black_24dp.kt$whatshot_black_24dp.Companion$fun getOrigHeight(): Double</ID>
+    <ID>FunctionOnlyReturningConstant:whatshot_black_24dp.kt$whatshot_black_24dp.Companion$fun getOrigWidth(): Double</ID>
+    <ID>FunctionOnlyReturningConstant:whatshot_black_24dp.kt$whatshot_black_24dp.Companion$fun getOrigX(): Double</ID>
+    <ID>FunctionOnlyReturningConstant:whatshot_black_24dp.kt$whatshot_black_24dp.Companion$fun getOrigY(): Double</ID>
+    <ID>FunctionOnlyReturningConstant:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp.Companion$fun getOrigHeight(): Double</ID>
+    <ID>FunctionOnlyReturningConstant:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp.Companion$fun getOrigWidth(): Double</ID>
+    <ID>FunctionOnlyReturningConstant:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp.Companion$fun getOrigX(): Double</ID>
+    <ID>FunctionOnlyReturningConstant:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp.Companion$fun getOrigY(): Double</ID>
+    <ID>LongMethod:account_circle_black_24dp.kt$account_circle_black_24dp$private fun _paint0(drawScope: DrawScope)</ID>
+    <ID>LongMethod:comment_black_24dp.kt$comment_black_24dp$private fun _paint0(drawScope: DrawScope)</ID>
+    <ID>LongMethod:favorite_border_black_24dp.kt$favorite_border_black_24dp$private fun _paint0(drawScope: DrawScope)</ID>
+    <ID>LongMethod:new_releases_black_24dp.kt$new_releases_black_24dp$private fun _paint0(drawScope: DrawScope)</ID>
+    <ID>LongMethod:new_releases_filled_black_24dp.kt$new_releases_filled_black_24dp$private fun _paint0(drawScope: DrawScope)</ID>
+    <ID>LongMethod:public_black_24dp.kt$public_black_24dp$private fun _paint0(drawScope: DrawScope)</ID>
+    <ID>LongMethod:whatshot_black_24dp.kt$whatshot_black_24dp$private fun _paint0(drawScope: DrawScope)</ID>
+    <ID>MagicNumber:Color.kt$0xFF201a19</ID>
+    <ID>MagicNumber:Color.kt$0xFF261a00</ID>
+    <ID>MagicNumber:Color.kt$0xFF2c1511</ID>
+    <ID>MagicNumber:Color.kt$0xFF362f2e</ID>
+    <ID>MagicNumber:Color.kt$0xFF3e2e04</ID>
+    <ID>MagicNumber:Color.kt$0xFF410000</ID>
+    <ID>MagicNumber:Color.kt$0xFF410001</ID>
+    <ID>MagicNumber:Color.kt$0xFF442925</ID>
+    <ID>MagicNumber:Color.kt$0xFF534341</ID>
+    <ID>MagicNumber:Color.kt$0xFF564418</ID>
+    <ID>MagicNumber:Color.kt$0xFF5d3f3a</ID>
+    <ID>MagicNumber:Color.kt$0xFF680003</ID>
+    <ID>MagicNumber:Color.kt$0xFF690000</ID>
+    <ID>MagicNumber:Color.kt$0xFF6c0000</ID>
+    <ID>MagicNumber:Color.kt$0xFF705c2e</ID>
+    <ID>MagicNumber:Color.kt$0xFF775752</ID>
+    <ID>MagicNumber:Color.kt$0xFF867370</ID>
+    <ID>MagicNumber:Color.kt$0xFF8a1a10</ID>
+    <ID>MagicNumber:Color.kt$0xFF930006</ID>
+    <ID>MagicNumber:Color.kt$0xFFa08c89</ID>
+    <ID>MagicNumber:Color.kt$0xFFac3325</ID>
+    <ID>MagicNumber:Color.kt$0xFFba1b1b</ID>
+    <ID>MagicNumber:Color.kt$0xFFd8c2be</ID>
+    <ID>MagicNumber:Color.kt$0xFFdec48c</ID>
+    <ID>MagicNumber:Color.kt$0xFFe7bdb6</ID>
+    <ID>MagicNumber:Color.kt$0xFFede0de</ID>
+    <ID>MagicNumber:Color.kt$0xFFf5deda</ID>
+    <ID>MagicNumber:Color.kt$0xFFfbdfa5</ID>
+    <ID>MagicNumber:Color.kt$0xFFfbeeec</ID>
+    <ID>MagicNumber:Color.kt$0xFFfcfcfc</ID>
+    <ID>MagicNumber:Color.kt$0xFFffb4a6</ID>
+    <ID>MagicNumber:Color.kt$0xFFffb4a9</ID>
+    <ID>MagicNumber:Color.kt$0xFFffdad3</ID>
+    <ID>MagicNumber:Color.kt$0xFFffdad4</ID>
+    <ID>MagicNumber:Color.kt$0xFFffffff</ID>
+    <ID>MagicNumber:CommentEntry.kt$16</ID>
+    <ID>MagicNumber:LobstersCard.kt$50</ID>
+    <ID>MagicNumber:LobstersCard.kt$8</ID>
+    <ID>MagicNumber:Theme.kt$31</ID>
+    <ID>MagicNumber:Type.kt$0.25</ID>
+    <ID>MagicNumber:account_circle_black_24dp.kt$account_circle_black_24dp$10.07f</ID>
+    <ID>MagicNumber:account_circle_black_24dp.kt$account_circle_black_24dp$11.43f</ID>
+    <ID>MagicNumber:account_circle_black_24dp.kt$account_circle_black_24dp$12.0f</ID>
+    <ID>MagicNumber:account_circle_black_24dp.kt$account_circle_black_24dp$13.0f</ID>
+    <ID>MagicNumber:account_circle_black_24dp.kt$account_circle_black_24dp$13.93f</ID>
+    <ID>MagicNumber:account_circle_black_24dp.kt$account_circle_black_24dp$14.03f</ID>
+    <ID>MagicNumber:account_circle_black_24dp.kt$account_circle_black_24dp$14.32f</ID>
+    <ID>MagicNumber:account_circle_black_24dp.kt$account_circle_black_24dp$15.0f</ID>
+    <ID>MagicNumber:account_circle_black_24dp.kt$account_circle_black_24dp$15.5f</ID>
+    <ID>MagicNumber:account_circle_black_24dp.kt$account_circle_black_24dp$15.8f</ID>
+    <ID>MagicNumber:account_circle_black_24dp.kt$account_circle_black_24dp$16.43f</ID>
+    <ID>MagicNumber:account_circle_black_24dp.kt$account_circle_black_24dp$16.45f</ID>
+    <ID>MagicNumber:account_circle_black_24dp.kt$account_circle_black_24dp$17.119999f</ID>
+    <ID>MagicNumber:account_circle_black_24dp.kt$account_circle_black_24dp$17.52f</ID>
+    <ID>MagicNumber:account_circle_black_24dp.kt$account_circle_black_24dp$18.14f</ID>
+    <ID>MagicNumber:account_circle_black_24dp.kt$account_circle_black_24dp$19.18f</ID>
+    <ID>MagicNumber:account_circle_black_24dp.kt$account_circle_black_24dp$20.0f</ID>
+    <ID>MagicNumber:account_circle_black_24dp.kt$account_circle_black_24dp$22.0f</ID>
+    <ID>MagicNumber:account_circle_black_24dp.kt$account_circle_black_24dp$255</ID>
+    <ID>MagicNumber:account_circle_black_24dp.kt$account_circle_black_24dp$5.86f</ID>
+    <ID>MagicNumber:account_circle_black_24dp.kt$account_circle_black_24dp$6.0f</ID>
+    <ID>MagicNumber:account_circle_black_24dp.kt$account_circle_black_24dp$6.4799995f</ID>
+    <ID>MagicNumber:account_circle_black_24dp.kt$account_circle_black_24dp$6.48f</ID>
+    <ID>MagicNumber:account_circle_black_24dp.kt$account_circle_black_24dp$7.55f</ID>
+    <ID>MagicNumber:account_circle_black_24dp.kt$account_circle_black_24dp$7.5699997f</ID>
+    <ID>MagicNumber:account_circle_black_24dp.kt$account_circle_black_24dp$7.57f</ID>
+    <ID>MagicNumber:account_circle_black_24dp.kt$account_circle_black_24dp$8.5f</ID>
+    <ID>MagicNumber:account_circle_black_24dp.kt$account_circle_black_24dp$9.5f</ID>
+    <ID>MagicNumber:account_circle_black_24dp.kt$account_circle_black_24dp$9.68f</ID>
+    <ID>MagicNumber:account_circle_black_24dp.kt$account_circle_black_24dp$9.97f</ID>
+    <ID>MagicNumber:arrow_back_black_24dp.kt$arrow_back_black_24dp$11.0f</ID>
+    <ID>MagicNumber:arrow_back_black_24dp.kt$arrow_back_black_24dp$12.0f</ID>
+    <ID>MagicNumber:arrow_back_black_24dp.kt$arrow_back_black_24dp$13.0f</ID>
+    <ID>MagicNumber:arrow_back_black_24dp.kt$arrow_back_black_24dp$13.41f</ID>
+    <ID>MagicNumber:arrow_back_black_24dp.kt$arrow_back_black_24dp$13.42f</ID>
+    <ID>MagicNumber:arrow_back_black_24dp.kt$arrow_back_black_24dp$18.59f</ID>
+    <ID>MagicNumber:arrow_back_black_24dp.kt$arrow_back_black_24dp$20.0f</ID>
+    <ID>MagicNumber:arrow_back_black_24dp.kt$arrow_back_black_24dp$255</ID>
+    <ID>MagicNumber:arrow_back_black_24dp.kt$arrow_back_black_24dp$4.0f</ID>
+    <ID>MagicNumber:arrow_back_black_24dp.kt$arrow_back_black_24dp$5.41f</ID>
+    <ID>MagicNumber:arrow_back_black_24dp.kt$arrow_back_black_24dp$7.83f</ID>
+    <ID>MagicNumber:comment_black_24dp.kt$comment_black_24dp$11.0f</ID>
+    <ID>MagicNumber:comment_black_24dp.kt$comment_black_24dp$12.0f</ID>
+    <ID>MagicNumber:comment_black_24dp.kt$comment_black_24dp$14.0f</ID>
+    <ID>MagicNumber:comment_black_24dp.kt$comment_black_24dp$16.0f</ID>
+    <ID>MagicNumber:comment_black_24dp.kt$comment_black_24dp$17.17f</ID>
+    <ID>MagicNumber:comment_black_24dp.kt$comment_black_24dp$17.1f</ID>
+    <ID>MagicNumber:comment_black_24dp.kt$comment_black_24dp$18.0f</ID>
+    <ID>MagicNumber:comment_black_24dp.kt$comment_black_24dp$18.83f</ID>
+    <ID>MagicNumber:comment_black_24dp.kt$comment_black_24dp$2.9f</ID>
+    <ID>MagicNumber:comment_black_24dp.kt$comment_black_24dp$20.0f</ID>
+    <ID>MagicNumber:comment_black_24dp.kt$comment_black_24dp$21.1f</ID>
+    <ID>MagicNumber:comment_black_24dp.kt$comment_black_24dp$21.99f</ID>
+    <ID>MagicNumber:comment_black_24dp.kt$comment_black_24dp$22.0f</ID>
+    <ID>MagicNumber:comment_black_24dp.kt$comment_black_24dp$255</ID>
+    <ID>MagicNumber:comment_black_24dp.kt$comment_black_24dp$4.0f</ID>
+    <ID>MagicNumber:comment_black_24dp.kt$comment_black_24dp$6.0f</ID>
+    <ID>MagicNumber:comment_black_24dp.kt$comment_black_24dp$8.0f</ID>
+    <ID>MagicNumber:comment_black_24dp.kt$comment_black_24dp$9.0f</ID>
+    <ID>MagicNumber:favorite_black_24dp.kt$favorite_black_24dp$10.55f</ID>
+    <ID>MagicNumber:favorite_black_24dp.kt$favorite_black_24dp$10.91f</ID>
+    <ID>MagicNumber:favorite_black_24dp.kt$favorite_black_24dp$12.0f</ID>
+    <ID>MagicNumber:favorite_black_24dp.kt$favorite_black_24dp$12.28f</ID>
+    <ID>MagicNumber:favorite_black_24dp.kt$favorite_black_24dp$13.09f</ID>
+    <ID>MagicNumber:favorite_black_24dp.kt$favorite_black_24dp$13.45f</ID>
+    <ID>MagicNumber:favorite_black_24dp.kt$favorite_black_24dp$14.76f</ID>
+    <ID>MagicNumber:favorite_black_24dp.kt$favorite_black_24dp$15.360001f</ID>
+    <ID>MagicNumber:favorite_black_24dp.kt$favorite_black_24dp$15.36f</ID>
+    <ID>MagicNumber:favorite_black_24dp.kt$favorite_black_24dp$16.5f</ID>
+    <ID>MagicNumber:favorite_black_24dp.kt$favorite_black_24dp$18.6f</ID>
+    <ID>MagicNumber:favorite_black_24dp.kt$favorite_black_24dp$19.58f</ID>
+    <ID>MagicNumber:favorite_black_24dp.kt$favorite_black_24dp$20.03f</ID>
+    <ID>MagicNumber:favorite_black_24dp.kt$favorite_black_24dp$20.04f</ID>
+    <ID>MagicNumber:favorite_black_24dp.kt$favorite_black_24dp$21.35f</ID>
+    <ID>MagicNumber:favorite_black_24dp.kt$favorite_black_24dp$22.0f</ID>
+    <ID>MagicNumber:favorite_black_24dp.kt$favorite_black_24dp$255</ID>
+    <ID>MagicNumber:favorite_black_24dp.kt$favorite_black_24dp$3.0f</ID>
+    <ID>MagicNumber:favorite_black_24dp.kt$favorite_black_24dp$3.81f</ID>
+    <ID>MagicNumber:favorite_black_24dp.kt$favorite_black_24dp$4.42f</ID>
+    <ID>MagicNumber:favorite_black_24dp.kt$favorite_black_24dp$5.09f</ID>
+    <ID>MagicNumber:favorite_black_24dp.kt$favorite_black_24dp$5.42f</ID>
+    <ID>MagicNumber:favorite_black_24dp.kt$favorite_black_24dp$5.4f</ID>
+    <ID>MagicNumber:favorite_black_24dp.kt$favorite_black_24dp$7.5f</ID>
+    <ID>MagicNumber:favorite_black_24dp.kt$favorite_black_24dp$8.5f</ID>
+    <ID>MagicNumber:favorite_black_24dp.kt$favorite_black_24dp$9.24f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$10.54f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$10.55f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$10.91f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$11.07f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$11.39f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$11.9f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$12.0f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$12.1f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$12.28f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$12.94f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$13.09f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$13.45f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$13.46f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$14.24f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$14.76f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$14.96f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$15.360001f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$15.36f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$16.5f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$16.86f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$18.55f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$18.5f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$18.65f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$18.6f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$19.58f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$20.03f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$20.04f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$20.0f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$21.35f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$22.0f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$255</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$3.0f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$3.81f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$4.0f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$4.42f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$5.09f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$5.0f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$5.42f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$5.4f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$5.5f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$5.99f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$6.5f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$7.14f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$7.3599997f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$7.5f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$8.5f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$9.04f</ID>
+    <ID>MagicNumber:favorite_border_black_24dp.kt$favorite_border_black_24dp$9.24f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$1.5399997f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$1.54f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$11.0f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$12.0f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$13.0f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$14.099999f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$14.11f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$14.58f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$14.779999f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$14.78f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$15.0f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$15.399999f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$15.4f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$16.01f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$16.9f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$17.0f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$17.289999f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$17.52f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$18.46f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$18.47f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$18.49f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$18.75f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$18.82f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$19.279999f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$19.289999f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$19.93f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$20.34f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$20.56f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$20.9f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$21.0f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$22.46f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$22.47f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$23.0f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$255</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$3.0f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$3.1000001f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$3.44f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$3.66f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$4.0699997f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$4.08f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$4.72f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$5.18f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$5.25f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$5.51f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$5.5299997f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$5.54f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$6.4799995f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$6.4900002f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$6.71f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$7.0999994f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$7.0f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$7.1000004f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$7.9900002f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$7.99f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$8.6f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$9.21f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$9.22f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$9.42f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$9.889999f</ID>
+    <ID>MagicNumber:new_releases_black_24dp.kt$new_releases_black_24dp$9.88f</ID>
+    <ID>MagicNumber:new_releases_filled_black_24dp.kt$new_releases_filled_black_24dp$1.5399997f</ID>
+    <ID>MagicNumber:new_releases_filled_black_24dp.kt$new_releases_filled_black_24dp$1.54f</ID>
+    <ID>MagicNumber:new_releases_filled_black_24dp.kt$new_releases_filled_black_24dp$11.0f</ID>
+    <ID>MagicNumber:new_releases_filled_black_24dp.kt$new_releases_filled_black_24dp$12.0f</ID>
+    <ID>MagicNumber:new_releases_filled_black_24dp.kt$new_releases_filled_black_24dp$13.0f</ID>
+    <ID>MagicNumber:new_releases_filled_black_24dp.kt$new_releases_filled_black_24dp$14.779999f</ID>
+    <ID>MagicNumber:new_releases_filled_black_24dp.kt$new_releases_filled_black_24dp$14.78f</ID>
+    <ID>MagicNumber:new_releases_filled_black_24dp.kt$new_releases_filled_black_24dp$15.0f</ID>
+    <ID>MagicNumber:new_releases_filled_black_24dp.kt$new_releases_filled_black_24dp$15.399999f</ID>
+    <ID>MagicNumber:new_releases_filled_black_24dp.kt$new_releases_filled_black_24dp$15.4f</ID>
+    <ID>MagicNumber:new_releases_filled_black_24dp.kt$new_releases_filled_black_24dp$17.0f</ID>
+    <ID>MagicNumber:new_releases_filled_black_24dp.kt$new_releases_filled_black_24dp$17.289999f</ID>
+    <ID>MagicNumber:new_releases_filled_black_24dp.kt$new_releases_filled_black_24dp$18.46f</ID>
+    <ID>MagicNumber:new_releases_filled_black_24dp.kt$new_releases_filled_black_24dp$18.47f</ID>
+    <ID>MagicNumber:new_releases_filled_black_24dp.kt$new_releases_filled_black_24dp$19.279999f</ID>
+    <ID>MagicNumber:new_releases_filled_black_24dp.kt$new_releases_filled_black_24dp$19.289999f</ID>
+    <ID>MagicNumber:new_releases_filled_black_24dp.kt$new_releases_filled_black_24dp$20.56f</ID>
+    <ID>MagicNumber:new_releases_filled_black_24dp.kt$new_releases_filled_black_24dp$20.9f</ID>
+    <ID>MagicNumber:new_releases_filled_black_24dp.kt$new_releases_filled_black_24dp$21.0f</ID>
+    <ID>MagicNumber:new_releases_filled_black_24dp.kt$new_releases_filled_black_24dp$22.46f</ID>
+    <ID>MagicNumber:new_releases_filled_black_24dp.kt$new_releases_filled_black_24dp$22.47f</ID>
+    <ID>MagicNumber:new_releases_filled_black_24dp.kt$new_releases_filled_black_24dp$23.0f</ID>
+    <ID>MagicNumber:new_releases_filled_black_24dp.kt$new_releases_filled_black_24dp$255</ID>
+    <ID>MagicNumber:new_releases_filled_black_24dp.kt$new_releases_filled_black_24dp$3.0f</ID>
+    <ID>MagicNumber:new_releases_filled_black_24dp.kt$new_releases_filled_black_24dp$3.1000001f</ID>
+    <ID>MagicNumber:new_releases_filled_black_24dp.kt$new_releases_filled_black_24dp$3.44f</ID>
+    <ID>MagicNumber:new_releases_filled_black_24dp.kt$new_releases_filled_black_24dp$4.72f</ID>
+    <ID>MagicNumber:new_releases_filled_black_24dp.kt$new_releases_filled_black_24dp$5.5299997f</ID>
+    <ID>MagicNumber:new_releases_filled_black_24dp.kt$new_releases_filled_black_24dp$5.54f</ID>
+    <ID>MagicNumber:new_releases_filled_black_24dp.kt$new_releases_filled_black_24dp$6.71f</ID>
+    <ID>MagicNumber:new_releases_filled_black_24dp.kt$new_releases_filled_black_24dp$7.0f</ID>
+    <ID>MagicNumber:new_releases_filled_black_24dp.kt$new_releases_filled_black_24dp$8.6f</ID>
+    <ID>MagicNumber:new_releases_filled_black_24dp.kt$new_releases_filled_black_24dp$9.21f</ID>
+    <ID>MagicNumber:new_releases_filled_black_24dp.kt$new_releases_filled_black_24dp$9.22f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$10.0f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$10.22f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$10.54f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$10.79f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$10.99f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$11.39f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$12.0f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$12.45f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$12.99f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$13.0f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$13.99f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$14.08f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$14.09f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$14.54f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$14.99f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$15.0f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$15.98f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$15.99f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$16.07f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$16.0f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$16.59f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$16.89f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$17.1f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$17.4f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$17.52f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$17.63f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$17.89f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$17.92f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$18.0f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$19.19f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$19.43f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$19.93f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$20.0f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$22.0f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$255</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$4.08f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$4.0f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$4.21f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$4.59f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$5.0f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$5.77f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$6.1f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$6.4799995f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$6.48f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$7.06f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$7.0f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$7.99f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$8.65f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$8.99f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$9.0f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$9.55f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$9.889999f</ID>
+    <ID>MagicNumber:public_black_24dp.kt$public_black_24dp$9.99f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$0.67f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$10.21f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$10.509999f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$10.58f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$10.62f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$10.83f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$10.96f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$11.16f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$11.2f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$11.44f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$11.57f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$11.889999f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$12.0f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$12.16f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$12.23f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$12.47f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$12.889999f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$12.88f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$12.94f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$13.16f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$13.21f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$13.44f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$13.49f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$13.5f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$13.94f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$14.0f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$14.24f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$14.28f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$14.32f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$14.349999f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$15.139999f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$15.309999f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$15.45f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$15.57f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$15.58f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$15.599999f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$16.11f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$16.33f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$16.42f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$16.91f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$17.31f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$17.34f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$17.41f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$17.99f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$18.0f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$18.42f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$20.0f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$22.0f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$255</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$3.3200002f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$3.8f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$4.0f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$5.1100006f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$5.21f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$5.4700003f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$5.4700007f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$6.0f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$6.3f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$6.77f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$6.86f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$7.23f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$7.2f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$7.51f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$7.5300007f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$7.53f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$7.58f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$7.87f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$8.61f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$8.690001f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$8.76f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$8.97f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$9.200001f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$9.27f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$9.37f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$9.4f</ID>
+    <ID>MagicNumber:whatshot_black_24dp.kt$whatshot_black_24dp$9.57f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$0.67f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$10.16f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$10.62f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$10.83f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$11.299999f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$11.45f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$11.53f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$11.709998f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$11.71f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$12.0f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$12.38f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$12.74f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$12.809999f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$12.889999f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$13.07f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$13.099999f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$13.5f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$14.0f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$14.24f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$14.2f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$14.359999f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$14.9f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$15.86f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$15.919999f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$16.31f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$16.42f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$16.509998f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$16.85f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$17.41f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$17.6f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$18.42f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$19.0f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$20.0f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$22.0f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$255</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$3.3200002f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$3.8f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$4.0f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$5.1100006f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$5.21f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$5.4700003f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$5.4700007f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$7.23f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$7.2f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$7.51f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$7.5300007f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$7.53f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$7.58f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$8.49f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$8.61f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$8.76f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$9.200001f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$9.54f</ID>
+    <ID>MagicNumber:whatshot_filled_black_24dp.kt$whatshot_filled_black_24dp$9.93f</ID>
+    <ID>SpreadOperator:Theme.kt$(*providedValues)</ID>
+    <ID>SwallowedException:UrlLauncher.kt$UrlLauncher$e: ActivityNotFoundException</ID>
+    <ID>ThrowingExceptionsWithoutMessageOrCause:NetworkError.kt$Throwable()</ID>
+    <ID>UnnecessaryAbstractClass:BasePaparazziTest.kt$BasePaparazziTest$BasePaparazziTest</ID>
+    <ID>UnusedPrivateMember:UserProfile.kt$modifier: Modifier = Modifier</ID>
+    <ID>WildcardImport:account_circle_black_24dp.kt$import androidx.compose.ui.geometry.*</ID>
+    <ID>WildcardImport:account_circle_black_24dp.kt$import androidx.compose.ui.graphics.*</ID>
+    <ID>WildcardImport:arrow_back_black_24dp.kt$import androidx.compose.ui.geometry.*</ID>
+    <ID>WildcardImport:arrow_back_black_24dp.kt$import androidx.compose.ui.graphics.*</ID>
+    <ID>WildcardImport:comment_black_24dp.kt$import androidx.compose.ui.geometry.*</ID>
+    <ID>WildcardImport:comment_black_24dp.kt$import androidx.compose.ui.graphics.*</ID>
+    <ID>WildcardImport:favorite_black_24dp.kt$import androidx.compose.ui.geometry.*</ID>
+    <ID>WildcardImport:favorite_black_24dp.kt$import androidx.compose.ui.graphics.*</ID>
+    <ID>WildcardImport:favorite_border_black_24dp.kt$import androidx.compose.ui.geometry.*</ID>
+    <ID>WildcardImport:favorite_border_black_24dp.kt$import androidx.compose.ui.graphics.*</ID>
+    <ID>WildcardImport:new_releases_black_24dp.kt$import androidx.compose.ui.geometry.*</ID>
+    <ID>WildcardImport:new_releases_black_24dp.kt$import androidx.compose.ui.graphics.*</ID>
+    <ID>WildcardImport:new_releases_filled_black_24dp.kt$import androidx.compose.ui.geometry.*</ID>
+    <ID>WildcardImport:new_releases_filled_black_24dp.kt$import androidx.compose.ui.graphics.*</ID>
+    <ID>WildcardImport:public_black_24dp.kt$import androidx.compose.ui.geometry.*</ID>
+    <ID>WildcardImport:public_black_24dp.kt$import androidx.compose.ui.graphics.*</ID>
+    <ID>WildcardImport:whatshot_black_24dp.kt$import androidx.compose.ui.geometry.*</ID>
+    <ID>WildcardImport:whatshot_black_24dp.kt$import androidx.compose.ui.graphics.*</ID>
+    <ID>WildcardImport:whatshot_filled_black_24dp.kt$import androidx.compose.ui.geometry.*</ID>
+    <ID>WildcardImport:whatshot_filled_black_24dp.kt$import androidx.compose.ui.graphics.*</ID>
+  </CurrentIssues>
+</SmellBaseline>

@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>LongParameterList:Comment.kt$Comment$( val comment: String, val url: String, val score: Int, @Serializable(with = JavaInstantSerializer::class) @SerialName("created_at") val createdAt: TemporalAccessor, @Serializable(with = JavaInstantSerializer::class) @SerialName("updated_at") val updatedAt: TemporalAccessor, @SerialName("indent_level") val indentLevel: Int, @SerialName("commenting_user") val user: User, )</ID>
+    <ID>LongParameterList:ExtendedPostDetails.kt$ExtendedPostDetails$( val title: String, val linkMetadata: LinkMetadata, val description: String, val submitter: User, val tags: List&lt;String&gt;, val comments: List&lt;Comment&gt;, val commentsUrl: String, )</ID>
+    <ID>LongParameterList:LobstersPost.kt$LobstersPost$( @SerialName("short_id") val shortId: String, @SerialName("created_at") val createdAt: String, val title: String, val url: String, val description: String, @SerialName("comment_count") val commentCount: Int, @SerialName("comments_url") val commentsUrl: String, @SerialName("submitter_user") val submitter: User, val tags: List&lt;String&gt;, )</ID>
+    <ID>LongParameterList:LobstersPostDetails.kt$LobstersPostDetails$( @SerialName("short_id") val shortId: String, @SerialName("created_at") val createdAt: String, val title: String, val url: String, val description: String, @SerialName("comment_count") val commentCount: Int, @SerialName("comments_url") val commentsUrl: String, @SerialName("submitter_user") val submitter: User, val tags: List&lt;String&gt;, val comments: List&lt;Comment&gt;, )</ID>
+  </CurrentIssues>
+</SmellBaseline>

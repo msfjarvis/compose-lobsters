@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>TopLevelPropertyNaming:Database.kt$internal const val LobstersDatabaseName = "SavedPosts.db"</ID>
+  </CurrentIssues>
+</SmellBaseline>

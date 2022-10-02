@@ -2,11 +2,6 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
-    <ID>FunctionNaming:ClawNavigationBar.kt$@Composable fun ClawNavigationBar( navController: NavController, items: List&lt;NavigationItem&gt;, isVisible: Boolean, modifier: Modifier = Modifier, )</ID>
-    <ID>FunctionNaming:DatabasePosts.kt$@OptIn(ExperimentalFoundationApi::class) @Composable fun DatabasePosts( items: Map&lt;Month, List&lt;SavedPost&gt;&gt;, listState: LazyListState, postActions: PostActions, modifier: Modifier = Modifier, )</ID>
-    <ID>FunctionNaming:ListItem.kt$@Composable fun ListItem( item: SavedPost, isSaved: suspend (SavedPost) -&gt; Boolean, postActions: PostActions, modifier: Modifier = Modifier, )</ID>
-    <ID>FunctionNaming:LobstersApp.kt$@OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class) @Composable fun LobstersApp( viewModel: ClawViewModel = viewModel(), urlLauncher: UrlLauncher, htmlConverter: HTMLConverter, setWebUri: (String?) -&gt; Unit, )</ID>
-    <ID>FunctionNaming:NetworkPosts.kt$@Composable fun NetworkPosts( items: LazyPagingItems&lt;LobstersPost&gt;, listState: LazyListState, isPostSaved: suspend (SavedPost) -&gt; Boolean, reloadPosts: () -&gt; Unit, postActions: PostActions, modifier: Modifier = Modifier, )</ID>
     <ID>FunctionOnlyReturningConstant:Destinations.kt$Destinations.Hottest$fun getRoute()</ID>
     <ID>FunctionOnlyReturningConstant:Destinations.kt$Destinations.Newest$fun getRoute()</ID>
     <ID>FunctionOnlyReturningConstant:Destinations.kt$Destinations.Saved$fun getRoute()</ID>
@@ -15,13 +10,11 @@
     <ID>MagicNumber:ClawApplication.kt$ClawApplication$0.25</ID>
     <ID>MagicNumber:ClawApplication.kt$ClawApplication$1024</ID>
     <ID>MagicNumber:ClawApplication.kt$ClawApplication$25L</ID>
-    <ID>MagicNumber:ClawViewModel.kt$ClawViewModel$20</ID>
     <ID>MagicNumber:MainActivity.kt$MainActivity$24</ID>
     <ID>MagicNumber:OkHttpModule.kt$OkHttpModule.Companion$10</ID>
     <ID>MagicNumber:OkHttpModule.kt$OkHttpModule.Companion$1024</ID>
     <ID>MagicNumber:OkHttpModule.kt$OkHttpModule.Companion.&lt;no name provided&gt;$0x000090000</ID>
     <ID>TooGenericExceptionCaught:LobstersPagingSource.kt$LobstersPagingSource$e: Exception</ID>
-    <ID>TopLevelPropertyNaming:ClawNavigationBar.kt$private const val AnimationDuration = 100</ID>
     <ID>UnnecessaryAbstractClass:CoroutineDispatcherModule.kt$CoroutineDispatcherModule$CoroutineDispatcherModule</ID>
     <ID>UnnecessaryAbstractClass:OkHttpModule.kt$OkHttpModule$OkHttpModule</ID>
   </CurrentIssues>

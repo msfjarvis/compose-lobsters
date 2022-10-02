@@ -3,72 +3,10 @@
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
     <ID>EmptyFunctionBlock:LobstersCardTest.kt$LobstersCardTest.Companion.&lt;no name provided&gt;${}</ID>
-    <ID>FunctionNaming:ClawAppBar.kt$@Composable @OptIn(ExperimentalMaterial3Api::class) fun ClawAppBar( backgroundColor: Color, modifier: Modifier = Modifier, navigationIcon: @Composable () -&gt; Unit = {}, title: @Composable () -&gt; Unit = {}, )</ID>
-    <ID>FunctionNaming:ClawAppBar.kt$@DevicePreviews @ThemePreviews @Composable fun ClawAppBarPreview()</ID>
-    <ID>FunctionNaming:CommentEntry.kt$@Composable fun CommentsHeader( postDetails: ExtendedPostDetails, postActions: PostActions, )</ID>
-    <ID>FunctionNaming:CommentEntry.kt$@Composable fun PostLink( linkMetadata: LinkMetadata, modifier: Modifier = Modifier, )</ID>
-    <ID>FunctionNaming:CommentEntry.kt$@OptIn(ExperimentalAnimationApi::class) @Composable fun CommentEntry( comment: Comment, )</ID>
-    <ID>FunctionNaming:Comments.kt$@Composable private fun CommentsPageInternal( details: ExtendedPostDetails, postActions: PostActions, modifier: Modifier = Modifier, )</ID>
-    <ID>FunctionNaming:Comments.kt$@Suppress("UNCHECKED_CAST") @Composable fun CommentsPage( postId: String, getDetails: suspend (String) -&gt; ExtendedPostDetails, postActions: PostActions, modifier: Modifier = Modifier, )</ID>
-    <ID>FunctionNaming:LobstersCard.kt$@Composable @OptIn(ExperimentalFoundationApi::class) fun LobstersCard( post: SavedPost, isSaved: Boolean, postActions: PostActions, modifier: Modifier = Modifier, )</ID>
-    <ID>FunctionNaming:LobstersCard.kt$@Composable @OptIn(ExperimentalMaterial3Api::class) fun CommentsButton( commentCount: Int?, modifier: Modifier = Modifier, )</ID>
-    <ID>FunctionNaming:LobstersCard.kt$@Composable fun PostDetails(post: SavedPost, modifier: Modifier = Modifier)</ID>
-    <ID>FunctionNaming:LobstersCard.kt$@Composable fun PostTitle( title: String, modifier: Modifier = Modifier, )</ID>
-    <ID>FunctionNaming:LobstersCard.kt$@Composable fun SaveButton( isSaved: Boolean, modifier: Modifier = Modifier, )</ID>
-    <ID>FunctionNaming:LobstersCard.kt$@Composable fun Submitter( text: AnnotatedString, avatarUrl: String, contentDescription: String, modifier: Modifier = Modifier, )</ID>
-    <ID>FunctionNaming:LobstersCard.kt$@Composable fun TagRow( tags: List&lt;String&gt;, modifier: Modifier = Modifier, )</ID>
-    <ID>FunctionNaming:LobstersCard.kt$@Composable fun TagText( tag: String, modifier: Modifier = Modifier, )</ID>
-    <ID>FunctionNaming:Markdown.kt$@Composable fun ThemedRichText( text: String, modifier: Modifier = Modifier, )</ID>
-    <ID>FunctionNaming:Markdown.kt$@ThemePreviews @Composable fun ThemedRichTextPreview()</ID>
-    <ID>FunctionNaming:MonthHeader.kt$@Composable fun MonthHeader(month: Month)</ID>
-    <ID>FunctionNaming:MonthHeader.kt$@DevicePreviews @ThemePreviews @Composable fun MonthHeaderPreview()</ID>
-    <ID>FunctionNaming:NetworkError.kt$@Composable fun NetworkError( label: String, error: Throwable, modifier: Modifier = Modifier, )</ID>
-    <ID>FunctionNaming:NetworkError.kt$@ThemePreviews @Composable fun NetworkErrorPreview()</ID>
-    <ID>FunctionNaming:NetworkImage.kt$@Composable fun NetworkImage( url: String, placeholder: Painter, contentDescription: String, modifier: Modifier = Modifier, )</ID>
-    <ID>FunctionNaming:ProgressBar.kt$@Composable fun ProgressBar(modifier: Modifier = Modifier)</ID>
-    <ID>FunctionNaming:Theme.kt$@Composable fun LobstersTheme( darkTheme: Boolean = isSystemInDarkTheme(), dynamicColor: Boolean = false, providedValues: Array&lt;ProvidedValue&lt;*&gt;&gt; = emptyArray(), content: @Composable () -&gt; Unit, )</ID>
-    <ID>FunctionNaming:UserProfile.kt$@Composable private fun UserProfileInternal( user: User, modifier: Modifier = Modifier, )</ID>
-    <ID>FunctionNaming:UserProfile.kt$@Suppress("UNCHECKED_CAST") @Composable fun UserProfile( username: String, getProfile: suspend (username: String) -&gt; User, modifier: Modifier = Modifier, )</ID>
-    <ID>MagicNumber:Color.kt$0xFF201a19</ID>
-    <ID>MagicNumber:Color.kt$0xFF261a00</ID>
-    <ID>MagicNumber:Color.kt$0xFF2c1511</ID>
-    <ID>MagicNumber:Color.kt$0xFF362f2e</ID>
-    <ID>MagicNumber:Color.kt$0xFF3e2e04</ID>
-    <ID>MagicNumber:Color.kt$0xFF410000</ID>
-    <ID>MagicNumber:Color.kt$0xFF410001</ID>
-    <ID>MagicNumber:Color.kt$0xFF442925</ID>
-    <ID>MagicNumber:Color.kt$0xFF534341</ID>
-    <ID>MagicNumber:Color.kt$0xFF564418</ID>
-    <ID>MagicNumber:Color.kt$0xFF5d3f3a</ID>
-    <ID>MagicNumber:Color.kt$0xFF680003</ID>
-    <ID>MagicNumber:Color.kt$0xFF690000</ID>
-    <ID>MagicNumber:Color.kt$0xFF6c0000</ID>
-    <ID>MagicNumber:Color.kt$0xFF705c2e</ID>
-    <ID>MagicNumber:Color.kt$0xFF775752</ID>
-    <ID>MagicNumber:Color.kt$0xFF867370</ID>
-    <ID>MagicNumber:Color.kt$0xFF8a1a10</ID>
-    <ID>MagicNumber:Color.kt$0xFF930006</ID>
-    <ID>MagicNumber:Color.kt$0xFFa08c89</ID>
-    <ID>MagicNumber:Color.kt$0xFFac3325</ID>
-    <ID>MagicNumber:Color.kt$0xFFba1b1b</ID>
-    <ID>MagicNumber:Color.kt$0xFFd8c2be</ID>
-    <ID>MagicNumber:Color.kt$0xFFdec48c</ID>
-    <ID>MagicNumber:Color.kt$0xFFe7bdb6</ID>
-    <ID>MagicNumber:Color.kt$0xFFede0de</ID>
-    <ID>MagicNumber:Color.kt$0xFFf5deda</ID>
-    <ID>MagicNumber:Color.kt$0xFFfbdfa5</ID>
-    <ID>MagicNumber:Color.kt$0xFFfbeeec</ID>
-    <ID>MagicNumber:Color.kt$0xFFfcfcfc</ID>
-    <ID>MagicNumber:Color.kt$0xFFffb4a6</ID>
-    <ID>MagicNumber:Color.kt$0xFFffb4a9</ID>
-    <ID>MagicNumber:Color.kt$0xFFffdad3</ID>
-    <ID>MagicNumber:Color.kt$0xFFffdad4</ID>
-    <ID>MagicNumber:Color.kt$0xFFffffff</ID>
     <ID>MagicNumber:CommentEntry.kt$16</ID>
     <ID>MagicNumber:LobstersCard.kt$50</ID>
     <ID>MagicNumber:LobstersCard.kt$8</ID>
     <ID>MagicNumber:Theme.kt$31</ID>
-    <ID>MagicNumber:Type.kt$0.25</ID>
     <ID>SpreadOperator:Theme.kt$(*providedValues)</ID>
     <ID>SwallowedException:UrlLauncher.kt$UrlLauncher$e: ActivityNotFoundException</ID>
     <ID>ThrowingExceptionsWithoutMessageOrCause:NetworkError.kt$Throwable()</ID>

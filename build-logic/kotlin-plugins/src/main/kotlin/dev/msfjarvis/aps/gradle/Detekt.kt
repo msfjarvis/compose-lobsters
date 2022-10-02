@@ -1,0 +1,28 @@
+package dev.msfjarvis.aps.gradle
+
+import io.gitlab.arturbosch.detekt.DetektPlugin
+import io.gitlab.arturbosch.detekt.extensions.DetektExtension
+import org.gradle.api.Project
+import org.gradle.kotlin.dsl.configure
+import org.gradle.language.base.plugins.LifecycleBasePlugin
+
+object Detekt {
+  fun apply(project: Project) {
+    project.pluginManager.apply(DetektPlugin::class.java)
+    project.extensions.configure<DetektExtension> {
+      parallel = true
+      ignoredBuildTypes = listOf("benchmark", "release")
+      basePath = project.layout.projectDirectory.toString()
+      baseline =
+        project.rootProject.layout.projectDirectory
+          .dir("detekt-baselines")
+          .file("${project.name}.xml")
+          .asFile
+    }
+    project.pluginManager.withPlugin("base") {
+      project.tasks.named(LifecycleBasePlugin.CHECK_TASK_NAME).configure {
+        dependsOn(project.tasks.named("detekt"))
+      }
+    }
+  }
+}

@@ -1,3 +1,5 @@
+@file:Suppress("LongParameterList")
+
 package dev.msfjarvis.claw.model
 
 class ExtendedPostDetails(

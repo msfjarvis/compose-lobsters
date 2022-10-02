@@ -2,6 +2,7 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
+    <ID>ComposableParamOrder:LobstersApp.kt$LobstersApp</ID>
     <ID>FunctionOnlyReturningConstant:Destinations.kt$Destinations.Hottest$fun getRoute()</ID>
     <ID>FunctionOnlyReturningConstant:Destinations.kt$Destinations.Newest$fun getRoute()</ID>
     <ID>FunctionOnlyReturningConstant:Destinations.kt$Destinations.Saved$fun getRoute()</ID>
@@ -14,6 +15,7 @@
     <ID>MagicNumber:OkHttpModule.kt$OkHttpModule.Companion$10</ID>
     <ID>MagicNumber:OkHttpModule.kt$OkHttpModule.Companion$1024</ID>
     <ID>MagicNumber:OkHttpModule.kt$OkHttpModule.Companion.&lt;no name provided&gt;$0x000090000</ID>
+    <ID>ModifierMissing:LobstersApp.kt$LobstersApp</ID>
     <ID>TooGenericExceptionCaught:LobstersPagingSource.kt$LobstersPagingSource$e: Exception</ID>
     <ID>UnnecessaryAbstractClass:CoroutineDispatcherModule.kt$CoroutineDispatcherModule$CoroutineDispatcherModule</ID>
     <ID>UnnecessaryAbstractClass:OkHttpModule.kt$OkHttpModule$OkHttpModule</ID>

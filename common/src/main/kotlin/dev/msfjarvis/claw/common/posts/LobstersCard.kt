@@ -19,7 +19,6 @@ import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
@@ -224,9 +223,9 @@ fun TagText(
   Text(
     text = tag,
     modifier =
-      Modifier.background(MaterialTheme.colorScheme.tertiaryContainer, RoundedCornerShape(50))
-        .padding(vertical = 4.dp, horizontal = 12.dp)
-        .then(modifier),
+      modifier
+        .background(MaterialTheme.colorScheme.tertiaryContainer, CircleShape)
+        .padding(vertical = 4.dp, horizontal = 12.dp),
     color = MaterialTheme.colorScheme.onTertiaryContainer,
     style = MaterialTheme.typography.labelLarge,
   )

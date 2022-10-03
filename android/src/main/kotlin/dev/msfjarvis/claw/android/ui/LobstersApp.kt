@@ -38,7 +38,6 @@ import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.common.comments.CommentsPage
 import dev.msfjarvis.claw.common.comments.HTMLConverter
-import dev.msfjarvis.claw.common.comments.LocalHTMLConverter
 import dev.msfjarvis.claw.common.res.ClawIcons
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.decorations.ClawAppBar
@@ -75,11 +74,7 @@ fun LobstersApp(
 
   LobstersTheme(
     dynamicColor = true,
-    providedValues =
-      arrayOf(
-        LocalUriHandler provides urlLauncher,
-        LocalHTMLConverter provides htmlConverter,
-      ),
+    providedValues = arrayOf(LocalUriHandler provides urlLauncher),
   ) {
     val currentUiMode = LocalConfiguration.current.uiMode
     val systemBarsColor = MaterialTheme.colorScheme.surfaceColorAtNavigationBarElevation()
@@ -211,6 +206,7 @@ fun LobstersApp(
             postId = postId,
             getDetails = viewModel::getPostComments,
             postActions = postActions,
+            htmlConverter = htmlConverter,
           )
         }
         composable(

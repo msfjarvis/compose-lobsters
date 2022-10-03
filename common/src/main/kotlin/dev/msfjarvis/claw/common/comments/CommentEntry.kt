@@ -49,9 +49,9 @@ import java.time.temporal.TemporalAccessor
 fun CommentsHeader(
   postDetails: ExtendedPostDetails,
   postActions: PostActions,
+  htmlConverter: HTMLConverter,
   modifier: Modifier = Modifier,
 ) {
-  val htmlConverter = LocalHTMLConverter.current
   val uriHandler = LocalUriHandler.current
 
   Surface(color = MaterialTheme.colorScheme.background, modifier = modifier) {
@@ -133,10 +133,10 @@ fun PostLink(
 @Composable
 fun CommentEntry(
   comment: Comment,
+  htmlConverter: HTMLConverter,
   modifier: Modifier = Modifier,
 ) {
   var expanded by remember(comment) { mutableStateOf(true) }
-  val htmlConverter = LocalHTMLConverter.current
   val uriHandler = LocalUriHandler.current
   Box(
     modifier =

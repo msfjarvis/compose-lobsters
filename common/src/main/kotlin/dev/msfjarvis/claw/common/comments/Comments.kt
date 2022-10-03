@@ -30,11 +30,18 @@ import dev.msfjarvis.claw.model.ExtendedPostDetails
 private fun CommentsPageInternal(
   details: ExtendedPostDetails,
   postActions: PostActions,
+  htmlConverter: HTMLConverter,
   modifier: Modifier = Modifier,
 ) {
   Surface(color = MaterialTheme.colorScheme.surfaceVariant) {
     LazyColumn(modifier = modifier, contentPadding = PaddingValues(bottom = 24.dp)) {
-      item { CommentsHeader(postDetails = details, postActions = postActions) }
+      item {
+        CommentsHeader(
+          postDetails = details,
+          postActions = postActions,
+          htmlConverter = htmlConverter,
+        )
+      }
 
       if (details.comments.isNotEmpty()) {
         item {
@@ -49,7 +56,7 @@ private fun CommentsPageInternal(
           if (index != 0) {
             Divider()
           }
-          CommentEntry(item)
+          CommentEntry(comment = item, htmlConverter = htmlConverter)
         }
       } else {
         item {
@@ -72,6 +79,7 @@ fun CommentsPage(
   postId: String,
   getDetails: suspend (String) -> ExtendedPostDetails,
   postActions: PostActions,
+  htmlConverter: HTMLConverter,
   modifier: Modifier = Modifier,
 ) {
   val postDetails by
@@ -86,9 +94,10 @@ fun CommentsPage(
   when (postDetails) {
     is Success<*> -> {
       CommentsPageInternal(
-        (postDetails as Success<ExtendedPostDetails>).data,
-        postActions,
-        modifier.fillMaxSize(),
+        details = (postDetails as Success<ExtendedPostDetails>).data,
+        postActions = postActions,
+        htmlConverter = htmlConverter,
+        modifier = modifier.fillMaxSize(),
       )
     }
     is Error -> {

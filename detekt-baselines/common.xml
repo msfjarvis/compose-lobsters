@@ -2,7 +2,6 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
-    <ID>CompositionLocalAllowlist:HTMLConverter.kt$LocalHTMLConverter</ID>
     <ID>MagicNumber:CommentEntry.kt$16</ID>
     <ID>MagicNumber:LobstersCard.kt$50</ID>
     <ID>MagicNumber:LobstersCard.kt$8</ID>

@@ -12,6 +12,7 @@ object Detekt {
   fun apply(project: Project) {
     project.pluginManager.apply(DetektPlugin::class.java)
     project.extensions.configure<DetektExtension> {
+      debug = project.providers.gradleProperty("debugDetekt").isPresent
       parallel = true
       ignoredBuildTypes = listOf("benchmark", "release")
       basePath = project.layout.projectDirectory.toString()

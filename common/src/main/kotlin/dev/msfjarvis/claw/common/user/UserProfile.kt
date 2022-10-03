@@ -50,7 +50,7 @@ fun UserProfile(
     }
   when (user) {
     is Success<*> -> {
-      UserProfileInternal((user as Success<User>).data)
+      UserProfileInternal(user = (user as Success<User>).data, modifier = modifier)
     }
     is Error -> {
       val error = user as Error

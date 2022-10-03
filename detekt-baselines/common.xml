@@ -18,6 +18,5 @@
     <ID>SwallowedException:UrlLauncher.kt$UrlLauncher$e: ActivityNotFoundException</ID>
     <ID>ThrowingExceptionsWithoutMessageOrCause:NetworkError.kt$Throwable()</ID>
     <ID>UnnecessaryAbstractClass:BasePaparazziTest.kt$BasePaparazziTest$BasePaparazziTest</ID>
-    <ID>UnusedPrivateMember:UserProfile.kt$modifier: Modifier = Modifier</ID>
   </CurrentIssues>
 </SmellBaseline>

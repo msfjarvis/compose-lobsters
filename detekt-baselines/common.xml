@@ -3,7 +3,6 @@
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
     <ID>CompositionLocalAllowlist:HTMLConverter.kt$LocalHTMLConverter</ID>
-    <ID>EmptyFunctionBlock:LobstersCardTest.kt$LobstersCardTest.Companion.&lt;no name provided&gt;${}</ID>
     <ID>MagicNumber:CommentEntry.kt$16</ID>
     <ID>MagicNumber:LobstersCard.kt$50</ID>
     <ID>MagicNumber:LobstersCard.kt$8</ID>
@@ -12,6 +11,5 @@
     <ID>ModifierReused:LobstersCard.kt$Row( modifier = modifier, verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp), ) { NetworkImage( url = avatarUrl, placeholder = ClawIcons.Account, contentDescription = contentDescription, modifier = modifier.requiredSize(24.dp).clip(CircleShape), ) Text(text = text, modifier = modifier, style = MaterialTheme.typography.bodyMedium) }</ID>
     <ID>ModifierReused:LobstersCard.kt$Text(text = text, modifier = modifier, style = MaterialTheme.typography.bodyMedium)</ID>
     <ID>SpreadOperator:Theme.kt$(*providedValues)</ID>
-    <ID>UnnecessaryAbstractClass:BasePaparazziTest.kt$BasePaparazziTest$BasePaparazziTest</ID>
   </CurrentIssues>
 </SmellBaseline>

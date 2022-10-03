@@ -7,7 +7,7 @@ import org.gradle.kotlin.dsl.configure
 import org.gradle.language.base.plugins.LifecycleBasePlugin
 
 object Detekt {
-  private const val TWITTER_RULES_VERSION = "0.0.17"
+  private const val TWITTER_RULES_VERSION = "0.0.18"
 
   fun apply(project: Project) {
     project.pluginManager.apply(DetektPlugin::class.java)

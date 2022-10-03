@@ -145,10 +145,10 @@ fun Submitter(
       url = avatarUrl,
       placeholder = ClawIcons.Account,
       contentDescription = contentDescription,
-      modifier = modifier.requiredSize(24.dp).clip(CircleShape),
+      modifier = Modifier.requiredSize(24.dp).clip(CircleShape),
     )
 
-    Text(text = text, modifier = modifier, style = MaterialTheme.typography.bodyMedium)
+    Text(text = text, style = MaterialTheme.typography.bodyMedium)
   }
 }
 

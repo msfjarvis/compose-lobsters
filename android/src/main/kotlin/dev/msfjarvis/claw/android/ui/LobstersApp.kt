@@ -88,7 +88,7 @@ fun LobstersApp(
       listOf(
         NavigationItem(
           label = "Hottest",
-          route = Destinations.Hottest.getRoute(),
+          route = Destinations.Hottest.route,
           icon = ClawIcons.Flame,
           selectedIcon = ClawIcons.FlameFilled,
         ) {
@@ -96,7 +96,7 @@ fun LobstersApp(
         },
         NavigationItem(
           label = "Newest",
-          route = Destinations.Newest.getRoute(),
+          route = Destinations.Newest.route,
           icon = ClawIcons.New,
           selectedIcon = ClawIcons.NewFilled,
         ) {
@@ -104,7 +104,7 @@ fun LobstersApp(
         },
         NavigationItem(
           label = "Saved",
-          route = Destinations.Saved.getRoute(),
+          route = Destinations.Saved.route,
           icon = ClawIcons.HeartBorder,
           selectedIcon = ClawIcons.Heart,
         ) {
@@ -158,12 +158,12 @@ fun LobstersApp(
     ) { paddingValues ->
       MaterialMotionNavHost(
         navController = navController,
-        startDestination = Destinations.startDestination.getRoute(),
+        startDestination = Destinations.startDestination.route,
         modifier = Modifier.padding(paddingValues),
       ) {
         val uri = LobstersApi.BASE_URL
         composable(
-          route = Destinations.Hottest.getRoute(),
+          route = Destinations.Hottest.route,
           deepLinks =
             listOf(navDeepLink { uriPattern = uri }, navDeepLink { uriPattern = "$uri/" }),
         ) {
@@ -177,7 +177,7 @@ fun LobstersApp(
           )
         }
         composable(
-          route = Destinations.Newest.getRoute(),
+          route = Destinations.Newest.route,
         ) {
           setWebUri("https://lobste.rs/")
           NetworkPosts(
@@ -188,7 +188,7 @@ fun LobstersApp(
             postActions = postActions,
           )
         }
-        composable(Destinations.Saved.getRoute()) {
+        composable(Destinations.Saved.route) {
           setWebUri(null)
           DatabasePosts(
             items = savedPosts,
@@ -197,12 +197,12 @@ fun LobstersApp(
           )
         }
         composable(
-          route = Destinations.Comments.getRoute("{postId}"),
+          route = Destinations.Comments.route,
           arguments = listOf(navArgument("postId") { type = NavType.StringType }),
           deepLinks =
             listOf(
-              navDeepLink { uriPattern = "$uri/s/{postId}/.*" },
-              navDeepLink { uriPattern = "$uri/s/{postId}" },
+              navDeepLink { uriPattern = "$uri/s/${Destinations.Comments.placeholder}/.*" },
+              navDeepLink { uriPattern = "$uri/s/${Destinations.Comments.placeholder}" },
             ),
         ) { backStackEntry ->
           val postId = requireNotNull(backStackEntry.arguments?.getString("postId"))
@@ -214,9 +214,10 @@ fun LobstersApp(
           )
         }
         composable(
-          route = Destinations.User.getRoute("{username}"),
+          route = Destinations.User.route,
           arguments = listOf(navArgument("username") { type = NavType.StringType }),
-          deepLinks = listOf(navDeepLink { uriPattern = "$uri/u/{username}" }),
+          deepLinks =
+            listOf(navDeepLink { uriPattern = "$uri/u/${Destinations.User.placeholder}" }),
         ) { backStackEntry ->
           val username = requireNotNull(backStackEntry.arguments?.getString("username"))
           UserProfile(

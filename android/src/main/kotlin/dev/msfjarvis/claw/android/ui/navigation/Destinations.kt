@@ -1,24 +1,28 @@
 package dev.msfjarvis.claw.android.ui.navigation
 
 sealed class Destinations {
+  abstract val route: String
+
   object Hottest : Destinations() {
-    fun getRoute() = "hottest"
+    override val route = "hottest"
   }
 
   object Newest : Destinations() {
-    fun getRoute() = "newest"
+    override val route = "newest"
   }
 
   object Saved : Destinations() {
-    fun getRoute() = "saved"
+    override val route = "saved"
   }
 
   object Comments : Destinations() {
-    fun getRoute(postId: String) = "comments/$postId"
+    const val placeholder = "{postId}"
+    override val route = "comments/$placeholder"
   }
 
   object User : Destinations() {
-    fun getRoute(username: String) = "user/$username"
+    const val placeholder = "{username}"
+    override val route = "user/$placeholder"
   }
 
   companion object {

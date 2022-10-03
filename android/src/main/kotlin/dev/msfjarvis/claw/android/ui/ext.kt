@@ -43,7 +43,9 @@ fun rememberPostActions(
       }
 
       override fun viewComments(postId: String) {
-        navController.navigate(Destinations.Comments.getRoute(postId))
+        navController.navigate(
+          Destinations.Comments.route.replace(Destinations.Comments.placeholder, postId)
+        )
       }
 
       override fun viewCommentsPage(commentsUrl: String) {

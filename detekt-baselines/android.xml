@@ -3,9 +3,6 @@
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
     <ID>ComposableParamOrder:LobstersApp.kt$LobstersApp</ID>
-    <ID>FunctionOnlyReturningConstant:Destinations.kt$Destinations.Hottest$fun getRoute()</ID>
-    <ID>FunctionOnlyReturningConstant:Destinations.kt$Destinations.Newest$fun getRoute()</ID>
-    <ID>FunctionOnlyReturningConstant:Destinations.kt$Destinations.Saved$fun getRoute()</ID>
     <ID>LongMethod:LobstersApp.kt$@OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class) @Composable fun LobstersApp( viewModel: ClawViewModel = viewModel(), urlLauncher: UrlLauncher, htmlConverter: HTMLConverter, setWebUri: (String?) -&gt; Unit, )</ID>
     <ID>LongParameterList:NetworkPosts.kt$( items: LazyPagingItems&lt;LobstersPost&gt;, listState: LazyListState, isPostSaved: suspend (SavedPost) -&gt; Boolean, reloadPosts: () -&gt; Unit, postActions: PostActions, modifier: Modifier = Modifier, )</ID>
     <ID>MagicNumber:ClawApplication.kt$ClawApplication$0.25</ID>

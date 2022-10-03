@@ -23,7 +23,8 @@ object Detekt {
     }
     project.pluginManager.withPlugin("base") {
       project.tasks.named(LifecycleBasePlugin.CHECK_TASK_NAME).configure {
-        dependsOn(project.tasks.named("detekt"))
+        val task = project.tasks.findByPath("detektMain") ?: project.tasks.findByPath("detekt")
+        if (task != null) dependsOn(task)
       }
     }
     project.dependencies.add(

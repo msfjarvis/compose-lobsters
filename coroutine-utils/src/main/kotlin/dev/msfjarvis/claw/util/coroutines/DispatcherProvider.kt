@@ -1,3 +1,5 @@
+@file:Suppress("InjectDispatcher") // False-positive
+
 package dev.msfjarvis.claw.util.coroutines
 
 import javax.inject.Inject

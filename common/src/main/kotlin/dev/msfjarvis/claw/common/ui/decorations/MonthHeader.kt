@@ -19,9 +19,13 @@ import dev.msfjarvis.claw.common.ui.surfaceColorAtNavigationBarElevation
 import java.time.Month
 
 @Composable
-fun MonthHeader(month: Month) {
+fun MonthHeader(
+  month: Month,
+  modifier: Modifier = Modifier,
+) {
   Box(
-    Modifier.fillMaxWidth()
+    modifier
+      .fillMaxWidth()
       .wrapContentHeight()
       .background(MaterialTheme.colorScheme.surfaceColorAtNavigationBarElevation())
   ) {

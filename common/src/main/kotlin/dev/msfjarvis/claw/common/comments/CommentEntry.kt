@@ -49,11 +49,12 @@ import java.time.temporal.TemporalAccessor
 fun CommentsHeader(
   postDetails: ExtendedPostDetails,
   postActions: PostActions,
+  modifier: Modifier = Modifier,
 ) {
   val htmlConverter = LocalHTMLConverter.current
   val uriHandler = LocalUriHandler.current
 
-  Surface(color = MaterialTheme.colorScheme.background) {
+  Surface(color = MaterialTheme.colorScheme.background, modifier = modifier) {
     Column(
       modifier = Modifier.padding(16.dp).fillMaxWidth(),
       verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -132,13 +133,15 @@ fun PostLink(
 @Composable
 fun CommentEntry(
   comment: Comment,
+  modifier: Modifier = Modifier,
 ) {
   var expanded by remember(comment) { mutableStateOf(true) }
   val htmlConverter = LocalHTMLConverter.current
   val uriHandler = LocalUriHandler.current
   Box(
     modifier =
-      Modifier.fillMaxWidth()
+      modifier
+        .fillMaxWidth()
         .clickable { expanded = !expanded }
         .background(MaterialTheme.colorScheme.background)
         .padding(start = (comment.indentLevel * 16).dp, end = 16.dp, top = 16.dp, bottom = 16.dp),

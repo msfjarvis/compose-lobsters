@@ -61,7 +61,9 @@ fun ClawNavigationBar(
               navItem.listStateResetCallback()
               return@NavigationBarItem
             }
-            navController.popBackStack(navController.graph.startDestinationRoute!!, false)
+            navController.graph.startDestinationRoute?.let { startDestination ->
+              navController.popBackStack(startDestination, false)
+            }
             if (navItem.route != Destinations.startDestination.route) {
               navController.navigate(navItem.route)
             }

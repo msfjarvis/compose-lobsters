@@ -67,5 +67,5 @@ fun NetworkError(
 @ThemePreviews
 @Composable
 fun NetworkErrorPreview() {
-  LobstersTheme { NetworkError(label = "Failed to load posts", error = Throwable()) }
+  LobstersTheme { NetworkError(label = "Failed to load posts", error = Throwable("Preview")) }
 }

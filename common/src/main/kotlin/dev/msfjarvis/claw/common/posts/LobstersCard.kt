@@ -180,7 +180,7 @@ fun CommentsButton(
     badge = {
       if (commentCount != null) {
         Badge(
-          modifier = Modifier.absoluteOffset(x = (-8).dp),
+          modifier = Modifier.absoluteOffset(x = -(8.dp)),
           containerColor = MaterialTheme.colorScheme.tertiaryContainer,
         ) {
           Text(

@@ -3,7 +3,6 @@
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
     <ID>MagicNumber:CommentEntry.kt$16</ID>
-    <ID>MagicNumber:LobstersCard.kt$8</ID>
     <ID>MagicNumber:Theme.kt$31</ID>
     <ID>ModifierMissing:ClawAppBar.kt$ClawAppBarPreview</ID>
     <ID>ModifierReused:LobstersCard.kt$Row( modifier = modifier, verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp), ) { NetworkImage( url = avatarUrl, placeholder = ClawIcons.Account, contentDescription = contentDescription, modifier = modifier.requiredSize(24.dp).clip(CircleShape), ) Text(text = text, modifier = modifier, style = MaterialTheme.typography.bodyMedium) }</ID>

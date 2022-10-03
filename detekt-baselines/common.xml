@@ -4,7 +4,6 @@
   <CurrentIssues>
     <ID>MagicNumber:CommentEntry.kt$16</ID>
     <ID>MagicNumber:Theme.kt$31</ID>
-    <ID>ModifierMissing:ClawAppBar.kt$ClawAppBarPreview</ID>
     <ID>SpreadOperator:Theme.kt$(*providedValues)</ID>
   </CurrentIssues>
 </SmellBaseline>

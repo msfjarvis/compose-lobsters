@@ -29,6 +29,12 @@ jobs:
         arguments: check -PslimTests
         gradle-home-cache-cleanup: true
 
+    - name: Run Detekt
+      uses: gradle/gradle-build-action@v2.3.2
+      with:
+        arguments: detektMain
+        gradle-home-cache-cleanup: true
+
     - name: (Fail-only) Upload test report
       if: failure()
       uses: actions/upload-artifact@v3.1.0

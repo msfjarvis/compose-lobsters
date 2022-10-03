@@ -4,7 +4,6 @@ import io.gitlab.arturbosch.detekt.DetektPlugin
 import io.gitlab.arturbosch.detekt.extensions.DetektExtension
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
-import org.gradle.language.base.plugins.LifecycleBasePlugin
 
 object Detekt {
   private const val TWITTER_RULES_VERSION = "0.0.18"
@@ -21,12 +20,6 @@ object Detekt {
           .dir("detekt-baselines")
           .file("${project.name}.xml")
           .asFile
-    }
-    project.pluginManager.withPlugin("base") {
-      project.tasks.named(LifecycleBasePlugin.CHECK_TASK_NAME).configure {
-        val task = project.tasks.findByPath("detektMain") ?: project.tasks.findByPath("detekt")
-        if (task != null) dependsOn(task)
-      }
     }
     project.dependencies.add(
       "detektPlugins",

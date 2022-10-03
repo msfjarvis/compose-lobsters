@@ -20,7 +20,7 @@ class UrlLauncher(private val context: Context) : UriHandler {
       customTabsIntent.launchUrl(context, Uri.parse(uri))
     } catch (e: ActivityNotFoundException) {
       val error = "Failed to open URL: $uri"
-      Napier.d(tag = "UrlLauncher") { error }
+      Napier.d(throwable = e, tag = "UrlLauncher") { error }
       Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
     }
   }

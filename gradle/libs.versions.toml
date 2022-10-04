@@ -13,7 +13,7 @@ okhttp = "3.14.9"
 retrofit = "2.9.0"
 richtext = "0.14.1"
 serialization = "1.4.0-RC"
-sqldelight = "2.0.0-SNAPSHOT"
+sqldelight = "2.0.0-alpha04"
 workmanager = "2.8.0-alpha04"
 
 [libraries]

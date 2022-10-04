@@ -37,10 +37,6 @@ pluginManagement {
         includeModule("com.sergei-lapin.napt", "gradle")
       }
     }
-    exclusiveContent {
-      forRepository { maven("https://oss.sonatype.org/content/repositories/snapshots/") }
-      filter { includeGroup("app.cash.sqldelight") }
-    }
     includeBuild("build-logic")
     mavenCentral()
   }
@@ -126,10 +122,6 @@ dependencyResolutionManagement {
         includeModule("org.gradle.android.cache-fix", "org.gradle.android.cache-fix.gradle.plugin")
         includeModule("gradle.plugin.org.gradle.android", "android-cache-fix-gradle-plugin")
       }
-    }
-    exclusiveContent {
-      forRepository { maven("https://oss.sonatype.org/content/repositories/snapshots/") }
-      filter { includeGroup("app.cash.sqldelight") }
     }
     mavenCentral()
   }

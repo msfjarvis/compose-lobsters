@@ -46,10 +46,6 @@ dependencyResolutionManagement {
   repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
   repositories {
     exclusiveContent {
-      forRepository { maven(url = "https://androidx.dev/storage/compose-compiler/repository/") }
-      filter { includeGroup("androidx.compose.compiler") }
-    }
-    exclusiveContent {
       forRepository { google() }
       filter {
         includeGroup("androidx.activity")
@@ -61,6 +57,7 @@ dependencyResolutionManagement {
         includeGroup("androidx.browser")
         includeGroup("androidx.collection")
         includeGroup("androidx.compose.animation")
+        includeGroup("androidx.compose.compiler")
         includeGroup("androidx.compose.foundation")
         includeGroup("androidx.compose.material")
         includeGroup("androidx.compose.material3")

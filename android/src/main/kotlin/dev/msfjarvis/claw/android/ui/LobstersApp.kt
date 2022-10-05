@@ -49,13 +49,14 @@ import soup.compose.material.motion.navigation.MaterialMotionNavHost
 import soup.compose.material.motion.navigation.composable
 import soup.compose.material.motion.navigation.rememberMaterialMotionNavController
 
+@Suppress("ModifierMissing") // Top-level composable, will never have a modifier supplied.
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 @Composable
 fun LobstersApp(
-  viewModel: ClawViewModel = viewModel(),
   urlLauncher: UrlLauncher,
   htmlConverter: HTMLConverter,
   setWebUri: (String?) -> Unit,
+  viewModel: ClawViewModel = viewModel(),
 ) {
   val systemUiController = rememberSystemUiController()
   val hottestListState = rememberLazyListState()

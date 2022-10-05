@@ -34,15 +34,20 @@ class ClawApplication : Application(), Configuration.Provider, ImageLoaderFactor
 
   override fun newImageLoader(): ImageLoader {
     return ImageLoader.Builder(this)
-      .memoryCache { MemoryCache.Builder(this).maxSizePercent(0.25).build() }
+      .memoryCache { MemoryCache.Builder(this).maxSizePercent(MEMORY_CACHE_RATIO).build() }
       .diskCache {
         DiskCache.Builder()
           .directory(cacheDir.resolve("image_cache"))
-          .maxSizeBytes(25L * 1024 * 1024) // 25 MB
+          .maxSizeBytes(DISK_CACHE_MAX_SIZE)
           .build()
       }
       // Show a short crossfade when loading images asynchronously.
       .crossfade(true)
       .build()
+  }
+
+  private companion object {
+    private const val MEMORY_CACHE_RATIO = 0.25
+    private const val DISK_CACHE_MAX_SIZE = 25L * 1024 * 1024 // 25 MB
   }
 }

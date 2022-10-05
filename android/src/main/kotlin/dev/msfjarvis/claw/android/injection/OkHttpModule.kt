@@ -21,24 +21,26 @@ import okhttp3.logging.HttpLoggingInterceptor
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class OkHttpModule {
+interface OkHttpModule {
 
-  @Binds abstract fun NapierLogger.bindLogger(): HttpLoggingInterceptor.Logger
+  @Binds fun NapierLogger.bindLogger(): HttpLoggingInterceptor.Logger
 
-  @Binds @IntoSet abstract fun UserAgentInterceptor.bindUAInterceptor(): Interceptor
+  @Binds @IntoSet fun UserAgentInterceptor.bindUAInterceptor(): Interceptor
 
   companion object {
+    private const val CACHE_SIZE_MB = 10L * 1024 * 1024
+    private const val THREAD_STATS_TAG = 0x000090000
 
     @Provides
     fun provideCache(@ApplicationContext context: Context): Cache {
-      return Cache(context.cacheDir, 10 * 1024 * 1024)
+      return Cache(context.cacheDir, CACHE_SIZE_MB)
     }
 
     @Provides
     fun provideSocketFactory(): SocketFactory {
       return object : DelegatingSocketFactory(getDefault()) {
         override fun configureSocket(socket: Socket): Socket {
-          TrafficStats.setThreadStatsTag(0x000090000)
+          TrafficStats.setThreadStatsTag(THREAD_STATS_TAG)
           return super.configureSocket(socket)
         }
       }

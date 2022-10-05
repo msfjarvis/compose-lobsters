@@ -17,6 +17,7 @@ constructor(
   @IODispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : PagingSource<Int, LobstersPost>() {
 
+  @Suppress("TooGenericExceptionCaught") // Intentional
   override suspend fun load(params: LoadParams<Int>): LoadResult<Int, LobstersPost> {
     return try {
       val page = params.key ?: 1

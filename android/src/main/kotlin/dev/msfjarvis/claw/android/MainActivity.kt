@@ -30,10 +30,14 @@ class MainActivity : ComponentActivity() {
     super.onCreate(savedInstanceState)
     installSplashScreen()
     setContent {
-      LobstersApp(urlLauncher = urlLauncher, htmlConverter = htmlConverter) { url -> webUri = url }
+      LobstersApp(
+        urlLauncher = urlLauncher,
+        htmlConverter = htmlConverter,
+        setWebUri = { url -> webUri = url },
+      )
     }
     val postUpdateWorkRequest =
-      PeriodicWorkRequestBuilder<SavedPostUpdaterWorker>(24, TimeUnit.HOURS)
+      PeriodicWorkRequestBuilder<SavedPostUpdaterWorker>(POST_REFRESH_PERIOD, TimeUnit.HOURS)
         .setConstraints(
           Constraints.Builder()
             .setRequiresCharging(false)
@@ -60,5 +64,9 @@ class MainActivity : ComponentActivity() {
         outContent.webUri = null
       }
     }
+  }
+
+  private companion object {
+    private const val POST_REFRESH_PERIOD = 24L // 24 hours
   }
 }

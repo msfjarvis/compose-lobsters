@@ -11,9 +11,9 @@ import kotlinx.coroutines.CoroutineDispatcher
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class CoroutineDispatcherModule {
+interface CoroutineDispatcherModule {
 
-  @Binds abstract fun DefaultDispatcherProvider.bind(): DispatcherProvider
+  @Binds fun DefaultDispatcherProvider.bind(): DispatcherProvider
 
   companion object {
     @[Provides IODispatcher]

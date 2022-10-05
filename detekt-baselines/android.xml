@@ -2,19 +2,7 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
-    <ID>ComposableParamOrder:LobstersApp.kt$LobstersApp</ID>
-    <ID>LongMethod:LobstersApp.kt$@OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class) @Composable fun LobstersApp( viewModel: ClawViewModel = viewModel(), urlLauncher: UrlLauncher, htmlConverter: HTMLConverter, setWebUri: (String?) -&gt; Unit, )</ID>
+    <ID>LongMethod:LobstersApp.kt$@Suppress("ModifierMissing") // Top-level composable, will never have a modifier supplied. @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class) @Composable fun LobstersApp( urlLauncher: UrlLauncher, htmlConverter: HTMLConverter, setWebUri: (String?) -&gt; Unit, viewModel: ClawViewModel = viewModel(), )</ID>
     <ID>LongParameterList:NetworkPosts.kt$( items: LazyPagingItems&lt;LobstersPost&gt;, listState: LazyListState, isPostSaved: suspend (SavedPost) -&gt; Boolean, reloadPosts: () -&gt; Unit, postActions: PostActions, modifier: Modifier = Modifier, )</ID>
-    <ID>MagicNumber:ClawApplication.kt$ClawApplication$0.25</ID>
-    <ID>MagicNumber:ClawApplication.kt$ClawApplication$1024</ID>
-    <ID>MagicNumber:ClawApplication.kt$ClawApplication$25L</ID>
-    <ID>MagicNumber:MainActivity.kt$MainActivity$24</ID>
-    <ID>MagicNumber:OkHttpModule.kt$OkHttpModule.Companion$10</ID>
-    <ID>MagicNumber:OkHttpModule.kt$OkHttpModule.Companion$1024</ID>
-    <ID>MagicNumber:OkHttpModule.kt$OkHttpModule.Companion.&lt;no name provided&gt;$0x000090000</ID>
-    <ID>ModifierMissing:LobstersApp.kt$LobstersApp</ID>
-    <ID>TooGenericExceptionCaught:LobstersPagingSource.kt$LobstersPagingSource$e: Exception</ID>
-    <ID>UnnecessaryAbstractClass:CoroutineDispatcherModule.kt$CoroutineDispatcherModule$CoroutineDispatcherModule</ID>
-    <ID>UnnecessaryAbstractClass:OkHttpModule.kt$OkHttpModule$OkHttpModule</ID>
   </CurrentIssues>
 </SmellBaseline>

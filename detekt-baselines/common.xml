@@ -1,9 +1,5 @@
 <?xml version="1.0" ?>
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
-  <CurrentIssues>
-    <ID>MagicNumber:CommentEntry.kt$16</ID>
-    <ID>MagicNumber:Theme.kt$31</ID>
-    <ID>SpreadOperator:Theme.kt$(*providedValues)</ID>
-  </CurrentIssues>
+  <CurrentIssues></CurrentIssues>
 </SmellBaseline>

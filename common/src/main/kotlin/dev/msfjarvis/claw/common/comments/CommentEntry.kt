@@ -129,6 +129,8 @@ fun PostLink(
   }
 }
 
+private val CommentEntryPadding = 16f.dp
+
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun CommentEntry(
@@ -144,7 +146,12 @@ fun CommentEntry(
         .fillMaxWidth()
         .clickable { expanded = !expanded }
         .background(MaterialTheme.colorScheme.background)
-        .padding(start = (comment.indentLevel * 16).dp, end = 16.dp, top = 16.dp, bottom = 16.dp),
+        .padding(
+          start = CommentEntryPadding * comment.indentLevel,
+          end = CommentEntryPadding,
+          top = CommentEntryPadding,
+          bottom = CommentEntryPadding,
+        ),
   ) {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
       Submitter(

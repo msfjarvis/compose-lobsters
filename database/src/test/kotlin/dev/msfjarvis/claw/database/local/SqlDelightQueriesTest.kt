@@ -9,7 +9,6 @@ import kotlin.test.assertEquals
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 
-@OptIn(ExperimentalStdlibApi::class)
 class SqlDelightQueriesTest {
 
   private lateinit var postQueries: SavedPostQueries

@@ -1,6 +1,6 @@
 [versions]
 accompanist = "0.26.4-beta"
-agp = "8.0.0-alpha02"
+agp = "8.0.0-alpha03"
 coil = "2.2.2"
 composeCompiler = "1.3.2"
 composeUi = "1.3.0-rc01"

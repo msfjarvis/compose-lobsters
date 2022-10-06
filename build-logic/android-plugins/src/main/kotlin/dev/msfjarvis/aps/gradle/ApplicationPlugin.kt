@@ -50,12 +50,4 @@ class ApplicationPlugin : Plugin<Project> {
       project.configureBuildSigning()
     }
   }
-
-  private fun Project.isSnapshot(): Boolean {
-    with(project.providers) {
-      val workflow = environmentVariable("GITHUB_WORKFLOW")
-      val snapshot = environmentVariable("SNAPSHOT")
-      return workflow.isPresent || snapshot.isPresent
-    }
-  }
 }

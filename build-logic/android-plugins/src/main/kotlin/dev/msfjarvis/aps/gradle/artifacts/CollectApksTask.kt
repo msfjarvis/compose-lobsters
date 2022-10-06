@@ -32,7 +32,7 @@ abstract class CollectApksTask : DefaultTask() {
     val outputDir = outputDirectory.asFile.get()
     outputDir.mkdirs()
     val builtArtifacts =
-      builtArtifactsLoader.get().load(apkFolder.get()) ?: throw RuntimeException("Cannot load APKs")
+      builtArtifactsLoader.get().load(apkFolder.get()) ?: error("Cannot load APKs")
     builtArtifacts.elements.forEach { artifact ->
       Files.copy(
         Paths.get(artifact.outputFile),

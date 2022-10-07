@@ -7,8 +7,10 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.preview.DevicePreviews
 import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
@@ -24,7 +26,7 @@ fun ClawAppBar(
 ) {
   TopAppBar(
     title = title,
-    modifier = modifier,
+    modifier = modifier.shadow(8.dp),
     colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = backgroundColor),
     navigationIcon = navigationIcon,
   )

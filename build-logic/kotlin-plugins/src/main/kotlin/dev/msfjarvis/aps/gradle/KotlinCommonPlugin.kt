@@ -29,7 +29,7 @@ class KotlinCommonPlugin : Plugin<Project> {
           allWarningsAsErrors = project.providers.environmentVariable("GITHUB_WORKFLOW").isPresent
           jvmTarget = JavaVersion.VERSION_11.toString()
           freeCompilerArgs = freeCompilerArgs + ADDITIONAL_COMPILER_ARGS
-          languageVersion = "1.5"
+          languageVersion = "1.7"
         }
       }
       withType<Test>().configureEach {

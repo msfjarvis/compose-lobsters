@@ -12,6 +12,7 @@
     android:roundIcon="@mipmap/ic_launcher"
     android:supportsRtl="true"
     android:theme="@style/Theme.Claw.SplashScreen"
+    android:enableOnBackInvokedCallback="true"
     tools:targetApi="s">
     <profileable
       android:shell="true"

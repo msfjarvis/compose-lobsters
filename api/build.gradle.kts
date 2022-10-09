@@ -8,6 +8,7 @@ plugins {
 dependencies {
   api(projects.model)
   api(libs.retrofit.lib)
+  api(libs.eithernet)
   implementation(libs.kotlinx.serialization.core)
   testImplementation(libs.kotlinx.coroutines.core)
   testImplementation(kotlin("test-junit"))

@@ -1,6 +1,8 @@
 package dev.msfjarvis.claw.android.injection
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import com.slack.eithernet.ApiResultCallAdapterFactory
+import com.slack.eithernet.ApiResultConverterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,7 +28,9 @@ object ApiModule {
     return Retrofit.Builder()
       .client(client)
       .baseUrl(LobstersApi.BASE_URL)
+      .addConverterFactory(ApiResultConverterFactory)
       .addConverterFactory(json.asConverterFactory(contentType))
+      .addCallAdapterFactory(ApiResultCallAdapterFactory)
       .build()
   }
 

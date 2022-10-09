@@ -4,12 +4,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import com.slack.eithernet.ApiResult.Failure
+import com.slack.eithernet.ApiResult.Success
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.msfjarvis.claw.android.injection.IODispatcher
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource
 import dev.msfjarvis.claw.android.ui.toLocalDateTime
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.database.local.SavedPost
+import java.io.IOException
 import java.time.Month
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
@@ -73,12 +76,28 @@ constructor(
 
   suspend fun getPostComments(postId: String) =
     withContext(ioDispatcher) {
-      val details = api.getPostDetails(postId)
+      val details =
+        when (val result = api.getPostDetails(postId)) {
+          is Success -> result.value
+          is Failure.NetworkFailure -> throw result.error
+          is Failure.UnknownFailure -> throw result.error
+          is Failure.HttpFailure,
+          is Failure.ApiFailure -> throw IOException("API returned an invalid response")
+        }
       val extendedDetails = postDetailsRepository.getExtendedDetails(details)
       extendedDetails
     }
 
-  suspend fun getUserProfile(username: String) = withContext(ioDispatcher) { api.getUser(username) }
+  suspend fun getUserProfile(username: String) =
+    withContext(ioDispatcher) {
+      when (val result = api.getUser(username)) {
+        is Success -> result.value
+        is Failure.NetworkFailure -> throw result.error
+        is Failure.UnknownFailure -> throw result.error
+        is Failure.HttpFailure,
+        is Failure.ApiFailure -> throw IOException("API returned an invalid response")
+      }
+    }
 
   fun refreshHottestPosts() {
     hottestPostsPagingSource?.invalidate()

@@ -4,13 +4,13 @@ import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import com.slack.eithernet.ApiResult
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import dev.msfjarvis.claw.android.viewmodel.SavedPostsRepository
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.common.posts.toDbModel
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -23,7 +23,6 @@ import kotlinx.coroutines.flow.first
  * and for new-enough posts that are still getting comments to have an accurate one.
  */
 @Suppress("DEPRECATION") // We're being nasty
-@OptIn(ExperimentalCoroutinesApi::class)
 @HiltWorker
 class SavedPostUpdaterWorker
 @AssistedInject
@@ -39,8 +38,8 @@ constructor(
       .map { post ->
         CoroutineScope(coroutineContext + Job()).async {
           val details = runCatching { lobstersApi.getPostDetails(post.shortId) }.getOrNull()
-          if (details != null) {
-            savedPostsRepository.savePost(details.toDbModel())
+          if (details is ApiResult.Success) {
+            savedPostsRepository.savePost(details.value.toDbModel())
           }
         }
       }

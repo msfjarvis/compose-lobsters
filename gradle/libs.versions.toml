@@ -67,6 +67,7 @@ crux = "com.chimbori.crux:crux:3.9.1"
 dagger-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "dagger" }
 dagger-hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "dagger" }
 dagger-hilt-core = { module = "com.google.dagger:hilt-core", version.ref = "dagger" }
+eithernet = "com.slack.eithernet:eithernet:1.2.1"
 javapoet = "com.squareup:javapoet:1.13.0"
 jsoup = "org.jsoup:jsoup:1.15.3"
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }

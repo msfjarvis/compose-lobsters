@@ -2,11 +2,14 @@ package dev.msfjarvis.claw.android.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.slack.eithernet.ApiResult.Failure
+import com.slack.eithernet.ApiResult.Success
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dev.msfjarvis.claw.android.injection.IODispatcher
 import dev.msfjarvis.claw.model.LobstersPost
+import java.io.IOException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
@@ -17,19 +20,19 @@ constructor(
   @IODispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : PagingSource<Int, LobstersPost>() {
 
-  @Suppress("TooGenericExceptionCaught") // Intentional
   override suspend fun load(params: LoadParams<Int>): LoadResult<Int, LobstersPost> {
-    return try {
-      val page = params.key ?: 1
-      val posts = withContext(ioDispatcher) { remoteFetcher.getItemsAtPage(page) }
-
-      LoadResult.Page(
-        data = posts,
-        prevKey = if (page == 1) null else page - 1,
-        nextKey = page.plus(1)
-      )
-    } catch (e: Exception) {
-      LoadResult.Error(e)
+    val page = params.key ?: 1
+    return when (val result = withContext(ioDispatcher) { remoteFetcher.getItemsAtPage(page) }) {
+      is Success ->
+        LoadResult.Page(
+          data = result.value,
+          prevKey = if (page == 1) null else page - 1,
+          nextKey = page.plus(1)
+        )
+      is Failure.NetworkFailure -> LoadResult.Error(result.error)
+      is Failure.UnknownFailure -> LoadResult.Error(result.error)
+      is Failure.HttpFailure,
+      is Failure.ApiFailure -> LoadResult.Error(IOException("API returned an invalid response"))
     }
   }
 

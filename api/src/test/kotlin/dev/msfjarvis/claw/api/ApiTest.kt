@@ -1,52 +1,46 @@
 package dev.msfjarvis.claw.api
 
+import com.slack.eithernet.ApiResult.Success
+import com.slack.eithernet.test.newEitherNetController
+import dev.msfjarvis.claw.model.LobstersPost
+import dev.msfjarvis.claw.model.LobstersPostDetails
+import dev.msfjarvis.claw.model.User
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertIs
 import kotlinx.coroutines.runBlocking
-import retrofit2.Retrofit
-import retrofit2.mock.MockRetrofit
-import retrofit2.mock.NetworkBehavior
-import retrofit2.mock.create
 
 class ApiTest {
-  private val retrofit = Retrofit.Builder().baseUrl(LobstersApi.BASE_URL).build()
-  private val networkBehaviour = createNetworkBehaviour()
-  private val api =
-    MockRetrofit.Builder(retrofit)
-      .networkBehavior(networkBehaviour)
-      .build()
-      .create<LobstersApi>()
-      .let(::FakeApi)
-
-  private fun createNetworkBehaviour(): NetworkBehavior {
-    val behaviour = NetworkBehavior.create()
-    behaviour.setFailurePercent(0)
-    behaviour.setErrorPercent(0)
-    return behaviour
-  }
+  private val wrapper = ApiWrapper(newEitherNetController())
+  private val api
+    get() = wrapper.api
 
   @Test
   fun `api gets correct number of items`() = runBlocking {
     val posts = api.getHottestPosts(1)
-    assertEquals(25, posts.size)
+    assertIs<Success<List<LobstersPost>>>(posts)
+    assertEquals(25, posts.value.size)
   }
 
   @Test
   fun `posts with no urls`() = runBlocking {
     val posts = api.getHottestPosts(1)
-    val commentsOnlyPosts = posts.asSequence().filter { it.url.isEmpty() }.toSet()
+    assertIs<Success<List<LobstersPost>>>(posts)
+    val commentsOnlyPosts = posts.value.asSequence().filter { it.url.isEmpty() }.toSet()
     assertEquals(2, commentsOnlyPosts.size)
   }
 
   @Test
   fun `post details with comments`() = runBlocking {
     val postDetails = api.getPostDetails("tdfoqh")
-    assertEquals(7, postDetails.comments.size)
+    assertIs<Success<LobstersPostDetails>>(postDetails)
+    assertEquals(7, postDetails.value.comments.size)
   }
 
   @Test
   fun `get user details`() = runBlocking {
     val user = api.getUser("msfjarvis")
-    assertEquals("msfjarvis", user.username)
+    assertIs<Success<User>>(user)
+    assertEquals("msfjarvis", user.value.username)
   }
 }

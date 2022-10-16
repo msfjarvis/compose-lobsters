@@ -11,6 +11,8 @@ import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 import dev.msfjarvis.claw.database.local.SavedPost
+import dev.msfjarvis.claw.model.LinkMetadata
+import dev.msfjarvis.claw.model.LobstersPostDetails
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -60,6 +62,14 @@ fun rememberPostActions(
 
       override fun toggleSave(post: SavedPost) {
         viewModel.toggleSave(post)
+      }
+
+      override suspend fun getComments(postId: String): LobstersPostDetails {
+        return viewModel.getPostComments(postId)
+      }
+
+      override suspend fun getLinkMetadata(url: String): LinkMetadata {
+        return viewModel.getLinkMetadata(url)
       }
     }
   }

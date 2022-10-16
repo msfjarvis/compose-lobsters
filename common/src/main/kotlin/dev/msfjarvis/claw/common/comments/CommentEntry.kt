@@ -49,7 +49,6 @@ import java.time.temporal.TemporalAccessor
 @Composable
 fun CommentsHeader(
   postDetails: LobstersPostDetails,
-  getLinkMetadata: suspend (String) -> LinkMetadata,
   postActions: PostActions,
   htmlConverter: HTMLConverter,
   modifier: Modifier = Modifier,
@@ -59,7 +58,7 @@ fun CommentsHeader(
     produceState(
       initialValue = LinkMetadata(postDetails.url, null, null),
     ) {
-      value = getLinkMetadata(postDetails.url)
+      value = postActions.getLinkMetadata(postDetails.url)
     }
 
   Surface(color = MaterialTheme.colorScheme.background, modifier = modifier) {

@@ -24,13 +24,11 @@ import dev.msfjarvis.claw.common.NetworkState.Success
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.ui.NetworkError
 import dev.msfjarvis.claw.common.ui.ProgressBar
-import dev.msfjarvis.claw.model.LinkMetadata
 import dev.msfjarvis.claw.model.LobstersPostDetails
 
 @Composable
 private fun CommentsPageInternal(
   details: LobstersPostDetails,
-  getLinkMetadata: suspend (String) -> LinkMetadata,
   postActions: PostActions,
   htmlConverter: HTMLConverter,
   modifier: Modifier = Modifier,
@@ -40,7 +38,6 @@ private fun CommentsPageInternal(
       item {
         CommentsHeader(
           postDetails = details,
-          getLinkMetadata = getLinkMetadata,
           postActions = postActions,
           htmlConverter = htmlConverter,
         )
@@ -76,19 +73,17 @@ private fun CommentsPageInternal(
   }
 }
 
-@Suppress("UNCHECKED_CAST", "LongParameterList")
+@Suppress("UNCHECKED_CAST")
 @Composable
 fun CommentsPage(
   postId: String,
-  getDetails: suspend (String) -> LobstersPostDetails,
-  getLinkMetadata: suspend (String) -> LinkMetadata,
   postActions: PostActions,
   htmlConverter: HTMLConverter,
   modifier: Modifier = Modifier,
 ) {
   val postDetails by
     produceState<NetworkState>(Loading) {
-      runCatching { getDetails(postId) }
+      runCatching { postActions.getComments(postId) }
         .fold(
           onSuccess = { details -> value = Success(details) },
           onFailure = { value = Error(error = it, description = "Failed to load comments") }
@@ -99,7 +94,6 @@ fun CommentsPage(
     is Success<*> -> {
       CommentsPageInternal(
         details = (postDetails as Success<LobstersPostDetails>).data,
-        getLinkMetadata = getLinkMetadata,
         postActions = postActions,
         htmlConverter = htmlConverter,
         modifier = modifier.fillMaxSize(),

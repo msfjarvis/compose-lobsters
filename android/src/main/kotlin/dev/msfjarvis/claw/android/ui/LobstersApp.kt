@@ -205,8 +205,6 @@ fun LobstersApp(
           setWebUri("https://lobste.rs/s/$postId")
           CommentsPage(
             postId = postId,
-            getDetails = viewModel::getPostComments,
-            getLinkMetadata = viewModel::getLinkMetadata,
             postActions = postActions,
             htmlConverter = htmlConverter,
           )

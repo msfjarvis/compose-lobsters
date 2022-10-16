@@ -206,6 +206,7 @@ fun LobstersApp(
           CommentsPage(
             postId = postId,
             getDetails = viewModel::getPostComments,
+            getLinkMetadata = viewModel::getLinkMetadata,
             postActions = postActions,
             htmlConverter = htmlConverter,
           )

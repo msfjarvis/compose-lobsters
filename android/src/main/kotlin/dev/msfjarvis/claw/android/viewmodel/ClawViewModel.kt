@@ -27,7 +27,7 @@ class ClawViewModel
 constructor(
   private val api: LobstersApi,
   private val savedPostsRepository: SavedPostsRepository,
-  private val postDetailsRepository: PostDetailsRepository,
+  private val linkMetadataRepository: LinkMetadataRepository,
   private val pagingSourceFactory: LobstersPagingSource.Factory,
   @IODispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
@@ -76,17 +76,17 @@ constructor(
 
   suspend fun getPostComments(postId: String) =
     withContext(ioDispatcher) {
-      val details =
-        when (val result = api.getPostDetails(postId)) {
-          is Success -> result.value
-          is Failure.NetworkFailure -> throw result.error
-          is Failure.UnknownFailure -> throw result.error
-          is Failure.HttpFailure,
-          is Failure.ApiFailure -> throw IOException("API returned an invalid response")
-        }
-      val extendedDetails = postDetailsRepository.getExtendedDetails(details)
-      extendedDetails
+      when (val result = api.getPostDetails(postId)) {
+        is Success -> result.value
+        is Failure.NetworkFailure -> throw result.error
+        is Failure.UnknownFailure -> throw result.error
+        is Failure.HttpFailure,
+        is Failure.ApiFailure -> throw IOException("API returned an invalid response")
+      }
     }
+
+  suspend fun getLinkMetadata(url: String) =
+    withContext(ioDispatcher) { linkMetadataRepository.getLinkMetadata(url) }
 
   suspend fun getUserProfile(username: String) =
     withContext(ioDispatcher) {

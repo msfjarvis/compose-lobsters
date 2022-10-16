@@ -23,6 +23,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -40,19 +41,26 @@ import dev.msfjarvis.claw.common.res.ClawIcons
 import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.common.ui.ThemedRichText
 import dev.msfjarvis.claw.model.Comment
-import dev.msfjarvis.claw.model.ExtendedPostDetails
 import dev.msfjarvis.claw.model.LinkMetadata
+import dev.msfjarvis.claw.model.LobstersPostDetails
 import java.time.Instant
 import java.time.temporal.TemporalAccessor
 
 @Composable
 fun CommentsHeader(
-  postDetails: ExtendedPostDetails,
+  postDetails: LobstersPostDetails,
+  getLinkMetadata: suspend (String) -> LinkMetadata,
   postActions: PostActions,
   htmlConverter: HTMLConverter,
   modifier: Modifier = Modifier,
 ) {
   val uriHandler = LocalUriHandler.current
+  val linkMetadata by
+    produceState(
+      initialValue = LinkMetadata(postDetails.url, null, null),
+    ) {
+      value = getLinkMetadata(postDetails.url)
+    }
 
   Surface(color = MaterialTheme.colorScheme.background, modifier = modifier) {
     Column(
@@ -63,13 +71,11 @@ fun CommentsHeader(
       TagRow(tags = postDetails.tags)
       Spacer(Modifier.height(4.dp))
 
-      if (postDetails.linkMetadata.url.isNotBlank()) {
+      if (linkMetadata.url.isNotBlank()) {
         PostLink(
-          linkMetadata = postDetails.linkMetadata,
+          linkMetadata = linkMetadata,
           modifier =
-            Modifier.clickable {
-              postActions.viewPost(postDetails.linkMetadata.url, postDetails.commentsUrl)
-            },
+            Modifier.clickable { postActions.viewPost(linkMetadata.url, postDetails.commentsUrl) },
         )
         Spacer(Modifier.height(4.dp))
       }

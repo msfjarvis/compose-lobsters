@@ -58,7 +58,8 @@ fun CommentsHeader(
     produceState(
       initialValue = LinkMetadata(postDetails.url, null, null),
     ) {
-      value = postActions.getLinkMetadata(postDetails.url)
+      runCatching { postActions.getLinkMetadata(postDetails.url) }
+        .onSuccess { metadata -> value = metadata }
     }
 
   Surface(color = MaterialTheme.colorScheme.background, modifier = modifier) {

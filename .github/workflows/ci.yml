@@ -24,13 +24,13 @@ jobs:
         java-version: 18
 
     - name: Run unit tests
-      uses: gradle/gradle-build-action@v2.3.2
+      uses: gradle/gradle-build-action@v2.3.3
       with:
         arguments: check -PslimTests
         gradle-home-cache-cleanup: true
 
     - name: Run Detekt
-      uses: gradle/gradle-build-action@v2.3.2
+      uses: gradle/gradle-build-action@v2.3.3
       with:
         arguments: detektMain
         gradle-home-cache-cleanup: true
@@ -62,7 +62,7 @@ jobs:
         ENCRYPT_KEY: ${{ secrets.ENCRYPT_KEY }}
 
     - name: Build release app
-      uses: gradle/gradle-build-action@v2.3.2
+      uses: gradle/gradle-build-action@v2.3.3
       with:
         arguments: collectReleaseApks
         gradle-home-cache-cleanup: true

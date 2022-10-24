@@ -10,7 +10,7 @@ git commit -am 'feat(release): bump version'
 
 gradle -q collectReleaseApks collectReleaseBundle
 
-git tag -s "v${VERSION}"
+git tag -s "v${VERSION}" -F distribution/whatsnew/whatsnew-en-GB
 
 gradle -q bumpSnapshot
 

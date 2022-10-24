@@ -10,8 +10,12 @@ git commit -am 'feat(release): bump version'
 
 gradle -q collectReleaseApks collectReleaseBundle
 
+git tag -s "v${VERSION}"
+
 gradle -q bumpSnapshot
 
 git commit -am 'feat(release): start next development iteration'
 
-gh release create "v${VERSION}" ./android/outputs/*
+git push origin main "v${VERSION}"
+
+gh release create "v${VERSION}" ./android/apk/*.apk ./android/bundle/*.aab

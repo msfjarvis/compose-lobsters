@@ -56,6 +56,7 @@ dependencyResolutionManagement {
         includeGroup("androidx.benchmark")
         includeGroup("androidx.browser")
         includeGroup("androidx.collection")
+        includeGroup("androidx.compose")
         includeGroup("androidx.compose.animation")
         includeGroup("androidx.compose.compiler")
         includeGroup("androidx.compose.foundation")

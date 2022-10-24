@@ -39,6 +39,7 @@ android {
 }
 
 dependencies {
+  implementation(platform(libs.androidx.compose.bom))
   annotationProcessor(libs.androidx.hilt.compiler)
   annotationProcessor(libs.dagger.hilt.compiler)
   implementation(projects.api)

@@ -9,6 +9,7 @@ plugins {
 androidComponents { beforeVariants { it.enableUnitTest = false } }
 
 dependencies {
+  implementation(platform(libs.androidx.compose.bom))
   api(libs.napier)
   implementation(projects.database)
   implementation(projects.model)

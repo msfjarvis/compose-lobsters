@@ -6,9 +6,11 @@ import java.nio.file.Paths
 import java.nio.file.StandardCopyOption
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.DirectoryProperty
+import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.InputFiles
 import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.OutputDirectory
@@ -20,6 +22,10 @@ import org.gradle.api.tasks.TaskAction
 @CacheableTask
 abstract class CollectApksTask : DefaultTask() {
   @get:InputFiles @get:PathSensitive(PathSensitivity.NONE) abstract val apkFolder: DirectoryProperty
+
+  @get:InputFile
+  @get:PathSensitive(PathSensitivity.NONE)
+  abstract val mappingFile: RegularFileProperty
 
   @get:Input abstract val variantName: Property<String>
 
@@ -40,5 +46,10 @@ abstract class CollectApksTask : DefaultTask() {
         StandardCopyOption.REPLACE_EXISTING,
       )
     }
+    Files.copy(
+      mappingFile.get().asFile.toPath(),
+      outputDir.resolve("mapping.txt").toPath(),
+      StandardCopyOption.REPLACE_EXISTING,
+    )
   }
 }

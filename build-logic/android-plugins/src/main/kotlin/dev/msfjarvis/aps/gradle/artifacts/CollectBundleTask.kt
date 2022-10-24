@@ -14,6 +14,8 @@ import org.gradle.api.tasks.TaskAction
 abstract class CollectBundleTask : DefaultTask() {
   @get:InputFile abstract val bundleFile: RegularFileProperty
 
+  @get:InputFile abstract val mappingFile: RegularFileProperty
+
   @get:Input abstract val variantName: Property<String>
 
   @get:Input abstract val versionName: Property<String>
@@ -27,6 +29,11 @@ abstract class CollectBundleTask : DefaultTask() {
     Files.copy(
       bundleFile.get().asFile.toPath(),
       outputDir.resolve("Claw-${variantName.get()}-${versionName.get()}.aab").toPath(),
+      StandardCopyOption.REPLACE_EXISTING,
+    )
+    Files.copy(
+      mappingFile.get().asFile.toPath(),
+      outputDir.resolve("mapping.txt").toPath(),
       StandardCopyOption.REPLACE_EXISTING,
     )
   }

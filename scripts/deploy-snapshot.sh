@@ -4,7 +4,7 @@ set -euxo pipefail
 
 NIGHTLY_TAG="nightly"
 CURRENT_REV="$(git rev-parse --short HEAD)"
-ASSET_DIRECTORY="${GITHUB_WORKSPACE:?}/android/outputs"
+ASSET_DIRECTORY="${GITHUB_WORKSPACE:?}/android/apk"
 
 function overwrite_local_tag() {
   git tag -f "${NIGHTLY_TAG}"
@@ -28,7 +28,7 @@ function create_release() {
   CHANGELOG_FILE="$(mktemp)"
   echo "Latest release for Claw from revision ${CURRENT_REV}" | tee "${CHANGELOG_FILE}"
   pushd "${ASSET_DIRECTORY}" || return
-  gh release create --prerelease --title "Latest snapshot build" --notes-file "${CHANGELOG_FILE}" "${NIGHTLY_TAG}" ./*
+  gh release create --prerelease --title "Latest snapshot build" --notes-file "${CHANGELOG_FILE}" "${NIGHTLY_TAG}" ./*.apk
   popd || return
 }
 

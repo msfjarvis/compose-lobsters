@@ -1,0 +1,3 @@
+Changelog
+
+- Prevent errors during link metadata retrieval from crashing the app

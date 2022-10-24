@@ -14,6 +14,8 @@ git tag -s "v${VERSION}"
 
 gradle -q bumpSnapshot
 
+truncate -s 0 distribution/whatsnew/whatsnew-en-GB
+
 git commit -am 'feat(release): start next development iteration'
 
 git push origin main "v${VERSION}"

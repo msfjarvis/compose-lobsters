@@ -1,6 +1,8 @@
 package dev.msfjarvis.aps.gradle.artifacts
 
+import java.io.File
 import java.nio.file.Files
+import java.nio.file.Path
 import java.nio.file.StandardCopyOption
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.DirectoryProperty
@@ -25,6 +27,10 @@ abstract class CollectBundleTask : DefaultTask() {
   @TaskAction
   fun taskAction() {
     val outputDir = outputDirectory.asFile.get()
+    val outputDirStream =
+      Files.walk(outputDir.toPath()).sorted(Comparator.reverseOrder()).map(Path::toFile)
+    outputDirStream.forEach(File::delete)
+    outputDirStream.close()
     outputDir.mkdirs()
     Files.copy(
       bundleFile.get().asFile.toPath(),

@@ -1,7 +1,9 @@
 package dev.msfjarvis.aps.gradle.artifacts
 
 import com.android.build.api.variant.BuiltArtifactsLoader
+import java.io.File
 import java.nio.file.Files
+import java.nio.file.Path
 import java.nio.file.Paths
 import java.nio.file.StandardCopyOption
 import org.gradle.api.DefaultTask
@@ -36,6 +38,10 @@ abstract class CollectApksTask : DefaultTask() {
   @TaskAction
   fun run() {
     val outputDir = outputDirectory.asFile.get()
+    val outputDirStream =
+      Files.walk(outputDir.toPath()).sorted(Comparator.reverseOrder()).map(Path::toFile)
+    outputDirStream.forEach(File::delete)
+    outputDirStream.close()
     outputDir.mkdirs()
     val builtArtifacts =
       builtArtifactsLoader.get().load(apkFolder.get()) ?: error("Cannot load APKs")

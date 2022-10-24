@@ -1,4 +1,0 @@
-Changelog
-
-- Prevent errors during link metadata retrieval from crashing the app
-- Update Jetpack libraries to 2022-10-24 release

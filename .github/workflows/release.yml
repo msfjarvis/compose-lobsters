@@ -17,6 +17,11 @@ jobs:
         distribution: temurin
         java-version: 18
 
+    - name: Decrypt secrets
+      run: scripts/signing-setup.sh "$ENCRYPT_KEY"
+      env:
+        ENCRYPT_KEY: ${{ secrets.ENCRYPT_KEY }}
+
     - name: Build release bundle
       uses: gradle/gradle-build-action@v2.3.3
       with:
@@ -32,3 +37,6 @@ jobs:
         track: production
         whatsNewDirectory: distribution/whatsnew
         mappingFile: android/bundle/mapping.txt
+
+    - name: Clean secrets
+      run: scripts/signing-cleanup.sh

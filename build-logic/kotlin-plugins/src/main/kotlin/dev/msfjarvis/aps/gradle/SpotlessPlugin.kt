@@ -7,6 +7,7 @@ package dev.msfjarvis.aps.gradle
 
 import com.diffplug.gradle.spotless.SpotlessExtension
 import com.diffplug.gradle.spotless.SpotlessPlugin
+import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
@@ -16,6 +17,9 @@ import org.gradle.kotlin.dsl.getByType
 class SpotlessPlugin : Plugin<Project> {
 
   override fun apply(project: Project) {
+    if (project.rootProject != project) {
+      throw GradleException("Spotless plugin must only be applied to the root project.")
+    }
     project.pluginManager.apply(SpotlessPlugin::class)
     project.extensions.getByType<SpotlessExtension>().run {
       kotlin {

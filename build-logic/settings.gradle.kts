@@ -1,6 +1,8 @@
 /*
- * Copyright © 2014-2021 The Android Password Store Authors. All Rights Reserved.
- * SPDX-License-Identifier: GPL-3.0-only
+ * Copyright © 2022 Harsh Shandilya.
+ * Use of this source code is governed by an MIT-style
+ * license that can be found in the LICENSE file or at
+ * https://opensource.org/licenses/MIT.
  */
 @file:Suppress("UnstableApiUsage")
 

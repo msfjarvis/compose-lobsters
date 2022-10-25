@@ -25,12 +25,14 @@ class SpotlessPlugin : Plugin<Project> {
       kotlin {
         ktfmt(KTFMT_VERSION).googleStyle()
         target("**/*.kt")
-        targetExclude("**/build/", "**/gen/")
+        targetExclude("**/build/", "/spotless/")
+        licenseHeaderFile(project.file("spotless/license.kt"))
       }
       kotlinGradle {
         ktfmt(KTFMT_VERSION).googleStyle()
         target("**/*.kts")
         targetExclude("**/build/")
+        licenseHeaderFile(project.file("spotless/license.kt"), "import|plugins|@file")
       }
       format("xml") {
         target("**/*.xml")

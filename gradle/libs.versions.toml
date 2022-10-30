@@ -8,7 +8,7 @@ coroutines = "1.6.4"
 dagger = "2.44"
 hilt = "1.0.0"
 kotlin = "1.7.20"
-material_motion = "0.9.1"
+material_motion = "0.10.3"
 # @pin Needs to be aligned with Retrofit
 okhttp = "3.14.9"
 retrofit = "2.9.0"

@@ -35,9 +35,9 @@ constructor(
           body.string()
         }
       val extractedMetadata = crux.extractFrom(parsedUrl, Jsoup.parse(htmlContent, url))
-      val faviconUrl = extractedMetadata.urls[FAVICON_URL].toString()
-      val readingTime = extractedMetadata[DURATION_MS]
-      val overriddenUrl = extractedMetadata[CANONICAL_URL] ?: url
+      val faviconUrl = extractedMetadata[FAVICON_URL].toString()
+      val readingTime = extractedMetadata[DURATION_MS].toString()
+      val overriddenUrl = extractedMetadata[CANONICAL_URL]?.toString() ?: url
       LinkMetadata(
         url = overriddenUrl,
         faviconUrl = faviconUrl,

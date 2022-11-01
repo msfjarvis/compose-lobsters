@@ -63,7 +63,7 @@ compose-richtext-markdown = { module = "com.halilibo.compose-richtext:richtext-c
 compose-richtext-material3 = { module = "com.halilibo.compose-richtext:richtext-ui-material3", version.ref = "richtext" }
 compose-richtext-ui = { module = "com.halilibo.compose-richtext:richtext-ui", version.ref = "richtext" }
 copydown = "io.github.furstenheim:copy_down:1.1"
-crux = "com.chimbori.crux:crux:3.10.0"
+crux = "com.chimbori.crux:crux:3.11.0"
 dagger-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "dagger" }
 dagger-hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "dagger" }
 dagger-hilt-core = { module = "com.google.dagger:hilt-core", version.ref = "dagger" }

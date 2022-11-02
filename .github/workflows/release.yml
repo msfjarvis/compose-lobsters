@@ -1,25 +1,15 @@
 name: Release to Google Play
 on:
-  workflow_dispatch:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
 
 jobs:
   publish-google-play-release:
     runs-on: ubuntu-latest
     steps:
-
-    - name: Get latest release
-      id: latest-release
-      shell: bash
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        tag_name="$(gh api /repos/msfjarvis/compose-lobsters/releases --jq '.[0].tag_name')"
-        echo "checkout_ref=${tag_name}" >> $GITHUB_OUTPUT
-
     - name: Checkout repository
       uses: actions/checkout@v3.1.0
-      with:
-        ref: ${{ steps.latest-release.outputs.checkout_ref }}
 
     - name: Set up JDK
       uses: actions/setup-java@v3.6.0
@@ -45,7 +35,6 @@ jobs:
         packageName: dev.msfjarvis.claw.android
         releaseFiles: android/bundle/*.aab
         track: production
-        status: completed
         whatsNewDirectory: distribution/whatsnew
         mappingFile: android/bundle/mapping.txt
 

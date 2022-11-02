@@ -21,5 +21,3 @@ git commit -am 'feat(release): start next development iteration'
 git push origin main "v${VERSION}"
 
 gh release create "v${VERSION}" -F distribution/whatsnew/whatsnew-en-GB --title "v${VERSION}" ./android/apk/*.apk ./android/bundle/*.aab
-
-gh workflow run release.yml

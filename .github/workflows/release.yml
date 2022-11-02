@@ -31,12 +31,13 @@ jobs:
     - name: Publish bundle to Google Play
       uses: r0adkll/upload-google-play@v1.0.19
       with:
-        serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+        mappingFile: android/bundle/mapping.txt
         packageName: dev.msfjarvis.claw.android
         releaseFiles: android/bundle/*.aab
+        serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+        status: completed
         track: production
         whatsNewDirectory: distribution/whatsnew
-        mappingFile: android/bundle/mapping.txt
 
     - name: Clean secrets
       run: scripts/signing-cleanup.sh

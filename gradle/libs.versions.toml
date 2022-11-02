@@ -1,6 +1,6 @@
 [versions]
 accompanist = "0.27.0"
-agp = "8.0.0-alpha06"
+agp = "8.0.0-alpha07"
 androidx-test = "1.5.0-rc01"
 coil = "2.2.2"
 # @keep used for kotlinCompilerExtensionVersion

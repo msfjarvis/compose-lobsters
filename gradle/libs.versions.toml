@@ -90,5 +90,5 @@ testparameterinjector = "com.google.testparameterinjector:test-parameter-injecto
 [plugins]
 android-test = { id = "com.android.test", version.ref = "agp" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
-napt = "com.sergei-lapin.napt:1.17"
+napt = "com.sergei-lapin.napt:1.18"
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }

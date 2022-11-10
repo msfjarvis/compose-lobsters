@@ -27,6 +27,7 @@ jobs:
       with:
         arguments: collectReleaseBundle
         gradle-home-cache-cleanup: true
+        cache-read-only: true
 
     - name: Publish bundle to Google Play
       uses: r0adkll/upload-google-play@78c9e796b1035c94169c101d8e46cb880194bfc3 # tag=v1.0.19

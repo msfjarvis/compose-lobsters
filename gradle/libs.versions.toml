@@ -16,7 +16,7 @@ retrofit = "2.9.0"
 richtext = "0.15.0"
 serialization = "1.4.1"
 sqldelight = "2.0.0-alpha04"
-workmanager = "2.8.0-beta01"
+workmanager = "2.8.0-beta02"
 
 [libraries]
 accompanist-flowlayout = { module = "com.google.accompanist:accompanist-flowlayout", version.ref = "accompanist" }

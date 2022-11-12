@@ -7,11 +7,18 @@
   ],
   "packageRules": [
     {
+      "matchPackagePatterns": [
+        "^kotlin",
+        "^org.jetbrains.kotlin",
+        "^androidx.compose.compiler"
+      ],
+      "groupName": "kotlin"
+    },
+    {
       "managers": [
         "gradle"
       ],
       "packagePatterns": [
-        "^org.jetbrains.kotlin",
         "^com.squareup.okhttp3"
       ],
       "enabled": false

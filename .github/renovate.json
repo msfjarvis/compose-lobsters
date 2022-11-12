@@ -44,6 +44,16 @@
       ],
       "datasourceTemplate": "maven",
       "depNameTemplate": "com.twitter.compose.rules:detekt"
-    }
+    },
+    {
+      "fileMatch": [
+        "gradle/libs.versions.toml"
+      ],
+      "matchStrings": [
+        "composeCompiler = \"(?<currentValue>.*)\""
+      ],
+      "datasourceTemplate": "maven",
+      "depNameTemplate": "androidx.compose.compiler:compiler"
+    }    
   ]
 }

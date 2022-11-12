@@ -24,10 +24,14 @@
       "enabled": false
     },
     {
-      "matchDatasources": ["maven"],
-      "matchPackageNames": ["androidx.compose.compiler:compiler"],
+      "matchDatasources": [
+        "maven"
+      ],
+      "matchPackageNames": [
+        "androidx.compose.compiler:compiler"
+      ],
       "registryUrls": [
-      	"https://maven.google.com/"
+        "https://maven.google.com/"
       ]
     }
   ],
@@ -61,6 +65,6 @@
       ],
       "datasourceTemplate": "maven",
       "depNameTemplate": "androidx.compose.compiler:compiler"
-    }    
+    }
   ]
 }

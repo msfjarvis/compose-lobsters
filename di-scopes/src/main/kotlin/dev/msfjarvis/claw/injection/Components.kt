@@ -8,7 +8,9 @@ package dev.msfjarvis.claw.injection
 
 object Components {
 
-  @PublishedApi @Suppress("ObjectPropertyName") internal val _components = mutableSetOf<Any>()
+  @PublishedApi
+  @Suppress("ObjectPropertyName", "ObjectPropertyNaming")
+  internal val _components = mutableSetOf<Any>()
 
   fun add(component: Any) {
     _components.add(component)

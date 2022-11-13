@@ -6,4 +6,4 @@
  */
 package dev.msfjarvis.claw.injection.scopes
 
-abstract class AppScope private constructor()
+@Suppress("UnnecessaryAbstractClass") abstract class AppScope private constructor()

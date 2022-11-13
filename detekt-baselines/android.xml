@@ -2,7 +2,7 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
-    <ID>LongMethod:LobstersApp.kt$@Suppress("ModifierMissing") // Top-level composable, will never have a modifier supplied. @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class) @Composable fun LobstersApp( urlLauncher: UrlLauncher, htmlConverter: HTMLConverter, setWebUri: (String?) -&gt; Unit, viewModel: ClawViewModel = viewModel(), )</ID>
+    <ID>LongMethod:LobstersApp.kt$@Suppress("ModifierMissing") // Top-level composable, will never have a modifier supplied. @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class) @Composable fun LobstersApp( urlLauncher: UrlLauncher, htmlConverter: HTMLConverter, setWebUri: (String?) -&gt; Unit, viewModel: ClawViewModel = tangleViewModel(), )</ID>
     <ID>LongParameterList:NetworkPosts.kt$( items: LazyPagingItems&lt;LobstersPost&gt;, listState: LazyListState, isPostSaved: suspend (SavedPost) -&gt; Boolean, reloadPosts: () -&gt; Unit, postActions: PostActions, modifier: Modifier = Modifier, )</ID>
   </CurrentIssues>
 </SmellBaseline>

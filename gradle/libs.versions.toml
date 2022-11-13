@@ -1,7 +1,7 @@
 [versions]
 accompanist = "0.27.0"
 agp = "8.0.0-alpha08"
-androidx-test = "1.5.1"
+androidx-test = "1.5.0"
 coil = "2.2.2"
 # @keep used for kotlinCompilerExtensionVersion
 composeCompiler = "1.4.0-alpha02"
@@ -44,7 +44,7 @@ androidx-test-core = { module = "androidx.test:core", version.ref = "androidx-te
 androidx-test-espresso-core = "androidx.test.espresso:espresso-core:3.5.0"
 androidx-test-ext-junit = "androidx.test.ext:junit:1.1.4"
 androidx-test-rules = { module = "androidx.test:rules", version.ref = "androidx-test" }
-androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidx-test" }
+androidx-test-runner = "androidx.test:runner:1.5.1"
 androidx-test-uiautomator = "androidx.test.uiautomator:uiautomator:2.3.0-alpha01"
 androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "workmanager" }
 build-agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }

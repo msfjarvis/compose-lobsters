@@ -8,6 +8,7 @@ package dev.msfjarvis.claw.core.injection
 
 import android.content.Context
 import android.net.TrafficStats
+import com.deliveryhero.whetstone.ForScope
 import com.deliveryhero.whetstone.app.ApplicationScope
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Binds
@@ -37,7 +38,7 @@ interface OkHttpModule {
     private const val THREAD_STATS_TAG = 0x000090000
 
     @Provides
-    fun provideCache(context: Context): Cache {
+    fun provideCache(@ForScope(ApplicationScope::class) context: Context): Cache {
       return Cache(context.cacheDir, CACHE_SIZE_MB)
     }
 

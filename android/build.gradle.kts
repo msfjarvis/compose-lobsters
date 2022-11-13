@@ -48,8 +48,6 @@ android {
 }
 
 dependencies {
-  anvil(libs.tangle.viewmodel.compiler)
-  anvil(libs.tangle.work.compiler)
   kapt(libs.dagger.compiler)
   implementation(platform(libs.androidx.compose.bom))
   implementation(libs.dagger)
@@ -58,7 +56,6 @@ dependencies {
   implementation(projects.core)
   implementation(projects.coroutineUtils)
   implementation(projects.database)
-  implementation(projects.diScopes)
   implementation(projects.metadataExtractor)
   implementation(projects.model)
   implementation(libs.accompanist.swiperefresh)
@@ -76,10 +73,4 @@ dependencies {
   implementation(libs.material.motion.core)
   implementation(libs.material.motion.navigation)
   implementation(libs.sqldelight.extensions.coroutines)
-  implementation(libs.tangle.viewmodel.api)
-  implementation(libs.tangle.viewmodel.compose) {
-    // https://github.com/RBusarow/Tangle/issues/558
-    exclude("androidx.compose.compiler")
-  }
-  implementation(libs.tangle.work.api)
 }

@@ -13,7 +13,6 @@ plugins {
 
 dependencies {
   api(libs.crux)
-  implementation(projects.diScopes)
   implementation(projects.model)
   implementation(libs.javax.inject)
   implementation(libs.jsoup)

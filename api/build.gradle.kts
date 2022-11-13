@@ -22,7 +22,6 @@ dependencies {
   api(projects.model)
   api(libs.retrofit)
   api(libs.eithernet)
-  implementation(projects.diScopes)
   implementation(libs.dagger)
   implementation(libs.javax.inject)
   testImplementation(testFixtures(libs.eithernet))

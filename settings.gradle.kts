@@ -171,7 +171,6 @@ include(
   "core",
   "coroutine-utils",
   "database",
-  "di-scopes",
   "metadata-extractor",
   "model",
 )

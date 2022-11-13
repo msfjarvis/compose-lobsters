@@ -9,6 +9,7 @@ package dev.msfjarvis.claw.database.injection
 import android.content.Context
 import app.cash.sqldelight.adapter.primitive.IntColumnAdapter
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
+import com.deliveryhero.whetstone.ForScope
 import com.deliveryhero.whetstone.app.ApplicationScope
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
@@ -24,7 +25,7 @@ object DatabaseModule {
   private const val LOBSTERS_DATABASE_NAME = "SavedPosts.db"
 
   @Provides
-  fun provideDatabase(context: Context): LobstersDatabase {
+  fun provideDatabase(@ForScope(ApplicationScope::class) context: Context): LobstersDatabase {
     val driver = AndroidSqliteDriver(LobstersDatabase.Schema, context, LOBSTERS_DATABASE_NAME)
     return LobstersDatabase(driver, SavedPost.Adapter(IntColumnAdapter, TagsAdapter()))
   }

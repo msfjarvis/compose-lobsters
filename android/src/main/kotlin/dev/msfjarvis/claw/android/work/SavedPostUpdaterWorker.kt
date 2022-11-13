@@ -9,17 +9,18 @@ package dev.msfjarvis.claw.android.work
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import com.deliveryhero.whetstone.ForScope
+import com.deliveryhero.whetstone.worker.ContributesWorker
+import com.deliveryhero.whetstone.worker.WorkerScope
 import com.slack.eithernet.ApiResult
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedInject
 import dev.msfjarvis.claw.android.viewmodel.SavedPostsRepository
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.common.posts.toDbModel
+import javax.inject.Inject
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.supervisorScope
-import tangle.work.TangleWorker
 
 /**
  * WorkManager-backed [CoroutineWorker] that gets all the posts from [SavedPostsRepository], fetches
@@ -27,14 +28,14 @@ import tangle.work.TangleWorker
  * saved posts that were saved before comment counts were added to be able to show a comment count
  * and for new-enough posts that are still getting comments to have an accurate one.
  */
-@TangleWorker
+@ContributesWorker
 class SavedPostUpdaterWorker
-@AssistedInject
+@Inject
 constructor(
+  @ForScope(WorkerScope::class) appContext: Context,
+  workerParams: WorkerParameters,
   private val savedPostsRepository: SavedPostsRepository,
   private val lobstersApi: LobstersApi,
-  @Assisted appContext: Context,
-  @Assisted workerParams: WorkerParameters,
 ) : CoroutineWorker(appContext, workerParams) {
   override suspend fun doWork(): Result {
     val posts = savedPostsRepository.savedPosts.first()

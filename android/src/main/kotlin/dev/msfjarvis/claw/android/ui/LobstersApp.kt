@@ -32,6 +32,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.deliveryhero.whetstone.compose.injectedViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.msfjarvis.claw.android.R
 import dev.msfjarvis.claw.android.ui.decorations.ClawNavigationBar
@@ -53,7 +54,6 @@ import kotlinx.coroutines.launch
 import soup.compose.material.motion.navigation.MaterialMotionNavHost
 import soup.compose.material.motion.navigation.composable
 import soup.compose.material.motion.navigation.rememberMaterialMotionNavController
-import tangle.viewmodel.compose.tangleViewModel
 
 @Suppress("ModifierMissing") // Top-level composable, will never have a modifier supplied.
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
@@ -62,7 +62,7 @@ fun LobstersApp(
   urlLauncher: UrlLauncher,
   htmlConverter: HTMLConverter,
   setWebUri: (String?) -> Unit,
-  viewModel: ClawViewModel = tangleViewModel(),
+  viewModel: ClawViewModel = injectedViewModel(),
 ) {
   val systemUiController = rememberSystemUiController()
   val hottestListState = rememberLazyListState()

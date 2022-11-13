@@ -31,7 +31,6 @@ sqldelight {
 dependencies {
   implementation(libs.dagger)
   implementation(projects.core)
-  implementation(projects.diScopes)
   implementation(libs.sqldelight.androidDriver)
   implementation(libs.sqldelight.primitiveAdapters)
   testImplementation(libs.sqldelight.jvmDriver)

@@ -7,24 +7,23 @@
 package dev.msfjarvis.claw.android
 
 import android.app.Application
+import com.deliveryhero.whetstone.Whetstone
+import com.deliveryhero.whetstone.app.ApplicationComponentOwner
+import com.deliveryhero.whetstone.app.ContributesAppInjector
 import dev.msfjarvis.claw.core.injection.AppPlugin
-import dev.msfjarvis.claw.injection.Components
-import dev.msfjarvis.claw.injection.scopes.AppScope
 import javax.inject.Inject
-import tangle.inject.TangleGraph
-import tangle.inject.TangleScope
 
-@TangleScope(AppScope::class)
-class ClawApplication : Application() {
+@ContributesAppInjector(generateAppComponent = true)
+class ClawApplication : Application(), ApplicationComponentOwner {
+
+  override val applicationComponent by
+    lazy(LazyThreadSafetyMode.NONE) { GeneratedApplicationComponent.create(this) }
 
   @Inject lateinit var plugins: Set<@JvmSuppressWildcards AppPlugin>
 
   override fun onCreate() {
+    Whetstone.inject(this)
     super.onCreate()
-    val component = DaggerAppComponent.factory().create(this)
-    Components.add(component)
-    TangleGraph.add(component)
-    TangleGraph.inject(this)
     plugins.forEach { plugin -> plugin.apply(this) }
   }
 }

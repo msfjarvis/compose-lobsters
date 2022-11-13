@@ -21,7 +21,6 @@ android { namespace = "dev.msfjarvis.claw.core" }
 dependencies {
   api(libs.kotlinx.serialization.json)
   api(libs.okhttp.loggingInterceptor)
-  implementation(projects.diScopes)
   implementation(libs.dagger)
   implementation(libs.javax.inject)
   implementation(libs.napier)

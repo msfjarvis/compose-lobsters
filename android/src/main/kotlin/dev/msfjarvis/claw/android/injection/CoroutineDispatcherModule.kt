@@ -6,17 +6,17 @@
  */
 package dev.msfjarvis.claw.android.injection
 
+import com.deliveryhero.whetstone.app.ApplicationScope
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
-import dev.msfjarvis.claw.injection.scopes.AppScope
 import dev.msfjarvis.claw.util.coroutines.DefaultDispatcherProvider
 import dev.msfjarvis.claw.util.coroutines.DispatcherProvider
 import kotlinx.coroutines.CoroutineDispatcher
 
 @Module
-@ContributesTo(AppScope::class)
+@ContributesTo(ApplicationScope::class)
 interface CoroutineDispatcherModule {
 
   @Binds fun DefaultDispatcherProvider.bind(): DispatcherProvider

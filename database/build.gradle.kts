@@ -12,6 +12,7 @@ plugins {
   id("dev.msfjarvis.claw.kotlin-common")
   id("dev.msfjarvis.claw.android-library")
   alias(libs.plugins.anvil)
+  alias(libs.plugins.whetstone)
 }
 
 anvil { generateDaggerFactories.set(true) }

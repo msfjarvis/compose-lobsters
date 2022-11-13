@@ -8,6 +8,7 @@ package dev.msfjarvis.claw.core.injection
 
 import android.content.Context
 import android.net.TrafficStats
+import com.deliveryhero.whetstone.app.ApplicationScope
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Binds
 import dagger.Module
@@ -16,7 +17,6 @@ import dagger.multibindings.IntoSet
 import dev.msfjarvis.claw.core.network.DelegatingSocketFactory
 import dev.msfjarvis.claw.core.network.NapierLogger
 import dev.msfjarvis.claw.core.network.UserAgentInterceptor
-import dev.msfjarvis.claw.injection.scopes.AppScope
 import java.net.Socket
 import javax.net.SocketFactory
 import okhttp3.Cache
@@ -25,7 +25,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 
 @Module
-@ContributesTo(AppScope::class)
+@ContributesTo(ApplicationScope::class)
 interface OkHttpModule {
 
   @Binds fun NapierLogger.bindLogger(): HttpLoggingInterceptor.Logger

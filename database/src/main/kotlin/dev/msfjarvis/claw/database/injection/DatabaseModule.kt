@@ -9,16 +9,16 @@ package dev.msfjarvis.claw.database.injection
 import android.content.Context
 import app.cash.sqldelight.adapter.primitive.IntColumnAdapter
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
+import com.deliveryhero.whetstone.app.ApplicationScope
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
 import dev.msfjarvis.claw.database.LobstersDatabase
 import dev.msfjarvis.claw.database.local.SavedPost
 import dev.msfjarvis.claw.database.model.TagsAdapter
-import dev.msfjarvis.claw.injection.scopes.AppScope
 
 @Module
-@ContributesTo(AppScope::class)
+@ContributesTo(ApplicationScope::class)
 object DatabaseModule {
 
   private const val LOBSTERS_DATABASE_NAME = "SavedPosts.db"

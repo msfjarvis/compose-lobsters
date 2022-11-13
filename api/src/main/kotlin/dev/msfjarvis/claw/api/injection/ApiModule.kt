@@ -6,20 +6,20 @@
  */
 package dev.msfjarvis.claw.api.injection
 
+import com.deliveryhero.whetstone.app.ApplicationScope
 import com.slack.eithernet.ApiResultCallAdapterFactory
 import com.slack.eithernet.ApiResultConverterFactory
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
 import dev.msfjarvis.claw.api.LobstersApi
-import dev.msfjarvis.claw.injection.scopes.AppScope
 import okhttp3.OkHttpClient
 import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.create
 
 @Module
-@ContributesTo(AppScope::class)
+@ContributesTo(ApplicationScope::class)
 object ApiModule {
   @Provides
   fun provideRetrofit(

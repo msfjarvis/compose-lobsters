@@ -13,6 +13,14 @@ plugins {
   id("dev.msfjarvis.claw.kotlin-kapt")
   id("dev.msfjarvis.claw.versioning-plugin")
   alias(libs.plugins.anvil)
+  alias(libs.plugins.whetstone)
+}
+
+whetstone {
+  addOns {
+    compose.set(true)
+    workManager.set(true)
+  }
 }
 
 android {

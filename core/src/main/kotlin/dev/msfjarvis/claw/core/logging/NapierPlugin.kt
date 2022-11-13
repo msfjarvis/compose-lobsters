@@ -7,14 +7,14 @@
 package dev.msfjarvis.claw.core.logging
 
 import android.app.Application
+import com.deliveryhero.whetstone.app.ApplicationScope
 import com.squareup.anvil.annotations.ContributesMultibinding
 import dev.msfjarvis.claw.core.injection.AppPlugin
-import dev.msfjarvis.claw.injection.scopes.AppScope
 import io.github.aakira.napier.DebugAntilog
 import io.github.aakira.napier.Napier
 import javax.inject.Inject
 
-@ContributesMultibinding(AppScope::class)
+@ContributesMultibinding(ApplicationScope::class)
 class NapierPlugin @Inject constructor() : AppPlugin {
   override fun apply(application: Application) {
     Napier.base(DebugAntilog())

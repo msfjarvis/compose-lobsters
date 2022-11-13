@@ -7,10 +7,14 @@
 @file:Suppress("DSL_SCOPE_VIOLATION", "UnstableApiUsage")
 
 plugins {
-  kotlin("jvm")
-  id("dev.msfjarvis.claw.kotlin-library")
+  kotlin("android")
+  id("dev.msfjarvis.claw.kotlin-common")
+  id("dev.msfjarvis.claw.android-library")
   alias(libs.plugins.anvil)
+  alias(libs.plugins.whetstone)
 }
+
+android { namespace = "dev.msfjarvis.claw.api" }
 
 anvil { generateDaggerFactories.set(true) }
 

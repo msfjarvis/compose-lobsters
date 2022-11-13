@@ -6,15 +6,15 @@
  */
 package dev.msfjarvis.claw.android.injection
 
+import com.deliveryhero.whetstone.app.ApplicationScope
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
 import dev.msfjarvis.claw.common.comments.HTMLConverter
-import dev.msfjarvis.claw.injection.scopes.AppScope
 import io.github.furstenheim.CopyDown
 
 @Module
-@ContributesTo(AppScope::class)
+@ContributesTo(ApplicationScope::class)
 object HTMLConverterModule {
 
   @Provides

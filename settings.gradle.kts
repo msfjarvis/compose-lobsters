@@ -6,6 +6,8 @@
  */
 @file:Suppress("UnstableApiUsage")
 
+import me.champeau.gradle.igp.gitRepositories
+
 pluginManagement {
   repositories {
     exclusiveContent {
@@ -41,10 +43,35 @@ pluginManagement {
         includeModule("gradle.plugin.org.gradle.android", "android-cache-fix-gradle-plugin")
         includeModule("com.sergei-lapin.napt", "com.sergei-lapin.napt.gradle.plugin")
         includeModule("com.sergei-lapin.napt", "gradle")
+        includeModule("me.champeau.includegit", "me.champeau.includegit.gradle.plugin")
+        includeModule("me.champeau.gradle.includegit", "plugin")
       }
     }
     includeBuild("build-logic")
     mavenCentral()
+  }
+}
+
+plugins { id("me.champeau.includegit") version "0.1.5" }
+
+gitRepositories {
+  checkoutsDirectory.set(rootProject.projectDir.resolve("build/checkouts"))
+  include("whetstone") {
+    uri.set("https://github.com/msfjarvis/whetstone")
+    branch.set("inject-component-activity")
+    includeBuild {
+      dependencySubstitution {
+        for (module in
+          listOf(
+            "whetstone",
+            "whetstone-compiler",
+            "whetstone-compose",
+            "whetstone-worker",
+          )) {
+          substitute(module("com.deliveryhero.whetstone:$module")).using(project(":$module"))
+        }
+      }
+    }
   }
 }
 
@@ -72,8 +99,10 @@ dependencyResolutionManagement {
         includeGroup("androidx.compose.ui")
         includeGroup("androidx.concurrent")
         includeGroup("androidx.core")
+        includeGroup("androidx.cursoradapter")
         includeGroup("androidx.customview")
         includeGroup("androidx.databinding")
+        includeGroup("androidx.drawerlayout")
         includeGroup("androidx.exifinterface")
         includeGroup("androidx.fragment")
         includeGroup("androidx.interpolator")

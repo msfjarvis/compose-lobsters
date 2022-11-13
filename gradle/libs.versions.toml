@@ -16,6 +16,7 @@ richtext = "0.15.0"
 serialization = "1.4.1"
 sqldelight = "2.0.0-alpha04"
 tangle = "0.15.1"
+whetstone = "0.3.0"
 workmanager = "2.8.0-beta02"
 
 [libraries]
@@ -89,9 +90,11 @@ tangle-viewmodel-compose = { module = "com.rickbusarow.tangle:tangle-viewmodel-c
 tangle-work-api = { module = "com.rickbusarow.tangle:tangle-work-api", version.ref = "tangle" }
 tangle-work-compiler = { module = "com.rickbusarow.tangle:tangle-work-compiler", version.ref = "tangle" }
 testparameterinjector = "com.google.testparameterinjector:test-parameter-injector:1.9"
+whetstone = { module = "com.deliveryhero.whetstone:whetstone", version.ref = "whetstone" }
 
 [plugins]
 android-test = { id = "com.android.test", version.ref = "agp" }
 anvil = "com.squareup.anvil:2.4.2"
 napt = "com.sergei-lapin.napt:1.18"
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
+whetstone = { id = "com.deliveryhero.whetstone", version.ref = "whetstone" }

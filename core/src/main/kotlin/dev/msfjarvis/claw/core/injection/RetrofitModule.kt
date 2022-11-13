@@ -7,8 +7,6 @@
 package dev.msfjarvis.claw.core.injection
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import com.slack.eithernet.ApiResultCallAdapterFactory
-import com.slack.eithernet.ApiResultConverterFactory
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
@@ -17,24 +15,11 @@ import dev.msfjarvis.claw.injection.scopes.AppScope
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType
-import retrofit2.CallAdapter
 import retrofit2.Converter
 
 @Module
 @ContributesTo(AppScope::class)
 object RetrofitModule {
-
-  @Provides
-  @IntoSet
-  fun provideApiResultCallAdapterFactory(): CallAdapter.Factory {
-    return ApiResultCallAdapterFactory
-  }
-
-  @Provides
-  @IntoSet
-  fun provideApiResultConverterFactory(): Converter.Factory {
-    return ApiResultConverterFactory
-  }
 
   @OptIn(ExperimentalSerializationApi::class)
   @Provides

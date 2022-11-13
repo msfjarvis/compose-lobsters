@@ -6,13 +6,14 @@
  */
 package dev.msfjarvis.claw.api.injection
 
+import com.slack.eithernet.ApiResultCallAdapterFactory
+import com.slack.eithernet.ApiResultConverterFactory
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.injection.scopes.AppScope
 import okhttp3.OkHttpClient
-import retrofit2.CallAdapter
 import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.create
@@ -24,15 +25,13 @@ object ApiModule {
   fun provideRetrofit(
     client: OkHttpClient,
     converterFactories: Set<@JvmSuppressWildcards Converter.Factory>,
-    callAdapterFactories: Set<@JvmSuppressWildcards CallAdapter.Factory>
   ): Retrofit {
     return Retrofit.Builder()
       .client(client)
       .baseUrl(LobstersApi.BASE_URL)
-      .apply {
-        converterFactories.forEach(this::addConverterFactory)
-        callAdapterFactories.forEach(this::addCallAdapterFactory)
-      }
+      .addConverterFactory(ApiResultConverterFactory)
+      .addCallAdapterFactory(ApiResultCallAdapterFactory)
+      .apply { converterFactories.forEach(this::addConverterFactory) }
       .build()
   }
 

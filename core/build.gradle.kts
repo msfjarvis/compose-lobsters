@@ -22,7 +22,6 @@ dependencies {
   api(libs.okhttp.loggingInterceptor)
   implementation(projects.diScopes)
   implementation(libs.dagger)
-  implementation(libs.eithernet)
   implementation(libs.javax.inject)
   implementation(libs.napier)
   implementation(libs.okhttp.core)

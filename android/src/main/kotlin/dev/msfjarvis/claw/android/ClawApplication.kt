@@ -8,31 +8,31 @@ package dev.msfjarvis.claw.android
 
 import android.app.Application
 import android.os.StrictMode
-import android.util.Log
-import androidx.work.Configuration
 import coil.ImageLoader
 import coil.ImageLoaderFactory
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
+import dev.msfjarvis.claw.core.injection.AppPlugin
 import dev.msfjarvis.claw.injection.Components
-import io.github.aakira.napier.DebugAntilog
-import io.github.aakira.napier.Napier
+import dev.msfjarvis.claw.injection.scopes.AppScope
+import javax.inject.Inject
 import tangle.inject.TangleGraph
+import tangle.inject.TangleScope
 
-class ClawApplication : Application(), Configuration.Provider, ImageLoaderFactory {
+@TangleScope(AppScope::class)
+class ClawApplication : Application(), ImageLoaderFactory {
+
+  @Inject lateinit var plugins: Set<@JvmSuppressWildcards AppPlugin>
 
   override fun onCreate() {
     super.onCreate()
     val component = DaggerAppComponent.factory().create(this)
     Components.add(component)
     TangleGraph.add(component)
+    TangleGraph.inject(this)
     StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder().detectAll().penaltyLog().build())
     StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build())
-    Napier.base(DebugAntilog())
-  }
-
-  override fun getWorkManagerConfiguration(): Configuration {
-    return Configuration.Builder().setMinimumLoggingLevel(Log.DEBUG).build()
+    plugins.forEach { plugin -> plugin.apply(this) }
   }
 
   override fun newImageLoader(): ImageLoader {

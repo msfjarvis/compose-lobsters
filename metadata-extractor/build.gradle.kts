@@ -13,8 +13,9 @@ plugins {
 
 dependencies {
   api(libs.crux)
+  implementation(projects.diScopes)
   implementation(projects.model)
-  implementation(libs.dagger.hilt.core)
+  implementation(libs.javax.inject)
   implementation(libs.jsoup)
   implementation(libs.kotlinx.coroutines.core)
   implementation(libs.okhttp.core)

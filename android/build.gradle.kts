@@ -65,11 +65,8 @@ dependencies {
   implementation(libs.coil)
   implementation(libs.copydown)
   implementation(libs.kotlinx.coroutines.core)
-  implementation(libs.kotlinx.serialization.json)
   implementation(libs.material.motion.core)
   implementation(libs.material.motion.navigation)
-  implementation(libs.okhttp.loggingInterceptor)
-  implementation(libs.retrofit.kotlinxSerializationConverter)
   implementation(libs.sqldelight.extensions.coroutines)
   implementation(libs.tangle.viewmodel.api)
   implementation(libs.tangle.viewmodel.compose) {

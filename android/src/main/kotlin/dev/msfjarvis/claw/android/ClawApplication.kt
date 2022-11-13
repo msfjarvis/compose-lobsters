@@ -7,7 +7,6 @@
 package dev.msfjarvis.claw.android
 
 import android.app.Application
-import android.os.StrictMode
 import coil.ImageLoader
 import coil.ImageLoaderFactory
 import coil.disk.DiskCache
@@ -30,8 +29,6 @@ class ClawApplication : Application(), ImageLoaderFactory {
     Components.add(component)
     TangleGraph.add(component)
     TangleGraph.inject(this)
-    StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder().detectAll().penaltyLog().build())
-    StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build())
     plugins.forEach { plugin -> plugin.apply(this) }
   }
 

@@ -27,7 +27,8 @@ class KotlinCommonPlugin : Plugin<Project> {
       }
       withType<KotlinCompile>().configureEach {
         kotlinOptions {
-          allWarningsAsErrors = project.providers.environmentVariable("GITHUB_WORKFLOW").isPresent
+          allWarningsAsErrors =
+            false // project.providers.environmentVariable("GITHUB_WORKFLOW").isPresent
           jvmTarget = JavaVersion.VERSION_11.toString()
           freeCompilerArgs = freeCompilerArgs + ADDITIONAL_COMPILER_ARGS
           languageVersion = "1.7"

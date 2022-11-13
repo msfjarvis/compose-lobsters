@@ -4,7 +4,7 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
-package dev.msfjarvis.claw.android.network
+package dev.msfjarvis.claw.core.network
 
 import java.net.InetAddress
 import java.net.Socket

@@ -13,10 +13,15 @@ plugins {
   alias(libs.plugins.anvil)
 }
 
+anvil { generateDaggerFactories.set(true) }
+
 android { namespace = "dev.msfjarvis.claw.core" }
 
 dependencies {
+  api(libs.okhttp.loggingInterceptor)
   implementation(projects.diScopes)
   implementation(libs.dagger)
   implementation(libs.javax.inject)
+  implementation(libs.napier)
+  implementation(libs.okhttp.core)
 }

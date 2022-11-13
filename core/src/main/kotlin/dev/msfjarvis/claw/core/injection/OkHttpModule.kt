@@ -4,7 +4,7 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
-package dev.msfjarvis.claw.android.injection
+package dev.msfjarvis.claw.core.injection
 
 import android.content.Context
 import android.net.TrafficStats
@@ -13,9 +13,9 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoSet
-import dev.msfjarvis.claw.android.network.DelegatingSocketFactory
-import dev.msfjarvis.claw.android.network.NapierLogger
-import dev.msfjarvis.claw.android.network.UserAgentInterceptor
+import dev.msfjarvis.claw.core.network.DelegatingSocketFactory
+import dev.msfjarvis.claw.core.network.NapierLogger
+import dev.msfjarvis.claw.core.network.UserAgentInterceptor
 import dev.msfjarvis.claw.injection.scopes.AppScope
 import java.net.Socket
 import javax.net.SocketFactory

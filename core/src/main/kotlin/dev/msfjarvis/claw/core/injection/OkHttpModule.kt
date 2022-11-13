@@ -69,7 +69,7 @@ interface OkHttpModule {
     @Provides
     @IntoSet
     fun provideHttpLoggingInterceptor(logger: HttpLoggingInterceptor.Logger): Interceptor {
-      return HttpLoggingInterceptor(logger).setLevel(HttpLoggingInterceptor.Level.HEADERS)
+      return HttpLoggingInterceptor(logger).setLevel(HttpLoggingInterceptor.Level.BASIC)
     }
   }
 }

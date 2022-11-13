@@ -10,13 +10,17 @@ plugins {
   kotlin("android")
   id("dev.msfjarvis.claw.kotlin-common")
   id("dev.msfjarvis.claw.android-library")
+  alias(libs.plugins.anvil)
 }
+
+anvil { generateDaggerFactories.set(true) }
 
 androidComponents { beforeVariants { it.enableUnitTest = false } }
 
 dependencies {
   implementation(platform(libs.androidx.compose.bom))
   api(libs.napier)
+  implementation(projects.core)
   implementation(projects.database)
   implementation(projects.model)
   implementation(libs.accompanist.flowlayout)

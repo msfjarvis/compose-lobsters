@@ -7,10 +7,6 @@
 package dev.msfjarvis.claw.android
 
 import android.app.Application
-import coil.ImageLoader
-import coil.ImageLoaderFactory
-import coil.disk.DiskCache
-import coil.memory.MemoryCache
 import dev.msfjarvis.claw.core.injection.AppPlugin
 import dev.msfjarvis.claw.injection.Components
 import dev.msfjarvis.claw.injection.scopes.AppScope
@@ -19,7 +15,7 @@ import tangle.inject.TangleGraph
 import tangle.inject.TangleScope
 
 @TangleScope(AppScope::class)
-class ClawApplication : Application(), ImageLoaderFactory {
+class ClawApplication : Application() {
 
   @Inject lateinit var plugins: Set<@JvmSuppressWildcards AppPlugin>
 
@@ -30,24 +26,5 @@ class ClawApplication : Application(), ImageLoaderFactory {
     TangleGraph.add(component)
     TangleGraph.inject(this)
     plugins.forEach { plugin -> plugin.apply(this) }
-  }
-
-  override fun newImageLoader(): ImageLoader {
-    return ImageLoader.Builder(this)
-      .memoryCache { MemoryCache.Builder(this).maxSizePercent(MEMORY_CACHE_RATIO).build() }
-      .diskCache {
-        DiskCache.Builder()
-          .directory(cacheDir.resolve("image_cache"))
-          .maxSizeBytes(DISK_CACHE_MAX_SIZE)
-          .build()
-      }
-      // Show a short crossfade when loading images asynchronously.
-      .crossfade(true)
-      .build()
-  }
-
-  private companion object {
-    private const val MEMORY_CACHE_RATIO = 0.25
-    private const val DISK_CACHE_MAX_SIZE = 25L * 1024 * 1024 // 25 MB
   }
 }

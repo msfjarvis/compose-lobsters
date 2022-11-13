@@ -11,7 +11,10 @@ plugins {
   alias(libs.plugins.sqldelight)
   id("dev.msfjarvis.claw.kotlin-common")
   id("dev.msfjarvis.claw.android-library")
+  alias(libs.plugins.anvil)
 }
+
+anvil { generateDaggerFactories.set(true) }
 
 android { namespace = "dev.msfjarvis.claw.database" }
 
@@ -25,6 +28,9 @@ sqldelight {
 }
 
 dependencies {
+  implementation(libs.dagger)
+  implementation(projects.core)
+  implementation(projects.diScopes)
   implementation(libs.sqldelight.androidDriver)
   implementation(libs.sqldelight.primitiveAdapters)
   testImplementation(libs.sqldelight.jvmDriver)

@@ -35,6 +35,10 @@ gradlePlugin {
       id = "dev.msfjarvis.claw.kotlin-common"
       implementationClass = "dev.msfjarvis.aps.gradle.KotlinCommonPlugin"
     }
+    register("kotlin-kapt") {
+      id = "dev.msfjarvis.claw.kotlin-kapt"
+      implementationClass = "dev.msfjarvis.aps.gradle.KotlinKaptPlugin"
+    }
     register("kotlin-library") {
       id = "dev.msfjarvis.claw.kotlin-library"
       implementationClass = "dev.msfjarvis.aps.gradle.KotlinLibraryPlugin"

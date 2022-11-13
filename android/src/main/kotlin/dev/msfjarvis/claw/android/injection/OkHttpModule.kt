@@ -8,16 +8,15 @@ package dev.msfjarvis.claw.android.injection
 
 import android.content.Context
 import android.net.TrafficStats
+import com.squareup.anvil.annotations.ContributesTo
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoSet
 import dev.msfjarvis.claw.android.network.DelegatingSocketFactory
 import dev.msfjarvis.claw.android.network.NapierLogger
 import dev.msfjarvis.claw.android.network.UserAgentInterceptor
+import dev.msfjarvis.claw.injection.scopes.AppScope
 import java.net.Socket
 import javax.net.SocketFactory
 import okhttp3.Cache
@@ -26,7 +25,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 
 @Module
-@InstallIn(SingletonComponent::class)
+@ContributesTo(AppScope::class)
 interface OkHttpModule {
 
   @Binds fun NapierLogger.bindLogger(): HttpLoggingInterceptor.Logger
@@ -38,7 +37,7 @@ interface OkHttpModule {
     private const val THREAD_STATS_TAG = 0x000090000
 
     @Provides
-    fun provideCache(@ApplicationContext context: Context): Cache {
+    fun provideCache(context: Context): Cache {
       return Cache(context.cacheDir, CACHE_SIZE_MB)
     }
 

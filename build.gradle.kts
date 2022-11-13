@@ -10,6 +10,5 @@ plugins {
   id("dev.msfjarvis.claw.spotless")
   id("dev.msfjarvis.claw.versions")
   id("dev.msfjarvis.claw.kotlin-common")
-  alias(libs.plugins.hilt) apply false
   alias(libs.plugins.android.test) apply false
 }

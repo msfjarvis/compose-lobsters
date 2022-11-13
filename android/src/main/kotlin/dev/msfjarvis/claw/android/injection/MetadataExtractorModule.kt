@@ -7,14 +7,14 @@
 package dev.msfjarvis.claw.android.injection
 
 import com.chimbori.crux.Crux
+import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import dev.msfjarvis.claw.injection.scopes.AppScope
 import okhttp3.OkHttpClient
 
 @Module
-@InstallIn(SingletonComponent::class)
+@ContributesTo(AppScope::class)
 object MetadataExtractorModule {
   @Provides
   fun provideCrux(

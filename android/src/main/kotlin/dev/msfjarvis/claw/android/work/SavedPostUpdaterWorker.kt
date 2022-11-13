@@ -7,7 +7,6 @@
 package dev.msfjarvis.claw.android.work
 
 import android.content.Context
-import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.slack.eithernet.ApiResult
@@ -20,6 +19,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.supervisorScope
+import tangle.work.TangleWorker
 
 /**
  * WorkManager-backed [CoroutineWorker] that gets all the posts from [SavedPostsRepository], fetches
@@ -27,7 +27,7 @@ import kotlinx.coroutines.supervisorScope
  * saved posts that were saved before comment counts were added to be able to show a comment count
  * and for new-enough posts that are still getting comments to have an accurate one.
  */
-@HiltWorker
+@TangleWorker
 class SavedPostUpdaterWorker
 @AssistedInject
 constructor(

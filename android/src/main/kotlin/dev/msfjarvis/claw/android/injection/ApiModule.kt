@@ -9,11 +9,11 @@ package dev.msfjarvis.claw.android.injection
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.slack.eithernet.ApiResultCallAdapterFactory
 import com.slack.eithernet.ApiResultConverterFactory
+import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import dev.msfjarvis.claw.api.LobstersApi
+import dev.msfjarvis.claw.injection.scopes.AppScope
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -23,7 +23,7 @@ import retrofit2.create
 
 @OptIn(ExperimentalSerializationApi::class)
 @Module
-@InstallIn(SingletonComponent::class)
+@ContributesTo(AppScope::class)
 object ApiModule {
   @Provides
   fun provideRetrofit(

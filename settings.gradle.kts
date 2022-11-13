@@ -140,8 +140,10 @@ include(
   "api",
   "benchmark",
   "common",
+  "core",
   "coroutine-utils",
   "database",
+  "di-scopes",
   "metadata-extractor",
   "model",
 )

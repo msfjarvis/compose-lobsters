@@ -12,7 +12,6 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.slack.eithernet.ApiResult.Failure
 import com.slack.eithernet.ApiResult.Success
-import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.msfjarvis.claw.android.injection.IODispatcher
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource
 import dev.msfjarvis.claw.android.ui.toLocalDateTime
@@ -20,16 +19,15 @@ import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.database.local.SavedPost
 import java.io.IOException
 import java.time.Month
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import tangle.viewmodel.VMInject
 
-@HiltViewModel
 class ClawViewModel
-@Inject
+@VMInject
 constructor(
   private val api: LobstersApi,
   private val savedPostsRepository: SavedPostsRepository,

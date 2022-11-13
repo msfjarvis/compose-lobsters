@@ -6,19 +6,14 @@
  */
 @file:Suppress("DSL_SCOPE_VIOLATION", "UnstableApiUsage")
 
-import dagger.hilt.android.plugin.HiltExtension
-
 plugins {
   id("dev.msfjarvis.claw.android-application")
   id("dev.msfjarvis.claw.rename-artifacts")
   id("dev.msfjarvis.claw.kotlin-android")
+  id("dev.msfjarvis.claw.kotlin-kapt")
   id("dev.msfjarvis.claw.versioning-plugin")
-  alias(libs.plugins.hilt)
-  alias(libs.plugins.napt)
+  alias(libs.plugins.anvil)
 }
-
-// Hilt's aggregating task fails with NAPT
-extensions.getByType<HiltExtension>().enableAggregatingTask = false
 
 android {
   namespace = "dev.msfjarvis.claw.android"
@@ -45,13 +40,17 @@ android {
 }
 
 dependencies {
+  anvil(libs.tangle.viewmodel.compiler)
+  anvil(libs.tangle.work.compiler)
+  kapt(libs.dagger.compiler)
   implementation(platform(libs.androidx.compose.bom))
-  annotationProcessor(libs.androidx.hilt.compiler)
-  annotationProcessor(libs.dagger.hilt.compiler)
+  implementation(libs.dagger)
   implementation(projects.api)
   implementation(projects.common)
+  implementation(projects.core)
   implementation(projects.coroutineUtils)
   implementation(projects.database)
+  implementation(projects.diScopes)
   implementation(projects.metadataExtractor)
   implementation(projects.model)
   implementation(libs.accompanist.swiperefresh)
@@ -59,14 +58,12 @@ dependencies {
   implementation(libs.androidx.activity.compose)
   implementation(libs.androidx.compose.material3)
   implementation(libs.androidx.core.splashscreen)
-  implementation(libs.androidx.hilt.work)
   implementation(libs.androidx.lifecycle.compose)
   implementation(libs.androidx.navigation.compose)
   implementation(libs.androidx.paging.compose)
   implementation(libs.androidx.work.runtime.ktx)
   implementation(libs.coil)
   implementation(libs.copydown)
-  implementation(libs.dagger.hilt.android)
   implementation(libs.kotlinx.coroutines.core)
   implementation(libs.kotlinx.serialization.json)
   implementation(libs.material.motion.core)
@@ -74,4 +71,10 @@ dependencies {
   implementation(libs.okhttp.loggingInterceptor)
   implementation(libs.retrofit.kotlinxSerializationConverter)
   implementation(libs.sqldelight.extensions.coroutines)
+  implementation(libs.tangle.viewmodel.api)
+  implementation(libs.tangle.viewmodel.compose) {
+    // https://github.com/RBusarow/Tangle/issues/558
+    exclude("androidx.compose.compiler")
+  }
+  implementation(libs.tangle.work.api)
 }

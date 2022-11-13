@@ -7,18 +7,17 @@
 package dev.msfjarvis.claw.android.injection
 
 import android.content.Context
+import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
-import dagger.hilt.android.qualifiers.ActivityContext
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
+import dev.msfjarvis.claw.injection.scopes.AppScope
 
 @Module
-@InstallIn(ActivityComponent::class)
+@ContributesTo(AppScope::class)
 object UrlLauncherModule {
   @Provides
-  fun provideUrlLauncher(@ActivityContext context: Context): UrlLauncher {
+  fun provideUrlLauncher(context: Context): UrlLauncher {
     return UrlLauncher(context)
   }
 }

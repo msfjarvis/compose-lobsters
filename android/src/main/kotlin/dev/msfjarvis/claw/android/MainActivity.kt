@@ -17,15 +17,17 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import dagger.hilt.android.AndroidEntryPoint
 import dev.msfjarvis.claw.android.ui.LobstersApp
 import dev.msfjarvis.claw.android.work.SavedPostUpdaterWorker
 import dev.msfjarvis.claw.common.comments.HTMLConverter
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
+import dev.msfjarvis.claw.injection.scopes.AppScope
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import tangle.inject.TangleGraph
+import tangle.inject.TangleScope
 
-@AndroidEntryPoint
+@TangleScope(AppScope::class)
 class MainActivity : ComponentActivity() {
 
   @Inject lateinit var urlLauncher: UrlLauncher
@@ -34,6 +36,7 @@ class MainActivity : ComponentActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
+    TangleGraph.inject(this)
     installSplashScreen()
     setContent {
       LobstersApp(

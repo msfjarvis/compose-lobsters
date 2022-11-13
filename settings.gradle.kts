@@ -76,7 +76,6 @@ dependencyResolutionManagement {
         includeGroup("androidx.databinding")
         includeGroup("androidx.exifinterface")
         includeGroup("androidx.fragment")
-        includeGroup("androidx.hilt")
         includeGroup("androidx.interpolator")
         includeGroup("androidx.lifecycle")
         includeGroup("androidx.loader")

@@ -1,0 +1,51 @@
+/*
+ * Copyright © 2022 Harsh Shandilya.
+ * Use of this source code is governed by an MIT-style
+ * license that can be found in the LICENSE file or at
+ * https://opensource.org/licenses/MIT.
+ */
+package dev.msfjarvis.claw.core.injection
+
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import com.slack.eithernet.ApiResultCallAdapterFactory
+import com.slack.eithernet.ApiResultConverterFactory
+import com.squareup.anvil.annotations.ContributesTo
+import dagger.Module
+import dagger.Provides
+import dagger.multibindings.IntoSet
+import dev.msfjarvis.claw.injection.scopes.AppScope
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType
+import retrofit2.CallAdapter
+import retrofit2.Converter
+
+@Module
+@ContributesTo(AppScope::class)
+object RetrofitModule {
+
+  @Provides
+  @IntoSet
+  fun provideApiResultCallAdapterFactory(): CallAdapter.Factory {
+    return ApiResultCallAdapterFactory
+  }
+
+  @Provides
+  @IntoSet
+  fun provideApiResultConverterFactory(): Converter.Factory {
+    return ApiResultConverterFactory
+  }
+
+  @OptIn(ExperimentalSerializationApi::class)
+  @Provides
+  @IntoSet
+  fun provideJsonConverterFactory(json: Json): Converter.Factory {
+    val contentType = MediaType.get("application/json")
+    return json.asConverterFactory(contentType)
+  }
+
+  @Provides
+  fun provideJsonSerializer(): Json {
+    return Json { ignoreUnknownKeys = true }
+  }
+}

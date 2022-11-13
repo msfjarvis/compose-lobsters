@@ -11,5 +11,5 @@ plugins {
 
 dependencies {
   api(libs.kotlinx.coroutines.core)
-  implementation(libs.dagger.hilt.core)
+  implementation(libs.javax.inject)
 }

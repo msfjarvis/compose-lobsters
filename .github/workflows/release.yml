@@ -61,7 +61,7 @@ jobs:
     - name: Post-release work
       shell: bash
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.POST_RELEASE_GH_TOKEN }}
       run: |
         # Tag the current version
         VERSION="$(tail -n1 android/version.properties | cut -d = -f 2)"

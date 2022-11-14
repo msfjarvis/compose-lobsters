@@ -89,6 +89,5 @@ whetstone = { module = "com.deliveryhero.whetstone:whetstone", version.ref = "wh
 [plugins]
 android-test = { id = "com.android.test", version.ref = "agp" }
 anvil = "com.squareup.anvil:2.4.2"
-napt = "com.sergei-lapin.napt:1.18"
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 whetstone = { id = "com.deliveryhero.whetstone", version.ref = "whetstone" }

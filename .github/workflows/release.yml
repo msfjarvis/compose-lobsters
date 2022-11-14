@@ -67,8 +67,8 @@ jobs:
         VERSION="$(tail -n1 android/version.properties | cut -d = -f 2)"
         git tag "v${VERSION}" -F distribution/whatsnew/whatsnew-en-GB
 
-        # Push everything to GitHub
-        git push origin --all
+        # Push the tag to GitHub
+        git push origin "v${VERSION}"
 
         # Create a GitHub release
         gh release create "v${VERSION}" -F distribution/whatsnew/whatsnew-en-GB --title "v${VERSION}" ./android/apk/*.apk ./android/bundle/*.aab

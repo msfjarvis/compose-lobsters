@@ -4,12 +4,17 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
+@file:Suppress("UnstableApiUsage")
+
 package dev.msfjarvis.aps.gradle
 
+import com.android.build.api.dsl.LibraryExtension
+import com.android.build.api.dsl.Lint
 import com.android.build.api.dsl.TestExtension
 import com.android.build.api.variant.ApplicationAndroidComponentsExtension
 import com.android.build.api.variant.LibraryAndroidComponentsExtension
 import com.android.build.gradle.TestedExtension
+import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
 import org.gradle.android.AndroidCacheFixPlugin
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
@@ -19,7 +24,6 @@ import org.gradle.kotlin.dsl.findByType
 
 private const val SLIM_TESTS_PROPERTY = "slimTests"
 
-@Suppress("UnstableApiUsage")
 class AndroidCommonPlugin : Plugin<Project> {
 
   private companion object {
@@ -27,9 +31,12 @@ class AndroidCommonPlugin : Plugin<Project> {
     const val MIN_SDK = 26
     const val TARGET_SDK = 33
   }
+
   override fun apply(project: Project) {
     project.configureSlimTests()
     project.pluginManager.apply(AndroidCacheFixPlugin::class)
+    project.extensions.findByType<BaseAppModuleExtension>()?.run { lint.configureLint(project) }
+    project.extensions.findByType<LibraryExtension>()?.run { lint.configureLint(project) }
     project.extensions.findByType<TestedExtension>()?.run {
       compileSdkVersion(COMPILE_SDK)
       defaultConfig {
@@ -81,6 +88,14 @@ class AndroidCommonPlugin : Plugin<Project> {
   }
 }
 
+private fun Lint.configureLint(project: Project) {
+  abortOnError = false
+  checkReleaseBuilds = false
+  warningsAsErrors = false
+  disable.add("DialogFragmentCallbacksDetector")
+  baseline = project.file("lint-baseline.xml")
+}
+
 /**
  * When the "slimTests" project property is provided, disable the unit test tasks on `release` build
  * type and `nonFree` product flavor to avoid running the same tests repeatedly in different build
@@ -89,7 +104,7 @@ class AndroidCommonPlugin : Plugin<Project> {
  * Examples: `./gradlew test -PslimTests` will run unit tests for `nonFreeDebug` and `debug` build
  * variants in Android App and Library projects, and all tests in JVM projects.
  */
-internal fun Project.configureSlimTests() {
+private fun Project.configureSlimTests() {
   if (providers.gradleProperty(SLIM_TESTS_PROPERTY).isPresent) {
     // Disable unit test tasks on the release build type for Android Library projects
     extensions.findByType<LibraryAndroidComponentsExtension>()?.run {

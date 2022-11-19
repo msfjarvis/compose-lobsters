@@ -26,14 +26,14 @@ jobs:
     - name: Run unit tests
       uses: gradle/gradle-build-action@3fbe033aaae657f011f88f29be9e65ed26bd29ef # tag=v2.3.3
       with:
-        arguments: --no-configuration-cache check -PslimTests
+        arguments: --no-configuration-cache --stacktrace check -PslimTests
         gradle-home-cache-cleanup: true
         cache-read-only: ${{ github.ref != 'refs/heads/main' }}
 
     - name: Run Detekt
       uses: gradle/gradle-build-action@3fbe033aaae657f011f88f29be9e65ed26bd29ef # tag=v2.3.3
       with:
-        arguments: --no-configuration-cache detektMain
+        arguments: --no-configuration-cache --stacktrace detektMain
         gradle-home-cache-cleanup: true
         cache-read-only: ${{ github.ref != 'refs/heads/main' }}
 
@@ -66,7 +66,7 @@ jobs:
     - name: Build release app
       uses: gradle/gradle-build-action@3fbe033aaae657f011f88f29be9e65ed26bd29ef # tag=v2.3.3
       with:
-        arguments: --no-configuration-cache collectReleaseApks
+        arguments: --no-configuration-cache --stacktrace collectReleaseApks
         gradle-home-cache-cleanup: true
         cache-read-only: ${{ github.ref != 'refs/heads/main' }}
 

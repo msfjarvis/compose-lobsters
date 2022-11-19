@@ -58,7 +58,7 @@ gitRepositories {
   checkoutsDirectory.set(rootProject.projectDir.resolve("build/checkouts"))
   include("whetstone") {
     uri.set("https://github.com/msfjarvis/whetstone")
-    branch.set("inject-component-activity")
+    tag.set("msfjarvis-2022-11-19")
     includeBuild {
       dependencySubstitution {
         for (module in

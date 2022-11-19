@@ -7,7 +7,6 @@
 package dev.msfjarvis.claw.metadata
 
 import com.chimbori.crux.Crux
-import com.chimbori.crux.api.Fields.CANONICAL_URL
 import com.chimbori.crux.api.Fields.DURATION_MS
 import com.chimbori.crux.api.Fields.FAVICON_URL
 import dev.msfjarvis.claw.model.LinkMetadata
@@ -37,9 +36,8 @@ constructor(
       val extractedMetadata = crux.extractFrom(parsedUrl, Jsoup.parse(htmlContent, url))
       val faviconUrl = extractedMetadata[FAVICON_URL].toString()
       val readingTime = extractedMetadata[DURATION_MS].toString()
-      val overriddenUrl = extractedMetadata[CANONICAL_URL]?.toString() ?: url
       LinkMetadata(
-        url = overriddenUrl,
+        url = url,
         faviconUrl = faviconUrl,
         readingTime = readingTime,
       )

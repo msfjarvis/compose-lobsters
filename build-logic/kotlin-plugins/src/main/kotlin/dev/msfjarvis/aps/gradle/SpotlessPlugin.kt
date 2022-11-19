@@ -26,18 +26,18 @@ class SpotlessPlugin : Plugin<Project> {
       kotlin {
         ktfmt(KTFMT_VERSION).googleStyle()
         target("**/*.kt")
-        targetExclude("**/build/", "/spotless/", "/checkouts/")
+        targetExclude("**/build/", "/spotless/")
         licenseHeaderFile(project.file("spotless/license.kt"))
       }
       kotlinGradle {
         ktfmt(KTFMT_VERSION).googleStyle()
         target("**/*.kts")
-        targetExclude("**/build/", "/checkouts/")
+        targetExclude("**/build/")
         licenseHeaderFile(project.file("spotless/license.kt"), "import|plugins|@file")
       }
       format("xml") {
         target("**/*.xml")
-        targetExclude("**/build/", ".idea/", "/checkouts/")
+        targetExclude("**/build/", ".idea/")
         trimTrailingWhitespace()
         indentWithSpaces()
         endWithNewline()

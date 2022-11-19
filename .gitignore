@@ -242,6 +242,3 @@ hs_err_pid*
 !/gradle/wrapper/gradle-wrapper.jar
 
 # End of https://www.toptal.com/developers/gitignore/api/androidstudio,gradle,intellij+all
-
-# Directory for checkouts of projects built by includegit-gradle-plugin
-/checkouts/

@@ -55,7 +55,7 @@ pluginManagement {
 plugins { id("me.champeau.includegit") version "0.1.5" }
 
 gitRepositories {
-  checkoutsDirectory.set(rootProject.projectDir.resolve("checkouts"))
+  checkoutsDirectory.set(rootProject.projectDir.resolve("build/checkouts"))
   include("whetstone") {
     uri.set("https://github.com/msfjarvis/whetstone")
     branch.set("inject-component-activity")

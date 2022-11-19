@@ -63,7 +63,5 @@ dependencies {
   implementation(libs.coil)
   implementation(libs.copydown)
   implementation(libs.kotlinx.coroutines.core)
-  implementation(libs.material.motion.core)
-  implementation(libs.material.motion.navigation)
   implementation(libs.sqldelight.extensions.coroutines)
 }

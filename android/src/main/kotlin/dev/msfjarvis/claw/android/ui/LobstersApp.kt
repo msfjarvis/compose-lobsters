@@ -6,7 +6,6 @@
  */
 package dev.msfjarvis.claw.android.ui
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -28,7 +27,10 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -51,12 +53,9 @@ import dev.msfjarvis.claw.common.ui.surfaceColorAtNavigationBarElevation
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 import dev.msfjarvis.claw.common.user.UserProfile
 import kotlinx.coroutines.launch
-import soup.compose.material.motion.navigation.MaterialMotionNavHost
-import soup.compose.material.motion.navigation.composable
-import soup.compose.material.motion.navigation.rememberMaterialMotionNavController
 
 @Suppress("ModifierMissing") // Top-level composable, will never have a modifier supplied.
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LobstersApp(
   urlLauncher: UrlLauncher,
@@ -68,7 +67,7 @@ fun LobstersApp(
   val hottestListState = rememberLazyListState()
   val newestListState = rememberLazyListState()
   val savedListState = rememberLazyListState()
-  val navController = rememberMaterialMotionNavController()
+  val navController = rememberNavController()
   val coroutineScope = rememberCoroutineScope()
   val postActions = rememberPostActions(urlLauncher, navController, viewModel)
   val backStackEntry by navController.currentBackStackEntryAsState()
@@ -158,7 +157,7 @@ fun LobstersApp(
         )
       },
     ) { paddingValues ->
-      MaterialMotionNavHost(
+      NavHost(
         navController = navController,
         startDestination = Destinations.startDestination.route,
         modifier = Modifier.padding(paddingValues),

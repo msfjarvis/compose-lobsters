@@ -8,7 +8,6 @@ composeCompiler = "1.4.0-alpha02"
 coroutines = "1.6.4"
 dagger = "2.44.2"
 kotlin = "1.7.21"
-material_motion = "0.10.3"
 # @pin Needs to be aligned with Retrofit
 okhttp = "3.14.9"
 retrofit = "2.9.0"
@@ -71,8 +70,6 @@ jsoup = "org.jsoup:jsoup:1.15.3"
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "serialization" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
-material_motion-core = { module = "io.github.fornewid:material-motion-compose-core", version.ref = "material_motion" }
-material_motion-navigation = { module = "io.github.fornewid:material-motion-compose-navigation", version.ref = "material_motion" }
 napier = "io.github.aakira:napier:2.6.1"
 okhttp-core = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 okhttp-loggingInterceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }

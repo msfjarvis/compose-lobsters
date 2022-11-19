@@ -38,11 +38,11 @@ jobs:
       shell: bash
       run: |
         # Remove the `-SNAPSHOT` suffix
-        ./gradlew -q clearPreRelease
+        ./gradlew -q --no-configuration-cache clearPreRelease
         git commit -am 'feat(release): bump version'
 
         # Build the release assets
-        ./gradlew collectReleaseApks collectReleaseBundle
+        ./gradlew --no-configuration-cache collectReleaseApks collectReleaseBundle
 
     - name: Clean secrets
       run: scripts/signing-cleanup.sh
@@ -74,7 +74,7 @@ jobs:
         gh release create "v${VERSION}" -F distribution/whatsnew/whatsnew-en-GB --title "v${VERSION}" ./android/apk/*.apk ./android/bundle/*.aab
 
         # Start the next development iteration
-        ./gradlew -q bumpSnapshot
+        ./gradlew -q --no-configuration-cache bumpSnapshot
         truncate -s 0 distribution/whatsnew/whatsnew-en-GB # Clear changelog
         git commit -am 'feat(release): start next development iteration'
         git push origin main

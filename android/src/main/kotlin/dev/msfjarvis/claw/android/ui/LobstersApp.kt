@@ -54,13 +54,13 @@ import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 import dev.msfjarvis.claw.common.user.UserProfile
 import kotlinx.coroutines.launch
 
-@Suppress("ModifierMissing") // Top-level composable, will never have a modifier supplied.
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LobstersApp(
   urlLauncher: UrlLauncher,
   htmlConverter: HTMLConverter,
   setWebUri: (String?) -> Unit,
+  modifier: Modifier = Modifier,
   viewModel: ClawViewModel = injectedViewModel(),
 ) {
   val systemUiController = rememberSystemUiController()
@@ -156,6 +156,7 @@ fun LobstersApp(
           isVisible = navItems.any { it.route == currentDestination },
         )
       },
+      modifier = modifier,
     ) { paddingValues ->
       NavHost(
         navController = navController,

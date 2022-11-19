@@ -20,7 +20,6 @@ workmanager = "2.8.0-beta02"
 
 [libraries]
 accompanist-flowlayout = { module = "com.google.accompanist:accompanist-flowlayout", version.ref = "accompanist" }
-accompanist-swiperefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "accompanist" }
 accompanist-sysuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
 androidx-activity-compose = "androidx.activity:activity-compose:1.7.0-alpha02"
 androidx-benchmark-macro-junit4 = "androidx.benchmark:benchmark-macro-junit4:1.2.0-alpha07"

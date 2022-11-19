@@ -71,7 +71,7 @@ jobs:
         git push origin "v${VERSION}"
 
         # Create a GitHub release
-        gh release create "v${VERSION}" -F distribution/whatsnew/whatsnew-en-GB --title "v${VERSION}" ./android/apk/*.apk ./android/bundle/*.aab
+        gh release create "v${VERSION}" --notes-file distribution/whatsnew/whatsnew-en-GB --title "v${VERSION}" ./android/apk/*.apk ./android/bundle/*.aab
 
         # Start the next development iteration
         ./gradlew -q --no-configuration-cache bumpSnapshot

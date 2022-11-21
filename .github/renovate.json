@@ -8,7 +8,8 @@
   "packageRules": [
     {
       "matchPackagePatterns": [
-        "^com.android.tools.build"
+        "^com.android.tools.build",
+        "^com.android.test"
       ],
       "enabled": false
     },

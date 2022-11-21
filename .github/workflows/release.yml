@@ -73,7 +73,7 @@ jobs:
         CHANGELOG: ${{ steps.changelog_reader.outputs.changes }}
       run: |
         mkdir -p distribution/whatsnew
-        printf '## Changelog\n' > distribution/whatsnew/whatsnew-en-GB
+        printf '## Changelog\n\n' > distribution/whatsnew/whatsnew-en-GB
         printf '%s' "${CHANGELOG}" >> distribution/whatsnew/whatsnew-en-GB
 
     - name: Publish bundle to Google Play

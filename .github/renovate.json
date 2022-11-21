@@ -8,6 +8,12 @@
   "packageRules": [
     {
       "matchPackagePatterns": [
+        "^com.android.tools.build"
+      ],
+      "enabled": false
+    },
+    {
+      "matchPackagePatterns": [
         "^kotlin",
         "^org.jetbrains.kotlin",
         "^androidx.compose.compiler"

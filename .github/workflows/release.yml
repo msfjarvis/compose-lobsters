@@ -66,13 +66,13 @@ jobs:
         version: ${{ env.VERSION }}
         path: ./CHANGELOG.md
 
-    - name: Write Play Store release notes file
+    - name: Write release notes file
       shell: bash
       env:
         CHANGELOG: ${{ steps.changelog_reader.outputs.changes }}
       run: |
         mkdir -p distribution/whatsnew
-        printf 'Changelog\n' > distribution/whatsnew/whatsnew-en-GB
+        printf '## Changelog\n' > distribution/whatsnew/whatsnew-en-GB
         printf '%s' "${CHANGELOG}" >> distribution/whatsnew/whatsnew-en-GB
 
     - name: Publish bundle to Google Play
@@ -90,7 +90,6 @@ jobs:
       shell: bash
       env:
         GITHUB_TOKEN: ${{ secrets.POST_RELEASE_GH_TOKEN }}
-        CHANGELOG: ${{ steps.changelog_reader.outputs.changes }}
       run: |
         # Tag the current version
         git tag "v${VERSION}" -F distribution/whatsnew/whatsnew-en-GB
@@ -98,13 +97,8 @@ jobs:
         # Push the tag to GitHub
         git push origin "v${VERSION}"
 
-        # Create GitHub release noes
-        CHANGELOG_FILE=$(mktemp)
-        printf '## Changelog\n' > "${CHANGELOG_FILE}"
-        printf '%s' "${CHANGELOG}" >> "${CHANGELOG_FILE}"
-
         # Create a GitHub release
-        gh release create "v${VERSION}" --notes-file "${CHANGELOG_FILE}" --title "v${VERSION}" ./android/apk/*.apk ./android/bundle/*.aab
+        gh release create "v${VERSION}" --notes-file distribution/whatsnew/whatsnew-en-GB --title "v${VERSION}" ./android/apk/*.apk ./android/bundle/*.aab
 
         # Start the next development iteration
         ./gradlew -q --no-configuration-cache bumpSnapshot

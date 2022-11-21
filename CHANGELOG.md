@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   The release pipeline now automatically generates Play Store release notes from the changelog file
 
+### Fixed
+
+-   Downgrade AGP to 8.0.0-alpha07 to fix Baseline Profiles not being packaged
+
 ## [1.7.0] - 2022-11-19
 
 ### Changed

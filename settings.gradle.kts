@@ -58,7 +58,7 @@ gitRepositories {
   checkoutsDirectory.set(rootProject.projectDir.resolve("build/checkouts"))
   include("whetstone") {
     uri.set("https://github.com/msfjarvis/whetstone")
-    tag.set("msfjarvis-2022-11-19")
+    tag.set("msfjarvis-2022-11-21")
     includeBuild {
       dependencySubstitution {
         for (module in

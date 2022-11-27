@@ -9,7 +9,8 @@
     {
       "matchPackagePatterns": [
         "^com.android.tools.build",
-        "^com.android.test"
+        "^com.android.test",
+        "^gradle"
       ],
       "enabled": false
     },

@@ -1,7 +1,7 @@
 [versions]
 accompanist = "0.27.1"
 # @pin https://issuetracker.google.com/issues/259556213
-agp = "8.0.0-alpha07"
+agp = "7.3.1"
 androidx-test = "1.5.0"
 coil = "2.2.2"
 # @keep used for kotlinCompilerExtensionVersion

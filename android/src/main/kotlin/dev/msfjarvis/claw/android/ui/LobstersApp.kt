@@ -171,7 +171,7 @@ fun LobstersApp(
         ) {
           setWebUri("https://lobste.rs/")
           NetworkPosts(
-            items = hottestPosts,
+            lazyPagingItems = hottestPosts,
             listState = hottestListState,
             isPostSaved = viewModel::isPostSaved,
             reloadPosts = viewModel::refreshHottestPosts,
@@ -183,7 +183,7 @@ fun LobstersApp(
         ) {
           setWebUri("https://lobste.rs/")
           NetworkPosts(
-            items = newestPosts,
+            lazyPagingItems = newestPosts,
             listState = newestListState,
             isPostSaved = viewModel::isPostSaved,
             reloadPosts = viewModel::refreshNewestPosts,

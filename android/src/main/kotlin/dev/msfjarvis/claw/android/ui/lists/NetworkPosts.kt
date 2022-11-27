@@ -32,28 +32,28 @@ import dev.msfjarvis.claw.model.LobstersPost
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun NetworkPosts(
-  items: LazyPagingItems<LobstersPost>,
+  lazyPagingItems: LazyPagingItems<LobstersPost>,
   listState: LazyListState,
   isPostSaved: suspend (SavedPost) -> Boolean,
   reloadPosts: () -> Unit,
   postActions: PostActions,
   modifier: Modifier = Modifier,
 ) {
-  val loadState = items.loadState.refresh
-  val isRefreshing = loadState == LoadState.Loading
+  val refreshLoadState = lazyPagingItems.loadState.refresh
+  val isRefreshing = refreshLoadState == LoadState.Loading
   val pullRefreshState = rememberPullRefreshState(isRefreshing, reloadPosts)
   Box(modifier = modifier.fillMaxSize().pullRefresh(pullRefreshState)) {
-    if (items.itemCount == 0 && loadState is LoadState.Error) {
+    if (lazyPagingItems.itemCount == 0 && refreshLoadState is LoadState.Error) {
       NetworkError(
         label = "Failed to load posts",
-        error = loadState.error,
+        error = refreshLoadState.error,
         modifier = Modifier.align(Alignment.Center),
       )
     } else {
       LazyColumn(
         state = listState,
       ) {
-        items(items) { item ->
+        items(lazyPagingItems) { item ->
           if (item != null) {
             val dbModel = item.toDbModel()
             ListItem(

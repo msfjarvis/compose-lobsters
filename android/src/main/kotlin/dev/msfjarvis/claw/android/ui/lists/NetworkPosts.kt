@@ -8,6 +8,9 @@ package dev.msfjarvis.claw.android.ui.lists
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material.ExperimentalMaterialApi
@@ -20,12 +23,14 @@ import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.posts.toDbModel
 import dev.msfjarvis.claw.common.ui.NetworkError
+import dev.msfjarvis.claw.common.ui.ProgressBar
 import dev.msfjarvis.claw.database.local.SavedPost
 import dev.msfjarvis.claw.model.LobstersPost
 
@@ -63,6 +68,16 @@ fun NetworkPosts(
             )
 
             Divider()
+          }
+        }
+        if (lazyPagingItems.loadState.append == LoadState.Loading) {
+          item {
+            ProgressBar(
+              modifier =
+                Modifier.fillMaxWidth()
+                  .wrapContentWidth(Alignment.CenterHorizontally)
+                  .padding(top = 4.dp),
+            )
           }
         }
       }

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+-   A loading indicator is added to the bottom of the post list to identify when new posts are being fetched
+
 ## [1.8.0] - 2022-11-21
 
 ### Changed

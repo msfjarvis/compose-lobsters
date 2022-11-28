@@ -11,7 +11,6 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,7 +24,6 @@ import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Divider
@@ -82,11 +80,7 @@ fun LobstersCard(
         SaveButton(
           isSaved = localSavedState,
           modifier =
-            Modifier.clickable(
-              role = Role.Button,
-              indication = rememberRipple(bounded = false, radius = 24.dp),
-              interactionSource = remember { MutableInteractionSource() },
-            ) {
+            Modifier.clickable(role = Role.Button) {
               localSavedState = !localSavedState
               postActions.toggleSave(post)
             },
@@ -97,8 +91,6 @@ fun LobstersCard(
           modifier =
             Modifier.combinedClickable(
               role = Role.Button,
-              indication = rememberRipple(bounded = false, radius = 24.dp),
-              interactionSource = remember { MutableInteractionSource() },
               onClick = { postActions.viewComments(post.shortId) },
               onLongClick = { postActions.viewCommentsPage(post.commentsUrl) },
             ),

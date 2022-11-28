@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.9.0] - 2022-11-28
+
 ### Changed
 
 -   A loading indicator is added to the bottom of the post list to identify when new posts are being fetched
@@ -79,7 +81,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/1.8.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/1.9.0...HEAD
+
+[1.9.0]: https://github.com/msfjarvis/compose-lobsters/compare/1.8.0...1.9.0
 
 [1.8.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.7.0...1.8.0
 

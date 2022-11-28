@@ -37,16 +37,10 @@ constructor(
   private val pagingSourceFactory: LobstersPagingSource.Factory,
   @IODispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
-  private var hottestPostsPagingSource: LobstersPagingSource? = null
-  private var newestPostsPagingSource: LobstersPagingSource? = null
   private val hottestPostsPager =
-    Pager(PagingConfig(20)) {
-      pagingSourceFactory.create(api::getHottestPosts).also { hottestPostsPagingSource = it }
-    }
+    Pager(PagingConfig(pageSize = 20)) { pagingSourceFactory.create(api::getHottestPosts) }
   private val newestPostsPager =
-    Pager(PagingConfig(20)) {
-      pagingSourceFactory.create(api::getHottestPosts).also { newestPostsPagingSource = it }
-    }
+    Pager(PagingConfig(pageSize = 20)) { pagingSourceFactory.create(api::getHottestPosts) }
 
   val hottestPosts
     get() = hottestPostsPager.flow
@@ -104,12 +98,4 @@ constructor(
         is Failure.ApiFailure -> throw IOException("API returned an invalid response")
       }
     }
-
-  fun refreshHottestPosts() {
-    hottestPostsPagingSource?.invalidate()
-  }
-
-  fun refreshNewestPosts() {
-    newestPostsPagingSource?.invalidate()
-  }
 }

@@ -40,13 +40,12 @@ fun NetworkPosts(
   lazyPagingItems: LazyPagingItems<LobstersPost>,
   listState: LazyListState,
   isPostSaved: suspend (SavedPost) -> Boolean,
-  reloadPosts: () -> Unit,
   postActions: PostActions,
   modifier: Modifier = Modifier,
 ) {
   val refreshLoadState = lazyPagingItems.loadState.refresh
   val isRefreshing = refreshLoadState == LoadState.Loading
-  val pullRefreshState = rememberPullRefreshState(isRefreshing, reloadPosts)
+  val pullRefreshState = rememberPullRefreshState(isRefreshing, lazyPagingItems::refresh)
   Box(modifier = modifier.fillMaxSize().pullRefresh(pullRefreshState)) {
     if (lazyPagingItems.itemCount == 0 && refreshLoadState is LoadState.Error) {
       NetworkError(

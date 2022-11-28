@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+-   Configure Coil image loader with better caching settings
+
 ## [1.9.0] - 2022-11-28
 
 ### Changed

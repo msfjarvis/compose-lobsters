@@ -6,6 +6,7 @@
  */
 package dev.msfjarvis.claw.common.ui.decorations
 
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -29,12 +30,14 @@ fun ClawAppBar(
   modifier: Modifier = Modifier,
   navigationIcon: @Composable () -> Unit = {},
   title: @Composable () -> Unit = {},
+  actions: @Composable RowScope.() -> Unit = {},
 ) {
   TopAppBar(
     title = title,
     modifier = modifier.shadow(8.dp),
     colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = backgroundColor),
     navigationIcon = navigationIcon,
+    actions = actions,
   )
 }
 

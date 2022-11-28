@@ -11,9 +11,13 @@ import coil.Coil
 import coil.ImageLoader
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
+import com.deliveryhero.whetstone.app.ApplicationScope
+import com.squareup.anvil.annotations.ContributesMultibinding
 import dev.msfjarvis.claw.core.injection.AppPlugin
+import javax.inject.Inject
 
-class CoilAppPlugin : AppPlugin {
+@ContributesMultibinding(ApplicationScope::class)
+class CoilAppPlugin @Inject constructor() : AppPlugin {
   override fun apply(application: Application) {
     Coil.setImageLoader {
       ImageLoader.Builder(application)

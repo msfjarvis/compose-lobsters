@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import androidx.paging.cachedIn
 import com.deliveryhero.whetstone.viewmodel.ContributesViewModel
 import com.slack.eithernet.ApiResult.Failure
 import com.slack.eithernet.ApiResult.Success
@@ -41,19 +40,19 @@ constructor(
   private var hottestPostsPagingSource: LobstersPagingSource? = null
   private var newestPostsPagingSource: LobstersPagingSource? = null
   private val hottestPostsPager =
-    Pager(PagingConfig(pageSize = 20)) {
+    Pager(PagingConfig(20)) {
       pagingSourceFactory.create(api::getHottestPosts).also { hottestPostsPagingSource = it }
     }
   private val newestPostsPager =
-    Pager(PagingConfig(pageSize = 20)) {
+    Pager(PagingConfig(20)) {
       pagingSourceFactory.create(api::getHottestPosts).also { newestPostsPagingSource = it }
     }
 
   val hottestPosts
-    get() = hottestPostsPager.flow.cachedIn(viewModelScope)
+    get() = hottestPostsPager.flow
 
   val newestPosts
-    get() = newestPostsPager.flow.cachedIn(viewModelScope)
+    get() = newestPostsPager.flow
 
   private val savedPostsFlow
     get() = savedPostsRepository.savedPosts

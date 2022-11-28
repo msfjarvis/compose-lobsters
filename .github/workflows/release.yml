@@ -60,7 +60,7 @@ jobs:
     - name: Clean secrets
       run: scripts/signing-cleanup.sh
 
-    - name: Get Changelog Entry
+    - name: Get changelog entry
       id: changelog_reader
       uses: mindsers/changelog-reader-action@b97ce03a10d9bdbb07beb491c76a5a01d78cd3ef # v2.2.2
       with:

@@ -10,10 +10,9 @@ package dev.msfjarvis.aps.gradle
 
 import com.android.build.api.dsl.LibraryExtension
 import com.android.build.api.dsl.Lint
-import com.android.build.api.dsl.TestExtension
 import com.android.build.api.variant.ApplicationAndroidComponentsExtension
 import com.android.build.api.variant.LibraryAndroidComponentsExtension
-import com.android.build.gradle.TestedExtension
+import com.android.build.gradle.BaseExtension
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
 import org.gradle.android.AndroidCacheFixPlugin
 import org.gradle.api.JavaVersion
@@ -35,19 +34,11 @@ class AndroidCommonPlugin : Plugin<Project> {
   override fun apply(project: Project) {
     project.configureSlimTests()
     project.pluginManager.apply(AndroidCacheFixPlugin::class)
-    project.extensions.findByType<BaseAppModuleExtension>()?.run { lint.configureLint(project) }
-    project.extensions.findByType<LibraryExtension>()?.run { lint.configureLint(project) }
-    project.extensions.findByType<TestedExtension>()?.run {
+    project.extensions.findByType<BaseExtension>()?.run {
       compileSdkVersion(COMPILE_SDK)
       defaultConfig {
         minSdk = MIN_SDK
         targetSdk = TARGET_SDK
-      }
-
-      sourceSets {
-        named("main") { java.srcDirs("src/main/kotlin") }
-        named("test") { java.srcDirs("src/test/kotlin") }
-        named("androidTest") { java.srcDirs("src/androidTest/kotlin") }
       }
 
       packagingOptions {
@@ -69,22 +60,8 @@ class AndroidCommonPlugin : Plugin<Project> {
         unitTests.isReturnDefaultValues = true
       }
     }
-    project.extensions.findByType<TestExtension>()?.run {
-      compileSdk = COMPILE_SDK
-      defaultConfig {
-        minSdk = MIN_SDK
-        targetSdk = TARGET_SDK
-      }
-      compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-      }
-
-      testOptions {
-        animationsDisabled = true
-        unitTests.isReturnDefaultValues = true
-      }
-    }
+    project.extensions.findByType<BaseAppModuleExtension>()?.run { lint.configureLint(project) }
+    project.extensions.findByType<LibraryExtension>()?.run { lint.configureLint(project) }
   }
 }
 

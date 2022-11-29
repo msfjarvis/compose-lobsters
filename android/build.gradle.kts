@@ -33,8 +33,8 @@ android {
   }
   buildTypes {
     create("benchmark") {
-      signingConfig = signingConfigs.getByName("debug")
-      matchingFallbacks += listOf("release")
+      signingConfig = signingConfigs["debug"]
+      matchingFallbacks += "release"
       isDebuggable = false
     }
   }

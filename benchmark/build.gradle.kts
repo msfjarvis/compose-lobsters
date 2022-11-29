@@ -20,8 +20,8 @@ android {
   buildTypes {
     create("benchmark") {
       isDebuggable = true
-      signingConfig = getByName("debug").signingConfig
-      matchingFallbacks += listOf("release")
+      signingConfig = signingConfigs["debug"]
+      matchingFallbacks += "release"
     }
   }
 

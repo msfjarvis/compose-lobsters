@@ -2,7 +2,6 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
-    <ID>LongMethod:LobstersApp.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun LobstersApp( urlLauncher: UrlLauncher, htmlConverter: HTMLConverter, setWebUri: (String?) -&gt; Unit, modifier: Modifier = Modifier, viewModel: ClawViewModel = injectedViewModel(), )</ID>
-    <ID>LongParameterList:NetworkPosts.kt$( lazyPagingItems: LazyPagingItems&lt;LobstersPost&gt;, listState: LazyListState, isPostSaved: suspend (SavedPost) -&gt; Boolean, reloadPosts: () -&gt; Unit, postActions: PostActions, modifier: Modifier = Modifier, )</ID>
+    <ID>LongMethod:LobstersApp.kt$@OptIn( ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class, ) @Composable fun LobstersApp( urlLauncher: UrlLauncher, htmlConverter: HTMLConverter, setWebUri: (String?) -&gt; Unit, modifier: Modifier = Modifier, viewModel: ClawViewModel = injectedViewModel(), )</ID>
   </CurrentIssues>
 </SmellBaseline>

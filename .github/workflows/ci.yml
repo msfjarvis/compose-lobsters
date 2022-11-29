@@ -10,6 +10,9 @@ on:
     branches:
       - main
 
+concurrency:
+  group: ${{ github.workflow }}
+
 jobs:
   check:
     runs-on: ubuntu-latest

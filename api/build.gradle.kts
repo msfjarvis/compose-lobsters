@@ -25,8 +25,8 @@ dependencies {
   implementation(libs.dagger)
   implementation(libs.javax.inject)
   testImplementation(testFixtures(libs.eithernet))
-  testImplementation(kotlin("test-junit"))
-  testImplementation(libs.kotlinx.coroutines.core)
+  testImplementation(libs.kotest.assertions.core)
+  testImplementation(libs.kotest.runner.junit5)
   testImplementation(libs.kotlinx.serialization.json)
   testImplementation(libs.retrofit.kotlinxSerializationConverter)
 }

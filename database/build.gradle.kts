@@ -33,7 +33,8 @@ dependencies {
   implementation(projects.core)
   implementation(libs.sqldelight.androidDriver)
   implementation(libs.sqldelight.primitiveAdapters)
-  testImplementation(libs.sqldelight.jvmDriver)
+  testImplementation(libs.kotest.assertions.core)
+  testImplementation(libs.kotest.runner.junit5)
   testImplementation(libs.kotlinx.coroutines.core)
-  testImplementation(kotlin("test-junit"))
+  testImplementation(libs.sqldelight.jvmDriver)
 }

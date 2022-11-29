@@ -27,7 +27,7 @@ class ApiWrapper(controller: EitherNetController<LobstersApi>) {
 
   init {
     controller.enqueue(LobstersApi::getHottestPosts) { success(hottest) }
-    controller.enqueue(LobstersApi::getNewestPosts) { success(hottest) }
+    controller.enqueue(LobstersApi::getHottestPosts) { success(hottest) }
     controller.enqueue(LobstersApi::getPostDetails) { success(postDetails) }
     controller.enqueue(LobstersApi::getUser) { success(user) }
   }

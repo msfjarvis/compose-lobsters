@@ -11,42 +11,40 @@ import com.slack.eithernet.test.newEitherNetController
 import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.LobstersPostDetails
 import dev.msfjarvis.claw.model.User
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertIs
-import kotlinx.coroutines.runBlocking
+import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.collections.shouldHaveSize
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.shouldBeTypeOf
 
-class ApiTest {
+class ApiTest : FunSpec() {
   private val wrapper = ApiWrapper(newEitherNetController())
   private val api
     get() = wrapper.api
 
-  @Test
-  fun `api gets correct number of items`() = runBlocking {
-    val posts = api.getHottestPosts(1)
-    assertIs<Success<List<LobstersPost>>>(posts)
-    assertEquals(25, posts.value.size)
-  }
+  init {
+    test("api gets correct number of items") {
+      val posts = api.getHottestPosts(1)
+      posts.shouldBeTypeOf<Success<List<LobstersPost>>>()
+      posts.value shouldHaveSize 25
+    }
 
-  @Test
-  fun `posts with no urls`() = runBlocking {
-    val posts = api.getHottestPosts(1)
-    assertIs<Success<List<LobstersPost>>>(posts)
-    val commentsOnlyPosts = posts.value.asSequence().filter { it.url.isEmpty() }.toSet()
-    assertEquals(2, commentsOnlyPosts.size)
-  }
+    test("posts with no urls") {
+      val posts = api.getHottestPosts(1)
+      posts.shouldBeTypeOf<Success<List<LobstersPost>>>()
+      val commentsOnlyPosts = posts.value.asSequence().filter { it.url.isEmpty() }.toSet()
+      commentsOnlyPosts shouldHaveSize 2
+    }
 
-  @Test
-  fun `post details with comments`() = runBlocking {
-    val postDetails = api.getPostDetails("tdfoqh")
-    assertIs<Success<LobstersPostDetails>>(postDetails)
-    assertEquals(7, postDetails.value.comments.size)
-  }
+    test("post details with comments") {
+      val postDetails = api.getPostDetails("tdfoqh")
+      postDetails.shouldBeTypeOf<Success<LobstersPostDetails>>()
+      postDetails.value.comments shouldHaveSize 7
+    }
 
-  @Test
-  fun `get user details`() = runBlocking {
-    val user = api.getUser("msfjarvis")
-    assertIs<Success<User>>(user)
-    assertEquals("msfjarvis", user.value.username)
+    test("get user details") {
+      val user = api.getUser("msfjarvis")
+      user.shouldBeTypeOf<Success<User>>()
+      user.value.username shouldBe "msfjarvis"
+    }
   }
 }

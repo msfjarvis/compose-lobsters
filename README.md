@@ -2,7 +2,9 @@
 
 Unofficial Android app for read-only access to [lobste.rs](https://lobste.rs), built with [Jetpack Compose](https://developer.android.com/jetpack/compose).
 
-![Screenshots](./.github/readme_feature.webp)
+<img src="https://github.com/msfjarvis/compose-lobsters/blob/main/.github/readme_feature.webp"
+     alt="Get it on Google Play"
+     height="550" />
 
 ## Download
 

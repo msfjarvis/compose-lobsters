@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.10.0] - 2022-11-30
+
 ### Changed
 
 -   Configure Coil image loader with better caching settings
@@ -86,7 +88,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/1.9.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/1.10.0...HEAD
+
+[1.10.0]: https://github.com/msfjarvis/compose-lobsters/compare/1.9.0...1.10.0
 
 [1.9.0]: https://github.com/msfjarvis/compose-lobsters/compare/1.8.0...1.9.0
 

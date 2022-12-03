@@ -126,13 +126,6 @@ dependencyResolutionManagement {
       }
     }
     exclusiveContent {
-      forRepository { gradlePluginPortal() }
-      filter {
-        includeModule("org.gradle.android.cache-fix", "org.gradle.android.cache-fix.gradle.plugin")
-        includeModule("gradle.plugin.org.gradle.android", "android-cache-fix-gradle-plugin")
-      }
-    }
-    exclusiveContent {
       forRepository { maven("https://oss.sonatype.org/content/repositories/snapshots/") }
       filter { includeGroup("dev.msfjarvis.whetstone") }
     }

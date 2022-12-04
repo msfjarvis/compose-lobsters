@@ -1,5 +1,5 @@
 /*
- * Copyright © 2021-2023 Harsh Shandilya.
+ * Copyright © 2021-2022 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -12,6 +12,7 @@ plugins {
   id("dev.msfjarvis.claw.android-library")
   id("dev.msfjarvis.claw.kotlin-android")
   alias(libs.plugins.anvil)
+  alias(libs.plugins.catalog)
   alias(libs.plugins.whetstone)
 }
 
@@ -30,6 +31,11 @@ android {
 androidComponents { beforeVariants { (it as HasUnitTestBuilder).enableUnitTest = false } }
 
 anvil { generateDaggerFactories.set(true) }
+
+catalog {
+  generateComposeExtensions = true
+  generateResourcesExtensions = false
+}
 
 dependencies {
   api(projects.core)

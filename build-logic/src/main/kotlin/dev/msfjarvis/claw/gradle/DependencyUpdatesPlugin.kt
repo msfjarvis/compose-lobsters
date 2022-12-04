@@ -13,7 +13,7 @@ import nl.littlerobots.vcu.plugin.VersionCatalogUpdatePlugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
-import org.gradle.kotlin.dsl.getByType
+import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.withType
 
 @Suppress("Unused")
@@ -31,7 +31,7 @@ class DependencyUpdatesPlugin : Plugin<Project> {
       }
       checkForGradleUpdate = true
     }
-    project.extensions.getByType<VersionCatalogUpdateExtension>().run {
+    project.extensions.configure<VersionCatalogUpdateExtension> {
       keep.keepUnusedLibraries.set(true)
     }
   }

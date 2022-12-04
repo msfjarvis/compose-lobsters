@@ -14,7 +14,7 @@ import dev.msfjarvis.claw.gradle.artifacts.CollectBundleTask
 import java.util.Locale
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.getByType
+import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.register
 
 @Suppress("Unused")
@@ -22,7 +22,7 @@ class RenameArtifactsPlugin : Plugin<Project> {
 
   override fun apply(project: Project) {
     project.pluginManager.withPlugin("com.android.application") {
-      project.extensions.getByType<ApplicationAndroidComponentsExtension>().run {
+      project.extensions.configure<ApplicationAndroidComponentsExtension> {
         onVariants { variant ->
           val taskPrefix = "collect${variant.name.capitalize(Locale.ROOT)}"
           project.tasks.register<CollectApksTask>("${taskPrefix}Apks") {

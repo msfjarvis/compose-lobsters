@@ -8,17 +8,18 @@
 
 package dev.msfjarvis.claw.gradle
 
+import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.LibraryExtension
 import com.android.build.api.dsl.Lint
 import com.android.build.api.variant.ApplicationAndroidComponentsExtension
 import com.android.build.api.variant.LibraryAndroidComponentsExtension
 import com.android.build.gradle.BaseExtension
-import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
 import org.gradle.android.AndroidCacheFixPlugin
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
+import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.findByType
 
 private const val SLIM_TESTS_PROPERTY = "slimTests"
@@ -34,7 +35,7 @@ class AndroidCommonPlugin : Plugin<Project> {
   override fun apply(project: Project) {
     project.configureSlimTests()
     project.pluginManager.apply(AndroidCacheFixPlugin::class)
-    project.extensions.findByType<BaseExtension>()?.run {
+    project.extensions.configure<BaseExtension> {
       compileSdkVersion(COMPILE_SDK)
       defaultConfig {
         minSdk = MIN_SDK
@@ -60,7 +61,7 @@ class AndroidCommonPlugin : Plugin<Project> {
         unitTests.isReturnDefaultValues = true
       }
     }
-    project.extensions.findByType<BaseAppModuleExtension>()?.run { lint.configureLint(project) }
+    project.extensions.findByType<ApplicationExtension>()?.run { lint.configureLint(project) }
     project.extensions.findByType<LibraryExtension>()?.run { lint.configureLint(project) }
   }
 }

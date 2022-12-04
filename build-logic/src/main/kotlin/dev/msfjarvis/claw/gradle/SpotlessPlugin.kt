@@ -12,7 +12,7 @@ import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
-import org.gradle.kotlin.dsl.getByType
+import org.gradle.kotlin.dsl.configure
 
 @Suppress("Unused")
 class SpotlessPlugin : Plugin<Project> {
@@ -22,7 +22,7 @@ class SpotlessPlugin : Plugin<Project> {
       throw GradleException("Spotless plugin must only be applied to the root project.")
     }
     project.pluginManager.apply(SpotlessPlugin::class)
-    project.extensions.getByType<SpotlessExtension>().run {
+    project.extensions.configure<SpotlessExtension> {
       kotlin {
         ktfmt(KTFMT_VERSION).googleStyle()
         target("**/*.kt")

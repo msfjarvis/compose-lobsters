@@ -8,13 +8,13 @@
 
 package dev.msfjarvis.claw.gradle
 
+import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.gradle.AppPlugin
-import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
 import dev.msfjarvis.claw.gradle.signing.configureBuildSigning
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
-import org.gradle.kotlin.dsl.getByType
+import org.gradle.kotlin.dsl.configure
 
 @Suppress("Unused")
 class ApplicationPlugin : Plugin<Project> {
@@ -22,8 +22,8 @@ class ApplicationPlugin : Plugin<Project> {
   override fun apply(project: Project) {
     project.pluginManager.apply(AppPlugin::class)
     project.pluginManager.apply(AndroidCommonPlugin::class)
-    project.extensions.getByType<BaseAppModuleExtension>().run {
-      adbOptions.installOptions("--user 0")
+    project.extensions.configure<ApplicationExtension> {
+      installation.installOptions("--user 0")
 
       dependenciesInfo {
         includeInBundle = false

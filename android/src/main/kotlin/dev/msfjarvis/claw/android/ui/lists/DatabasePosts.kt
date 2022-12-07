@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import dev.msfjarvis.claw.common.posts.LobstersCard
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.ui.decorations.MonthHeader
 import dev.msfjarvis.claw.database.local.SavedPost
@@ -33,9 +34,9 @@ fun DatabasePosts(
     items.forEach { (month, posts) ->
       stickyHeader { MonthHeader(month = month) }
       items(posts) { item ->
-        ListItem(
-          item = item,
-          isSaved = { true },
+        LobstersCard(
+          post = item,
+          isSaved = true,
           postActions = postActions,
         )
 

@@ -27,19 +27,18 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
+import dev.msfjarvis.claw.common.posts.LobstersCard
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.posts.toDbModel
 import dev.msfjarvis.claw.common.ui.NetworkError
 import dev.msfjarvis.claw.common.ui.ProgressBar
-import dev.msfjarvis.claw.database.local.SavedPost
 import dev.msfjarvis.claw.model.LobstersPost
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun NetworkPosts(
-  lazyPagingItems: LazyPagingItems<LobstersPost>,
+  lazyPagingItems: LazyPagingItems<Pair<LobstersPost, Boolean>>,
   listState: LazyListState,
-  isPostSaved: suspend (SavedPost) -> Boolean,
   postActions: PostActions,
   modifier: Modifier = Modifier,
 ) {
@@ -59,10 +58,10 @@ fun NetworkPosts(
       ) {
         items(lazyPagingItems) { item ->
           if (item != null) {
-            val dbModel = item.toDbModel()
-            ListItem(
-              item = dbModel,
-              isSaved = isPostSaved,
+            val (post, saved) = item
+            LobstersCard(
+              post = post.toDbModel(),
+              isSaved = saved,
               postActions = postActions,
             )
 

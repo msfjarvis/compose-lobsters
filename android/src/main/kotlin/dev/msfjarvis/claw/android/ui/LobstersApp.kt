@@ -179,7 +179,6 @@ fun LobstersApp(
           NetworkPosts(
             lazyPagingItems = hottestPosts,
             listState = hottestListState,
-            isPostSaved = viewModel::isPostSaved,
             postActions = postActions,
           )
         }
@@ -190,7 +189,6 @@ fun LobstersApp(
           NetworkPosts(
             lazyPagingItems = newestPosts,
             listState = newestListState,
-            isPostSaved = viewModel::isPostSaved,
             postActions = postActions,
           )
         }

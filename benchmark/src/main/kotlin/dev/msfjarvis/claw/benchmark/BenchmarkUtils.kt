@@ -54,6 +54,6 @@ private fun UiDevice.returnToHottestScreen() {
 }
 
 private fun UiDevice.openCommentsScreen() {
-  findObjects(By.desc(COMMENT_BUTTON_DESC)).first().click()
   waitForSubmitterName()
+  findObjects(By.desc(COMMENT_BUTTON_DESC)).first().click()
 }

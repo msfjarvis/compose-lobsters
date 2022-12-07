@@ -6,4 +6,6 @@
  -->
 <resources>
   <string name="app_name">Claw</string>
+  <string name="content_description_go_back">Go back to previous screen</string>
+  <string name="label_post_load_failure">Failed to load posts</string>
 </resources>

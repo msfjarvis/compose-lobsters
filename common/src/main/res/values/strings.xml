@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="content_description_user_avatar">User avatar for %1$s</string>
+  <string name="content_description_add_saved_post">Add to saved posts</string>
+  <string name="content_description_remove_saved_post">Remove from saved posts</string>
+  <string name="content_description_comments_button">Open comments</string>
+  <string name="label_submitter">Submitted by %1$s</string>
+  <string name="label_profile_load_failure">Failed to load profile for %1$s</string>
+  <string name="label_invited_by">Invited by [%1$s](%2$s)</string>
+  <string name="label_comments_header">Comments</string>
+  <string name="label_comments_page_no_comments">No comments</string>
+  <string name="label_copy_stacktrace">Copy stacktrace</string>
+</resources>

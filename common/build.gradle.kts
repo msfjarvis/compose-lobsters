@@ -20,6 +20,7 @@ android {
   buildFeatures {
     androidResources = true
     compose = true
+    resValues = true
   }
   composeOptions {
     useLiveLiterals = false

@@ -24,7 +24,10 @@ plugins {
 android {
   namespace = "dev.msfjarvis.claw.android"
   defaultConfig { applicationId = "dev.msfjarvis.claw.android" }
-  buildFeatures { compose = true }
+  buildFeatures {
+    compose = true
+    resValues = true
+  }
   composeOptions {
     useLiveLiterals = false
     kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()

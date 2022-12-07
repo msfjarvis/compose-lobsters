@@ -15,14 +15,10 @@ import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.UiDevice
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 
 @LargeTest
-@Ignore(
-  "These tests fail saying that ProfileInstaller 1.3.0-alpha02 should be used which we already are"
-)
 class BaselineProfileBenchmark {
   @get:Rule val benchmarkRule = MacrobenchmarkRule()
   private lateinit var device: UiDevice

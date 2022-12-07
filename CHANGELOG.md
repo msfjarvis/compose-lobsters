@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+-   Upgrade to Compose 2022.12.00 release
+-   Refresh packaged baseline profile
+-   Improve how saved state of posts is queried
+
 ## [1.10.0] - 2022-11-30
 
 ### Changed

@@ -6,6 +6,7 @@
  */
 package dev.msfjarvis.claw.benchmark
 
+import androidx.benchmark.macro.ExperimentalStableBaselineProfilesApi
 import androidx.benchmark.macro.junit4.BaselineProfileRule
 import androidx.test.filters.MediumTest
 import androidx.test.platform.app.InstrumentationRegistry
@@ -14,6 +15,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
+@ExperimentalStableBaselineProfilesApi
 @MediumTest
 class BaselineProfileGenerator {
   @get:Rule val baselineProfileRule = BaselineProfileRule()
@@ -27,5 +29,10 @@ class BaselineProfileGenerator {
 
   @Test
   fun startup() =
-    baselineProfileRule.collectBaselineProfile(packageName = PACKAGE_NAME) { exploreUI(device) }
+    baselineProfileRule.collectStableBaselineProfile(
+      packageName = PACKAGE_NAME,
+      maxIterations = 5,
+    ) {
+      exploreUI(device)
+    }
 }

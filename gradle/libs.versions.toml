@@ -26,7 +26,7 @@ androidx-activity-compose = "androidx.activity:activity-compose:1.7.0-alpha02"
 androidx-benchmark-macro-junit4 = "androidx.benchmark:benchmark-macro-junit4:1.2.0-alpha08"
 androidx-browser = "androidx.browser:browser:1.5.0-alpha02"
 androidx-compose-animation = { module = "androidx.compose.animation:animation" }
-androidx-compose-bom = "androidx.compose:compose-bom:2022.11.00"
+androidx-compose-bom = "androidx.compose:compose-bom:2022.12.00"
 androidx-compose-foundation = { module = "androidx.compose.foundation:foundation" }
 androidx-compose-material = { module = "androidx.compose.material:material" }
 androidx-compose-material3 = { module = "androidx.compose.material3:material3" }

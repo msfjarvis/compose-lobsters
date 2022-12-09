@@ -104,15 +104,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/1.12.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.12.0...HEAD
 
-[1.12.0]: https://github.com/msfjarvis/compose-lobsters/compare/1.11.0...1.12.0
+[1.12.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.11.0...v1.12.0
 
-[1.11.0]: https://github.com/msfjarvis/compose-lobsters/compare/1.10.0...1.11.0
+[1.11.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.10.0...v1.11.0
 
-[1.10.0]: https://github.com/msfjarvis/compose-lobsters/compare/1.9.0...1.10.0
+[1.10.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.9.0...v1.10.0
 
-[1.9.0]: https://github.com/msfjarvis/compose-lobsters/compare/1.8.0...1.9.0
+[1.9.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.8.0...v1.9.0
 
 [1.8.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.7.0...1.8.0
 

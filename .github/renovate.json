@@ -73,6 +73,16 @@
       ],
       "datasourceTemplate": "maven",
       "depNameTemplate": "androidx.compose.compiler:compiler"
+    },
+    {
+      "fileMatch": [
+        "qodana.yaml"
+      ],
+      "matchStrings": [
+        "jetbrains/qodana-jvm-community:(?<currentValue>.*)"
+      ],
+      "datasourceTemplate": "docker",
+      "depNameTemplate": "jetbrains/qodana-jvm-community",
     }
   ]
 }

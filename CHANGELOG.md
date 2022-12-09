@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.12.0] - 2022-12-09
+
 ### Changed
 
 -   Do not schedule post update job every time the app starts
@@ -102,7 +104,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/1.11.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/1.12.0...HEAD
+
+[1.12.0]: https://github.com/msfjarvis/compose-lobsters/compare/1.11.0...1.12.0
 
 [1.11.0]: https://github.com/msfjarvis/compose-lobsters/compare/1.10.0...1.11.0
 

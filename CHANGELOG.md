@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+-   Do not schedule post update job every time the app starts
+
 ## [1.11.0] - 2022-12-07
 
 ### Changed

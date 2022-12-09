@@ -12,18 +12,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.work.Constraints
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.NetworkType
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
 import com.deliveryhero.whetstone.Whetstone
 import com.deliveryhero.whetstone.activity.ContributesActivityInjector
 import dev.msfjarvis.claw.android.ui.LobstersApp
-import dev.msfjarvis.claw.android.work.SavedPostUpdaterWorker
 import dev.msfjarvis.claw.common.comments.HTMLConverter
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @ContributesActivityInjector
@@ -44,23 +37,6 @@ class MainActivity : ComponentActivity() {
         setWebUri = { url -> webUri = url },
       )
     }
-    val postUpdateWorkRequest =
-      PeriodicWorkRequestBuilder<SavedPostUpdaterWorker>(POST_REFRESH_PERIOD, TimeUnit.HOURS)
-        .setConstraints(
-          Constraints.Builder()
-            .setRequiresCharging(false)
-            .setRequiresBatteryNotLow(true)
-            .setRequiredNetworkType(NetworkType.CONNECTED)
-            .setRequiresDeviceIdle(true)
-            .build()
-        )
-        .build()
-    WorkManager.getInstance(this@MainActivity)
-      .enqueueUniquePeriodicWork(
-        "updateSavedPosts",
-        ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE,
-        postUpdateWorkRequest,
-      )
   }
 
   override fun onProvideAssistContent(outContent: AssistContent?) {
@@ -72,9 +48,5 @@ class MainActivity : ComponentActivity() {
         outContent.webUri = null
       }
     }
-  }
-
-  private companion object {
-    private const val POST_REFRESH_PERIOD = 24L // 24 hours
   }
 }

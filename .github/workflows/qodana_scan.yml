@@ -10,10 +10,10 @@ jobs:
   qodana:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # v3
         with:
           fetch-depth: 0
       - name: 'Qodana Scan'
-        uses: JetBrains/qodana-action@v2022.2.3
+        uses: JetBrains/qodana-action@2b75b91f95751e06ff1341cae0869a9cfcc6bb10 # v2022.2.3
         env:
           QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}

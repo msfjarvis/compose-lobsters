@@ -1,4 +1,4 @@
 version: "1.0"
-linter: jetbrains/qodana-jvm-community:2022.2
+linter: jetbrains/qodana-jvm-community:2022.3
 exclude:
   - name: KotlinAnnotator

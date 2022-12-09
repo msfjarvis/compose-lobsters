@@ -10,8 +10,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import androidx.paging.cachedIn
-import androidx.paging.map
 import com.deliveryhero.whetstone.viewmodel.ContributesViewModel
 import com.slack.eithernet.ApiResult.Failure
 import com.slack.eithernet.ApiResult.Success
@@ -45,16 +43,10 @@ constructor(
     Pager(PagingConfig(pageSize = 20)) { pagingSourceFactory.create(api::getHottestPosts) }
 
   val hottestPosts
-    get() =
-      hottestPostsPager.flow
-        .map { pagingData -> pagingData.map { item -> item to isPostSaved(item.shortId) } }
-        .cachedIn(viewModelScope)
+    get() = hottestPostsPager.flow
 
   val newestPosts
-    get() =
-      newestPostsPager.flow
-        .map { pagingData -> pagingData.map { item -> item to isPostSaved(item.shortId) } }
-        .cachedIn(viewModelScope)
+    get() = newestPostsPager.flow
 
   private val savedPostsFlow
     get() = savedPostsRepository.savedPosts
@@ -67,13 +59,13 @@ constructor(
     return sorted.groupBy { post -> post.createdAt.toLocalDateTime().month }
   }
 
-  private suspend fun isPostSaved(shortId: String): Boolean {
-    return savedPostsFlow.first().any { savedPost -> savedPost.shortId == shortId }
+  suspend fun isPostSaved(post: SavedPost): Boolean {
+    return savedPostsFlow.first().any { savedPost -> savedPost.shortId == post.shortId }
   }
 
   fun toggleSave(post: SavedPost) {
     viewModelScope.launch(ioDispatcher) {
-      val saved = isPostSaved(post.shortId)
+      val saved = isPostSaved(post)
       if (saved) {
         savedPostsRepository.removePost(post)
       } else {

@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Do not schedule post update job every time the app starts
 -   Improve favicon loading to reduce unnecessary redraws
+-   Fix post lists being reloaded unnecessarily
 
 ## [1.11.0] - 2022-12-07
 

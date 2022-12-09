@@ -111,7 +111,7 @@ fun PostLink(
       shape = RoundedCornerShape(8.dp),
     )
   ) {
-    Row(modifier = Modifier.padding(16.dp), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+    Row(modifier = Modifier.padding(16.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
       NetworkImage(
         url = linkMetadata.faviconUrl,
         placeholder = ClawIcons.Web,

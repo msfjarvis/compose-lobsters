@@ -13,7 +13,7 @@ import coil.compose.AsyncImage
 
 @Composable
 fun NetworkImage(
-  url: String,
+  url: String?,
   placeholder: Painter,
   contentDescription: String,
   modifier: Modifier = Modifier,

@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 -   Do not schedule post update job every time the app starts
+-   Improve favicon loading to reduce unnecessary redraws
 
 ## [1.11.0] - 2022-12-07
 

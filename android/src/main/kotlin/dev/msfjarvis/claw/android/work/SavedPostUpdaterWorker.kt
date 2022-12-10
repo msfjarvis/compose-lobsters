@@ -12,15 +12,13 @@ import androidx.work.WorkerParameters
 import com.deliveryhero.whetstone.ForScope
 import com.deliveryhero.whetstone.worker.ContributesWorker
 import com.deliveryhero.whetstone.worker.WorkerScope
-import com.slack.eithernet.ApiResult
+import com.slack.eithernet.ApiResult.Success
 import dev.msfjarvis.claw.android.viewmodel.SavedPostsRepository
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.common.posts.toDbModel
+import dev.msfjarvis.claw.model.LobstersPostDetails
 import javax.inject.Inject
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.supervisorScope
 
 /**
  * WorkManager-backed [CoroutineWorker] that gets all the posts from [SavedPostsRepository], fetches
@@ -38,19 +36,13 @@ constructor(
   private val lobstersApi: LobstersApi,
 ) : CoroutineWorker(appContext, workerParams) {
   override suspend fun doWork(): Result {
-    val posts = savedPostsRepository.savedPosts.first()
-    supervisorScope {
-      posts
-        .map { post ->
-          async {
-            val details = lobstersApi.getPostDetails(post.shortId)
-            if (details is ApiResult.Success) {
-              savedPostsRepository.savePost(details.value.toDbModel())
-            }
-          }
-        }
-        .awaitAll()
-    }
+    savedPostsRepository.savedPosts
+      .first()
+      .map { post -> lobstersApi.getPostDetails(post.shortId) }
+      .filterIsInstance<Success<LobstersPostDetails>>()
+      .map { result -> result.value.toDbModel() }
+      .toList()
+      .let { savedPostsRepository.savePosts(it) }
     return Result.success()
   }
 }

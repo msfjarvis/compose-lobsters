@@ -30,6 +30,15 @@ constructor(
     withContext(dbDispatcher) { savedPostQueries.insertOrReplacePost(post) }
   }
 
+  suspend fun savePosts(posts: List<SavedPost>) {
+    Napier.d(tag = TAG) { "Saving posts: ${posts.joinToString(",") { it.shortId }}" }
+    withContext(dbDispatcher) {
+      savedPostQueries.transaction {
+        posts.forEach { post -> savedPostQueries.insertOrReplacePost(post) }
+      }
+    }
+  }
+
   suspend fun removePost(post: SavedPost) {
     Napier.d(tag = TAG) { "Removing post: ${post.shortId}" }
     withContext(dbDispatcher) { savedPostQueries.deletePost(post.shortId) }

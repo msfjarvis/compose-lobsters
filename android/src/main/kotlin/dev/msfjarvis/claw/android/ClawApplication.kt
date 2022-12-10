@@ -46,7 +46,7 @@ class ClawApplication : Application(), ApplicationComponentOwner {
     WorkManager.getInstance(this)
       .enqueueUniquePeriodicWork(
         "updateSavedPosts",
-        ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE,
+        ExistingPeriodicWorkPolicy.UPDATE,
         postUpdateWorkRequest,
       )
   }

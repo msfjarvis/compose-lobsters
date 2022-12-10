@@ -149,6 +149,10 @@
         android:name="androidx.work.WorkManagerInitializer"
         android:value="androidx.startup"
         tools:node="remove" />
+      <meta-data
+        android:name="com.deliveryhero.whetstone.worker.WhetstoneWorkerInitializer"
+        android:value="androidx.startup"
+        tools:node="remove" />
     </provider>
     <!-- https://issuetracker.google.com/issues/258619948 -->
     <receiver

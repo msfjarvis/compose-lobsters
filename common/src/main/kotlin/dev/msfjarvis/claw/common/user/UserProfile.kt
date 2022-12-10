@@ -90,9 +90,11 @@ private fun UserProfileInternal(
       ThemedRichText(
         text = user.about,
       )
-      ThemedRichText(
-        text = "Invited by [${user.invitedBy}](https://lobste.rs/u/${user.invitedBy})",
-      )
+      user.invitedBy?.let { invitedBy ->
+        ThemedRichText(
+          text = "Invited by [${invitedBy}](https://lobste.rs/u/${user.invitedBy})",
+        )
+      }
     }
   }
 }

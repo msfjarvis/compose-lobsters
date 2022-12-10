@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+-   Fix crash when viewing [jcs](https://lobste.rs/u/jcs)' comments
+
 ## [1.12.0] - 2022-12-09
 
 ### Changed

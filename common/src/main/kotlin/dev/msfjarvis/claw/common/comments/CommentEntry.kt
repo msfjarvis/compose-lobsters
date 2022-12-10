@@ -26,10 +26,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.AnnotatedString
@@ -43,7 +41,6 @@ import dev.msfjarvis.claw.common.posts.TagRow
 import dev.msfjarvis.claw.common.res.ClawIcons
 import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.common.ui.ThemedRichText
-import dev.msfjarvis.claw.model.Comment
 import dev.msfjarvis.claw.model.LinkMetadata
 import dev.msfjarvis.claw.model.LobstersPostDetails
 import java.time.Instant
@@ -134,17 +131,18 @@ private val CommentEntryPadding = 16f.dp
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun CommentEntry(
-  comment: Comment,
+  commentNode: CommentNode,
   htmlConverter: HTMLConverter,
+  toggleExpanded: (CommentNode) -> Unit,
   modifier: Modifier = Modifier,
 ) {
-  var expanded by remember(comment) { mutableStateOf(true) }
   val uriHandler = LocalUriHandler.current
+  val comment = commentNode.comment
   Box(
     modifier =
       modifier
         .fillMaxWidth()
-        .clickable { expanded = !expanded }
+        .clickable { toggleExpanded(commentNode) }
         .background(MaterialTheme.colorScheme.background)
         .padding(
           start = CommentEntryPadding * comment.indentLevel,
@@ -167,7 +165,7 @@ fun CommentEntry(
         modifier =
           Modifier.clickable { uriHandler.openUri("https://lobste.rs/u/${comment.user.username}") },
       )
-      AnimatedContent(targetState = expanded) { expandedState ->
+      AnimatedContent(targetState = commentNode.isExpanded) { expandedState ->
         if (expandedState) {
           ThemedRichText(
             text = htmlConverter.convertHTMLToMarkdown(comment.comment),

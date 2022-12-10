@@ -11,14 +11,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
+import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -39,6 +38,8 @@ private fun CommentsPageInternal(
   htmlConverter: HTMLConverter,
   modifier: Modifier = Modifier,
 ) {
+  val commentNodes = createListNode(details.comments).toMutableStateList()
+
   Surface(color = MaterialTheme.colorScheme.surfaceVariant) {
     LazyColumn(modifier = modifier, contentPadding = PaddingValues(bottom = 24.dp)) {
       item {
@@ -49,7 +50,7 @@ private fun CommentsPageInternal(
         )
       }
 
-      if (details.comments.isNotEmpty()) {
+      if (commentNodes.isNotEmpty()) {
         item {
           Text(
             text = "Comments",
@@ -58,11 +59,18 @@ private fun CommentsPageInternal(
           )
         }
 
-        itemsIndexed(details.comments) { index, item ->
-          if (index != 0) {
-            Divider()
+        item {
+          DisplayListNode(comments = commentNodes, htmlConverter = htmlConverter) { node ->
+            val newNode = toggleAllExpanded(node)
+            val index =
+              commentNodes.indexOf(commentNodes.find { it.comment.url == node.comment.url })
+            if (index == -1) {
+              error("Failed to find node for comment: ${node.comment}")
+            } else {
+              commentNodes.removeAt(index)
+              commentNodes.add(index, newNode)
+            }
           }
-          CommentEntry(comment = item, htmlConverter = htmlConverter)
         }
       } else {
         item {

@@ -21,6 +21,7 @@ fun LobstersPost.toDbModel(): SavedPost {
     submitterName = submitter.username,
     submitterAvatarUrl = submitter.avatarUrl,
     tags = tags,
+    description = description,
   )
 }
 
@@ -35,5 +36,6 @@ fun LobstersPostDetails.toDbModel(): SavedPost {
     submitterName = submitter.username,
     submitterAvatarUrl = submitter.avatarUrl,
     tags = tags,
+    description = description,
   )
 }

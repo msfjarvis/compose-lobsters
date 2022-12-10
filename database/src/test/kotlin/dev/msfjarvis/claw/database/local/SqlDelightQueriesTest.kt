@@ -131,6 +131,7 @@ class SqlDelightQueriesTest : FunSpec() {
           submitterName = "test_user_$i",
           submitterAvatarUrl = "test_avatar_url",
           tags = listOf(),
+          description = "",
         )
 
       posts.add(post)

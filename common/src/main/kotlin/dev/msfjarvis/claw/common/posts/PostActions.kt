@@ -6,10 +6,12 @@
  */
 package dev.msfjarvis.claw.common.posts
 
+import androidx.compose.runtime.Stable
 import dev.msfjarvis.claw.database.local.SavedPost
 import dev.msfjarvis.claw.model.LinkMetadata
 import dev.msfjarvis.claw.model.LobstersPostDetails
 
+@Stable
 interface PostActions {
   fun viewPost(postUrl: String, commentsUrl: String)
   fun viewComments(postId: String)

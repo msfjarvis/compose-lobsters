@@ -8,22 +8,13 @@ package dev.msfjarvis.claw.android.injection
 
 import com.deliveryhero.whetstone.app.ApplicationScope
 import com.squareup.anvil.annotations.ContributesTo
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
+import dev.msfjarvis.claw.android.ui.util.HTMLConverterImpl
 import dev.msfjarvis.claw.common.comments.HTMLConverter
-import io.github.furstenheim.CopyDown
 
 @Module
 @ContributesTo(ApplicationScope::class)
-object HTMLConverterModule {
-
-  @Provides
-  fun provideHTMLConverter() =
-    object : HTMLConverter {
-      private val copydown = CopyDown()
-
-      override fun convertHTMLToMarkdown(html: String): String {
-        return copydown.convert(html)
-      }
-    }
+interface HTMLConverterModule {
+  @Binds fun HTMLConverterImpl.bind(): HTMLConverter
 }

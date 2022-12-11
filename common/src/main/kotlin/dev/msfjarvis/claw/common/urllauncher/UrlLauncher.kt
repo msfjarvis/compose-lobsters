@@ -11,9 +11,11 @@ import android.content.Context
 import android.net.Uri
 import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.platform.UriHandler
 import io.github.aakira.napier.Napier
 
+@Stable
 class UrlLauncher(private val context: Context) : UriHandler {
   override fun openUri(uri: String) {
     val customTabsIntent =

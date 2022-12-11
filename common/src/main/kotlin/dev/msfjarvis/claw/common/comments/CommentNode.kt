@@ -6,8 +6,8 @@
  */
 package dev.msfjarvis.claw.common.comments
 
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material3.Divider
-import androidx.compose.runtime.Composable
 import dev.msfjarvis.claw.model.Comment
 
 data class CommentNode(
@@ -40,22 +40,6 @@ fun createListNode(comments: List<Comment>): MutableList<CommentNode> {
   return commentNodes
 }
 
-@Composable
-fun DisplayListNode(
-  comments: List<CommentNode>,
-  htmlConverter: HTMLConverter,
-  updateComments: (CommentNode) -> Unit,
-) {
-  comments.forEach {
-    CommentEntry(commentNode = it, htmlConverter = htmlConverter, updateComments)
-    Divider()
-
-    if (it.children.isNotEmpty()) {
-      DisplayListNode(comments = it.children, htmlConverter = htmlConverter, updateComments)
-    }
-  }
-}
-
 fun toggleAllExpanded(commentNode: CommentNode): CommentNode {
   commentNode.isExpanded = !commentNode.isExpanded
 
@@ -63,4 +47,40 @@ fun toggleAllExpanded(commentNode: CommentNode): CommentNode {
     commentNode.children.forEach { toggleAllExpanded(it) }
   }
   return commentNode
+}
+
+fun LazyListScope.nodes(
+  nodes: List<CommentNode>,
+  htmlConverter: HTMLConverter,
+  toggleExpanded: (CommentNode) -> Unit,
+) {
+  nodes.forEach { node ->
+    node(
+      node = node,
+      htmlConverter = htmlConverter,
+      toggleExpanded = toggleExpanded,
+    )
+  }
+}
+
+fun LazyListScope.node(
+  node: CommentNode,
+  htmlConverter: HTMLConverter,
+  toggleExpanded: (CommentNode) -> Unit,
+) {
+  item {
+    CommentEntry(
+      commentNode = node,
+      htmlConverter = htmlConverter,
+      toggleExpanded = toggleExpanded,
+    )
+    Divider()
+  }
+  if (node.children.isNotEmpty()) {
+    nodes(
+      node.children,
+      htmlConverter = htmlConverter,
+      toggleExpanded = toggleExpanded,
+    )
+  }
 }

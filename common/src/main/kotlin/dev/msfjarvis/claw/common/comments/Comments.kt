@@ -59,19 +59,20 @@ private fun CommentsPageInternal(
           )
         }
 
-        item {
-          DisplayListNode(comments = commentNodes, htmlConverter = htmlConverter) { node ->
+        nodes(
+          nodes = commentNodes,
+          htmlConverter = htmlConverter,
+          toggleExpanded = { node ->
             val newNode = toggleAllExpanded(node)
+            // TODO(anunaym14): make this search recursive
             val index =
               commentNodes.indexOf(commentNodes.find { it.comment.url == node.comment.url })
-            if (index == -1) {
-              error("Failed to find node for comment: ${node.comment}")
-            } else {
+            if (index != -1) {
               commentNodes.removeAt(index)
               commentNodes.add(index, newNode)
             }
-          }
-        }
+          },
+        )
       } else {
         item {
           Text(

@@ -1,0 +1,90 @@
+name: Baseline profile generation
+
+on:
+  # every day at 00:43
+  schedule:
+    - cron: '43 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  baseline-profile:
+    runs-on: macos-latest
+    timeout-minutes: 45
+    env:
+      TERM: dumb
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # tag=v3.1.0
+      with:
+        token: ${{ secrets.POST_RELEASE_GH_TOKEN }}
+        fetch-depth: 0
+
+    - name: Set up JDK
+      uses: actions/setup-java@c3ac5dd0ed8db40fedb61c32fbe677e6b355e94c # v3.8.0
+      with:
+        distribution: temurin
+        java-version: 18
+
+    - name: Set up Git author
+      shell: bash
+      run: |
+        git config user.name "GitHub Actions"
+        git config user.email noreply@github.com
+
+    - name: Setup Gradle caching
+      uses: gradle/gradle-build-action@3fbe033aaae657f011f88f29be9e65ed26bd29ef # tag=v2.3.3
+      with:
+        gradle-home-cache-cleanup: true
+
+    - name: Decrypt secrets
+      run: scripts/signing-setup.sh "$ENCRYPT_KEY"
+      env:
+        ENCRYPT_KEY: ${{ secrets.ENCRYPT_KEY }}
+
+    # This allows us to build most of what we need without the emulator running
+    # and using resources
+    - name: Build app and benchmark
+      run: ./gradlew :benchmark:assembleBenchmark :app:assembleStandardBenchmark
+
+    # Now use reactivecircus/android-emulator-runner to spin up an emulator and run our
+    # baseline profile generator. We need to manually pull the baseline profiles off the
+    # emulator when using the GA runner
+    - name: Run benchmark
+      uses: reactivecircus/android-emulator-runner@v2
+      with:
+        api-level: 33
+        target: google_apis
+        arch: x86_64
+        profile: Galaxy Nexus
+        script: |
+          # Run our benchmark, enabling only tests using BaselineProfile
+          ./gradlew connectedBenchmarkAndroidTest -Pandroid.testInstrumentationRunnerArguments.size=large
+          # Need to manually pull the generated profiles from the emulator
+          adb pull /sdcard/Android/media/dev.msfjarvis.claw.benchmark benchmark/build/outputs/baseline-prof/
+
+    # If we're on main branch, copy over the baseline profile and
+    # commit it to the repository (if changed)
+    - name: Commit baseline profile into main
+      if: github.ref == 'refs/heads/main'
+      run: |
+        # Pull down any changes which may have been committed while this workflow has been running
+        git pull
+        # Sort the baseline profile, saving it to app/
+        sort -o app/src/main/baseline-prof.txt benchmark/build/outputs/baseline-prof/BaselineProfileGenerator_startup-baseline-prof.txt
+        # If the baseline profile has changed, commit it
+        if [[ $(git diff --stat app/src/main/baseline-prof.txt) != '' ]]; then
+          git add app/src/main/baseline-prof.txt
+          git commit -m "chore(android): refresh baseline profile" && git push
+        fi
+
+    # Upload the entire generated folder and attach it to the CI run
+    - name: Attach baseline profile
+      uses: actions/upload-artifact@83fd05a356d7e2593de66fc9913b3002723633cb # v3.1.1
+      with:
+        name: Baseline profile output
+        path: benchmark/build/outputs/baseline-prof
+
+    - name: Clean secrets
+      if: always()
+      run: scripts/signing-cleanup.sh

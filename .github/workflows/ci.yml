@@ -62,7 +62,9 @@ jobs:
         java-version: 18
 
     - name: Decrypt secrets
-      run: scripts/signing-setup.sh "$ENCRYPT_KEY"
+      run: |
+        ./scripts/setup-age.sh
+        ./scripts/signing-setup.sh "$ENCRYPT_KEY"
       env:
         ENCRYPT_KEY: ${{ secrets.ENCRYPT_KEY }}
 

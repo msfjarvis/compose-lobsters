@@ -2,16 +2,20 @@
 
 set -euo pipefail
 
-ENCRYPT_KEY="${1:-}"
+ENCRYPT_KEY="${1}"
+TEMP_KEY="$(mktemp)"
 
-declare -A SECRETS
-SECRETS[secrets/keystore.cipher]=keystore.jks
-SECRETS[secrets/props.cipher]=keystore.properties
+echo "${ENCRYPT_KEY:?}" > "${TEMP_KEY}"
 
-if [[ -n "$ENCRYPT_KEY" ]]; then
-    for src in "${!SECRETS[@]}"; do
-      openssl enc -aes-256-cbc -md sha256 -pbkdf2 -d -in "${src}" -out "${SECRETS[${src}]}" -k "${ENCRYPT_KEY}"
-    done
-else
-    echo "Usage: ./signing-setup.sh <encryption key>"
-fi
+function decrypt() {
+  if ! command -v age 1>/dev/null; then
+    echo "age not installed"
+    exit 1
+  fi
+  SRC="${1}"
+  DST="${2}"
+  age --decrypt -i "${TEMP_KEY}" -o "${DST:?}" "${SRC:?}"
+}
+
+decrypt secrets/keystore.cipher keystore.jks
+decrypt secrets/props.cipher keystore.properties

@@ -53,7 +53,7 @@ jobs:
     # baseline profile generator. We need to manually pull the baseline profiles off the
     # emulator when using the GA runner
     - name: Run benchmark
-      uses: reactivecircus/android-emulator-runner@v2
+      uses: reactivecircus/android-emulator-runner@50986b1464923454c95e261820bc626f38490ec0 # v2
       with:
         api-level: 33
         target: google_apis

@@ -10,7 +10,7 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material3.Divider
 import dev.msfjarvis.claw.model.Comment
 
-data class CommentNode(
+internal data class CommentNode(
   val comment: Comment,
   var parent: CommentNode? = null,
   val children: MutableList<CommentNode> = mutableListOf(),
@@ -26,7 +26,7 @@ data class CommentNode(
   }
 }
 
-fun createListNode(comments: List<Comment>): MutableList<CommentNode> {
+internal fun createListNode(comments: List<Comment>): MutableList<CommentNode> {
   val commentNodes = mutableListOf<CommentNode>()
 
   for (i in comments.indices) {
@@ -40,7 +40,7 @@ fun createListNode(comments: List<Comment>): MutableList<CommentNode> {
   return commentNodes
 }
 
-fun toggleAllExpanded(commentNode: CommentNode): CommentNode {
+internal fun toggleAllExpanded(commentNode: CommentNode): CommentNode {
   commentNode.isExpanded = !commentNode.isExpanded
 
   if (commentNode.children.isNotEmpty()) {
@@ -49,7 +49,7 @@ fun toggleAllExpanded(commentNode: CommentNode): CommentNode {
   return commentNode
 }
 
-fun findTopMostParent(node: CommentNode): CommentNode {
+internal fun findTopMostParent(node: CommentNode): CommentNode {
   val parent = node.parent
   return if (parent != null) {
     findTopMostParent(parent)
@@ -58,7 +58,7 @@ fun findTopMostParent(node: CommentNode): CommentNode {
   }
 }
 
-fun LazyListScope.nodes(
+internal fun LazyListScope.nodes(
   nodes: List<CommentNode>,
   htmlConverter: HTMLConverter,
   toggleExpanded: (CommentNode) -> Unit,
@@ -72,7 +72,7 @@ fun LazyListScope.nodes(
   }
 }
 
-fun LazyListScope.node(
+private fun LazyListScope.node(
   node: CommentNode,
   htmlConverter: HTMLConverter,
   toggleExpanded: (CommentNode) -> Unit,

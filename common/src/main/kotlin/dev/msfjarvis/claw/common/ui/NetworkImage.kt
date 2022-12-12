@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import coil.compose.AsyncImage
 
 @Composable
-fun NetworkImage(
+internal fun NetworkImage(
   url: String?,
   placeholder: Painter,
   contentDescription: String,

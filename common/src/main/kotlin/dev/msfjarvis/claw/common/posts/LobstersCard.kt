@@ -115,7 +115,7 @@ fun PostDetails(post: SavedPost, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun PostTitle(
+internal fun PostTitle(
   title: String,
   modifier: Modifier = Modifier,
 ) {
@@ -128,7 +128,7 @@ fun PostTitle(
 }
 
 @Composable
-fun Submitter(
+internal fun Submitter(
   text: AnnotatedString,
   avatarUrl: String,
   contentDescription: String,
@@ -151,7 +151,7 @@ fun Submitter(
 }
 
 @Composable
-fun SaveButton(
+private fun SaveButton(
   isSaved: Boolean,
   modifier: Modifier = Modifier,
 ) {
@@ -169,7 +169,7 @@ fun SaveButton(
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
-fun CommentsButton(
+private fun CommentsButton(
   commentCount: Int?,
   modifier: Modifier = Modifier,
 ) {
@@ -200,7 +200,7 @@ fun CommentsButton(
 }
 
 @Composable
-fun TagRow(
+internal fun TagRow(
   tags: List<String>,
   modifier: Modifier = Modifier,
 ) {
@@ -214,7 +214,7 @@ fun TagRow(
 }
 
 @Composable
-fun TagText(
+private fun TagText(
   tag: String,
   modifier: Modifier = Modifier,
 ) {

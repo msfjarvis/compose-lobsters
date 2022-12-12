@@ -23,7 +23,7 @@ import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
 
 @Composable
-fun ThemedRichText(
+internal fun ThemedRichText(
   text: String,
   modifier: Modifier = Modifier,
 ) {
@@ -50,7 +50,7 @@ fun ThemedRichText(
 
 @ThemePreviews
 @Composable
-fun ThemedRichTextPreview() {
+internal fun ThemedRichTextPreview() {
   val text =
     """
       ### Heading

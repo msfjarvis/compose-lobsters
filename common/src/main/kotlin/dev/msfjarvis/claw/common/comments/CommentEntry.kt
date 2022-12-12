@@ -47,7 +47,7 @@ import java.time.Instant
 import java.time.temporal.TemporalAccessor
 
 @Composable
-fun CommentsHeader(
+internal fun CommentsHeader(
   postDetails: LobstersPostDetails,
   postActions: PostActions,
   htmlConverter: HTMLConverter,
@@ -98,7 +98,7 @@ fun CommentsHeader(
 }
 
 @Composable
-fun PostLink(
+private fun PostLink(
   linkMetadata: LinkMetadata,
   modifier: Modifier = Modifier,
 ) {
@@ -130,7 +130,7 @@ private val CommentEntryPadding = 16f.dp
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun CommentEntry(
+internal fun CommentEntry(
   commentNode: CommentNode,
   htmlConverter: HTMLConverter,
   toggleExpanded: (CommentNode) -> Unit,

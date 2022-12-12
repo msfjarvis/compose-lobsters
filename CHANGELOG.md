@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 -   Rework how often saved posts are updated
+-   Collapsing a comment now collapses all comments under it similar to how it works on the website
 
 ## [1.13.0] - 2022-12-10
 

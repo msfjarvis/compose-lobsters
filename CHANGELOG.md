@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.14.0] - 2022-12-12
+
 ### Changed
 
 -   Rework how often saved posts are updated
@@ -115,7 +117,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.13.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.14.0...HEAD
+
+[1.14.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.13.0...v1.14.0
 
 [1.13.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.12.0...v1.13.0
 

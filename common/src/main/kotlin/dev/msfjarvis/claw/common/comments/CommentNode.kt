@@ -77,6 +77,10 @@ fun LazyListScope.node(
   htmlConverter: HTMLConverter,
   toggleExpanded: (CommentNode) -> Unit,
 ) {
+  // Skip the node if neither the node nor its parent is expanded
+  if (!node.isExpanded && node.parent?.isExpanded == false) {
+    return
+  }
   item {
     CommentEntry(
       commentNode = node,

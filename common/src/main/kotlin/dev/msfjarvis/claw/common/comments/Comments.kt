@@ -63,12 +63,13 @@ private fun CommentsPageInternal(
           nodes = commentNodes,
           htmlConverter = htmlConverter,
           toggleExpanded = { node ->
-            // TODO(anunaym14): make this search recursive
+            val newNode = toggleAllExpanded(node)
+            val parent = findTopMostParent(newNode)
             val index =
-              commentNodes.indexOf(commentNodes.find { it.comment.url == node.comment.url })
+              commentNodes.indexOf(commentNodes.find { it.comment.url == parent.comment.url })
             if (index != -1) {
               commentNodes.removeAt(index)
-              commentNodes.add(index, toggleAllExpanded(node))
+              commentNodes.add(index, parent)
             }
           },
         )

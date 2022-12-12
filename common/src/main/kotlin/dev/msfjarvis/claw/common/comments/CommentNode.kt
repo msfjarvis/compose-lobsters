@@ -49,6 +49,15 @@ fun toggleAllExpanded(commentNode: CommentNode): CommentNode {
   return commentNode
 }
 
+fun findTopMostParent(node: CommentNode): CommentNode {
+  val parent = node.parent
+  return if (parent != null) {
+    findTopMostParent(parent)
+  } else {
+    node
+  }
+}
+
 fun LazyListScope.nodes(
   nodes: List<CommentNode>,
   htmlConverter: HTMLConverter,

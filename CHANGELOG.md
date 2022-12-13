@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+-   Fix a case where collapsing the parent of an already collapsed comment caused it become expanded
+
 ## [1.14.0] - 2022-12-12
 
 ### Changed

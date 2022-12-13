@@ -40,11 +40,11 @@ internal fun createListNode(comments: List<Comment>): MutableList<CommentNode> {
   return commentNodes
 }
 
-internal fun toggleAllExpanded(commentNode: CommentNode): CommentNode {
-  commentNode.isExpanded = !commentNode.isExpanded
+internal fun updateAllExpanded(commentNode: CommentNode, expanded: Boolean): CommentNode {
+  commentNode.isExpanded = expanded
 
   if (commentNode.children.isNotEmpty()) {
-    commentNode.children.forEach { toggleAllExpanded(it) }
+    commentNode.children.forEach { updateAllExpanded(it, expanded) }
   }
   return commentNode
 }

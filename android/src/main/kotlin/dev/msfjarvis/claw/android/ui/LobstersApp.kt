@@ -14,6 +14,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
@@ -22,6 +23,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
@@ -69,6 +71,7 @@ fun LobstersApp(
   modifier: Modifier = Modifier,
   viewModel: ClawViewModel = injectedViewModel(),
 ) {
+  val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
   val systemUiController = rememberSystemUiController()
   val hottestListState = rememberLazyListState()
   val newestListState = rememberLazyListState()
@@ -153,6 +156,7 @@ fun LobstersApp(
               Text(text = stringResource(R.string.app_name), fontWeight = FontWeight.Bold)
             }
           },
+          scrollBehavior = scrollBehavior,
         )
       },
       bottomBar = {
@@ -162,7 +166,10 @@ fun LobstersApp(
           isVisible = navItems.any { it.route == currentDestination },
         )
       },
-      modifier = modifier.semantics { testTagsAsResourceId = true },
+      modifier =
+        modifier
+          .semantics { testTagsAsResourceId = true }
+          .nestedScroll(scrollBehavior.nestedScrollConnection),
     ) { paddingValues ->
       NavHost(
         navController = navController,

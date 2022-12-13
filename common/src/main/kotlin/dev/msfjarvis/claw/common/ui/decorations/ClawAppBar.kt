@@ -4,6 +4,8 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package dev.msfjarvis.claw.common.ui.decorations
 
 import androidx.compose.foundation.layout.RowScope
@@ -12,6 +14,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -24,13 +27,13 @@ import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
 import dev.msfjarvis.claw.common.ui.surfaceColorAtNavigationBarElevation
 
 @Composable
-@OptIn(ExperimentalMaterial3Api::class)
 fun ClawAppBar(
   backgroundColor: Color,
   modifier: Modifier = Modifier,
   navigationIcon: @Composable () -> Unit = {},
   title: @Composable () -> Unit = {},
   actions: @Composable RowScope.() -> Unit = {},
+  scrollBehavior: TopAppBarScrollBehavior? = null,
 ) {
   TopAppBar(
     title = title,
@@ -38,6 +41,7 @@ fun ClawAppBar(
     colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = backgroundColor),
     navigationIcon = navigationIcon,
     actions = actions,
+    scrollBehavior = scrollBehavior,
   )
 }
 

@@ -75,7 +75,7 @@ fun NetworkPosts(
               modifier =
                 Modifier.fillMaxWidth()
                   .wrapContentWidth(Alignment.CenterHorizontally)
-                  .padding(top = 4.dp),
+                  .padding(top = 16.dp),
             )
           }
         }

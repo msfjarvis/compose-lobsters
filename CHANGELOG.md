@@ -9,7 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
--   Fix a case where collapsing the parent of an already collapsed comment caused it become expanded
+-   Fix a case where collapsing the parent of an already collapsed comment caused it to become expanded
+-   Tweak progress bar UI
+-   Allow app bar to scroll away
 
 ## [1.14.0] - 2022-12-12
 

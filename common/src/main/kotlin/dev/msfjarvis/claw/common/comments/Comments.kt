@@ -126,6 +126,10 @@ fun CommentsPage(
         )
       }
     }
-    Loading -> ProgressBar()
+    Loading -> {
+      Box(modifier = Modifier.fillMaxSize()) {
+        ProgressBar(modifier = Modifier.align(Alignment.Center))
+      }
+    }
   }
 }

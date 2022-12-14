@@ -7,6 +7,7 @@
 package dev.msfjarvis.claw.common.user
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -60,9 +61,19 @@ fun UserProfile(
     }
     is Error -> {
       val error = user as Error
-      NetworkError(label = error.description, error = error.error)
+      Box(modifier = Modifier.fillMaxSize()) {
+        NetworkError(
+          label = error.description,
+          error = error.error,
+          modifier = Modifier.align(Alignment.Center),
+        )
+      }
     }
-    Loading -> ProgressBar()
+    Loading -> {
+      Box(modifier = Modifier.fillMaxSize()) {
+        ProgressBar(modifier = Modifier.align(Alignment.Center))
+      }
+    }
   }
 }
 

@@ -6,6 +6,7 @@
  */
 package dev.msfjarvis.claw.common.comments
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.toMutableStateList
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -116,7 +118,13 @@ fun CommentsPage(
     }
     is Error -> {
       val error = postDetails as Error
-      NetworkError(label = error.description, error = error.error)
+      Box(modifier = Modifier.fillMaxSize()) {
+        NetworkError(
+          label = error.description,
+          error = error.error,
+          modifier = Modifier.align(Alignment.Center),
+        )
+      }
     }
     Loading -> ProgressBar()
   }

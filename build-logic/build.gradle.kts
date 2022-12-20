@@ -47,13 +47,13 @@ gradlePlugin {
       id = "dev.msfjarvis.claw.kotlin-common"
       implementationClass = "dev.msfjarvis.claw.gradle.KotlinCommonPlugin"
     }
+    register("kotlin-jvm") {
+      id = "dev.msfjarvis.claw.kotlin-jvm"
+      implementationClass = "dev.msfjarvis.claw.gradle.KotlinJvmPlugin"
+    }
     register("kotlin-kapt") {
       id = "dev.msfjarvis.claw.kotlin-kapt"
       implementationClass = "dev.msfjarvis.claw.gradle.KotlinKaptPlugin"
-    }
-    register("kotlin-library") {
-      id = "dev.msfjarvis.claw.kotlin-library"
-      implementationClass = "dev.msfjarvis.claw.gradle.KotlinLibraryPlugin"
     }
     register("rename-artifacts") {
       id = "dev.msfjarvis.claw.rename-artifacts"
@@ -79,7 +79,6 @@ dependencies {
   implementation(libs.build.cachefix)
   implementation(libs.build.detekt)
   implementation(libs.build.kotlin.gradle)
-  implementation(libs.build.kotlin.serialization)
   implementation(libs.build.semver)
   implementation(libs.build.spotless)
   implementation(libs.build.vcu)

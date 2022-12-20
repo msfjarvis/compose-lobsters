@@ -4,10 +4,7 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
-plugins {
-  kotlin("jvm")
-  id("dev.msfjarvis.claw.kotlin-library")
-}
+plugins { id("dev.msfjarvis.claw.kotlin-jvm") }
 
 dependencies {
   api(libs.kotlinx.coroutines.core)

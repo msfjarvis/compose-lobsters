@@ -7,9 +7,8 @@
 @file:Suppress("DSL_SCOPE_VIOLATION", "UnstableApiUsage")
 
 plugins {
-  kotlin("jvm")
-  kotlin("plugin.serialization")
-  id("dev.msfjarvis.claw.kotlin-common")
+  id("dev.msfjarvis.claw.kotlin-jvm")
+  alias(libs.plugins.kotlin.serialization)
 }
 
 dependencies { implementation(libs.kotlinx.serialization.core) }

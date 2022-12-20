@@ -6,10 +6,7 @@
  */
 @file:Suppress("DSL_SCOPE_VIOLATION", "UnstableApiUsage")
 
-plugins {
-  kotlin("jvm")
-  id("dev.msfjarvis.claw.kotlin-library")
-}
+plugins { id("dev.msfjarvis.claw.kotlin-jvm") }
 
 dependencies {
   api(libs.crux)

@@ -27,13 +27,14 @@ constructor(
 ) : PagingSource<Int, LobstersPost>() {
 
   override suspend fun load(params: LoadParams<Int>): LoadResult<Int, LobstersPost> {
-    val page = params.key ?: 1
+    val page = params.key ?: STARTING_PAGE_INDEX
     return when (val result = withContext(ioDispatcher) { remoteFetcher.getItemsAtPage(page) }) {
       is Success ->
         LoadResult.Page(
+          itemsBefore = (page - 1) * PAGE_SIZE,
           data = result.value,
-          prevKey = if (page == 1) null else page - 1,
-          nextKey = page.plus(1)
+          prevKey = if (page == STARTING_PAGE_INDEX) null else page - 1,
+          nextKey = page + 1,
         )
       is Failure.NetworkFailure -> LoadResult.Error(result.error)
       is Failure.UnknownFailure -> LoadResult.Error(result.error)
@@ -42,12 +43,19 @@ constructor(
     }
   }
 
-  override fun getRefreshKey(state: PagingState<Int, LobstersPost>): Int {
-    return state.pages.size + 1
+  override fun getRefreshKey(state: PagingState<Int, LobstersPost>): Int? {
+    return state.anchorPosition?.let { anchorPosition ->
+      (anchorPosition / PAGE_SIZE).coerceAtLeast(STARTING_PAGE_INDEX)
+    }
   }
 
   @AssistedFactory
   interface Factory {
     fun create(remoteFetcher: RemoteFetcher<LobstersPost>): LobstersPagingSource
+  }
+
+  companion object {
+    const val PAGE_SIZE = 25
+    const val STARTING_PAGE_INDEX = 1
   }
 }

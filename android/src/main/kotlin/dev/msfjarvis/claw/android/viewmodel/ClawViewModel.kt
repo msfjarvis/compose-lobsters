@@ -15,6 +15,8 @@ import com.slack.eithernet.ApiResult.Failure
 import com.slack.eithernet.ApiResult.Success
 import dev.msfjarvis.claw.android.injection.IODispatcher
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource
+import dev.msfjarvis.claw.android.paging.LobstersPagingSource.Companion.PAGE_SIZE
+import dev.msfjarvis.claw.android.paging.LobstersPagingSource.Companion.STARTING_PAGE_INDEX
 import dev.msfjarvis.claw.android.ui.toLocalDateTime
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.database.local.SavedPost
@@ -38,9 +40,13 @@ constructor(
   @IODispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
   private val hottestPostsPager =
-    Pager(PagingConfig(pageSize = 20)) { pagingSourceFactory.create(api::getHottestPosts) }
+    Pager(PagingConfig(pageSize = PAGE_SIZE), initialKey = STARTING_PAGE_INDEX) {
+      pagingSourceFactory.create(api::getHottestPosts)
+    }
   private val newestPostsPager =
-    Pager(PagingConfig(pageSize = 20)) { pagingSourceFactory.create(api::getHottestPosts) }
+    Pager(PagingConfig(pageSize = PAGE_SIZE), initialKey = STARTING_PAGE_INDEX) {
+      pagingSourceFactory.create(api::getHottestPosts)
+    }
 
   val hottestPosts
     get() = hottestPostsPager.flow

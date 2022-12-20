@@ -57,7 +57,7 @@ fun NetworkPosts(
       LazyColumn(
         state = listState,
       ) {
-        items(lazyPagingItems) { item ->
+        items(items = lazyPagingItems, key = { it.shortId }) { item ->
           if (item != null) {
             val dbModel = item.toDbModel()
             ListItem(
@@ -70,7 +70,7 @@ fun NetworkPosts(
           }
         }
         if (lazyPagingItems.loadState.append == LoadState.Loading) {
-          item {
+          item(key = "progressbar") {
             ProgressBar(
               modifier =
                 Modifier.fillMaxWidth()

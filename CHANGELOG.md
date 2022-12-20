@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -   Fix a case where collapsing the parent of an already collapsed comment caused it to become expanded
 -   Tweak progress bar UI to use a linear indicator
 -   Allow app bar to hide when scrolling down
+-   Fix bug where refreshing a list of posts caused it to jump around multiple times
 
 ## [1.14.0] - 2022-12-12
 

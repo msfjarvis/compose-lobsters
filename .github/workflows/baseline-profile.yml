@@ -61,7 +61,7 @@ jobs:
         profile: Galaxy Nexus
         script: |
           # Run our benchmark, enabling only tests using BaselineProfile
-          ./gradlew connectedBenchmarkAndroidTest -Pandroid.testInstrumentationRunnerArguments.size=large --stacktrace
+          ./gradlew connectedBenchmarkAndroidTest -Pandroid.testInstrumentationRunnerArguments.androidx.benchmark.enabledRules=BaselineProfile --stacktrace
           # Need to manually pull the generated profiles from the emulator
           adb pull /sdcard/Android/media/dev.msfjarvis.claw.benchmark benchmark/build/outputs/baseline-prof/
 

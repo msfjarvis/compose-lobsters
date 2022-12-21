@@ -107,8 +107,8 @@ jobs:
         # Sort the baseline profile, saving it to app/
         sort -o android/src/main/baseline-prof.txt benchmark/build/outputs/baseline-prof/BaselineProfileGenerator_startup-baseline-prof.txt
         # If the baseline profile has changed, commit it
-        if [[ $(git diff --stat app/src/main/baseline-prof.txt) != '' ]]; then
-          git add app/src/main/baseline-prof.txt
+        if [[ $(git diff --stat android/src/main/baseline-prof.txt) != '' ]]; then
+          git add android/src/main/baseline-prof.txt
           git commit -m "chore(android): refresh baseline profile" && git push
         fi
 

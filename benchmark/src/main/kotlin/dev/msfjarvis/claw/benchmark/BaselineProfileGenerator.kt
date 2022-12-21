@@ -31,6 +31,6 @@ class BaselineProfileGenerator {
       packageName = PACKAGE_NAME,
       maxIterations = 5,
     ) {
-      exploreUI(device)
+      startActivityAndWait()
     }
 }

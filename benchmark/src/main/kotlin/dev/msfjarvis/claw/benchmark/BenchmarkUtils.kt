@@ -19,6 +19,7 @@ private const val NAV_ID_NEWEST = "NEWEST"
 private const val NAV_ID_SAVED = "SAVED"
 private const val COMMENT_BUTTON_DESC = "Open comments"
 
+@Suppress("Unused")
 fun MacrobenchmarkScope.exploreUI(device: UiDevice) {
   startActivityAndWait()
   device.run {

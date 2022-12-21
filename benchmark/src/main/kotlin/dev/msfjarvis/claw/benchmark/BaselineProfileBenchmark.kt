@@ -50,7 +50,7 @@ class BaselineProfileBenchmark {
       startupMode = StartupMode.COLD,
       compilationMode = compilationMode
     ) {
-      exploreUI(device)
+      startActivityAndWait()
     }
   }
 }

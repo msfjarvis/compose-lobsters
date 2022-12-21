@@ -8,15 +8,13 @@ package dev.msfjarvis.claw.benchmark
 
 import androidx.benchmark.macro.ExperimentalStableBaselineProfilesApi
 import androidx.benchmark.macro.junit4.BaselineProfileRule
-import androidx.test.filters.LargeTest
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.UiDevice
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-@ExperimentalStableBaselineProfilesApi
-@LargeTest
+@OptIn(ExperimentalStableBaselineProfilesApi::class)
 class BaselineProfileGenerator {
   @get:Rule val baselineProfileRule = BaselineProfileRule()
   private lateinit var device: UiDevice

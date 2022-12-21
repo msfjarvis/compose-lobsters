@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  AVD_API_LEVEL: 33
+  AVD_API_LEVEL: 31
   AVD_ARCH: x86_64
 
 jobs:
@@ -71,6 +71,8 @@ jobs:
       with:
         api-level: ${{ env.AVD_API_LEVEL }}
         arch: ${{ env.AVD_ARCH }}
+        channel: canary
+        target: aosp_atd
         force-avd-creation: false
         emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
         disable-animations: false
@@ -84,7 +86,10 @@ jobs:
       with:
         api-level: ${{ env.AVD_API_LEVEL }}
         arch: ${{ env.AVD_ARCH }}
+        channel: canary
+        target: aosp_atd
         disable-animations: true
+        disable-spellchecker: true
         disk-size: 8G
         script: |
           # Run our benchmark, enabling only tests using BaselineProfile

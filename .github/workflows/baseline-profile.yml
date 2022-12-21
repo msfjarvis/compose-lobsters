@@ -73,7 +73,7 @@ jobs:
         # Pull down any changes which may have been committed while this workflow has been running
         git pull
         # Sort the baseline profile, saving it to app/
-        sort -o app/src/main/baseline-prof.txt benchmark/build/outputs/baseline-prof/BaselineProfileGenerator_startup-baseline-prof.txt
+        sort -o android/src/main/baseline-prof.txt benchmark/build/outputs/baseline-prof/BaselineProfileGenerator_startup-baseline-prof.txt
         # If the baseline profile has changed, commit it
         if [[ $(git diff --stat app/src/main/baseline-prof.txt) != '' ]]; then
           git add app/src/main/baseline-prof.txt

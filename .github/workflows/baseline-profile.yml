@@ -6,6 +6,10 @@ on:
     - cron: '43 0 * * *'
   workflow_dispatch:
 
+env:
+  AVD_API_LEVEL: 33
+  AVD_ARCH: x86_64
+
 jobs:
   baseline-profile:
     runs-on: macos-latest
@@ -37,6 +41,16 @@ jobs:
       with:
         gradle-home-cache-cleanup: true
 
+    # Restore AVD from cache
+    - name: Cache AVD
+      uses: actions/cache@9b0c1fce7a93df8e3bb8926b0d6e9d89e92f20a7 # v3.0.11
+      id: avd-cache
+      with:
+        path: |
+          ~/.android/avd/*
+          ~/.android/adb*
+        key: ${{ runner.os }}-avd-${{ env.AVD_API_LEVEL }}-${{ env.AVD_ARCH }}
+
     - name: Decrypt secrets
       run: |
         ./scripts/setup-age.sh
@@ -49,16 +63,29 @@ jobs:
     - name: Build app and benchmark
       run: ./gradlew :benchmark:assembleBenchmark :android:assembleBenchmark
 
-    # Now use reactivecircus/android-emulator-runner to spin up an emulator and run our
-    # baseline profile generator. We need to manually pull the baseline profiles off the
+    # Now use reactivecircus/android-emulator-runner to spin up an emulator. We're gonna use it again
+    # to actually run the test once the emulator has booted.
+    - name: Create AVD snapshot for caching
+      if: steps.avd-cache.outputs.cache-hit != 'true'
+      uses: reactivecircus/android-emulator-runner@50986b1464923454c95e261820bc626f38490ec0 # v2
+      with:
+        api-level: ${{ env.AVD_API_LEVEL }}
+        arch: ${{ env.AVD_ARCH }}
+        force-avd-creation: false
+        emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+        disable-animations: false
+        disk-size: 8G
+        script: echo "Generated AVD snapshot for caching."
+
+    # Run our baseline profile generator. We need to manually pull the baseline profiles off the
     # emulator when using the GA runner
     - name: Run benchmark
       uses: reactivecircus/android-emulator-runner@50986b1464923454c95e261820bc626f38490ec0 # v2
       with:
-        api-level: 33
-        target: google_apis
-        arch: x86_64
-        profile: Galaxy Nexus
+        api-level: ${{ env.AVD_API_LEVEL }}
+        arch: ${{ env.AVD_ARCH }}
+        disable-animations: true
+        disk-size: 8G
         script: |
           # Run our benchmark, enabling only tests using BaselineProfile
           ./gradlew connectedBenchmarkAndroidTest -Pandroid.testInstrumentationRunnerArguments.androidx.benchmark.enabledRules=BaselineProfile --stacktrace

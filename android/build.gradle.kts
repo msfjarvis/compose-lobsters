@@ -6,9 +6,6 @@
  */
 @file:Suppress("DSL_SCOPE_VIOLATION", "UnstableApiUsage")
 
-import org.gradle.kotlin.dsl.withType
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
   id("dev.msfjarvis.claw.android-application")
   id("dev.msfjarvis.claw.rename-artifacts")
@@ -23,23 +20,6 @@ whetstone {
   addOns {
     compose.set(true)
     workManager.set(true)
-  }
-}
-
-tasks.withType<KotlinCompile>().configureEach {
-  kotlinOptions {
-    freeCompilerArgs =
-      freeCompilerArgs +
-        listOf(
-          "-P",
-          "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=" +
-            rootProject.buildDir.absolutePath +
-            "/compose_metrics/",
-          "-P",
-          "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=" +
-            rootProject.buildDir.absolutePath +
-            "/compose_metrics/",
-        )
   }
 }
 

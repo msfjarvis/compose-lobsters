@@ -6,9 +6,6 @@
  */
 @file:Suppress("DSL_SCOPE_VIOLATION", "UnstableApiUsage")
 
-import org.gradle.kotlin.dsl.withType
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
   id("dev.msfjarvis.claw.kotlin-android")
   id("dev.msfjarvis.claw.android-library")
@@ -19,23 +16,6 @@ plugins {
 anvil { generateDaggerFactories.set(true) }
 
 androidComponents { beforeVariants { it.enableUnitTest = false } }
-
-tasks.withType<KotlinCompile>().configureEach {
-  kotlinOptions {
-    freeCompilerArgs =
-      freeCompilerArgs +
-        listOf(
-          "-P",
-          "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=" +
-            rootProject.buildDir.absolutePath +
-            "/compose_metrics/",
-          "-P",
-          "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=" +
-            rootProject.buildDir.absolutePath +
-            "/compose_metrics/",
-        )
-  }
-}
 
 dependencies {
   implementation(platform(libs.androidx.compose.bom))

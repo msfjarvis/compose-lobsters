@@ -27,13 +27,6 @@ pluginManagement {
       }
     }
     exclusiveContent {
-      forRepository { maven("https://maven.pkg.jetbrains.space/public/p/compose/dev") }
-      filter {
-        includeGroupByRegex("org\\.jetbrains\\.compose.*")
-        includeGroup("org.jetbrains.skiko")
-      }
-    }
-    exclusiveContent {
       forRepository { gradlePluginPortal() }
       filter {
         includeModule("com.github.ben-manes", "gradle-versions-plugin")
@@ -116,13 +109,6 @@ dependencyResolutionManagement {
         includeGroup("com.google.android.gms")
         includeGroup("com.google.testing.platform")
         includeModule("com.google.android.material", "material")
-      }
-    }
-    exclusiveContent {
-      forRepository { maven("https://maven.pkg.jetbrains.space/public/p/compose/dev") }
-      filter {
-        includeGroupByRegex("org\\.jetbrains\\.compose.*")
-        includeGroup("org.jetbrains.skiko")
       }
     }
     exclusiveContent {

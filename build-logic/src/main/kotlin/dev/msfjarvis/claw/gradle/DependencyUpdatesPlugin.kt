@@ -26,13 +26,22 @@ class DependencyUpdatesPlugin : Plugin<Project> {
         when (candidate.group) {
           "com.squareup.okhttp3",
           "org.jetbrains.kotlin" -> true
-          else -> false
+          else -> isNonStable(candidate.version) && !isNonStable(currentVersion)
         }
       }
+      checkConstraints = true
+      checkBuildEnvironmentConstraints = true
       checkForGradleUpdate = true
     }
     project.extensions.configure<VersionCatalogUpdateExtension> {
       keep.keepUnusedLibraries.set(true)
     }
+  }
+
+  private fun isNonStable(version: String): Boolean {
+    val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { version.toUpperCase().contains(it) }
+    val regex = "^[0-9,.v-]+(-r)?$".toRegex()
+    val isStable = stableKeyword || regex.matches(version)
+    return isStable.not()
   }
 }

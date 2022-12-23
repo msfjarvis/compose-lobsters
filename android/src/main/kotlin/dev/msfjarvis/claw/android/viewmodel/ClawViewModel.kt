@@ -45,7 +45,7 @@ constructor(
     }
   private val newestPostsPager =
     Pager(PagingConfig(pageSize = PAGE_SIZE), initialKey = STARTING_PAGE_INDEX) {
-      pagingSourceFactory.create(api::getHottestPosts)
+      pagingSourceFactory.create(api::getNewestPosts)
     }
 
   val hottestPosts

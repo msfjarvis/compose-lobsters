@@ -9,6 +9,7 @@ coroutines = "1.6.4"
 dagger = "2.44.2"
 kotest = "5.5.4"
 kotlin = "1.7.21"
+ktor = "2.2.1"
 # @pin Needs to be aligned with Retrofit
 okhttp = "3.14.9"
 retrofit = "2.9.0"
@@ -72,6 +73,20 @@ kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref 
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "serialization" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
+ktor-serialization-kotlinx-json-jvm = { module = "io.ktor:ktor-serialization-kotlinx-json-jvm", version.ref = "ktor" }
+ktor-server-auth-jvm = { module = "io.ktor:ktor-server-auth-jvm", version.ref = "ktor" }
+ktor-server-call-id-jvm = { module = "io.ktor:ktor-server-call-id-jvm", version.ref = "ktor" }
+ktor-server-call-logging-jvm = { module = "io.ktor:ktor-server-call-logging-jvm", version.ref = "ktor" }
+ktor-server-content-negotiation-jvm = { module = "io.ktor:ktor-server-content-negotiation-jvm", version.ref = "ktor" }
+ktor-server-core-jvm = { module = "io.ktor:ktor-server-core-jvm", version.ref = "ktor" }
+ktor-server-host-common-jvm = { module = "io.ktor:ktor-server-host-common-jvm", version.ref = "ktor" }
+ktor-server-hsts-jvm = { module = "io.ktor:ktor-server-hsts-jvm", version.ref = "ktor" }
+ktor-server-http-redirect-jvm = { module = "io.ktor:ktor-server-http-redirect-jvm", version.ref = "ktor" }
+ktor-server-locations-jvm = { module = "io.ktor:ktor-server-locations-jvm", version.ref = "ktor" }
+ktor-server-netty-jvm = { module = "io.ktor:ktor-server-netty-jvm", version.ref = "ktor" }
+ktor-server-status-pages-jvm = { module = "io.ktor:ktor-server-status-pages-jvm", version.ref = "ktor" }
+ktor-server-tests-jvm = { module = "io.ktor:ktor-server-tests-jvm", version.ref = "ktor" }
+logback-classic = "ch.qos.logback:logback-classic:1.2.11"
 napier = "io.github.aakira:napier:2.6.1"
 okhttp-core = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 okhttp-loggingInterceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
@@ -88,5 +103,6 @@ whetstone = { module = "com.deliveryhero.whetstone:whetstone", version.ref = "wh
 android-test = { id = "com.android.test", version.ref = "agp" }
 anvil = "com.squareup.anvil:2.4.3"
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+ktor = { id = "io.ktor.plugin", version.ref = "ktor" }
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 whetstone = { id = "dev.msfjarvis.whetstone", version.ref = "whetstone" }

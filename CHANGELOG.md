@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.16.0] - 2022-12-24
+
 ### Changed
 
 -   Fix bug where newest posts tab actually showed hottest posts instead
@@ -130,7 +132,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.15.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.16.0...HEAD
+
+[1.16.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.15.0...v1.16.0
 
 [1.15.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.14.0...v1.15.0
 

@@ -86,7 +86,7 @@ ktor-server-locations-jvm = { module = "io.ktor:ktor-server-locations-jvm", vers
 ktor-server-netty-jvm = { module = "io.ktor:ktor-server-netty-jvm", version.ref = "ktor" }
 ktor-server-status-pages-jvm = { module = "io.ktor:ktor-server-status-pages-jvm", version.ref = "ktor" }
 ktor-server-tests-jvm = { module = "io.ktor:ktor-server-tests-jvm", version.ref = "ktor" }
-logback-classic = "ch.qos.logback:logback-classic:1.2.11"
+logback-classic = "ch.qos.logback:logback-classic:1.4.5"
 napier = "io.github.aakira:napier:2.6.1"
 okhttp-core = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 okhttp-loggingInterceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }

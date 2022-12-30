@@ -11,7 +11,6 @@ import com.android.build.api.variant.ApplicationAndroidComponentsExtension
 import com.android.build.api.variant.VariantOutputConfiguration
 import dev.msfjarvis.claw.gradle.artifacts.CollectApksTask
 import dev.msfjarvis.claw.gradle.artifacts.CollectBundleTask
-import java.util.Locale
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -24,7 +23,7 @@ class RenameArtifactsPlugin : Plugin<Project> {
     project.pluginManager.withPlugin("com.android.application") {
       project.extensions.configure<ApplicationAndroidComponentsExtension> {
         onVariants { variant ->
-          val taskPrefix = "collect${variant.name.capitalize(Locale.ROOT)}"
+          val taskPrefix = "collect${variant.name.replaceFirstChar { it.uppercase() }}"
           project.tasks.register<CollectApksTask>("${taskPrefix}Apks") {
             variantName.set(variant.name)
             apkFolder.set(variant.artifacts.get(SingleArtifact.APK))

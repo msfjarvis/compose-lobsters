@@ -139,5 +139,4 @@ include(
   "database",
   "metadata-extractor",
   "model",
-  "sync-backend",
 )

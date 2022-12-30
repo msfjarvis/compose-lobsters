@@ -139,5 +139,6 @@ include(
   "database",
   "metadata-extractor",
   "model",
-  "sync-backend",
+//  Disabled due to Ktor plugin not working with Gradle 8.0-rc-1
+//  "sync-backend",
 )

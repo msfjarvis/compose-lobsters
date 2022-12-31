@@ -64,7 +64,7 @@ copydown = "io.github.furstenheim:copy_down:1.1"
 crux = "com.chimbori.crux:crux:3.11.0"
 dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
 dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
-eithernet = "com.slack.eithernet:eithernet:1.2.1"
+eithernet = "com.slack.eithernet:eithernet:1.3.1"
 javapoet = "com.squareup:javapoet:1.13.0"
 javax-inject = "javax.inject:javax.inject:1"
 jsoup = "org.jsoup:jsoup:1.15.3"

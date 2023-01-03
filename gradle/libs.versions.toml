@@ -9,7 +9,7 @@ coroutines = "1.6.4"
 dagger = "2.44.2"
 kotest = "5.5.4"
 kotlin = "1.7.21"
-ktor = "2.2.1"
+ktor = "2.2.2"
 # @pin Needs to be aligned with Retrofit
 okhttp = "3.14.9"
 retrofit = "2.9.0"

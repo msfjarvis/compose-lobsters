@@ -23,8 +23,6 @@ class ApplicationPlugin : Plugin<Project> {
     project.pluginManager.apply(AppPlugin::class)
     project.pluginManager.apply(AndroidCommonPlugin::class)
     project.extensions.configure<ApplicationExtension> {
-      installation.installOptions("--user 0")
-
       dependenciesInfo {
         includeInBundle = false
         includeInApk = false

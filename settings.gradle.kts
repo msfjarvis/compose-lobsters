@@ -30,16 +30,8 @@ pluginManagement {
       forRepository { gradlePluginPortal() }
       filter {
         includeModule("com.github.ben-manes", "gradle-versions-plugin")
-        includeModule(
-          "com.github.johnrengelman.shadow",
-          "com.github.johnrengelman.shadow.gradle.plugin"
-        )
-        includeModule("com.github.jengelman.gradle.plugins", "shadow")
         includeModule("org.gradle.android.cache-fix", "org.gradle.android.cache-fix.gradle.plugin")
-        includeModule("gradle.plugin.com.google.cloud.tools", "jib-gradle-plugin")
         includeModule("gradle.plugin.org.gradle.android", "android-cache-fix-gradle-plugin")
-        includeModule("io.ktor.plugin", "io.ktor.plugin.gradle.plugin")
-        includeModule("io.ktor.plugin", "plugin")
       }
     }
     exclusiveContent {

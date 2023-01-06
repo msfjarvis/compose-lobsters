@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+-   Revert questionable app bar scrolling behaviour change
+
 ## [1.16.0] - 2022-12-24
 
 ### Changed

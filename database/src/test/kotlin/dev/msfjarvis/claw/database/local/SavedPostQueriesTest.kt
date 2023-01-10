@@ -9,7 +9,7 @@ package dev.msfjarvis.claw.database.local
 import app.cash.sqldelight.adapter.primitive.IntColumnAdapter
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import dev.msfjarvis.claw.database.LobstersDatabase
-import dev.msfjarvis.claw.database.model.TagsAdapter
+import dev.msfjarvis.claw.database.model.CSVAdapter
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldHaveSize
@@ -26,7 +26,8 @@ class SavedPostQueriesTest : FunSpec() {
       val database =
         LobstersDatabase(
           driver,
-          SavedPost.Adapter(IntColumnAdapter, TagsAdapter()),
+          PostComments.Adapter(CSVAdapter()),
+          SavedPost.Adapter(IntColumnAdapter, CSVAdapter()),
         )
       postQueries = database.savedPostQueries
     }

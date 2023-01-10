@@ -15,7 +15,7 @@ import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 
-class SqlDelightQueriesTest : FunSpec() {
+class SavedPostQueriesTest : FunSpec() {
 
   private lateinit var postQueries: SavedPostQueries
 

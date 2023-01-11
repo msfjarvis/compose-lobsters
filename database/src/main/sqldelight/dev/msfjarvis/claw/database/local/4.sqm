@@ -1,0 +1,7 @@
+import kotlin.String;
+import kotlin.collections.List;
+
+CREATE TABLE IF NOT EXISTS PostComments(
+  postId TEXT NOT NULL PRIMARY KEY,
+  commentIds TEXT AS List<String> NOT NULL
+);

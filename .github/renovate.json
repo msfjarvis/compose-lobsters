@@ -37,6 +37,17 @@
       "registryUrls": [
         "https://androidx.dev/storage/compose-compiler/repository/"
       ]
+    },
+    {
+      "matchDatasources": [
+        "maven"
+      ],
+      "matchPackageNames": [
+        "com.squareup.anvil"
+      ],
+      "registryUrls": [
+        "https://repo.maven.apache.org/maven2/"
+      ]
     }
   ],
   "regexManagers": [

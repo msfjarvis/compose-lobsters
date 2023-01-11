@@ -18,7 +18,6 @@ anvil { generateDaggerFactories.set(true) }
 androidComponents { beforeVariants { it.enableUnitTest = false } }
 
 dependencies {
-  implementation(platform(libs.androidx.compose.bom))
   api(libs.napier)
   implementation(projects.core)
   implementation(projects.database)

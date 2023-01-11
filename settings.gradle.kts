@@ -74,6 +74,7 @@ dependencyResolutionManagement {
         includeGroup("androidx.customview")
         includeGroup("androidx.databinding")
         includeGroup("androidx.drawerlayout")
+        includeGroup("androidx.emoji2")
         includeGroup("androidx.exifinterface")
         includeGroup("androidx.fragment")
         includeGroup("androidx.interpolator")

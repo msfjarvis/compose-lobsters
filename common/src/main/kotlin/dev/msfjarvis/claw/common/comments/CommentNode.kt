@@ -28,14 +28,20 @@ internal data class CommentNode(
   }
 }
 
-internal fun createListNode(comments: List<Comment>): MutableList<CommentNode> {
+internal fun createListNode(
+  comments: List<Comment>,
+  commentState: PostComments?
+): MutableList<CommentNode> {
   val commentNodes = mutableListOf<CommentNode>()
+  val isUnread = { id: String -> commentState?.commentIds?.contains(id) == false }
 
   for (i in comments.indices) {
     if (comments[i].indentLevel == 1) {
-      commentNodes.add(CommentNode(comment = comments[i]))
+      commentNodes.add(CommentNode(comment = comments[i], isUnread = isUnread(comments[i].shortId)))
     } else {
-      commentNodes.last().addChild(CommentNode(comment = comments[i]))
+      commentNodes
+        .last()
+        .addChild(CommentNode(comment = comments[i], isUnread = isUnread(comments[i].shortId)))
     }
   }
 

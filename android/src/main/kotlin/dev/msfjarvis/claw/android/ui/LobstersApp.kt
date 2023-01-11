@@ -217,6 +217,8 @@ fun LobstersApp(
             postId = postId,
             postActions = postActions,
             htmlConverter = htmlConverter,
+            getSeenComments = viewModel::getSeenComments,
+            markSeenComments = viewModel::markSeenComments,
           )
         }
         composable(

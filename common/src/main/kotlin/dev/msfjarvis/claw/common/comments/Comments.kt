@@ -1,5 +1,5 @@
 /*
- * Copyright © 2021-2022 Harsh Shandilya.
+ * Copyright © 2021-2023 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -16,6 +16,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.toMutableStateList
@@ -31,16 +32,22 @@ import dev.msfjarvis.claw.common.NetworkState.Success
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.ui.NetworkError
 import dev.msfjarvis.claw.common.ui.ProgressBar
+import dev.msfjarvis.claw.database.local.PostComments
+import dev.msfjarvis.claw.model.Comment
 import dev.msfjarvis.claw.model.LobstersPostDetails
 
+@Suppress("LongParameterList")
 @Composable
 private fun CommentsPageInternal(
   details: LobstersPostDetails,
   postActions: PostActions,
   htmlConverter: HTMLConverter,
+  commentState: PostComments?,
+  markSeenComments: (String, List<Comment>) -> Unit,
   modifier: Modifier = Modifier,
 ) {
-  val commentNodes = createListNode(details.comments).toMutableStateList()
+  val commentNodes = createListNode(details.comments, commentState).toMutableStateList()
+  LaunchedEffect(key1 = commentNodes) { markSeenComments(details.shortId, details.comments) }
 
   Surface(color = MaterialTheme.colorScheme.surfaceVariant) {
     LazyColumn(modifier = modifier, contentPadding = PaddingValues(bottom = 24.dp)) {
@@ -90,12 +97,14 @@ private fun CommentsPageInternal(
   }
 }
 
-@Suppress("UNCHECKED_CAST")
+@Suppress("UNCHECKED_CAST", "LongParameterList")
 @Composable
 fun CommentsPage(
   postId: String,
   postActions: PostActions,
   htmlConverter: HTMLConverter,
+  getSeenComments: suspend (String) -> PostComments?,
+  markSeenComments: (String, List<Comment>) -> Unit,
   modifier: Modifier = Modifier,
 ) {
   val postDetails by
@@ -106,6 +115,8 @@ fun CommentsPage(
           onFailure = { value = Error(error = it, description = "Failed to load comments") }
         )
     }
+  val commentState by
+    produceState<PostComments?>(initialValue = null) { value = getSeenComments(postId) }
 
   when (postDetails) {
     is Success<*> -> {
@@ -113,6 +124,8 @@ fun CommentsPage(
         details = (postDetails as Success<LobstersPostDetails>).data,
         postActions = postActions,
         htmlConverter = htmlConverter,
+        commentState = commentState,
+        markSeenComments = markSeenComments,
         modifier = modifier.fillMaxSize(),
       )
     }

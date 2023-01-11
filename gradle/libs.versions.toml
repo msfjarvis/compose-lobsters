@@ -4,18 +4,18 @@ agp = "7.4.0-rc03"
 androidx-test = "1.5.0"
 coil = "2.2.2"
 # @keep used for kotlinCompilerExtensionVersion
-composeCompiler = "1.4.0-alpha02"
+composeCompiler = "1.4.0-dev-k1.8.0-33c0ad36f83"
 coroutines = "1.6.4"
 dagger = "2.44.2"
 kotest = "5.5.4"
-kotlin = "1.7.21"
+kotlin = "1.8.0"
 # @pin Needs to be aligned with Retrofit
 okhttp = "3.14.9"
 retrofit = "2.9.0"
 richtext = "0.16.0"
 serialization = "1.4.1"
 sqldelight = "2.0.0-alpha04"
-whetstone = "0.5.0-SNAPSHOT"
+whetstone = "0.6.0-SNAPSHOT"
 workmanager = "2.8.0-rc01"
 
 [libraries]
@@ -86,7 +86,7 @@ whetstone = { module = "com.deliveryhero.whetstone:whetstone", version.ref = "wh
 
 [plugins]
 android-test = { id = "com.android.test", version.ref = "agp" }
-anvil = "com.squareup.anvil:2.4.3"
+anvil = "com.squareup.anvil:2.4.4-SNAPSHOT"
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 whetstone = { id = "dev.msfjarvis.whetstone", version.ref = "whetstone" }

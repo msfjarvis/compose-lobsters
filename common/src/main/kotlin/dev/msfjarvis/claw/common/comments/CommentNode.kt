@@ -1,5 +1,5 @@
 /*
- * Copyright © 2022 Harsh Shandilya.
+ * Copyright © 2022-2023 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -8,13 +8,15 @@ package dev.msfjarvis.claw.common.comments
 
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material3.Divider
+import dev.msfjarvis.claw.database.local.PostComments
 import dev.msfjarvis.claw.model.Comment
 
 internal data class CommentNode(
   val comment: Comment,
   var parent: CommentNode? = null,
   val children: MutableList<CommentNode> = mutableListOf(),
-  var isExpanded: Boolean = true
+  val isUnread: Boolean = false,
+  var isExpanded: Boolean = true,
 ) {
   fun addChild(child: CommentNode) {
     if (comment.indentLevel + 1 == child.comment.indentLevel) {

@@ -1,5 +1,5 @@
 /*
- * Copyright © 2021-2022 Harsh Shandilya.
+ * Copyright © 2021-2023 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -31,8 +31,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.posts.PostTitle
@@ -157,6 +160,7 @@ internal fun CommentEntry(
           buildCommenterString(
             commenterName = comment.user.username,
             score = comment.score,
+            isUnread = commentNode.isUnread,
             createdAt = comment.createdAt,
             updatedAt = comment.updatedAt,
           ),
@@ -181,6 +185,7 @@ internal fun CommentEntry(
 fun buildCommenterString(
   commenterName: String,
   score: Int,
+  isUnread: Boolean,
   createdAt: TemporalAccessor,
   updatedAt: TemporalAccessor,
 ): AnnotatedString {
@@ -218,6 +223,18 @@ fun buildCommenterString(
       append(' ')
       append(updatedRelative.toString())
       append(')')
+    }
+    if (isUnread) {
+      append(' ')
+      withStyle(
+        style =
+          SpanStyle(
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.error,
+          )
+      ) {
+        append("(unread)")
+      }
     }
   }
 }

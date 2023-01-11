@@ -15,6 +15,18 @@
       "groupName": "kotlin"
     },
     {
+      "matchPackagePatterns": [
+        "^androidx.compose.animation",
+        "^androidx.compose.foundation",
+        "^androidx.compose.material",
+        "^androidx.compose.material3",
+        "^androidx.compose.runtime",
+        "^androidx.compose.ui",
+        "^androidx.lifecycle:lifecycle-viewmodel-compose"
+      ],
+      "groupName": "compose"
+    },
+    {
       "managers": [
         "gradle"
       ],

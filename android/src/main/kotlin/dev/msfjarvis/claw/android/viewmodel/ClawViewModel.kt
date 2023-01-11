@@ -1,5 +1,5 @@
 /*
- * Copyright © 2021-2022 Harsh Shandilya.
+ * Copyright © 2021-2023 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -20,6 +20,7 @@ import dev.msfjarvis.claw.android.paging.LobstersPagingSource.Companion.STARTING
 import dev.msfjarvis.claw.android.ui.toLocalDateTime
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.database.local.SavedPost
+import dev.msfjarvis.claw.model.Comment
 import java.io.IOException
 import java.time.Month
 import javax.inject.Inject
@@ -90,6 +91,12 @@ constructor(
         is Failure.ApiFailure -> throw IOException("API returned an invalid response")
       }
     }
+
+  suspend fun getSeenComments(postId: String) = savedPostsRepository.getSeenComments(postId)
+
+  fun markSeenComments(postId: String, comments: List<Comment>) {
+    viewModelScope.launch { savedPostsRepository.markSeenComments(postId, comments) }
+  }
 
   suspend fun getLinkMetadata(url: String) =
     withContext(ioDispatcher) { linkMetadataRepository.getLinkMetadata(url) }

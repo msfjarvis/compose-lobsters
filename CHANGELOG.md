@@ -7,8 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+-   The app will now mark new comments as unread when returning to posts
+
 ### Changed
 
+-   Upgrade to Kotlin 1.8.0
 -   Revert questionable app bar scrolling behaviour change
 
 ## [1.16.0] - 2022-12-24

@@ -1,6 +1,7 @@
 [versions]
 accompanist = "0.28.0"
 agp = "7.4.0-rc03"
+androidx-compose-ui = "1.4.0-alpha04"
 androidx-test = "1.5.0"
 coil = "2.2.2"
 # @keep used for kotlinCompilerExtensionVersion
@@ -28,10 +29,10 @@ androidx-compose-foundation = "androidx.compose.foundation:foundation:1.4.0-alph
 androidx-compose-material = "androidx.compose.material:material:1.4.0-alpha04"
 androidx-compose-material3 = "androidx.compose.material3:material3:1.1.0-alpha04"
 androidx-compose-runtime = "androidx.compose.runtime:runtime:1.4.0-alpha04"
-androidx-compose-ui = "androidx.compose.ui:ui:1.4.0-alpha04"
-androidx-compose-ui-text = "androidx.compose.ui:ui-text:1.4.0-alpha04"
-androidx-compose-ui-tooling = "androidx.compose.ui:ui-tooling:1.4.0-alpha04"
-androidx-compose-ui-tooling-preview = "androidx.compose.ui:ui-tooling-preview:1.4.0-alpha04"
+androidx-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "androidx-compose-ui" }
+androidx-compose-ui-text = { module = "androidx.compose.ui:ui-text", version.ref = "androidx-compose-ui" }
+androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "androidx-compose-ui" }
+androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "androidx-compose-ui" }
 androidx-core-splashscreen = "androidx.core:core-splashscreen:1.0.0"
 androidx-lifecycle-compose = "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.0-alpha04"
 androidx-navigation-compose = "androidx.navigation:navigation-compose:2.6.0-alpha04"

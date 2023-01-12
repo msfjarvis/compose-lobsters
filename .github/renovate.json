@@ -32,10 +32,12 @@
         "maven"
       ],
       "matchPackageNames": [
-        "androidx.compose.compiler:compiler"
+        "androidx.compose.compiler:compiler",
+        "dev.chrisbanes.compose:compose-bom"
       ],
       "registryUrls": [
-        "https://androidx.dev/storage/compose-compiler/repository/"
+        "https://androidx.dev/storage/compose-compiler/repository/",
+        "https://repo.maven.apache.org/maven2/"
       ]
     },
     {

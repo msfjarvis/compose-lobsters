@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.17.0] - 2023-01-12
+
 ### Added
 
 -   The app will now mark new comments as unread when returning to posts
@@ -141,7 +143,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.16.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.17.0...HEAD
+
+[1.17.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.16.0...v1.17.0
 
 [1.16.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.15.0...v1.16.0
 

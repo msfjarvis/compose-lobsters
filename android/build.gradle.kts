@@ -43,6 +43,7 @@ android {
 
 dependencies {
   kapt(libs.dagger.compiler)
+  implementation(platform(libs.androidx.compose.bom))
   implementation(libs.dagger)
   implementation(projects.api)
   implementation(projects.common)

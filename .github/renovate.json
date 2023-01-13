@@ -24,10 +24,6 @@
       "enabled": false
     },
     {
-      "matchPackageNames": ["com.android.tools.build:gradle"],
-      "allowedVersions": "<=7.4.0"
-    },
-    {
       "matchDatasources": [
         "maven"
       ],

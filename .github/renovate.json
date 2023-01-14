@@ -73,10 +73,10 @@
         "qodana.yaml"
       ],
       "matchStrings": [
-        "jetbrains/qodana-jvm-community:(?<currentValue>.*)"
+        "jetbrains/qodana-jvm-android:(?<currentValue>.*)"
       ],
       "datasourceTemplate": "docker",
-      "depNameTemplate": "jetbrains/qodana-jvm-community",
+      "depNameTemplate": "jetbrains/qodana-jvm-android",
     }
   ]
 }

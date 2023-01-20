@@ -19,7 +19,10 @@
         "gradle"
       ],
       "packagePatterns": [
-        "^com.squareup.okhttp3"
+        // We want to stay in sync with Retrofit
+        "^com.squareup.okhttp3",
+        // Renovate refuses to stop resolving this from the snapshots repo
+        "^app.cash.sqldelight",
       ],
       "enabled": false
     },

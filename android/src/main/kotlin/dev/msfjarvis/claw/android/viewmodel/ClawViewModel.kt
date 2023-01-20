@@ -22,6 +22,7 @@ import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.database.local.SavedPost
 import dev.msfjarvis.claw.model.Comment
 import java.io.IOException
+import java.net.HttpURLConnection
 import java.time.Month
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
@@ -87,7 +88,13 @@ constructor(
         is Success -> result.value
         is Failure.NetworkFailure -> throw result.error
         is Failure.UnknownFailure -> throw result.error
-        is Failure.HttpFailure,
+        is Failure.HttpFailure -> {
+          if (result.code == HttpURLConnection.HTTP_NOT_FOUND) {
+            throw IOException("Story was removed by moderator")
+          } else {
+            throw IOException("API returned an invalid response")
+          }
+        }
         is Failure.ApiFailure -> throw IOException("API returned an invalid response")
       }
     }

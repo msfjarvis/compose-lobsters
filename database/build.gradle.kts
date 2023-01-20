@@ -19,11 +19,13 @@ anvil { generateDaggerFactories.set(true) }
 android { namespace = "dev.msfjarvis.claw.database" }
 
 sqldelight {
-  database("LobstersDatabase") {
-    packageName = "dev.msfjarvis.claw.database"
-    sourceFolders = listOf("sqldelight")
-    schemaOutputDirectory = file("src/main/sqldelight/databases")
-    verifyMigrations = true
+  databases {
+    create("LobstersDatabase") {
+      packageName.set("dev.msfjarvis.claw.database")
+      sourceFolders.set(listOf("sqldelight"))
+      schemaOutputDirectory.set(file("src/main/sqldelight/databases"))
+      verifyMigrations.set(true)
+    }
   }
 }
 

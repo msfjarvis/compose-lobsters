@@ -32,7 +32,7 @@ fun DatabasePosts(
   ) {
     items.forEach { (month, posts) ->
       stickyHeader { MonthHeader(month = month) }
-      items(posts) { item ->
+      items(posts, { it.shortId }) { item ->
         ListItem(
           item = item,
           isSaved = { true },

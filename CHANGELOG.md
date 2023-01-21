@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.18.0] - 2023-01-21
+
 ### Changed
 
 -   Special-case deleted stories in comments API
@@ -148,7 +150,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.17.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.18.0...HEAD
+
+[1.18.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.17.0...v1.18.0
 
 [1.17.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.16.0...v1.17.0
 

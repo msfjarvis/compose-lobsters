@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 -   Special-case deleted stories in comments API
+-   Fix regression where save button had the incorrect visual state
 
 ## [1.17.0] - 2023-01-12
 

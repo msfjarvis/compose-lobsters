@@ -23,6 +23,7 @@ dependencies {
   implementation(projects.core)
   implementation(projects.database)
   implementation(projects.model)
+  implementation(libs.accompanist.flowlayout)
   implementation(libs.androidx.browser)
   implementation(libs.androidx.compose.animation)
   implementation(libs.androidx.compose.foundation)

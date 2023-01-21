@@ -26,17 +26,6 @@
       ],
       "enabled": false
     },
-    {
-      "matchDatasources": [
-        "maven"
-      ],
-      "matchPackageNames": [
-        "dev.chrisbanes.compose:compose-bom"
-      ],
-      "registryUrls": [
-        "https://repo.maven.apache.org/maven2/"
-      ]
-    }
   ],
   "regexManagers": [
     {

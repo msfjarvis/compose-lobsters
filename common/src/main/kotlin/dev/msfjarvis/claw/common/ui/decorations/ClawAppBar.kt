@@ -35,7 +35,7 @@ fun ClawAppBar(
   TopAppBar(
     title = title,
     modifier = modifier.shadow(8.dp),
-    colors = TopAppBarDefaults.topAppBarColors(containerColor = backgroundColor),
+    colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = backgroundColor),
     navigationIcon = navigationIcon,
     actions = actions,
   )

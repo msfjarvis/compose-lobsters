@@ -13,7 +13,7 @@
     android:supportsRtl="true"
     android:theme="@style/Theme.Claw.SplashScreen"
     android:enableOnBackInvokedCallback="true"
-    tools:targetApi="s">
+    tools:targetApi="tiramisu">
     <profileable
       android:shell="true"
       tools:targetApi="29" />

@@ -80,6 +80,7 @@ dependencyResolutionManagement {
         includeGroup("androidx.navigation")
         includeGroup("androidx.paging")
         includeGroup("androidx.profileinstaller")
+        includeGroup("androidx.resourceinspection")
         includeGroup("androidx.room")
         includeGroup("androidx.savedstate")
         includeGroup("androidx.startup")

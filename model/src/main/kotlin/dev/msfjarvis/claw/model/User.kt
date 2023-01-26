@@ -16,6 +16,6 @@ class User(
   val username: String,
   val about: String,
   @SerialName("invited_by_user") val invitedBy: String?,
-  @SerialName("avatar_url") val avatarUrl: String,
-  @SerialName("created_at") val createdAt: String,
+  val avatarUrl: String,
+  val createdAt: String,
 )

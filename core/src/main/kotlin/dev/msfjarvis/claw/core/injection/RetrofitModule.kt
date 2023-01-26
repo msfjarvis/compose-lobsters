@@ -14,14 +14,15 @@ import dagger.Provides
 import dagger.multibindings.IntoSet
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonNamingStrategy
 import okhttp3.MediaType
 import retrofit2.Converter
 
 @Module
 @ContributesTo(ApplicationScope::class)
+@OptIn(ExperimentalSerializationApi::class)
 object RetrofitModule {
 
-  @OptIn(ExperimentalSerializationApi::class)
   @Provides
   @IntoSet
   fun provideJsonConverterFactory(json: Json): Converter.Factory {
@@ -31,6 +32,9 @@ object RetrofitModule {
 
   @Provides
   fun provideJsonSerializer(): Json {
-    return Json { ignoreUnknownKeys = true }
+    return Json {
+      ignoreUnknownKeys = true
+      namingStrategy = JsonNamingStrategy.SnakeCase
+    }
   }
 }

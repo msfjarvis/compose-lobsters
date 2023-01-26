@@ -15,16 +15,12 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 class Comment(
-  @SerialName("short_id") val shortId: String,
+  val shortId: String,
   val comment: String,
   val url: String,
   val score: Int,
-  @Serializable(with = JavaInstantSerializer::class)
-  @SerialName("created_at")
-  val createdAt: TemporalAccessor,
-  @Serializable(with = JavaInstantSerializer::class)
-  @SerialName("updated_at")
-  val updatedAt: TemporalAccessor,
-  @SerialName("indent_level") val indentLevel: Int,
+  @Serializable(with = JavaInstantSerializer::class) val createdAt: TemporalAccessor,
+  @Serializable(with = JavaInstantSerializer::class) val updatedAt: TemporalAccessor,
+  val indentLevel: Int,
   @SerialName("commenting_user") val user: User,
 )

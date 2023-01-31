@@ -29,7 +29,7 @@ class BaselineProfileGenerator {
   fun startup() =
     baselineProfileRule.collectStableBaselineProfile(
       packageName = PACKAGE_NAME,
-      maxIterations = 5,
+      maxIterations = 15,
     ) {
       startActivityAndWait()
     }

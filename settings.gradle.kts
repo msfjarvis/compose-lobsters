@@ -59,7 +59,6 @@ dependencyResolutionManagement {
         includeGroup("androidx.collection")
         includeGroup("androidx.compose")
         includeGroup("androidx.compose.animation")
-        includeGroup("androidx.compose.compiler")
         includeGroup("androidx.compose.foundation")
         includeGroup("androidx.compose.material")
         includeGroup("androidx.compose.material3")
@@ -114,6 +113,10 @@ dependencyResolutionManagement {
     exclusiveContent {
       forRepository { maven("https://oss.sonatype.org/content/repositories/snapshots/") }
       filter { includeGroup("dev.msfjarvis.whetstone") }
+    }
+    exclusiveContent {
+      forRepository { maven("https://androidx.dev/storage/compose-compiler/repository/") }
+      filter { includeGroup("androidx.compose.compiler") }
     }
     mavenCentral()
   }

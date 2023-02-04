@@ -48,7 +48,7 @@ androidx-test-runner = "androidx.test:runner:1.5.2"
 androidx-test-uiautomator = "androidx.test.uiautomator:uiautomator:2.3.0-alpha02"
 androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "workmanager" }
 build-agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }
-build-cachefix = "org.gradle.android.cache-fix:org.gradle.android.cache-fix.gradle.plugin:2.6.1"
+build-cachefix = "org.gradle.android.cache-fix:org.gradle.android.cache-fix.gradle.plugin:2.6.3"
 build-detekt = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.22.0"
 build-kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 build-semver = "com.vdurmont:semver4j:3.1.0"

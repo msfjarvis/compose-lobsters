@@ -9,7 +9,7 @@ composeCompiler = "1.4.0"
 coroutines = "1.6.4"
 dagger = "2.44.2"
 kotest = "5.5.4"
-kotlin = "1.8.0"
+kotlin = "1.8.10"
 # @pin Needs to be aligned with Retrofit
 okhttp = "3.14.9"
 retrofit = "2.9.0"

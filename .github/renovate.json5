@@ -40,7 +40,7 @@
   "regexManagers": [
     {
       "fileMatch": [
-        "build-logic/kotlin-plugins/src/main/kotlin/dev/msfjarvis/aps/gradle/SpotlessPlugin.kt"
+        "SpotlessPlugin\.kt$"
       ],
       "matchStrings": [
         "KTFMT_VERSION = \"(?<currentValue>.*)\""
@@ -51,7 +51,7 @@
     },
     {
       "fileMatch": [
-        "build-logic/kotlin-plugins/src/main/kotlin/dev/msfjarvis/aps/gradle/Detekt.kt"
+        "Detekt\.kt$"
       ],
       "matchStrings": [
         "TWITTER_RULES_VERSION = \"(?<currentValue>.*)\""

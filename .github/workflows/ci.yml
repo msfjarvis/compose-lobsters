@@ -11,7 +11,7 @@ on:
       - main
 
 concurrency:
-  group: ${{ github.workflow }}
+  group: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
   check:

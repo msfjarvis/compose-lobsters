@@ -5,6 +5,7 @@
     "helpers:pinGitHubActionDigests",
     "github>msfjarvis/shared-workflows//renovate/automerge"
   ],
+  "branchConcurrentLimit": 15,
   "packageRules": [
     {
       matchDatasources: [

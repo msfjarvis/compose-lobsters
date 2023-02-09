@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.20.0] - 2023-02-09
+
 ## [1.19.0] - 2023-02-01
 
 ### Changed
@@ -157,7 +159,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 -   Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.19.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.20.0...HEAD
+
+[1.20.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.19.0...v1.20.0
 
 [1.19.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.18.0...v1.19.0
 

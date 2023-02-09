@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## Changed
+
+*   Fix bug that caused the app to crash on launch
+
 ## [1.20.0] - 2023-02-09
 
 ### Changed

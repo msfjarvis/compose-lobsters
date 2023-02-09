@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.21.0] - 2023-02-09
+
 ## Changed
 
 *   Fix bug that caused the app to crash on launch
@@ -167,7 +169,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 *   Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.20.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.21.0...HEAD
+
+[1.21.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.20.0...v1.21.0
 
 [1.20.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.19.0...v1.20.0
 

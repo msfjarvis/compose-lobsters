@@ -697,12 +697,10 @@ style:
     excludeImports:
       - 'java.util.*'
 
-TwitterCompose:
+Compose:
   CompositionLocalAllowlist:
     active: true
     # allowedCompositionLocals: LocalSomething,LocalSomethingElse
-  CompositionLocalNaming:
-    active: true
   ContentEmitterReturningValues:
     active: true
     # contentEmitters: MyComposable,MyOtherComposable

@@ -12,7 +12,7 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 
 object Detekt {
-  private const val TWITTER_RULES_VERSION = "0.0.26"
+  private const val COMPOSE_RULES_VERSION = "0.1.1"
 
   fun apply(project: Project) {
     project.pluginManager.apply(DetektPlugin::class.java)
@@ -29,7 +29,7 @@ object Detekt {
     }
     project.dependencies.add(
       "detektPlugins",
-      "com.twitter.compose.rules:detekt:$TWITTER_RULES_VERSION",
+      "io.nlopez.compose.rules:detekt:$COMPOSE_RULES_VERSION",
     )
   }
 }

@@ -55,10 +55,10 @@
         "Detekt\.kt$"
       ],
       "matchStrings": [
-        "TWITTER_RULES_VERSION = \"(?<currentValue>.*)\""
+        "COMPOSE_RULES_VERSION = \"(?<currentValue>.*)\""
       ],
       "datasourceTemplate": "maven",
-      "depNameTemplate": "com.twitter.compose.rules:detekt",
+      "depNameTemplate": "io.nlopez.compose.rules:detekt",
       "registryUrlTemplate": "https://repo1.maven.org/maven2/",
     },
     {

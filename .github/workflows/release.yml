@@ -80,7 +80,7 @@ jobs:
         printf '%s' "${CHANGELOG}" >> distribution/whatsnew/whatsnew-en-GB
 
     - name: Publish bundle to Google Play
-      uses: r0adkll/upload-google-play@9a5e7fcdd507f75178243375c12ce7c6ea6d62d0 # v1.1.0
+      uses: r0adkll/upload-google-play@70c7397e868b00eccd390222f492ab3e30520d09 # v1.1.1
       with:
         mappingFile: android/bundle/mapping.txt
         packageName: dev.msfjarvis.claw.android

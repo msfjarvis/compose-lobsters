@@ -28,6 +28,9 @@ class ApiWrapper(controller: EitherNetController<LobstersApi>) {
   private val postDetails: LobstersPostDetails =
     json.decodeFromString(getJson("post_details_tdfoqh.json"))
   private val user: User = json.decodeFromString(getJson("msfjarvis.json"))
+  private val metaPosts: List<LobstersPost> = json.decodeFromString(getJson("meta.json"))
+  private val programmingRustPosts: List<LobstersPost> =
+    json.decodeFromString(getJson("programming_rust.json"))
 
   val api = controller.api
 
@@ -36,5 +39,7 @@ class ApiWrapper(controller: EitherNetController<LobstersApi>) {
     controller.enqueue(LobstersApi::getHottestPosts) { success(hottest) }
     controller.enqueue(LobstersApi::getPostDetails) { success(postDetails) }
     controller.enqueue(LobstersApi::getUser) { success(user) }
+    controller.enqueue(LobstersApi::getPostsByTags) { success(metaPosts) }
+    controller.enqueue(LobstersApi::getPostsByTags) { success(programmingRustPosts) }
   }
 }

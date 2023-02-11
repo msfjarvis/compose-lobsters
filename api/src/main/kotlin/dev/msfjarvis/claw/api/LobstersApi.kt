@@ -1,5 +1,5 @@
 /*
- * Copyright © 2021-2022 Harsh Shandilya.
+ * Copyright © 2021-2023 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -7,6 +7,7 @@
 package dev.msfjarvis.claw.api
 
 import com.slack.eithernet.ApiResult
+import dev.msfjarvis.claw.api.util.Tags
 import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.LobstersPostDetails
 import dev.msfjarvis.claw.model.User
@@ -28,6 +29,12 @@ interface LobstersApi {
 
   @GET("u/{username}.json")
   suspend fun getUser(@Path("username") username: String): ApiResult<User, Unit>
+
+  @GET("t/{tags}.json")
+  suspend fun getPostsByTags(
+    @Path("tags") tag: Tags,
+    @Query("page") page: Int,
+  ): ApiResult<List<LobstersPost>, Unit>
 
   companion object {
     const val BASE_URL = "https://lobste.rs"

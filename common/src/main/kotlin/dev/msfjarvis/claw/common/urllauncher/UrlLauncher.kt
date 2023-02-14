@@ -22,7 +22,7 @@ class UrlLauncher(private val context: Context) : UriHandler {
       CustomTabsIntent.Builder()
         .setShareState(CustomTabsIntent.SHARE_STATE_ON)
         .setShowTitle(true)
-        .setColorScheme(CustomTabsIntent.COLOR_SCHEME_DARK)
+        .setColorScheme(CustomTabsIntent.COLOR_SCHEME_SYSTEM)
         .build()
     try {
       customTabsIntent.launchUrl(context, Uri.parse(uri))

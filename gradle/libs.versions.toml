@@ -67,7 +67,7 @@ dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = 
 eithernet = "com.slack.eithernet:eithernet:1.3.1"
 javapoet = "com.squareup:javapoet:1.13.0"
 javax-inject = "javax.inject:javax.inject:1"
-jsoup = "org.jsoup:jsoup:1.15.3"
+jsoup = "org.jsoup:jsoup:1.15.4"
 kotest-assertions-core = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
 kotest-runner-junit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }

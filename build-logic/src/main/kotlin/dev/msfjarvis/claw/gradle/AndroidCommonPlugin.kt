@@ -1,5 +1,5 @@
 /*
- * Copyright © 2022 Harsh Shandilya.
+ * Copyright © 2022-2023 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -21,8 +21,6 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.findByType
-
-private const val SLIM_TESTS_PROPERTY = "slimTests"
 
 class AndroidCommonPlugin : Plugin<Project> {
 
@@ -74,30 +72,20 @@ private fun Lint.configureLint(project: Project) {
   baseline = project.file("lint-baseline.xml")
 }
 
-/**
- * When the "slimTests" project property is provided, disable the unit test tasks on `release` build
- * type and `nonFree` product flavor to avoid running the same tests repeatedly in different build
- * variants.
- *
- * Examples: `./gradlew test -PslimTests` will run unit tests for `nonFreeDebug` and `debug` build
- * variants in Android App and Library projects, and all tests in JVM projects.
- */
 private fun Project.configureSlimTests() {
-  if (providers.gradleProperty(SLIM_TESTS_PROPERTY).isPresent) {
-    // Disable unit test tasks on the release build type for Android Library projects
-    extensions.findByType<LibraryAndroidComponentsExtension>()?.run {
-      beforeVariants(selector().withBuildType("release")) {
-        it.enableUnitTest = false
-        it.enableAndroidTest = false
-      }
+  // Disable unit test tasks on the release build type for Android Library projects
+  extensions.findByType<LibraryAndroidComponentsExtension>()?.run {
+    beforeVariants(selector().withBuildType("release")) {
+      it.enableUnitTest = false
+      it.enableAndroidTest = false
     }
+  }
 
-    // Disable unit test tasks on the release build type for Android Application projects.
-    extensions.findByType<ApplicationAndroidComponentsExtension>()?.run {
-      beforeVariants(selector().withBuildType("release")) {
-        it.enableUnitTest = false
-        it.enableAndroidTest = false
-      }
+  // Disable unit test tasks on the release build type for Android Application projects.
+  extensions.findByType<ApplicationAndroidComponentsExtension>()?.run {
+    beforeVariants(selector().withBuildType("release")) {
+      it.enableUnitTest = false
+      it.enableAndroidTest = false
     }
   }
 }

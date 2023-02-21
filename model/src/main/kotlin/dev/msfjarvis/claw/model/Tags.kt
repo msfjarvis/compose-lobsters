@@ -4,10 +4,10 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
-package dev.msfjarvis.claw.api.util
+package dev.msfjarvis.claw.model
 
 class Tags {
-  private var tags: MutableList<String> = emptyList<String>().toMutableList()
+  private var tags = arrayListOf<String>()
 
   fun addTag(tag: String) {
     this.tags.add(tag)

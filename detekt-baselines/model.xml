@@ -2,6 +2,6 @@
 <SmellBaseline>
   <ManuallySuppressedIssues></ManuallySuppressedIssues>
   <CurrentIssues>
-    <ID>MemberNameEqualsClassName:Tags.kt$Tags$private var tags: MutableList&lt;String&gt; = emptyList&lt;String&gt;().toMutableList()</ID>
+    <ID>MemberNameEqualsClassName:Tags.kt$Tags$private var tags = arrayListOf&lt;String&gt;()</ID>
   </CurrentIssues>
 </SmellBaseline>

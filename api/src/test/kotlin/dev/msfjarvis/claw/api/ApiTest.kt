@@ -8,9 +8,9 @@ package dev.msfjarvis.claw.api
 
 import com.slack.eithernet.ApiResult.Success
 import com.slack.eithernet.test.newEitherNetController
-import dev.msfjarvis.claw.api.util.Tags
 import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.LobstersPostDetails
+import dev.msfjarvis.claw.model.Tags
 import dev.msfjarvis.claw.model.User
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.collections.shouldHaveSize

@@ -7,9 +7,9 @@
 package dev.msfjarvis.claw.api
 
 import com.slack.eithernet.ApiResult
-import dev.msfjarvis.claw.api.util.Tags
 import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.LobstersPostDetails
+import dev.msfjarvis.claw.model.Tags
 import dev.msfjarvis.claw.model.User
 import retrofit2.http.GET
 import retrofit2.http.Path

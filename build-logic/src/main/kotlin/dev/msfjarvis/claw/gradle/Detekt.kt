@@ -12,7 +12,7 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 
 object Detekt {
-  private const val COMPOSE_RULES_VERSION = "0.1.1"
+  private const val COMPOSE_RULES_VERSION = "0.1.2"
 
   fun apply(project: Project) {
     project.pluginManager.apply(DetektPlugin::class.java)

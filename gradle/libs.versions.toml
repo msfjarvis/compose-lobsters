@@ -52,7 +52,7 @@ build-cachefix = "org.gradle.android.cache-fix:org.gradle.android.cache-fix.grad
 build-detekt = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.22.0"
 build-kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 build-semver = "com.vdurmont:semver4j:3.1.0"
-build-spotless = "com.diffplug.spotless:spotless-plugin-gradle:6.15.0"
+build-spotless = "com.diffplug.spotless:spotless-plugin-gradle:6.16.0"
 build-vcu = "nl.littlerobots.version-catalog-update:nl.littlerobots.version-catalog-update.gradle.plugin:0.7.0"
 build-versions = "com.github.ben-manes:gradle-versions-plugin:0.46.0"
 coil = { module = "io.coil-kt:coil", version.ref = "coil" }

@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.23.0] - 2023-03-02
+
 ### Added
 
 *   Introduce [Sentry](https://sentry.io) for error reporting and performance monitoring
@@ -180,7 +182,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 *   Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.22.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.23.0...HEAD
+
+[1.23.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.22.0...v1.23.0
 
 [1.22.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.21.0...v1.22.0
 

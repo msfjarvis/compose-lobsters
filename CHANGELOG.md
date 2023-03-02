@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.22.0] - 2023-03-02
+
 ### Changed
 
 *   In-app browser now respects the user's choice for dark mode
@@ -174,7 +176,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 *   Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.21.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.22.0...HEAD
+
+[1.22.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.21.0...v1.22.0
 
 [1.21.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.20.0...v1.21.0
 

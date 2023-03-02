@@ -7,9 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+*   In-app browser now respects the user's choice for dark mode
+*   Upgrade dependencies
+
 ## [1.21.0] - 2023-02-09
 
-## Changed
+### Changed
 
 *   Fix bug that caused the app to crash on launch
 

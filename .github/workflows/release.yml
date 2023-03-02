@@ -59,6 +59,7 @@ jobs:
       shell: bash
       env:
         SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+        SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       run: |
         ./gradlew --no-configuration-cache collectReleaseApks collectReleaseBundle -PsentryUploadMappings
 

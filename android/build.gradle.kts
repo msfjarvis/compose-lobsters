@@ -11,6 +11,7 @@ plugins {
   id("dev.msfjarvis.claw.rename-artifacts")
   id("dev.msfjarvis.claw.kotlin-android")
   id("dev.msfjarvis.claw.kotlin-kapt")
+  id("dev.msfjarvis.claw.sentry")
   id("dev.msfjarvis.claw.versioning-plugin")
   alias(libs.plugins.anvil)
   alias(libs.plugins.whetstone)

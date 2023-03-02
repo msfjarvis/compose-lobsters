@@ -57,8 +57,10 @@ jobs:
 
     - name: Build release assets
       shell: bash
+      env:
+        SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       run: |
-        ./gradlew --no-configuration-cache collectReleaseApks collectReleaseBundle
+        ./gradlew --no-configuration-cache collectReleaseApks collectReleaseBundle -PsentryUploadMappings
 
     - name: Clean secrets
       run: scripts/signing-cleanup.sh

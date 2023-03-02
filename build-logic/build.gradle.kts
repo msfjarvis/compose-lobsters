@@ -1,5 +1,5 @@
 /*
- * Copyright © 2022 Harsh Shandilya.
+ * Copyright © 2022-2023 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -59,6 +59,10 @@ gradlePlugin {
       id = "dev.msfjarvis.claw.rename-artifacts"
       implementationClass = "dev.msfjarvis.claw.gradle.RenameArtifactsPlugin"
     }
+    register("sentry") {
+      id = "dev.msfjarvis.claw.sentry"
+      implementationClass = "dev.msfjarvis.claw.gradle.SentryPlugin"
+    }
     register("spotless") {
       id = "dev.msfjarvis.claw.spotless"
       implementationClass = "dev.msfjarvis.claw.gradle.SpotlessPlugin"
@@ -80,6 +84,7 @@ dependencies {
   implementation(libs.build.detekt)
   implementation(libs.build.kotlin.gradle)
   implementation(libs.build.semver)
+  implementation(libs.build.sentry)
   implementation(libs.build.spotless)
   implementation(libs.build.vcu)
   implementation(libs.build.versions)

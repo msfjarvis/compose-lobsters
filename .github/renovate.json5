@@ -26,6 +26,13 @@
       "groupName": "kotlin"
     },
     {
+      "matchPackagePatterns": [
+        "^io.sentry",
+        "^sentry",
+      ],
+      "groupName": "sentry"
+    },
+    {
       "managers": [
         "gradle"
       ],
@@ -81,6 +88,17 @@
       ],
       "datasourceTemplate": "docker",
       "depNameTemplate": "jetbrains/qodana-jvm-android",
+    },
+    {
+      "fileMatch": [
+        "gradle/libs.versions.toml"
+      ],
+      "matchStrings": [
+        "sentry-sdk = \"(?<currentValue>.*)\""
+      ],
+      "datasourceTemplate": "maven",
+      "depNameTemplate": "io.sentry:sentry-android",
+      "registryUrlTemplate": "https://repo1.maven.org/maven2/",
     }
   ]
 }

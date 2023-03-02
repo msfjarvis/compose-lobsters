@@ -14,6 +14,7 @@ kotlin = "1.8.10"
 okhttp = "3.14.9"
 retrofit = "2.9.0"
 richtext = "0.16.0"
+sentry-sdk = "6.15.0"
 serialization = "1.5.0"
 sqldelight = "2.0.0-alpha05"
 whetstone = "0.6.0-SNAPSHOT"
@@ -52,6 +53,7 @@ build-cachefix = "org.gradle.android.cache-fix:org.gradle.android.cache-fix.grad
 build-detekt = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.22.0"
 build-kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 build-semver = "com.vdurmont:semver4j:3.1.0"
+build-sentry = "io.sentry.android.gradle:io.sentry.android.gradle.gradle.plugin:3.4.2"
 build-spotless = "com.diffplug.spotless:spotless-plugin-gradle:6.16.0"
 build-vcu = "nl.littlerobots.version-catalog-update:nl.littlerobots.version-catalog-update.gradle.plugin:0.7.0"
 build-versions = "com.github.ben-manes:gradle-versions-plugin:0.46.0"
@@ -78,6 +80,7 @@ okhttp-core = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 okhttp-loggingInterceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-kotlinxSerializationConverter = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
+sentry-bom = { module = "io.sentry:sentry-bom", version.ref = "sentry-sdk" }
 sqldelight-androidDriver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
 sqldelight-extensions-coroutines = { module = "app.cash.sqldelight:coroutines-extensions-jvm", version.ref = "sqldelight" }
 sqldelight-jvmDriver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }

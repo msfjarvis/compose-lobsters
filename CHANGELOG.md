@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+*   Introduce [Sentry](https://sentry.io) for error reporting and performance monitoring
+
 ## [1.22.0] - 2023-03-02
 
 ### Changed

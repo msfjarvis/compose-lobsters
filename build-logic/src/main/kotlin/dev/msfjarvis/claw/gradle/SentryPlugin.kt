@@ -25,11 +25,9 @@ class SentryPlugin : Plugin<Project> {
       val catalog = project.extensions.getByType<VersionCatalogsExtension>()
       val libs = catalog.named("libs")
       project.extensions.configure<ApplicationAndroidComponentsExtension> {
-        onVariants(selector()) { variant ->
+        onVariants(selector().all()) { variant ->
           val sentryDsn = project.providers.environmentVariable(SENTRY_DSN_PROPERTY)
-          if (sentryDsn.isPresent) {
-            variant.manifestPlaceholders.put("sentryDsn", sentryDsn.get())
-          }
+          variant.manifestPlaceholders.put("sentryDsn", sentryDsn.getOrElse(""))
         }
       }
       project.plugins.apply(io.sentry.android.gradle.SentryPlugin::class)
@@ -42,7 +40,7 @@ class SentryPlugin : Plugin<Project> {
         autoUploadNativeSymbols.set(false)
         includeNativeSources.set(false)
         ignoredVariants.set(emptySet())
-        ignoredBuildTypes.set(setOf("debug"))
+        ignoredBuildTypes.set(setOf("benchmark", "debug"))
         ignoredFlavors.set(emptySet())
         tracingInstrumentation {
           enabled.set(true)

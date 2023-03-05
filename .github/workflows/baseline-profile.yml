@@ -9,6 +9,7 @@ on:
 env:
   AVD_API_LEVEL: 31
   AVD_ARCH: x86_64
+  CI_BENCHMARK: true
 
 jobs:
   baseline-profile:

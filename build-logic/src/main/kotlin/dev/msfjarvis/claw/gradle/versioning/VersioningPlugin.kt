@@ -21,7 +21,7 @@ import org.gradle.kotlin.dsl.withType
 /**
  * A Gradle [Plugin] that takes a [Project] with the [AppPlugin] applied and dynamically sets the
  * versionCode and versionName properties based on values read from a [VERSIONING_PROP_FILE] file in
- * the [Project.getBuildDir] directory. It also adds Gradle tasks to bump the major, minor, and
+ * the [Project.getProjectDir] directory. It also adds Gradle tasks to bump the major, minor, and
  * patch versions along with one to prepare the next snapshot.
  */
 @Suppress("Unused")

@@ -10,6 +10,7 @@ plugins { id("dev.msfjarvis.claw.kotlin-jvm") }
 
 dependencies {
   api(libs.crux)
+  implementation(platform(libs.okhttp.bom))
   implementation(projects.model)
   implementation(libs.javax.inject)
   implementation(libs.jsoup)

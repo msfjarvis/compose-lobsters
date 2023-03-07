@@ -22,13 +22,7 @@ class DependencyUpdatesPlugin : Plugin<Project> {
     project.pluginManager.apply(VersionsPlugin::class)
     project.pluginManager.apply(VersionCatalogUpdatePlugin::class)
     project.tasks.withType<DependencyUpdatesTask>().configureEach {
-      rejectVersionIf {
-        when (candidate.group) {
-          "com.squareup.okhttp3",
-          "org.jetbrains.kotlin" -> true
-          else -> isNonStable(candidate.version) && !isNonStable(currentVersion)
-        }
-      }
+      rejectVersionIf { isNonStable(candidate.version) && !isNonStable(currentVersion) }
       checkConstraints = true
       checkBuildEnvironmentConstraints = true
       checkForGradleUpdate = true

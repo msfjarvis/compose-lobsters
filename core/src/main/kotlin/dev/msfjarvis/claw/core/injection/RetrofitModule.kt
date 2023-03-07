@@ -15,7 +15,7 @@ import dagger.multibindings.IntoSet
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonNamingStrategy
-import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Converter
 
 @Module
@@ -26,7 +26,7 @@ object RetrofitModule {
   @Provides
   @IntoSet
   fun provideJsonConverterFactory(json: Json): Converter.Factory {
-    val contentType = MediaType.get("application/json")
+    val contentType = "application/json".toMediaType()
     return json.asConverterFactory(contentType)
   }
 

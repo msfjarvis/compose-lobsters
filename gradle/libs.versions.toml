@@ -9,8 +9,7 @@ coroutines = "1.6.4"
 dagger = "2.45"
 kotest = "5.5.5"
 kotlin = "1.8.10"
-# @pin Needs to be aligned with Retrofit
-okhttp = "3.14.9"
+okhttp = "4.10.0"
 retrofit = "2.9.0"
 richtext = "0.16.0"
 sentry-sdk = "6.15.0"
@@ -75,8 +74,9 @@ kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-c
 kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "serialization" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
 napier = "io.github.aakira:napier:2.6.1"
-okhttp-core = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
-okhttp-loggingInterceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
+okhttp-bom = "com.squareup.okhttp3:okhttp-bom:4.10.0"
+okhttp-core = { module = "com.squareup.okhttp3:okhttp" }
+okhttp-loggingInterceptor = { module = "com.squareup.okhttp3:logging-interceptor" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-kotlinxSerializationConverter = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
 sentry-bom = { module = "io.sentry:sentry-bom", version.ref = "sentry-sdk" }

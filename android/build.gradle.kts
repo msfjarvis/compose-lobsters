@@ -66,6 +66,7 @@ dependencies {
   implementation(libs.androidx.work.runtime.ktx)
   implementation(libs.coil)
   implementation(libs.copydown)
+  implementation(libs.kotlinx.collections.immutable)
   implementation(libs.kotlinx.coroutines.core)
   implementation(libs.sqldelight.extensions.coroutines)
 }

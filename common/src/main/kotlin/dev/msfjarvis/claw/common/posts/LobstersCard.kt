@@ -47,6 +47,8 @@ import com.google.accompanist.flowlayout.FlowRow
 import dev.msfjarvis.claw.common.res.ClawIcons
 import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.database.local.SavedPost
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 @OptIn(ExperimentalFoundationApi::class)
@@ -104,7 +106,7 @@ fun LobstersCard(
 fun PostDetails(post: SavedPost, modifier: Modifier = Modifier) {
   Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
     PostTitle(title = post.title)
-    TagRow(tags = post.tags)
+    TagRow(tags = post.tags.toImmutableList())
     Spacer(Modifier.height(4.dp))
     Submitter(
       text = AnnotatedString("Submitted by ${post.submitterName}"),
@@ -201,7 +203,7 @@ private fun CommentsButton(
 
 @Composable
 internal fun TagRow(
-  tags: List<String>,
+  tags: ImmutableList<String>,
   modifier: Modifier = Modifier,
 ) {
   FlowRow(

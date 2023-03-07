@@ -25,6 +25,8 @@ import java.io.IOException
 import java.net.HttpURLConnection
 import java.time.Month
 import javax.inject.Inject
+import kotlinx.collections.immutable.ImmutableMap
+import kotlinx.collections.immutable.toImmutableMap
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -62,9 +64,9 @@ constructor(
   val savedPosts
     get() = savedPostsFlow.map(::mapSavedPosts)
 
-  private fun mapSavedPosts(items: List<SavedPost>): Map<Month, List<SavedPost>> {
+  private fun mapSavedPosts(items: List<SavedPost>): ImmutableMap<Month, List<SavedPost>> {
     val sorted = items.sortedByDescending { post -> post.createdAt.toLocalDateTime() }
-    return sorted.groupBy { post -> post.createdAt.toLocalDateTime().month }
+    return sorted.groupBy { post -> post.createdAt.toLocalDateTime().month }.toImmutableMap()
   }
 
   suspend fun isPostSaved(post: SavedPost): Boolean {

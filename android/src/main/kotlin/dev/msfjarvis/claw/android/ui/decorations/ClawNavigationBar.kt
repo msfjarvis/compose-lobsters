@@ -1,5 +1,5 @@
 /*
- * Copyright © 2022 Harsh Shandilya.
+ * Copyright © 2022-2023 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -23,13 +23,14 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.testTag
 import androidx.navigation.NavController
 import dev.msfjarvis.claw.android.ui.navigation.Destinations
+import kotlinx.collections.immutable.ImmutableList
 
 private const val AnimationDuration = 100
 
 @Composable
 fun ClawNavigationBar(
   navController: NavController,
-  items: List<NavigationItem>,
+  items: ImmutableList<NavigationItem>,
   isVisible: Boolean,
   modifier: Modifier = Modifier,
 ) {

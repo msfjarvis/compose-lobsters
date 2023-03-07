@@ -48,6 +48,7 @@ import dev.msfjarvis.claw.model.LinkMetadata
 import dev.msfjarvis.claw.model.LobstersPostDetails
 import java.time.Instant
 import java.time.temporal.TemporalAccessor
+import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 internal fun CommentsHeader(
@@ -71,7 +72,7 @@ internal fun CommentsHeader(
       verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
       PostTitle(title = postDetails.title)
-      TagRow(tags = postDetails.tags)
+      TagRow(tags = postDetails.tags.toImmutableList())
       Spacer(Modifier.height(4.dp))
 
       if (linkMetadata.url.isNotBlank()) {

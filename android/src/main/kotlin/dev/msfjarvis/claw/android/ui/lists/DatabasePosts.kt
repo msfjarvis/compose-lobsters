@@ -17,11 +17,12 @@ import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.ui.decorations.MonthHeader
 import dev.msfjarvis.claw.database.local.SavedPost
 import java.time.Month
+import kotlinx.collections.immutable.ImmutableMap
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DatabasePosts(
-  items: Map<Month, List<SavedPost>>,
+  items: ImmutableMap<Month, List<SavedPost>>,
   listState: LazyListState,
   postActions: PostActions,
   modifier: Modifier = Modifier,

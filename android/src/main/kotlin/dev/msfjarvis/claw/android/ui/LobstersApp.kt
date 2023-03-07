@@ -55,6 +55,8 @@ import dev.msfjarvis.claw.common.ui.decorations.ClawAppBar
 import dev.msfjarvis.claw.common.ui.surfaceColorAtNavigationBarElevation
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 import dev.msfjarvis.claw.common.user.UserProfile
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.coroutines.launch
 
 @OptIn(
@@ -82,7 +84,7 @@ fun LobstersApp(
 
   val hottestPosts = viewModel.hottestPosts.collectAsLazyPagingItems()
   val newestPosts = viewModel.newestPosts.collectAsLazyPagingItems()
-  val savedPosts by viewModel.savedPosts.collectAsState(emptyMap())
+  val savedPosts by viewModel.savedPosts.collectAsState(persistentMapOf())
 
   LobstersTheme(
     dynamicColor = true,
@@ -92,7 +94,7 @@ fun LobstersApp(
     val systemBarsColor = MaterialTheme.colorScheme.surfaceColorAtNavigationBarElevation()
     val backgroundColor = MaterialTheme.colorScheme.background
     val navItems =
-      listOf(
+      persistentListOf(
         NavigationItem(
           label = "Hottest",
           route = Destinations.Hottest.route,

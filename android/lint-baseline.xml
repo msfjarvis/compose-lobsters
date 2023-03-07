@@ -53,26 +53,4 @@
             file="src/main/res/mipmap-xxxhdpi/ic_launcher_foreground.png"/>
     </issue>
 
-    <issue
-        id="ComposeUnstableCollections"
-        message="The Compose Compiler cannot infer the stability of a parameter if a List&lt;NavigationItem> is used in it, even if the item type is stable.&#xA;You should use Kotlinx Immutable Collections instead: `items: ImmutableList&lt;NavigationItem>` or create an `@Immutable` wrapper for this class: `@Immutable data class ItemsList(val items: List&lt;NavigationItem>)`&#xA;See https://slackhq.github.io/compose-lints/rules/#avoid-using-unstable-collections for more information."
-        errorLine1="  items: List&lt;NavigationItem>,"
-        errorLine2="         ~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/kotlin/dev/msfjarvis/claw/android/ui/decorations/ClawNavigationBar.kt"
-            line="32"
-            column="10"/>
-    </issue>
-
-    <issue
-        id="ComposeUnstableCollections"
-        message="The Compose Compiler cannot infer the stability of a parameter if a Map&lt;Month, List&lt;SavedPost>> is used in it, even if the item type is stable.&#xA;You should use Kotlinx Immutable Collections instead: `items: ImmutableMap&lt;Month, List&lt;SavedPost>>` or create an `@Immutable` wrapper for this class: `@Immutable data class ItemsMap(val items: Map&lt;Month, List&lt;SavedPost>>)`&#xA;See https://slackhq.github.io/compose-lints/rules/#avoid-using-unstable-collections for more information."
-        errorLine1="  items: Map&lt;Month, List&lt;SavedPost>>,"
-        errorLine2="         ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/kotlin/dev/msfjarvis/claw/android/ui/lists/DatabasePosts.kt"
-            line="24"
-            column="10"/>
-    </issue>
-
 </issues>

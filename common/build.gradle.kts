@@ -36,6 +36,7 @@ dependencies {
   implementation(libs.compose.richtext.markdown)
   implementation(libs.compose.richtext.material3)
   implementation(libs.compose.richtext.ui)
+  implementation(libs.kotlinx.collections.immutable)
   implementation(libs.kotlinx.coroutines.core)
   testImplementation(kotlin("test-junit"))
   testImplementation(libs.testparameterinjector)

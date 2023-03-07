@@ -1,15 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <issues format="6" by="lint 7.4.2" type="baseline" client="gradle" dependencies="false" name="AGP (7.4.2)" variant="all" version="7.4.2">
 
-    <issue
-        id="ComposeUnstableCollections"
-        message="The Compose Compiler cannot infer the stability of a parameter if a List&lt;String> is used in it, even if the item type is stable.&#xA;You should use Kotlinx Immutable Collections instead: `tags: ImmutableList&lt;String>` or create an `@Immutable` wrapper for this class: `@Immutable data class TagsList(val items: List&lt;String>)`&#xA;See https://slackhq.github.io/compose-lints/rules/#avoid-using-unstable-collections for more information."
-        errorLine1="  tags: List&lt;String>,"
-        errorLine2="        ~~~~~~~~~~~~">
-        <location
-            file="src/main/kotlin/dev/msfjarvis/claw/common/posts/LobstersCard.kt"
-            line="204"
-            column="9"/>
-    </issue>
-
 </issues>

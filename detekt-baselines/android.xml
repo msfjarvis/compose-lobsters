@@ -1,7 +1,0 @@
-<?xml version="1.0" ?>
-<SmellBaseline>
-  <ManuallySuppressedIssues></ManuallySuppressedIssues>
-  <CurrentIssues>
-    <ID>LongMethod:LobstersApp.kt$@OptIn( ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class, ) @Composable fun LobstersApp( urlLauncher: UrlLauncher, htmlConverter: HTMLConverter, setWebUri: (String?) -&gt; Unit, modifier: Modifier = Modifier, viewModel: ClawViewModel = injectedViewModel(), )</ID>
-  </CurrentIssues>
-</SmellBaseline>

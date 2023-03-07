@@ -1,7 +1,0 @@
-<?xml version="1.0" ?>
-<SmellBaseline>
-  <ManuallySuppressedIssues></ManuallySuppressedIssues>
-  <CurrentIssues>
-    <ID>MemberNameEqualsClassName:Tags.kt$Tags$private val tags = arrayListOf&lt;String&gt;()</ID>
-  </CurrentIssues>
-</SmellBaseline>

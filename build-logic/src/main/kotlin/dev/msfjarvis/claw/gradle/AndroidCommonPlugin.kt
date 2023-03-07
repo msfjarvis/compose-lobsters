@@ -18,9 +18,11 @@ import org.gradle.android.AndroidCacheFixPlugin
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.findByType
+import org.gradle.kotlin.dsl.getByType
 
 class AndroidCommonPlugin : Plugin<Project> {
 
@@ -61,6 +63,9 @@ class AndroidCommonPlugin : Plugin<Project> {
     }
     project.extensions.findByType<ApplicationExtension>()?.run { lint.configureLint(project) }
     project.extensions.findByType<LibraryExtension>()?.run { lint.configureLint(project) }
+    val catalog = project.extensions.getByType<VersionCatalogsExtension>()
+    val libs = catalog.named("libs")
+    project.dependencies.addProvider("lintChecks", libs.findLibrary("slack-compose-lints").get())
   }
 }
 
@@ -69,6 +74,7 @@ private fun Lint.configureLint(project: Project) {
   checkReleaseBuilds = false
   warningsAsErrors = false
   disable.add("DialogFragmentCallbacksDetector")
+  error.add("ComposeM2Api")
   baseline = project.file("lint-baseline.xml")
 }
 

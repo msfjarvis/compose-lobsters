@@ -57,17 +57,6 @@
     },
     {
       "fileMatch": [
-        "Detekt\.kt$"
-      ],
-      "matchStrings": [
-        "COMPOSE_RULES_VERSION = \"(?<currentValue>.*)\""
-      ],
-      "datasourceTemplate": "maven",
-      "depNameTemplate": "io.nlopez.compose.rules:detekt",
-      "registryUrlTemplate": "https://repo1.maven.org/maven2/",
-    },
-    {
-      "fileMatch": [
         "gradle/libs.versions.toml"
       ],
       "matchStrings": [

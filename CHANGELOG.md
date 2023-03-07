@@ -9,7 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-*   Rebuild app icon assets to aligh better with Material guidelines
+*   Rebuild app icon assets to align better with Material guidelines
+*   Adopt Slack's Compose lints and address issues found by it
+*   Upgrade to Okhttp 4.x
 
 ## [1.23.0] - 2023-03-02
 

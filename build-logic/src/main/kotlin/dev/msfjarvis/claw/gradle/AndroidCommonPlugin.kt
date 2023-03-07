@@ -70,9 +70,9 @@ class AndroidCommonPlugin : Plugin<Project> {
 }
 
 private fun Lint.configureLint(project: Project) {
-  abortOnError = false
-  checkReleaseBuilds = false
-  warningsAsErrors = false
+  abortOnError = true
+  checkReleaseBuilds = true
+  warningsAsErrors = true
   disable.add("DialogFragmentCallbacksDetector")
   error.add("ComposeM2Api")
   baseline = project.file("lint-baseline.xml")

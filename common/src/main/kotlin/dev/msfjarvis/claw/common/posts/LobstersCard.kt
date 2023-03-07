@@ -157,7 +157,7 @@ private fun SaveButton(
   isSaved: Boolean,
   modifier: Modifier = Modifier,
 ) {
-  Crossfade(targetState = isSaved) { saved ->
+  Crossfade(targetState = isSaved, label = "save-button") { saved ->
     Box(modifier = modifier.padding(12.dp)) {
       Icon(
         painter = if (saved) ClawIcons.Heart else ClawIcons.HeartBorder,

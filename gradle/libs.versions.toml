@@ -21,7 +21,7 @@ workmanager = "2.8.0"
 [libraries]
 accompanist-flowlayout = { module = "com.google.accompanist:accompanist-flowlayout", version.ref = "accompanist" }
 accompanist-sysuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
-androidx-activity-compose = "androidx.activity:activity-compose:1.7.0-beta02"
+androidx-activity-compose = "androidx.activity:activity-compose:1.7.0-rc01"
 androidx-benchmark-macro-junit4 = "androidx.benchmark:benchmark-macro-junit4:1.2.0-alpha10"
 androidx-browser = "androidx.browser:browser:1.5.0"
 androidx-compose-animation = { module = "androidx.compose.animation:animation" }

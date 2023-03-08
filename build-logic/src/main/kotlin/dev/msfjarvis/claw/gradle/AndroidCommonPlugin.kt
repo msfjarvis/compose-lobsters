@@ -73,8 +73,8 @@ private fun Lint.configureLint(project: Project) {
   abortOnError = true
   checkReleaseBuilds = true
   warningsAsErrors = true
-  disable.add("DialogFragmentCallbacksDetector")
-  error.add("ComposeM2Api")
+  enable += "ComposeM2Api"
+  error += "ComposeM2Api"
   baseline = project.file("lint-baseline.xml")
 }
 

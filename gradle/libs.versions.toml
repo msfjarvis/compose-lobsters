@@ -77,6 +77,7 @@ napier = "io.github.aakira:napier:2.6.1"
 okhttp-bom = "com.squareup.okhttp3:okhttp-bom:4.10.0"
 okhttp-core = { module = "com.squareup.okhttp3:okhttp" }
 okhttp-loggingInterceptor = { module = "com.squareup.okhttp3:logging-interceptor" }
+okhttp-mockwebserver = { module = "com.squareup.okhttp3:mockwebserver" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-kotlinxSerializationConverter = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
 sentry-bom = { module = "io.sentry:sentry-bom", version.ref = "sentry-sdk" }

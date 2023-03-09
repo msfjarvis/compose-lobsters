@@ -66,7 +66,11 @@ dependencies {
   implementation(libs.androidx.work.runtime.ktx)
   implementation(libs.coil)
   implementation(libs.copydown)
+  implementation(libs.jsoup)
   implementation(libs.kotlinx.collections.immutable)
   implementation(libs.kotlinx.coroutines.core)
   implementation(libs.sqldelight.extensions.coroutines)
+  testImplementation(libs.kotest.assertions.core)
+  testImplementation(libs.kotest.runner.junit5)
+  testImplementation(libs.okhttp.mockwebserver)
 }

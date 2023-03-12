@@ -59,6 +59,7 @@ dependencies {
   implementation(libs.androidx.compose.material)
   implementation(libs.androidx.compose.material3)
   implementation(libs.androidx.core.splashscreen)
+  implementation(libs.androidx.datastore.preferences)
   implementation(libs.androidx.lifecycle.compose)
   implementation(libs.androidx.navigation.compose)
   implementation(libs.androidx.paging.compose)

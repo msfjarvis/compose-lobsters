@@ -70,6 +70,7 @@ dependencyResolutionManagement {
         includeGroup("androidx.cursoradapter")
         includeGroup("androidx.customview")
         includeGroup("androidx.databinding")
+        includeGroup("androidx.datastore")
         includeGroup("androidx.drawerlayout")
         includeGroup("androidx.emoji2")
         includeGroup("androidx.exifinterface")

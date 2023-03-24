@@ -17,10 +17,7 @@ tasks.withType<JavaCompile>().configureEach {
 }
 
 tasks.withType<KotlinCompile>().configureEach {
-  kotlinOptions {
-    jvmTarget = JavaVersion.VERSION_11.toString()
-    freeCompilerArgs = freeCompilerArgs + "-Xsam-conversions=class"
-  }
+  kotlinOptions { jvmTarget = JavaVersion.VERSION_11.toString() }
 }
 
 gradlePlugin {

@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.24.0] - 2023-03-24
+
 ### Changed
 
 *   Rebuild app icon assets to align better with Material guidelines
@@ -190,7 +192,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 *   Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.23.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.24.0...HEAD
+
+[1.24.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.23.0...v1.24.0
 
 [1.23.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.22.0...v1.23.0
 

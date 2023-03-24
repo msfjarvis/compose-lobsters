@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 *   Rebuild app icon assets to align better with Material guidelines
 *   Adopt Slack's Compose lints and address issues found by it
 *   Upgrade to OkHttp 4.x
+*   Upgrade to Compose March release
+*   Start work on support for logging in with lobste.rs
 
 ## [1.23.0] - 2023-03-02
 

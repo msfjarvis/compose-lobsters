@@ -2,7 +2,7 @@
 accompanist = "0.30.0"
 agp = "7.4.2"
 androidx-test = "1.6.0-alpha01"
-coil = "2.2.2"
+coil = "2.3.0"
 # @keep used for kotlinCompilerExtensionVersion
 composeCompiler = "1.4.4"
 coroutines = "1.6.4"

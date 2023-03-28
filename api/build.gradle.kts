@@ -16,11 +16,13 @@ android { namespace = "dev.msfjarvis.claw.api" }
 anvil { generateDaggerFactories.set(true) }
 
 dependencies {
-  api(projects.model)
-  api(libs.retrofit)
   api(libs.eithernet)
+  api(libs.retrofit)
+  api(projects.model)
+
   implementation(libs.dagger)
   implementation(libs.javax.inject)
+
   testImplementation(testFixtures(libs.eithernet))
   testImplementation(libs.kotest.assertions.core)
   testImplementation(libs.kotest.runner.junit5)

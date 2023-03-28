@@ -16,9 +16,10 @@ anvil { generateDaggerFactories.set(true) }
 android { namespace = "dev.msfjarvis.claw.core" }
 
 dependencies {
-  implementation(platform(libs.okhttp.bom))
   api(libs.kotlinx.serialization.json)
   api(libs.okhttp.loggingInterceptor)
+
+  implementation(platform(libs.okhttp.bom))
   implementation(libs.dagger)
   implementation(libs.javax.inject)
   implementation(libs.napier)

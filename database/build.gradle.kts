@@ -29,9 +29,10 @@ sqldelight {
 
 dependencies {
   implementation(libs.dagger)
-  implementation(projects.core)
   implementation(libs.sqldelight.androidDriver)
   implementation(libs.sqldelight.primitiveAdapters)
+  implementation(projects.core)
+
   testImplementation(libs.kotest.assertions.core)
   testImplementation(libs.kotest.runner.junit5)
   testImplementation(libs.kotlinx.coroutines.core)

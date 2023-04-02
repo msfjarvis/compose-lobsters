@@ -32,6 +32,8 @@ pluginManagement {
         includeModule("com.github.ben-manes", "gradle-versions-plugin")
         includeModule("org.gradle.android.cache-fix", "org.gradle.android.cache-fix.gradle.plugin")
         includeModule("gradle.plugin.org.gradle.android", "android-cache-fix-gradle-plugin")
+        includeModule("dev.iurysouza.modulegraph", "dev.iurysouza.modulegraph.gradle.plugin")
+        includeModule("dev.iurysouza", "modulegraph")
       }
     }
     exclusiveContent {

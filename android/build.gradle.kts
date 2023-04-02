@@ -4,7 +4,7 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
-@file:Suppress("DSL_SCOPE_VIOLATION", "UnstableApiUsage")
+@file:Suppress("UnstableApiUsage")
 
 plugins {
   id("dev.msfjarvis.claw.android-application")

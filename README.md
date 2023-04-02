@@ -14,6 +14,32 @@ Unofficial Android app for read-only access to [lobste.rs](https://lobste.rs), b
 
 Snapshots from the development branch can be obtained [here](https://github.com/msfjarvis/compose-lobsters/releases/tag/nightly).
 
+## Dependency Diagram
+```mermaid
+%%{
+  init: {
+    'theme': 'neutral'
+  }
+}%%
+
+graph LR
+
+  benchmark --> android
+  android --> api
+  android --> common
+  android --> core
+  android --> coroutine-utils
+  android --> database
+  android --> metadata-extractor
+  android --> model
+  api --> model
+  common --> core
+  common --> database
+  common --> model
+  metadata-extractor --> model
+  database --> core
+
+```
 ## License
 
 See [LICENSE](LICENSE)

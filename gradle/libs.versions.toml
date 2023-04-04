@@ -1,5 +1,5 @@
 [versions]
-accompanist = "0.30.0"
+accompanist = "0.30.1"
 agp = "7.4.2"
 androidx-test = "1.6.0-alpha01"
 coil = "2.3.0"

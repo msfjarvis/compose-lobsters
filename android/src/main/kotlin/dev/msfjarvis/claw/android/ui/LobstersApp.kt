@@ -11,18 +11,14 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
@@ -38,10 +34,10 @@ import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.deliveryhero.whetstone.compose.injectedViewModel
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dev.msfjarvis.claw.android.R
 import dev.msfjarvis.claw.android.ui.decorations.ClawNavigationBar
 import dev.msfjarvis.claw.android.ui.decorations.NavigationItem
+import dev.msfjarvis.claw.android.ui.decorations.TransparentSystemBars
 import dev.msfjarvis.claw.android.ui.lists.DatabasePosts
 import dev.msfjarvis.claw.android.ui.lists.NetworkPosts
 import dev.msfjarvis.claw.android.ui.navigation.Destinations
@@ -52,7 +48,6 @@ import dev.msfjarvis.claw.common.comments.HTMLConverter
 import dev.msfjarvis.claw.common.res.ClawIcons
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.decorations.ClawAppBar
-import dev.msfjarvis.claw.common.ui.surfaceColorAtNavigationBarElevation
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 import dev.msfjarvis.claw.common.user.UserProfile
 import kotlinx.collections.immutable.persistentListOf
@@ -71,7 +66,6 @@ fun LobstersApp(
   modifier: Modifier = Modifier,
   viewModel: ClawViewModel = injectedViewModel(),
 ) {
-  val systemUiController = rememberSystemUiController()
   val hottestListState = rememberLazyListState()
   val newestListState = rememberLazyListState()
   val savedListState = rememberLazyListState()
@@ -90,9 +84,6 @@ fun LobstersApp(
     dynamicColor = true,
     providedValues = arrayOf(LocalUriHandler provides urlLauncher),
   ) {
-    val currentUiMode = LocalConfiguration.current.uiMode
-    val systemBarsColor = MaterialTheme.colorScheme.surfaceColorAtNavigationBarElevation()
-    val backgroundColor = MaterialTheme.colorScheme.background
     val navItems =
       persistentListOf(
         NavigationItem(
@@ -121,23 +112,11 @@ fun LobstersApp(
         },
       )
 
-    SideEffect { systemUiController.setStatusBarColor(color = systemBarsColor) }
-
-    // Track UI mode as a key to force a navbar color update when dark theme is toggled
-    LaunchedEffect(currentDestination, currentUiMode) {
-      val color =
-        if (navItems.none { item -> item.route == currentDestination }) {
-          backgroundColor
-        } else {
-          systemBarsColor
-        }
-      systemUiController.setNavigationBarColor(color = color)
-    }
+    TransparentSystemBars()
 
     Scaffold(
       topBar = {
         ClawAppBar(
-          backgroundColor = systemBarsColor,
           navigationIcon = {
             if (navItems.none { it.route == currentDestination }) {
               IconButton(

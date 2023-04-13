@@ -21,7 +21,8 @@
       "matchPackagePatterns": [
         "^kotlin",
         "^org.jetbrains.kotlin",
-        "^androidx.compose.compiler"
+        "^androidx.compose.compiler",
+        "^anvil",
       ],
       "groupName": "kotlin"
     },

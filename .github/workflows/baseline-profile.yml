@@ -74,7 +74,7 @@ jobs:
         channel: canary
         target: aosp_atd
         force-avd-creation: false
-        emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+        emulator-options: -gpu swiftshader_indirect
         disable-animations: false
         disk-size: 8G
         script: echo "Generated AVD snapshot for caching."

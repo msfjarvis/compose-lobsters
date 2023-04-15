@@ -21,7 +21,6 @@ import org.gradle.kotlin.dsl.getByType
 class SentryPlugin : Plugin<Project> {
 
   override fun apply(project: Project) {
-    if (project.providers.environmentVariable("CI_BENCHMARK").isPresent) return
     project.pluginManager.withPlugin("com.android.application") {
       val catalog = project.extensions.getByType<VersionCatalogsExtension>()
       val libs = catalog.named("libs")

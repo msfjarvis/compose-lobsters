@@ -9,7 +9,6 @@ on:
 env:
   AVD_API_LEVEL: 31
   AVD_ARCH: x86_64
-  CI_BENCHMARK: true
 
 jobs:
   baseline-profile:
@@ -62,8 +61,6 @@ jobs:
     # This allows us to build most of what we need without the emulator running
     # and using resources
     - name: Build app and benchmark
-      env:
-        SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       run: ./gradlew :benchmark:assembleBenchmark :android:assembleBenchmark
 
     # Now use reactivecircus/android-emulator-runner to spin up an emulator. We're gonna use it again

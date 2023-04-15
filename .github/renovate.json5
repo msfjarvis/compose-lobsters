@@ -24,7 +24,7 @@
         "^androidx.compose.compiler",
         "^anvil",
       ],
-      "groupName": "kotlin"
+      "enabled": false
     },
     {
       "matchPackagePatterns": [

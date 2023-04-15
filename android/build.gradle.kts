@@ -38,6 +38,7 @@ android {
       matchingFallbacks += "release"
       isDebuggable = false
       proguardFile("benchmark-rules.pro")
+      applicationIdSuffix = ".benchmark"
     }
   }
 }

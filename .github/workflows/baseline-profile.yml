@@ -6,10 +6,6 @@ on:
     - cron: '43 0 * * *'
   workflow_dispatch:
 
-env:
-  AVD_API_LEVEL: 31
-  AVD_ARCH: x86_64
-
 jobs:
   baseline-profile:
     runs-on: macos-latest
@@ -40,16 +36,7 @@ jobs:
       uses: gradle/gradle-build-action@749f47bda3e44aa060e82d7b3ef7e40d953bd629 # v2.4.2
       with:
         gradle-home-cache-cleanup: true
-
-    # Restore AVD from cache
-    - name: Cache AVD
-      uses: actions/cache@88522ab9f39a2ea568f7027eddc7d8d8bc9d59c8 # v3.3.1
-      id: avd-cache
-      with:
-        path: |
-          ~/.android/avd/*
-          ~/.android/adb*
-        key: ${{ runner.os }}-avd-${{ env.AVD_API_LEVEL }}-${{ env.AVD_ARCH }}
+        cache-read-only: true
 
     - name: Decrypt secrets
       run: |
@@ -63,39 +50,15 @@ jobs:
     - name: Build app and benchmark
       run: ./gradlew :benchmark:assembleBenchmark :android:assembleBenchmark
 
-    # Now use reactivecircus/android-emulator-runner to spin up an emulator. We're gonna use it again
-    # to actually run the test once the emulator has booted.
-    - name: Create AVD snapshot for caching
-      if: steps.avd-cache.outputs.cache-hit != 'true'
-      uses: reactivecircus/android-emulator-runner@d94c3fbe4fe6a29e4a5ba47c12fb47677c73656b # v2.28.0
-      with:
-        api-level: ${{ env.AVD_API_LEVEL }}
-        arch: ${{ env.AVD_ARCH }}
-        channel: canary
-        target: aosp_atd
-        force-avd-creation: false
-        emulator-options: -gpu swiftshader_indirect
-        disable-animations: false
-        disk-size: 8G
-        script: echo "Generated AVD snapshot for caching."
+    - name: Clear unused Gradle Managed Devices
+      run: ./gradlew cleanManagedDevices --unused-only
 
-    # Run our baseline profile generator. We need to manually pull the baseline profiles off the
-    # emulator when using the GA runner
-    - name: Run benchmark
-      uses: reactivecircus/android-emulator-runner@d94c3fbe4fe6a29e4a5ba47c12fb47677c73656b # v2
-      with:
-        api-level: ${{ env.AVD_API_LEVEL }}
-        arch: ${{ env.AVD_ARCH }}
-        channel: canary
-        target: aosp_atd
-        disable-animations: true
-        disable-spellchecker: true
-        disk-size: 8G
-        script: |
-          # Run our benchmark, enabling only tests using BaselineProfile
-          ./gradlew connectedBenchmarkAndroidTest -Pandroid.testInstrumentationRunnerArguments.androidx.benchmark.enabledRules=BaselineProfile --stacktrace
-          # Need to manually pull the generated profiles from the emulator
-          adb pull /sdcard/Android/media/dev.msfjarvis.claw.benchmark benchmark/build/outputs/baseline-prof/
+    - name: Run benchmark on Gradle Managed Device
+      run: |
+        ./gradlew api31BenchmarkAndroidTest \
+          -Dorg.gradle.workers.max=1 \
+          -Pandroid.testInstrumentationRunnerArguments.androidx.benchmark.enabledRules=BaselineProfile \
+          -Pandroid.testoptions.manageddevices.emulator.gpu="swiftshader_indirect"
 
     # If we're on main branch, copy over the baseline profile and
     # commit it to the repository (if changed)
@@ -104,20 +67,20 @@ jobs:
       run: |
         # Pull down any changes which may have been committed while this workflow has been running
         git pull
-        # Sort the baseline profile, saving it to app/
-        sort -o android/src/main/baseline-prof.txt benchmark/build/outputs/baseline-prof/BaselineProfileGenerator_startup-baseline-prof.txt
+        # Sort the baseline profile, output to android/
+        sort -o android/src/main/baseline-prof.txt benchmark/build/outputs/managed_device_android_test_additional_output/api31/BaselineProfileGenerator_generateBaselineProfile-baseline-prof.txt
         # If the baseline profile has changed, commit it
         if [[ $(git diff --stat android/src/main/baseline-prof.txt) != '' ]]; then
           git add android/src/main/baseline-prof.txt
           git commit -m "chore(android): refresh baseline profile" && git push
         fi
 
-    # Upload the entire generated folder and attach it to the CI run
+    # Upload the entire output folder and attach it to the CI run
     - name: Attach baseline profile
       uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
       with:
         name: Baseline profile output
-        path: benchmark/build/outputs/baseline-prof
+        path: benchmark/build/outputs/managed_device_android_test_additional_output
 
     - name: Clean secrets
       if: always()

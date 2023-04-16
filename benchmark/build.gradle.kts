@@ -4,6 +4,10 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
+@file:Suppress("UnstableApiUsage")
+
+import com.android.build.api.dsl.ManagedVirtualDevice
+
 plugins {
   alias(libs.plugins.android.test)
   id("dev.msfjarvis.claw.android-common")
@@ -20,6 +24,18 @@ android {
       isDebuggable = true
       signingConfig = signingConfigs["debug"]
       matchingFallbacks += "release"
+    }
+  }
+
+  testOptions {
+    managedDevices {
+      devices {
+        create<ManagedVirtualDevice>("api31") {
+          device = "Pixel 6"
+          apiLevel = 31
+          systemImageSource = "aosp"
+        }
+      }
     }
   }
 

@@ -26,7 +26,7 @@ class BaselineProfileGenerator {
   }
 
   @Test
-  fun startup() =
+  fun generateBaselineProfile() =
     baselineProfileRule.collectStableBaselineProfile(
       packageName = PACKAGE_NAME,
       maxIterations = 15,

@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+*   Make the app draw edge to edge
+*   Simplify Top App Bar color scheme
+*   Rework how baseline profiles are generated
+*   Upgrade to Compose April release
+
 ## [1.24.0] - 2023-03-24
 
 ### Changed

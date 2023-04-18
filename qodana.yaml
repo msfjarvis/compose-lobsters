@@ -1,3 +1,0 @@
-version: "1.0"
-# Also update renovate.json when the linter is changed
-linter: jetbrains/qodana-jvm-android:2023.1-eap

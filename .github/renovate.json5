@@ -69,16 +69,6 @@
     },
     {
       "fileMatch": [
-        "qodana.yaml"
-      ],
-      "matchStrings": [
-        "jetbrains/qodana-jvm-android:(?<currentValue>.*)"
-      ],
-      "datasourceTemplate": "docker",
-      "depNameTemplate": "jetbrains/qodana-jvm-android",
-    },
-    {
-      "fileMatch": [
         "gradle/libs.versions.toml"
       ],
       "matchStrings": [

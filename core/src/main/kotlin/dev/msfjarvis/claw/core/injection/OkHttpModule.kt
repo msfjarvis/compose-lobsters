@@ -21,6 +21,7 @@ import dev.msfjarvis.claw.core.network.UserAgentInterceptor
 import java.net.Socket
 import javax.net.SocketFactory
 import okhttp3.Cache
+import okhttp3.CertificatePinner
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -36,6 +37,15 @@ interface OkHttpModule {
   companion object {
     private const val CACHE_SIZE_MB = 10L * 1024 * 1024
     private const val THREAD_STATS_TAG = 0x000090000
+
+    @Provides
+    fun provideCertificatePinner(): CertificatePinner {
+      return CertificatePinner.Builder()
+        .add("lobste.rs", "sha256/Bla1TIdpGeHXQS0/CIrA5hhFhOTZd94IIJRS3G3AcIo=")
+        .add("lobste.rs", "sha256/jQJTbIh0grw0/1TkHSumWb+Fs0Ggogr621gT3PvPKG0=")
+        .add("lobste.rs", "sha256/C5+lpZ7tcVwmwQIMcRtPbsQtWLABXhQzejna0wHFr8M=")
+        .build()
+    }
 
     @Provides
     fun provideCache(@ForScope(ApplicationScope::class) context: Context): Cache {
@@ -57,12 +67,14 @@ interface OkHttpModule {
       cache: Cache,
       socketFactory: SocketFactory,
       interceptors: Set<@JvmSuppressWildcards Interceptor>,
+      certificatePinner: CertificatePinner,
     ): OkHttpClient {
       return OkHttpClient.Builder()
         .apply {
           cache(cache)
           interceptors.forEach(::addNetworkInterceptor)
           socketFactory(socketFactory)
+          certificatePinner(certificatePinner)
         }
         .build()
     }

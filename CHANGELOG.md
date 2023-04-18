@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.25.0] - 2023-04-18
+
 ### Changed
 
 *   Make the app draw edge to edge
@@ -199,7 +201,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 *   Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.24.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.25.0...HEAD
+
+[1.25.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.24.0...v1.25.0
 
 [1.24.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.23.0...v1.24.0
 

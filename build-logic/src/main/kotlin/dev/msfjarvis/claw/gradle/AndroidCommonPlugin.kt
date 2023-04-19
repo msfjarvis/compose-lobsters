@@ -70,9 +70,19 @@ class AndroidCommonPlugin : Plugin<Project> {
 }
 
 private fun Lint.configureLint(project: Project) {
+  quiet = project.providers.environmentVariable("CI").isPresent
   abortOnError = true
   checkReleaseBuilds = true
   warningsAsErrors = true
+  ignoreWarnings = false
+  checkAllWarnings = true
+  noLines = false
+  showAll = true
+  explainIssues = true
+  textReport = false
+  xmlReport = false
+  htmlReport = true
+  sarifReport = true
   enable += "ComposeM2Api"
   error += "ComposeM2Api"
   baseline = project.file("lint-baseline.xml")

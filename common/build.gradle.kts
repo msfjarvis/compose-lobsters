@@ -4,6 +4,8 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
+@file:Suppress("UnstableApiUsage")
+
 plugins {
   id("dev.msfjarvis.claw.kotlin-android")
   id("dev.msfjarvis.claw.android-library")
@@ -11,9 +13,21 @@ plugins {
   alias(libs.plugins.whetstone)
 }
 
-anvil { generateDaggerFactories.set(true) }
+android {
+  buildFeatures {
+    androidResources = true
+    compose = true
+  }
+  composeOptions {
+    useLiveLiterals = false
+    kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
+  }
+  namespace = "dev.msfjarvis.claw.common"
+}
 
 androidComponents { beforeVariants { it.enableUnitTest = false } }
+
+anvil { generateDaggerFactories.set(true) }
 
 dependencies {
   implementation(platform(libs.androidx.compose.bom))
@@ -38,16 +52,4 @@ dependencies {
   implementation(libs.kotlinx.coroutines.core)
   testImplementation(kotlin("test-junit"))
   testImplementation(libs.testparameterinjector)
-}
-
-android {
-  buildFeatures {
-    androidResources = true
-    compose = true
-  }
-  composeOptions {
-    useLiveLiterals = false
-    kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
-  }
-  namespace = "dev.msfjarvis.claw.common"
 }

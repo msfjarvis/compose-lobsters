@@ -12,9 +12,9 @@ plugins {
   alias(libs.plugins.whetstone)
 }
 
-anvil { generateDaggerFactories.set(true) }
-
 android { namespace = "dev.msfjarvis.claw.database" }
+
+anvil { generateDaggerFactories.set(true) }
 
 sqldelight {
   databases {

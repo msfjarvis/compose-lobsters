@@ -17,13 +17,6 @@ plugins {
   alias(libs.plugins.whetstone)
 }
 
-whetstone {
-  addOns {
-    compose.set(true)
-    workManager.set(true)
-  }
-}
-
 android {
   namespace = "dev.msfjarvis.claw.android"
   defaultConfig { applicationId = "dev.msfjarvis.claw.android" }
@@ -40,6 +33,13 @@ android {
       proguardFile("benchmark-rules.pro")
       applicationIdSuffix = ".benchmark"
     }
+  }
+}
+
+whetstone {
+  addOns {
+    compose.set(true)
+    workManager.set(true)
   }
 }
 

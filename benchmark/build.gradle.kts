@@ -43,6 +43,8 @@ android {
   experimentalProperties["android.experimental.self-instrumenting"] = true
 }
 
+androidComponents { beforeVariants(selector().all()) { it.enable = it.buildType == "benchmark" } }
+
 dependencies {
   implementation(libs.androidx.benchmark.macro.junit4)
   implementation(libs.androidx.profileinstaller)
@@ -53,5 +55,3 @@ dependencies {
   implementation(libs.androidx.test.runner)
   implementation(libs.androidx.test.uiautomator)
 }
-
-androidComponents { beforeVariants(selector().all()) { it.enable = it.buildType == "benchmark" } }

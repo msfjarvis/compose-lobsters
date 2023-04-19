@@ -11,9 +11,9 @@ plugins {
   alias(libs.plugins.whetstone)
 }
 
-anvil { generateDaggerFactories.set(true) }
-
 android { namespace = "dev.msfjarvis.claw.core" }
+
+anvil { generateDaggerFactories.set(true) }
 
 dependencies {
   api(libs.kotlinx.serialization.json)

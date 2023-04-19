@@ -7,6 +7,7 @@
 import org.gradle.api.JavaVersion
 import org.gradle.api.tasks.compile.JavaCompile
 import org.gradle.kotlin.dsl.withType
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins { `kotlin-dsl` }
@@ -17,7 +18,7 @@ tasks.withType<JavaCompile>().configureEach {
 }
 
 tasks.withType<KotlinCompile>().configureEach {
-  kotlinOptions { jvmTarget = JavaVersion.VERSION_11.toString() }
+  compilerOptions { jvmTarget.set(JvmTarget.JVM_11) }
 }
 
 gradlePlugin {

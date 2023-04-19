@@ -13,7 +13,9 @@ import org.gradle.api.tasks.compile.JavaCompile
 import org.gradle.api.tasks.testing.Test
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.gradle.kotlin.dsl.withType
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 @Suppress("Unused")
 class KotlinCommonPlugin : Plugin<Project> {
@@ -24,13 +26,14 @@ class KotlinCommonPlugin : Plugin<Project> {
         sourceCompatibility = JavaVersion.VERSION_11.toString()
         targetCompatibility = JavaVersion.VERSION_11.toString()
       }
-      withType<KotlinCompile>().configureEach {
-        kotlinOptions {
-          allWarningsAsErrors =
-            false // project.providers.environmentVariable("GITHUB_WORKFLOW").isPresent
-          jvmTarget = JavaVersion.VERSION_11.toString()
-          freeCompilerArgs = freeCompilerArgs + ADDITIONAL_COMPILER_ARGS
-          languageVersion = "1.7"
+      withType<KotlinJvmCompile>().configureEach {
+        compilerOptions {
+          allWarningsAsErrors.set(
+            project.providers.environmentVariable("GITHUB_WORKFLOW").isPresent
+          )
+          jvmTarget.set(JvmTarget.JVM_11)
+          freeCompilerArgs.addAll(ADDITIONAL_COMPILER_ARGS)
+          languageVersion.set(KotlinVersion.KOTLIN_1_7)
         }
       }
       withType<Test>().configureEach {

@@ -14,6 +14,8 @@ import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.absoluteOffset
@@ -43,7 +45,6 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.flowlayout.FlowRow
 import dev.msfjarvis.claw.common.res.ClawIcons
 import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.database.local.SavedPost
@@ -202,16 +203,15 @@ private fun CommentsButton(
 }
 
 @Composable
+@OptIn(ExperimentalLayoutApi::class)
 internal fun TagRow(
   tags: ImmutableList<String>,
   modifier: Modifier = Modifier,
 ) {
-  FlowRow(
-    modifier = modifier,
-    mainAxisSpacing = 8.dp,
-    crossAxisSpacing = 8.dp,
-  ) {
-    tags.forEach { tag -> TagText(tag) }
+  FlowRow(verticalAlignment = Alignment.CenterVertically, modifier = modifier) {
+    tags.forEach { tag ->
+      TagText(tag = tag, modifier = Modifier.padding(end = 8.dp, top = 4.dp, bottom = 4.dp))
+    }
   }
 }
 

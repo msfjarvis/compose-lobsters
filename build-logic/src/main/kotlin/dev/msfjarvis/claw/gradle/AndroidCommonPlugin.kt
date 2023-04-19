@@ -10,10 +10,10 @@ package dev.msfjarvis.claw.gradle
 
 import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.LibraryExtension
-import com.android.build.api.dsl.Lint
 import com.android.build.api.variant.ApplicationAndroidComponentsExtension
 import com.android.build.api.variant.LibraryAndroidComponentsExtension
 import com.android.build.gradle.BaseExtension
+import dev.msfjarvis.claw.gradle.LintConfig.configureLint
 import org.gradle.android.AndroidCacheFixPlugin
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
@@ -61,31 +61,12 @@ class AndroidCommonPlugin : Plugin<Project> {
         unitTests.isReturnDefaultValues = true
       }
     }
-    project.extensions.findByType<ApplicationExtension>()?.run { lint.configureLint(project) }
-    project.extensions.findByType<LibraryExtension>()?.run { lint.configureLint(project) }
+    project.extensions.findByType<ApplicationExtension>()?.lint?.configureLint(project)
+    project.extensions.findByType<LibraryExtension>()?.lint?.configureLint(project)
     val catalog = project.extensions.getByType<VersionCatalogsExtension>()
     val libs = catalog.named("libs")
     project.dependencies.addProvider("lintChecks", libs.findLibrary("slack-compose-lints").get())
   }
-}
-
-private fun Lint.configureLint(project: Project) {
-  quiet = project.providers.environmentVariable("CI").isPresent
-  abortOnError = true
-  checkReleaseBuilds = true
-  warningsAsErrors = true
-  ignoreWarnings = false
-  checkAllWarnings = true
-  noLines = false
-  showAll = true
-  explainIssues = true
-  textReport = false
-  xmlReport = false
-  htmlReport = true
-  sarifReport = true
-  enable += "ComposeM2Api"
-  error += "ComposeM2Api"
-  baseline = project.file("lint-baseline.xml")
 }
 
 private fun Project.configureSlimTests() {

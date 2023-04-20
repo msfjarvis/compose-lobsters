@@ -43,7 +43,7 @@ androidx-test-espresso-core = "androidx.test.espresso:espresso-core:3.6.0-alpha0
 androidx-test-ext-junit = "androidx.test.ext:junit:1.2.0-alpha01"
 androidx-test-rules = { module = "androidx.test:rules", version.ref = "androidx-test" }
 androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidx-test" }
-androidx-test-uiautomator = "androidx.test.uiautomator:uiautomator:2.3.0-alpha02"
+androidx-test-uiautomator = "androidx.test.uiautomator:uiautomator:2.3.0-alpha03"
 androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "workmanager" }
 build-agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 build-cachefix = "org.gradle.android.cache-fix:org.gradle.android.cache-fix.gradle.plugin:2.7.1"

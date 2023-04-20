@@ -7,8 +7,8 @@
 @file:Suppress("UnstableApiUsage")
 
 plugins {
-  id("dev.msfjarvis.claw.kotlin-android")
   id("dev.msfjarvis.claw.android-library")
+  id("dev.msfjarvis.claw.kotlin-android")
   alias(libs.plugins.anvil)
   alias(libs.plugins.whetstone)
 }

@@ -19,8 +19,8 @@ import org.jetbrains.kotlin.gradle.plugin.KotlinPluginWrapper
 class KotlinJvmPlugin : Plugin<Project> {
   override fun apply(project: Project) {
     project.pluginManager.apply(KotlinPluginWrapper::class)
-    project.pluginManager.apply(KotlinCommonPlugin::class)
     project.pluginManager.apply(LintPlugin::class)
     project.extensions.findByType<Lint>()?.configureLint(project, isJVM = true)
+    project.pluginManager.apply(KotlinCommonPlugin::class)
   }
 }

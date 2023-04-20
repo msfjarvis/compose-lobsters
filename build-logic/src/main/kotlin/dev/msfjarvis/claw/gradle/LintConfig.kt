@@ -8,6 +8,9 @@ package dev.msfjarvis.claw.gradle
 
 import com.android.build.api.dsl.Lint
 import org.gradle.api.Project
+import org.gradle.api.tasks.Copy
+import org.gradle.kotlin.dsl.named
+import org.gradle.kotlin.dsl.register
 
 object LintConfig {
   fun Lint.configureLint(project: Project, isJVM: Boolean = false) {
@@ -29,5 +32,26 @@ object LintConfig {
       error += "ComposeM2Api"
     }
     baseline = project.file("lint-baseline.xml")
+  }
+
+  fun configureRootProject(project: Project) {
+    project.tasks.register<Copy>("collectLintReports") {
+      into(project.layout.buildDirectory.dir("lint-reports"))
+    }
+  }
+
+  fun configureSubProject(project: Project) {
+    val collectorTask = project.rootProject.tasks.named<Copy>("collectLintReports")
+    val lintTask = project.tasks.named("lint")
+    val name = project.name
+
+    collectorTask.configure {
+      from(project.layout.buildDirectory.file("reports")) {
+        include("*.sarif")
+        rename { it.replace("-results", "-results-$name") }
+      }
+      dependsOn(":$name:lint")
+    }
+    lintTask.configure { finalizedBy(collectorTask) }
   }
 }

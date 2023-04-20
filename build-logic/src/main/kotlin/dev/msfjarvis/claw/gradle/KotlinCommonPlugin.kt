@@ -21,6 +21,11 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 class KotlinCommonPlugin : Plugin<Project> {
 
   override fun apply(project: Project) {
+    if (project.rootProject == project) {
+      LintConfig.configureRootProject(project)
+    } else if (project.name != "benchmark") {
+      LintConfig.configureSubProject(project)
+    }
     project.tasks.run {
       withType<JavaCompile>().configureEach {
         sourceCompatibility = JavaVersion.VERSION_11.toString()

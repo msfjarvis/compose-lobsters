@@ -1,11 +1,9 @@
 /*
- * Copyright © 2022 Harsh Shandilya.
+ * Copyright © 2022-2023 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
-@file:Suppress("NON_SOURCE_REPEATED_ANNOTATION") // IDE false-positive
-
 package dev.msfjarvis.claw.common.ui.preview
 
 import android.content.res.Configuration

@@ -11,10 +11,5 @@
     <meta-data android:name="io.sentry.attach-screenshot" android:value="true" />
     <!-- enable view hierarchy for crashes -->
     <meta-data android:name="io.sentry.attach-view-hierarchy" android:value="true" />
-
-    <!-- enable the performance API by setting a sample-rate, adjust in production env -->
-    <meta-data android:name="io.sentry.traces.sample-rate" android:value="0.8" />
-    <!-- enable profiling when starting transactions, adjust in production env -->
-    <meta-data android:name="io.sentry.traces.profiling.sample-rate" android:value="0.8" />
   </application>
 </manifest>

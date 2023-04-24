@@ -46,8 +46,13 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import dev.msfjarvis.claw.common.res.ClawIcons
+import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.NetworkImage
+import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
 import dev.msfjarvis.claw.database.local.SavedPost
+import dev.msfjarvis.claw.model.LinkMetadata
+import dev.msfjarvis.claw.model.LobstersPostDetails
+import dev.msfjarvis.claw.model.User
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 
@@ -229,4 +234,51 @@ private fun TagText(
     color = MaterialTheme.colorScheme.onTertiaryContainer,
     style = MaterialTheme.typography.labelLarge,
   )
+}
+
+@ThemePreviews
+@Composable
+fun LobstersCardPreview() {
+  LobstersTheme {
+    LobstersCard(
+      post =
+        SavedPost(
+          shortId = "ooga",
+          title = "Simple Anomaly Detection Using Plain SQL",
+          url = "https://hakibenita.com/sql-anomaly-detection",
+          createdAt = "2020-09-21T08:04:24.000-05:00",
+          commentCount = 1,
+          commentsUrl = "https://lobste.rs/s/q1hh1g/simple_anomaly_detection_using_plain_sql",
+          submitterName = "Haki",
+          submitterAvatarUrl = "/avatars/Haki-100.png",
+          tags = listOf("databases", "apis"),
+          description = "",
+        ),
+      isSaved = true,
+      postActions =
+        object : PostActions {
+          override fun viewPost(postUrl: String, commentsUrl: String) {}
+          override fun viewComments(postId: String) {}
+          override fun viewCommentsPage(commentsUrl: String) {}
+          override fun toggleSave(post: SavedPost) {}
+          override suspend fun getComments(postId: String): LobstersPostDetails {
+            return LobstersPostDetails(
+              shortId = "ooga",
+              title = "Simple Anomaly Detection Using Plain SQL",
+              url = "https://hakibenita.com/sql-anomaly-detection",
+              createdAt = "2020-09-21T08:04:24.000-05:00",
+              commentCount = 1,
+              commentsUrl = "https://lobste.rs/s/q1hh1g/simple_anomaly_detection_using_plain_sql",
+              tags = listOf("databases", "apis"),
+              description = "",
+              submitter = User("Haki", "", "", "", ""),
+              comments = emptyList(),
+            )
+          }
+          override suspend fun getLinkMetadata(url: String): LinkMetadata {
+            return LinkMetadata("", "", "")
+          }
+        },
+    )
+  }
 }

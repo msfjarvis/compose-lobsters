@@ -71,6 +71,9 @@ interface OkHttpModule {
     ): OkHttpClient {
       return OkHttpClient.Builder()
         .apply {
+          followRedirects(true)
+          followSslRedirects(true)
+          retryOnConnectionFailure(true)
           cache(cache)
           interceptors.forEach(::addNetworkInterceptor)
           socketFactory(socketFactory)

@@ -17,6 +17,7 @@ import java.util.UUID
 
 class PostCommentsQueriesTest : FunSpec() {
   private lateinit var postQueries: PostCommentsQueries
+
   init {
     beforeEach {
       val driver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)

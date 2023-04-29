@@ -258,9 +258,13 @@ fun LobstersCardPreview() {
       postActions =
         object : PostActions {
           override fun viewPost(postUrl: String, commentsUrl: String) {}
+
           override fun viewComments(postId: String) {}
+
           override fun viewCommentsPage(commentsUrl: String) {}
+
           override fun toggleSave(post: SavedPost) {}
+
           override suspend fun getComments(postId: String): LobstersPostDetails {
             return LobstersPostDetails(
               shortId = "ooga",
@@ -275,6 +279,7 @@ fun LobstersCardPreview() {
               comments = emptyList(),
             )
           }
+
           override suspend fun getLinkMetadata(url: String): LinkMetadata {
             return LinkMetadata("", "", "")
           }

@@ -1,5 +1,5 @@
 /*
- * Copyright © 2022 Harsh Shandilya.
+ * Copyright © 2022-2023 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -18,9 +18,13 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 interface DispatcherProvider {
 
   fun main(): CoroutineDispatcher = Dispatchers.Main
+
   fun default(): CoroutineDispatcher = Dispatchers.Default
+
   fun io(): CoroutineDispatcher = Dispatchers.IO
+
   fun unconfined(): CoroutineDispatcher = Dispatchers.Unconfined
+
   fun database(): CoroutineDispatcher = Dispatchers.IO.limitedParallelism(1)
 }
 

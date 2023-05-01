@@ -5,8 +5,8 @@
 
 set -euo pipefail
 
-[ -n "${ANDROID_SDK_ROOT:-}" ] || {
-  echo "ANDROID_SDK_ROOT must be set to use this script"
+[ -n "${ANDROID_HOME:-}" ] || {
+  echo "ANDROID_HOME must be set to use this script"
   exit
   1
 }
@@ -16,14 +16,14 @@ API_LEVEL="${ANDROID_API_LEVEL:-30}"
 
 sdkmanager "system-images;android-${API_LEVEL};google_apis;x86_64"
 
-echo no | "${ANDROID_SDK_ROOT}"/cmdline-tools/latest/bin/avdmanager create avd \
+echo no | "${ANDROID_HOME}"/cmdline-tools/latest/bin/avdmanager create avd \
   --force \
   -n "Pixel_XL_API_${API_LEVEL}" \
   --abi 'google_apis/x86_64' \
   --package "system-images;android-${API_LEVEL};google_apis;x86_64" \
   --device 'pixel_xl'
 
-"${ANDROID_SDK_ROOT}"/emulator/emulator \
+"${ANDROID_HOME}"/emulator/emulator \
   -avd "Pixel_XL_API_${API_LEVEL}" \
   -no-window \
   -noaudio \

@@ -1,22 +1,19 @@
 -allowaccessmodification
--dontpreverify
--dontusemixedcaseclassnames
--dontskipnonpubliclibraryclasses
 -verbose
 
 -keepattributes *Annotation*
 
 -keepclasseswithmembernames class * {
-    native <methods>;
+  native <methods>;
 }
 
 -keepclassmembers enum * {
-    public static **[] values();
-    public static ** valueOf(java.lang.String);
+  public static **[] values();
+  public static ** valueOf(java.lang.String);
 }
 
 -keepclassmembers class * implements android.os.Parcelable {
-    public static final ** CREATOR;
+  public static final ** CREATOR;
 }
 
 -keep class androidx.annotation.Keep
@@ -24,13 +21,13 @@
 -keep @androidx.annotation.Keep class * {*;}
 
 -keepclasseswithmembers class * {
-    @androidx.annotation.Keep <methods>;
+  @androidx.annotation.Keep <methods>;
 }
 
 -keepclasseswithmembers class * {
-    @androidx.annotation.Keep <fields>;
+  @androidx.annotation.Keep <fields>;
 }
 
 -keepclasseswithmembers class * {
-    @androidx.annotation.Keep <init>(...);
+  @androidx.annotation.Keep <init>(...);
 }

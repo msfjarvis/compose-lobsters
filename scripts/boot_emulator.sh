@@ -7,12 +7,11 @@ set -euo pipefail
 
 [ -n "${ANDROID_HOME:-}" ] || {
   echo "ANDROID_HOME must be set to use this script"
-  exit
-  1
+  exit 1
 }
-[ -n "${ANDROID_API_LEVEL:-}" ] || { echo "ANDROID_API_LEVEL not defined; defaulting to 30"; }
+[ -n "${ANDROID_API_LEVEL:-}" ] || { echo "ANDROID_API_LEVEL not defined; defaulting to 33"; }
 
-API_LEVEL="${ANDROID_API_LEVEL:-30}"
+API_LEVEL="${ANDROID_API_LEVEL:-33}"
 
 sdkmanager "system-images;android-${API_LEVEL};google_apis;x86_64"
 
@@ -25,6 +24,5 @@ echo no | "${ANDROID_HOME}"/cmdline-tools/latest/bin/avdmanager create avd \
 
 "${ANDROID_HOME}"/emulator/emulator \
   -avd "Pixel_XL_API_${API_LEVEL}" \
-  -no-window \
-  -noaudio \
-  -no-boot-anim
+  -gpu 'swiftshader_indirect' \
+  -noaudio

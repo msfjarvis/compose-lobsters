@@ -9,6 +9,7 @@ package dev.msfjarvis.claw.benchmark
 import androidx.benchmark.macro.MacrobenchmarkScope
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiDevice
+import androidx.test.uiautomator.UiObject2
 import androidx.test.uiautomator.Until
 
 const val PACKAGE_NAME = "dev.msfjarvis.claw.android.benchmark"
@@ -39,7 +40,7 @@ private fun UiDevice.waitForSubmitterName() {
 
 private fun UiDevice.savePosts() {
   waitForSubmitterName()
-  findObjects(By.desc(SAVE_BUTTON_DESC)).forEach { btn -> btn.click() }
+  findObjects(By.desc(SAVE_BUTTON_DESC)).forEach(UiObject2::click)
 }
 
 private fun UiDevice.exploreScreens() {

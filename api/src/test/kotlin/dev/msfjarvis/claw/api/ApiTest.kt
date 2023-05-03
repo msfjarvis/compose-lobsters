@@ -6,65 +6,71 @@
  */
 package dev.msfjarvis.claw.api
 
+import com.google.common.truth.Truth.assertThat
 import com.slack.eithernet.ApiResult.Success
 import com.slack.eithernet.test.newEitherNetController
 import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.LobstersPostDetails
 import dev.msfjarvis.claw.model.Tags
 import dev.msfjarvis.claw.model.User
-import io.kotest.core.spec.style.FunSpec
-import io.kotest.matchers.collections.shouldHaveSize
-import io.kotest.matchers.shouldBe
-import io.kotest.matchers.types.shouldBeTypeOf
+import dev.msfjarvis.claw.util.TestUtils.assertIs
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
+import org.junit.jupiter.api.Test
 
-class ApiTest : FunSpec() {
+@OptIn(ExperimentalCoroutinesApi::class)
+class ApiTest {
   private val wrapper = ApiWrapper(newEitherNetController())
   private val api
     get() = wrapper.api
 
-  init {
-    test("api gets correct number of items") {
-      val posts = api.getHottestPosts(1)
-      posts.shouldBeTypeOf<Success<List<LobstersPost>>>()
-      posts.value shouldHaveSize 25
-    }
+  @Test
+  fun `api gets correct number of items`() = runTest {
+    val posts = api.getHottestPosts(1)
+    assertIs<Success<List<LobstersPost>>>(posts)
+    assertThat(posts.value).hasSize(25)
+  }
 
-    test("posts with no urls") {
-      val posts = api.getHottestPosts(1)
-      posts.shouldBeTypeOf<Success<List<LobstersPost>>>()
-      val commentsOnlyPosts = posts.value.asSequence().filter { it.url.isEmpty() }.toSet()
-      commentsOnlyPosts shouldHaveSize 2
-    }
+  @Test
+  fun `posts with no urls`() = runTest {
+    val posts = api.getHottestPosts(1)
+    assertIs<Success<List<LobstersPost>>>(posts)
+    val commentsOnlyPosts = posts.value.asSequence().filter { it.url.isEmpty() }.toSet()
+    assertThat(commentsOnlyPosts).hasSize(2)
+  }
 
-    test("post details with comments") {
-      val postDetails = api.getPostDetails("tdfoqh")
-      postDetails.shouldBeTypeOf<Success<LobstersPostDetails>>()
-      postDetails.value.comments shouldHaveSize 7
-    }
+  @Test
+  fun `post details with comments`() = runTest {
+    val postDetails = api.getPostDetails("tdfoqh")
+    assertIs<Success<LobstersPostDetails>>(postDetails)
+    assertThat(postDetails.value.comments).hasSize(7)
+  }
 
-    test("get user details") {
-      val user = api.getUser("msfjarvis")
-      user.shouldBeTypeOf<Success<User>>()
-      user.value.username shouldBe "msfjarvis"
-    }
+  @Test
+  fun `get user details`() = runTest {
+    val user = api.getUser("msfjarvis")
+    assertIs<Success<User>>(user)
+    assertThat(user.value.username).isEqualTo("msfjarvis")
+  }
 
-    test("get posts by single tag") {
-      var tags = Tags()
-      tags.addTag("meta")
-      val posts = api.getPostsByTags(tags, 1)
-      posts.shouldBeTypeOf<Success<List<LobstersPost>>>()
-      posts.value shouldHaveSize 25
-      posts.value[0].tags.contains("meta")
-    }
+  @Test
+  fun `get posts by single tag`() = runTest {
+    val tags = Tags()
+    tags.addTag("meta")
+    val posts = api.getPostsByTags(tags, 1)
+    assertIs<Success<List<LobstersPost>>>(posts)
+    assertThat(posts.value).hasSize(25)
+    assertThat(posts.value[0].tags).contains("meta")
+  }
 
-    test("get posts by multiple tags") {
-      var tags = Tags()
-      tags.addTag("programming")
-      tags.addTag("rust")
-      val posts = api.getPostsByTags(tags, 1)
-      posts.shouldBeTypeOf<Success<List<LobstersPost>>>()
-      posts.value shouldHaveSize 25
-      posts.value[0].tags.contains("programming") or posts.value[0].tags.contains("rust")
-    }
+  @Test
+  fun `get posts by multiple tags`() = runTest {
+    val tags = Tags()
+    tags.addTag("programming")
+    tags.addTag("rust")
+    val posts = api.getPostsByTags(tags, 1)
+    assertIs<Success<List<LobstersPost>>>(posts)
+    assertThat(posts.value).hasSize(25)
+    assertThat(posts.value[0].tags).containsAnyOf("programming", "rust")
   }
 }

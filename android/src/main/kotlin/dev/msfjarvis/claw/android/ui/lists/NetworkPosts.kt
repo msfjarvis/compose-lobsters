@@ -1,5 +1,5 @@
 /*
- * Copyright © 2021-2022 Harsh Shandilya.
+ * Copyright © 2021-2023 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -26,7 +26,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.items
+import androidx.paging.compose.itemContentType
+import androidx.paging.compose.itemKey
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.posts.toDbModel
 import dev.msfjarvis.claw.common.ui.NetworkError
@@ -57,7 +58,12 @@ fun NetworkPosts(
       LazyColumn(
         state = listState,
       ) {
-        items(items = lazyPagingItems, key = { it.shortId }) { item ->
+        items(
+          count = lazyPagingItems.itemCount,
+          key = lazyPagingItems.itemKey { it.shortId },
+          contentType = lazyPagingItems.itemContentType { "LobstersItem" },
+        ) { index ->
+          val item = lazyPagingItems[index]
           if (item != null) {
             val dbModel = item.toDbModel()
             ListItem(

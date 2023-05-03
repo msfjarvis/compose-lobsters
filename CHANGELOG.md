@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+*   Upgrade to Compose May release
+*   Disable Sentry performance reporting
+*   Migrate to Compose Foundation `FlowRow` in `LobstersCard`
+
 ## [1.25.0] - 2023-04-18
 
 ### Changed

@@ -8,41 +8,42 @@ package dev.msfjarvis.claw.database.local
 
 import app.cash.sqldelight.adapter.primitive.IntColumnAdapter
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
+import com.google.common.truth.Truth.assertThat
 import dev.msfjarvis.claw.database.LobstersDatabase
 import dev.msfjarvis.claw.database.model.CSVAdapter
-import io.kotest.core.spec.style.FunSpec
-import io.kotest.matchers.collections.shouldHaveSize
-import io.kotest.matchers.shouldBe
 import java.util.UUID
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
-class PostCommentsQueriesTest : FunSpec() {
+class PostCommentsQueriesTest {
   private lateinit var postQueries: PostCommentsQueries
 
-  init {
-    beforeEach {
-      val driver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
-      LobstersDatabase.Schema.create(driver)
-      val database =
-        LobstersDatabase(
-          driver,
-          PostComments.Adapter(CSVAdapter()),
-          SavedPost.Adapter(IntColumnAdapter, CSVAdapter()),
-        )
-      postQueries = database.postCommentsQueries
-    }
+  @BeforeEach
+  fun setup() {
+    val driver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
+    LobstersDatabase.Schema.create(driver)
+    val database =
+      LobstersDatabase(
+        driver,
+        PostComments.Adapter(CSVAdapter()),
+        SavedPost.Adapter(IntColumnAdapter, CSVAdapter()),
+      )
+    postQueries = database.postCommentsQueries
+  }
 
-    test("get non-existent post") {
-      val ids = postQueries.getCommentIds(UUID.randomUUID().toString()).executeAsOneOrNull()
-      ids shouldBe null
-    }
+  @Test
+  fun `get non-existent post`() {
+    val ids = postQueries.getCommentIds(UUID.randomUUID().toString()).executeAsOneOrNull()
+    assertThat(ids).isNull()
+  }
 
-    test("put and get post comments") {
-      val postId = UUID.randomUUID().toString()
-      val comments = PostComments(postId, List(10) { UUID.randomUUID().toString() })
-      postQueries.rememberComments(comments)
+  @Test
+  fun `put and get post comments`() {
+    val postId = UUID.randomUUID().toString()
+    val comments = PostComments(postId, List(10) { UUID.randomUUID().toString() })
+    postQueries.rememberComments(comments)
 
-      val ids = postQueries.getCommentIds(postId).executeAsOne().commentIds
-      ids shouldHaveSize 10
-    }
+    val ids = postQueries.getCommentIds(postId).executeAsOne().commentIds
+    assertThat(ids).hasSize(10)
   }
 }

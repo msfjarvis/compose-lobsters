@@ -33,8 +33,13 @@ dependencies {
   implementation(libs.sqldelight.primitiveAdapters)
   implementation(projects.core)
 
-  testImplementation(libs.kotest.assertions.core)
-  testImplementation(libs.kotest.runner.junit5)
+  testImplementation(libs.junit.jupiter.api)
+  testImplementation(libs.truth) { exclude(group = "junit", module = "junit") }
+  testRuntimeOnly(libs.junit.jupiter.engine)
+  testRuntimeOnly(libs.junit.legacy) {
+    // See https://github.com/google/truth/issues/333
+    because("Truth needs it")
+  }
   testImplementation(libs.kotlinx.coroutines.core)
   testImplementation(libs.sqldelight.jvmDriver)
 }

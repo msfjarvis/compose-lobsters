@@ -6,13 +6,23 @@
  */
 package dev.msfjarvis.claw.util
 
+import com.google.common.truth.Truth.assertThat
 import java.io.File
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.contract
 
+@OptIn(ExperimentalContracts::class)
 object TestUtils {
   fun getJson(path: String): String {
     // Load the JSON response
     val uri = javaClass.classLoader!!.getResource(path)
     val file = File(uri.path)
     return String(file.readBytes())
+  }
+
+  inline fun <reified T> assertIs(value: Any?): T {
+    contract { returns() implies (value is T) }
+    assertThat(value).isInstanceOf(T::class.java)
+    return value as T
   }
 }

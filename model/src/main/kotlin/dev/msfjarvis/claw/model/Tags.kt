@@ -17,6 +17,10 @@ class Tags {
     tags.remove(tag)
   }
 
+  operator fun contains(tag: String): Boolean {
+    return tag in tags
+  }
+
   override fun toString(): String {
     return tags.joinToString(",")
   }

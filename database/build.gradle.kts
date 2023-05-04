@@ -34,12 +34,13 @@ dependencies {
   implementation(projects.core)
 
   testImplementation(libs.junit.jupiter.api)
+  testImplementation(libs.kotlinx.coroutines.core)
+  testImplementation(libs.sqldelight.jvmDriver)
   testImplementation(libs.truth) { exclude(group = "junit", module = "junit") }
+
   testRuntimeOnly(libs.junit.jupiter.engine)
   testRuntimeOnly(libs.junit.legacy) {
     // See https://github.com/google/truth/issues/333
     because("Truth needs it")
   }
-  testImplementation(libs.kotlinx.coroutines.core)
-  testImplementation(libs.sqldelight.jvmDriver)
 }

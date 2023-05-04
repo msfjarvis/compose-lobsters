@@ -30,11 +30,9 @@ androidComponents { beforeVariants { it.enableUnitTest = false } }
 anvil { generateDaggerFactories.set(true) }
 
 dependencies {
-  implementation(platform(libs.androidx.compose.bom))
   api(libs.napier)
-  implementation(projects.core)
-  implementation(projects.database)
-  implementation(projects.model)
+
+  implementation(platform(libs.androidx.compose.bom))
   implementation(libs.androidx.browser)
   implementation(libs.androidx.compose.animation)
   implementation(libs.androidx.compose.foundation)
@@ -49,6 +47,7 @@ dependencies {
   implementation(libs.compose.richtext.ui)
   implementation(libs.kotlinx.collections.immutable)
   implementation(libs.kotlinx.coroutines.core)
-  testImplementation(kotlin("test-junit"))
-  testImplementation(libs.testparameterinjector)
+  implementation(projects.core)
+  implementation(projects.database)
+  implementation(projects.model)
 }

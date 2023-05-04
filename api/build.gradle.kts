@@ -25,13 +25,14 @@ dependencies {
 
   testImplementation(testFixtures(libs.eithernet))
   testImplementation(libs.junit.jupiter.api)
+  testImplementation(libs.kotlinx.coroutines.test)
+  testImplementation(libs.kotlinx.serialization.json)
+  testImplementation(libs.retrofit.kotlinxSerializationConverter)
   testImplementation(libs.truth) { exclude(group = "junit", module = "junit") }
+
   testRuntimeOnly(libs.junit.jupiter.engine)
   testRuntimeOnly(libs.junit.legacy) {
     // See https://github.com/google/truth/issues/333
     because("Truth needs it")
   }
-  testImplementation(libs.kotlinx.coroutines.test)
-  testImplementation(libs.kotlinx.serialization.json)
-  testImplementation(libs.retrofit.kotlinxSerializationConverter)
 }

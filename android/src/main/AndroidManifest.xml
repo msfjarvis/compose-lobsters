@@ -163,5 +163,14 @@
         <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
       </intent-filter>
     </receiver>
+    <!-- Required: set your sentry.io project identifier (DSN) -->
+    <meta-data android:name="io.sentry.dsn" android:value="${sentryDsn}" />
+    <!-- enable automatic breadcrumbs for user interactions (clicks, swipes, scrolls) -->
+    <meta-data android:name="io.sentry.traces.user-interaction.enable" android:value="${enableSentry}" />
+    <meta-data android:name="io.sentry.breadcrumbs.user-interaction" android:value="${enableSentry}" />
+    <!-- enable screenshot for crashes -->
+    <meta-data android:name="io.sentry.attach-screenshot" android:value="${enableSentry}" />
+    <!-- enable view hierarchy for crashes -->
+    <meta-data android:name="io.sentry.attach-view-hierarchy" android:value="${enableSentry}" />
   </application>
 </manifest>

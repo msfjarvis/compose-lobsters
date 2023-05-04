@@ -29,6 +29,15 @@ class SentryPlugin : Plugin<Project> {
           val sentryDsn = project.providers.environmentVariable(SENTRY_DSN_PROPERTY)
           variant.manifestPlaceholders.put("sentryDsn", sentryDsn.getOrElse(""))
         }
+        onVariants(selector().withBuildType("benchmark")) { variant ->
+          variant.manifestPlaceholders.put("enableSentry", "false")
+        }
+        onVariants(selector().withBuildType("debug")) { variant ->
+          variant.manifestPlaceholders.put("enableSentry", "false")
+        }
+        onVariants(selector().withBuildType("release")) { variant ->
+          variant.manifestPlaceholders.put("enableSentry", "true")
+        }
       }
       project.plugins.apply(io.sentry.android.gradle.SentryPlugin::class)
       project.extensions.configure<SentryPluginExtension> {

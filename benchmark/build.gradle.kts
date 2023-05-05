@@ -17,7 +17,10 @@ plugins {
 android {
   namespace = "dev.msfjarvis.claw.benchmark"
 
-  defaultConfig { testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner" }
+  defaultConfig {
+    minSdk = 28
+    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+  }
 
   buildTypes {
     create("benchmark") {

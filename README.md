@@ -8,11 +8,11 @@ Unofficial Android app for read-only access to [lobste.rs](https://lobste.rs), b
        height="80" />
 </a>
 
+> Snapshots from the development branch can be obtained [here](https://github.com/msfjarvis/compose-lobsters/releases/tag/nightly).
+
 <img src="https://github.com/msfjarvis/compose-lobsters/blob/main/.github/readme_feature.webp"
      alt="Side by side screenshots of the app's main page in dark and light UI modes"
      height="550" />
-
-Snapshots from the development branch can be obtained [here](https://github.com/msfjarvis/compose-lobsters/releases/tag/nightly).
 
 ## Dependency Diagram
 ```mermaid

@@ -77,7 +77,6 @@ gradlePlugin {
 dependencies {
   implementation(libs.build.agp)
   implementation(libs.build.cachefix)
-  implementation(libs.build.depsort)
   implementation(libs.build.kotlin.gradle)
   implementation(libs.build.semver)
   implementation(libs.build.sentry)

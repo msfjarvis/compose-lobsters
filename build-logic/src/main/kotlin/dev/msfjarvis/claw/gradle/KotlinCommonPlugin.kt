@@ -6,14 +6,12 @@
  */
 package dev.msfjarvis.claw.gradle
 
-import com.squareup.sort.SortDependenciesPlugin
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.compile.JavaCompile
 import org.gradle.api.tasks.testing.Test
 import org.gradle.api.tasks.testing.logging.TestLogEvent
-import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
@@ -28,7 +26,6 @@ class KotlinCommonPlugin : Plugin<Project> {
     } else if (project.name != "benchmark") {
       LintConfig.configureSubProject(project)
     }
-    project.pluginManager.apply(SortDependenciesPlugin::class)
     project.tasks.run {
       withType<JavaCompile>().configureEach {
         sourceCompatibility = JavaVersion.VERSION_11.toString()

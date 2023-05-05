@@ -4,6 +4,8 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
+import dev.msfjarvis.claw.gradle.addTestDependencies
+
 plugins {
   id("dev.msfjarvis.claw.android-library")
   id("dev.msfjarvis.claw.kotlin-android")
@@ -33,14 +35,7 @@ dependencies {
   implementation(libs.sqldelight.primitiveAdapters)
   implementation(projects.core)
 
-  testImplementation(libs.junit.jupiter.api)
   testImplementation(libs.kotlinx.coroutines.core)
   testImplementation(libs.sqldelight.jvmDriver)
-  testImplementation(libs.truth) { exclude(group = "junit", module = "junit") }
-
-  testRuntimeOnly(libs.junit.jupiter.engine)
-  testRuntimeOnly(libs.junit.legacy) {
-    // See https://github.com/google/truth/issues/333
-    because("Truth needs it")
-  }
+  addTestDependencies(project)
 }

@@ -6,6 +6,8 @@
  */
 @file:Suppress("UnstableApiUsage")
 
+import dev.msfjarvis.claw.gradle.addTestDependencies
+
 plugins {
   id("dev.msfjarvis.claw.android-application")
   id("dev.msfjarvis.claw.rename-artifacts")
@@ -74,14 +76,7 @@ dependencies {
 
   kapt(libs.dagger.compiler)
 
-  testImplementation(libs.junit.jupiter.api)
   testImplementation(libs.kotlinx.coroutines.test)
   testImplementation(libs.okhttp.mockwebserver)
-  testImplementation(libs.truth) { exclude(group = "junit", module = "junit") }
-
-  testRuntimeOnly(libs.junit.jupiter.engine)
-  testRuntimeOnly(libs.junit.legacy) {
-    // See https://github.com/google/truth/issues/333
-    because("Truth needs it")
-  }
+  addTestDependencies(project)
 }

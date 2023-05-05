@@ -58,7 +58,7 @@ fun ClawNavigationBar(
             Crossfade(isCurrentDestination, label = "nav-label") {
               Icon(
                 painter = if (it) navItem.selectedIcon else navItem.icon,
-                contentDescription = navItem.label.uppercase()
+                contentDescription = navItem.label.replaceFirstChar(Char::uppercase),
               )
             }
           },

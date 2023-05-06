@@ -30,7 +30,11 @@ androidComponents { beforeVariants { it.enableUnitTest = false } }
 anvil { generateDaggerFactories.set(true) }
 
 dependencies {
-  api(libs.napier)
+  api(projects.core)
+  api(projects.database)
+  api(projects.model)
+
+  compileOnly(libs.androidx.compose.ui.tooling.preview)
 
   implementation(platform(libs.androidx.compose.bom))
   implementation(libs.androidx.browser)
@@ -39,15 +43,13 @@ dependencies {
   implementation(libs.androidx.compose.material3)
   implementation(libs.androidx.compose.runtime)
   implementation(libs.androidx.compose.ui.text)
-  implementation(libs.androidx.compose.ui.tooling)
-  implementation(libs.androidx.compose.ui.tooling.preview)
   implementation(libs.coil.compose)
   implementation(libs.compose.richtext.markdown)
   implementation(libs.compose.richtext.material3)
   implementation(libs.compose.richtext.ui)
   implementation(libs.kotlinx.collections.immutable)
   implementation(libs.kotlinx.coroutines.core)
-  implementation(projects.core)
-  implementation(projects.database)
-  implementation(projects.model)
+  implementation(libs.napier)
+
+  runtimeOnly(libs.androidx.compose.ui.tooling)
 }

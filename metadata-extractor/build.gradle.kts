@@ -8,11 +8,10 @@ plugins { id("dev.msfjarvis.claw.kotlin-jvm") }
 
 dependencies {
   api(libs.crux)
+  api(libs.javax.inject)
+  api(libs.okhttp.core)
+  api(projects.model)
 
   implementation(platform(libs.okhttp.bom))
-  implementation(libs.javax.inject)
   implementation(libs.jsoup)
-  implementation(libs.kotlinx.coroutines.core)
-  implementation(libs.okhttp.core)
-  implementation(projects.model)
 }

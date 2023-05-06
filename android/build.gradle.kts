@@ -65,6 +65,7 @@ dependencies {
   implementation(libs.jsoup)
   implementation(libs.kotlinx.collections.immutable)
   implementation(libs.kotlinx.coroutines.core)
+  implementation(libs.napier)
   implementation(libs.sqldelight.extensions.coroutines)
   implementation(projects.api)
   implementation(projects.common)

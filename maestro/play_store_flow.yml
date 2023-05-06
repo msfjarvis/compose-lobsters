@@ -6,7 +6,7 @@ appId: dev.msfjarvis.claw.android
     index: 0
 - tapOn:
     text: "Add to saved posts"
-    index: 2
+    index: 1
 - takeScreenshot: "HottestPosts"
 - tapOn: "Saved"
 - takeScreenshot: "SavedPosts"

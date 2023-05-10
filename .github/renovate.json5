@@ -19,6 +19,12 @@
     },
     {
       "matchPackagePatterns": [
+        "^androidx.*",
+      ],
+      "groupName": "androidx"
+    },
+    {
+      "matchPackagePatterns": [
         "^kotlin",
         "^org.jetbrains.kotlin",
         "^androidx.compose.compiler",

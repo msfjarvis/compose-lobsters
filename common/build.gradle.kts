@@ -34,8 +34,6 @@ dependencies {
   api(projects.database)
   api(projects.model)
 
-  compileOnly(libs.androidx.compose.ui.tooling.preview)
-
   implementation(platform(libs.androidx.compose.bom))
   implementation(libs.androidx.browser)
   implementation(libs.androidx.compose.animation)
@@ -50,6 +48,8 @@ dependencies {
   implementation(libs.kotlinx.collections.immutable)
   implementation(libs.kotlinx.coroutines.core)
   implementation(libs.napier)
+
+  compileOnly(libs.androidx.compose.ui.tooling.preview)
 
   runtimeOnly(libs.androidx.compose.ui.tooling)
 }

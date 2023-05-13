@@ -213,9 +213,12 @@ internal fun TagRow(
   tags: ImmutableList<String>,
   modifier: Modifier = Modifier,
 ) {
-  FlowRow(verticalAlignment = Alignment.CenterVertically, modifier = modifier) {
+  FlowRow(
+    modifier = modifier,
+    horizontalArrangement = Arrangement.spacedBy(8.dp),
+  ) {
     tags.forEach { tag ->
-      TagText(tag = tag, modifier = Modifier.padding(end = 8.dp, top = 4.dp, bottom = 4.dp))
+      TagText(tag = tag, modifier = Modifier.padding(top = 4.dp, bottom = 4.dp))
     }
   }
 }

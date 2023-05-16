@@ -28,15 +28,15 @@ class KotlinCommonPlugin : Plugin<Project> {
     }
     project.tasks.run {
       withType<JavaCompile>().configureEach {
-        sourceCompatibility = JavaVersion.VERSION_11.toString()
-        targetCompatibility = JavaVersion.VERSION_11.toString()
+        sourceCompatibility = JavaVersion.VERSION_17.toString()
+        targetCompatibility = JavaVersion.VERSION_17.toString()
       }
       withType<KotlinJvmCompile>().configureEach {
         compilerOptions {
           allWarningsAsErrors.set(
             project.providers.environmentVariable("GITHUB_WORKFLOW").isPresent
           )
-          jvmTarget.set(JvmTarget.JVM_11)
+          jvmTarget.set(JvmTarget.JVM_17)
           freeCompilerArgs.addAll(ADDITIONAL_COMPILER_ARGS)
           languageVersion.set(KotlinVersion.KOTLIN_1_7)
         }

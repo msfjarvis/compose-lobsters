@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+*   Small accessibility improvements
+*   Slightly tweak the layout for story items to take less vertical space
+*   Upgrade to Compose `-alpha04` release
+
 ## [1.26.0] - 2023-05-03
 
 ### Changed

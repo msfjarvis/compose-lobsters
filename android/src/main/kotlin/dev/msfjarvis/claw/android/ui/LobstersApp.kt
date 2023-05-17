@@ -209,6 +209,7 @@ fun LobstersApp(
             listOf(navDeepLink { uriPattern = "$uri/u/${Destinations.User.placeholder}" }),
         ) { backStackEntry ->
           val username = requireNotNull(backStackEntry.arguments?.getString("username"))
+          setWebUri("https://lobste.rs/u/$username")
           UserProfile(
             username = username,
             getProfile = viewModel::getUserProfile,

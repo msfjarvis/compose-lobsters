@@ -8,7 +8,14 @@ package dev.msfjarvis.claw.android.ui
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.NewReleases
+import androidx.compose.material.icons.filled.Whatshot
+import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material.icons.outlined.NavigateBefore
+import androidx.compose.material.icons.outlined.NewReleases
+import androidx.compose.material.icons.outlined.Whatshot
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -19,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
@@ -45,7 +53,6 @@ import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.common.comments.CommentsPage
 import dev.msfjarvis.claw.common.comments.HTMLConverter
-import dev.msfjarvis.claw.common.res.ClawIcons
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.decorations.ClawAppBar
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
@@ -54,10 +61,7 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.coroutines.launch
 
-@OptIn(
-  ExperimentalComposeUiApi::class,
-  ExperimentalMaterial3Api::class,
-)
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun LobstersApp(
   urlLauncher: UrlLauncher,
@@ -89,24 +93,24 @@ fun LobstersApp(
         NavigationItem(
           label = "Hottest",
           route = Destinations.Hottest.route,
-          icon = ClawIcons.Flame,
-          selectedIcon = ClawIcons.FlameFilled,
+          icon = rememberVectorPainter(Icons.Outlined.Whatshot),
+          selectedIcon = rememberVectorPainter(Icons.Filled.Whatshot),
         ) {
           coroutineScope.launch { hottestListState.animateScrollToItem(index = 0) }
         },
         NavigationItem(
           label = "Newest",
           route = Destinations.Newest.route,
-          icon = ClawIcons.New,
-          selectedIcon = ClawIcons.NewFilled,
+          icon = rememberVectorPainter(Icons.Outlined.NewReleases),
+          selectedIcon = rememberVectorPainter(Icons.Filled.NewReleases),
         ) {
           coroutineScope.launch { newestListState.animateScrollToItem(index = 0) }
         },
         NavigationItem(
           label = "Saved",
           route = Destinations.Saved.route,
-          icon = ClawIcons.HeartBorder,
-          selectedIcon = ClawIcons.Heart,
+          icon = rememberVectorPainter(Icons.Outlined.FavoriteBorder),
+          selectedIcon = rememberVectorPainter(Icons.Filled.Favorite),
         ) {
           coroutineScope.launch { savedListState.animateScrollToItem(index = 0) }
         },
@@ -123,7 +127,7 @@ fun LobstersApp(
                 onClick = { if (!navController.popBackStack()) context.getActivity()?.finish() }
               ) {
                 Icon(
-                  painter = ClawIcons.ArrowBack,
+                  painter = rememberVectorPainter(Icons.Outlined.NavigateBefore),
                   contentDescription = "Go back to previous screen",
                 )
               }

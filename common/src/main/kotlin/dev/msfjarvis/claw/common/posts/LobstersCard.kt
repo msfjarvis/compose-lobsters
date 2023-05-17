@@ -26,6 +26,11 @@ import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.outlined.Comment
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Divider
@@ -41,11 +46,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import dev.msfjarvis.claw.common.res.ClawIcons
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
@@ -149,7 +154,7 @@ internal fun Submitter(
   ) {
     NetworkImage(
       url = avatarUrl,
-      placeholder = ClawIcons.Account,
+      placeholder = rememberVectorPainter(Icons.Filled.AccountCircle),
       contentDescription = contentDescription,
       modifier = Modifier.requiredSize(24.dp).clip(CircleShape),
     )
@@ -166,10 +171,13 @@ private fun SaveButton(
   Crossfade(targetState = isSaved, label = "save-button") { saved ->
     Box(modifier = modifier.padding(12.dp)) {
       Icon(
-        painter = if (saved) ClawIcons.Heart else ClawIcons.HeartBorder,
+        painter =
+          rememberVectorPainter(
+            if (saved) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder
+          ),
         tint = MaterialTheme.colorScheme.secondary,
         contentDescription = if (saved) "Remove from saved posts" else "Add to saved posts",
-        modifier = Modifier.align(Alignment.Center)
+        modifier = Modifier.align(Alignment.Center),
       )
     }
   }
@@ -199,7 +207,7 @@ private fun CommentsButton(
     },
   ) {
     Icon(
-      painter = ClawIcons.Comment,
+      painter = rememberVectorPainter(Icons.Outlined.Comment),
       tint = MaterialTheme.colorScheme.secondary,
       contentDescription = "Open comments",
       modifier = Modifier.align(Alignment.Center),

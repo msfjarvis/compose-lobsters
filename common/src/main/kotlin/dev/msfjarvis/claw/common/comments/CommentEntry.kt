@@ -8,7 +8,6 @@ package dev.msfjarvis.claw.common.comments
 
 import android.text.format.DateUtils
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -21,6 +20,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Public
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -29,6 +30,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
@@ -41,7 +43,6 @@ import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.posts.PostTitle
 import dev.msfjarvis.claw.common.posts.Submitter
 import dev.msfjarvis.claw.common.posts.TagRow
-import dev.msfjarvis.claw.common.res.ClawIcons
 import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.common.ui.ThemedRichText
 import dev.msfjarvis.claw.model.LinkMetadata
@@ -115,7 +116,7 @@ private fun PostLink(
     Row(modifier = Modifier.padding(16.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
       NetworkImage(
         url = linkMetadata.faviconUrl,
-        placeholder = ClawIcons.Web,
+        placeholder = rememberVectorPainter(Icons.Filled.Public),
         contentDescription = "",
         modifier = Modifier.size(24.dp),
       )
@@ -132,7 +133,6 @@ private fun PostLink(
 
 private val CommentEntryPadding = 16f.dp
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 internal fun CommentEntry(
   commentNode: CommentNode,
@@ -170,7 +170,10 @@ internal fun CommentEntry(
         modifier =
           Modifier.clickable { uriHandler.openUri("https://lobste.rs/u/${comment.user.username}") },
       )
-      AnimatedContent(targetState = commentNode.isExpanded) { expandedState ->
+      AnimatedContent(
+        label = "comment_body",
+        targetState = commentNode.isExpanded,
+      ) { expandedState ->
         if (expandedState) {
           ThemedRichText(
             text = htmlConverter.convertHTMLToMarkdown(comment.comment),

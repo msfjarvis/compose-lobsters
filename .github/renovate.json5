@@ -29,6 +29,7 @@
         "^org.jetbrains.kotlin",
         "^androidx.compose.compiler",
         "^anvil",
+        "^coil",
       ],
       "enabled": false
     },

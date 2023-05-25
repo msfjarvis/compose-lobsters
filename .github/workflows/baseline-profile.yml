@@ -26,6 +26,10 @@ jobs:
         distribution: temurin
         java-version: 18
 
+    - name: Accept all SDK licenses
+      shell: bash
+      run: printf 'y\ny\ny\ny\ny\n' | $ANDROID_HOME/tools/bin/sdkmanager --licenses
+
     - name: Set up Git author
       shell: bash
       run: |

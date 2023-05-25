@@ -1,6 +1,6 @@
 [versions]
 accompanist = "0.30.1"
-agp = "8.0.2"
+agp = "8.2.0-alpha04"
 coil = "2.4.0"
 # @keep used for kotlinCompilerExtensionVersion
 composeCompiler = "1.4.4"
@@ -48,6 +48,7 @@ androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version
 build-agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 build-cachefix = "org.gradle.android.cache-fix:org.gradle.android.cache-fix.gradle.plugin:2.7.1"
 build-kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+build-r8 = "com.android.tools:r8:8.2.8-dev"
 build-semver = "com.vdurmont:semver4j:3.1.0"
 build-sentry = "io.sentry.android.gradle:io.sentry.android.gradle.gradle.plugin:3.7.0"
 build-spotless = "com.diffplug.spotless:spotless-plugin-gradle:6.19.0"

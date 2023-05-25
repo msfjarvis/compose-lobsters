@@ -11,6 +11,7 @@ package dev.msfjarvis.claw.gradle
 import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.LibraryExtension
 import com.android.build.api.variant.ApplicationAndroidComponentsExtension
+import com.android.build.api.variant.HasUnitTestBuilder
 import com.android.build.api.variant.LibraryAndroidComponentsExtension
 import com.android.build.gradle.BaseExtension
 import dev.msfjarvis.claw.gradle.LintConfig.configureLint
@@ -73,7 +74,7 @@ private fun Project.configureSlimTests() {
   // Disable unit test tasks on the release build type for Android Library projects
   extensions.findByType<LibraryAndroidComponentsExtension>()?.run {
     beforeVariants(selector().withBuildType("release")) {
-      it.enableUnitTest = false
+      (it as HasUnitTestBuilder).enableUnitTest = false
       it.enableAndroidTest = false
     }
   }
@@ -81,7 +82,7 @@ private fun Project.configureSlimTests() {
   // Disable unit test tasks on the release build type for Android Application projects.
   extensions.findByType<ApplicationAndroidComponentsExtension>()?.run {
     beforeVariants(selector().withBuildType("release")) {
-      it.enableUnitTest = false
+      (it as HasUnitTestBuilder).enableUnitTest = false
       it.enableAndroidTest = false
     }
   }

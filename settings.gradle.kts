@@ -49,7 +49,7 @@ pluginManagement {
       filter { includeGroup("dev.msfjarvis.whetstone") }
     }
     exclusiveContent {
-      forRepository { maven("https://storage.googleapis.com/r8-releases/raw") }
+      forRepository { maven("https://storage.googleapis.com/r8-releases/raw/main") }
       filter { includeModule("com.android.tools", "r8") }
     }
     includeBuild("build-logic")

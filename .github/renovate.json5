@@ -86,18 +86,6 @@
       "datasourceTemplate": "maven",
       "depNameTemplate": "io.sentry:sentry-android",
       "registryUrlTemplate": "https://repo1.maven.org/maven2/",
-    },
-    {
-      "fileMatch": [
-        "gradle/libs.versions.toml"
-      ],
-      "matchStrings": [
-        "r8 = \"(?<currentDigest>.*)\""
-      ],
-      "currentValueTemplate": "main",
-      "depNameTemplate": "r8",
-      "packageNameTemplate": "https://r8.googlesource.com/r8.git",
-      "datasourceTemplate": "git-refs",
     }
   ]
 }

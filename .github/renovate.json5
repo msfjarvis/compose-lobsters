@@ -47,8 +47,8 @@
       "packagePatterns": [
         // Renovate refuses to stop resolving this from the snapshots repo
         "^app.cash.sqldelight",
-        // I want this to be resolved from the Git datasource rather than Maven
-        "^r8",
+        // Currently on a pre-release version for bugfixes
+        "com.android.tools:r8",
       ],
       "enabled": false
     },

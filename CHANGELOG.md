@@ -11,7 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 *   Small accessibility improvements
 *   Slightly tweak the layout for story items to take less vertical space
-*   Upgrade to Compose `-alpha04` release
+*   Upgrade to Compose `1.5.0-beta01` release
+*   Set accessibility web URI for profile screen
+*   Directly use Material Icons from upstream artifacts
+*   Upgrade dependencies
 
 ## [1.26.0] - 2023-05-03
 

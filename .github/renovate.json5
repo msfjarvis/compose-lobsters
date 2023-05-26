@@ -47,6 +47,8 @@
       "packagePatterns": [
         // Renovate refuses to stop resolving this from the snapshots repo
         "^app.cash.sqldelight",
+        // I want this to be resolved from the Git datasource rather than Maven
+        "^r8",
       ],
       "enabled": false
     },

@@ -67,13 +67,13 @@ fun ClawNavigationBar(
           onClick = {
             if (isCurrentDestination) {
               navItem.listStateResetCallback()
-              return@NavigationBarItem
-            }
-            navController.graph.startDestinationRoute?.let { startDestination ->
-              navController.popBackStack(startDestination, false)
-            }
-            if (navItem.route != Destinations.startDestination.route) {
-              navController.navigate(navItem.route)
+            } else {
+              navController.graph.startDestinationRoute?.let { startDestination ->
+                navController.popBackStack(startDestination, false)
+              }
+              if (navItem.route != Destinations.startDestination.route) {
+                navController.navigate(navItem.route)
+              }
             }
           },
           modifier = Modifier.testTag(navItem.label.uppercase()),

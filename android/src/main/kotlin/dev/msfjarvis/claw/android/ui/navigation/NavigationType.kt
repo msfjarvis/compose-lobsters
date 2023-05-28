@@ -15,7 +15,6 @@ enum class ClawNavigationType {
   companion object {
     fun fromSize(windowSize: WindowWidthSizeClass): ClawNavigationType {
       return when (windowSize) {
-        WindowWidthSizeClass.Compact -> BOTTOM_NAVIGATION
         WindowWidthSizeClass.Medium,
         WindowWidthSizeClass.Expanded -> NAVIGATION_RAIL
         else -> BOTTOM_NAVIGATION

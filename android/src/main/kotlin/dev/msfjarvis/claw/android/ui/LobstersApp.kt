@@ -160,7 +160,7 @@ fun LobstersApp(
       modifier = modifier.semantics { testTagsAsResourceId = true },
     ) { paddingValues ->
       Row(modifier = Modifier.padding(paddingValues)) {
-        AnimatedVisibility(visible = navigationType != ClawNavigationType.BOTTOM_NAVIGATION) {
+        AnimatedVisibility(visible = navigationType == ClawNavigationType.NAVIGATION_RAIL) {
           ClawNavigationRail(
             navController = navController,
             items = navItems,

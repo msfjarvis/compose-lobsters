@@ -6,6 +6,8 @@
  */
 package dev.msfjarvis.claw.android.ui
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
@@ -20,6 +22,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -44,10 +47,12 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.deliveryhero.whetstone.compose.injectedViewModel
 import dev.msfjarvis.claw.android.R
 import dev.msfjarvis.claw.android.ui.decorations.ClawNavigationBar
+import dev.msfjarvis.claw.android.ui.decorations.ClawNavigationRail
 import dev.msfjarvis.claw.android.ui.decorations.NavigationItem
 import dev.msfjarvis.claw.android.ui.decorations.TransparentSystemBars
 import dev.msfjarvis.claw.android.ui.lists.DatabasePosts
 import dev.msfjarvis.claw.android.ui.lists.NetworkPosts
+import dev.msfjarvis.claw.android.ui.navigation.ClawNavigationType
 import dev.msfjarvis.claw.android.ui.navigation.Destinations
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.api.LobstersApi
@@ -66,6 +71,7 @@ import kotlinx.coroutines.launch
 fun LobstersApp(
   urlLauncher: UrlLauncher,
   htmlConverter: HTMLConverter,
+  windowSizeClass: WindowSizeClass,
   setWebUri: (String?) -> Unit,
   modifier: Modifier = Modifier,
   viewModel: ClawViewModel = injectedViewModel(),
@@ -83,6 +89,8 @@ fun LobstersApp(
   val hottestPosts = viewModel.hottestPosts.collectAsLazyPagingItems()
   val newestPosts = viewModel.newestPosts.collectAsLazyPagingItems()
   val savedPosts by viewModel.savedPosts.collectAsState(persistentMapOf())
+
+  val navigationType = ClawNavigationType.fromSize(windowSizeClass.widthSizeClass)
 
   LobstersTheme(
     dynamicColor = true,
@@ -141,83 +149,94 @@ fun LobstersApp(
         )
       },
       bottomBar = {
-        ClawNavigationBar(
-          navController = navController,
-          items = navItems,
-          isVisible = navItems.any { it.route == currentDestination },
-        )
+        AnimatedVisibility(visible = navigationType == ClawNavigationType.BOTTOM_NAVIGATION) {
+          ClawNavigationBar(
+            navController = navController,
+            items = navItems,
+            isVisible = navItems.any { it.route == currentDestination },
+          )
+        }
       },
       modifier = modifier.semantics { testTagsAsResourceId = true },
     ) { paddingValues ->
-      NavHost(
-        navController = navController,
-        startDestination = Destinations.startDestination.route,
-        modifier = Modifier.padding(paddingValues),
-      ) {
-        val uri = LobstersApi.BASE_URL
-        composable(
-          route = Destinations.Hottest.route,
-          deepLinks =
-            listOf(navDeepLink { uriPattern = uri }, navDeepLink { uriPattern = "$uri/" }),
+      Row(modifier = Modifier.padding(paddingValues)) {
+        AnimatedVisibility(visible = navigationType != ClawNavigationType.BOTTOM_NAVIGATION) {
+          ClawNavigationRail(
+            navController = navController,
+            items = navItems,
+            isVisible = navItems.any { it.route == currentDestination },
+          )
+        }
+
+        NavHost(
+          navController = navController,
+          startDestination = Destinations.startDestination.route,
         ) {
-          setWebUri("https://lobste.rs/")
-          NetworkPosts(
-            lazyPagingItems = hottestPosts,
-            listState = hottestListState,
-            isPostSaved = viewModel::isPostSaved,
-            postActions = postActions,
-          )
-        }
-        composable(
-          route = Destinations.Newest.route,
-        ) {
-          setWebUri("https://lobste.rs/")
-          NetworkPosts(
-            lazyPagingItems = newestPosts,
-            listState = newestListState,
-            isPostSaved = viewModel::isPostSaved,
-            postActions = postActions,
-          )
-        }
-        composable(Destinations.Saved.route) {
-          setWebUri(null)
-          DatabasePosts(
-            items = savedPosts,
-            listState = savedListState,
-            postActions = postActions,
-          )
-        }
-        composable(
-          route = Destinations.Comments.route,
-          arguments = listOf(navArgument("postId") { type = NavType.StringType }),
-          deepLinks =
-            listOf(
-              navDeepLink { uriPattern = "$uri/s/${Destinations.Comments.placeholder}/.*" },
-              navDeepLink { uriPattern = "$uri/s/${Destinations.Comments.placeholder}" },
-            ),
-        ) { backStackEntry ->
-          val postId = requireNotNull(backStackEntry.arguments?.getString("postId"))
-          setWebUri("https://lobste.rs/s/$postId")
-          CommentsPage(
-            postId = postId,
-            postActions = postActions,
-            htmlConverter = htmlConverter,
-            getSeenComments = viewModel::getSeenComments,
-            markSeenComments = viewModel::markSeenComments,
-          )
-        }
-        composable(
-          route = Destinations.User.route,
-          arguments = listOf(navArgument("username") { type = NavType.StringType }),
-          deepLinks =
-            listOf(navDeepLink { uriPattern = "$uri/u/${Destinations.User.placeholder}" }),
-        ) { backStackEntry ->
-          val username = requireNotNull(backStackEntry.arguments?.getString("username"))
-          setWebUri("https://lobste.rs/u/$username")
-          UserProfile(
-            username = username,
-            getProfile = viewModel::getUserProfile,
-          )
+          val uri = LobstersApi.BASE_URL
+          composable(
+            route = Destinations.Hottest.route,
+            deepLinks =
+              listOf(navDeepLink { uriPattern = uri }, navDeepLink { uriPattern = "$uri/" }),
+          ) {
+            setWebUri("https://lobste.rs/")
+            NetworkPosts(
+              lazyPagingItems = hottestPosts,
+              listState = hottestListState,
+              isPostSaved = viewModel::isPostSaved,
+              postActions = postActions,
+            )
+          }
+          composable(
+            route = Destinations.Newest.route,
+          ) {
+            setWebUri("https://lobste.rs/")
+            NetworkPosts(
+              lazyPagingItems = newestPosts,
+              listState = newestListState,
+              isPostSaved = viewModel::isPostSaved,
+              postActions = postActions,
+            )
+          }
+          composable(Destinations.Saved.route) {
+            setWebUri(null)
+            DatabasePosts(
+              items = savedPosts,
+              listState = savedListState,
+              postActions = postActions,
+            )
+          }
+          composable(
+            route = Destinations.Comments.route,
+            arguments = listOf(navArgument("postId") { type = NavType.StringType }),
+            deepLinks =
+              listOf(
+                navDeepLink { uriPattern = "$uri/s/${Destinations.Comments.placeholder}/.*" },
+                navDeepLink { uriPattern = "$uri/s/${Destinations.Comments.placeholder}" },
+              ),
+          ) { backStackEntry ->
+            val postId = requireNotNull(backStackEntry.arguments?.getString("postId"))
+            setWebUri("https://lobste.rs/s/$postId")
+            CommentsPage(
+              postId = postId,
+              postActions = postActions,
+              htmlConverter = htmlConverter,
+              getSeenComments = viewModel::getSeenComments,
+              markSeenComments = viewModel::markSeenComments,
+            )
+          }
+          composable(
+            route = Destinations.User.route,
+            arguments = listOf(navArgument("username") { type = NavType.StringType }),
+            deepLinks =
+              listOf(navDeepLink { uriPattern = "$uri/u/${Destinations.User.placeholder}" }),
+          ) { backStackEntry ->
+            val username = requireNotNull(backStackEntry.arguments?.getString("username"))
+            setWebUri("https://lobste.rs/u/$username")
+            UserProfile(
+              username = username,
+              getProfile = viewModel::getUserProfile,
+            )
+          }
         }
       }
     }

@@ -109,6 +109,7 @@ dependencyResolutionManagement {
         includeGroup("androidx.vectordrawable")
         includeGroup("androidx.versionedparcelable")
         includeGroup("androidx.viewpager")
+        includeGroup("androidx.window")
         includeGroup("androidx.work")
         includeGroup("com.android")
         includeGroup("com.android.tools")

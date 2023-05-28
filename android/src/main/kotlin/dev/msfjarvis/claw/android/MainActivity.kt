@@ -11,6 +11,8 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import com.deliveryhero.whetstone.Whetstone
@@ -27,15 +29,19 @@ class MainActivity : ComponentActivity() {
   @Inject lateinit var htmlConverter: HTMLConverter
   private var webUri: String? = null
 
+  @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     installSplashScreen()
     Whetstone.inject(this)
     WindowCompat.setDecorFitsSystemWindows(window, false)
     setContent {
+      val windowSizeClass = calculateWindowSizeClass(this)
+
       LobstersApp(
         urlLauncher = urlLauncher,
         htmlConverter = htmlConverter,
+        windowSizeClass = windowSizeClass,
         setWebUri = { url -> webUri = url },
       )
     }

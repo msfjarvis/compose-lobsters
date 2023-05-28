@@ -13,22 +13,20 @@ import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationRail
+import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.testTag
 import androidx.navigation.NavController
 import dev.msfjarvis.claw.android.ui.navigation.Destinations
 import kotlinx.collections.immutable.ImmutableList
 
-const val AnimationDuration = 100
-
 @Composable
-fun ClawNavigationBar(
+fun ClawNavigationRail(
   navController: NavController,
   items: ImmutableList<NavigationItem>,
   isVisible: Boolean,
@@ -50,10 +48,11 @@ fun ClawNavigationBar(
       ),
     modifier = Modifier,
   ) {
-    NavigationBar(modifier = modifier) {
+    NavigationRail(modifier = modifier) {
+      Spacer(Modifier.weight(1f))
       items.forEach { navItem ->
         val isCurrentDestination = navController.currentDestination?.route == navItem.route
-        NavigationBarItem(
+        NavigationRailItem(
           icon = {
             Crossfade(isCurrentDestination, label = "nav-label") {
               Icon(
@@ -67,7 +66,7 @@ fun ClawNavigationBar(
           onClick = {
             if (isCurrentDestination) {
               navItem.listStateResetCallback()
-              return@NavigationBarItem
+              return@NavigationRailItem
             }
             navController.graph.startDestinationRoute?.let { startDestination ->
               navController.popBackStack(startDestination, false)
@@ -79,14 +78,7 @@ fun ClawNavigationBar(
           modifier = Modifier.testTag(navItem.label.uppercase()),
         )
       }
+      Spacer(Modifier.weight(1f))
     }
   }
 }
-
-class NavigationItem(
-  val label: String,
-  val route: String,
-  val icon: Painter,
-  val selectedIcon: Painter,
-  val listStateResetCallback: () -> Unit,
-)

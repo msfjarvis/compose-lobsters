@@ -173,11 +173,7 @@ fun LobstersApp(
           startDestination = Destinations.startDestination.route,
         ) {
           val uri = LobstersApi.BASE_URL
-          composable(
-            route = Destinations.Hottest.route,
-            deepLinks =
-              listOf(navDeepLink { uriPattern = uri }, navDeepLink { uriPattern = "$uri/" }),
-          ) {
+          composable(route = Destinations.Hottest.route) {
             setWebUri("https://lobste.rs/")
             NetworkPosts(
               lazyPagingItems = hottestPosts,
@@ -186,9 +182,7 @@ fun LobstersApp(
               postActions = postActions,
             )
           }
-          composable(
-            route = Destinations.Newest.route,
-          ) {
+          composable(route = Destinations.Newest.route) {
             setWebUri("https://lobste.rs/")
             NetworkPosts(
               lazyPagingItems = newestPosts,
@@ -197,7 +191,7 @@ fun LobstersApp(
               postActions = postActions,
             )
           }
-          composable(Destinations.Saved.route) {
+          composable(route = Destinations.Saved.route) {
             setWebUri(null)
             DatabasePosts(
               items = savedPosts,

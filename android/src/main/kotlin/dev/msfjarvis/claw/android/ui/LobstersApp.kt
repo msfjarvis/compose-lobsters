@@ -6,7 +6,10 @@
  */
 package dev.msfjarvis.claw.android.ui
 
+import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -36,6 +39,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.text.font.FontWeight
+import androidx.navigation.NamedNavArgument
+import androidx.navigation.NavBackStackEntry
+import androidx.navigation.NavDeepLink
+import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -173,7 +180,7 @@ fun LobstersApp(
           startDestination = Destinations.startDestination.route,
         ) {
           val uri = LobstersApi.BASE_URL
-          composable(route = Destinations.Hottest.route) {
+          animatedScreenComposable(route = Destinations.Hottest.route) {
             setWebUri("https://lobste.rs/")
             NetworkPosts(
               lazyPagingItems = hottestPosts,
@@ -182,7 +189,7 @@ fun LobstersApp(
               postActions = postActions,
             )
           }
-          composable(route = Destinations.Newest.route) {
+          animatedScreenComposable(route = Destinations.Newest.route) {
             setWebUri("https://lobste.rs/")
             NetworkPosts(
               lazyPagingItems = newestPosts,
@@ -191,7 +198,7 @@ fun LobstersApp(
               postActions = postActions,
             )
           }
-          composable(route = Destinations.Saved.route) {
+          animatedScreenComposable(route = Destinations.Saved.route) {
             setWebUri(null)
             DatabasePosts(
               items = savedPosts,
@@ -207,6 +214,10 @@ fun LobstersApp(
                 navDeepLink { uriPattern = "$uri/s/${Destinations.Comments.placeholder}/.*" },
                 navDeepLink { uriPattern = "$uri/s/${Destinations.Comments.placeholder}" },
               ),
+            enterTransition = { slideInVertically(initialOffsetY = { -it }) },
+            exitTransition = { slideOutVertically(targetOffsetY = { -it }) },
+            popEnterTransition = { slideInVertically(initialOffsetY = { -it }) },
+            popExitTransition = { slideOutVertically(targetOffsetY = { -it }) },
           ) { backStackEntry ->
             val postId = requireNotNull(backStackEntry.arguments?.getString("postId"))
             setWebUri("https://lobste.rs/s/$postId")
@@ -235,4 +246,23 @@ fun LobstersApp(
       }
     }
   }
+}
+
+@Suppress("NOTHING_TO_INLINE") // Not doing it for performance
+private inline fun NavGraphBuilder.animatedScreenComposable(
+  route: String,
+  arguments: List<NamedNavArgument> = emptyList(),
+  deepLinks: List<NavDeepLink> = emptyList(),
+  noinline content: @Composable AnimatedContentScope.(NavBackStackEntry) -> Unit
+) {
+  composable(
+    route = route,
+    arguments = arguments,
+    deepLinks = deepLinks,
+    enterTransition = { slideInVertically(initialOffsetY = { it }) },
+    exitTransition = { slideOutVertically(targetOffsetY = { it }) },
+    popEnterTransition = { slideInVertically(initialOffsetY = { it }) },
+    popExitTransition = { slideOutVertically(targetOffsetY = { it }) },
+    content = content,
+  )
 }

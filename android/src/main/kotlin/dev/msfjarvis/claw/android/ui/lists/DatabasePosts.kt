@@ -7,6 +7,8 @@
 package dev.msfjarvis.claw.android.ui.lists
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
@@ -27,20 +29,24 @@ fun DatabasePosts(
   postActions: PostActions,
   modifier: Modifier = Modifier,
 ) {
-  LazyColumn(
-    state = listState,
-    modifier = modifier,
-  ) {
-    items.forEach { (month, posts) ->
-      stickyHeader { MonthHeader(month = month) }
-      items(posts, { it.shortId }) { item ->
-        ListItem(
-          item = item,
-          isSaved = { true },
-          postActions = postActions,
-        )
-
-        Divider()
+  Box(modifier = modifier.fillMaxSize()) {
+    LazyColumn(
+      state = listState,
+    ) {
+      items.forEach { (month, posts) ->
+        stickyHeader(contentType = "month-header") { MonthHeader(month = month) }
+        items(
+          items = posts,
+          key = { it.shortId },
+          contentType = { "LobstersItem" },
+        ) { item ->
+          ListItem(
+            item = item,
+            isSaved = { true },
+            postActions = postActions,
+          )
+          Divider()
+        }
       }
     }
   }

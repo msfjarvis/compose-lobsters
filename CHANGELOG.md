@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 *   Set accessibility web URI for profile screen
 *   Directly use Material Icons from upstream artifacts
 *   Upgrade dependencies
+*   Add adaptive navigation support (thanks @Yash-Garg)
 
 ## [1.26.0] - 2023-05-03
 

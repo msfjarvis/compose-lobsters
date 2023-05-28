@@ -11,8 +11,8 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.FastOutLinearInEasing
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationRail
@@ -35,15 +35,15 @@ fun ClawNavigationRail(
   AnimatedVisibility(
     visible = isVisible,
     enter =
-      slideInVertically(
-        // Enters by sliding up from offset 0 to fullHeight.
-        initialOffsetY = { fullHeight -> fullHeight },
+      slideInHorizontally(
+        // Enters by sliding in from offset -fullWidth to 0.
+        initialOffsetX = { fullWidth -> -fullWidth },
         animationSpec = tween(durationMillis = AnimationDuration, easing = LinearOutSlowInEasing),
       ),
     exit =
-      slideOutVertically(
-        // Exits by sliding up from offset 0 to -fullHeight.
-        targetOffsetY = { fullHeight -> fullHeight },
+      slideOutHorizontally(
+        // Exits by sliding out from offset 0 to -fullWidth.
+        targetOffsetX = { fullWidth -> -fullWidth },
         animationSpec = tween(durationMillis = AnimationDuration, easing = FastOutLinearInEasing),
       ),
     modifier = Modifier,

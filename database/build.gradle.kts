@@ -22,7 +22,6 @@ sqldelight {
   databases {
     create("LobstersDatabase") {
       packageName.set("dev.msfjarvis.claw.database")
-      sourceFolders.set(listOf("sqldelight"))
       schemaOutputDirectory.set(file("src/main/sqldelight/databases"))
       verifyMigrations.set(true)
     }

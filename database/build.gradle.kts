@@ -32,6 +32,7 @@ dependencies {
   implementation(libs.dagger)
   implementation(libs.sqldelight.androidDriver)
   implementation(libs.sqldelight.primitiveAdapters)
+  implementation(libs.sqlite.android)
 
   testImplementation(libs.sqldelight.jvmDriver)
   addTestDependencies(project)

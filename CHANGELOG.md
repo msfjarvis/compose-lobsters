@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 *   Directly use Material Icons from upstream artifacts
 *   Upgrade dependencies
 *   Add adaptive navigation support (thanks @Yash-Garg)
+*   Use latest SQLite for backing databases
 
 ## [1.26.0] - 2023-05-03
 

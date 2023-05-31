@@ -18,6 +18,7 @@ import dev.msfjarvis.claw.database.LobstersDatabase
 import dev.msfjarvis.claw.database.local.PostComments
 import dev.msfjarvis.claw.database.local.SavedPost
 import dev.msfjarvis.claw.database.model.CSVAdapter
+import io.requery.android.database.sqlite.RequerySQLiteOpenHelperFactory
 
 @Module
 @ContributesTo(ApplicationScope::class)
@@ -27,11 +28,17 @@ object DatabaseModule {
 
   @Provides
   fun provideDatabase(@ForScope(ApplicationScope::class) context: Context): LobstersDatabase {
-    val driver = AndroidSqliteDriver(LobstersDatabase.Schema, context, LOBSTERS_DATABASE_NAME)
+    val driver =
+      AndroidSqliteDriver(
+        schema = LobstersDatabase.Schema,
+        context = context,
+        name = LOBSTERS_DATABASE_NAME,
+        factory = RequerySQLiteOpenHelperFactory(),
+      )
     return LobstersDatabase(
-      driver,
-      PostComments.Adapter(CSVAdapter()),
-      SavedPost.Adapter(IntColumnAdapter, CSVAdapter()),
+      driver = driver,
+      PostCommentsAdapter = PostComments.Adapter(CSVAdapter()),
+      SavedPostAdapter = SavedPost.Adapter(IntColumnAdapter, CSVAdapter()),
     )
   }
 }

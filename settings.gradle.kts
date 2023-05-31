@@ -131,6 +131,10 @@ dependencyResolutionManagement {
       forRepository { maven("https://oss.sonatype.org/content/repositories/snapshots/") }
       filter { includeGroup("dev.msfjarvis.whetstone") }
     }
+    exclusiveContent {
+      forRepository { maven("https://jitpack.io") }
+      filter { includeGroup("com.github.requery") }
+    }
     mavenCentral()
   }
 }

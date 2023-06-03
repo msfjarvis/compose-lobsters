@@ -7,6 +7,9 @@
 package dev.msfjarvis.claw.android.ui
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -171,6 +174,9 @@ fun LobstersApp(
         NavHost(
           navController = navController,
           startDestination = Destinations.startDestination.route,
+          // Make animations 2x faster than default specs
+          enterTransition = { fadeIn(animationSpec = tween(350)) },
+          exitTransition = { fadeOut(animationSpec = tween(350)) },
         ) {
           val uri = LobstersApi.BASE_URL
           composable(route = Destinations.Hottest.route) {

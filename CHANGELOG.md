@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+*   Navigation transitions have been slightly sped up
+
 ### Fixed
 
 *   Add workaround for a native library loading crash observed on some devices

@@ -36,6 +36,7 @@ android {
       applicationIdSuffix = ".benchmark"
     }
   }
+  packaging { jniLibs { useLegacyPackaging = true } }
 }
 
 whetstone {

@@ -151,7 +151,7 @@ fun LobstersApp(
             }
           },
           actions = {
-            if (currentDestination != Destinations.DataTransfer.route) {
+            if (navItems.any { it.route == currentDestination }) {
               IconButton(onClick = { navController.navigate(Destinations.DataTransfer.route) }) {
                 Icon(
                   imageVector = Icons.Outlined.ImportExport,

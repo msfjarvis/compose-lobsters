@@ -152,11 +152,13 @@ fun LobstersApp(
             }
           },
           actions = {
-            IconButton(onClick = { navController.navigate(Destinations.DataTransfer.route) }) {
-              Icon(
-                imageVector = Icons.Outlined.ImportExport,
-                contentDescription = "Data transfer options"
-              )
+            if (currentDestination != Destinations.DataTransfer.route) {
+              IconButton(onClick = { navController.navigate(Destinations.DataTransfer.route) }) {
+                Icon(
+                  imageVector = Icons.Outlined.ImportExport,
+                  contentDescription = "Data transfer options"
+                )
+              }
             }
           },
         )

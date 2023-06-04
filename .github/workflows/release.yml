@@ -2,6 +2,9 @@ name: Release to Google Play
 on:
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+
 jobs:
   publish-google-play-release:
     runs-on: ubuntu-latest

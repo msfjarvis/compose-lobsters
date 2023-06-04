@@ -6,6 +6,9 @@ on:
     - cron: '43 0 * * *'
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+
 jobs:
   baseline-profile:
     runs-on: macos-latest

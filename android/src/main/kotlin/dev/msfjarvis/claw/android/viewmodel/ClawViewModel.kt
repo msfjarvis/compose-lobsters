@@ -39,6 +39,7 @@ class ClawViewModel
 constructor(
   private val api: LobstersApi,
   private val savedPostsRepository: SavedPostsRepository,
+  private val commentsRepository: CommentsRepository,
   private val linkMetadataRepository: LinkMetadataRepository,
   private val pagingSourceFactory: LobstersPagingSource.Factory,
   @IODispatcher private val ioDispatcher: CoroutineDispatcher,
@@ -101,10 +102,10 @@ constructor(
       }
     }
 
-  suspend fun getSeenComments(postId: String) = savedPostsRepository.getSeenComments(postId)
+  suspend fun getSeenComments(postId: String) = commentsRepository.getSeenComments(postId)
 
   fun markSeenComments(postId: String, comments: List<Comment>) {
-    viewModelScope.launch { savedPostsRepository.markSeenComments(postId, comments) }
+    viewModelScope.launch { commentsRepository.markSeenComments(postId, comments) }
   }
 
   suspend fun getLinkMetadata(url: String) =

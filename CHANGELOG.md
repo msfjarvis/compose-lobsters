@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+*   Backup and restore options for saved posts
+
 ## [1.28.0] - 2023-06-03
 
 ### Changed

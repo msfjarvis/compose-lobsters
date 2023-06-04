@@ -41,6 +41,7 @@ constructor(
   private val savedPostsRepository: SavedPostsRepository,
   private val commentsRepository: CommentsRepository,
   private val linkMetadataRepository: LinkMetadataRepository,
+  val dataTransferRepository: DataTransferRepository,
   private val pagingSourceFactory: LobstersPagingSource.Factory,
   @IODispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel() {

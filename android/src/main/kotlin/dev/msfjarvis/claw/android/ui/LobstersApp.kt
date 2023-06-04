@@ -18,6 +18,7 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.NewReleases
 import androidx.compose.material.icons.filled.Whatshot
 import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material.icons.outlined.ImportExport
 import androidx.compose.material.icons.outlined.NavigateBefore
 import androidx.compose.material.icons.outlined.NewReleases
 import androidx.compose.material.icons.outlined.Whatshot
@@ -49,6 +50,7 @@ import androidx.navigation.navDeepLink
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.deliveryhero.whetstone.compose.injectedViewModel
 import dev.msfjarvis.claw.android.R
+import dev.msfjarvis.claw.android.ui.datatransfer.DataTransferScreen
 import dev.msfjarvis.claw.android.ui.decorations.ClawNavigationBar
 import dev.msfjarvis.claw.android.ui.decorations.ClawNavigationRail
 import dev.msfjarvis.claw.android.ui.decorations.NavigationItem
@@ -149,6 +151,14 @@ fun LobstersApp(
               Text(text = stringResource(R.string.app_name), fontWeight = FontWeight.Bold)
             }
           },
+          actions = {
+            IconButton(onClick = { navController.navigate(Destinations.DataTransfer.route) }) {
+              Icon(
+                imageVector = Icons.Outlined.ImportExport,
+                contentDescription = "Data transfer options"
+              )
+            }
+          },
         )
       },
       bottomBar = {
@@ -235,6 +245,12 @@ fun LobstersApp(
             UserProfile(
               username = username,
               getProfile = viewModel::getUserProfile,
+            )
+          }
+          composable(route = Destinations.DataTransfer.route) {
+            DataTransferScreen(
+              context = context,
+              dataTransferRepository = viewModel.dataTransferRepository,
             )
           }
         }

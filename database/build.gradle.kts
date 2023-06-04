@@ -37,5 +37,6 @@ dependencies {
   implementation(libs.kotlinx.serialization.core)
 
   testImplementation(libs.sqldelight.jvmDriver)
+  testImplementation(libs.kotlinx.serialization.json)
   addTestDependencies(project)
 }

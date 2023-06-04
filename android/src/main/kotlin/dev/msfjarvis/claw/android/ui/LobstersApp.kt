@@ -25,11 +25,14 @@ import androidx.compose.material.icons.outlined.Whatshot
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -85,6 +88,7 @@ fun LobstersApp(
   val savedListState = rememberLazyListState()
   val navController = rememberNavController()
   val coroutineScope = rememberCoroutineScope()
+  val snackbarHostState = remember { SnackbarHostState() }
   val postActions = rememberPostActions(urlLauncher, navController, viewModel)
   val backStackEntry by navController.currentBackStackEntryAsState()
   val currentDestination = backStackEntry?.destination?.route
@@ -171,6 +175,7 @@ fun LobstersApp(
           )
         }
       },
+      snackbarHost = { SnackbarHost(snackbarHostState) },
       modifier = modifier.semantics { testTagsAsResourceId = true },
     ) { paddingValues ->
       Row(modifier = Modifier.padding(paddingValues)) {
@@ -252,6 +257,7 @@ fun LobstersApp(
             DataTransferScreen(
               context = context,
               dataTransferRepository = viewModel.dataTransferRepository,
+              snackbarHostState = snackbarHostState,
             )
           }
         }

@@ -18,6 +18,7 @@ import androidx.compose.material.icons.outlined.NorthEast
 import androidx.compose.material.icons.outlined.SouthWest
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -34,12 +35,13 @@ private const val MIME_TYPE = "application/json"
 fun DataTransferScreen(
   context: Context,
   dataTransferRepository: DataTransferRepository,
+  snackbarHostState: SnackbarHostState,
   modifier: Modifier = Modifier,
 ) {
   val coroutineScope = rememberCoroutineScope()
   Column(modifier = modifier) {
-    ImportOption(context, coroutineScope, dataTransferRepository)
-    ExportOption(context, coroutineScope, dataTransferRepository)
+    ImportOption(context, coroutineScope, dataTransferRepository, snackbarHostState)
+    ExportOption(context, coroutineScope, dataTransferRepository, snackbarHostState)
   }
 }
 
@@ -48,13 +50,18 @@ private fun ImportOption(
   context: Context,
   coroutineScope: CoroutineScope,
   dataTransferRepository: DataTransferRepository,
+  snackbarHostState: SnackbarHostState,
 ) {
   val importAction =
     rememberLauncherForActivityResult(GetContent()) { uri ->
-      if (uri == null) return@rememberLauncherForActivityResult
+      if (uri == null) {
+        coroutineScope.launch { snackbarHostState.showSnackbar("No file selected") }
+        return@rememberLauncherForActivityResult
+      }
       coroutineScope.launch {
         context.contentResolver.openInputStream(uri)?.use { stream ->
           dataTransferRepository.importPosts(stream)
+          snackbarHostState.showSnackbar("Successfully imported posts")
         }
       }
     }
@@ -72,13 +79,18 @@ private fun ExportOption(
   context: Context,
   coroutineScope: CoroutineScope,
   dataTransferRepository: DataTransferRepository,
+  snackbarHostState: SnackbarHostState,
 ) {
   val exportAction =
     rememberLauncherForActivityResult(CreateDocument(MIME_TYPE)) { uri ->
-      if (uri == null) return@rememberLauncherForActivityResult
+      if (uri == null) {
+        coroutineScope.launch { snackbarHostState.showSnackbar("No file selected") }
+        return@rememberLauncherForActivityResult
+      }
       coroutineScope.launch {
         context.contentResolver.openOutputStream(uri)?.use { stream ->
           dataTransferRepository.exportPosts(stream)
+          snackbarHostState.showSnackbar("Successfully exported posts")
         }
       }
     }

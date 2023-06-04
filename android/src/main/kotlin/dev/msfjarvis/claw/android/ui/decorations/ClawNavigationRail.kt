@@ -56,7 +56,7 @@ fun ClawNavigationRail(
           icon = {
             Crossfade(isCurrentDestination, label = "nav-label") {
               Icon(
-                painter = if (it) navItem.selectedIcon else navItem.icon,
+                imageVector = if (it) navItem.selectedIcon else navItem.icon,
                 contentDescription = navItem.label.replaceFirstChar(Char::uppercase),
               )
             }

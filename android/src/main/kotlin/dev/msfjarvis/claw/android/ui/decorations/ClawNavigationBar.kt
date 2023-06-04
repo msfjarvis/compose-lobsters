@@ -19,7 +19,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
 import androidx.navigation.NavController
 import dev.msfjarvis.claw.android.ui.navigation.Destinations
@@ -57,7 +57,7 @@ fun ClawNavigationBar(
           icon = {
             Crossfade(isCurrentDestination, label = "nav-label") {
               Icon(
-                painter = if (it) navItem.selectedIcon else navItem.icon,
+                imageVector = if (it) navItem.selectedIcon else navItem.icon,
                 contentDescription = navItem.label.replaceFirstChar(Char::uppercase),
               )
             }
@@ -86,7 +86,7 @@ fun ClawNavigationBar(
 class NavigationItem(
   val label: String,
   val route: String,
-  val icon: Painter,
-  val selectedIcon: Painter,
+  val icon: ImageVector,
+  val selectedIcon: ImageVector,
   val listStateResetCallback: () -> Unit,
 )

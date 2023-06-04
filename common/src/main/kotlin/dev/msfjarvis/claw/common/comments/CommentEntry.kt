@@ -30,7 +30,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
@@ -116,7 +115,7 @@ private fun PostLink(
     Row(modifier = Modifier.padding(16.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
       NetworkImage(
         url = linkMetadata.faviconUrl,
-        placeholder = rememberVectorPainter(Icons.Filled.Public),
+        placeholder = Icons.Filled.Public,
         contentDescription = "",
         modifier = Modifier.size(24.dp),
       )

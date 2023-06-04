@@ -24,7 +24,6 @@ import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.unit.dp
 import dev.msfjarvis.claw.common.NetworkState
 import dev.msfjarvis.claw.common.NetworkState.Error
@@ -92,7 +91,7 @@ private fun UserProfileInternal(
     ) {
       NetworkImage(
         url = "https://lobste.rs/${user.avatarUrl}",
-        placeholder = rememberVectorPainter(Icons.Filled.AccountCircle),
+        placeholder = Icons.Filled.AccountCircle,
         contentDescription = "Avatar of ${user.username}",
         modifier = Modifier.requiredSize(120.dp).clip(CircleShape),
       )

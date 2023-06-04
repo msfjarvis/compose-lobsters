@@ -33,7 +33,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
@@ -106,24 +105,24 @@ fun LobstersApp(
         NavigationItem(
           label = "Hottest",
           route = Destinations.Hottest.route,
-          icon = rememberVectorPainter(Icons.Outlined.Whatshot),
-          selectedIcon = rememberVectorPainter(Icons.Filled.Whatshot),
+          icon = Icons.Outlined.Whatshot,
+          selectedIcon = Icons.Filled.Whatshot,
         ) {
           coroutineScope.launch { hottestListState.animateScrollToItem(index = 0) }
         },
         NavigationItem(
           label = "Newest",
           route = Destinations.Newest.route,
-          icon = rememberVectorPainter(Icons.Outlined.NewReleases),
-          selectedIcon = rememberVectorPainter(Icons.Filled.NewReleases),
+          icon = Icons.Outlined.NewReleases,
+          selectedIcon = Icons.Filled.NewReleases,
         ) {
           coroutineScope.launch { newestListState.animateScrollToItem(index = 0) }
         },
         NavigationItem(
           label = "Saved",
           route = Destinations.Saved.route,
-          icon = rememberVectorPainter(Icons.Outlined.FavoriteBorder),
-          selectedIcon = rememberVectorPainter(Icons.Filled.Favorite),
+          icon = Icons.Outlined.FavoriteBorder,
+          selectedIcon = Icons.Filled.Favorite,
         ) {
           coroutineScope.launch { savedListState.animateScrollToItem(index = 0) }
         },
@@ -140,7 +139,7 @@ fun LobstersApp(
                 onClick = { if (!navController.popBackStack()) context.getActivity()?.finish() }
               ) {
                 Icon(
-                  painter = rememberVectorPainter(Icons.Outlined.NavigateBefore),
+                  imageVector = Icons.Outlined.NavigateBefore,
                   contentDescription = "Go back to previous screen",
                 )
               }

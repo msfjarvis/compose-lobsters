@@ -1,5 +1,5 @@
 /*
- * Copyright © 2022 Harsh Shandilya.
+ * Copyright © 2022-2023 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -19,8 +19,6 @@ import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 import dev.msfjarvis.claw.database.local.SavedPost
 import dev.msfjarvis.claw.model.LinkMetadata
 import dev.msfjarvis.claw.model.LobstersPostDetails
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 fun Context.getActivity(): ComponentActivity? {
   return when (this) {
@@ -28,14 +26,6 @@ fun Context.getActivity(): ComponentActivity? {
     is ContextWrapper -> baseContext.getActivity()
     else -> null
   }
-}
-
-/**
- * Parses a given [String] into a [LocalDateTime]. This method is only intended to be used for dates
- * in the format returned by the Lobsters API, and is not a general purpose parsing solution.
- */
-fun String.toLocalDateTime(): LocalDateTime {
-  return LocalDateTime.from(DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(this))
 }
 
 @Composable

@@ -17,13 +17,14 @@ import dev.msfjarvis.claw.android.injection.IODispatcher
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource.Companion.PAGE_SIZE
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource.Companion.STARTING_PAGE_INDEX
-import dev.msfjarvis.claw.android.ui.toLocalDateTime
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.database.local.SavedPost
 import dev.msfjarvis.claw.model.Comment
 import java.io.IOException
 import java.net.HttpURLConnection
+import java.time.LocalDateTime
 import java.time.Month
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.toImmutableMap
@@ -122,4 +123,13 @@ constructor(
         is Failure.ApiFailure -> throw IOException("API returned an invalid response")
       }
     }
+
+  /**
+   * Parses a given [String] into a [LocalDateTime]. This method is only intended to be used for
+   * dates in the format returned by the Lobsters API, and is not a general purpose parsing
+   * solution.
+   */
+  private fun String.toLocalDateTime(): LocalDateTime {
+    return LocalDateTime.from(DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(this))
+  }
 }

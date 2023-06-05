@@ -6,6 +6,7 @@
  */
 package dev.msfjarvis.claw.android.ui.lists
 
+import androidx.activity.compose.ReportDrawn
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -29,6 +30,7 @@ fun DatabasePosts(
   postActions: PostActions,
   modifier: Modifier = Modifier,
 ) {
+  ReportDrawn()
   Box(modifier = modifier.fillMaxSize()) {
     LazyColumn(
       state = listState,

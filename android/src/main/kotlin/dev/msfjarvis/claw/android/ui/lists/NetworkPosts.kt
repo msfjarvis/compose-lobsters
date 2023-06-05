@@ -6,6 +6,7 @@
  */
 package dev.msfjarvis.claw.android.ui.lists
 
+import androidx.activity.compose.ReportDrawnWhen
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -44,6 +45,7 @@ fun NetworkPosts(
   postActions: PostActions,
   modifier: Modifier = Modifier,
 ) {
+  ReportDrawnWhen { lazyPagingItems.itemCount > 0 }
   val refreshLoadState = lazyPagingItems.loadState.refresh
   val isRefreshing = refreshLoadState == LoadState.Loading
   val pullRefreshState = rememberPullRefreshState(isRefreshing, lazyPagingItems::refresh)

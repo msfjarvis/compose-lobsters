@@ -8,7 +8,6 @@ package dev.msfjarvis.claw.android.viewmodel
 
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.Dispatcher
@@ -18,7 +17,6 @@ import okhttp3.mockwebserver.RecordedRequest
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class CSRFRepositoryTest {
   @Test
   fun `correctly extracts CSRF token`() = runTest {

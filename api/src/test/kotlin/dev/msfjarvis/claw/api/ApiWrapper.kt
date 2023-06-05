@@ -16,7 +16,6 @@ import dev.msfjarvis.claw.model.Tags
 import dev.msfjarvis.claw.model.User
 import dev.msfjarvis.claw.util.TestUtils.getJson
 import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonNamingStrategy
 

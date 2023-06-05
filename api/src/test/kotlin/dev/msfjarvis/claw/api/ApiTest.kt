@@ -14,11 +14,9 @@ import dev.msfjarvis.claw.model.LobstersPostDetails
 import dev.msfjarvis.claw.model.Tags
 import dev.msfjarvis.claw.model.User
 import dev.msfjarvis.claw.util.TestUtils.assertIs
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class ApiTest {
   private val wrapper = ApiWrapper(newEitherNetController())
   private val api

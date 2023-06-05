@@ -42,6 +42,11 @@ pluginManagement {
         includeModule("gradle.plugin.org.gradle.android", "android-cache-fix-gradle-plugin")
         includeModule("dev.iurysouza.modulegraph", "dev.iurysouza.modulegraph.gradle.plugin")
         includeModule("dev.iurysouza", "modulegraph")
+        includeModule(
+          "com.jraska.module.graph.assertion",
+          "com.jraska.module.graph.assertion.gradle.plugin"
+        )
+        includeModule("com.jraska.module.graph.assertion", "plugin")
       }
     }
     exclusiveContent {

@@ -16,6 +16,7 @@ plugins {
   id("dev.msfjarvis.claw.sentry")
   id("dev.msfjarvis.claw.versioning-plugin")
   alias(libs.plugins.anvil)
+  alias(libs.plugins.modulegraphassert)
   alias(libs.plugins.whetstone)
 }
 
@@ -37,6 +38,12 @@ android {
     }
   }
   packaging { jniLibs { useLegacyPackaging = true } }
+}
+
+moduleGraphAssert {
+  assertOnAnyBuild = true
+  maxHeight = 4
+  restricted = arrayOf(":core -X> :.*")
 }
 
 whetstone {

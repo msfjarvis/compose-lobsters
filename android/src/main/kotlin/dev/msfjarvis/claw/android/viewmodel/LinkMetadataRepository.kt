@@ -40,13 +40,10 @@ constructor(
         readingTime = readingTime,
       )
     }
-      ?: makeDefault(url)
+      ?: LinkMetadata(
+        url = url,
+        faviconUrl = null,
+        readingTime = null,
+      )
   }
-
-  private fun makeDefault(url: String) =
-    LinkMetadata(
-      url,
-      null,
-      null,
-    )
 }

@@ -2,17 +2,15 @@ appId: dev.msfjarvis.claw.android
 ---
 - launchApp
 - tapOn:
-    text: "Add to saved posts"
+    id: "save_button"
     index: 0
 - tapOn:
-    text: "Add to saved posts"
+    id: "save_button"
     index: 1
 - takeScreenshot: "HottestPosts"
 - tapOn: "Saved"
 - takeScreenshot: "SavedPosts"
 - tapOn: "Hottest"
-- tapOn:
-    text: "Open comments"
-    index: 0
+- tapOn: "Open comments"
 - waitForAnimationToEnd
 - takeScreenshot: "CommentsPage"

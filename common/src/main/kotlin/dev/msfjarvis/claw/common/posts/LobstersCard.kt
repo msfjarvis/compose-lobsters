@@ -46,6 +46,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -173,7 +174,7 @@ private fun SaveButton(
         imageVector = if (saved) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
         tint = MaterialTheme.colorScheme.secondary,
         contentDescription = if (saved) "Remove from saved posts" else "Add to saved posts",
-        modifier = Modifier.align(Alignment.Center),
+        modifier = Modifier.align(Alignment.Center).testTag("save_button"),
       )
     }
   }

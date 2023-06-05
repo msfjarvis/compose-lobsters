@@ -12,7 +12,7 @@ Unofficial Android app for read-only access to [lobste.rs](https://lobste.rs), b
 
 <img src="https://github.com/msfjarvis/compose-lobsters/blob/main/.github/readme_feature.webp"
      alt="Side by side screenshots of the app's main page in dark and light UI modes"
-     height="550" />
+     height="540" />
 
 ## Dependency Diagram
 

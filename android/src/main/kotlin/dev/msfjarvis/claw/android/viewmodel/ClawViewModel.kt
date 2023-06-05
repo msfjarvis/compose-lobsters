@@ -13,11 +13,11 @@ import androidx.paging.PagingConfig
 import com.deliveryhero.whetstone.viewmodel.ContributesViewModel
 import com.slack.eithernet.ApiResult.Failure
 import com.slack.eithernet.ApiResult.Success
-import dev.msfjarvis.claw.android.injection.IODispatcher
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource.Companion.PAGE_SIZE
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource.Companion.STARTING_PAGE_INDEX
 import dev.msfjarvis.claw.api.LobstersApi
+import dev.msfjarvis.claw.core.injection.IODispatcher
 import dev.msfjarvis.claw.database.local.SavedPost
 import dev.msfjarvis.claw.model.Comment
 import java.io.IOException

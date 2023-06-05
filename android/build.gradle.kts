@@ -73,7 +73,6 @@ dependencies {
   implementation(projects.api)
   implementation(projects.common)
   implementation(projects.core)
-  implementation(projects.coroutineUtils)
   implementation(projects.database)
   implementation(projects.metadataExtractor)
   implementation(projects.model)

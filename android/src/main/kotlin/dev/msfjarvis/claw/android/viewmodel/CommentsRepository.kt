@@ -6,7 +6,7 @@
  */
 package dev.msfjarvis.claw.android.viewmodel
 
-import dev.msfjarvis.claw.android.injection.DatabaseDispatcher
+import dev.msfjarvis.claw.core.injection.DatabaseDispatcher
 import dev.msfjarvis.claw.database.LobstersDatabase
 import dev.msfjarvis.claw.database.local.PostComments
 import dev.msfjarvis.claw.model.Comment

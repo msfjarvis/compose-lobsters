@@ -16,7 +16,7 @@ import com.deliveryhero.whetstone.app.ApplicationScope
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
-import dev.msfjarvis.claw.util.coroutines.DispatcherProvider
+import dev.msfjarvis.claw.core.coroutines.DispatcherProvider
 import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob

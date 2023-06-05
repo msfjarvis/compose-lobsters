@@ -149,7 +149,6 @@ include(
   "benchmark",
   "common",
   "core",
-  "coroutine-utils",
   "database",
   "metadata-extractor",
   "model",

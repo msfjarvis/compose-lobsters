@@ -1,5 +1,5 @@
 /*
- * Copyright © 2021-2022 Harsh Shandilya.
+ * Copyright © 2021-2023 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -13,7 +13,7 @@ import com.slack.eithernet.ApiResult.Success
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
-import dev.msfjarvis.claw.android.injection.IODispatcher
+import dev.msfjarvis.claw.core.injection.IODispatcher
 import dev.msfjarvis.claw.model.LobstersPost
 import java.io.IOException
 import kotlinx.coroutines.CoroutineDispatcher

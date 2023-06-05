@@ -6,8 +6,8 @@
  */
 package dev.msfjarvis.claw.android.viewmodel
 
-import dev.msfjarvis.claw.android.injection.IODispatcher
 import dev.msfjarvis.claw.api.injection.BaseUrl
+import dev.msfjarvis.claw.core.injection.IODispatcher
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext

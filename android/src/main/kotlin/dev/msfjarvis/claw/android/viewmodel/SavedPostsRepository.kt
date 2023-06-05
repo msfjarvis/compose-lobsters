@@ -8,7 +8,7 @@ package dev.msfjarvis.claw.android.viewmodel
 
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
-import dev.msfjarvis.claw.android.injection.DatabaseDispatcher
+import dev.msfjarvis.claw.core.injection.DatabaseDispatcher
 import dev.msfjarvis.claw.database.LobstersDatabase
 import dev.msfjarvis.claw.database.local.SavedPost
 import io.github.aakira.napier.Napier

@@ -29,7 +29,6 @@ graph LR
   android --> api
   android --> common
   android --> core
-  android --> coroutine-utils
   android --> database
   android --> metadata-extractor
   android --> model

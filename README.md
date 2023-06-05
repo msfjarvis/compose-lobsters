@@ -30,13 +30,11 @@ graph LR
   android --> common
   android --> core
   android --> database
-  android --> metadata-extractor
   android --> model
   api --> model
   common --> core
   common --> database
   common --> model
-  metadata-extractor --> model
 
 ```
 ## License

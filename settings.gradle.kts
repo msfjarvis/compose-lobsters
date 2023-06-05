@@ -155,6 +155,5 @@ include(
   "common",
   "core",
   "database",
-  "metadata-extractor",
   "model",
 )

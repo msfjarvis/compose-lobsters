@@ -71,6 +71,7 @@ dependencies {
   implementation(libs.androidx.work.runtime.ktx)
   implementation(libs.coil)
   implementation(libs.copydown)
+  implementation(libs.crux)
   implementation(libs.dagger)
   implementation(libs.jsoup)
   implementation(libs.kotlinx.collections.immutable)
@@ -81,7 +82,6 @@ dependencies {
   implementation(projects.common)
   implementation(projects.core)
   implementation(projects.database)
-  implementation(projects.metadataExtractor)
   implementation(projects.model)
 
   kapt(libs.dagger.compiler)

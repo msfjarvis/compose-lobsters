@@ -1,2 +1,3 @@
 *.json
 baseline-prof.txt
+**/test/resources/**

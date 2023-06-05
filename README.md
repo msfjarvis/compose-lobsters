@@ -15,6 +15,7 @@ Unofficial Android app for read-only access to [lobste.rs](https://lobste.rs), b
      height="550" />
 
 ## Dependency Diagram
+
 ```mermaid
 %%{
   init: {
@@ -37,7 +38,6 @@ graph LR
   common --> database
   common --> model
   metadata-extractor --> model
-  database --> core
 
 ```
 ## License

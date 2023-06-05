@@ -31,7 +31,7 @@ constructor(
   @DatabaseDispatcher private val dbDispatcher: CoroutineDispatcher,
   @IODispatcher private val ioDispatcher: CoroutineDispatcher,
 ) {
-  private val serializer = ListSerializer(SavedPostSerializer())
+  private val serializer = ListSerializer(SavedPostSerializer)
   private val savedPostQueries = database.savedPostQueries
 
   suspend fun importPosts(input: InputStream) {

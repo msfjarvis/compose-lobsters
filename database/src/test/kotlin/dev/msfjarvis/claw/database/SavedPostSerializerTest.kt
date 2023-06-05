@@ -24,14 +24,14 @@ class SavedPostSerializerTest {
 
   @Test
   fun serialize() {
-    val encoded = json.encodeToString(SavedPostSerializer(), SAVED_POST)
+    val encoded = json.encodeToString(SavedPostSerializer, SAVED_POST)
     assertThat(encoded).isNotEmpty()
     assertThat(encoded).isEqualTo(text)
   }
 
   @Test
   fun deserialize() {
-    val decoded = json.decodeFromString(SavedPostSerializer(), text)
+    val decoded = json.decodeFromString(SavedPostSerializer, text)
     assertThat(decoded).isEqualTo(SAVED_POST)
   }
 

@@ -23,7 +23,7 @@ import kotlinx.serialization.encoding.encodeStructure
 
 @OptIn(ExperimentalSerializationApi::class)
 @Serializer(forClass = SavedPost::class)
-class SavedPostSerializer : KSerializer<SavedPost> {
+object SavedPostSerializer : KSerializer<SavedPost> {
   private val delegateSerializer = ListSerializer(String.serializer())
   override val descriptor: SerialDescriptor =
     buildClassSerialDescriptor("SavedPost") {

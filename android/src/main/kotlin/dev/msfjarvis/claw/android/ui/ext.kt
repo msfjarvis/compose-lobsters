@@ -41,9 +41,10 @@ fun rememberPostActions(
       }
 
       override fun viewComments(postId: String) {
-        navController.navigate(
+        val currentRoute = navController.currentDestination?.route
+        val newRoute =
           Destinations.Comments.route.replace(Destinations.Comments.placeholder, postId)
-        )
+        if (currentRoute != Destinations.Comments.route) navController.navigate(newRoute)
       }
 
       override fun viewCommentsPage(commentsUrl: String) {

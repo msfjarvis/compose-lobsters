@@ -55,13 +55,13 @@ private fun ImportOption(
   val importAction =
     rememberLauncherForActivityResult(GetContent()) { uri ->
       if (uri == null) {
-        coroutineScope.launch { snackbarHostState.showSnackbar("No file selected") }
+        coroutineScope.launch { snackbarHostState.showSnackbarDismissing("No file selected") }
         return@rememberLauncherForActivityResult
       }
       coroutineScope.launch {
         context.contentResolver.openInputStream(uri)?.use { stream ->
           dataTransferRepository.importPosts(stream)
-          snackbarHostState.showSnackbar("Successfully imported posts")
+          snackbarHostState.showSnackbarDismissing("Successfully imported posts")
         }
       }
     }
@@ -84,13 +84,13 @@ private fun ExportOption(
   val exportAction =
     rememberLauncherForActivityResult(CreateDocument(MIME_TYPE)) { uri ->
       if (uri == null) {
-        coroutineScope.launch { snackbarHostState.showSnackbar("No file selected") }
+        coroutineScope.launch { snackbarHostState.showSnackbarDismissing("No file selected") }
         return@rememberLauncherForActivityResult
       }
       coroutineScope.launch {
         context.contentResolver.openOutputStream(uri)?.use { stream ->
           dataTransferRepository.exportPosts(stream)
-          snackbarHostState.showSnackbar("Successfully exported posts")
+          snackbarHostState.showSnackbarDismissing("Successfully exported posts")
         }
       }
     }
@@ -125,4 +125,12 @@ private fun SettingsActionItem(
     },
     modifier = modifier.clickable { onClick?.invoke() },
   )
+}
+
+/** Shows a Snackbar but dismisses any existing ones first. */
+private suspend fun SnackbarHostState.showSnackbarDismissing(
+  text: String,
+) {
+  currentSnackbarData?.dismiss()
+  showSnackbar(text)
 }

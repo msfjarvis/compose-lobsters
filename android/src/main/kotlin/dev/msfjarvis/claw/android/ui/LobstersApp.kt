@@ -138,7 +138,10 @@ fun LobstersApp(
       topBar = {
         ClawAppBar(
           navigationIcon = {
-            if (navItems.none { it.route == currentDestination }) {
+            if (
+              navController.previousBackStackEntry != null &&
+                navItems.none { it.route == currentDestination }
+            ) {
               IconButton(
                 onClick = { if (!navController.popBackStack()) context.getActivity()?.finish() }
               ) {

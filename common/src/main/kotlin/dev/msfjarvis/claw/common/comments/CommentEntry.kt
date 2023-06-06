@@ -7,7 +7,6 @@
 package dev.msfjarvis.claw.common.comments
 
 import android.text.format.DateUtils
-import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -169,16 +168,11 @@ internal fun CommentEntry(
         modifier =
           Modifier.clickable { uriHandler.openUri("https://lobste.rs/u/${comment.user.username}") },
       )
-      AnimatedContent(
-        label = "comment_body",
-        targetState = commentNode.isExpanded,
-      ) { expandedState ->
-        if (expandedState) {
-          ThemedRichText(
-            text = htmlConverter.convertHTMLToMarkdown(comment.comment),
-            modifier = Modifier.padding(top = 8.dp)
-          )
-        }
+      if (commentNode.isExpanded) {
+        ThemedRichText(
+          text = htmlConverter.convertHTMLToMarkdown(comment.comment),
+          modifier = Modifier.padding(top = 8.dp)
+        )
       }
     }
   }

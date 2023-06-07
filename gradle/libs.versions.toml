@@ -84,6 +84,7 @@ okhttp-mockwebserver = { module = "com.squareup.okhttp3:mockwebserver" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-kotlinxSerializationConverter = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0"
 sentry-bom = { module = "io.sentry:sentry-bom", version.ref = "sentry-sdk" }
+sentry-okhttp = { module = "io.sentry:sentry-android-okhttp", version.ref = "sentry-sdk" }
 slack-compose-lints = "com.slack.lint.compose:compose-lint-checks:1.2.0"
 sqldelight-androidDriver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
 sqldelight-extensions-coroutines = { module = "app.cash.sqldelight:coroutines-extensions-jvm", version.ref = "sqldelight" }

@@ -22,8 +22,10 @@ dependencies {
   api(libs.okhttp.loggingInterceptor)
 
   implementation(platform(libs.okhttp.bom))
+  implementation(platform(libs.sentry.bom))
   implementation(libs.dagger)
   implementation(libs.napier)
   implementation(libs.okhttp.core)
   implementation(libs.retrofit.kotlinxSerializationConverter)
+  implementation(libs.sentry.okhttp)
 }

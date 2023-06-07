@@ -16,7 +16,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Inbox
+import androidx.compose.material.icons.filled.Inbox
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -44,7 +44,7 @@ fun DatabasePosts(
     if (items.isEmpty()) {
       Column(modifier = Modifier.align(Alignment.Center)) {
         Icon(
-          imageVector = Icons.Outlined.Inbox,
+          imageVector = Icons.Filled.Inbox,
           contentDescription = "Empty inbox icon",
           modifier = Modifier.align(Alignment.CenterHorizontally).size(36.dp),
         )

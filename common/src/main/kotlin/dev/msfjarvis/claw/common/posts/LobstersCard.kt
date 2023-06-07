@@ -28,9 +28,9 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Comment
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.outlined.Comment
-import androidx.compose.material.icons.outlined.FavoriteBorder
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Divider
@@ -171,7 +171,7 @@ private fun SaveButton(
   Crossfade(targetState = isSaved, label = "save-button") { saved ->
     Box(modifier = modifier.padding(12.dp)) {
       Icon(
-        imageVector = if (saved) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
+        imageVector = if (saved) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
         tint = MaterialTheme.colorScheme.secondary,
         contentDescription = if (saved) "Remove from saved posts" else "Add to saved posts",
         modifier = Modifier.align(Alignment.Center).testTag("save_button"),
@@ -204,7 +204,7 @@ private fun CommentsButton(
     },
   ) {
     Icon(
-      imageVector = Icons.Outlined.Comment,
+      imageVector = Icons.Filled.Comment,
       tint = MaterialTheme.colorScheme.secondary,
       contentDescription = "Open comments",
       modifier = Modifier.align(Alignment.Center),

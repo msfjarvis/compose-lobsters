@@ -14,8 +14,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.NorthEast
-import androidx.compose.material.icons.outlined.SouthWest
+import androidx.compose.material.icons.filled.Download
+import androidx.compose.material.icons.filled.Upload
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.SnackbarHostState
@@ -68,7 +68,7 @@ private fun ImportOption(
   SettingsActionItem(
     title = "Import saved posts",
     description = "Import saved posts from a previously generated export",
-    icon = Icons.Outlined.SouthWest,
+    icon = Icons.Filled.Download,
   ) {
     importAction.launch(MIME_TYPE)
   }
@@ -97,7 +97,7 @@ private fun ExportOption(
   SettingsActionItem(
     title = "Export posts to file",
     description = "Write all saved posts into a JSON file that can be imported at a later date",
-    icon = Icons.Outlined.NorthEast,
+    icon = Icons.Filled.Upload,
   ) {
     exportAction.launch("claw-export.json")
   }

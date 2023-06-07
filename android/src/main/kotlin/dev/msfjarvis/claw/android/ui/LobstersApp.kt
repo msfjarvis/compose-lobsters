@@ -14,12 +14,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.ImportExport
 import androidx.compose.material.icons.filled.NewReleases
 import androidx.compose.material.icons.filled.Whatshot
 import androidx.compose.material.icons.outlined.FavoriteBorder
-import androidx.compose.material.icons.outlined.ImportExport
-import androidx.compose.material.icons.outlined.NavigateBefore
 import androidx.compose.material.icons.outlined.NewReleases
 import androidx.compose.material.icons.outlined.Whatshot
 import androidx.compose.material3.Icon
@@ -146,7 +146,7 @@ fun LobstersApp(
                 onClick = { if (!navController.popBackStack()) context.getActivity()?.finish() }
               ) {
                 Icon(
-                  imageVector = Icons.Outlined.NavigateBefore,
+                  imageVector = Icons.Filled.ArrowBack,
                   contentDescription = "Go back to previous screen",
                 )
               }
@@ -161,7 +161,7 @@ fun LobstersApp(
             if (navItems.any { it.route == currentDestination }) {
               IconButton(onClick = { navController.navigate(Destinations.DataTransfer.route) }) {
                 Icon(
-                  imageVector = Icons.Outlined.ImportExport,
+                  imageVector = Icons.Filled.ImportExport,
                   contentDescription = "Data transfer options"
                 )
               }

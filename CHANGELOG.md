@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 *   Spamming the comments button no longer causes it to be opened multiple times
+*   Saved posts screen now has a visual indication when you have nothing saved
+*   Iconography has been updated across the board to be more consistent
 
 ## [1.28.0] - 2023-06-03
 

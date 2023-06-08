@@ -22,6 +22,9 @@ pushd "${SCRIPT_DIR}"/../screenshots || exit 1
 # Delete any existing screenshots
 rm -rf ./*.png
 
+# Allow demo mode to be enabled
+adb shell settings put global sysui_demo_allowed 1
+
 # Enable Demo Mode on the device with the following settings
 # - Hide notification icons
 # - Set clock to 1200 hrs

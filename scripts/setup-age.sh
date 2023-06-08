@@ -4,7 +4,7 @@ set -euxo pipefail
 
 TEMP_DIR="$(mktemp -d)"
 BIN_DIR=""
-AGE_VERSION="v1.0.0"
+AGE_VERSION="v1.1.1"
 AGE_FILE=""
 
 case "$(uname)" in
@@ -21,7 +21,7 @@ esac
 
 pushd "${TEMP_DIR}"
 
-curl -L --silent --show-error --retry 3 --fail -o age.tar.gz "https://github.com/FiloSottile/age/releases/download/v1.0.0/${AGE_FILE:?}"
+curl -L --silent --show-error --retry 3 --fail -o age.tar.gz "https://github.com/FiloSottile/age/releases/download/${AGE_VERSION}/${AGE_FILE:?}"
 tar xvf age.tar.gz
 rm age/LICENSE
 mkdir -p "${BIN_DIR}"

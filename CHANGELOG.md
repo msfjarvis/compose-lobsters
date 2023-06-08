@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.29.0] - 2023-06-08
+
 ### Added
 
 *   Backup and restore options for saved posts
@@ -242,7 +244,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 *   Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.28.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.29.0...HEAD
+
+[1.29.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.28.0...v1.29.0
 
 [1.28.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.27.0...v1.28.0
 

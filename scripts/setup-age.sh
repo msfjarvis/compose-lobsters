@@ -6,14 +6,22 @@ TEMP_DIR="$(mktemp -d)"
 BIN_DIR=""
 AGE_VERSION="v1.1.1"
 AGE_FILE=""
+ARCH=""
+
+case "$(uname -m)" in
+  aarch64) ARCH="arm" ;;
+  x86_64) ARCH="amd64" ;;
+  *) ARCH="amd64" ;;
+esac
+
 
 case "$(uname)" in
   Linux)
-    AGE_FILE="age-${AGE_VERSION}-linux-amd64.tar.gz"
+    AGE_FILE="age-${AGE_VERSION}-linux-${ARCH}.tar.gz"
     BIN_DIR="${HOME}/.local/bin"
     ;;
   Darwin)
-    AGE_FILE="age-${AGE_VERSION}-darwin-amd64.tar.gz"
+    AGE_FILE="age-${AGE_VERSION}-darwin-${ARCH}.tar.gz"
     BIN_DIR="${HOME}/bin"
     ;;
   *) echo "Unsupported system: $(uname)"; exit 1 ;;

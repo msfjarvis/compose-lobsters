@@ -8,6 +8,7 @@ package dev.msfjarvis.claw.benchmark
 
 import androidx.benchmark.macro.BaselineProfileMode
 import androidx.benchmark.macro.CompilationMode
+import androidx.benchmark.macro.FrameTimingMetric
 import androidx.benchmark.macro.StartupMode
 import androidx.benchmark.macro.StartupTimingMetric
 import androidx.benchmark.macro.junit4.MacrobenchmarkRule
@@ -28,27 +29,27 @@ class BaselineProfileBenchmark {
   }
 
   @Test
-  fun startupNoCompilation() {
-    startup(CompilationMode.None())
+  fun noCompilation() {
+    exploreUI(CompilationMode.None())
   }
 
   @Test
-  fun startupBaselineFullyCompiled() {
-    startup(CompilationMode.Full())
+  fun fullyCompiled() {
+    exploreUI(CompilationMode.Full())
   }
 
   @Test
-  fun startupBaselineProfile() {
-    startup(CompilationMode.Partial(baselineProfileMode = BaselineProfileMode.Require))
+  fun baselineProfile() {
+    exploreUI(CompilationMode.Partial(baselineProfileMode = BaselineProfileMode.Require))
   }
 
-  private fun startup(compilationMode: CompilationMode) {
+  private fun exploreUI(compilationMode: CompilationMode) {
     benchmarkRule.measureRepeated(
       packageName = PACKAGE_NAME,
-      metrics = listOf(StartupTimingMetric()),
-      iterations = 10,
+      metrics = listOf(FrameTimingMetric(), StartupTimingMetric()),
+      compilationMode = compilationMode,
       startupMode = StartupMode.COLD,
-      compilationMode = compilationMode
+      iterations = 10,
     ) {
       device.executeShellCommand("pm clear $PACKAGE_NAME")
 

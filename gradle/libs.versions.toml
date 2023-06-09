@@ -81,6 +81,7 @@ retrofit-kotlinxSerializationConverter = "com.jakewharton.retrofit:retrofit2-kot
 sentry-bom = { module = "io.sentry:sentry-bom", version.ref = "sentry-sdk" }
 sentry-okhttp = { module = "io.sentry:sentry-android-okhttp", version.ref = "sentry-sdk" }
 slack-compose-lints = "com.slack.lint.compose:compose-lint-checks:1.2.0"
+soloader = "com.facebook.soloader:soloader:0.10.5"
 sqldelight-androidDriver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
 sqldelight-extensions-coroutines = { module = "app.cash.sqldelight:coroutines-extensions-jvm", version.ref = "sqldelight" }
 sqldelight-jvmDriver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }

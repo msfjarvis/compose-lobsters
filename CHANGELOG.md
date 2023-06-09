@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 *   Comments and user profile text rendering was overhauled, there should be no visual changes
+*   Added another workaround for native library loading crash
 
 ## [1.29.0] - 2023-06-08
 

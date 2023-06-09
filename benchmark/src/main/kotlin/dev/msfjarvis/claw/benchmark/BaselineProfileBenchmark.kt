@@ -1,5 +1,5 @@
 /*
- * Copyright © 2022 Harsh Shandilya.
+ * Copyright © 2022-2023 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -50,7 +50,17 @@ class BaselineProfileBenchmark {
       startupMode = StartupMode.COLD,
       compilationMode = compilationMode
     ) {
+      device.executeShellCommand("pm clear $PACKAGE_NAME")
+
       startActivityAndWait()
+
+      device.waitForIdle()
+
+      device.savePosts()
+
+      device.exploreScreens()
+
+      device.returnToHottestScreen()
     }
   }
 }

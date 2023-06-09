@@ -6,56 +6,38 @@
  */
 package dev.msfjarvis.claw.benchmark
 
-import androidx.benchmark.macro.MacrobenchmarkScope
 import androidx.test.uiautomator.By
+import androidx.test.uiautomator.BySelector
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiObject2
 import androidx.test.uiautomator.Until
 
 const val PACKAGE_NAME = "dev.msfjarvis.claw.android.benchmark"
 private const val AWAIT_TIMEOUT = 10_000L
-private const val SAVE_BUTTON_DESC = "Add to saved posts"
+private const val SAVE_BUTTON_ID = "save_button"
 private const val NAV_ID_HOTTEST = "HOTTEST"
 private const val NAV_ID_NEWEST = "NEWEST"
 private const val NAV_ID_SAVED = "SAVED"
-private const val COMMENT_BUTTON_DESC = "Open comments"
 
-@Suppress("Unused")
-fun MacrobenchmarkScope.exploreUI(device: UiDevice) {
-  startActivityAndWait()
-  device.run {
-    savePosts()
-
-    exploreScreens()
-
-    returnToHottestScreen()
-
-    openCommentsScreen()
-  }
+fun UiDevice.savePosts() {
+  waitForObject(By.res(SAVE_BUTTON_ID)).click()
 }
 
-private fun UiDevice.waitForSubmitterName() {
-  wait(Until.hasObject(By.textContains("Submitted by")), AWAIT_TIMEOUT)
-}
-
-private fun UiDevice.savePosts() {
-  waitForSubmitterName()
-  findObjects(By.desc(SAVE_BUTTON_DESC)).forEach(UiObject2::click)
-}
-
-private fun UiDevice.exploreScreens() {
+fun UiDevice.exploreScreens() {
   listOf(NAV_ID_HOTTEST, NAV_ID_NEWEST, NAV_ID_SAVED).forEach { tag ->
-    findObject(By.res(tag)).click()
-    waitForSubmitterName()
+    waitForObject(By.res(tag)).click()
+    waitForIdle()
   }
 }
 
-private fun UiDevice.returnToHottestScreen() {
-  findObject(By.res(NAV_ID_HOTTEST)).click()
-  waitForSubmitterName()
+fun UiDevice.returnToHottestScreen() {
+  waitForObject(By.res(NAV_ID_HOTTEST)).click()
 }
 
-private fun UiDevice.openCommentsScreen() {
-  waitForSubmitterName()
-  findObjects(By.desc(COMMENT_BUTTON_DESC)).first().click()
+private fun UiDevice.waitForObject(selector: BySelector, timeout: Long = AWAIT_TIMEOUT): UiObject2 {
+  if (wait(Until.hasObject(selector), timeout)) {
+    return findObject(selector)
+  }
+
+  error("Object with selector [$selector] not found")
 }

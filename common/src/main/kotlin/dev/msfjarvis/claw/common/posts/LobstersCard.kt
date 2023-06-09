@@ -207,7 +207,7 @@ private fun CommentsButton(
       imageVector = Icons.Filled.Comment,
       tint = MaterialTheme.colorScheme.secondary,
       contentDescription = "Open comments",
-      modifier = Modifier.align(Alignment.Center),
+      modifier = Modifier.align(Alignment.Center).testTag("comments_button"),
     )
   }
 }

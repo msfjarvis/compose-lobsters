@@ -29,6 +29,16 @@ class BaselineProfileGenerator {
       packageName = PACKAGE_NAME,
       maxIterations = 8,
     ) {
+      device.executeShellCommand("pm clear $PACKAGE_NAME")
+
       startActivityAndWait()
+
+      device.waitForIdle()
+
+      device.savePosts()
+
+      device.exploreScreens()
+
+      device.returnToHottestScreen()
     }
 }

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+*   Comments and user profile text rendering was overhauled, there should be no visual changes
+
 ## [1.29.0] - 2023-06-08
 
 ### Added

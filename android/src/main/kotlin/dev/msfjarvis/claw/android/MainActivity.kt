@@ -18,7 +18,6 @@ import androidx.core.view.WindowCompat
 import com.deliveryhero.whetstone.Whetstone
 import com.deliveryhero.whetstone.activity.ContributesActivityInjector
 import dev.msfjarvis.claw.android.ui.LobstersApp
-import dev.msfjarvis.claw.common.comments.HTMLConverter
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 import javax.inject.Inject
 
@@ -26,7 +25,6 @@ import javax.inject.Inject
 class MainActivity : ComponentActivity() {
 
   @Inject lateinit var urlLauncher: UrlLauncher
-  @Inject lateinit var htmlConverter: HTMLConverter
   private var webUri: String? = null
 
   @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
@@ -40,7 +38,6 @@ class MainActivity : ComponentActivity() {
 
       LobstersApp(
         urlLauncher = urlLauncher,
-        htmlConverter = htmlConverter,
         windowSizeClass = windowSizeClass,
         setWebUri = { url -> webUri = url },
       )

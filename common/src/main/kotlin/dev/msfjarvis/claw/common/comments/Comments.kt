@@ -41,7 +41,6 @@ import dev.msfjarvis.claw.model.LobstersPostDetails
 private fun CommentsPageInternal(
   details: LobstersPostDetails,
   postActions: PostActions,
-  htmlConverter: HTMLConverter,
   commentState: PostComments?,
   markSeenComments: (String, List<Comment>) -> Unit,
   modifier: Modifier = Modifier,
@@ -55,7 +54,6 @@ private fun CommentsPageInternal(
         CommentsHeader(
           postDetails = details,
           postActions = postActions,
-          htmlConverter = htmlConverter,
         )
       }
 
@@ -70,7 +68,6 @@ private fun CommentsPageInternal(
 
         nodes(
           nodes = commentNodes,
-          htmlConverter = htmlConverter,
           toggleExpanded = { node ->
             val newNode = setExpanded(node, !node.isExpanded)
             val parent = findTopMostParent(newNode)
@@ -102,7 +99,6 @@ private fun CommentsPageInternal(
 fun CommentsPage(
   postId: String,
   postActions: PostActions,
-  htmlConverter: HTMLConverter,
   getSeenComments: suspend (String) -> PostComments?,
   markSeenComments: (String, List<Comment>) -> Unit,
   modifier: Modifier = Modifier,
@@ -123,7 +119,6 @@ fun CommentsPage(
       CommentsPageInternal(
         details = (postDetails as Success<LobstersPostDetails>).data,
         postActions = postActions,
-        htmlConverter = htmlConverter,
         commentState = commentState,
         markSeenComments = markSeenComments,
         modifier = modifier.fillMaxSize(),

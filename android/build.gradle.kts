@@ -70,7 +70,6 @@ dependencies {
   implementation(libs.androidx.profileinstaller)
   implementation(libs.androidx.work.runtime.ktx)
   implementation(libs.coil)
-  implementation(libs.copydown)
   implementation(libs.crux)
   implementation(libs.dagger)
   implementation(libs.jsoup)

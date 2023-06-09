@@ -1,5 +1,5 @@
 /*
- * Copyright © 2021-2022 Harsh Shandilya.
+ * Copyright © 2021-2023 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -17,7 +17,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ProvidedValue
 import androidx.compose.ui.platform.LocalContext
-import com.halilibo.richtext.ui.material3.SetupMaterial3RichText
 
 private val LightThemeColors =
   lightColorScheme(
@@ -98,8 +97,6 @@ fun LobstersTheme(
       else -> if (darkTheme) DarkThemeColors else LightThemeColors
     }
   CompositionLocalProvider(*providedValues) {
-    MaterialTheme(colorScheme = colorScheme, typography = AppTypography) {
-      SetupMaterial3RichText { content() }
-    }
+    MaterialTheme(colorScheme = colorScheme, typography = AppTypography, content = content)
   }
 }

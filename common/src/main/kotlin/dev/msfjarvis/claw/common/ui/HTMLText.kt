@@ -17,11 +17,15 @@ import android.text.style.SubscriptSpan
 import android.text.style.SuperscriptSpan
 import android.text.style.URLSpan
 import android.text.style.UnderlineSpan
-import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
@@ -152,6 +156,38 @@ private fun SubscriptSpan.spanStyle(): SpanStyle =
 @Suppress("UnusedReceiverParameter")
 private fun SuperscriptSpan.spanStyle(): SpanStyle =
   SpanStyle(baselineShift = BaselineShift.Superscript)
+
+@Composable
+private fun ClickableText(
+  text: AnnotatedString,
+  modifier: Modifier = Modifier,
+  style: TextStyle = TextStyle.Default,
+  softWrap: Boolean = true,
+  overflow: TextOverflow = TextOverflow.Clip,
+  maxLines: Int = Int.MAX_VALUE,
+  onTextLayout: (TextLayoutResult) -> Unit = {},
+  onClick: (Int) -> Unit
+) {
+  val layoutResult = remember { mutableStateOf<TextLayoutResult?>(null) }
+  val pressIndicator =
+    Modifier.pointerInput(onClick) {
+      detectTapGestures { pos ->
+        layoutResult.value?.let { layoutResult -> onClick(layoutResult.getOffsetForPosition(pos)) }
+      }
+    }
+  Text(
+    text = text,
+    modifier = modifier.then(pressIndicator),
+    style = style,
+    softWrap = softWrap,
+    overflow = overflow,
+    maxLines = maxLines,
+    onTextLayout = {
+      layoutResult.value = it
+      onTextLayout(it)
+    }
+  )
+}
 
 @Preview
 @Composable

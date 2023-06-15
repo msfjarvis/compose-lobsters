@@ -18,7 +18,9 @@ import android.text.style.SubscriptSpan
 import android.text.style.SuperscriptSpan
 import android.text.style.URLSpan
 import android.text.style.UnderlineSpan
+import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -42,6 +44,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import androidx.core.text.HtmlCompat
+import dev.msfjarvis.claw.common.theme.LobstersTheme
 
 private const val URL_TAG = "url_tag"
 
@@ -197,9 +200,11 @@ private fun ClickableText(
 @Preview
 @Composable
 fun HTMLTextPreview() {
-  HTMLText(
-    text =
-      """
+  LobstersTheme {
+    Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
+      HTMLText(
+        text =
+          """
       <h3 id="heading">Heading</h3>
       <p>This is a paragraph body</p>
       <pre><code>This is <span class="hljs-selector-tag">a</span> <span class="hljs-selector-tag">code</span> block
@@ -207,7 +212,9 @@ fun HTMLTextPreview() {
       <blockquote><p>This is a blockquote</p></blockquote>
       <p><a href="https://github.com/msfjarvis/compose-lobsters">This is a link</a></p>
       <p><img src="https://avatars.githubusercontent.com/u/13348378?v=4" alt="Image"></p>
-    """
-        .trimIndent()
-  )
+          """
+            .trimIndent()
+      )
+    }
+  }
 }

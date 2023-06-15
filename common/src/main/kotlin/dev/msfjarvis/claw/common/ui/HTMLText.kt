@@ -10,6 +10,7 @@ import android.graphics.Typeface
 import android.text.Spanned
 import android.text.style.BulletSpan
 import android.text.style.ForegroundColorSpan
+import android.text.style.QuoteSpan
 import android.text.style.RelativeSizeSpan
 import android.text.style.StrikethroughSpan
 import android.text.style.StyleSpan
@@ -103,6 +104,7 @@ private fun String.asHTML(
         is StrikethroughSpan -> span.spanStyle()
         is SuperscriptSpan -> span.spanStyle()
         is SubscriptSpan -> span.spanStyle()
+        is QuoteSpan -> span.spanStyle()
         is URLSpan -> {
           addStringAnnotation(tag = URL_TAG, annotation = span.url, start = start, end = end)
           span.spanStyle()
@@ -136,6 +138,9 @@ private fun StrikethroughSpan.spanStyle(): SpanStyle =
 
 private fun RelativeSizeSpan.spanStyle(fontSize: TextUnit): SpanStyle =
   SpanStyle(fontSize = (fontSize.value * sizeChange).sp)
+
+@Suppress("UnusedReceiverParameter")
+private fun QuoteSpan.spanStyle(): SpanStyle = SpanStyle(fontStyle = FontStyle.Italic)
 
 private fun StyleSpan.spanStyle(): SpanStyle? =
   when (style) {
@@ -199,6 +204,7 @@ fun HTMLTextPreview() {
       <p>This is a paragraph body</p>
       <pre><code>This is <span class="hljs-selector-tag">a</span> <span class="hljs-selector-tag">code</span> block
       </code></pre><p>This is an <code>inline code block</code></p>
+      <blockquote><p>This is a blockquote</p></blockquote>
       <p><a href="https://github.com/msfjarvis/compose-lobsters">This is a link</a></p>
       <p><img src="https://avatars.githubusercontent.com/u/13348378?v=4" alt="Image"></p>
     """

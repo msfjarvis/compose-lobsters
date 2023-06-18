@@ -88,7 +88,7 @@ sqldelight-jvmDriver = { module = "app.cash.sqldelight:sqlite-driver", version.r
 sqldelight-primitiveAdapters = { module = "app.cash.sqldelight:primitive-adapters", version.ref = "sqldelight" }
 sqlite-android = "com.github.requery:sqlite-android:3.42.0"
 testparameterinjector = "com.google.testparameterinjector:test-parameter-injector:1.12"
-truth = "com.google.truth:truth:1.1.4"
+truth = "com.google.truth:truth:1.1.5"
 whetstone = { module = "com.deliveryhero.whetstone:whetstone", version.ref = "whetstone" }
 
 [plugins]

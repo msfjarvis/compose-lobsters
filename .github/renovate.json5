@@ -15,6 +15,7 @@
         "https://maven.google.com/",
         "https://repo1.maven.org/maven2",
         "https://plugins.gradle.org/m2/",
+        "https://jitpack.io",
       ],
     },
     {

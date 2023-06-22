@@ -27,9 +27,9 @@ import org.gradle.kotlin.dsl.getByType
 class AndroidCommonPlugin : Plugin<Project> {
 
   private companion object {
-    const val COMPILE_SDK = 33
+    const val COMPILE_SDK = 34
     const val MIN_SDK = 26
-    const val TARGET_SDK = 33
+    const val TARGET_SDK = 34
   }
 
   override fun apply(project: Project) {

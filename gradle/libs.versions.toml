@@ -11,7 +11,7 @@ kotlin = "1.8.10"
 retrofit = "2.9.0"
 sentry-sdk = "6.24.0"
 serialization = "1.5.1"
-sqldelight = "2.0.0-rc01"
+sqldelight = "2.0.0-rc02"
 whetstone = "0.6.0-SNAPSHOT"
 workmanager = "2.8.1"
 

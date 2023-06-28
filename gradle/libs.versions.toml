@@ -9,6 +9,7 @@ dagger = "2.46.1"
 junit = "5.9.3"
 kotlin = "1.8.10"
 retrofit = "2.9.0"
+richtext = "0.16.0"
 sentry-sdk = "6.24.0"
 serialization = "1.5.1"
 sqldelight = "2.0.0-rc02"
@@ -56,6 +57,10 @@ build-vcu = "nl.littlerobots.version-catalog-update:nl.littlerobots.version-cata
 build-versions = "com.github.ben-manes:gradle-versions-plugin:0.47.0"
 coil = { module = "io.coil-kt:coil", version.ref = "coil" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
+compose-richtext-markdown = { module = "com.halilibo.compose-richtext:richtext-commonmark", version.ref = "richtext" }
+compose-richtext-material3 = { module = "com.halilibo.compose-richtext:richtext-ui-material3", version.ref = "richtext" }
+compose-richtext-ui = { module = "com.halilibo.compose-richtext:richtext-ui", version.ref = "richtext" }
+copydown = "io.github.furstenheim:copy_down:1.1"
 crux = "com.chimbori.crux:crux:3.12.0"
 dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
 dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }

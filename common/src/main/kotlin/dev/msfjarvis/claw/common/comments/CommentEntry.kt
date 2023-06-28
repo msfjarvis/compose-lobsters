@@ -41,8 +41,8 @@ import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.posts.PostTitle
 import dev.msfjarvis.claw.common.posts.Submitter
 import dev.msfjarvis.claw.common.posts.TagRow
-import dev.msfjarvis.claw.common.ui.HTMLText
 import dev.msfjarvis.claw.common.ui.NetworkImage
+import dev.msfjarvis.claw.common.ui.ThemedRichText
 import dev.msfjarvis.claw.model.LinkMetadata
 import dev.msfjarvis.claw.model.LobstersPostDetails
 import java.time.Instant
@@ -53,6 +53,7 @@ import kotlinx.collections.immutable.toImmutableList
 internal fun CommentsHeader(
   postDetails: LobstersPostDetails,
   postActions: PostActions,
+  htmlConverter: HTMLConverter,
   modifier: Modifier = Modifier,
 ) {
   val uriHandler = LocalUriHandler.current
@@ -83,7 +84,7 @@ internal fun CommentsHeader(
       }
 
       if (postDetails.description.isNotBlank()) {
-        HTMLText(postDetails.description)
+        ThemedRichText(htmlConverter.convertHTMLToMarkdown(postDetails.description))
         Spacer(Modifier.height(4.dp))
       }
       Submitter(
@@ -133,6 +134,7 @@ private val CommentEntryPadding = 16f.dp
 @Composable
 internal fun CommentEntry(
   commentNode: CommentNode,
+  htmlConverter: HTMLConverter,
   toggleExpanded: (CommentNode) -> Unit,
   modifier: Modifier = Modifier,
 ) {
@@ -167,7 +169,10 @@ internal fun CommentEntry(
           Modifier.clickable { uriHandler.openUri("https://lobste.rs/u/${comment.user.username}") },
       )
       if (commentNode.isExpanded) {
-        HTMLText(text = comment.comment, modifier = Modifier.padding(top = 8.dp))
+        ThemedRichText(
+          text = htmlConverter.convertHTMLToMarkdown(comment.comment),
+          modifier = Modifier.padding(top = 8.dp)
+        )
       }
     }
   }

@@ -29,10 +29,10 @@ import dev.msfjarvis.claw.common.NetworkState
 import dev.msfjarvis.claw.common.NetworkState.Error
 import dev.msfjarvis.claw.common.NetworkState.Loading
 import dev.msfjarvis.claw.common.NetworkState.Success
-import dev.msfjarvis.claw.common.ui.HTMLText
 import dev.msfjarvis.claw.common.ui.NetworkError
 import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.common.ui.ProgressBar
+import dev.msfjarvis.claw.common.ui.ThemedRichText
 import dev.msfjarvis.claw.model.User
 
 @Suppress("UNCHECKED_CAST")
@@ -99,10 +99,12 @@ private fun UserProfileInternal(
         text = user.username,
         style = MaterialTheme.typography.displaySmall,
       )
-      HTMLText(text = user.about)
+      ThemedRichText(
+        text = user.about,
+      )
       user.invitedBy?.let { invitedBy ->
-        HTMLText(
-          text = """Invited by <a href="https://lobste.rs/u/${invitedBy}">${invitedBy}</a>""",
+        ThemedRichText(
+          text = "Invited by [${invitedBy}](https://lobste.rs/u/${user.invitedBy})",
         )
       }
     }

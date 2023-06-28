@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ProvidedValue
 import androidx.compose.ui.platform.LocalContext
+import com.halilibo.richtext.ui.material3.SetupMaterial3RichText
 
 private val LightThemeColors =
   lightColorScheme(
@@ -97,6 +98,8 @@ fun LobstersTheme(
       else -> if (darkTheme) DarkThemeColors else LightThemeColors
     }
   CompositionLocalProvider(*providedValues) {
-    MaterialTheme(colorScheme = colorScheme, typography = AppTypography, content = content)
+    MaterialTheme(colorScheme = colorScheme, typography = AppTypography) {
+      SetupMaterial3RichText { content() }
+    }
   }
 }

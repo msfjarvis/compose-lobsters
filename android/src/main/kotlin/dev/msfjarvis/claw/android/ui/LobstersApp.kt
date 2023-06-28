@@ -64,6 +64,7 @@ import dev.msfjarvis.claw.android.ui.navigation.Destinations
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.common.comments.CommentsPage
+import dev.msfjarvis.claw.common.comments.HTMLConverter
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.decorations.ClawAppBar
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
@@ -76,6 +77,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun LobstersApp(
   urlLauncher: UrlLauncher,
+  htmlConverter: HTMLConverter,
   windowSizeClass: WindowSizeClass,
   setWebUri: (String?) -> Unit,
   modifier: Modifier = Modifier,
@@ -236,6 +238,7 @@ fun LobstersApp(
             CommentsPage(
               postId = postId,
               postActions = postActions,
+              htmlConverter = htmlConverter,
               getSeenComments = viewModel::getSeenComments,
               markSeenComments = viewModel::markSeenComments,
             )

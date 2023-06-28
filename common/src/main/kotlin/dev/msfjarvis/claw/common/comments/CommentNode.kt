@@ -68,11 +68,13 @@ internal fun findTopMostParent(node: CommentNode): CommentNode {
 
 internal fun LazyListScope.nodes(
   nodes: List<CommentNode>,
+  htmlConverter: HTMLConverter,
   toggleExpanded: (CommentNode) -> Unit,
 ) {
   nodes.forEach { node ->
     node(
       node = node,
+      htmlConverter = htmlConverter,
       toggleExpanded = toggleExpanded,
     )
   }
@@ -80,6 +82,7 @@ internal fun LazyListScope.nodes(
 
 private fun LazyListScope.node(
   node: CommentNode,
+  htmlConverter: HTMLConverter,
   toggleExpanded: (CommentNode) -> Unit,
 ) {
   // Skip the node if neither the node nor its parent is expanded
@@ -89,6 +92,7 @@ private fun LazyListScope.node(
   item {
     CommentEntry(
       commentNode = node,
+      htmlConverter = htmlConverter,
       toggleExpanded = toggleExpanded,
     )
     Divider()
@@ -96,6 +100,7 @@ private fun LazyListScope.node(
   if (node.children.isNotEmpty()) {
     nodes(
       node.children,
+      htmlConverter = htmlConverter,
       toggleExpanded = toggleExpanded,
     )
   }

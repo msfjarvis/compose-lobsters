@@ -31,6 +31,7 @@ class AndroidCommonPlugin : Plugin<Project> {
     const val COMPILE_SDK = 34
     const val MIN_SDK = 26
     const val TARGET_SDK = 34
+    const val SLIM_TESTS_PROPERTY = "slimTests"
   }
 
   override fun apply(project: Project) {
@@ -68,22 +69,25 @@ class AndroidCommonPlugin : Plugin<Project> {
     val libs = catalog.named("libs")
     project.dependencies.addProvider("lintChecks", libs.findLibrary("slack-compose-lints").get())
   }
-}
 
-private fun Project.configureSlimTests() {
-  // Disable unit test tasks on the release build type for Android Library projects
-  extensions.findByType<LibraryAndroidComponentsExtension>()?.run {
-    beforeVariants(selector().withBuildType("release")) {
-      (it as HasUnitTestBuilder).enableUnitTest = false
-      it.enableAndroidTest = false
+  private fun Project.configureSlimTests() {
+    if (!providers.gradleProperty(SLIM_TESTS_PROPERTY).isPresent) {
+      return
     }
-  }
+    // Disable unit test tasks on the release build type for Android Library projects
+    extensions.findByType<LibraryAndroidComponentsExtension>()?.run {
+      beforeVariants(selector().withBuildType("release")) {
+        (it as HasUnitTestBuilder).enableUnitTest = false
+        it.enableAndroidTest = false
+      }
+    }
 
-  // Disable unit test tasks on the release build type for Android Application projects.
-  extensions.findByType<ApplicationAndroidComponentsExtension>()?.run {
-    beforeVariants(selector().withBuildType("release")) {
-      (it as HasUnitTestBuilder).enableUnitTest = false
-      it.enableAndroidTest = false
+    // Disable unit test tasks on the release build type for Android Application projects.
+    extensions.findByType<ApplicationAndroidComponentsExtension>()?.run {
+      beforeVariants(selector().withBuildType("release")) {
+        (it as HasUnitTestBuilder).enableUnitTest = false
+        it.enableAndroidTest = false
+      }
     }
   }
 }

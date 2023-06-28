@@ -86,7 +86,7 @@ jobs:
         # Pull down any changes which may have been committed while this workflow has been running
         git pull
         # Sort the baseline profile, output to android/
-        sort -o android/src/main/baseline-prof.txt benchmark/build/outputs/managed_device_android_test_additional_output/api31/BaselineProfileGenerator_generateBaselineProfile-baseline-prof.txt
+        sort -o android/src/main/baseline-prof.txt benchmark/build/outputs/managed_device_android_test_additional_output/benchmark/api31/BaselineProfileGenerator_generateBaselineProfile-baseline-prof.txt
         # If the baseline profile has changed, commit it
         if [[ $(git diff --stat android/src/main/baseline-prof.txt) != '' ]]; then
           git add android/src/main/baseline-prof.txt

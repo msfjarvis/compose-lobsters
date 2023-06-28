@@ -6,6 +6,8 @@
  */
 @file:Suppress("UnstableApiUsage")
 
+import com.android.build.api.variant.HasUnitTestBuilder
+
 plugins {
   id("dev.msfjarvis.claw.android-library")
   id("dev.msfjarvis.claw.kotlin-android")
@@ -25,7 +27,7 @@ android {
   namespace = "dev.msfjarvis.claw.common"
 }
 
-androidComponents { beforeVariants { it.enableUnitTest = false } }
+androidComponents { beforeVariants { (it as HasUnitTestBuilder).enableUnitTest = false } }
 
 anvil { generateDaggerFactories.set(true) }
 

@@ -14,7 +14,7 @@ sentry-sdk = "6.24.0"
 serialization = "1.5.1"
 sqldelight = "2.0.0-rc02"
 whetstone = "0.6.0-SNAPSHOT"
-workmanager = "2.8.1"
+workmanager = "2.9.0-alpha01"
 
 [libraries]
 accompanist-sysuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
@@ -45,7 +45,7 @@ androidx-test-ext-junit = "androidx.test.ext:junit:1.2.0-alpha01"
 androidx-test-rules = "androidx.test:rules:1.6.0-alpha01"
 androidx-test-runner = "androidx.test:runner:1.6.0-alpha03"
 androidx-test-uiautomator = "androidx.test.uiautomator:uiautomator:2.3.0-alpha03"
-androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "workmanager" }
+androidx-work-runtime = { module = "androidx.work:work-runtime", version.ref = "workmanager" }
 build-agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 build-cachefix = "org.gradle.android.cache-fix:org.gradle.android.cache-fix.gradle.plugin:2.7.2"
 build-kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }

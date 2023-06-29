@@ -44,7 +44,7 @@ jobs:
         java-version: 18
 
     - name: Run unit tests
-      uses: gradle/gradle-build-action@8e02c8272aba4650563824b7012f8a86158901c6 # v2.5.0
+      uses: gradle/gradle-build-action@40b6781dcdec2762ad36556682ac74e31030cfe2 # v2.5.1
       with:
         arguments: --no-configuration-cache --stacktrace check -PslimTests
         gradle-home-cache-cleanup: true
@@ -94,7 +94,7 @@ jobs:
         ENCRYPT_KEY: ${{ secrets.ENCRYPT_KEY }}
 
     - name: Build release app
-      uses: gradle/gradle-build-action@8e02c8272aba4650563824b7012f8a86158901c6 # v2.5.0
+      uses: gradle/gradle-build-action@40b6781dcdec2762ad36556682ac74e31030cfe2 # v2.5.1
       env:
         SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       with:

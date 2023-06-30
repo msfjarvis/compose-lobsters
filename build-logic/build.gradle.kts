@@ -4,22 +4,9 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
-import org.gradle.api.JavaVersion
-import org.gradle.api.tasks.compile.JavaCompile
-import org.gradle.kotlin.dsl.withType
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins { `kotlin-dsl` }
 
-tasks.withType<JavaCompile>().configureEach {
-  sourceCompatibility = JavaVersion.VERSION_17.toString()
-  targetCompatibility = JavaVersion.VERSION_17.toString()
-}
-
-tasks.withType<KotlinCompile>().configureEach {
-  compilerOptions { jvmTarget.set(JvmTarget.JVM_17) }
-}
+kotlin.jvmToolchain { languageVersion.set(JavaLanguageVersion.of(17)) }
 
 gradlePlugin {
   plugins {

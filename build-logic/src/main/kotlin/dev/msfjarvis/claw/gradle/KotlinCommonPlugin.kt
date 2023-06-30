@@ -6,16 +6,16 @@
  */
 package dev.msfjarvis.claw.gradle
 
-import org.gradle.api.JavaVersion
+import org.gradle.api.Action
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.tasks.compile.JavaCompile
 import org.gradle.api.tasks.testing.Test
 import org.gradle.api.tasks.testing.logging.TestLogEvent
+import org.gradle.jvm.toolchain.JavaLanguageVersion
+import org.gradle.jvm.toolchain.JavaToolchainSpec
 import org.gradle.kotlin.dsl.withType
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
-import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 @Suppress("Unused")
 class KotlinCommonPlugin : Plugin<Project> {
@@ -27,18 +27,11 @@ class KotlinCommonPlugin : Plugin<Project> {
       LintConfig.configureSubProject(project)
     }
     project.tasks.run {
-      withType<JavaCompile>().configureEach {
-        sourceCompatibility = JavaVersion.VERSION_17.toString()
-        targetCompatibility = JavaVersion.VERSION_17.toString()
-      }
-      withType<KotlinJvmCompile>().configureEach {
+      withType<KotlinCompile>().configureEach {
         compilerOptions {
-          allWarningsAsErrors.set(
-            project.providers.environmentVariable("GITHUB_WORKFLOW").isPresent
-          )
-          jvmTarget.set(JvmTarget.JVM_17)
+          allWarningsAsErrors.set(true)
           freeCompilerArgs.addAll(ADDITIONAL_COMPILER_ARGS)
-          languageVersion.set(KotlinVersion.KOTLIN_1_7)
+          languageVersion.set(KotlinVersion.KOTLIN_1_8)
         }
       }
       withType<Test>().configureEach {
@@ -49,10 +42,13 @@ class KotlinCommonPlugin : Plugin<Project> {
     }
   }
 
-  private companion object {
+  companion object {
     private val ADDITIONAL_COMPILER_ARGS =
       listOf(
         "-opt-in=kotlin.RequiresOptIn",
       )
+
+    val JVM_TOOLCHAIN_ACTION =
+      Action<JavaToolchainSpec> { languageVersion.set(JavaLanguageVersion.of(17)) }
   }
 }

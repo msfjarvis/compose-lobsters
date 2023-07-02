@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.30.0] - 2023-07-02
+
 ### Changed
 
 *   Added another workaround for native library loading crash
@@ -248,7 +250,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 *   Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.29.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.30.0...HEAD
+
+[1.30.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.29.0...v1.30.0
 
 [1.29.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.28.0...v1.29.0
 

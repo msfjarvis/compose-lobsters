@@ -37,10 +37,11 @@ class SpotlessPlugin : Plugin<Project> {
       }
       format("xml") {
         target("**/*.xml")
-        targetExclude("**/build/", ".idea/")
+        targetExclude("**/build/", ".idea/", "/spotless/", "**/lint-baseline.xml")
         trimTrailingWhitespace()
         indentWithSpaces()
         endWithNewline()
+        licenseHeaderFile(project.file("spotless/license.xml"), "<\\?xml")
       }
     }
   }

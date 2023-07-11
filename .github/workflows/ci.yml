@@ -34,6 +34,7 @@ jobs:
         arguments: --no-configuration-cache --stacktrace check -PslimTests
         gradle-home-cache-cleanup: true
         cache-read-only: ${{ github.ref != 'refs/heads/main' }}
+        dependency-graph: generate-and-submit
 
     - name: (Fail-only) Upload test report
       if: failure()

@@ -56,6 +56,7 @@ fun DatabasePosts(
           stickyHeader(contentType = "month-header") { MonthHeader(month = month) }
           items(
             items = posts,
+            key = { it.shortId },
             contentType = { "LobstersItem" },
           ) { item ->
             ListItem(

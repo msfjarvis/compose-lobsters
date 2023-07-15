@@ -24,7 +24,7 @@ constructor(
   @BaseUrl private val url: String,
 ) {
   suspend fun extractToken(): String? {
-    val request = Request.Builder().url(url).get().build()
+    val request = Request.Builder().url(url).build()
     return withContext(dispatcher) {
       okHttpClient.newCall(request).execute().use { response ->
         val doc = Jsoup.parse(response.body?.string() ?: return@use null)

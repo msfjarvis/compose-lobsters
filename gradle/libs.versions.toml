@@ -61,7 +61,7 @@ compose-richtext-markdown = { module = "com.halilibo.compose-richtext:richtext-c
 compose-richtext-material3 = { module = "com.halilibo.compose-richtext:richtext-ui-material3", version.ref = "richtext" }
 compose-richtext-ui = { module = "com.halilibo.compose-richtext:richtext-ui", version.ref = "richtext" }
 copydown = "io.github.furstenheim:copy_down:1.1"
-crux = "com.chimbori.crux:crux:3.12.0"
+crux = "com.chimbori.crux:crux:3.13.0"
 dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
 dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
 eithernet = "com.slack.eithernet:eithernet:1.4.1"

@@ -8,10 +8,12 @@
 
 package dev.msfjarvis.claw.model
 
+import dev.drewhamilton.poko.Poko
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
+@Poko
 class LobstersPost(
   val shortId: String,
   val createdAt: String,

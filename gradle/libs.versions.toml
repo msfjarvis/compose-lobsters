@@ -65,7 +65,6 @@ crux = "com.chimbori.crux:crux:5.0"
 dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
 dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
 eithernet = "com.slack.eithernet:eithernet:1.4.1"
-javapoet = "com.squareup:javapoet:1.13.0"
 javax-inject = "javax.inject:javax.inject:1"
 jsoup = "org.jsoup:jsoup:1.16.1"
 junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit" }
@@ -102,5 +101,6 @@ anvil = "com.squareup.anvil:2.4.4"
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 modulegraph = "dev.iurysouza.modulegraph:0.4.0"
 modulegraphassert = "com.jraska.module.graph.assertion:2.4.1"
+poko = "dev.drewhamilton.poko:0.12.0"
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 whetstone = { id = "dev.msfjarvis.whetstone", version.ref = "whetstone" }

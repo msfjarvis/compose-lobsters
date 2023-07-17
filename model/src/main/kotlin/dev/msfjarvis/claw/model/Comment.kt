@@ -8,12 +8,14 @@
 
 package dev.msfjarvis.claw.model
 
+import dev.drewhamilton.poko.Poko
 import dev.msfjarvis.claw.serialization.JavaInstantSerializer
 import java.time.temporal.TemporalAccessor
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
+@Poko
 class Comment(
   val shortId: String,
   val comment: String,

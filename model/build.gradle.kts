@@ -7,6 +7,7 @@
 plugins {
   id("dev.msfjarvis.claw.kotlin-jvm")
   alias(libs.plugins.kotlin.serialization)
+  alias(libs.plugins.poko)
 }
 
 dependencies { implementation(libs.kotlinx.serialization.core) }

@@ -21,6 +21,8 @@ import dev.msfjarvis.claw.core.injection.IODispatcher
 import dev.msfjarvis.claw.database.local.SavedPost
 import dev.msfjarvis.claw.model.Comment
 import java.io.IOException
+import java.io.InputStream
+import java.io.OutputStream
 import java.net.HttpURLConnection
 import java.time.LocalDateTime
 import java.time.Month
@@ -42,7 +44,7 @@ constructor(
   private val savedPostsRepository: SavedPostsRepository,
   private val commentsRepository: CommentsRepository,
   private val linkMetadataRepository: LinkMetadataRepository,
-  val dataTransferRepository: DataTransferRepository,
+  private val dataTransferRepository: DataTransferRepository,
   private val pagingSourceFactory: LobstersPagingSource.Factory,
   @IODispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
@@ -123,6 +125,10 @@ constructor(
         is Failure.ApiFailure -> throw IOException("API returned an invalid response")
       }
     }
+
+  suspend fun importPosts(input: InputStream) = dataTransferRepository.importPosts(input)
+
+  suspend fun exportPosts(output: OutputStream) = dataTransferRepository.exportPosts(output)
 
   /**
    * Parses a given [String] into a [LocalDateTime]. This method is only intended to be used for

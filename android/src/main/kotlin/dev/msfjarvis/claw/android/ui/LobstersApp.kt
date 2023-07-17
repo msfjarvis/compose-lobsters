@@ -259,7 +259,8 @@ fun LobstersApp(
           composable(route = Destinations.DataTransfer.route) {
             DataTransferScreen(
               context = context,
-              dataTransferRepository = viewModel.dataTransferRepository,
+              importPosts = viewModel::importPosts,
+              exportPosts = viewModel::exportPosts,
               snackbarHostState = snackbarHostState,
             )
           }

@@ -25,7 +25,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import dev.msfjarvis.claw.android.viewmodel.DataTransferRepository
+import java.io.InputStream
+import java.io.OutputStream
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -34,14 +35,15 @@ private const val MIME_TYPE = "application/json"
 @Composable
 fun DataTransferScreen(
   context: Context,
-  dataTransferRepository: DataTransferRepository,
+  importPosts: suspend (InputStream) -> Unit,
+  exportPosts: suspend (OutputStream) -> Unit,
   snackbarHostState: SnackbarHostState,
   modifier: Modifier = Modifier,
 ) {
   val coroutineScope = rememberCoroutineScope()
   Column(modifier = modifier) {
-    ImportOption(context, coroutineScope, dataTransferRepository, snackbarHostState)
-    ExportOption(context, coroutineScope, dataTransferRepository, snackbarHostState)
+    ImportOption(context, coroutineScope, importPosts, snackbarHostState)
+    ExportOption(context, coroutineScope, exportPosts, snackbarHostState)
   }
 }
 
@@ -49,7 +51,7 @@ fun DataTransferScreen(
 private fun ImportOption(
   context: Context,
   coroutineScope: CoroutineScope,
-  dataTransferRepository: DataTransferRepository,
+  importPosts: suspend (InputStream) -> Unit,
   snackbarHostState: SnackbarHostState,
 ) {
   val importAction =
@@ -60,7 +62,7 @@ private fun ImportOption(
       }
       coroutineScope.launch {
         context.contentResolver.openInputStream(uri)?.use { stream ->
-          dataTransferRepository.importPosts(stream)
+          importPosts(stream)
           snackbarHostState.showSnackbarDismissing("Successfully imported posts")
         }
       }
@@ -78,7 +80,7 @@ private fun ImportOption(
 private fun ExportOption(
   context: Context,
   coroutineScope: CoroutineScope,
-  dataTransferRepository: DataTransferRepository,
+  exportPosts: suspend (OutputStream) -> Unit,
   snackbarHostState: SnackbarHostState,
 ) {
   val exportAction =
@@ -89,7 +91,7 @@ private fun ExportOption(
       }
       coroutineScope.launch {
         context.contentResolver.openOutputStream(uri)?.use { stream ->
-          dataTransferRepository.exportPosts(stream)
+          exportPosts(stream)
           snackbarHostState.showSnackbarDismissing("Successfully exported posts")
         }
       }

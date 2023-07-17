@@ -26,33 +26,10 @@
     },
     {
       "matchPackagePatterns": [
-        "^kotlin",
-        "^org.jetbrains.kotlin",
-        "^androidx.compose.compiler",
-        "^anvil",
-        "^coil",
-        "^poko",
-      ],
-      "enabled": false
-    },
-    {
-      "matchPackagePatterns": [
         "^io.sentry",
         "^sentry",
       ],
       "groupName": "sentry"
-    },
-    {
-      "managers": [
-        "gradle"
-      ],
-      "packagePatterns": [
-        // Renovate refuses to stop resolving this from the snapshots repo
-        "^app.cash.sqldelight",
-        // Currently on a pre-release version for bugfixes
-        "com.android.tools:r8",
-      ],
-      "enabled": false
     },
   ],
   "regexManagers": [
@@ -89,5 +66,5 @@
       "depNameTemplate": "io.sentry:sentry-android",
       "registryUrlTemplate": "https://repo1.maven.org/maven2/",
     }
-  ]
+  ],
 }

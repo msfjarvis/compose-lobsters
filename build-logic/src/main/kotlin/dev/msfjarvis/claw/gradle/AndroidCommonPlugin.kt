@@ -70,7 +70,8 @@ class AndroidCommonPlugin : Plugin<Project> {
     }
     // Disable unit test tasks on the release build type for Android Library projects
     extensions.findByType<LibraryAndroidComponentsExtension>()?.run {
-      beforeVariants(selector().withBuildType("release")) {
+      beforeVariants(selector().all()) {
+        if (it.name == "debug") return@beforeVariants
         (it as HasUnitTestBuilder).enableUnitTest = false
         it.enableAndroidTest = false
       }
@@ -78,7 +79,8 @@ class AndroidCommonPlugin : Plugin<Project> {
 
     // Disable unit test tasks on the release build type for Android Application projects.
     extensions.findByType<ApplicationAndroidComponentsExtension>()?.run {
-      beforeVariants(selector().withBuildType("release")) {
+      beforeVariants(selector().all()) {
+        if (it.name == "debug") return@beforeVariants
         (it as HasUnitTestBuilder).enableUnitTest = false
         it.enableAndroidTest = false
       }

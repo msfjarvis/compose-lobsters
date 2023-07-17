@@ -59,7 +59,7 @@ internal fun CommentsHeader(
   val uriHandler = LocalUriHandler.current
   val linkMetadata by
     produceState(
-      initialValue = LinkMetadata(postDetails.url, null, null),
+      initialValue = LinkMetadata(postDetails.url, null),
     ) {
       runCatching { postActions.getLinkMetadata(postDetails.url) }
         .onSuccess { metadata -> value = metadata }

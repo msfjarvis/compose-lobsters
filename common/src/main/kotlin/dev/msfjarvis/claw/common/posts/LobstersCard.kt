@@ -289,7 +289,7 @@ fun LobstersCardPreview() {
           }
 
           override suspend fun getLinkMetadata(url: String): LinkMetadata {
-            return LinkMetadata("", "", "")
+            return LinkMetadata("", "")
           }
         },
     )

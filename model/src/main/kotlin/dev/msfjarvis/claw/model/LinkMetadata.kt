@@ -1,5 +1,5 @@
 /*
- * Copyright © 2022 Harsh Shandilya.
+ * Copyright © 2022-2023 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -8,8 +8,10 @@
 
 package dev.msfjarvis.claw.model
 
-data class LinkMetadata(
+import dev.drewhamilton.poko.Poko
+
+@Poko
+class LinkMetadata(
   val url: String,
   val faviconUrl: String?,
-  val readingTime: String?,
 )

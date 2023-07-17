@@ -13,7 +13,7 @@ import kotlin.contracts.contract
 
 @OptIn(ExperimentalContracts::class)
 object TestUtils {
-  fun getJson(path: String): String {
+  fun getResource(path: String): String {
     // Load the JSON response
     val uri = javaClass.classLoader!!.getResource(path)
     val file = File(uri.path)

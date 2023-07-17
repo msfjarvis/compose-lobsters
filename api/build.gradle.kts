@@ -24,6 +24,7 @@ dependencies {
 
   implementation(libs.dagger)
   implementation(libs.javax.inject)
+  implementation(libs.jsoup)
 
   testImplementation(testFixtures(libs.eithernet))
   testImplementation(libs.kotlinx.coroutines.test)

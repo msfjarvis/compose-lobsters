@@ -14,7 +14,7 @@ import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.LobstersPostDetails
 import dev.msfjarvis.claw.model.Tags
 import dev.msfjarvis.claw.model.User
-import dev.msfjarvis.claw.util.TestUtils.getJson
+import dev.msfjarvis.claw.util.TestUtils.getResource
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonNamingStrategy
@@ -25,13 +25,13 @@ class ApiWrapper(controller: EitherNetController<LobstersApi>) {
     ignoreUnknownKeys = true
     namingStrategy = JsonNamingStrategy.SnakeCase
   }
-  private val hottest: List<LobstersPost> = json.decodeFromString(getJson("hottest.json"))
+  private val hottest: List<LobstersPost> = json.decodeFromString(getResource("hottest.json"))
   private val postDetails: LobstersPostDetails =
-    json.decodeFromString(getJson("post_details_tdfoqh.json"))
-  private val user: User = json.decodeFromString(getJson("msfjarvis.json"))
-  private val metaPosts: List<LobstersPost> = json.decodeFromString(getJson("meta.json"))
+    json.decodeFromString(getResource("post_details_tdfoqh.json"))
+  private val user: User = json.decodeFromString(getResource("msfjarvis.json"))
+  private val metaPosts: List<LobstersPost> = json.decodeFromString(getResource("meta.json"))
   private val programmingRustPosts: List<LobstersPost> =
-    json.decodeFromString(getJson("programming_rust.json"))
+    json.decodeFromString(getResource("programming_rust.json"))
   private val getPostsBody = { args: Array<Any> ->
     val tags = args[0] as Tags
     if ("meta" in tags) {

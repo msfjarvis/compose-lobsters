@@ -21,7 +21,7 @@ import retrofit2.Converter
 @Module
 @ContributesTo(ApplicationScope::class)
 @OptIn(ExperimentalSerializationApi::class)
-object RetrofitModule {
+object JsonModule {
 
   @Provides
   @IntoSet

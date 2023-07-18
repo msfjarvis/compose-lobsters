@@ -19,7 +19,7 @@ workmanager = "2.9.0-alpha01"
 [libraries]
 accompanist-sysuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
 androidx-activity-compose = "androidx.activity:activity-compose:1.7.2"
-androidx-benchmark-macro-junit4 = "androidx.benchmark:benchmark-macro-junit4:1.2.0-alpha16"
+androidx-benchmark-macro-junit4 = "androidx.benchmark:benchmark-macro-junit4:1.2.0-beta01"
 androidx-browser = "androidx.browser:browser:1.5.0"
 androidx-compose-animation = { module = "androidx.compose.animation:animation" }
 androidx-compose-bom = "dev.chrisbanes.compose:compose-bom:2023.06.00-alpha01"

@@ -6,6 +6,7 @@
  */
 package dev.msfjarvis.claw.common.comments
 
+import android.os.SystemClock
 import android.text.format.DateUtils
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -191,7 +192,7 @@ fun buildCommenterString(
   createdAt: TemporalAccessor,
   updatedAt: TemporalAccessor,
 ): AnnotatedString {
-  val now = System.currentTimeMillis()
+  val now = SystemClock.elapsedRealtime()
   val createdRelative =
     remember(createdAt) {
       DateUtils.getRelativeTimeSpanString(

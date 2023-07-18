@@ -11,7 +11,6 @@ import com.slack.eithernet.ApiResult.Success
 import com.slack.eithernet.test.newEitherNetController
 import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.LobstersPostDetails
-import dev.msfjarvis.claw.model.Tags
 import dev.msfjarvis.claw.model.User
 import dev.msfjarvis.claw.util.TestUtils.assertIs
 import kotlinx.coroutines.test.runTest
@@ -49,26 +48,5 @@ class ApiTest {
     val user = api.getUser("msfjarvis")
     assertIs<Success<User>>(user)
     assertThat(user.value.username).isEqualTo("msfjarvis")
-  }
-
-  @Test
-  fun `get posts by single tag`() = runTest {
-    val tags = Tags()
-    tags.addTag("meta")
-    val posts = api.getPostsByTags(tags, 1)
-    assertIs<Success<List<LobstersPost>>>(posts)
-    assertThat(posts.value).hasSize(25)
-    assertThat(posts.value[0].tags).contains("meta")
-  }
-
-  @Test
-  fun `get posts by multiple tags`() = runTest {
-    val tags = Tags()
-    tags.addTag("programming")
-    tags.addTag("rust")
-    val posts = api.getPostsByTags(tags, 1)
-    assertIs<Success<List<LobstersPost>>>(posts)
-    assertThat(posts.value).hasSize(25)
-    assertThat(posts.value[0].tags).containsAnyOf("programming", "rust")
   }
 }

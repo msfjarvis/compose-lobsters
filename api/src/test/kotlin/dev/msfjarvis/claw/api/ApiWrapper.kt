@@ -6,13 +6,11 @@
  */
 package dev.msfjarvis.claw.api
 
-import com.slack.eithernet.ApiResult.Companion.httpFailure
 import com.slack.eithernet.ApiResult.Companion.success
 import com.slack.eithernet.test.EitherNetController
 import com.slack.eithernet.test.enqueue
 import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.LobstersPostDetails
-import dev.msfjarvis.claw.model.Tags
 import dev.msfjarvis.claw.model.User
 import dev.msfjarvis.claw.util.TestUtils.getResource
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -29,19 +27,6 @@ class ApiWrapper(controller: EitherNetController<LobstersApi>) {
   private val postDetails: LobstersPostDetails =
     json.decodeFromString(getResource("post_details_tdfoqh.json"))
   private val user: User = json.decodeFromString(getResource("msfjarvis.json"))
-  private val metaPosts: List<LobstersPost> = json.decodeFromString(getResource("meta.json"))
-  private val programmingRustPosts: List<LobstersPost> =
-    json.decodeFromString(getResource("programming_rust.json"))
-  private val getPostsBody = { args: Array<Any> ->
-    val tags = args[0] as Tags
-    if ("meta" in tags) {
-      success(metaPosts)
-    } else if ("programming" in tags && "rust" in tags) {
-      success(programmingRustPosts)
-    } else {
-      httpFailure(400)
-    }
-  }
 
   val api = controller.api
 
@@ -50,7 +35,5 @@ class ApiWrapper(controller: EitherNetController<LobstersApi>) {
     controller.enqueue(LobstersApi::getHottestPosts) { success(hottest) }
     controller.enqueue(LobstersApi::getPostDetails) { success(postDetails) }
     controller.enqueue(LobstersApi::getUser) { success(user) }
-    controller.enqueue(LobstersApi::getPostsByTags, getPostsBody)
-    controller.enqueue(LobstersApi::getPostsByTags, getPostsBody)
   }
 }

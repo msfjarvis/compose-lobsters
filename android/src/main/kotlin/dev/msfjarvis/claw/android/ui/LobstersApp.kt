@@ -18,9 +18,11 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.ImportExport
 import androidx.compose.material.icons.filled.NewReleases
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Whatshot
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.NewReleases
+import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.Whatshot
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -59,6 +61,7 @@ import dev.msfjarvis.claw.android.ui.decorations.NavigationItem
 import dev.msfjarvis.claw.android.ui.decorations.TransparentSystemBars
 import dev.msfjarvis.claw.android.ui.lists.DatabasePosts
 import dev.msfjarvis.claw.android.ui.lists.NetworkPosts
+import dev.msfjarvis.claw.android.ui.lists.SearchList
 import dev.msfjarvis.claw.android.ui.navigation.ClawNavigationType
 import dev.msfjarvis.claw.android.ui.navigation.Destinations
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
@@ -86,6 +89,7 @@ fun LobstersApp(
   val hottestListState = rememberLazyListState()
   val newestListState = rememberLazyListState()
   val savedListState = rememberLazyListState()
+  val searchListState = rememberLazyListState()
   val navController = rememberNavController()
   val coroutineScope = rememberCoroutineScope()
   val snackbarHostState = remember { SnackbarHostState() }
@@ -97,6 +101,7 @@ fun LobstersApp(
   val hottestPosts = viewModel.hottestPosts.collectAsLazyPagingItems()
   val newestPosts = viewModel.newestPosts.collectAsLazyPagingItems()
   val savedPosts by viewModel.savedPosts.collectAsState(persistentMapOf())
+  val searchResults = viewModel.searchResults.collectAsLazyPagingItems()
 
   val navigationType = ClawNavigationType.fromSize(windowSizeClass.widthSizeClass)
 
@@ -130,44 +135,54 @@ fun LobstersApp(
         ) {
           coroutineScope.launch { savedListState.animateScrollToItem(index = 0) }
         },
+        NavigationItem(
+          label = "Search",
+          route = Destinations.Search.route,
+          icon = Icons.Outlined.Search,
+          selectedIcon = Icons.Filled.Search,
+        ) {
+          coroutineScope.launch { searchListState.animateScrollToItem(index = 0) }
+        },
       )
 
     TransparentSystemBars()
 
     Scaffold(
       topBar = {
-        ClawAppBar(
-          navigationIcon = {
-            if (
-              navController.previousBackStackEntry != null &&
-                navItems.none { it.route == currentDestination }
-            ) {
-              IconButton(
-                onClick = { if (!navController.popBackStack()) context.getActivity()?.finish() }
+        if (currentDestination != Destinations.Search.route) {
+          ClawAppBar(
+            navigationIcon = {
+              if (
+                navController.previousBackStackEntry != null &&
+                  navItems.none { it.route == currentDestination }
               ) {
-                Icon(
-                  imageVector = Icons.Filled.ArrowBack,
-                  contentDescription = "Go back to previous screen",
-                )
+                IconButton(
+                  onClick = { if (!navController.popBackStack()) context.getActivity()?.finish() },
+                ) {
+                  Icon(
+                    imageVector = Icons.Filled.ArrowBack,
+                    contentDescription = "Go back to previous screen",
+                  )
+                }
               }
-            }
-          },
-          title = {
-            if (navItems.any { it.route == currentDestination }) {
-              Text(text = stringResource(R.string.app_name), fontWeight = FontWeight.Bold)
-            }
-          },
-          actions = {
-            if (navItems.any { it.route == currentDestination }) {
-              IconButton(onClick = { navController.navigate(Destinations.DataTransfer.route) }) {
-                Icon(
-                  imageVector = Icons.Filled.ImportExport,
-                  contentDescription = "Data transfer options"
-                )
+            },
+            title = {
+              if (navItems.any { it.route == currentDestination }) {
+                Text(text = stringResource(R.string.app_name), fontWeight = FontWeight.Bold)
               }
-            }
-          },
-        )
+            },
+            actions = {
+              if (navItems.any { it.route == currentDestination }) {
+                IconButton(onClick = { navController.navigate(Destinations.DataTransfer.route) }) {
+                  Icon(
+                    imageVector = Icons.Filled.ImportExport,
+                    contentDescription = "Data transfer options",
+                  )
+                }
+              }
+            },
+          )
+        }
       },
       bottomBar = {
         AnimatedVisibility(visible = navigationType == ClawNavigationType.BOTTOM_NAVIGATION) {
@@ -222,6 +237,21 @@ fun LobstersApp(
               items = savedPosts,
               listState = savedListState,
               postActions = postActions,
+            )
+          }
+          composable(Destinations.Search.route) {
+            setWebUri("https://lobste.rs/search")
+            SearchList(
+              items = searchResults,
+              listState = searchListState,
+              isPostSaved = viewModel::isPostSaved,
+              postActions = postActions,
+              searchQuery = viewModel.searchQuery,
+              setSearchQuery = { query -> viewModel.searchQuery = query },
+              triggerSearch = { query ->
+                viewModel.searchQuery = query
+                searchResults.refresh()
+              }
             )
           }
           composable(

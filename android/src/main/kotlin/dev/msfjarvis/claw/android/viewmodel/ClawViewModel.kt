@@ -6,6 +6,9 @@
  */
 package dev.msfjarvis.claw.android.viewmodel
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
@@ -16,7 +19,9 @@ import com.slack.eithernet.ApiResult.Success
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource.Companion.PAGE_SIZE
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource.Companion.STARTING_PAGE_INDEX
+import dev.msfjarvis.claw.android.paging.SearchPagingSource
 import dev.msfjarvis.claw.api.LobstersApi
+import dev.msfjarvis.claw.api.LobstersSearchApi
 import dev.msfjarvis.claw.core.injection.IODispatcher
 import dev.msfjarvis.claw.database.local.SavedPost
 import dev.msfjarvis.claw.model.Comment
@@ -41,11 +46,13 @@ class ClawViewModel
 @Inject
 constructor(
   private val api: LobstersApi,
+  private val searchApi: LobstersSearchApi,
   private val savedPostsRepository: SavedPostsRepository,
   private val commentsRepository: CommentsRepository,
   private val linkMetadataRepository: LinkMetadataRepository,
   private val dataTransferRepository: DataTransferRepository,
   private val pagingSourceFactory: LobstersPagingSource.Factory,
+  private val searchPagingSourceFactory: SearchPagingSource.Factory,
   @IODispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
   private val hottestPostsPager =
@@ -55,6 +62,10 @@ constructor(
   private val newestPostsPager =
     Pager(PagingConfig(pageSize = PAGE_SIZE), initialKey = STARTING_PAGE_INDEX) {
       pagingSourceFactory.create(api::getNewestPosts)
+    }
+  private val searchResultsPager =
+    Pager(PagingConfig(pageSize = PAGE_SIZE), initialKey = STARTING_PAGE_INDEX) {
+      searchPagingSourceFactory.create { searchApi.searchPosts(searchQuery, it) }
     }
 
   val hottestPosts
@@ -68,6 +79,11 @@ constructor(
 
   val savedPosts
     get() = savedPostsFlow.map(::mapSavedPosts)
+
+  val searchResults
+    get() = searchResultsPager.flow
+
+  var searchQuery by mutableStateOf("")
 
   private fun mapSavedPosts(items: List<SavedPost>): ImmutableMap<Month, List<SavedPost>> {
     val sorted = items.sortedByDescending { post -> post.createdAt.toLocalDateTime() }

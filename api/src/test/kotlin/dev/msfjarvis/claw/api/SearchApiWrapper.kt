@@ -20,10 +20,9 @@ class SearchApiWrapper(controller: EitherNetController<LobstersSearchApi>) {
   init {
     controller.enqueue(LobstersSearchApi::searchPosts) {
       success(
-        SearchConverter()
-          .convert(
-            ResponseBody.create(MediaType.get("text/html"), getResource("search_chatgpt_page.html"))
-          )
+        SearchConverter.convert(
+          ResponseBody.create(MediaType.get("text/html"), getResource("search_chatgpt_page.html"))
+        )
       )
     }
   }

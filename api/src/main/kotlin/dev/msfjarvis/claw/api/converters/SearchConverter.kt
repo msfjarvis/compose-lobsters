@@ -10,7 +10,6 @@ import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.User
 import java.lang.reflect.Type
-import javax.inject.Inject
 import okhttp3.ResponseBody
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
@@ -18,7 +17,7 @@ import org.jsoup.select.Elements
 import retrofit2.Converter
 import retrofit2.Retrofit
 
-class SearchConverter @Inject constructor() : Converter<ResponseBody, List<LobstersPost>> {
+object SearchConverter : Converter<ResponseBody, List<LobstersPost>> {
   override fun convert(value: ResponseBody): List<LobstersPost> {
     val elements =
       Jsoup.parse(value.string(), LobstersApi.BASE_URL).select("div.story_liner.h-entry")
@@ -74,13 +73,13 @@ class SearchConverter @Inject constructor() : Converter<ResponseBody, List<Lobst
     )
   }
 
-  class Factory @Inject constructor(private val converter: SearchConverter) : Converter.Factory() {
+  object Factory : Converter.Factory() {
     override fun responseBodyConverter(
       type: Type,
       annotations: Array<out Annotation>,
       retrofit: Retrofit
     ): Converter<ResponseBody, List<LobstersPost>> {
-      return converter
+      return SearchConverter
     }
   }
 }

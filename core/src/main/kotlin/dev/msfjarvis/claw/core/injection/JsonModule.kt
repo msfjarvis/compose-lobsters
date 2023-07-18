@@ -11,7 +11,8 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
-import dagger.multibindings.IntoSet
+import dagger.multibindings.IntKey
+import dagger.multibindings.IntoMap
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonNamingStrategy
@@ -24,7 +25,8 @@ import retrofit2.Converter
 object JsonModule {
 
   @Provides
-  @IntoSet
+  @IntKey(1)
+  @IntoMap
   fun provideJsonConverterFactory(json: Json): Converter.Factory {
     val contentType = "application/json".toMediaType()
     return json.asConverterFactory(contentType)

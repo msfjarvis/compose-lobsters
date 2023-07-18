@@ -12,9 +12,9 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface LobstersSearchApi {
-  @GET("/search?q={query}&what=stories&order=newest&page={page}")
+  @GET("/search?what=stories&order=newest")
   suspend fun searchPosts(
-    @Query("query") searchQuery: String,
+    @Query("q") searchQuery: String,
     @Query("page") page: Int,
   ): ApiResult<List<LobstersPost>, Unit>
 }

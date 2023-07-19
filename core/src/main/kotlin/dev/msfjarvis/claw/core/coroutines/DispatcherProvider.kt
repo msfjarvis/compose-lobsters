@@ -23,8 +23,6 @@ interface DispatcherProvider {
 
   fun io(): CoroutineDispatcher = Dispatchers.IO
 
-  fun unconfined(): CoroutineDispatcher = Dispatchers.Unconfined
-
   fun database(): CoroutineDispatcher = Dispatchers.IO.limitedParallelism(1)
 }
 

@@ -30,23 +30,29 @@ import androidx.compose.ui.semantics.isTraversalGroup
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import androidx.paging.compose.LazyPagingItems
+import androidx.paging.PagingData
+import androidx.paging.compose.collectAsLazyPagingItems
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.ui.SearchBar
 import dev.msfjarvis.claw.database.local.SavedPost
 import dev.msfjarvis.claw.model.LobstersPost
+import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun SearchList(
-  items: LazyPagingItems<LobstersPost>,
+  items: Flow<PagingData<LobstersPost>>,
   listState: LazyListState,
   isPostSaved: suspend (SavedPost) -> Boolean,
   postActions: PostActions,
   searchQuery: String,
   setSearchQuery: (String) -> Unit,
-  triggerSearch: (String) -> Unit,
   modifier: Modifier = Modifier,
 ) {
+  val lazyPagingItems = items.collectAsLazyPagingItems()
+  val triggerSearch = { query: String ->
+    setSearchQuery(query)
+    lazyPagingItems.refresh()
+  }
   DisposableEffect(true) {
     // Clear search field when navigating away
     onDispose { triggerSearch("") }
@@ -65,7 +71,7 @@ fun SearchList(
     )
     if (searchActive) {
       NetworkPosts(
-        lazyPagingItems = items,
+        lazyPagingItems = lazyPagingItems,
         listState = listState,
         isPostSaved = isPostSaved,
         postActions = postActions,

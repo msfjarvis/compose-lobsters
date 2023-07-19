@@ -101,7 +101,6 @@ fun LobstersApp(
   val hottestPosts = viewModel.hottestPosts.collectAsLazyPagingItems()
   val newestPosts = viewModel.newestPosts.collectAsLazyPagingItems()
   val savedPosts by viewModel.savedPosts.collectAsState(persistentMapOf())
-  val searchResults = viewModel.searchResults.collectAsLazyPagingItems()
 
   val navigationType = ClawNavigationType.fromSize(windowSizeClass.widthSizeClass)
 
@@ -242,16 +241,12 @@ fun LobstersApp(
           composable(Destinations.Search.route) {
             setWebUri("https://lobste.rs/search")
             SearchList(
-              items = searchResults,
+              items = viewModel.searchResults,
               listState = searchListState,
               isPostSaved = viewModel::isPostSaved,
               postActions = postActions,
               searchQuery = viewModel.searchQuery,
               setSearchQuery = { query -> viewModel.searchQuery = query },
-              triggerSearch = { query ->
-                viewModel.searchQuery = query
-                searchResults.refresh()
-              }
             )
           }
           composable(

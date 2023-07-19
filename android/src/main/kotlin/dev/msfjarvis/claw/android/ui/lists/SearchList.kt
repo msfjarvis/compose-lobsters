@@ -82,7 +82,7 @@ fun SearchList(
         Column(modifier = Modifier.align(Alignment.Center)) {
           Icon(
             imageVector = Icons.Filled.SearchOff,
-            contentDescription = "Empty inbox icon",
+            contentDescription = "No search results",
             modifier = Modifier.align(Alignment.CenterHorizontally).size(36.dp),
           )
           Text(text = "Nothing to see here", style = MaterialTheme.typography.headlineSmall)

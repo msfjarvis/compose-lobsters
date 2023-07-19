@@ -34,8 +34,7 @@ class ApplicationPlugin : Plugin<Project> {
       }
 
       buildTypes {
-        named("release") {
-          isMinifyEnabled = true
+        all {
           setProguardFiles(
             listOf(
               "proguard-android-optimize.pro",
@@ -44,6 +43,7 @@ class ApplicationPlugin : Plugin<Project> {
             )
           )
         }
+        named("release") { isMinifyEnabled = true }
         named("debug") {
           applicationIdSuffix = ".debug"
           versionNameSuffix = "-debug"

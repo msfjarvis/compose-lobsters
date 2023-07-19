@@ -55,7 +55,7 @@ fun SearchList(
   }
   DisposableEffect(true) {
     // Clear search field when navigating away
-    onDispose { triggerSearch("") }
+    onDispose { setSearchQuery("") }
   }
 
   var searchActive by remember { mutableStateOf(false) }

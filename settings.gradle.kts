@@ -153,4 +153,5 @@ include(
   "core",
   "database",
   "model",
+  "store",
 )

@@ -12,6 +12,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 *  Added the ability to search for posts
 *  Text in the comments page is now selectable
 
+### Changed
+
+*  Upgrade to Compose July release
+*  Upgrade to Kotlin 1.9.0
+
 ## [1.30.0] - 2023-07-02
 
 ### Changed

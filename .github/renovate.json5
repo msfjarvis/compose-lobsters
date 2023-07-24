@@ -20,6 +20,16 @@
       ],
     },
     {
+      "matchPackageNames": [
+        "androidx.compose.compiler:compiler",
+        "com.squareup.anvil",
+        "dev.drewhamilton.poko",
+        "org.jetbrains.kotlin:kotlin-gradle-plugin",
+        "org.jetbrains.kotlin.plugin.serialization",
+      ],
+      "groupName": "Kotlin and Compose",
+    },
+    {
       "matchPackagePatterns": [
         "^androidx.*",
       ],
@@ -34,12 +44,7 @@
     },
     {
       "matchPackageNames": [
-        "androidx.compose.compiler:compiler",
         "com.android.tools:r8",
-        "com.squareup.anvil",
-        "dev.drewhamilton.poko",
-        "org.jetbrains.kotlin:kotlin-gradle-plugin",
-        "org.jetbrains.kotlin.plugin.serialization",
       ],
       "enabled": false,
     },

@@ -3,17 +3,17 @@ accompanist = "0.31.4-beta"
 agp = "8.2.0-alpha13"
 coil = "2.4.0"
 # @keep used for kotlinCompilerExtensionVersion
-composeCompiler = "1.4.4"
+composeCompiler = "1.5.0"
 coroutines = "1.7.2"
 dagger = "2.47"
 junit = "5.10.0"
-kotlin = "1.8.10"
+kotlin = "1.9.0"
 retrofit = "2.9.0"
 richtext = "0.17.0"
 sentry-sdk = "6.26.0"
 serialization = "1.5.1"
 sqldelight = "2.0.0-rc02"
-whetstone = "0.6.0-SNAPSHOT"
+whetstone = "0.7.0-SNAPSHOT"
 workmanager = "2.9.0-alpha01"
 
 [libraries]
@@ -97,10 +97,10 @@ whetstone = { module = "com.deliveryhero.whetstone:whetstone", version.ref = "wh
 
 [plugins]
 android-test = { id = "com.android.test", version.ref = "agp" }
-anvil = "com.squareup.anvil:2.4.4"
+anvil = "com.squareup.anvil:2.4.6"
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 modulegraph = "dev.iurysouza.modulegraph:0.4.0"
 modulegraphassert = "com.jraska.module.graph.assertion:2.4.1"
-poko = "dev.drewhamilton.poko:0.12.0"
+poko = "dev.drewhamilton.poko:0.14.0"
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 whetstone = { id = "dev.msfjarvis.whetstone", version.ref = "whetstone" }

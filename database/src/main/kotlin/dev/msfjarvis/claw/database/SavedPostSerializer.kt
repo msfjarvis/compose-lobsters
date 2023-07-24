@@ -9,7 +9,6 @@ package dev.msfjarvis.claw.database
 import dev.msfjarvis.claw.database.local.SavedPost
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
-import kotlinx.serialization.Serializer
 import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.builtins.serializer
 import kotlinx.serialization.descriptors.SerialDescriptor
@@ -22,7 +21,6 @@ import kotlinx.serialization.encoding.decodeStructure
 import kotlinx.serialization.encoding.encodeStructure
 
 @OptIn(ExperimentalSerializationApi::class)
-@Serializer(forClass = SavedPost::class)
 object SavedPostSerializer : KSerializer<SavedPost> {
   private val delegateSerializer = ListSerializer(String.serializer())
   override val descriptor: SerialDescriptor =

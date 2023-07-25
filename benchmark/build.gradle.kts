@@ -33,10 +33,10 @@ android {
   testOptions {
     managedDevices {
       devices {
-        create<ManagedVirtualDevice>("baselineprofile") {
-          device = "Pixel 5"
-          apiLevel = 33
-          systemImageSource = "google_apis"
+        create<ManagedVirtualDevice>("api31") {
+          device = "Pixel 6"
+          apiLevel = 31
+          systemImageSource = "aosp"
         }
       }
     }

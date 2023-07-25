@@ -10,6 +10,14 @@ appId: dev.msfjarvis.claw.android
 - takeScreenshot: "HottestPosts"
 - tapOn: "Saved"
 - takeScreenshot: "SavedPosts"
+- tapOn: "Search"
+- tapOn:
+    id: "search_bar"
+- inputText: "Rust"
+- pressKey: Enter
+- hideKeyboard
+- waitForAnimationToEnd
+- takeScreenshot: "SearchPage"
 - tapOn: "Hottest"
 - tapOn: "Open comments"
 - waitForAnimationToEnd

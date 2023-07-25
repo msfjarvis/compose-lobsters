@@ -26,6 +26,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.isTraversalGroup
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
@@ -67,7 +68,7 @@ fun SearchList(
         triggerSearch(it)
         searchActive = true
       },
-      modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp),
+      modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp).testTag("search_bar"),
     )
     if (searchActive) {
       NetworkPosts(

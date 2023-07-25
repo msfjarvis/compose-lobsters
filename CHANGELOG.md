@@ -7,15 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.31.0] - 2023-07-25
+
 ### Added
 
-*  Added the ability to search for posts
-*  Text in the comments page is now selectable
+*   Added the ability to search for posts
+*   Text in the comments page is now selectable
 
 ### Changed
 
-*  Upgrade to Compose July release
-*  Upgrade to Kotlin 1.9.0
+*   Upgrade to Compose July release
+*   Upgrade to Kotlin 1.9.0
 
 ## [1.30.0] - 2023-07-02
 
@@ -260,7 +262,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 *   Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.30.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.31.0...HEAD
+
+[1.31.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.30.0...v1.31.0
 
 [1.30.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.29.0...v1.30.0
 

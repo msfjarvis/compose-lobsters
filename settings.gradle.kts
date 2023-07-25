@@ -52,14 +52,6 @@ pluginManagement {
     }
     exclusiveContent {
       forRepository {
-        maven("https://oss.sonatype.org/content/repositories/snapshots/") {
-          name = "Sonatype snapshots"
-        }
-      }
-      filter { includeGroup("dev.msfjarvis.whetstone") }
-    }
-    exclusiveContent {
-      forRepository {
         maven("https://storage.googleapis.com/r8-releases/raw/main") { name = "R8 mainline" }
       }
       filter { includeModule("com.android.tools", "r8") }
@@ -138,14 +130,6 @@ dependencyResolutionManagement {
         includeGroup("com.google.testing.platform")
         includeModule("com.google.android.material", "material")
       }
-    }
-    exclusiveContent {
-      forRepository {
-        maven("https://oss.sonatype.org/content/repositories/snapshots/") {
-          name = "Sonatype snapshots"
-        }
-      }
-      filter { includeGroup("dev.msfjarvis.whetstone") }
     }
     exclusiveContent {
       forRepository { maven("https://jitpack.io") { name = "JitPack" } }

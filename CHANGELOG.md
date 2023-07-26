@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+*   Upgrade to AndroidX July 26 release
+*   Revert selectable text feature due to sporadic crashes
+
 ## [1.31.0] - 2023-07-25
 
 ### Added

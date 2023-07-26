@@ -3,11 +3,11 @@
 set -euo pipefail
 
 ENCRYPT_KEY="${1}"
-TEMP_KEY="$(mktemp)"
+KEY_FILE="$(mktemp)"
 
-trap "rm -rf ${TEMP_KEY} 2>/dev/null" INT TERM EXIT
+trap "rm -rf ${KEY_FILE} 2>/dev/null" INT TERM EXIT
 
-echo "${ENCRYPT_KEY:?}" > "${TEMP_KEY}"
+echo "${ENCRYPT_KEY:?}" > "${KEY_FILE}"
 
 function decrypt() {
   if ! command -v age 1>/dev/null; then
@@ -16,8 +16,8 @@ function decrypt() {
   fi
   SRC="${1}"
   DST="${2}"
-  age --decrypt -i "${TEMP_KEY}" -o "${DST:?}" "${SRC:?}"
+  age --decrypt -i "${KEY_FILE}" -o "${DST:?}" "${SRC:?}"
 }
 
-decrypt secrets/keystore.cipher keystore.jks
-decrypt secrets/props.cipher keystore.properties
+decrypt secrets/keystore.jks.age keystore.jks
+decrypt secrets/keystore.properties.age keystore.properties

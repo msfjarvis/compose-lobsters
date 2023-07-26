@@ -7,7 +7,7 @@
 package dev.msfjarvis.claw.common.comments
 
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import dev.msfjarvis.claw.database.local.PostComments
 import dev.msfjarvis.claw.model.Comment
 
@@ -95,7 +95,7 @@ private fun LazyListScope.node(
       htmlConverter = htmlConverter,
       toggleExpanded = toggleExpanded,
     )
-    Divider()
+    HorizontalDivider()
   }
   if (node.children.isNotEmpty()) {
     nodes(

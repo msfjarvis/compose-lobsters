@@ -18,7 +18,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
@@ -74,7 +74,7 @@ fun NetworkPosts(
               postActions = postActions,
             )
 
-            Divider()
+            HorizontalDivider()
           }
         }
         if (lazyPagingItems.loadState.append == LoadState.Loading) {

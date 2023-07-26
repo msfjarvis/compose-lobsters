@@ -19,7 +19,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Public
 import androidx.compose.material3.MaterialTheme
@@ -71,7 +70,7 @@ internal fun CommentsHeader(
       modifier = Modifier.padding(16.dp).fillMaxWidth(),
       verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-      SelectionContainer { PostTitle(title = postDetails.title) }
+      PostTitle(title = postDetails.title)
       TagRow(tags = postDetails.tags.toImmutableList())
       Spacer(Modifier.height(4.dp))
 
@@ -85,9 +84,7 @@ internal fun CommentsHeader(
       }
 
       if (postDetails.description.isNotBlank()) {
-        SelectionContainer {
-          ThemedRichText(htmlConverter.convertHTMLToMarkdown(postDetails.description))
-        }
+        ThemedRichText(htmlConverter.convertHTMLToMarkdown(postDetails.description))
         Spacer(Modifier.height(4.dp))
       }
       Submitter(
@@ -172,12 +169,10 @@ internal fun CommentEntry(
           Modifier.clickable { uriHandler.openUri("https://lobste.rs/u/${comment.user.username}") },
       )
       if (commentNode.isExpanded) {
-        SelectionContainer {
-          ThemedRichText(
-            text = htmlConverter.convertHTMLToMarkdown(comment.comment),
-            modifier = Modifier.padding(top = 8.dp)
-          )
-        }
+        ThemedRichText(
+          text = htmlConverter.convertHTMLToMarkdown(comment.comment),
+          modifier = Modifier.padding(top = 8.dp)
+        )
       }
     }
   }

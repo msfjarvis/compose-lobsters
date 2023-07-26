@@ -12,7 +12,7 @@ retrofit = "2.9.0"
 richtext = "0.17.0"
 sentry-sdk = "6.27.0"
 serialization = "1.5.1"
-sqldelight = "2.0.0-rc02"
+sqldelight = "2.0.0"
 whetstone = "0.6.0"
 workmanager = "2.9.0-alpha01"
 

@@ -31,6 +31,7 @@ import java.io.OutputStream
 import java.net.HttpURLConnection
 import java.time.LocalDateTime
 import java.time.Month
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 import kotlinx.collections.immutable.ImmutableMap
@@ -152,6 +153,7 @@ constructor(
    * solution.
    */
   private fun String.toLocalDateTime(): LocalDateTime {
+    if (isEmpty()) return LocalDateTime.now(ZoneId.systemDefault())
     return LocalDateTime.from(DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(this))
   }
 }

@@ -36,9 +36,9 @@ jobs:
     - name: Decrypt secrets
       run: |
         ./scripts/setup-age.sh
-        ./scripts/signing-setup.sh "$ENCRYPT_KEY"
+        ./scripts/signing-setup.sh "$AGE_SECRET_KEY"
       env:
-        ENCRYPT_KEY: ${{ secrets.ENCRYPT_KEY }}
+        AGE_SECRET_KEY: ${{ secrets.AGE_SECRET_KEY }}
 
     - name: Get current version
       shell: bash

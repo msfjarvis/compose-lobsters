@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.32.0] - 2023-07-27
+
 ### Changed
 
 *   Upgrade to AndroidX July 26 release
@@ -267,7 +269,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 *   Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.31.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.32.0...HEAD
+
+[1.32.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.31.0...v1.32.0
 
 [1.31.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.30.0...v1.31.0
 

@@ -16,6 +16,7 @@ object LintConfig {
   fun Lint.configureLint(project: Project, isJVM: Boolean = false) {
     quiet = project.providers.environmentVariable("CI").isPresent
     abortOnError = true
+    checkDependencies = true
     checkReleaseBuilds = true
     warningsAsErrors = true
     ignoreWarnings = false

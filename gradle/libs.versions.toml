@@ -97,7 +97,7 @@ whetstone = { module = "com.deliveryhero.whetstone:whetstone", version.ref = "wh
 
 [plugins]
 android-test = { id = "com.android.test", version.ref = "agp" }
-anvil = "com.squareup.anvil:2.4.6"
+anvil = "com.squareup.anvil:2.4.7"
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 modulegraph = "dev.iurysouza.modulegraph:0.4.0"
 modulegraphassert = "com.jraska.module.graph.assertion:2.4.1"

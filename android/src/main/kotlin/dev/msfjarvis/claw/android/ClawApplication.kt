@@ -33,6 +33,7 @@ class ClawApplication : Application(), ApplicationComponentOwner {
     Whetstone.inject(this)
     super.onCreate()
     SoLoader.init(this, false)
+    SoLoader.loadLibrary("sqlite3x")
     plugins.forEach { plugin -> plugin.apply(this) }
     val postUpdateWorkRequest =
       PeriodicWorkRequestBuilder<SavedPostUpdaterWorker>(POST_REFRESH_PERIOD, TimeUnit.HOURS)

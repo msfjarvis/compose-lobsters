@@ -12,7 +12,7 @@ import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiObject2
 import androidx.test.uiautomator.Until
 
-const val PACKAGE_NAME = "dev.msfjarvis.claw.android.benchmark"
+const val PACKAGE_NAME = "dev.msfjarvis.claw.android"
 private const val AWAIT_TIMEOUT = 10_000L
 private const val SAVE_BUTTON_ID = "save_button"
 private const val NAV_ID_HOTTEST = "HOTTEST"

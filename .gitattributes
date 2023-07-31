@@ -2,3 +2,4 @@
 **/dependencies/** linguist-generated
 **/clawicons/** linguist-generated
 android/src/main/baseline-prof.txt linguist-generated -diff
+android/src/main/generated/** linguist-generated -diff

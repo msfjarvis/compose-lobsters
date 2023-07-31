@@ -1,6 +1,7 @@
 [versions]
 accompanist = "0.31.4-beta"
 agp = "8.2.0-alpha14"
+benchmark = "1.2.0-beta02"
 coil = "2.4.0"
 # @keep used for kotlinCompilerExtensionVersion
 composeCompiler = "1.5.1"
@@ -19,7 +20,7 @@ workmanager = "2.9.0-alpha02"
 [libraries]
 accompanist-sysuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
 androidx-activity-compose = "androidx.activity:activity-compose:1.7.2"
-androidx-benchmark-macro-junit4 = "androidx.benchmark:benchmark-macro-junit4:1.2.0-beta02"
+androidx-benchmark-macro-junit4 = { module = "androidx.benchmark:benchmark-macro-junit4", version.ref = "benchmark" }
 androidx-browser = "androidx.browser:browser:1.5.0"
 androidx-compose-animation = { module = "androidx.compose.animation:animation" }
 androidx-compose-bom = "dev.chrisbanes.compose:compose-bom:2023.07.00-alpha02"
@@ -98,6 +99,7 @@ whetstone = { module = "com.deliveryhero.whetstone:whetstone", version.ref = "wh
 [plugins]
 android-test = { id = "com.android.test", version.ref = "agp" }
 anvil = "com.squareup.anvil:2.4.7"
+baselineprofile = { id = "androidx.baselineprofile", version.ref = "benchmark" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 modulegraph = "dev.iurysouza.modulegraph:0.4.0"
 modulegraphassert = "com.jraska.module.graph.assertion:2.4.1"

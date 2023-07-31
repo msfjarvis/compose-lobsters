@@ -10,13 +10,14 @@ import com.android.build.api.dsl.ManagedVirtualDevice
 
 plugins {
   alias(libs.plugins.android.test)
-  id("dev.msfjarvis.claw.android-common")
   id("dev.msfjarvis.claw.kotlin-android")
+  alias(libs.plugins.baselineprofile)
 }
 
 android {
   namespace = "dev.msfjarvis.claw.benchmark"
 
+  compileSdk = 34
   defaultConfig {
     minSdk = 28
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -30,23 +31,23 @@ android {
     }
   }
 
-  testOptions {
-    managedDevices {
-      devices {
-        create<ManagedVirtualDevice>("api31") {
-          device = "Pixel 6"
-          apiLevel = 31
-          systemImageSource = "aosp"
-        }
-      }
+  testOptions.managedDevices.devices {
+    create<ManagedVirtualDevice>("api31") {
+      device = "Pixel 6"
+      apiLevel = 31
+      systemImageSource = "aosp"
     }
   }
 
   targetProjectPath = ":android"
-  experimentalProperties["android.experimental.self-instrumenting"] = true
+  experimentalProperties["android.experimental.r8.dex-startup-optimization"] = true
 }
 
-androidComponents { beforeVariants(selector().all()) { it.enable = it.buildType == "benchmark" } }
+baselineProfile {
+  managedDevices += "api31"
+  useConnectedDevices = false
+  enableEmulatorDisplay = false
+}
 
 dependencies {
   implementation(libs.androidx.benchmark.macro.junit4)

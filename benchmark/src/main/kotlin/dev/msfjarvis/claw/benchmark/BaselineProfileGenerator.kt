@@ -28,6 +28,7 @@ class BaselineProfileGenerator {
     baselineProfileRule.collect(
       packageName = PACKAGE_NAME,
       maxIterations = 8,
+      includeInStartupProfile = true,
     ) {
       device.executeShellCommand("pm clear $PACKAGE_NAME")
 

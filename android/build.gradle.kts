@@ -18,6 +18,7 @@ plugins {
   alias(libs.plugins.anvil)
   alias(libs.plugins.modulegraphassert)
   alias(libs.plugins.whetstone)
+  alias(libs.plugins.baselineprofile)
 }
 
 android {
@@ -28,16 +29,14 @@ android {
     useLiveLiterals = false
     kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
   }
-  buildTypes {
-    create("benchmark") {
-      signingConfig = signingConfigs["debug"]
-      matchingFallbacks += "release"
-      isDebuggable = false
-      proguardFile("benchmark-rules.pro")
-      applicationIdSuffix = ".benchmark"
-    }
-  }
   packaging { jniLibs { useLegacyPackaging = true } }
+}
+
+baselineProfile {
+  dexLayoutOptimization = true
+  mergeIntoMain = true
+  saveInSrc = true
+  from(projects.benchmark.dependencyProject)
 }
 
 moduleGraphAssert {

@@ -51,39 +51,26 @@ jobs:
     # This allows us to build most of what we need without the emulator running
     # and using resources
     - name: Build app and benchmark
-      run: ./gradlew :benchmark:assembleBenchmark :android:assembleBenchmark
+      run: ./gradlew :benchmark:assembleNonMinifiedBenchmark :android:assembleNonMinifiedRelease
 
-    - name: Clear unused Gradle Managed Devices
-      run: ./gradlew cleanManagedDevices --unused-only
+    - name: Setup emulator for benchmark
+      run: ./gradlew :benchmark:api31Setup
 
     - name: Run benchmark on Gradle Managed Device
       run: |
-        ./gradlew api31BenchmarkAndroidTest \
-          -Dorg.gradle.workers.max=1 \
-          -Pandroid.testInstrumentationRunnerArguments.androidx.benchmark.enabledRules=BaselineProfile \
+        ./gradlew cleanManagedDevices
+        ./gradlew generateBaselineProfile \
           -Pandroid.testoptions.manageddevices.emulator.gpu="swiftshader_indirect"
 
-    # If we're on main branch, copy over the baseline profile and
-    # commit it to the repository (if changed)
+    # If we're on main branch, commit the baseline profile to the repository (if changed)
     - name: Commit baseline profile into main
       if: github.ref == 'refs/heads/main'
       run: |
-        # Pull down any changes which may have been committed while this workflow has been running
-        git pull
-        # Sort the baseline profile, output to android/
-        sort -o android/src/main/baseline-prof.txt benchmark/build/outputs/managed_device_android_test_additional_output/benchmark/api31/BaselineProfileGenerator_generateBaselineProfile-baseline-prof.txt
         # If the baseline profile has changed, commit it
-        if [[ $(git diff --stat android/src/main/baseline-prof.txt) != '' ]]; then
-          git add android/src/main/baseline-prof.txt
+        if [[ $(git diff --stat android/src/main/generated/baselineProfiles/baseline-prof.txt) != '' ]]; then
+          git add android/src/main/generated/baselineProfiles/baseline-prof.txt
           git commit -m "chore(android): refresh baseline profile" && git push
         fi
-
-    # Upload the entire output folder and attach it to the CI run
-    - name: Attach baseline profile
-      uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
-      with:
-        name: Baseline profile output
-        path: benchmark/build/outputs/managed_device_android_test_additional_output
 
     - name: Clean secrets
       if: always()

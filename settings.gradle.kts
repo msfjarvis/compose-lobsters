@@ -12,6 +12,8 @@ pluginManagement {
     exclusiveContent {
       forRepository { google() }
       filter {
+        includeGroup("androidx.baselineprofile")
+        includeGroup("androidx.benchmark")
         includeGroup("androidx.databinding")
         includeGroup("com.android")
         includeModule("com.android.test", "com.android.test.gradle.plugin")

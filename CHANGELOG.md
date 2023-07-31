@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+*   Yet another attempt at fixing native library crashes
+*   Rework how baseline profiles are generated
+
 ## [1.32.0] - 2023-07-27
 
 ### Changed

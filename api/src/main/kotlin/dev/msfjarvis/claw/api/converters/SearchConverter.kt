@@ -51,7 +51,7 @@ object SearchConverter : Converter<ResponseBody, List<LobstersPost>> {
   private fun getCommentsData(elem: Elements): Pair<Int, String> {
     val linkElement = elem.select("a")
     val countString = linkElement.text().trimStart().substringBefore(" ")
-    val commentsUrl = linkElement.attr("href")
+    val commentsUrl = LobstersApi.BASE_URL + linkElement.attr("href")
     return (countString.toIntOrNull() ?: 0) to commentsUrl
   }
 

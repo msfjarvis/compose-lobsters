@@ -7,10 +7,8 @@
 package dev.msfjarvis.claw.common.posts
 
 import androidx.compose.animation.Crossfade
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -62,7 +60,6 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 
 @Composable
-@OptIn(ExperimentalFoundationApi::class)
 fun LobstersCard(
   post: SavedPost,
   isSaved: Boolean,
@@ -102,10 +99,9 @@ fun LobstersCard(
         CommentsButton(
           commentCount = post.commentCount,
           modifier =
-            Modifier.combinedClickable(
+            Modifier.clickable(
               role = Role.Button,
               onClick = { postActions.viewComments(post.shortId) },
-              onLongClick = { postActions.viewCommentsPage(post.commentsUrl) },
             ),
         )
       }

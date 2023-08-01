@@ -91,6 +91,7 @@ sqldelight-extensions-coroutines = { module = "app.cash.sqldelight:coroutines-ex
 sqldelight-jvmDriver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 sqldelight-primitiveAdapters = { module = "app.cash.sqldelight:primitive-adapters", version.ref = "sqldelight" }
 sqlite-android = "com.github.requery:sqlite-android:3.42.0"
+swipe = "me.saket.swipe:swipe:1.2.0"
 testparameterinjector = "com.google.testparameterinjector:test-parameter-injector:1.12"
 truth = "com.google.truth:truth:1.1.5"
 unfurl = "me.saket.unfurl:unfurl:1.7.0"

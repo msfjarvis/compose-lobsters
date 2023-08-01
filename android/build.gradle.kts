@@ -77,6 +77,7 @@ dependencies {
   implementation(libs.napier)
   implementation(libs.soloader)
   implementation(libs.sqldelight.extensions.coroutines)
+  implementation(libs.swipe)
   implementation(libs.unfurl)
   implementation(projects.api)
   implementation(projects.common)

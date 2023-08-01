@@ -35,6 +35,10 @@ class SpotlessPlugin : Plugin<Project> {
         targetExclude("**/build/")
         licenseHeaderFile(project.file("spotless/license.kt"), "import|plugins|@file")
       }
+      python {
+        target("scripts/**.py")
+        black("23.3.0")
+      }
       format("xml") {
         target("**/*.xml")
         targetExclude("**/build/", ".idea/", "/spotless/", "**/lint-baseline.xml")

@@ -14,10 +14,20 @@ def exec(command_str: str, shell: bool = False) -> Optional[int]:
     print(f"Executing '{command_str}'")
     proc = None
     if shell:
-        proc = subprocess.run(command_str, text=True, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        proc = subprocess.run(
+            command_str,
+            text=True,
+            shell=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+        )
     else:
         proc = subprocess.run(
-            command_str.split(" "), text=True, shell=False, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+            command_str.split(" "),
+            text=True,
+            shell=False,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
         )
     result = proc.returncode
     print(f"{proc.stdout}")
@@ -72,9 +82,9 @@ def create_release():
         apks = " ".join(glob.glob("*.apk"))
         exec(
             "gh release create --prerelease "
-            +f"--title 'Latest snapshot build' --notes-file {cf.name} "
-            +f"{NIGHTLY_TAG} {apks}",
-            shell=True
+            + f"--title 'Latest snapshot build' --notes-file {cf.name} "
+            + f"{NIGHTLY_TAG} {apks}",
+            shell=True,
         )
         os.chdir(cwd)
 

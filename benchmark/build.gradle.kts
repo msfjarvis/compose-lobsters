@@ -9,7 +9,7 @@
 import com.android.build.api.dsl.ManagedVirtualDevice
 
 plugins {
-  alias(libs.plugins.android.test)
+  id(libs.plugins.android.test.get().pluginId)
   id("dev.msfjarvis.claw.kotlin-android")
   alias(libs.plugins.baselineprofile)
 }

@@ -1,6 +1,12 @@
 name: Release to Google Play
 on:
   workflow_dispatch:
+    inputs:
+      inAppUpdatePriority:
+        description: 'In app update priority (0-5)'
+        type: number
+        default: "0"
+        required: false
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -95,6 +101,7 @@ jobs:
         status: completed
         track: production
         whatsNewDirectory: distribution/whatsnew
+        inAppUpdatePriority: ${{ inputs.inAppUpdatePriority }}
 
     - name: Post-release work
       shell: bash

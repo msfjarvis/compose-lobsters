@@ -29,7 +29,6 @@ android {
     useLiveLiterals = false
     kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
   }
-  packaging { jniLibs { useLegacyPackaging = true } }
 }
 
 baselineProfile {
@@ -75,7 +74,6 @@ dependencies {
   implementation(libs.kotlinx.collections.immutable)
   implementation(libs.kotlinx.coroutines.core)
   implementation(libs.napier)
-  implementation(libs.soloader)
   implementation(libs.sqldelight.extensions.coroutines)
   implementation(libs.swipe)
   implementation(libs.unfurl)

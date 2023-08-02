@@ -15,7 +15,6 @@ import androidx.work.WorkManager
 import com.deliveryhero.whetstone.Whetstone
 import com.deliveryhero.whetstone.app.ApplicationComponentOwner
 import com.deliveryhero.whetstone.app.ContributesAppInjector
-import com.facebook.soloader.SoLoader
 import dev.msfjarvis.claw.android.work.SavedPostUpdaterWorker
 import dev.msfjarvis.claw.core.injection.AppPlugin
 import java.util.concurrent.TimeUnit
@@ -32,8 +31,6 @@ class ClawApplication : Application(), ApplicationComponentOwner {
   override fun onCreate() {
     Whetstone.inject(this)
     super.onCreate()
-    SoLoader.init(this, false)
-    SoLoader.loadLibrary("sqlite3x")
     plugins.forEach { plugin -> plugin.apply(this) }
     val postUpdateWorkRequest =
       PeriodicWorkRequestBuilder<SavedPostUpdaterWorker>(POST_REFRESH_PERIOD, TimeUnit.HOURS)

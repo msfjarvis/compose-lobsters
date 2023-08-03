@@ -24,12 +24,14 @@ plugins {
 
 android {
   namespace = "dev.msfjarvis.claw.android"
-  defaultConfig { applicationId = "dev.msfjarvis.claw.android" }
-  buildFeatures { compose = true }
+  defaultConfig.applicationId = "dev.msfjarvis.claw.android"
+  buildFeatures.compose = true
   composeOptions {
     useLiveLiterals = false
     kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
   }
+  // kotlinx.serialization 1.6.0-RC regression
+  packagingOptions.resources.pickFirsts += "**/*.bin"
 }
 
 baselineProfile {

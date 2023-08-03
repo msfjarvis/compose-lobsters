@@ -15,7 +15,6 @@ import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
 import dev.msfjarvis.claw.database.LobstersDatabase
-import dev.msfjarvis.claw.database.local.CachedNewestPost
 import dev.msfjarvis.claw.database.local.PostComments
 import dev.msfjarvis.claw.database.local.SavedPost
 import dev.msfjarvis.claw.database.model.CSVAdapter
@@ -38,10 +37,8 @@ object DatabaseModule {
       )
     return LobstersDatabase(
       driver = driver,
-      PostCommentsAdapter = PostComments.Adapter(CSVAdapter),
-      SavedPostAdapter = SavedPost.Adapter(IntColumnAdapter, CSVAdapter),
-      CachedNewestPostAdapter =
-        CachedNewestPost.Adapter(IntColumnAdapter, IntColumnAdapter, CSVAdapter),
+      PostCommentsAdapter = PostComments.Adapter(CSVAdapter()),
+      SavedPostAdapter = SavedPost.Adapter(IntColumnAdapter, CSVAdapter()),
     )
   }
 }

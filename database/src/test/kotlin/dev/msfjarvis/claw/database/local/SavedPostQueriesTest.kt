@@ -24,9 +24,8 @@ class SavedPostQueriesTest {
     val database =
       LobstersDatabase(
         driver,
-        CachedNewestPost.Adapter(IntColumnAdapter, IntColumnAdapter, CSVAdapter),
-        PostComments.Adapter(CSVAdapter),
-        SavedPost.Adapter(IntColumnAdapter, CSVAdapter),
+        PostComments.Adapter(CSVAdapter()),
+        SavedPost.Adapter(IntColumnAdapter, CSVAdapter()),
       )
     postQueries = database.savedPostQueries
   }

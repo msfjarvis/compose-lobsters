@@ -19,8 +19,13 @@ anvil { generateDaggerFactories.set(true) }
 dependencies {
   api(projects.database)
   api(projects.model)
+  api(projects.core)
 
   implementation(projects.api)
+  implementation(libs.dagger)
+  implementation(libs.javax.inject)
   implementation(libs.kotlinx.atomicfu)
+  implementation(libs.kotlinx.coroutines.core)
+  implementation(libs.sqldelight.extensions.coroutines)
   implementation(libs.store5)
 }

@@ -25,8 +25,9 @@ class PostCommentsQueriesTest {
     val database =
       LobstersDatabase(
         driver,
-        PostComments.Adapter(CSVAdapter()),
-        SavedPost.Adapter(IntColumnAdapter, CSVAdapter()),
+        CachedNewestPost.Adapter(IntColumnAdapter, IntColumnAdapter, CSVAdapter),
+        PostComments.Adapter(CSVAdapter),
+        SavedPost.Adapter(IntColumnAdapter, CSVAdapter),
       )
     postQueries = database.postCommentsQueries
   }

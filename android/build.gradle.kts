@@ -19,6 +19,7 @@ plugins {
   alias(libs.plugins.modulegraphassert)
   alias(libs.plugins.whetstone)
   alias(libs.plugins.baselineprofile)
+  alias(libs.plugins.licensee)
 }
 
 android {
@@ -36,6 +37,13 @@ baselineProfile {
   mergeIntoMain = true
   saveInSrc = true
   from(projects.benchmark.dependencyProject)
+}
+
+licensee {
+  allow("Apache-2.0")
+  allow("MIT")
+  ignoreDependencies("org.commonmark") { because("Commonmark is BSD licensed") }
+  allowUrl("https://jsoup.org/license") { because("Jsoup is MIT licensed") }
 }
 
 moduleGraphAssert {

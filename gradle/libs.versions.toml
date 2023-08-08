@@ -1,5 +1,5 @@
 [versions]
-accompanist = "0.31.4-beta"
+accompanist = "0.33.0-alpha"
 agp = "8.2.0-alpha15"
 benchmark = "1.2.0-beta02"
 coil = "2.4.0"

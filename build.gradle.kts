@@ -4,6 +4,9 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
+import dev.iurysouza.modulegraph.Orientation
+import dev.iurysouza.modulegraph.Theme
+
 plugins {
   id("dev.msfjarvis.claw.spotless")
   id("dev.msfjarvis.claw.versions")
@@ -12,6 +15,8 @@ plugins {
 }
 
 moduleGraphConfig {
-  readmePath.set(project.layout.projectDirectory.file("README.md").asFile.absolutePath)
   heading.set("## Dependency Diagram")
+  orientation.set(Orientation.TOP_TO_BOTTOM)
+  readmePath.set(project.layout.projectDirectory.file("README.md").asFile.absolutePath)
+  theme.set(Theme.DARK)
 }

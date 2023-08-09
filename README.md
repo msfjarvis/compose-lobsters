@@ -19,11 +19,11 @@ Unofficial Android app for read-only access to [lobste.rs](https://lobste.rs), b
 ```mermaid
 %%{
   init: {
-    'theme': 'neutral'
+    'theme': 'dark'
   }
 }%%
 
-graph LR
+graph TB
 
   benchmark --> android
   android --> api
@@ -31,6 +31,7 @@ graph LR
   android --> core
   android --> database
   android --> model
+  android --> benchmark
   api --> model
   common --> core
   common --> database

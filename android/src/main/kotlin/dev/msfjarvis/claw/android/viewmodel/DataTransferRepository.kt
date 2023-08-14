@@ -8,9 +8,9 @@ package dev.msfjarvis.claw.android.viewmodel
 
 import dev.msfjarvis.claw.core.injection.DatabaseDispatcher
 import dev.msfjarvis.claw.core.injection.IODispatcher
-import dev.msfjarvis.claw.database.LobstersDatabase
 import dev.msfjarvis.claw.database.SavedPostSerializer
 import dev.msfjarvis.claw.database.local.SavedPost
+import dev.msfjarvis.claw.database.local.SavedPostQueries
 import java.io.InputStream
 import java.io.OutputStream
 import javax.inject.Inject
@@ -26,13 +26,12 @@ import kotlinx.serialization.json.encodeToStream
 class DataTransferRepository
 @Inject
 constructor(
-  private val database: LobstersDatabase,
   private val json: Json,
+  private val savedPostQueries: SavedPostQueries,
   @DatabaseDispatcher private val dbDispatcher: CoroutineDispatcher,
   @IODispatcher private val ioDispatcher: CoroutineDispatcher,
 ) {
   private val serializer = ListSerializer(SavedPostSerializer)
-  private val savedPostQueries = database.savedPostQueries
 
   suspend fun importPosts(input: InputStream) {
     val posts: List<SavedPost> =
@@ -43,7 +42,7 @@ constructor(
         )
       }
     withContext(dbDispatcher) {
-      database.transaction { posts.forEach(savedPostQueries::insertOrReplacePost) }
+      savedPostQueries.transaction { posts.forEach(savedPostQueries::insertOrReplacePost) }
     }
   }
 

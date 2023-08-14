@@ -7,8 +7,8 @@
 package dev.msfjarvis.claw.android.viewmodel
 
 import dev.msfjarvis.claw.core.injection.DatabaseDispatcher
-import dev.msfjarvis.claw.database.LobstersDatabase
 import dev.msfjarvis.claw.database.local.PostComments
+import dev.msfjarvis.claw.database.local.PostCommentsQueries
 import dev.msfjarvis.claw.model.Comment
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
@@ -17,10 +17,9 @@ import kotlinx.coroutines.withContext
 class CommentsRepository
 @Inject
 constructor(
-  database: LobstersDatabase,
+  private val postCommentsQueries: PostCommentsQueries,
   @DatabaseDispatcher private val dbDispatcher: CoroutineDispatcher,
 ) {
-  private val postCommentsQueries = database.postCommentsQueries
 
   suspend fun getSeenComments(postId: String) =
     withContext(dbDispatcher) { postCommentsQueries.getCommentIds(postId).executeAsOneOrNull() }

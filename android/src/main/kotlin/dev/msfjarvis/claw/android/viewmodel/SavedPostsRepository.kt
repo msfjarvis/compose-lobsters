@@ -9,8 +9,8 @@ package dev.msfjarvis.claw.android.viewmodel
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import dev.msfjarvis.claw.core.injection.DatabaseDispatcher
-import dev.msfjarvis.claw.database.LobstersDatabase
 import dev.msfjarvis.claw.database.local.SavedPost
+import dev.msfjarvis.claw.database.local.SavedPostQueries
 import io.github.aakira.napier.Napier
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
@@ -19,10 +19,9 @@ import kotlinx.coroutines.withContext
 class SavedPostsRepository
 @Inject
 constructor(
-  database: LobstersDatabase,
+  private val savedPostQueries: SavedPostQueries,
   @DatabaseDispatcher private val dbDispatcher: CoroutineDispatcher,
 ) {
-  private val savedPostQueries = database.savedPostQueries
   val savedPosts = savedPostQueries.selectAllPosts().asFlow().mapToList(dbDispatcher)
 
   suspend fun savePost(post: SavedPost) {

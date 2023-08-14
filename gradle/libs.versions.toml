@@ -1,6 +1,6 @@
 [versions]
 accompanist = "0.33.0-alpha"
-agp = "8.2.0-alpha15"
+agp = "8.2.0-alpha16"
 benchmark = "1.2.0-beta03"
 coil = "2.4.0"
 # @keep used for kotlinCompilerExtensionVersion

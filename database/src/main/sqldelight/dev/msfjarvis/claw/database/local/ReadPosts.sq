@@ -1,0 +1,17 @@
+CREATE TABLE ReadPosts(
+  id TEXT NOT NULL PRIMARY KEY
+);
+
+markRead:
+INSERT OR REPLACE
+INTO ReadPosts(id)
+VALUES (?);
+
+markUnread:
+DELETE FROM ReadPosts
+WHERE id = ?;
+
+isRead:
+SELECT *
+FROM ReadPosts
+WHERE id = ?;

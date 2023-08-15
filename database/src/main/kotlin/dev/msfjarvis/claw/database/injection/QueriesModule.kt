@@ -12,6 +12,7 @@ import dagger.Module
 import dagger.Provides
 import dev.msfjarvis.claw.database.LobstersDatabase
 import dev.msfjarvis.claw.database.local.PostCommentsQueries
+import dev.msfjarvis.claw.database.local.ReadPostsQueries
 import dev.msfjarvis.claw.database.local.SavedPostQueries
 
 @Module
@@ -28,5 +29,12 @@ object QueriesModule {
     @InternalDatabaseApi database: LobstersDatabase
   ): PostCommentsQueries {
     return database.postCommentsQueries
+  }
+
+  @Provides
+  fun provideReadPostsQueries(
+    @InternalDatabaseApi database: LobstersDatabase,
+  ): ReadPostsQueries {
+    return database.readPostsQueries
   }
 }

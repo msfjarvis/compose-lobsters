@@ -6,11 +6,7 @@
  */
 package dev.msfjarvis.claw.database.local
 
-import app.cash.sqldelight.adapter.primitive.IntColumnAdapter
-import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import com.google.common.truth.Truth.assertThat
-import dev.msfjarvis.claw.database.LobstersDatabase
-import dev.msfjarvis.claw.database.model.CSVAdapter
 import java.util.UUID
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -20,15 +16,7 @@ class PostCommentsQueriesTest {
 
   @BeforeEach
   fun setup() {
-    val driver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
-    LobstersDatabase.Schema.create(driver)
-    val database =
-      LobstersDatabase(
-        driver,
-        PostComments.Adapter(CSVAdapter()),
-        SavedPost.Adapter(IntColumnAdapter, CSVAdapter()),
-      )
-    postQueries = database.postCommentsQueries
+    postQueries = setupDatabase().postCommentsQueries
   }
 
   @Test

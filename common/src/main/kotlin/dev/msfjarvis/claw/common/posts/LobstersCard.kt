@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -72,6 +71,7 @@ fun LobstersCard(
       modifier
         .fillMaxWidth()
         .clickable { postActions.viewPost(post.url, post.commentsUrl) }
+        .background(MaterialTheme.colorScheme.background)
         .padding(start = 16.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
   ) {
     Row(
@@ -132,7 +132,8 @@ internal fun PostTitle(
     text = title,
     modifier = modifier,
     style = MaterialTheme.typography.titleMedium,
-    fontWeight = FontWeight.Bold
+    fontWeight = FontWeight.Bold,
+    color = MaterialTheme.colorScheme.onBackground,
   )
 }
 
@@ -153,9 +154,14 @@ internal fun Submitter(
       placeholder = Icons.Filled.AccountCircle,
       contentDescription = contentDescription,
       modifier = Modifier.requiredSize(24.dp).clip(CircleShape),
+      placeholderTintColor = MaterialTheme.colorScheme.onBackground,
     )
 
-    Text(text = text, style = MaterialTheme.typography.bodyMedium)
+    Text(
+      text = text,
+      style = MaterialTheme.typography.bodyMedium,
+      color = MaterialTheme.colorScheme.onBackground,
+    )
   }
 }
 
@@ -187,7 +193,6 @@ private fun CommentsButton(
     badge = {
       if (commentCount != null) {
         Badge(
-          modifier = Modifier.absoluteOffset(x = -(8.dp)),
           containerColor = MaterialTheme.colorScheme.tertiaryContainer,
         ) {
           Text(
@@ -203,7 +208,7 @@ private fun CommentsButton(
       imageVector = Icons.Filled.Comment,
       tint = MaterialTheme.colorScheme.secondary,
       contentDescription = "Open comments",
-      modifier = Modifier.align(Alignment.Center).testTag("comments_button"),
+      modifier = Modifier.testTag("comments_button"),
     )
   }
 }
@@ -218,9 +223,7 @@ internal fun TagRow(
     modifier = modifier,
     horizontalArrangement = Arrangement.spacedBy(8.dp),
   ) {
-    tags.forEach { tag ->
-      TagText(tag = tag, modifier = Modifier.padding(top = 4.dp, bottom = 4.dp))
-    }
+    tags.forEach { tag -> TagText(tag = tag) }
   }
 }
 

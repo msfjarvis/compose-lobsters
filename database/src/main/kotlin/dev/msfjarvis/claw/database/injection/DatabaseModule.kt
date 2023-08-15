@@ -26,7 +26,7 @@ object DatabaseModule {
 
   private const val LOBSTERS_DATABASE_NAME = "SavedPosts.db"
 
-  @Provides
+  @[Provides InternalDatabaseApi]
   fun provideDatabase(@ForScope(ApplicationScope::class) context: Context): LobstersDatabase {
     val driver =
       AndroidSqliteDriver(

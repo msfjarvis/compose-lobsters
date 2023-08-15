@@ -19,12 +19,14 @@ import dev.msfjarvis.claw.database.local.SavedPostQueries
 object QueriesModule {
 
   @Provides
-  fun provideSavedPostsQueries(database: LobstersDatabase): SavedPostQueries {
+  fun provideSavedPostsQueries(@InternalDatabaseApi database: LobstersDatabase): SavedPostQueries {
     return database.savedPostQueries
   }
 
   @Provides
-  fun providePostCommentsQueries(database: LobstersDatabase): PostCommentsQueries {
+  fun providePostCommentsQueries(
+    @InternalDatabaseApi database: LobstersDatabase
+  ): PostCommentsQueries {
     return database.postCommentsQueries
   }
 }

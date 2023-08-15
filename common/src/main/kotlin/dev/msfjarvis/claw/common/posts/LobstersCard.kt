@@ -62,6 +62,7 @@ import kotlinx.collections.immutable.toImmutableList
 fun LobstersCard(
   post: SavedPost,
   isSaved: Boolean,
+  isRead: Boolean,
   postActions: PostActions,
   modifier: Modifier = Modifier,
 ) {
@@ -70,7 +71,7 @@ fun LobstersCard(
     modifier =
       modifier
         .fillMaxWidth()
-        .clickable { postActions.viewPost(post.url, post.commentsUrl) }
+        .clickable { postActions.viewPost(post.shortId, post.url, post.commentsUrl) }
         .background(MaterialTheme.colorScheme.background)
         .padding(start = 16.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
   ) {
@@ -81,6 +82,7 @@ fun LobstersCard(
       PostDetails(
         modifier = Modifier.weight(1f),
         post = post,
+        isRead = isRead,
       )
       Column(
         modifier = Modifier.wrapContentHeight(),
@@ -110,9 +112,9 @@ fun LobstersCard(
 }
 
 @Composable
-fun PostDetails(post: SavedPost, modifier: Modifier = Modifier) {
+fun PostDetails(post: SavedPost, isRead: Boolean, modifier: Modifier = Modifier) {
   Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
-    PostTitle(title = post.title)
+    PostTitle(title = post.title, isRead = isRead)
     TagRow(tags = post.tags.toImmutableList())
     Spacer(Modifier.height(4.dp))
     Submitter(
@@ -126,13 +128,14 @@ fun PostDetails(post: SavedPost, modifier: Modifier = Modifier) {
 @Composable
 internal fun PostTitle(
   title: String,
+  isRead: Boolean,
   modifier: Modifier = Modifier,
 ) {
   Text(
     text = title,
     modifier = modifier,
     style = MaterialTheme.typography.titleMedium,
-    fontWeight = FontWeight.Bold,
+    fontWeight = if (isRead) FontWeight.Normal else FontWeight.Bold,
     color = MaterialTheme.colorScheme.onBackground,
   )
 }
@@ -261,10 +264,11 @@ fun LobstersCardPreview() {
           tags = listOf("databases", "apis"),
           description = "",
         ),
+      isRead = true,
       isSaved = true,
       postActions =
         object : PostActions {
-          override fun viewPost(postUrl: String, commentsUrl: String) {}
+          override fun viewPost(postId: String, postUrl: String, commentsUrl: String) {}
 
           override fun viewComments(postId: String) {}
 

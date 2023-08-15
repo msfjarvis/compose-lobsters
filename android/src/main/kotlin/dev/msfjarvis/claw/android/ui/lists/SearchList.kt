@@ -75,6 +75,7 @@ fun SearchList(
         lazyPagingItems = lazyPagingItems,
         listState = listState,
         isPostSaved = isPostSaved,
+        isPostRead = { false },
         postActions = postActions,
         modifier = modifier,
       )

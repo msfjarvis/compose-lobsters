@@ -42,6 +42,7 @@ fun NetworkPosts(
   lazyPagingItems: LazyPagingItems<LobstersPost>,
   listState: LazyListState,
   isPostSaved: suspend (SavedPost) -> Boolean,
+  isPostRead: suspend (String) -> Boolean,
   postActions: PostActions,
   modifier: Modifier = Modifier,
 ) {
@@ -71,6 +72,7 @@ fun NetworkPosts(
             ListItem(
               item = dbModel,
               isSaved = isPostSaved,
+              isRead = isPostRead,
               postActions = postActions,
             )
 

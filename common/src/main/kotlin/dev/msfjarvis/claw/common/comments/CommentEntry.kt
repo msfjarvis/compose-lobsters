@@ -70,7 +70,7 @@ internal fun CommentsHeader(
       modifier = Modifier.padding(16.dp).fillMaxWidth(),
       verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-      PostTitle(title = postDetails.title)
+      PostTitle(title = postDetails.title, isRead = false)
       TagRow(tags = postDetails.tags.toImmutableList())
       Spacer(Modifier.height(4.dp))
 
@@ -78,7 +78,9 @@ internal fun CommentsHeader(
         PostLink(
           linkMetadata = linkMetadata,
           modifier =
-            Modifier.clickable { postActions.viewPost(linkMetadata.url, postDetails.commentsUrl) },
+            Modifier.clickable {
+              postActions.viewPost(postDetails.shortId, linkMetadata.url, postDetails.commentsUrl)
+            },
         )
         Spacer(Modifier.height(4.dp))
       }

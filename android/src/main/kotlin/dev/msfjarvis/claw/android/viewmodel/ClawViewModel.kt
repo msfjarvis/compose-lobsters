@@ -48,8 +48,9 @@ class ClawViewModel
 constructor(
   private val api: LobstersApi,
   private val searchApi: LobstersSearchApi,
-  private val savedPostsRepository: SavedPostsRepository,
   private val commentsRepository: CommentsRepository,
+  private val readPostsRepository: ReadPostsRepository,
+  private val savedPostsRepository: SavedPostsRepository,
   private val linkMetadataRepository: LinkMetadataRepository,
   private val dataTransferRepository: DataTransferRepository,
   private val pagingSourceFactory: LobstersPagingSource.Factory,
@@ -146,6 +147,12 @@ constructor(
   suspend fun importPosts(input: InputStream) = dataTransferRepository.importPosts(input)
 
   suspend fun exportPosts(output: OutputStream) = dataTransferRepository.exportPosts(output)
+
+  fun markPostAsRead(postId: String) {
+    viewModelScope.launch { readPostsRepository.markRead(postId) }
+  }
+
+  suspend fun isPostRead(postId: String) = readPostsRepository.isRead(postId)
 
   /**
    * Parses a given [String] into a [LocalDateTime]. This method is only intended to be used for

@@ -62,6 +62,7 @@ fun DatabasePosts(
             ListItem(
               item = item,
               isSaved = { true },
+              isRead = { false },
               postActions = postActions,
             )
             HorizontalDivider()

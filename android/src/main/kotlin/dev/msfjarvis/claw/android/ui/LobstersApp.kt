@@ -218,6 +218,7 @@ fun LobstersApp(
               lazyPagingItems = hottestPosts,
               listState = hottestListState,
               isPostSaved = viewModel::isPostSaved,
+              isPostRead = viewModel::isPostRead,
               postActions = postActions,
             )
           }
@@ -227,6 +228,7 @@ fun LobstersApp(
               lazyPagingItems = newestPosts,
               listState = newestListState,
               isPostSaved = viewModel::isPostSaved,
+              isPostRead = viewModel::isPostRead,
               postActions = postActions,
             )
           }

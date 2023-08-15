@@ -13,7 +13,7 @@ import dev.msfjarvis.claw.model.LobstersPostDetails
 
 @Stable
 interface PostActions {
-  fun viewPost(postUrl: String, commentsUrl: String)
+  fun viewPost(postId: String, postUrl: String, commentsUrl: String)
 
   fun viewComments(postId: String)
 

@@ -36,11 +36,13 @@ fun rememberPostActions(
 ): PostActions {
   return remember {
     object : PostActions {
-      override fun viewPost(postUrl: String, commentsUrl: String) {
+      override fun viewPost(postId: String, postUrl: String, commentsUrl: String) {
+        viewModel.markPostAsRead(postId)
         urlLauncher.openUri(postUrl.ifEmpty { commentsUrl })
       }
 
       override fun viewComments(postId: String) {
+        viewModel.markPostAsRead(postId)
         val currentRoute = navController.currentDestination?.route
         val newRoute =
           Destinations.Comments.route.replace(Destinations.Comments.placeholder, postId)

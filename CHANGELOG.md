@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+*   Add a swipe action to open the comments page on `lobste.rs`
+*   Automatically mark posts as "read" and visually distinguish between them
+*   Tweak list items to reduce vertical size and adjust colors
+*   Drop workarounds for native library crashes since they did not resolve the bug
+
 ## [1.33.0] - 2023-07-31
 
 ### Changed

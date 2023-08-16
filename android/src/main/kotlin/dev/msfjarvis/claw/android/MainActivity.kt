@@ -11,14 +11,16 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.core.view.WindowCompat
 import com.deliveryhero.whetstone.Whetstone
 import com.deliveryhero.whetstone.activity.ContributesActivityInjector
 import dev.msfjarvis.claw.android.ui.LobstersApp
 import dev.msfjarvis.claw.common.comments.HTMLConverter
+import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 import javax.inject.Inject
 
@@ -34,16 +36,20 @@ class MainActivity : ComponentActivity() {
     super.onCreate(savedInstanceState)
     installSplashScreen()
     Whetstone.inject(this)
-    WindowCompat.setDecorFitsSystemWindows(window, false)
+    enableEdgeToEdge()
     setContent {
       val windowSizeClass = calculateWindowSizeClass(this)
-
-      LobstersApp(
-        urlLauncher = urlLauncher,
-        htmlConverter = htmlConverter,
-        windowSizeClass = windowSizeClass,
-        setWebUri = { url -> webUri = url },
-      )
+      LobstersTheme(
+        dynamicColor = true,
+        providedValues = arrayOf(LocalUriHandler provides urlLauncher),
+      ) {
+        LobstersApp(
+          urlLauncher = urlLauncher,
+          htmlConverter = htmlConverter,
+          windowSizeClass = windowSizeClass,
+          setWebUri = { url -> webUri = url },
+        )
+      }
     }
   }
 

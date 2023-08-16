@@ -1,5 +1,4 @@
 [versions]
-accompanist = "0.33.0-alpha"
 agp = "8.2.0-alpha16"
 benchmark = "1.2.0-beta03"
 coil = "2.4.0"
@@ -18,8 +17,7 @@ whetstone = "0.6.0"
 workmanager = "2.9.0-alpha02"
 
 [libraries]
-accompanist-sysuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
-androidx-activity-compose = "androidx.activity:activity-compose:1.7.2"
+androidx-activity-compose = "androidx.activity:activity-compose:1.8.0-alpha06"
 androidx-benchmark-macro-junit4 = { module = "androidx.benchmark:benchmark-macro-junit4", version.ref = "benchmark" }
 androidx-browser = "androidx.browser:browser:1.6.0"
 androidx-compose-animation = { module = "androidx.compose.animation:animation" }

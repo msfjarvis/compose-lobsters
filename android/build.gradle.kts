@@ -64,7 +64,6 @@ whetstone {
 dependencies {
   implementation(platform(libs.androidx.compose.bom))
   implementation(platform(libs.okhttp.bom))
-  implementation(libs.accompanist.sysuicontroller)
   implementation(libs.androidx.activity.compose)
   implementation(libs.androidx.compose.material)
   implementation(libs.androidx.compose.material.icons.extended)

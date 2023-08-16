@@ -39,7 +39,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
@@ -58,7 +57,6 @@ import dev.msfjarvis.claw.android.ui.datatransfer.DataTransferScreen
 import dev.msfjarvis.claw.android.ui.decorations.ClawNavigationBar
 import dev.msfjarvis.claw.android.ui.decorations.ClawNavigationRail
 import dev.msfjarvis.claw.android.ui.decorations.NavigationItem
-import dev.msfjarvis.claw.android.ui.decorations.TransparentSystemBars
 import dev.msfjarvis.claw.android.ui.lists.DatabasePosts
 import dev.msfjarvis.claw.android.ui.lists.NetworkPosts
 import dev.msfjarvis.claw.android.ui.lists.SearchList
@@ -68,7 +66,6 @@ import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.common.comments.CommentsPage
 import dev.msfjarvis.claw.common.comments.HTMLConverter
-import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.decorations.ClawAppBar
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 import dev.msfjarvis.claw.common.user.UserProfile
@@ -104,193 +101,186 @@ fun LobstersApp(
 
   val navigationType = ClawNavigationType.fromSize(windowSizeClass.widthSizeClass)
 
-  LobstersTheme(
-    dynamicColor = true,
-    providedValues = arrayOf(LocalUriHandler provides urlLauncher),
-  ) {
-    val navItems =
-      persistentListOf(
-        NavigationItem(
-          label = "Hottest",
-          route = Destinations.Hottest.route,
-          icon = Icons.Outlined.Whatshot,
-          selectedIcon = Icons.Filled.Whatshot,
-        ) {
-          coroutineScope.launch { hottestListState.animateScrollToItem(index = 0) }
-        },
-        NavigationItem(
-          label = "Newest",
-          route = Destinations.Newest.route,
-          icon = Icons.Outlined.NewReleases,
-          selectedIcon = Icons.Filled.NewReleases,
-        ) {
-          coroutineScope.launch { newestListState.animateScrollToItem(index = 0) }
-        },
-        NavigationItem(
-          label = "Saved",
-          route = Destinations.Saved.route,
-          icon = Icons.Outlined.FavoriteBorder,
-          selectedIcon = Icons.Filled.Favorite,
-        ) {
-          coroutineScope.launch { savedListState.animateScrollToItem(index = 0) }
-        },
-        NavigationItem(
-          label = "Search",
-          route = Destinations.Search.route,
-          icon = Icons.Outlined.Search,
-          selectedIcon = Icons.Filled.Search,
-        ) {
-          coroutineScope.launch { searchListState.animateScrollToItem(index = 0) }
-        },
-      )
+  val navItems =
+    persistentListOf(
+      NavigationItem(
+        label = "Hottest",
+        route = Destinations.Hottest.route,
+        icon = Icons.Outlined.Whatshot,
+        selectedIcon = Icons.Filled.Whatshot,
+      ) {
+        coroutineScope.launch { hottestListState.animateScrollToItem(index = 0) }
+      },
+      NavigationItem(
+        label = "Newest",
+        route = Destinations.Newest.route,
+        icon = Icons.Outlined.NewReleases,
+        selectedIcon = Icons.Filled.NewReleases,
+      ) {
+        coroutineScope.launch { newestListState.animateScrollToItem(index = 0) }
+      },
+      NavigationItem(
+        label = "Saved",
+        route = Destinations.Saved.route,
+        icon = Icons.Outlined.FavoriteBorder,
+        selectedIcon = Icons.Filled.Favorite,
+      ) {
+        coroutineScope.launch { savedListState.animateScrollToItem(index = 0) }
+      },
+      NavigationItem(
+        label = "Search",
+        route = Destinations.Search.route,
+        icon = Icons.Outlined.Search,
+        selectedIcon = Icons.Filled.Search,
+      ) {
+        coroutineScope.launch { searchListState.animateScrollToItem(index = 0) }
+      },
+    )
 
-    TransparentSystemBars()
-
-    Scaffold(
-      topBar = {
-        if (currentDestination != Destinations.Search.route) {
-          ClawAppBar(
-            navigationIcon = {
-              if (
-                navController.previousBackStackEntry != null &&
-                  navItems.none { it.route == currentDestination }
+  Scaffold(
+    topBar = {
+      if (currentDestination != Destinations.Search.route) {
+        ClawAppBar(
+          navigationIcon = {
+            if (
+              navController.previousBackStackEntry != null &&
+                navItems.none { it.route == currentDestination }
+            ) {
+              IconButton(
+                onClick = { if (!navController.popBackStack()) context.getActivity()?.finish() },
               ) {
-                IconButton(
-                  onClick = { if (!navController.popBackStack()) context.getActivity()?.finish() },
-                ) {
-                  Icon(
-                    imageVector = Icons.Filled.ArrowBack,
-                    contentDescription = "Go back to previous screen",
-                  )
-                }
+                Icon(
+                  imageVector = Icons.Filled.ArrowBack,
+                  contentDescription = "Go back to previous screen",
+                )
               }
-            },
-            title = {
-              if (navItems.any { it.route == currentDestination }) {
-                Text(text = stringResource(R.string.app_name), fontWeight = FontWeight.Bold)
+            }
+          },
+          title = {
+            if (navItems.any { it.route == currentDestination }) {
+              Text(text = stringResource(R.string.app_name), fontWeight = FontWeight.Bold)
+            }
+          },
+          actions = {
+            if (navItems.any { it.route == currentDestination }) {
+              IconButton(onClick = { navController.navigate(Destinations.DataTransfer.route) }) {
+                Icon(
+                  imageVector = Icons.Filled.ImportExport,
+                  contentDescription = "Data transfer options",
+                )
               }
-            },
-            actions = {
-              if (navItems.any { it.route == currentDestination }) {
-                IconButton(onClick = { navController.navigate(Destinations.DataTransfer.route) }) {
-                  Icon(
-                    imageVector = Icons.Filled.ImportExport,
-                    contentDescription = "Data transfer options",
-                  )
-                }
-              }
-            },
-          )
-        }
-      },
-      bottomBar = {
-        AnimatedVisibility(visible = navigationType == ClawNavigationType.BOTTOM_NAVIGATION) {
-          ClawNavigationBar(
-            navController = navController,
-            items = navItems,
-            isVisible = navItems.any { it.route == currentDestination },
-          )
-        }
-      },
-      snackbarHost = { SnackbarHost(snackbarHostState) },
-      modifier = modifier.semantics { testTagsAsResourceId = true },
-    ) { paddingValues ->
-      Row(modifier = Modifier.padding(paddingValues)) {
-        AnimatedVisibility(visible = navigationType == ClawNavigationType.NAVIGATION_RAIL) {
-          ClawNavigationRail(
-            navController = navController,
-            items = navItems,
-            isVisible = navItems.any { it.route == currentDestination },
-          )
-        }
-
-        NavHost(
+            }
+          },
+        )
+      }
+    },
+    bottomBar = {
+      AnimatedVisibility(visible = navigationType == ClawNavigationType.BOTTOM_NAVIGATION) {
+        ClawNavigationBar(
           navController = navController,
-          startDestination = Destinations.startDestination.route,
-          // Make animations 2x faster than default specs
-          enterTransition = { fadeIn(animationSpec = tween(350)) },
-          exitTransition = { fadeOut(animationSpec = tween(350)) },
-        ) {
-          val uri = LobstersApi.BASE_URL
-          composable(route = Destinations.Hottest.route) {
-            setWebUri("https://lobste.rs/")
-            NetworkPosts(
-              lazyPagingItems = hottestPosts,
-              listState = hottestListState,
-              isPostSaved = viewModel::isPostSaved,
-              isPostRead = viewModel::isPostRead,
-              postActions = postActions,
-            )
-          }
-          composable(route = Destinations.Newest.route) {
-            setWebUri("https://lobste.rs/")
-            NetworkPosts(
-              lazyPagingItems = newestPosts,
-              listState = newestListState,
-              isPostSaved = viewModel::isPostSaved,
-              isPostRead = viewModel::isPostRead,
-              postActions = postActions,
-            )
-          }
-          composable(route = Destinations.Saved.route) {
-            setWebUri(null)
-            DatabasePosts(
-              items = savedPosts,
-              listState = savedListState,
-              postActions = postActions,
-            )
-          }
-          composable(Destinations.Search.route) {
-            setWebUri("https://lobste.rs/search")
-            SearchList(
-              items = viewModel.searchResults,
-              listState = searchListState,
-              isPostSaved = viewModel::isPostSaved,
-              postActions = postActions,
-              searchQuery = viewModel.searchQuery,
-              setSearchQuery = { query -> viewModel.searchQuery = query },
-            )
-          }
-          composable(
-            route = Destinations.Comments.route,
-            arguments = listOf(navArgument("postId") { type = NavType.StringType }),
-            deepLinks =
-              listOf(
-                navDeepLink { uriPattern = "$uri/s/${Destinations.Comments.placeholder}/.*" },
-                navDeepLink { uriPattern = "$uri/s/${Destinations.Comments.placeholder}" },
-              ),
-          ) { backStackEntry ->
-            val postId = requireNotNull(backStackEntry.arguments?.getString("postId"))
-            setWebUri("https://lobste.rs/s/$postId")
-            CommentsPage(
-              postId = postId,
-              postActions = postActions,
-              htmlConverter = htmlConverter,
-              getSeenComments = viewModel::getSeenComments,
-              markSeenComments = viewModel::markSeenComments,
-            )
-          }
-          composable(
-            route = Destinations.User.route,
-            arguments = listOf(navArgument("username") { type = NavType.StringType }),
-            deepLinks =
-              listOf(navDeepLink { uriPattern = "$uri/u/${Destinations.User.placeholder}" }),
-          ) { backStackEntry ->
-            val username = requireNotNull(backStackEntry.arguments?.getString("username"))
-            setWebUri("https://lobste.rs/u/$username")
-            UserProfile(
-              username = username,
-              getProfile = viewModel::getUserProfile,
-            )
-          }
-          composable(route = Destinations.DataTransfer.route) {
-            DataTransferScreen(
-              context = context,
-              importPosts = viewModel::importPosts,
-              exportPosts = viewModel::exportPosts,
-              snackbarHostState = snackbarHostState,
-            )
-          }
+          items = navItems,
+          isVisible = navItems.any { it.route == currentDestination },
+        )
+      }
+    },
+    snackbarHost = { SnackbarHost(snackbarHostState) },
+    modifier = modifier.semantics { testTagsAsResourceId = true },
+  ) { paddingValues ->
+    Row(modifier = Modifier.padding(paddingValues)) {
+      AnimatedVisibility(visible = navigationType == ClawNavigationType.NAVIGATION_RAIL) {
+        ClawNavigationRail(
+          navController = navController,
+          items = navItems,
+          isVisible = navItems.any { it.route == currentDestination },
+        )
+      }
+
+      NavHost(
+        navController = navController,
+        startDestination = Destinations.startDestination.route,
+        // Make animations 2x faster than default specs
+        enterTransition = { fadeIn(animationSpec = tween(350)) },
+        exitTransition = { fadeOut(animationSpec = tween(350)) },
+      ) {
+        val uri = LobstersApi.BASE_URL
+        composable(route = Destinations.Hottest.route) {
+          setWebUri("https://lobste.rs/")
+          NetworkPosts(
+            lazyPagingItems = hottestPosts,
+            listState = hottestListState,
+            isPostSaved = viewModel::isPostSaved,
+            isPostRead = viewModel::isPostRead,
+            postActions = postActions,
+          )
+        }
+        composable(route = Destinations.Newest.route) {
+          setWebUri("https://lobste.rs/")
+          NetworkPosts(
+            lazyPagingItems = newestPosts,
+            listState = newestListState,
+            isPostSaved = viewModel::isPostSaved,
+            isPostRead = viewModel::isPostRead,
+            postActions = postActions,
+          )
+        }
+        composable(route = Destinations.Saved.route) {
+          setWebUri(null)
+          DatabasePosts(
+            items = savedPosts,
+            listState = savedListState,
+            postActions = postActions,
+          )
+        }
+        composable(Destinations.Search.route) {
+          setWebUri("https://lobste.rs/search")
+          SearchList(
+            items = viewModel.searchResults,
+            listState = searchListState,
+            isPostSaved = viewModel::isPostSaved,
+            postActions = postActions,
+            searchQuery = viewModel.searchQuery,
+            setSearchQuery = { query -> viewModel.searchQuery = query },
+          )
+        }
+        composable(
+          route = Destinations.Comments.route,
+          arguments = listOf(navArgument("postId") { type = NavType.StringType }),
+          deepLinks =
+            listOf(
+              navDeepLink { uriPattern = "$uri/s/${Destinations.Comments.placeholder}/.*" },
+              navDeepLink { uriPattern = "$uri/s/${Destinations.Comments.placeholder}" },
+            ),
+        ) { backStackEntry ->
+          val postId = requireNotNull(backStackEntry.arguments?.getString("postId"))
+          setWebUri("https://lobste.rs/s/$postId")
+          CommentsPage(
+            postId = postId,
+            postActions = postActions,
+            htmlConverter = htmlConverter,
+            getSeenComments = viewModel::getSeenComments,
+            markSeenComments = viewModel::markSeenComments,
+          )
+        }
+        composable(
+          route = Destinations.User.route,
+          arguments = listOf(navArgument("username") { type = NavType.StringType }),
+          deepLinks =
+            listOf(navDeepLink { uriPattern = "$uri/u/${Destinations.User.placeholder}" }),
+        ) { backStackEntry ->
+          val username = requireNotNull(backStackEntry.arguments?.getString("username"))
+          setWebUri("https://lobste.rs/u/$username")
+          UserProfile(
+            username = username,
+            getProfile = viewModel::getUserProfile,
+          )
+        }
+        composable(route = Destinations.DataTransfer.route) {
+          DataTransferScreen(
+            context = context,
+            importPosts = viewModel::importPosts,
+            exportPosts = viewModel::exportPosts,
+            snackbarHostState = snackbarHostState,
+          )
         }
       }
     }

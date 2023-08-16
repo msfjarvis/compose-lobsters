@@ -19,7 +19,5 @@
     <item name="android:windowActionModeOverlay">true</item>
   </style>
 
-  <style name="Theme.Claw" parent="Base.Theme.Claw">
-    <item name="android:windowLightStatusBar">@bool/use_light_status_bar</item>
-  </style>
+  <style name="Theme.Claw" parent="Base.Theme.Claw" />
 </resources>

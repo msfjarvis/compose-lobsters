@@ -6,6 +6,7 @@
  */
 @file:Suppress("UnstableApiUsage")
 
+import com.android.build.api.variant.BuildConfigField
 import dev.msfjarvis.claw.gradle.addTestDependencies
 
 plugins {
@@ -32,6 +33,15 @@ android {
   }
   // kotlinx.serialization 1.6.0-RC regression
   packagingOptions.resources.pickFirsts += "**/*.bin"
+}
+
+androidComponents {
+  onVariants { variant ->
+    variant.buildConfigFields.put(
+      "ENABLE_READ_COMMENTS",
+      BuildConfigField("boolean", "false", "Not yet buddy boy")
+    )
+  }
 }
 
 baselineProfile {

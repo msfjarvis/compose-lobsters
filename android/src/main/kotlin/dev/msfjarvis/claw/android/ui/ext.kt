@@ -12,6 +12,7 @@ import androidx.activity.ComponentActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.NavController
+import dev.msfjarvis.claw.android.BuildConfig
 import dev.msfjarvis.claw.android.ui.navigation.Destinations
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.common.posts.PostActions
@@ -37,12 +38,16 @@ fun rememberPostActions(
   return remember {
     object : PostActions {
       override fun viewPost(postId: String, postUrl: String, commentsUrl: String) {
-        viewModel.markPostAsRead(postId)
+        if (BuildConfig.ENABLE_READ_COMMENTS) {
+          viewModel.markPostAsRead(postId)
+        }
         urlLauncher.openUri(postUrl.ifEmpty { commentsUrl })
       }
 
       override fun viewComments(postId: String) {
-        viewModel.markPostAsRead(postId)
+        if (BuildConfig.ENABLE_READ_COMMENTS) {
+          viewModel.markPostAsRead(postId)
+        }
         val currentRoute = navController.currentDestination?.route
         val newRoute =
           Destinations.Comments.route.replace(Destinations.Comments.placeholder, postId)

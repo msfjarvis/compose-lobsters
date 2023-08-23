@@ -20,7 +20,7 @@ class ReadPostsQueriesTest {
   }
 
   @Test
-  fun markPostAsRead() {
+  fun `mark post as read`() {
     val id = UUID.randomUUID().toString()
     postQueries.markRead(id)
     assertThat(postQueries.isRead(id).executeAsOne()).isNotNull()

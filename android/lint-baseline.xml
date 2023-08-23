@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<issues format="6" by="lint 8.2.0-alpha14" type="baseline" client="gradle" dependencies="true" name="AGP (8.2.0-alpha14)" variant="all" version="8.2.0-alpha14">
+<issues format="6" by="lint 8.2.0-alpha16" type="baseline" client="gradle" dependencies="true" name="AGP (8.2.0-alpha16)" variant="all" version="8.2.0-alpha16">
+
+    <issue
+        id="NewerVersionAvailable"
+        message="A newer version of org.jetbrains.kotlin.plugin.serialization than 1.9.0 is available: 1.9.10"
+        errorLine1="kotlin = &quot;1.9.0&quot;"
+        errorLine2="         ~~~~~~~">
+        <location
+            file="../gradle/libs.versions.toml"
+            line="10"
+            column="10"/>
+    </issue>
 
     <issue
         id="NewerVersionAvailable"
@@ -8,7 +19,7 @@
         errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="../gradle/libs.versions.toml"
-            line="100"
+            line="97"
             column="9"/>
     </issue>
 

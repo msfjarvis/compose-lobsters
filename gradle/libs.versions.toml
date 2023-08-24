@@ -1,5 +1,5 @@
 [versions]
-agp = "8.2.0-alpha16"
+agp = "8.2.0-beta01"
 benchmark = "1.2.0-beta04"
 coil = "2.4.0"
 # @keep used for kotlinCompilerExtensionVersion

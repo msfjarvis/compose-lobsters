@@ -51,8 +51,7 @@ object LintConfig {
         include("*.sarif")
         rename { it.replace("-results", "-results-$name") }
       }
-      dependsOn(":$name:lint")
+      dependsOn(lintTask)
     }
-    lintTask.configure { finalizedBy(collectorTask) }
   }
 }

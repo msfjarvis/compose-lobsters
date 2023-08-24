@@ -3,17 +3,6 @@
 
     <issue
         id="NewerVersionAvailable"
-        message="A newer version of org.jetbrains.kotlin.plugin.serialization than 1.9.0 is available: 1.9.10"
-        errorLine1="kotlin = &quot;1.9.0&quot;"
-        errorLine2="         ~~~~~~~">
-        <location
-            file="../gradle/libs.versions.toml"
-            line="10"
-            column="10"/>
-    </issue>
-
-    <issue
-        id="NewerVersionAvailable"
         message="A newer version of com.squareup.anvil than 2.4.7 is available: 2.4.7-1-8"
         errorLine1="anvil = &quot;com.squareup.anvil:2.4.7&quot;"
         errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~">

@@ -12,7 +12,6 @@ plugins {
   id("dev.msfjarvis.claw.android-library")
   id("dev.msfjarvis.claw.kotlin-android")
   alias(libs.plugins.anvil)
-  alias(libs.plugins.whetstone)
 }
 
 android {
@@ -32,6 +31,8 @@ androidComponents { beforeVariants { (it as HasUnitTestBuilder).enableUnitTest =
 anvil { generateDaggerFactories.set(true) }
 
 dependencies {
+  anvil(libs.whetstone.compiler)
+
   api(projects.core)
   api(projects.database)
   api(projects.model)
@@ -51,6 +52,7 @@ dependencies {
   implementation(libs.kotlinx.collections.immutable)
   implementation(libs.kotlinx.coroutines.core)
   implementation(libs.napier)
+  implementation(libs.whetstone)
 
   compileOnly(libs.androidx.compose.ui.tooling.preview)
 

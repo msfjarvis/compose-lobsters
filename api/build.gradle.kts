@@ -10,7 +10,6 @@ plugins {
   id("dev.msfjarvis.claw.android-library")
   id("dev.msfjarvis.claw.kotlin-android")
   alias(libs.plugins.anvil)
-  alias(libs.plugins.whetstone)
 }
 
 android { namespace = "dev.msfjarvis.claw.api" }
@@ -18,6 +17,7 @@ android { namespace = "dev.msfjarvis.claw.api" }
 anvil { generateDaggerFactories.set(true) }
 
 dependencies {
+  anvil(libs.whetstone.compiler)
   api(libs.eithernet)
   api(libs.retrofit)
   api(projects.model)
@@ -25,6 +25,7 @@ dependencies {
   implementation(libs.dagger)
   implementation(libs.javax.inject)
   implementation(libs.jsoup)
+  implementation(libs.whetstone)
 
   testImplementation(testFixtures(libs.eithernet))
   testImplementation(libs.kotlinx.coroutines.test)

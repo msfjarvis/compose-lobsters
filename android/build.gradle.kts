@@ -12,14 +12,13 @@ plugins {
   id("dev.msfjarvis.claw.android-application")
   id("dev.msfjarvis.claw.rename-artifacts")
   id("dev.msfjarvis.claw.kotlin-android")
-  id("dev.msfjarvis.claw.kotlin-kapt")
   id("dev.msfjarvis.claw.sentry")
   id("dev.msfjarvis.claw.versioning-plugin")
   alias(libs.plugins.anvil)
   alias(libs.plugins.modulegraphassert)
-  alias(libs.plugins.whetstone)
   alias(libs.plugins.baselineprofile)
   alias(libs.plugins.licensee)
+  alias(libs.plugins.ksp)
 }
 
 android {
@@ -54,14 +53,9 @@ moduleGraphAssert {
   restricted = arrayOf(":core -X> :.*")
 }
 
-whetstone {
-  addOns {
-    compose.set(true)
-    workManager.set(true)
-  }
-}
-
 dependencies {
+  anvil(libs.whetstone.compiler)
+
   implementation(platform(libs.androidx.compose.bom))
   implementation(platform(libs.okhttp.bom))
   implementation(libs.androidx.activity.compose)
@@ -86,13 +80,15 @@ dependencies {
   implementation(libs.sqldelight.extensions.coroutines)
   implementation(libs.swipe)
   implementation(libs.unfurl)
+  implementation(libs.whetstone.compose)
+  implementation(libs.whetstone.worker)
   implementation(projects.api)
   implementation(projects.common)
   implementation(projects.core)
   implementation(projects.database)
   implementation(projects.model)
 
-  kapt(libs.dagger.compiler)
+  ksp(libs.dagger.compiler)
 
   testImplementation(libs.kotlinx.coroutines.test)
   testImplementation(libs.okhttp.mockwebserver)

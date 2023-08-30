@@ -12,7 +12,6 @@ plugins {
   alias(libs.plugins.kotlin.serialization)
   alias(libs.plugins.anvil)
   alias(libs.plugins.sqldelight)
-  alias(libs.plugins.whetstone)
 }
 
 android { namespace = "dev.msfjarvis.claw.database" }
@@ -30,11 +29,14 @@ sqldelight {
 }
 
 dependencies {
+  anvil(libs.whetstone.compiler)
+
   implementation(libs.dagger)
   implementation(libs.sqldelight.androidDriver)
   implementation(libs.sqldelight.primitiveAdapters)
   implementation(libs.sqlite.android)
   implementation(libs.kotlinx.serialization.core)
+  implementation(libs.whetstone)
 
   testImplementation(libs.sqldelight.jvmDriver)
   testImplementation(libs.kotlinx.serialization.json)

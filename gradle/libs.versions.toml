@@ -91,12 +91,17 @@ sqlite-android = "com.github.requery:sqlite-android:3.43.0"
 swipe = "me.saket.swipe:swipe:1.2.0"
 truth = "com.google.truth:truth:1.1.5"
 unfurl = "me.saket.unfurl:unfurl:1.7.0"
+whetstone = { module = "dev.msfjarvis.whetstone:whetstone", version.ref = "whetstone"}
+whetstone-compiler = { module = "dev.msfjarvis.whetstone:whetstone-compiler", version.ref = "whetstone"}
+whetstone-compose = { module = "dev.msfjarvis.whetstone:whetstone-compose", version.ref = "whetstone"}
+whetstone-worker = { module = "dev.msfjarvis.whetstone:whetstone-worker", version.ref = "whetstone"}
 
 [plugins]
 android-test = { id = "com.android.test", version.ref = "agp" }
 anvil = "com.squareup.anvil:2.4.7"
 baselineprofile = { id = "androidx.baselineprofile", version.ref = "benchmark" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+ksp = "com.google.devtools.ksp:1.9.10-1.0.13"
 licensee = "app.cash.licensee:1.7.0"
 modulegraph = "dev.iurysouza.modulegraph:0.4.0"
 modulegraphassert = "com.jraska.module.graph.assertion:2.4.1"

@@ -31,9 +31,9 @@ import okhttp3.logging.HttpLoggingInterceptor
 @ContributesTo(ApplicationScope::class)
 interface OkHttpModule {
 
-  @Binds fun NapierLogger.bindLogger(): HttpLoggingInterceptor.Logger
+  @Binds fun bindLogger(impl: NapierLogger): HttpLoggingInterceptor.Logger
 
-  @Binds @IntoSet fun UserAgentInterceptor.bindUAInterceptor(): Interceptor
+  @Binds @IntoSet fun bindUAInterceptor(impl: UserAgentInterceptor): Interceptor
 
   companion object {
     private const val CACHE_SIZE_MB = 10L * 1024 * 1024

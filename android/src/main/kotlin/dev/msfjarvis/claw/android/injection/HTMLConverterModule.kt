@@ -16,5 +16,5 @@ import dev.msfjarvis.claw.common.comments.HTMLConverter
 @Module
 @ContributesTo(ApplicationScope::class)
 interface HTMLConverterModule {
-  @Binds fun HTMLConverterImpl.bind(): HTMLConverter
+  @Binds fun bindHTMLConverter(impl: HTMLConverterImpl): HTMLConverter
 }

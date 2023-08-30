@@ -17,12 +17,14 @@ internal data class CommentNode(
   val children: MutableList<CommentNode> = mutableListOf(),
   val isUnread: Boolean = false,
   var isExpanded: Boolean = true,
+  var indentLevel: Int
 ) {
   fun addChild(child: CommentNode) {
-    if (comment.indentLevel + 1 == child.comment.indentLevel) {
+    if (comment.shortId == child.comment.parentComment) {
       children.add(child)
       child.parent = this
     } else {
+      child.indentLevel += 1
       children.last().addChild(child)
     }
   }
@@ -36,12 +38,24 @@ internal fun createListNode(
   val isUnread = { id: String -> commentState?.commentIds?.contains(id) == false }
 
   for (i in comments.indices) {
-    if (comments[i].indentLevel == 1) {
-      commentNodes.add(CommentNode(comment = comments[i], isUnread = isUnread(comments[i].shortId)))
+    if (comments[i].parentComment == null) {
+      commentNodes.add(
+        CommentNode(
+          comment = comments[i],
+          isUnread = isUnread(comments[i].shortId),
+          indentLevel = 1
+        )
+      )
     } else {
-      commentNodes
-        .last()
-        .addChild(CommentNode(comment = comments[i], isUnread = isUnread(comments[i].shortId)))
+      commentNodes.last().let {
+        it.addChild(
+          CommentNode(
+            comment = comments[i],
+            isUnread = isUnread(comments[i].shortId),
+            indentLevel = it.indentLevel + 1
+          )
+        )
+      }
     }
   }
 

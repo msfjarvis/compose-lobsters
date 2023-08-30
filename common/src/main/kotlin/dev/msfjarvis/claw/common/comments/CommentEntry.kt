@@ -149,7 +149,7 @@ internal fun CommentEntry(
         .clickable { toggleExpanded(commentNode) }
         .background(MaterialTheme.colorScheme.background)
         .padding(
-          start = CommentEntryPadding * comment.indentLevel,
+          start = CommentEntryPadding * commentNode.indentLevel,
           end = CommentEntryPadding,
           top = CommentEntryPadding,
           bottom = CommentEntryPadding,

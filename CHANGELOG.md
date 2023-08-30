@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.34.0] - 2023-08-30
+
 ### Added
 
 *   Add a swipe action on each story to open the comments page on `lobste.rs`
@@ -291,7 +293,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 *   Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.33.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.34.0...HEAD
+
+[1.34.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.33.0...v1.34.0
 
 [1.33.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.32.0...v1.33.0
 

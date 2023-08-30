@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<issues format="6" by="lint 8.2.0-alpha16" type="baseline" client="gradle" dependencies="true" name="AGP (8.2.0-alpha16)" variant="all" version="8.2.0-alpha16">
+<issues format="6" by="lint 8.2.0-beta01" type="baseline" client="gradle" dependencies="true" name="AGP (8.2.0-beta01)" variant="all" version="8.2.0-beta01">
 
     <issue
         id="NewerVersionAvailable"
@@ -10,17 +10,6 @@
             file="../gradle/libs.versions.toml"
             line="97"
             column="9"/>
-    </issue>
-
-    <issue
-        id="UsingMaterialAndMaterial3Libraries"
-        message="Using a material import while also using the material3 library"
-        errorLine1="import androidx.compose.material.ExperimentalMaterialApi"
-        errorLine2="       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/kotlin/dev/msfjarvis/claw/android/ui/lists/NetworkPosts.kt"
-            line="17"
-            column="8"/>
     </issue>
 
 </issues>

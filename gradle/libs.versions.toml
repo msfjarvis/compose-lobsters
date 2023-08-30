@@ -5,7 +5,7 @@ coil = "2.4.0"
 # @keep used for kotlinCompilerExtensionVersion
 composeCompiler = "1.5.3-dev-k1.9.10-593b4c95fce"
 coroutines = "1.7.3"
-dagger = "2.47"
+dagger = "2.48"
 junit = "5.10.0"
 kotlin = "1.9.10"
 retrofit = "2.9.0"

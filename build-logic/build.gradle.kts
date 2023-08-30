@@ -34,10 +34,6 @@ gradlePlugin {
       id = "dev.msfjarvis.claw.kotlin-jvm"
       implementationClass = "dev.msfjarvis.claw.gradle.KotlinJvmPlugin"
     }
-    register("kotlin-kapt") {
-      id = "dev.msfjarvis.claw.kotlin-kapt"
-      implementationClass = "dev.msfjarvis.claw.gradle.KotlinKaptPlugin"
-    }
     register("rename-artifacts") {
       id = "dev.msfjarvis.claw.rename-artifacts"
       implementationClass = "dev.msfjarvis.claw.gradle.RenameArtifactsPlugin"

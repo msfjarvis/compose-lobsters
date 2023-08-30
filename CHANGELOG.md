@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 *   Tweak list items to reduce vertical size and adjust colors
 *   Drop bogus workarounds for native library crashes
+*   Updated Jetpack Compose and SQLite
 
 ### Fixed
 

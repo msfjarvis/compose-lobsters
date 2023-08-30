@@ -7,12 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+*   Add a swipe action on each story to open the comments page on `lobste.rs`
+
 ### Changed
 
-*   Add a swipe action to open the comments page on `lobste.rs`
-*   Automatically mark posts as "read" and visually distinguish between them
 *   Tweak list items to reduce vertical size and adjust colors
-*   Drop workarounds for native library crashes since they did not resolve the bug
+*   Drop bogus workarounds for native library crashes
+
+### Fixed
+
+*   Rework how comments are displayed to adapt to lobste.rs API change
 
 ## [1.33.0] - 2023-07-31
 

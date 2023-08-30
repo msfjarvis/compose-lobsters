@@ -40,7 +40,7 @@ class ApiTest {
   fun `post details with comments`() = runTest {
     val postDetails = api.getPostDetails("tdfoqh")
     assertIs<Success<LobstersPostDetails>>(postDetails)
-    assertThat(postDetails.value.comments).hasSize(7)
+    assertThat(postDetails.value.comments).hasSize(10)
   }
 
   @Test

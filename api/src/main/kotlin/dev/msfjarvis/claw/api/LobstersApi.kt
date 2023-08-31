@@ -26,7 +26,7 @@ interface LobstersApi {
   @GET("s/{postId}.json")
   suspend fun getPostDetails(@Path("postId") postId: String): ApiResult<LobstersPostDetails, Unit>
 
-  @GET("u/{username}.json")
+  @GET("~{username}.json")
   suspend fun getUser(@Path("username") username: String): ApiResult<User, Unit>
 
   companion object {

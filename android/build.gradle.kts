@@ -20,6 +20,7 @@ plugins {
   alias(libs.plugins.whetstone)
   alias(libs.plugins.baselineprofile)
   alias(libs.plugins.licensee)
+  alias(libs.plugins.tracelog)
 }
 
 android {

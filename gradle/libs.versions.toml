@@ -99,7 +99,7 @@ baselineprofile = { id = "androidx.baselineprofile", version.ref = "benchmark" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 licensee = "app.cash.licensee:1.7.0"
 modulegraph = "dev.iurysouza.modulegraph:0.4.0"
-modulegraphassert = "com.jraska.module.graph.assertion:2.4.1"
+modulegraphassert = "com.jraska.module.graph.assertion:2.5.0"
 poko = "dev.drewhamilton.poko:0.15.0"
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 tracelog = "dev.msfjarvis.tracelog:0.1.3"

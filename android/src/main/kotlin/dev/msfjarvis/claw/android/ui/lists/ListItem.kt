@@ -7,7 +7,7 @@
 package dev.msfjarvis.claw.android.ui.lists
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Reply
+import androidx.compose.material.icons.automirrored.filled.Reply
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -32,7 +32,7 @@ fun ListItem(
   val read by produceState(false, item.shortId) { value = isRead(item.shortId) }
   val commentsAction =
     SwipeAction(
-      icon = rememberVectorPainter(Icons.Filled.Reply),
+      icon = rememberVectorPainter(Icons.AutoMirrored.Filled.Reply),
       background = MaterialTheme.colorScheme.tertiary,
       onSwipe = { postActions.viewCommentsPage(item.commentsUrl) },
     )

@@ -24,8 +24,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Comment
 import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Comment
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Badge
@@ -208,7 +208,7 @@ private fun CommentsButton(
     },
   ) {
     Icon(
-      imageVector = Icons.Filled.Comment,
+      imageVector = Icons.AutoMirrored.Filled.Comment,
       tint = MaterialTheme.colorScheme.secondary,
       contentDescription = "Open comments",
       modifier = Modifier.testTag("comments_button"),

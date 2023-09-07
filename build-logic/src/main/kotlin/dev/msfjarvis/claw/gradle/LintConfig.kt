@@ -33,6 +33,8 @@ object LintConfig {
       error += "ComposeM2Api"
     }
     baseline = project.file("lint-baseline.xml")
+    // This is extremely annoying
+    disable += "NewerVersionAvailable"
   }
 
   fun configureRootProject(project: Project) {

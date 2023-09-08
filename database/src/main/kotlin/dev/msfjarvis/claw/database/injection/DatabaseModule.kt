@@ -9,9 +9,9 @@ package dev.msfjarvis.claw.database.injection
 import android.content.Context
 import app.cash.sqldelight.adapter.primitive.IntColumnAdapter
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
-import com.deliveryhero.whetstone.ForScope
 import com.deliveryhero.whetstone.app.ApplicationScope
 import com.squareup.anvil.annotations.ContributesTo
+import com.squareup.anvil.annotations.optional.ForScope
 import dagger.Module
 import dagger.Provides
 import dev.msfjarvis.claw.database.LobstersDatabase

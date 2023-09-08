@@ -11,9 +11,9 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStoreFile
-import com.deliveryhero.whetstone.ForScope
 import com.deliveryhero.whetstone.app.ApplicationScope
 import com.squareup.anvil.annotations.ContributesTo
+import com.squareup.anvil.annotations.optional.ForScope
 import dagger.Module
 import dagger.Provides
 import dev.msfjarvis.claw.core.coroutines.DispatcherProvider

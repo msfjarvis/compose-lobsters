@@ -94,7 +94,7 @@ unfurl = "me.saket.unfurl:unfurl:1.7.0"
 
 [plugins]
 android-test = { id = "com.android.test", version.ref = "agp" }
-anvil = "com.squareup.anvil:2.4.7"
+anvil = "com.squareup.anvil:2.4.8"
 baselineprofile = { id = "androidx.baselineprofile", version.ref = "benchmark" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 licensee = "app.cash.licensee:1.7.0"

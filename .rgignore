@@ -1,3 +1,3 @@
 *.json
-baseline-prof.txt
+startup-prof.txt
 **/test/resources/**

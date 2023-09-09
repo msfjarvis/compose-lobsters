@@ -43,10 +43,24 @@ jobs:
           name: Test report
           path: android/build/reports
 
+  dependency-review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0
+
+      - name: Dependency Review
+        uses: actions/dependency-review-action@v3
+        with:
+          base-ref: refs/heads/main
+          head-ref: ${{ github.ref }}
+
   deploy-release-snapshot:
     runs-on: ubuntu-latest
     if: "github.event_name == 'push' && github.event.ref == 'refs/heads/main'"
-    needs: [ "check" ]
+    needs:
+      - check
+      - dependency-review
     steps:
     - name: Checkout repository
       uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac # v4.0.0

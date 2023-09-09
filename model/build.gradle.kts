@@ -5,9 +5,19 @@
  * https://opensource.org/licenses/MIT.
  */
 plugins {
-  id("dev.msfjarvis.claw.kotlin-jvm")
+  id("dev.msfjarvis.claw.android-library")
+  id("dev.msfjarvis.claw.kotlin-android")
   alias(libs.plugins.kotlin.serialization)
   alias(libs.plugins.poko)
+  alias(libs.plugins.ksp)
 }
 
-dependencies { implementation(libs.kotlinx.serialization.core) }
+android { namespace = "dev.msfjarvis.claw.model" }
+
+dependencies {
+  implementation(libs.kotlinx.serialization.core)
+  implementation(libs.konvert.api)
+  implementation(projects.database)
+
+  ksp(libs.konvert.processor)
+}

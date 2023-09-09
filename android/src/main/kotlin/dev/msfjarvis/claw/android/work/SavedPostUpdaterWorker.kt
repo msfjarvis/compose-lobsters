@@ -15,8 +15,8 @@ import com.slack.eithernet.ApiResult.Success
 import com.squareup.anvil.annotations.optional.ForScope
 import dev.msfjarvis.claw.android.viewmodel.SavedPostsRepository
 import dev.msfjarvis.claw.api.LobstersApi
-import dev.msfjarvis.claw.common.posts.toDbModel
 import dev.msfjarvis.claw.model.LobstersPostDetails
+import dev.msfjarvis.claw.model.toSavedPost
 import javax.inject.Inject
 import kotlinx.coroutines.flow.first
 
@@ -40,7 +40,7 @@ constructor(
       .first()
       .map { post -> lobstersApi.getPostDetails(post.shortId) }
       .filterIsInstance<Success<LobstersPostDetails>>()
-      .map { result -> result.value.toDbModel() }
+      .map { result -> result.value.toSavedPost() }
       .let { savedPostsRepository.savePosts(it) }
     return Result.success()
   }

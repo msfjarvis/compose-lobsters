@@ -21,6 +21,7 @@ plugins {
   alias(libs.plugins.baselineprofile)
   alias(libs.plugins.licensee)
   alias(libs.plugins.tracelog)
+  alias(libs.plugins.ksp)
 }
 
 android {
@@ -81,6 +82,7 @@ dependencies {
   implementation(libs.copydown)
   implementation(libs.dagger)
   implementation(libs.jsoup)
+  implementation(libs.konvert.api)
   implementation(libs.kotlinx.collections.immutable)
   implementation(libs.kotlinx.coroutines.core)
   implementation(libs.napier)
@@ -94,6 +96,7 @@ dependencies {
   implementation(projects.model)
 
   kapt(libs.dagger.compiler)
+  ksp(libs.konvert.processor)
 
   testImplementation(libs.kotlinx.coroutines.test)
   testImplementation(libs.okhttp.mockwebserver)

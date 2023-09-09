@@ -7,6 +7,7 @@ composeCompiler = "1.5.3-dev-k1.9.10-593b4c95fce"
 coroutines = "1.7.3"
 dagger = "2.48"
 junit = "5.10.0"
+konvert = "2.2.0"
 kotlin = "1.9.10"
 retrofit = "2.9.0"
 richtext = "0.17.0"
@@ -68,6 +69,8 @@ jsoup = "org.jsoup:jsoup:1.16.1"
 junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit" }
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit" }
 junit-legacy = "junit:junit:4.13.2"
+konvert-api = { module = "io.mcarle:konvert-api", version.ref = "konvert" }
+konvert-processor = { module = "io.mcarle:konvert", version.ref = "konvert" }
 kotlinx-collections-immutable = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5"
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
@@ -97,6 +100,7 @@ android-test = { id = "com.android.test", version.ref = "agp" }
 anvil = "com.squareup.anvil:2.4.8"
 baselineprofile = { id = "androidx.baselineprofile", version.ref = "benchmark" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+ksp = "com.google.devtools.ksp:1.9.10-1.0.13"
 licensee = "app.cash.licensee:1.7.0"
 modulegraph = "dev.iurysouza.modulegraph:0.4.0"
 modulegraphassert = "com.jraska.module.graph.assertion:2.5.0"

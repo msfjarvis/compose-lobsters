@@ -9,11 +9,28 @@
 package dev.msfjarvis.claw.model
 
 import dev.drewhamilton.poko.Poko
+import dev.msfjarvis.claw.database.local.SavedPost
+import io.mcarle.konvert.api.KonvertTo
+import io.mcarle.konvert.api.Mapping
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 @Poko
+@KonvertTo(
+  value = SavedPost::class,
+  mappings =
+    [
+      Mapping(
+        target = "submitterName",
+        expression = "it.submitter.username",
+      ),
+      Mapping(
+        target = "submitterAvatarUrl",
+        expression = "it.submitter.avatarUrl",
+      ),
+    ],
+)
 class LobstersPost(
   val shortId: String,
   val createdAt: String,

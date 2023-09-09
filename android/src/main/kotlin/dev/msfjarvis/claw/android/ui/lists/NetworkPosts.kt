@@ -30,11 +30,11 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.itemContentType
 import androidx.paging.compose.itemKey
 import dev.msfjarvis.claw.common.posts.PostActions
-import dev.msfjarvis.claw.common.posts.toDbModel
 import dev.msfjarvis.claw.common.ui.NetworkError
 import dev.msfjarvis.claw.common.ui.ProgressBar
 import dev.msfjarvis.claw.database.local.SavedPost
 import dev.msfjarvis.claw.model.LobstersPost
+import dev.msfjarvis.claw.model.toSavedPost
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -68,7 +68,7 @@ fun NetworkPosts(
         ) { index ->
           val item = lazyPagingItems[index]
           if (item != null) {
-            val dbModel = item.toDbModel()
+            val dbModel = item.toSavedPost()
             ListItem(
               item = dbModel,
               isSaved = isPostSaved,

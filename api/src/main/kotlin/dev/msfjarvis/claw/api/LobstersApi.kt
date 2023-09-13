@@ -29,6 +29,8 @@ interface LobstersApi {
   @GET("~{username}.json")
   suspend fun getUser(@Path("username") username: String): ApiResult<User, Unit>
 
+  @GET("/") suspend fun getCSRFToken(): ApiResult<CSRFToken, Unit>
+
   companion object {
     const val BASE_URL = "https://lobste.rs"
   }

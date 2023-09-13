@@ -16,6 +16,7 @@ import dagger.multibindings.IntKey
 import dagger.multibindings.IntoMap
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.api.LobstersSearchApi
+import dev.msfjarvis.claw.api.converters.CSRFTokenConverter
 import dev.msfjarvis.claw.api.converters.SearchConverter
 import javax.inject.Qualifier
 import okhttp3.OkHttpClient
@@ -80,6 +81,11 @@ object RetrofitModule {
   @IntKey(0)
   @IntoMap
   fun provideApiResultCallAdapter(): CallAdapter.Factory = ApiResultCallAdapterFactory
+
+  @Provides
+  @IntKey(Int.MAX_VALUE)
+  @IntoMap
+  fun provideCSRFTokenConverter(): Converter.Factory = CSRFTokenConverter.Factory
 
   @Provides
   @SearchApi

@@ -9,6 +9,7 @@ package dev.msfjarvis.claw.api
 import com.slack.eithernet.ApiResult.Companion.success
 import com.slack.eithernet.test.EitherNetController
 import com.slack.eithernet.test.enqueue
+import dev.msfjarvis.claw.api.converters.CSRFTokenConverter
 import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.LobstersPostDetails
 import dev.msfjarvis.claw.model.User
@@ -16,6 +17,8 @@ import dev.msfjarvis.claw.util.TestUtils.getResource
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonNamingStrategy
+import okhttp3.MediaType
+import okhttp3.ResponseBody
 
 @OptIn(ExperimentalSerializationApi::class)
 class ApiWrapper(controller: EitherNetController<LobstersApi>) {
@@ -35,5 +38,12 @@ class ApiWrapper(controller: EitherNetController<LobstersApi>) {
     controller.enqueue(LobstersApi::getHottestPosts) { success(hottest) }
     controller.enqueue(LobstersApi::getPostDetails) { success(postDetails) }
     controller.enqueue(LobstersApi::getUser) { success(user) }
+    controller.enqueue(LobstersApi::getCSRFToken) {
+      success(
+        CSRFTokenConverter.convert(
+          ResponseBody.create(MediaType.get("text/html"), getResource("search_chatgpt_page.html"))
+        )
+      )
+    }
   }
 }

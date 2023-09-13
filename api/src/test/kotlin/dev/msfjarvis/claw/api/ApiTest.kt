@@ -49,4 +49,14 @@ class ApiTest {
     assertIs<Success<User>>(user)
     assertThat(user.value.username).isEqualTo("msfjarvis")
   }
+
+  @Test
+  fun `retrieve CSRF token`() = runTest {
+    val token = api.getCSRFToken()
+    assertIs<Success<CSRFToken>>(token)
+    assertThat(token.value.value)
+      .isEqualTo(
+        "oLI2VtS7LbkvxzGZQXgvl3E88RSwOw38Z_nlkxTk5r9JUznOv7sS8BeV_8h-jmI3aMJBh1mdRz4ckl8ItW3tlA"
+      )
+  }
 }

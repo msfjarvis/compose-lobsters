@@ -1,6 +1,9 @@
 name: CodeQL
 
 on:
+  push:
+    branches:
+      - renovate/**
   workflow_dispatch:
   schedule:
     - cron: '31 7 * * 3'

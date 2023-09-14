@@ -41,7 +41,7 @@ class ApiWrapper(controller: EitherNetController<LobstersApi>) {
     controller.enqueue(LobstersApi::getCSRFToken) {
       success(
         CSRFTokenConverter.convert(
-          ResponseBody.create(MediaType.get("text/html"), getResource("search_chatgpt_page.html"))
+          ResponseBody.create(MediaType.get("text/html"), getResource("csrf_page.html"))
         )
       )
     }

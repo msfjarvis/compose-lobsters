@@ -56,7 +56,7 @@ class ApiTest {
     assertIs<Success<CSRFToken>>(token)
     assertThat(token.value.value)
       .isEqualTo(
-        "oLI2VtS7LbkvxzGZQXgvl3E88RSwOw38Z_nlkxTk5r9JUznOv7sS8BeV_8h-jmI3aMJBh1mdRz4ckl8ItW3tlA"
+        "OZWykgFemPVeOSNmB53-ccKXe458X7xCInO1-qzFU6nk_9RCSrSQqS9OPmA5_pyy8qD3IYAIZ7XfAM3gdhJpkQ"
       )
   }
 }

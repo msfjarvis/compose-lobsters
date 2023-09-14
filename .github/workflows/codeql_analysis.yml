@@ -36,7 +36,7 @@ jobs:
         cache-read-only: true
 
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@701f152f28d4350ad289a5e31435e9ab6169a7ca # v2.21.6
+      uses: github/codeql-action/init@04daf014b50eaf774287bf3f0f1869d4b4c4b913 # v2.21.7
       with:
         languages: java
         tools: latest
@@ -48,6 +48,6 @@ jobs:
         ./gradlew assemble -PslimTests
 
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@701f152f28d4350ad289a5e31435e9ab6169a7ca # v2.21.6
+      uses: github/codeql-action/analyze@04daf014b50eaf774287bf3f0f1869d4b4c4b913 # v2.21.7
       with:
         category: "/language:java"

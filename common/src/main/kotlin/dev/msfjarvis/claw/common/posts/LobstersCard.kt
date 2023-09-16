@@ -225,6 +225,7 @@ internal fun TagRow(
   FlowRow(
     modifier = modifier,
     horizontalArrangement = Arrangement.spacedBy(8.dp),
+    verticalArrangement = Arrangement.spacedBy(8.dp),
   ) {
     tags.forEach { tag -> TagText(tag = tag) }
   }

@@ -20,9 +20,8 @@ object TestUtils {
     return String(file.readBytes())
   }
 
-  inline fun <reified T> assertIs(value: Any?): T {
+  inline fun <reified T> assertIs(value: Any?) {
     contract { returns() implies (value is T) }
     assertThat(value).isInstanceOf(T::class.java)
-    return value as T
   }
 }

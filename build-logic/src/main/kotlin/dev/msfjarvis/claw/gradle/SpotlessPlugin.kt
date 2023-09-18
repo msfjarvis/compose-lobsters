@@ -50,6 +50,6 @@ class SpotlessPlugin : Plugin<Project> {
   }
 
   private companion object {
-    private const val KTFMT_VERSION = "0.44"
+    private const val KTFMT_VERSION = "0.45"
   }
 }

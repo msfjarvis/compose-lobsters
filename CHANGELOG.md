@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+*   Fixed missing vertical spacing between post tags
+*   Fixed user profile links not displaying correctly in-app
+*   Update to Compose October release
+
 ## [1.34.0] - 2023-08-30
 
 ### Added

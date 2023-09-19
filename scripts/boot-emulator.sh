@@ -11,15 +11,20 @@ set -euo pipefail
 }
 [ -n "${ANDROID_API_LEVEL:-}" ] || { echo "ANDROID_API_LEVEL not defined; defaulting to 33"; }
 
+ARCH="x86_64"
+if [[ "$(uname -m)" == "arm64" && "$(uname)" == "Darwin" ]]; then
+  ARCH="arm64-v8a"
+fi
+
 API_LEVEL="${ANDROID_API_LEVEL:-33}"
 
-sdkmanager "system-images;android-${API_LEVEL};google_apis;x86_64"
+sdkmanager "system-images;android-${API_LEVEL};google_apis;${ARCH}"
 
 echo no | "${ANDROID_HOME}"/cmdline-tools/latest/bin/avdmanager create avd \
   --force \
   -n "Pixel_XL_API_${API_LEVEL}" \
-  --abi 'google_apis/x86_64' \
-  --package "system-images;android-${API_LEVEL};google_apis;x86_64" \
+  --abi "google_apis/${ARCH}" \
+  --package "system-images;android-${API_LEVEL};google_apis;${ARCH}" \
   --device 'pixel_xl'
 
 "${ANDROID_HOME}"/emulator/emulator \

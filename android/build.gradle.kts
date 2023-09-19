@@ -36,7 +36,6 @@ android {
 }
 
 baselineProfile {
-  dexLayoutOptimization = true
   mergeIntoMain = true
   saveInSrc = true
   from(projects.benchmark.dependencyProject)

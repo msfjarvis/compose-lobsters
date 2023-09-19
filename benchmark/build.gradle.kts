@@ -40,7 +40,6 @@ android {
   }
 
   targetProjectPath = ":android"
-  experimentalProperties["android.experimental.r8.dex-startup-optimization"] = true
 }
 
 baselineProfile {

@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.35.0] - 2023-09-19
+
 ### Changed
 
 *   Fixed missing vertical spacing between post tags
@@ -299,7 +301,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 *   Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.34.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.35.0...HEAD
+
+[1.35.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.34.0...v1.35.0
 
 [1.34.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.33.0...v1.34.0
 

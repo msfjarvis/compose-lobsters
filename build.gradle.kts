@@ -15,7 +15,7 @@ plugins {
 }
 
 moduleGraphConfig {
-  heading.set("## Dependency Diagram")
+  heading.set("## Module dependency graph")
   orientation.set(Orientation.TOP_TO_BOTTOM)
   readmePath.set(project.layout.projectDirectory.file("README.md").asFile.absolutePath)
   theme.set(Theme.DARK)

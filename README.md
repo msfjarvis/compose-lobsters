@@ -14,7 +14,7 @@ Unofficial Android app for read-only access to [lobste.rs](https://lobste.rs), b
      alt="A grid of screenshots from the app, in clockwise order: the main screen, the comments page, the search page and the saved posts page"
      width="550" />
 
-## Dependency Diagram
+## Module dependency graph
 
 ```mermaid
 %%{
@@ -25,6 +25,7 @@ Unofficial Android app for read-only access to [lobste.rs](https://lobste.rs), b
 
 graph TB
 
+  model --> database
   benchmark --> android
   android --> api
   android --> common
@@ -36,7 +37,6 @@ graph TB
   common --> core
   common --> database
   common --> model
-
 ```
 ## License
 

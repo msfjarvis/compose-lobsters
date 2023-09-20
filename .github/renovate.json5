@@ -32,6 +32,9 @@
       "matchPackagePatterns": [
         "^androidx.*",
       ],
+      "matchPackageNames": [
+        "dev.chrisbanes.compose:compose-bom",
+      ],
       "groupName": "androidx"
     },
     {

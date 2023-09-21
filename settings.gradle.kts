@@ -60,6 +60,10 @@ pluginManagement {
     }
     includeBuild("build-logic")
     mavenCentral()
+    maven("https://oss.sonatype.org/content/repositories/snapshots/") {
+      name = "Sonatype Snapshots"
+      content { includeGroup("dev.msfjarvis.whetstone") }
+    }
   }
 }
 
@@ -141,6 +145,10 @@ dependencyResolutionManagement {
       filter { includeGroup("androidx.compose.compiler") }
     }
     mavenCentral()
+    maven("https://oss.sonatype.org/content/repositories/snapshots/") {
+      name = "Sonatype Snapshots"
+      content { includeGroup("dev.msfjarvis.whetstone") }
+    }
   }
 }
 

@@ -6,6 +6,7 @@ coil = "2.4.0"
 composeCompiler = "1.5.3-dev-k1.9.10-593b4c95fce"
 coroutines = "1.7.3"
 dagger = "2.48"
+glance = "1.0.0"
 junit = "5.10.0"
 konvert = "2.3.0"
 kotlin = "1.9.10"
@@ -24,6 +25,8 @@ androidx-browser = "androidx.browser:browser:1.6.0"
 androidx-compose-animation = { module = "androidx.compose.animation:animation" }
 androidx-compose-bom = "dev.chrisbanes.compose:compose-bom:2023.10.00-alpha02"
 androidx-compose-foundation = { module = "androidx.compose.foundation:foundation" }
+androidx-compose-glance = { module = "androidx.glance:glance-appwidget", version.ref = "glance" }
+androidx-compose-glance-m3 = { module = "androidx.glance:glance-material3", version.ref = "glance" }
 androidx-compose-material = { module = "androidx.compose.material:material" }
 androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
 androidx-compose-material3 = { module = "androidx.compose.material3:material3" }

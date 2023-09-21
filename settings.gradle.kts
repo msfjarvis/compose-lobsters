@@ -98,6 +98,7 @@ dependencyResolutionManagement {
         includeGroup("androidx.emoji2")
         includeGroup("androidx.exifinterface")
         includeGroup("androidx.fragment")
+        includeGroup("androidx.glance")
         includeGroup("androidx.interpolator")
         includeGroup("androidx.lifecycle")
         includeGroup("androidx.loader")

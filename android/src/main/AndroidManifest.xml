@@ -155,6 +155,15 @@
         <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
       </intent-filter>
     </receiver>
+    <receiver android:name=".glance.WidgetReceiver"
+        android:exported="true">
+      <intent-filter>
+        <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+      </intent-filter>
+      <meta-data
+          android:name="android.appwidget.provider"
+          android:resource="@xml/saved_posts_widget_info" />
+    </receiver>
     <!-- Required: set your sentry.io project identifier (DSN) -->
     <meta-data android:name="io.sentry.dsn" android:value="${sentryDsn}" />
     <!-- enable automatic breadcrumbs for user interactions (clicks, swipes, scrolls) -->

@@ -65,6 +65,8 @@ dependencies {
   implementation(platform(libs.androidx.compose.bom))
   implementation(platform(libs.okhttp.bom))
   implementation(libs.androidx.activity.compose)
+  implementation(libs.androidx.compose.glance)
+  implementation(libs.androidx.compose.glance.m3)
   implementation(libs.androidx.compose.material)
   implementation(libs.androidx.compose.material.icons.extended)
   implementation(libs.androidx.compose.material3)

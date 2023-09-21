@@ -34,7 +34,6 @@ androidx-compose-ui-text = { module = "androidx.compose.ui:ui-text" }
 androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 androidx-core-splashscreen = "androidx.core:core-splashscreen:1.0.1"
-androidx-datastore-preferences = "androidx.datastore:datastore-preferences:1.1.0-alpha05"
 androidx-lifecycle-compose = "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2"
 androidx-navigation-compose = "androidx.navigation:navigation-compose:2.7.3"
 androidx-paging-compose = "androidx.paging:paging-compose:3.2.1"

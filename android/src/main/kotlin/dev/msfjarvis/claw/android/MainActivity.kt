@@ -63,4 +63,8 @@ class MainActivity : ComponentActivity() {
       }
     }
   }
+
+  companion object {
+    const val NAVIGATION_KEY = "postId"
+  }
 }

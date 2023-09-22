@@ -32,6 +32,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -52,6 +53,7 @@ import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.deliveryhero.whetstone.compose.injectedViewModel
+import dev.msfjarvis.claw.android.MainActivity
 import dev.msfjarvis.claw.android.R
 import dev.msfjarvis.claw.android.ui.datatransfer.DataTransferScreen
 import dev.msfjarvis.claw.android.ui.decorations.ClawAppBar
@@ -100,6 +102,15 @@ fun LobstersApp(
   val savedPosts by viewModel.savedPostsByMonth.collectAsState(persistentMapOf())
 
   val navigationType = ClawNavigationType.fromSize(windowSizeClass.widthSizeClass)
+
+  val postIdOverride = context.getActivity()?.intent?.extras?.getString(MainActivity.NAVIGATION_KEY)
+  LaunchedEffect(false) {
+    if (postIdOverride != null) {
+      navController.navigate(
+        Destinations.Comments.route.replace(Destinations.Comments.placeholder, postIdOverride)
+      )
+    }
+  }
 
   val navItems =
     persistentListOf(

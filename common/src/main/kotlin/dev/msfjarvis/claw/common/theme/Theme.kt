@@ -19,7 +19,7 @@ import androidx.compose.runtime.ProvidedValue
 import androidx.compose.ui.platform.LocalContext
 import com.halilibo.richtext.ui.material3.SetupMaterial3RichText
 
-private val LightThemeColors =
+val LightThemeColors =
   lightColorScheme(
     primary = md_theme_light_primary,
     onPrimary = md_theme_light_onPrimary,
@@ -48,7 +48,7 @@ private val LightThemeColors =
     inverseSurface = md_theme_light_inverseSurface,
   )
 
-private val DarkThemeColors =
+val DarkThemeColors =
   darkColorScheme(
     primary = md_theme_dark_primary,
     onPrimary = md_theme_dark_onPrimary,

@@ -76,11 +76,11 @@ constructor(
   val newestPosts
     get() = newestPostsPager.flow
 
-  private val savedPostsFlow
+  val savedPosts
     get() = savedPostsRepository.savedPosts
 
-  val savedPosts
-    get() = savedPostsFlow.map(::mapSavedPosts)
+  val savedPostsByMonth
+    get() = savedPosts.map(::mapSavedPosts)
 
   val searchResults
     get() = searchResultsPager.flow
@@ -93,7 +93,7 @@ constructor(
   }
 
   suspend fun isPostSaved(post: SavedPost): Boolean {
-    return savedPostsFlow.first().any { savedPost -> savedPost.shortId == post.shortId }
+    return savedPosts.first().any { savedPost -> savedPost.shortId == post.shortId }
   }
 
   fun toggleSave(post: SavedPost) {

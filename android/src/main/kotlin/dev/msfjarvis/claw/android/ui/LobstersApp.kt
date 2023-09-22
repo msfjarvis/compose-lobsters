@@ -97,7 +97,7 @@ fun LobstersApp(
 
   val hottestPosts = viewModel.hottestPosts.collectAsLazyPagingItems()
   val newestPosts = viewModel.newestPosts.collectAsLazyPagingItems()
-  val savedPosts by viewModel.savedPosts.collectAsState(persistentMapOf())
+  val savedPosts by viewModel.savedPostsByMonth.collectAsState(persistentMapOf())
 
   val navigationType = ClawNavigationType.fromSize(windowSizeClass.widthSizeClass)
 

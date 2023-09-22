@@ -7,12 +7,14 @@
 package dev.msfjarvis.claw.android.work
 
 import android.content.Context
+import androidx.glance.appwidget.updateAll
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.deliveryhero.whetstone.worker.ContributesWorker
 import com.deliveryhero.whetstone.worker.WorkerScope
 import com.slack.eithernet.ApiResult.Success
 import com.squareup.anvil.annotations.optional.ForScope
+import dev.msfjarvis.claw.android.glance.SavedPostsWidget
 import dev.msfjarvis.claw.android.viewmodel.SavedPostsRepository
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.model.LobstersPostDetails
@@ -42,6 +44,7 @@ constructor(
       .filterIsInstance<Success<LobstersPostDetails>>()
       .map { result -> result.value.toSavedPost() }
       .let { savedPostsRepository.savePosts(it) }
+    SavedPostsWidget(savedPostsRepository.savedPosts).updateAll(applicationContext)
     return Result.success()
   }
 }

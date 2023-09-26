@@ -14,7 +14,6 @@ case "$(uname -m)" in
   *) ARCH="amd64" ;;
 esac
 
-
 case "$(uname)" in
   Linux)
     AGE_FILE="age-${AGE_VERSION}-linux-${ARCH}.tar.gz"
@@ -24,7 +23,10 @@ case "$(uname)" in
     AGE_FILE="age-${AGE_VERSION}-darwin-${ARCH}.tar.gz"
     BIN_DIR="${HOME}/bin"
     ;;
-  *) echo "Unsupported system: $(uname)"; exit 1 ;;
+  *)
+    echo "Unsupported system: $(uname)"
+    exit 1
+    ;;
 esac
 
 pushd "${TEMP_DIR}"

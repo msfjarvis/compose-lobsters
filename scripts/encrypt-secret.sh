@@ -11,8 +11,8 @@ if ! command -v age 1>/dev/null; then
   exit 1
 fi
 
-if [[ -n "$AGE_KEY" && -n "$INPUT_FILE" && -n "$OUTPUT_FILE" ]]; then
-  age --encrypt -r "$(echo "${AGE_KEY}" | age-keygen -y)" -o "${OUTPUT_FILE}" < "${INPUT_FILE}"
+if [[ -n $AGE_KEY && -n $INPUT_FILE && -n $OUTPUT_FILE ]]; then
+  age --encrypt -r "$(echo "${AGE_KEY}" | age-keygen -y)" -o "${OUTPUT_FILE}" <"${INPUT_FILE}"
 else
   echo "Usage: ./encrypt-secret.sh <input file> <output file> <encryption key>"
 fi

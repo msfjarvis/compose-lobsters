@@ -6,7 +6,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
 
 MAESTRO_FLOW="${1:-}"
-if [[ -z "${MAESTRO_FLOW}" ]]; then
+if [[ -z ${MAESTRO_FLOW} ]]; then
   echo "No flow file was provided"
   echo "Usage: run-maestro-flows.sh flow.yml"
   exit 1

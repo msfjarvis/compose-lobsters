@@ -9,7 +9,6 @@ import dev.msfjarvis.claw.gradle.addTestDependencies
 plugins {
   id("dev.msfjarvis.claw.android-library")
   id("dev.msfjarvis.claw.kotlin-android")
-  alias(libs.plugins.kotlin.serialization)
   alias(libs.plugins.anvil)
   alias(libs.plugins.whetstone)
 }
@@ -24,9 +23,7 @@ dependencies {
   implementation(libs.sqldelight.androidDriver)
   implementation(libs.sqldelight.primitiveAdapters)
   implementation(libs.sqlite.android)
-  implementation(libs.kotlinx.serialization.core)
 
   testImplementation(libs.sqldelight.jvmDriver)
-  testImplementation(libs.kotlinx.serialization.json)
   addTestDependencies(project)
 }

@@ -8,6 +8,7 @@ import dev.msfjarvis.claw.gradle.addTestDependencies
 
 plugins {
   id("dev.msfjarvis.claw.kotlin-jvm")
+  alias(libs.plugins.kotlin.serialization)
   alias(libs.plugins.sqldelight)
 }
 
@@ -19,4 +20,10 @@ sqldelight {
       verifyMigrations.set(true)
     }
   }
+}
+
+dependencies {
+  implementation(libs.kotlinx.serialization.core)
+  testImplementation(libs.kotlinx.serialization.json)
+  addTestDependencies(project)
 }

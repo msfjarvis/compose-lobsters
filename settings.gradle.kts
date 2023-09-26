@@ -148,10 +148,7 @@ dependencyResolutionManagement {
     mavenCentral()
     maven("https://oss.sonatype.org/content/repositories/snapshots/") {
       name = "Sonatype Snapshots"
-      content {
-        includeGroup("dev.msfjarvis.whetstone")
-        includeGroup("me.saket.swipe")
-      }
+      content { includeGroup("dev.msfjarvis.whetstone") }
     }
   }
 }

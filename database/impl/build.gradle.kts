@@ -11,7 +11,6 @@ plugins {
   id("dev.msfjarvis.claw.kotlin-android")
   alias(libs.plugins.kotlin.serialization)
   alias(libs.plugins.anvil)
-  alias(libs.plugins.sqldelight)
   alias(libs.plugins.whetstone)
 }
 
@@ -19,17 +18,8 @@ android { namespace = "dev.msfjarvis.claw.database" }
 
 anvil { generateDaggerFactories.set(true) }
 
-sqldelight {
-  databases {
-    create("LobstersDatabase") {
-      packageName.set("dev.msfjarvis.claw.database")
-      schemaOutputDirectory.set(file("src/main/sqldelight/databases"))
-      verifyMigrations.set(true)
-    }
-  }
-}
-
 dependencies {
+  api(projects.database.core)
   implementation(libs.dagger)
   implementation(libs.sqldelight.androidDriver)
   implementation(libs.sqldelight.primitiveAdapters)

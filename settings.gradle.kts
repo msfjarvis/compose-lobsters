@@ -166,6 +166,7 @@ include(
   "benchmark",
   "common",
   "core",
-  "database",
+  "database:core",
+  "database:impl",
   "model",
 )

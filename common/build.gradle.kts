@@ -33,7 +33,7 @@ anvil { generateDaggerFactories.set(true) }
 
 dependencies {
   api(projects.core)
-  api(projects.database)
+  api(projects.database.core)
   api(projects.model)
 
   implementation(platform(libs.androidx.compose.bom))

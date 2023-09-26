@@ -90,7 +90,7 @@ dependencies {
   implementation(projects.api)
   implementation(projects.common)
   implementation(projects.core)
-  implementation(projects.database)
+  implementation(projects.database.impl)
   implementation(projects.model)
 
   kapt(libs.dagger.compiler)

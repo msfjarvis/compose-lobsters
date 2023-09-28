@@ -25,6 +25,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.github.michaelbull.result.coroutines.runSuspendCatching
+import com.github.michaelbull.result.fold
 import dev.msfjarvis.claw.common.NetworkState
 import dev.msfjarvis.claw.common.NetworkState.Error
 import dev.msfjarvis.claw.common.NetworkState.Loading
@@ -109,10 +111,10 @@ fun CommentsPage(
 ) {
   val postDetails by
     produceState<NetworkState>(Loading) {
-      runCatching { postActions.getComments(postId) }
+      runSuspendCatching { postActions.getComments(postId) }
         .fold(
-          onSuccess = { details -> value = Success(details) },
-          onFailure = { value = Error(error = it, description = "Failed to load comments") }
+          success = { details -> value = Success(details) },
+          failure = { value = Error(error = it, description = "Failed to load comments") },
         )
     }
   val commentState by

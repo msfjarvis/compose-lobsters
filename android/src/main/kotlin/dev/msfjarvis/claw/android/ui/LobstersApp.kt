@@ -262,7 +262,10 @@ fun LobstersApp(
               navDeepLink { uriPattern = "$uri/s/${Destinations.Comments.placeholder}" },
             ),
         ) { backStackEntry ->
-          val postId = requireNotNull(backStackEntry.arguments?.getString("postId"))
+          val postId =
+            requireNotNull(backStackEntry.arguments?.getString("postId")) {
+              "Navigating to ${Destinations.Comments.route} without necessary 'postId' argument"
+            }
           setWebUri("https://lobste.rs/s/$postId")
           CommentsPage(
             postId = postId,
@@ -278,7 +281,10 @@ fun LobstersApp(
           deepLinks =
             listOf(navDeepLink { uriPattern = "$uri/u/${Destinations.User.placeholder}" }),
         ) { backStackEntry ->
-          val username = requireNotNull(backStackEntry.arguments?.getString("username"))
+          val username =
+            requireNotNull(backStackEntry.arguments?.getString("username")) {
+              "Navigating to ${Destinations.User.route} without necessary 'username' argument"
+            }
           setWebUri("https://lobste.rs/u/$username")
           UserProfile(
             username = username,

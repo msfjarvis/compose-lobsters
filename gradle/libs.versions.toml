@@ -10,6 +10,7 @@ glance = "1.0.0"
 junit = "5.10.0"
 konvert = "2.3.0"
 kotlin = "1.9.10"
+kotlinResult = "1.1.18"
 retrofit = "2.9.0"
 richtext = "0.17.0"
 sentry-sdk = "6.29.0"
@@ -78,6 +79,7 @@ kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-c
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "serialization" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
+kotlinResult-coroutines = { module = "com.michael-bull.kotlin-result:kotlin-result-coroutines", version.ref = "kotlinResult" }
 napier = "io.github.aakira:napier:2.6.1"
 okhttp-bom = "com.squareup.okhttp3:okhttp-bom:4.11.0"
 okhttp-core = { module = "com.squareup.okhttp3:okhttp" }
@@ -88,6 +90,7 @@ retrofit-kotlinxSerializationConverter = "com.jakewharton.retrofit:retrofit2-kot
 sentry-bom = { module = "io.sentry:sentry-bom", version.ref = "sentry-sdk" }
 sentry-okhttp = { module = "io.sentry:sentry-android-okhttp", version.ref = "sentry-sdk" }
 slack-compose-lints = "com.slack.lint.compose:compose-lint-checks:1.2.0"
+slack-lints = "com.slack.lint:slack-lint-checks:0.6.0"
 sqldelight-androidDriver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
 sqldelight-extensions-coroutines = { module = "app.cash.sqldelight:coroutines-extensions-jvm", version.ref = "sqldelight" }
 sqldelight-jvmDriver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }

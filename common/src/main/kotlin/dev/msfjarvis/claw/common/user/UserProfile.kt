@@ -25,6 +25,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import com.github.michaelbull.result.coroutines.runSuspendCatching
+import com.github.michaelbull.result.fold
 import dev.msfjarvis.claw.common.NetworkState
 import dev.msfjarvis.claw.common.NetworkState.Error
 import dev.msfjarvis.claw.common.NetworkState.Loading
@@ -44,10 +46,10 @@ fun UserProfile(
 ) {
   val user by
     produceState<NetworkState>(Loading) {
-      runCatching { getProfile(username) }
+      runSuspendCatching { getProfile(username) }
         .fold(
-          onSuccess = { profile -> value = Success(profile) },
-          onFailure = {
+          success = { profile -> value = Success(profile) },
+          failure = {
             value =
               Error(
                 error = it,

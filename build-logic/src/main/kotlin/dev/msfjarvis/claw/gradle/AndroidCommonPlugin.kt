@@ -62,6 +62,7 @@ class AndroidCommonPlugin : Plugin<Project> {
     val catalog = project.extensions.getByType<VersionCatalogsExtension>()
     val libs = catalog.named("libs")
     project.dependencies.addProvider("lintChecks", libs.findLibrary("slack-compose-lints").get())
+    project.dependencies.addProvider("lintChecks", libs.findLibrary("slack-lints").get())
   }
 
   private fun Project.configureSlimTests() {

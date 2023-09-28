@@ -46,6 +46,9 @@ licensee {
   allow("MIT")
   ignoreDependencies("org.commonmark") { because("Commonmark is BSD licensed") }
   allowUrl("https://jsoup.org/license") { because("Jsoup is MIT licensed") }
+  allowUrl("https://opensource.org/licenses/isc-license.txt") {
+    because("kotlin-result is ISC licensed")
+  }
 }
 
 moduleGraphAssert {

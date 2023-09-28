@@ -50,6 +50,7 @@ dependencies {
   implementation(libs.compose.richtext.ui)
   implementation(libs.kotlinx.collections.immutable)
   implementation(libs.kotlinx.coroutines.core)
+  implementation(libs.kotlinResult.coroutines)
   implementation(libs.napier)
 
   compileOnly(libs.androidx.compose.ui.tooling.preview)

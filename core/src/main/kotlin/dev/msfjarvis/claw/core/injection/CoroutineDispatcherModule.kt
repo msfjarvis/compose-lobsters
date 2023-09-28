@@ -28,7 +28,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 @ContributesTo(ApplicationScope::class)
 interface CoroutineDispatcherModule {
 
-  @Binds fun DefaultDispatcherProvider.bind(): DispatcherProvider
+  @Binds fun bindDispatcherProvider(impl: DefaultDispatcherProvider): DispatcherProvider
 
   companion object {
     @[Provides IODispatcher]

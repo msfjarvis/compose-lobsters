@@ -4,7 +4,7 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
-@file:Suppress("InjectDispatcher") // False-positive
+@file:Suppress("RawDispatchersUse") // False-positive
 
 package dev.msfjarvis.claw.core.coroutines
 

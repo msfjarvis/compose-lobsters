@@ -37,6 +37,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import com.github.michaelbull.result.coroutines.runSuspendCatching
+import com.github.michaelbull.result.onSuccess
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.posts.PostTitle
 import dev.msfjarvis.claw.common.posts.Submitter
@@ -61,7 +63,7 @@ internal fun CommentsHeader(
     produceState(
       initialValue = LinkMetadata(postDetails.url, null),
     ) {
-      runCatching { postActions.getLinkMetadata(postDetails.url) }
+      runSuspendCatching { postActions.getLinkMetadata(postDetails.url) }
         .onSuccess { metadata -> value = metadata }
     }
 

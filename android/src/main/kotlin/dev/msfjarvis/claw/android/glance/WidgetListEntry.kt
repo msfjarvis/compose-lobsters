@@ -6,10 +6,10 @@
  */
 package dev.msfjarvis.claw.android.glance
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.text.font.FontStyle as UIFontStyle
-import androidx.compose.ui.text.font.FontWeight as UIFontWeight
 import androidx.compose.ui.unit.dp
 import androidx.glance.GlanceComposable
 import androidx.glance.GlanceModifier
@@ -18,15 +18,15 @@ import androidx.glance.action.ActionParameters.Key
 import androidx.glance.action.actionParametersOf
 import androidx.glance.action.actionStartActivity
 import androidx.glance.action.clickable
+import androidx.glance.appwidget.action.actionStartActivity
 import androidx.glance.appwidget.cornerRadius
 import androidx.glance.background
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
-import androidx.glance.layout.Column
+import androidx.glance.layout.Row
 import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.padding
-import androidx.glance.text.FontStyle
-import androidx.glance.text.FontWeight
+import androidx.glance.layout.wrapContentWidth
 import androidx.glance.text.Text
 import androidx.glance.text.TextAlign
 import androidx.glance.text.TextStyle
@@ -44,21 +44,26 @@ fun WidgetListEntry(
 ) {
   val titleStyle = MaterialTheme.typography.titleMedium
   val subtitleStyle = MaterialTheme.typography.labelLarge
+  val postAction =
+    if (post.url.isNotEmpty()) {
+      actionStartActivity(Intent(Intent.ACTION_VIEW, Uri.parse(post.url)))
+    } else {
+      actionStartActivity<MainActivity>(actionParametersOf(destinationKey to post.shortId))
+    }
+  val commentsAction =
+    actionStartActivity<MainActivity>(actionParametersOf(destinationKey to post.shortId))
   Box(modifier.padding(8.dp)) {
-    Column(
+    Row(
       verticalAlignment = Alignment.CenterVertically,
       modifier =
         GlanceModifier.fillMaxWidth()
           .background(GlanceTheme.colors.surfaceVariant)
-          .cornerRadius(8.dp)
-          .padding(horizontal = 8.dp)
-          .clickable(
-            actionStartActivity<MainActivity>(actionParametersOf(destinationKey to post.shortId))
-          ),
+          .cornerRadius(16.dp)
+          .padding(8.dp),
     ) {
       Text(
         text = post.title,
-        modifier = GlanceModifier.padding(horizontal = 4.dp, vertical = 4.dp),
+        modifier = GlanceModifier.defaultWeight().padding(start = 4.dp).clickable(postAction),
         style =
           TextStyle(
             color = GlanceTheme.colors.onSurfaceVariant,
@@ -71,9 +76,7 @@ fun WidgetListEntry(
         Text(
           text = "$count comments",
           modifier =
-            GlanceModifier.defaultWeight()
-              .padding(horizontal = 4.dp, vertical = 4.dp)
-              .fillMaxWidth(),
+            GlanceModifier.wrapContentWidth().padding(end = 4.dp).clickable(commentsAction),
           style =
             TextStyle(
               color = GlanceTheme.colors.onSurfaceVariant,
@@ -85,22 +88,5 @@ fun WidgetListEntry(
         )
       }
     }
-  }
-}
-
-fun UIFontWeight?.toGlance(): FontWeight? {
-  return when (this) {
-    UIFontWeight.Normal -> FontWeight.Normal
-    UIFontWeight.Medium -> FontWeight.Medium
-    UIFontWeight.Bold -> FontWeight.Bold
-    else -> null
-  }
-}
-
-fun UIFontStyle?.toGlance(): FontStyle? {
-  return when (this) {
-    UIFontStyle.Normal -> FontStyle.Normal
-    UIFontStyle.Italic -> FontStyle.Italic
-    else -> null
   }
 }

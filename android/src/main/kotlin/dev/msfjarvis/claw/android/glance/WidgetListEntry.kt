@@ -44,14 +44,11 @@ fun WidgetListEntry(
 ) {
   val titleStyle = MaterialTheme.typography.titleMedium
   val subtitleStyle = MaterialTheme.typography.labelLarge
-  val postAction =
-    if (post.url.isNotEmpty()) {
-      actionStartActivity(Intent(Intent.ACTION_VIEW, Uri.parse(post.url)))
-    } else {
-      actionStartActivity<MainActivity>(actionParametersOf(destinationKey to post.shortId))
-    }
   val commentsAction =
     actionStartActivity<MainActivity>(actionParametersOf(destinationKey to post.shortId))
+  val postAction =
+    if (post.url.isNotEmpty()) actionStartActivity(Intent(Intent.ACTION_VIEW, Uri.parse(post.url)))
+    else commentsAction
   Box(modifier.padding(8.dp)) {
     Row(
       verticalAlignment = Alignment.CenterVertically,

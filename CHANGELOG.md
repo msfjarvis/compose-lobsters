@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+*   Introduce an initial attempt at a home screen widget
+
 ## [1.35.0] - 2023-09-19
 
 ### Changed

@@ -10,8 +10,6 @@ import android.content.Context
 import android.os.Build
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
@@ -31,11 +29,9 @@ import androidx.glance.text.TextStyle
 import dev.msfjarvis.claw.common.theme.DarkThemeColors
 import dev.msfjarvis.claw.common.theme.LightThemeColors
 import dev.msfjarvis.claw.database.local.SavedPost
-import kotlinx.collections.immutable.persistentListOf
-import kotlinx.coroutines.flow.Flow
 
 class SavedPostsWidget(
-  private val savedPosts: Flow<List<SavedPost>>,
+  private val posts: List<SavedPost>,
 ) : GlanceAppWidget() {
   override suspend fun provideGlance(context: Context, id: GlanceId) {
     provideContent {
@@ -50,8 +46,6 @@ class SavedPostsWidget(
 
   @Composable
   private fun WidgetHost() {
-    val posts by savedPosts.collectAsState(persistentListOf())
-
     LazyColumn(
       modifier =
         GlanceModifier.fillMaxSize()

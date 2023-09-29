@@ -35,6 +35,8 @@ object LintConfig {
     baseline = project.file("lint-baseline.xml")
     // This is extremely annoying
     disable += "NewerVersionAvailable"
+    // Jetpack Compose lints are incompatible with AGP 8.3.0-alpha06
+    disable += "ObsoleteLintCustomCheck"
   }
 
   fun configureRootProject(project: Project) {

@@ -6,16 +6,22 @@
  */
 package dev.msfjarvis.claw.android.viewmodel
 
+import android.app.Application
+import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.ViewModel
+import androidx.glance.appwidget.updateAll
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import com.deliveryhero.whetstone.app.ApplicationScope
 import com.deliveryhero.whetstone.viewmodel.ContributesViewModel
 import com.slack.eithernet.ApiResult.Failure
 import com.slack.eithernet.ApiResult.Success
+import com.squareup.anvil.annotations.optional.ForScope
+import dev.msfjarvis.claw.android.glance.SavedPostsWidget
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource.Companion.PAGE_SIZE
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource.Companion.STARTING_PAGE_INDEX
@@ -23,6 +29,7 @@ import dev.msfjarvis.claw.android.paging.SearchPagingSource
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.api.LobstersSearchApi
 import dev.msfjarvis.claw.core.injection.IODispatcher
+import dev.msfjarvis.claw.core.injection.MainDispatcher
 import dev.msfjarvis.claw.database.local.SavedPost
 import dev.msfjarvis.claw.model.Comment
 import java.io.IOException
@@ -56,7 +63,9 @@ constructor(
   private val pagingSourceFactory: LobstersPagingSource.Factory,
   private val searchPagingSourceFactory: SearchPagingSource.Factory,
   @IODispatcher private val ioDispatcher: CoroutineDispatcher,
-) : ViewModel() {
+  @MainDispatcher private val mainDispatcher: CoroutineDispatcher,
+  @ForScope(ApplicationScope::class) context: Context,
+) : AndroidViewModel(context as Application) {
   private val hottestPostsPager =
     Pager(PagingConfig(pageSize = PAGE_SIZE), initialKey = STARTING_PAGE_INDEX) {
       pagingSourceFactory.create(api::getHottestPosts)
@@ -103,6 +112,10 @@ constructor(
         savedPostsRepository.removePost(post)
       } else {
         savedPostsRepository.savePost(post)
+      }
+      val newPosts = savedPosts.first()
+      withContext(mainDispatcher) {
+        SavedPostsWidget(newPosts.subList(0, 50)).updateAll(getApplication())
       }
     }
   }

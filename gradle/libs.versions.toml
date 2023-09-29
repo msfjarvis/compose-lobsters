@@ -55,7 +55,7 @@ build-kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", ve
 build-r8 = "com.android.tools:r8:c765114c30df8ed3e5d1a84868d3ed1037549e85"
 build-semver = "com.vdurmont:semver4j:3.1.0"
 build-sentry = "io.sentry.android.gradle:io.sentry.android.gradle.gradle.plugin:3.12.0"
-build-spotless = "com.diffplug.spotless:spotless-plugin-gradle:6.21.0"
+build-spotless = "com.diffplug.spotless:spotless-plugin-gradle:6.22.0"
 build-vcu = "nl.littlerobots.version-catalog-update:nl.littlerobots.version-catalog-update.gradle.plugin:0.8.1"
 build-versions = "com.github.ben-manes:gradle-versions-plugin:0.48.0"
 coil = { module = "io.coil-kt:coil", version.ref = "coil" }

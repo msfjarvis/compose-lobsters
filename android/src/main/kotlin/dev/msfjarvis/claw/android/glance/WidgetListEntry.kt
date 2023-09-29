@@ -21,12 +21,14 @@ import androidx.glance.action.clickable
 import androidx.glance.appwidget.cornerRadius
 import androidx.glance.background
 import androidx.glance.layout.Alignment
+import androidx.glance.layout.Box
 import androidx.glance.layout.Column
 import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.padding
 import androidx.glance.text.FontStyle
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
+import androidx.glance.text.TextAlign
 import androidx.glance.text.TextStyle
 import dev.msfjarvis.claw.android.MainActivity
 import dev.msfjarvis.claw.android.MainActivity.Companion.NAVIGATION_KEY
@@ -41,28 +43,48 @@ fun WidgetListEntry(
   modifier: GlanceModifier = GlanceModifier,
 ) {
   val titleStyle = MaterialTheme.typography.titleMedium
-  Column(
-    verticalAlignment = Alignment.CenterVertically,
-    modifier =
-      modifier
-        .fillMaxWidth()
-        .background(GlanceTheme.colors.surfaceVariant)
-        .cornerRadius(8.dp)
-        .clickable(
-          actionStartActivity<MainActivity>(actionParametersOf(destinationKey to post.shortId))
-        ),
-  ) {
-    Text(
-      text = post.title,
-      modifier = GlanceModifier.padding(horizontal = 4.dp, vertical = 4.dp),
-      style =
-        TextStyle(
-          color = GlanceTheme.colors.onSurfaceVariant,
-          fontSize = titleStyle.fontSize,
-          fontWeight = titleStyle.fontWeight.toGlance(),
-          fontStyle = titleStyle.fontStyle.toGlance(),
+  val subtitleStyle = MaterialTheme.typography.labelLarge
+  Box(modifier.padding(8.dp)) {
+    Column(
+      verticalAlignment = Alignment.CenterVertically,
+      modifier =
+        GlanceModifier.fillMaxWidth()
+          .background(GlanceTheme.colors.surfaceVariant)
+          .cornerRadius(8.dp)
+          .padding(horizontal = 8.dp)
+          .clickable(
+            actionStartActivity<MainActivity>(actionParametersOf(destinationKey to post.shortId))
+          ),
+    ) {
+      Text(
+        text = post.title,
+        modifier = GlanceModifier.padding(horizontal = 4.dp, vertical = 4.dp),
+        style =
+          TextStyle(
+            color = GlanceTheme.colors.onSurfaceVariant,
+            fontSize = titleStyle.fontSize,
+            fontWeight = titleStyle.fontWeight.toGlance(),
+            fontStyle = titleStyle.fontStyle.toGlance(),
+          )
+      )
+      post.commentCount?.let { count ->
+        Text(
+          text = "$count comments",
+          modifier =
+            GlanceModifier.defaultWeight()
+              .padding(horizontal = 4.dp, vertical = 4.dp)
+              .fillMaxWidth(),
+          style =
+            TextStyle(
+              color = GlanceTheme.colors.onSurfaceVariant,
+              fontSize = subtitleStyle.fontSize,
+              fontWeight = subtitleStyle.fontWeight.toGlance(),
+              fontStyle = subtitleStyle.fontStyle.toGlance(),
+              textAlign = TextAlign.End,
+            )
         )
-    )
+      }
+    }
   }
 }
 

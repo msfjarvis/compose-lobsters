@@ -86,7 +86,10 @@ constructor(
     get() = newestPostsPager.flow
 
   val savedPosts
-    get() = savedPostsRepository.savedPosts
+    get() =
+      savedPostsRepository.savedPosts.map {
+        it.sortedByDescending { post -> post.createdAt.toLocalDateTime() }
+      }
 
   val savedPostsByMonth
     get() = savedPosts.map(::mapSavedPosts)

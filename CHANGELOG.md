@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 *   Introduce an initial attempt at a home screen widget
 
+### Changed
+
+*   Fixed a crash triggered when swiping items
+*   Adjusted pull to refresh component to match Material You theme
+
 ## [1.35.0] - 2023-09-19
 
 ### Changed

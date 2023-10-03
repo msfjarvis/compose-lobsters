@@ -14,13 +14,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.pullrefresh.PullRefreshIndicator
-import androidx.compose.material.pullrefresh.pullRefresh
-import androidx.compose.material.pullrefresh.rememberPullRefreshState
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,8 +30,11 @@ import dev.msfjarvis.claw.common.ui.ProgressBar
 import dev.msfjarvis.claw.database.local.SavedPost
 import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.toSavedPost
+import eu.bambooapps.material3.pullrefresh.PullRefreshIndicator
+import eu.bambooapps.material3.pullrefresh.pullRefresh
+import eu.bambooapps.material3.pullrefresh.rememberPullRefreshState
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NetworkPosts(
   lazyPagingItems: LazyPagingItems<LobstersPost>,
@@ -95,8 +93,7 @@ fun NetworkPosts(
       refreshing = isRefreshing,
       state = pullRefreshState,
       modifier = Modifier.align(Alignment.TopCenter),
-      backgroundColor = MaterialTheme.colorScheme.surface,
-      contentColor = contentColorFor(MaterialTheme.colorScheme.surface),
+      shadowElevation = 6.dp, // From M2 implementation
     )
   }
 }

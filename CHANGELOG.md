@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.36.0] - 2023-10-04
+
 ### Added
 
 *   Introduce an initial attempt at a home screen widget
@@ -310,7 +312,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 *   Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.35.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.36.0...HEAD
+
+[1.36.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.35.0...v1.36.0
 
 [1.35.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.34.0...v1.35.0
 

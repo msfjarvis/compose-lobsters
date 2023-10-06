@@ -100,7 +100,10 @@ constructor(
   var searchQuery by mutableStateOf("")
 
   private fun mapSavedPosts(items: List<SavedPost>): ImmutableMap<Month, List<SavedPost>> {
-    val sorted = items.sortedByDescending { post -> post.createdAt.toLocalDateTime() }
+    val sorted =
+      items.sortedWith { post1, post2 ->
+        post2.createdAt.toLocalDateTime().compareTo(post1.createdAt.toLocalDateTime())
+      }
     return sorted.groupBy { post -> post.createdAt.toLocalDateTime().month }.toImmutableMap()
   }
 

@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+*   Fixed a crash that infrequently happened in the comments page
+*   Fixed a crash when trying to list saved posts
+*   Fixed a crash in home screen widget when user had less than 50 saved posts
+*   Upgraded to Compose 1.6.0-alpha07
+
 ## [1.36.0] - 2023-10-04
 
 ### Added

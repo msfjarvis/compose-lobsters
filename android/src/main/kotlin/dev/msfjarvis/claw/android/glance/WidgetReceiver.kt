@@ -23,7 +23,7 @@ class WidgetReceiver : GlanceAppWidgetReceiver() {
   @Inject lateinit var viewModel: ClawViewModel
 
   override val glanceAppWidget: GlanceAppWidget
-    get() = SavedPostsWidget(runBlocking { viewModel.savedPosts.first().subList(0, 50) })
+    get() = SavedPostsWidget(runBlocking { viewModel.savedPosts.first().take(50) })
 
   override fun onReceive(context: Context, intent: Intent) {
     Whetstone.inject(this, context)

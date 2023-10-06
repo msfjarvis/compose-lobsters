@@ -118,7 +118,7 @@ constructor(
       }
       val newPosts = savedPosts.first()
       withContext(mainDispatcher) {
-        SavedPostsWidget(newPosts.subList(0, 50)).updateAll(getApplication())
+        SavedPostsWidget(newPosts.take(50)).updateAll(getApplication())
       }
     }
   }

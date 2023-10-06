@@ -44,8 +44,7 @@ constructor(
       .filterIsInstance<Success<LobstersPostDetails>>()
       .map { result -> result.value.toSavedPost() }
       .let { savedPostsRepository.savePosts(it) }
-    SavedPostsWidget(savedPostsRepository.savedPosts.first().subList(0, 50))
-      .updateAll(applicationContext)
+    SavedPostsWidget(savedPostsRepository.savedPosts.first().take(50)).updateAll(applicationContext)
     return Result.success()
   }
 }

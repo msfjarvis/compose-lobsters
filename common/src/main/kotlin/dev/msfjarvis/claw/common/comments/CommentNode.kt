@@ -25,7 +25,7 @@ internal data class CommentNode(
       child.parent = this
     } else {
       child.indentLevel += 1
-      children.last().addChild(child)
+      children.lastOrNull()?.addChild(child)
     }
   }
 }
@@ -47,7 +47,7 @@ internal fun createListNode(
         )
       )
     } else {
-      commentNodes.last().let {
+      commentNodes.lastOrNull()?.let {
         it.addChild(
           CommentNode(
             comment = comments[i],

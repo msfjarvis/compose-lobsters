@@ -7,9 +7,11 @@
 package dev.msfjarvis.claw.android
 
 import android.app.assist.AssistContent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
@@ -36,7 +38,18 @@ class MainActivity : ComponentActivity() {
     super.onCreate(savedInstanceState)
     installSplashScreen()
     Whetstone.inject(this)
-    enableEdgeToEdge()
+    enableEdgeToEdge(
+      statusBarStyle =
+        SystemBarStyle.light(
+          Color.TRANSPARENT,
+          Color.TRANSPARENT,
+        ),
+      navigationBarStyle =
+        SystemBarStyle.light(
+          Color.TRANSPARENT,
+          Color.TRANSPARENT,
+        ),
+    )
     setContent {
       val windowSizeClass = calculateWindowSizeClass(this)
       LobstersTheme(

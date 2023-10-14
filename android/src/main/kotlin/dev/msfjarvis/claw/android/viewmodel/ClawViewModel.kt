@@ -44,9 +44,12 @@ import javax.inject.Inject
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.toImmutableMap
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 
 @ContributesViewModel
@@ -99,6 +102,17 @@ constructor(
 
   var searchQuery by mutableStateOf("")
 
+  private val _savedPostsMutex = Mutex()
+  private var _savedPosts = emptyList<String>()
+
+  init {
+    viewModelScope.launch {
+      savedPosts.collectLatest {
+        _savedPostsMutex.withLock { _savedPosts = it.map(SavedPost::shortId) }
+      }
+    }
+  }
+
   private fun mapSavedPosts(items: List<SavedPost>): ImmutableMap<Month, List<SavedPost>> {
     val sorted =
       items.sortedWith { post1, post2 ->
@@ -107,8 +121,8 @@ constructor(
     return sorted.groupBy { post -> post.createdAt.toLocalDateTime().month }.toImmutableMap()
   }
 
-  suspend fun isPostSaved(post: SavedPost): Boolean {
-    return savedPosts.first().any { savedPost -> savedPost.shortId == post.shortId }
+  fun isPostSaved(post: SavedPost): Boolean {
+    return _savedPosts.contains(post.shortId)
   }
 
   fun toggleSave(post: SavedPost) {

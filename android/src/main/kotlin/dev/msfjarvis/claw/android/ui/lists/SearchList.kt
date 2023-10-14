@@ -43,7 +43,7 @@ import kotlinx.coroutines.flow.Flow
 fun SearchList(
   items: Flow<PagingData<LobstersPost>>,
   listState: LazyListState,
-  isPostSaved: suspend (SavedPost) -> Boolean,
+  isPostSaved: (SavedPost) -> Boolean,
   postActions: PostActions,
   searchQuery: String,
   setSearchQuery: (String) -> Unit,

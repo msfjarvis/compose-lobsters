@@ -23,12 +23,11 @@ import me.saket.swipe.SwipeableActionsBox
 @Composable
 fun ListItem(
   item: SavedPost,
-  isSaved: suspend (SavedPost) -> Boolean,
+  isSaved: (SavedPost) -> Boolean,
   isRead: suspend (String) -> Boolean,
   postActions: PostActions,
   modifier: Modifier = Modifier,
 ) {
-  val saved by produceState(false, item) { value = isSaved(item) }
   val read by produceState(false, item.shortId) { value = isRead(item.shortId) }
   val commentsAction =
     SwipeAction(
@@ -41,7 +40,7 @@ fun ListItem(
   ) {
     LobstersCard(
       post = item,
-      isSaved = saved,
+      isSaved = isSaved(item),
       isRead = read,
       postActions = postActions,
       modifier = modifier,

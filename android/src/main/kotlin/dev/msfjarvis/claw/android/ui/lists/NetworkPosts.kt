@@ -39,7 +39,7 @@ import eu.bambooapps.material3.pullrefresh.rememberPullRefreshState
 fun NetworkPosts(
   lazyPagingItems: LazyPagingItems<LobstersPost>,
   listState: LazyListState,
-  isPostSaved: suspend (SavedPost) -> Boolean,
+  isPostSaved: (SavedPost) -> Boolean,
   isPostRead: suspend (String) -> Boolean,
   postActions: PostActions,
   modifier: Modifier = Modifier,

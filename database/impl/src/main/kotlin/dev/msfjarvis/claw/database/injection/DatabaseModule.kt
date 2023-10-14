@@ -9,6 +9,7 @@ package dev.msfjarvis.claw.database.injection
 import android.content.Context
 import app.cash.sqldelight.adapter.primitive.IntColumnAdapter
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
+import app.cash.sqldelight.logs.LogSqliteDriver
 import com.deliveryhero.whetstone.app.ApplicationScope
 import com.squareup.anvil.annotations.ContributesTo
 import com.squareup.anvil.annotations.optional.ForScope
@@ -18,6 +19,7 @@ import dev.msfjarvis.claw.database.LobstersDatabase
 import dev.msfjarvis.claw.database.local.PostComments
 import dev.msfjarvis.claw.database.local.SavedPost
 import dev.msfjarvis.claw.database.model.CSVAdapter
+import io.github.aakira.napier.Napier
 import io.requery.android.database.sqlite.RequerySQLiteOpenHelperFactory
 
 @Module
@@ -29,12 +31,16 @@ object DatabaseModule {
   @[Provides InternalDatabaseApi]
   fun provideDatabase(@ForScope(ApplicationScope::class) context: Context): LobstersDatabase {
     val driver =
-      AndroidSqliteDriver(
-        schema = LobstersDatabase.Schema,
-        context = context,
-        name = LOBSTERS_DATABASE_NAME,
-        factory = RequerySQLiteOpenHelperFactory(),
-      )
+      LogSqliteDriver(
+        AndroidSqliteDriver(
+          schema = LobstersDatabase.Schema,
+          context = context,
+          name = LOBSTERS_DATABASE_NAME,
+          factory = RequerySQLiteOpenHelperFactory(),
+        )
+      ) { message ->
+        Napier.d(tag = "SQLDelightQuery", message = message)
+      }
     return LobstersDatabase(
       driver = driver,
       PostCommentsAdapter = PostComments.Adapter(CSVAdapter()),

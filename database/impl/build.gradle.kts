@@ -19,6 +19,7 @@ anvil { generateDaggerFactories.set(true) }
 
 dependencies {
   api(projects.database.core)
+  implementation(libs.napier)
   implementation(libs.dagger)
   implementation(libs.sqldelight.androidDriver)
   implementation(libs.sqldelight.primitiveAdapters)

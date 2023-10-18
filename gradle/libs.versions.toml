@@ -1,6 +1,6 @@
 [versions]
 agp = "8.3.0-alpha07"
-benchmark = "1.2.0-rc02"
+benchmark = "1.2.0"
 coil = "2.4.0"
 # @keep used for kotlinCompilerExtensionVersion
 composeCompiler = "1.5.3"
@@ -17,7 +17,7 @@ sentry-sdk = "6.31.0"
 serialization = "1.6.0"
 sqldelight = "2.0.0"
 whetstone = "0.8.0"
-workmanager = "2.9.0-beta01"
+workmanager = "2.9.0-rc01"
 
 [libraries]
 androidx-activity-compose = "androidx.activity:activity-compose:1.8.0"

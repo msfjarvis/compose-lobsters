@@ -29,19 +29,24 @@ Unofficial Android app for read-only access to [lobste.rs](https://lobste.rs), b
 
 graph TB
 
-  model --> database
+  subgraph database
+    core
+    impl
+  end
+  model --> core
   benchmark --> android
+  impl --> core
   android --> api
   android --> common
   android --> core
-  android --> database
+  android --> impl
   android --> model
   android --> benchmark
   api --> model
   common --> core
-  common --> database
   common --> model
 ```
+
 ## License
 
 See [LICENSE](LICENSE)

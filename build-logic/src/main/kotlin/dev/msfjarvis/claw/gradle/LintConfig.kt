@@ -31,6 +31,8 @@ object LintConfig {
     if (!isJVM) {
       enable += "ComposeM2Api"
       error += "ComposeM2Api"
+      // False-positives in the TestContainers library
+      disable += "DeprecatedCall"
     }
     baseline = project.file("lint-baseline.xml")
     // This is extremely annoying

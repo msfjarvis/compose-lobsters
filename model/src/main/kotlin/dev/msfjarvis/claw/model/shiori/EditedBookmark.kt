@@ -13,8 +13,8 @@ import kotlinx.serialization.Serializable
 @Poko
 class EditedBookmark(
   val id: Int,
-  val url: String,
-  val title: String,
+  val url: String? = null,
+  val title: String? = null,
   val excerpt: String? = null,
   val author: String? = null,
   val public: Int? = null,

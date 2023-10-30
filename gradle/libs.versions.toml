@@ -1,7 +1,7 @@
 [versions]
 agp = "8.3.0-alpha11"
 benchmark = "1.2.0"
-coil = "2.4.0"
+coil = "2.5.0"
 # @keep used for kotlinCompilerExtensionVersion
 composeCompiler = "1.5.3"
 coroutines = "1.7.3"

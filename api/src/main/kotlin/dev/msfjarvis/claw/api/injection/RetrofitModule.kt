@@ -16,6 +16,7 @@ import dagger.multibindings.IntKey
 import dagger.multibindings.IntoMap
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.api.LobstersSearchApi
+import dev.msfjarvis.claw.api.ShioriApi
 import dev.msfjarvis.claw.api.converters.CSRFTokenConverter
 import dev.msfjarvis.claw.api.converters.SearchConverter
 import javax.inject.Qualifier
@@ -71,6 +72,8 @@ object RetrofitModule {
 
   @Provides
   fun provideSearchApi(@SearchApi retrofit: Retrofit): LobstersSearchApi = retrofit.create()
+
+  @Provides fun provideShioriApi(retrofit: Retrofit): ShioriApi = retrofit.create()
 
   @Provides
   @IntKey(0)

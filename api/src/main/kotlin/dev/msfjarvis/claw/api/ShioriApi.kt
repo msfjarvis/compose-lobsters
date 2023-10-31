@@ -7,6 +7,7 @@
 package dev.msfjarvis.claw.api
 
 import android.annotation.SuppressLint
+import com.slack.eithernet.ApiResult
 import dev.msfjarvis.claw.model.shiori.AuthRequest
 import dev.msfjarvis.claw.model.shiori.AuthResponse
 import dev.msfjarvis.claw.model.shiori.Bookmark
@@ -23,30 +24,32 @@ import retrofit2.http.PUT
 private const val SESSION_ID_HEADER = "X-Session-Id"
 
 interface ShioriApi {
-  @POST("/api/login") suspend fun login(@Body body: AuthRequest): AuthResponse
+  @POST("/api/login") suspend fun login(@Body body: AuthRequest): ApiResult<AuthResponse, Unit>
 
   @SuppressLint("RetrofitUsage") // POST without a body is apparently fine?
   @POST("/api/logout")
-  suspend fun logout(@Header(SESSION_ID_HEADER) sessionId: String)
+  suspend fun logout(@Header(SESSION_ID_HEADER) sessionId: String): ApiResult<Unit, Unit>
 
   @GET("/api/bookmarks")
-  suspend fun getBookmarks(@Header(SESSION_ID_HEADER) sessionId: String): BookmarksResponse
+  suspend fun getBookmarks(
+    @Header(SESSION_ID_HEADER) sessionId: String,
+  ): ApiResult<BookmarksResponse, Unit>
 
   @POST("/api/bookmarks")
   suspend fun addBookmark(
     @Header(SESSION_ID_HEADER) sessionId: String,
     @Body bookmarkRequest: BookmarkRequest,
-  ): Bookmark
+  ): ApiResult<Bookmark, Unit>
 
   @PUT("/api/bookmarks")
   suspend fun editBookmark(
     @Header(SESSION_ID_HEADER) sessionId: String,
     @Body bookmark: EditedBookmark,
-  ): Bookmark
+  ): ApiResult<Bookmark, Unit>
 
   @HTTP(method = "DELETE", path = "/api/bookmarks", hasBody = true)
   suspend fun deleteBookmark(
     @Header(SESSION_ID_HEADER) sessionId: String,
     @Body ids: List<Int>,
-  ): Int
+  ): ApiResult<Int, Unit>
 }

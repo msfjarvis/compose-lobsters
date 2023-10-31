@@ -8,11 +8,17 @@ package dev.msfjarvis.claw.api
 
 import com.google.common.truth.Truth.assertThat
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import com.slack.eithernet.ApiResultCallAdapterFactory
+import com.slack.eithernet.ApiResultConverterFactory
+import com.slack.eithernet.successOrNull
 import dev.msfjarvis.claw.model.shiori.AuthRequest
 import dev.msfjarvis.claw.model.shiori.AuthResponse
+import dev.msfjarvis.claw.model.shiori.Bookmark
 import dev.msfjarvis.claw.model.shiori.BookmarkRequest
+import dev.msfjarvis.claw.model.shiori.BookmarksResponse
 import dev.msfjarvis.claw.model.shiori.EditedBookmark
 import dev.msfjarvis.claw.model.shiori.Tag
+import dev.msfjarvis.claw.util.TestUtils.assertIs
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
@@ -31,7 +37,10 @@ class ShioriApiTest {
   @BeforeEach
   fun setUp() {
     container.start()
-    runBlocking { credentials = api.login(AuthRequest(USER, PASSWORD)) }
+    runBlocking {
+      credentials =
+        requireNotNull(api.login(AuthRequest(USER, PASSWORD)).successOrNull()) { "Login failed" }
+    }
   }
 
   @AfterEach
@@ -41,7 +50,8 @@ class ShioriApiTest {
 
   @Test
   fun getBookmarks() = runTest {
-    val response = api.getBookmarks(credentials.session)
+    val response = api.getBookmarks(credentials.session).successOrNull()
+    assertIs<BookmarksResponse>(response)
     assertThat(response.page).isEqualTo(1)
     assertThat(response.bookmarks).isEmpty()
   }
@@ -49,21 +59,24 @@ class ShioriApiTest {
   @Test
   fun addBookmark() = runTest {
     val response =
-      api.addBookmark(
-        credentials.session,
-        BookmarkRequest(
-          "https://example.com",
-          false,
-          0,
-          emptyList(),
-          "Example Domain",
-          """
+      api
+        .addBookmark(
+          credentials.session,
+          BookmarkRequest(
+            "https://example.com",
+            false,
+            0,
+            emptyList(),
+            "Example Domain",
+            """
           This domain is for use in illustrative examples in documents.
           You may use this domain in literature without prior coordination or asking for permission.
         """
-            .trimIndent(),
+              .trimIndent(),
+          )
         )
-      )
+        .successOrNull()
+    assertIs<Bookmark>(response)
     assertThat(response.url).isEqualTo("https://example.com")
     assertThat(response.title).isEqualTo("Example Domain")
     assertThat(response.excerpt)
@@ -80,21 +93,24 @@ class ShioriApiTest {
   @Test
   fun editBookmark() = runTest {
     val response =
-      api.addBookmark(
-        credentials.session,
-        BookmarkRequest(
-          "https://example.com",
-          false,
-          0,
-          emptyList(),
-          "Example Domain",
-          """
+      api
+        .addBookmark(
+          credentials.session,
+          BookmarkRequest(
+            "https://example.com",
+            false,
+            0,
+            emptyList(),
+            "Example Domain",
+            """
           This domain is for use in illustrative examples in documents.
           You may use this domain in literature without prior coordination or asking for permission.
           """
-            .trimIndent(),
+              .trimIndent(),
+          )
         )
-      )
+        .successOrNull()
+    assertIs<Bookmark>(response)
     assertThat(response.tags).isEmpty()
     val newBookmark =
       EditedBookmark(
@@ -103,7 +119,8 @@ class ShioriApiTest {
         title = response.title,
         tags = listOf(Tag("examples")),
       )
-    val edited = api.editBookmark(credentials.session, newBookmark)
+    val edited = api.editBookmark(credentials.session, newBookmark).successOrNull()
+    assertIs<Bookmark>(edited)
     assertThat(edited.tags).isNotEmpty()
     assertThat(edited.tags).containsExactly(Tag("examples"))
   }
@@ -111,22 +128,25 @@ class ShioriApiTest {
   @Test
   fun deleteBookmark() = runTest {
     val response =
-      api.addBookmark(
-        credentials.session,
-        BookmarkRequest(
-          "https://example.com",
-          false,
-          0,
-          emptyList(),
-          "Example Domain",
-          """
+      api
+        .addBookmark(
+          credentials.session,
+          BookmarkRequest(
+            "https://example.com",
+            false,
+            0,
+            emptyList(),
+            "Example Domain",
+            """
           This domain is for use in illustrative examples in documents.
           You may use this domain in literature without prior coordination or asking for permission.
           """
-            .trimIndent(),
+              .trimIndent(),
+          )
         )
-      )
-    val count = api.deleteBookmark(credentials.session, listOf(response.id))
+        .successOrNull()
+    assertIs<Bookmark>(response)
+    val count = api.deleteBookmark(credentials.session, listOf(response.id)).successOrNull()
     assertThat(count).isEqualTo(1)
   }
 
@@ -144,7 +164,9 @@ class ShioriApiTest {
       get() =
         Retrofit.Builder()
           .baseUrl("http://${container.host}:${container.firstMappedPort}")
+          .addConverterFactory(ApiResultConverterFactory)
           .addConverterFactory(json.asConverterFactory(MediaType.get("application/json")))
+          .addCallAdapterFactory(ApiResultCallAdapterFactory)
           .build()
           .create<ShioriApi>()
   }

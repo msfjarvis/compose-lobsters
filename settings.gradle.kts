@@ -70,9 +70,8 @@ pluginManagement {
 dependencyResolutionManagement {
   repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
   repositories {
-    exclusiveContent {
-      forRepository { google() }
-      filter {
+    google {
+      content {
         includeGroup("androidx.activity")
         includeGroup("androidx.appcompat")
         includeGroup("androidx.annotation")

@@ -22,6 +22,7 @@
     {
       "matchPackageNames": [
         "androidx.compose.compiler:compiler",
+        "com.google.devtools.ksp",
         "dev.drewhamilton.poko",
         "org.jetbrains.kotlin:kotlin-gradle-plugin",
         "org.jetbrains.kotlin.plugin.serialization",

@@ -10,7 +10,6 @@ import com.google.common.truth.Truth.assertThat
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dev.msfjarvis.claw.model.shiori.AuthRequest
 import dev.msfjarvis.claw.model.shiori.AuthResponse
-import dev.msfjarvis.claw.model.shiori.Bookmark
 import dev.msfjarvis.claw.model.shiori.BookmarkRequest
 import dev.msfjarvis.claw.model.shiori.EditedBookmark
 import dev.msfjarvis.claw.model.shiori.Tag
@@ -18,9 +17,7 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType
-import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.testcontainers.containers.GenericContainer
@@ -33,18 +30,13 @@ class ShioriApiTest {
 
   @BeforeEach
   fun setUp() {
+    container.start()
     runBlocking { credentials = api.login(AuthRequest(USER, PASSWORD)) }
   }
 
   @AfterEach
   fun tearDown() {
-    runBlocking {
-      val ids = api.getBookmarks(credentials.session).bookmarks.map(Bookmark::id)
-      if (ids.isNotEmpty()) {
-        api.deleteBookmark(credentials.session, ids)
-      }
-      api.logout(credentials.session)
-    }
+    container.stop()
   }
 
   @Test
@@ -148,26 +140,12 @@ class ShioriApiTest {
 
     private val json = Json { ignoreUnknownKeys = true }
 
-    // The mapped port can only be obtained after the container has started, so this has to be lazy.
-    private val api by
-      lazy(LazyThreadSafetyMode.NONE) {
+    private val api
+      get() =
         Retrofit.Builder()
           .baseUrl("http://${container.host}:${container.firstMappedPort}")
           .addConverterFactory(json.asConverterFactory(MediaType.get("application/json")))
           .build()
           .create<ShioriApi>()
-      }
-
-    @JvmStatic
-    @BeforeAll
-    fun setupContainer() {
-      container.start()
-    }
-
-    @JvmStatic
-    @AfterAll
-    fun destroyContainer() {
-      container.stop()
-    }
   }
 }

@@ -8,6 +8,7 @@ package dev.msfjarvis.claw.android.ui.decorations
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -19,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.preview.DevicePreviews
 import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
+import dev.msfjarvis.claw.common.ui.surfaceColorAtNavigationBarElevation
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
@@ -31,7 +33,10 @@ fun ClawAppBar(
   TopAppBar(
     title = title,
     modifier = modifier.shadow(8.dp),
-    colors = TopAppBarDefaults.topAppBarColors(),
+    colors =
+      TopAppBarDefaults.topAppBarColors(
+        containerColor = MaterialTheme.colorScheme.surfaceColorAtNavigationBarElevation()
+      ),
     navigationIcon = navigationIcon,
     actions = actions,
   )

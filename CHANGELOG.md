@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 *   Enable logging of SQLite queries
 *   Start work on integrating Shiori (https://github.com/go-shiori/shiori/) as a
     remote backup target for saved posts
+*   Make top app bar color match bottom bar
 
 ## [1.37.0] - 2023-10-06
 

@@ -65,7 +65,7 @@ compose-richtext-ui = { module = "com.halilibo.compose-richtext:richtext-ui", ve
 copydown = "io.github.furstenheim:copy_down:1.1"
 dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
 dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
-eithernet = "com.slack.eithernet:eithernet:1.6.0"
+eithernet = "com.slack.eithernet:eithernet:1.7.0"
 javax-inject = "javax.inject:javax.inject:1"
 jsoup = "org.jsoup:jsoup:1.16.2"
 junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit" }

@@ -149,29 +149,40 @@
     <!-- https://issuetracker.google.com/issues/258619948 -->
     <receiver
       android:name="androidx.profileinstaller.ProfileInstallReceiver"
-      android:permission="android.permission.DUMP"
-      android:exported="true">
+      android:exported="true"
+      android:permission="android.permission.DUMP">
       <intent-filter>
         <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
       </intent-filter>
     </receiver>
-    <receiver android:name=".glance.WidgetReceiver"
-        android:exported="true">
+    <receiver
+      android:name=".glance.WidgetReceiver"
+      android:exported="true">
       <intent-filter>
         <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
       </intent-filter>
       <meta-data
-          android:name="android.appwidget.provider"
-          android:resource="@xml/saved_posts_widget_info" />
+        android:name="android.appwidget.provider"
+        android:resource="@xml/saved_posts_widget_info" />
     </receiver>
     <!-- Required: set your sentry.io project identifier (DSN) -->
-    <meta-data android:name="io.sentry.dsn" android:value="${sentryDsn}" />
+    <meta-data
+      android:name="io.sentry.dsn"
+      android:value="${sentryDsn}" />
     <!-- enable automatic breadcrumbs for user interactions (clicks, swipes, scrolls) -->
-    <meta-data android:name="io.sentry.traces.user-interaction.enable" android:value="${enableSentry}" />
-    <meta-data android:name="io.sentry.breadcrumbs.user-interaction" android:value="${enableSentry}" />
+    <meta-data
+      android:name="io.sentry.traces.user-interaction.enable"
+      android:value="${enableSentry}" />
+    <meta-data
+      android:name="io.sentry.breadcrumbs.user-interaction"
+      android:value="${enableSentry}" />
     <!-- enable screenshot for crashes -->
-    <meta-data android:name="io.sentry.attach-screenshot" android:value="${enableSentry}" />
+    <meta-data
+      android:name="io.sentry.attach-screenshot"
+      android:value="${enableSentry}" />
     <!-- enable view hierarchy for crashes -->
-    <meta-data android:name="io.sentry.attach-view-hierarchy" android:value="${enableSentry}" />
+    <meta-data
+      android:name="io.sentry.attach-view-hierarchy"
+      android:value="${enableSentry}" />
   </application>
 </manifest>

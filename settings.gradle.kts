@@ -102,6 +102,7 @@ dependencyResolutionManagement {
         includeGroup("androidx.resourceinspection")
         includeGroup("androidx.room")
         includeGroup("androidx.savedstate")
+        includeGroup("androidx.security")
         includeGroup("androidx.startup")
         includeGroup("androidx.sqlite")
         includeGroup("androidx.test")

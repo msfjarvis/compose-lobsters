@@ -78,6 +78,7 @@ dependencies {
   implementation(libs.androidx.navigation.compose)
   implementation(libs.androidx.paging.compose)
   implementation(libs.androidx.profileinstaller)
+  implementation(libs.androidx.security)
   implementation(libs.androidx.work.runtime)
   implementation(libs.coil)
   implementation(libs.copydown)

@@ -6,7 +6,6 @@
  */
 package dev.msfjarvis.claw.api
 
-import android.annotation.SuppressLint
 import com.slack.eithernet.ApiResult
 import dev.msfjarvis.claw.model.shiori.AuthRequest
 import dev.msfjarvis.claw.model.shiori.AuthResponse
@@ -26,8 +25,7 @@ private const val SESSION_ID_HEADER = "X-Session-Id"
 interface ShioriApi {
   @POST("/api/login") suspend fun login(@Body body: AuthRequest): ApiResult<AuthResponse, Unit>
 
-  @SuppressLint("RetrofitUsage") // POST without a body is apparently fine?
-  @POST("/api/logout")
+  @HTTP(method = "POST", path = "/api/logout", hasBody = false)
   suspend fun logout(@Header(SESSION_ID_HEADER) sessionId: String): ApiResult<Unit, Unit>
 
   @GET("/api/bookmarks")

@@ -19,6 +19,7 @@ import dev.msfjarvis.claw.api.LobstersSearchApi
 import dev.msfjarvis.claw.api.ShioriApi
 import dev.msfjarvis.claw.api.converters.CSRFTokenConverter
 import dev.msfjarvis.claw.api.converters.SearchConverter
+import javax.inject.Named
 import javax.inject.Qualifier
 import okhttp3.OkHttpClient
 import retrofit2.CallAdapter
@@ -41,7 +42,7 @@ object RetrofitModule {
     client: OkHttpClient,
     converterFactories: Map<Int, @JvmSuppressWildcards Converter.Factory>,
     callAdapterFactories: Map<Int, @JvmSuppressWildcards CallAdapter.Factory>,
-    @BaseUrl baseUrl: String,
+    @Named("LobstersURL") baseUrl: String,
   ): Retrofit {
     return Retrofit.Builder()
       .client(client)
@@ -57,7 +58,7 @@ object RetrofitModule {
     client: OkHttpClient,
     @SearchApi converterFactories: List<@JvmSuppressWildcards Converter.Factory>,
     callAdapterFactories: Map<Int, @JvmSuppressWildcards CallAdapter.Factory>,
-    @BaseUrl baseUrl: String,
+    @Named("LobstersURL") baseUrl: String,
   ): Retrofit {
     return Retrofit.Builder()
       .client(client)
@@ -98,10 +99,8 @@ object RetrofitModule {
       SearchConverter.Factory,
     )
 
-  @Provides @BaseUrl fun provideBaseUrl(): String = LobstersApi.BASE_URL
+  @Provides @Named("LobstersURL") fun provideLobstersUrl(): String = LobstersApi.BASE_URL
 }
-
-@Qualifier @Retention(AnnotationRetention.RUNTIME) annotation class BaseUrl
 
 /** Internal Dagger [Qualifier] to identify dependencies exclusive to [LobstersSearchApi]. */
 @Qualifier @Retention(AnnotationRetention.RUNTIME) private annotation class SearchApi

@@ -246,7 +246,6 @@ fun LobstersApp(
           setWebUri("https://lobste.rs/search")
           SearchList(
             items = viewModel.searchResults,
-            listState = searchListState,
             isPostSaved = viewModel::isPostSaved,
             postActions = postActions,
             searchQuery = viewModel.searchQuery,

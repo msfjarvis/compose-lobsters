@@ -6,6 +6,7 @@
  */
 package dev.msfjarvis.claw.android.ui
 
+import android.content.Intent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -17,13 +18,15 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.ImportExport
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.NewReleases
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Whatshot
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.NewReleases
-import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.Whatshot
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -35,8 +38,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -55,6 +60,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.deliveryhero.whetstone.compose.injectedViewModel
 import dev.msfjarvis.claw.android.MainActivity
 import dev.msfjarvis.claw.android.R
+import dev.msfjarvis.claw.android.SearchActivity
 import dev.msfjarvis.claw.android.ui.datatransfer.DataTransferScreen
 import dev.msfjarvis.claw.android.ui.decorations.ClawAppBar
 import dev.msfjarvis.claw.android.ui.decorations.ClawNavigationBar
@@ -62,7 +68,6 @@ import dev.msfjarvis.claw.android.ui.decorations.ClawNavigationRail
 import dev.msfjarvis.claw.android.ui.decorations.NavigationItem
 import dev.msfjarvis.claw.android.ui.lists.DatabasePosts
 import dev.msfjarvis.claw.android.ui.lists.NetworkPosts
-import dev.msfjarvis.claw.android.ui.lists.SearchList
 import dev.msfjarvis.claw.android.ui.navigation.ClawNavigationType
 import dev.msfjarvis.claw.android.ui.navigation.Destinations
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
@@ -88,7 +93,6 @@ fun LobstersApp(
   val hottestListState = rememberLazyListState()
   val newestListState = rememberLazyListState()
   val savedListState = rememberLazyListState()
-  val searchListState = rememberLazyListState()
   val navController = rememberNavController()
   val coroutineScope = rememberCoroutineScope()
   val snackbarHostState = remember { SnackbarHostState() }
@@ -138,52 +142,68 @@ fun LobstersApp(
       ) {
         coroutineScope.launch { savedListState.animateScrollToItem(index = 0) }
       },
-      NavigationItem(
-        label = "Search",
-        route = Destinations.Search.route,
-        icon = Icons.Outlined.Search,
-        selectedIcon = Icons.Filled.Search,
-      ) {
-        coroutineScope.launch { searchListState.animateScrollToItem(index = 0) }
-      },
     )
 
   Scaffold(
     topBar = {
-      if (currentDestination != Destinations.Search.route) {
-        ClawAppBar(
-          navigationIcon = {
-            if (
-              navController.previousBackStackEntry != null &&
-                navItems.none { it.route == currentDestination }
+      ClawAppBar(
+        navigationIcon = {
+          if (
+            navController.previousBackStackEntry != null &&
+              navItems.none { it.route == currentDestination }
+          ) {
+            IconButton(
+              onClick = { if (!navController.popBackStack()) context.getActivity()?.finish() },
             ) {
-              IconButton(
-                onClick = { if (!navController.popBackStack()) context.getActivity()?.finish() },
-              ) {
-                Icon(
-                  imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                  contentDescription = "Go back to previous screen",
-                )
-              }
+              Icon(
+                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                contentDescription = "Go back to previous screen",
+              )
             }
-          },
-          title = {
-            if (navItems.any { it.route == currentDestination }) {
-              Text(text = stringResource(R.string.app_name), fontWeight = FontWeight.Bold)
+          }
+        },
+        title = {
+          if (navItems.any { it.route == currentDestination }) {
+            Text(text = stringResource(R.string.app_name), fontWeight = FontWeight.Bold)
+          }
+        },
+        actions = {
+          var expanded by remember { mutableStateOf(false) }
+          if (navItems.any { it.route == currentDestination }) {
+            IconButton(onClick = { expanded = true }) {
+              Icon(Icons.Default.MoreVert, contentDescription = "Extra options")
             }
-          },
-          actions = {
-            if (navItems.any { it.route == currentDestination }) {
-              IconButton(onClick = { navController.navigate(Destinations.DataTransfer.route) }) {
-                Icon(
-                  imageVector = Icons.Filled.ImportExport,
-                  contentDescription = "Data transfer options",
-                )
-              }
+            DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+              DropdownMenuItem(
+                text = { Text("Backup and restore") },
+                onClick = {
+                  navController.navigate(Destinations.DataTransfer.route)
+                  expanded = false
+                },
+                leadingIcon = {
+                  Icon(
+                    imageVector = Icons.Filled.ImportExport,
+                    contentDescription = "Data transfer options",
+                  )
+                }
+              )
+              DropdownMenuItem(
+                text = { Text("Search posts") },
+                onClick = {
+                  context.startActivity(Intent(context, SearchActivity::class.java))
+                  expanded = false
+                },
+                leadingIcon = {
+                  Icon(
+                    imageVector = Icons.Filled.Search,
+                    contentDescription = "Search posts",
+                  )
+                }
+              )
             }
-          },
-        )
-      }
+          }
+        },
+      )
     },
     bottomBar = {
       AnimatedVisibility(visible = navigationType == ClawNavigationType.BOTTOM_NAVIGATION) {
@@ -240,16 +260,6 @@ fun LobstersApp(
             items = savedPosts,
             listState = savedListState,
             postActions = postActions,
-          )
-        }
-        composable(Destinations.Search.route) {
-          setWebUri("https://lobste.rs/search")
-          SearchList(
-            items = viewModel.searchResults,
-            isPostSaved = viewModel::isPostSaved,
-            postActions = postActions,
-            searchQuery = viewModel.searchQuery,
-            setSearchQuery = { query -> viewModel.searchQuery = query },
           )
         }
         composable(

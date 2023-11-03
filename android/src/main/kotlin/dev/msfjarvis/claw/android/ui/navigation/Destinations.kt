@@ -21,10 +21,6 @@ sealed class Destinations {
     override val route = "saved"
   }
 
-  object Search : Destinations() {
-    override val route = "search"
-  }
-
   object Comments : Destinations() {
     const val placeholder = "{postId}"
     override val route = "comments/$placeholder"

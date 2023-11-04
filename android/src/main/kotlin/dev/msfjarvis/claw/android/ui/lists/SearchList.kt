@@ -68,7 +68,7 @@ fun SearchList(
     ) {
       lazyPagingItems.itemSnapshotList.items.forEach { item ->
         val dbModel = item.toSavedPost()
-        ListItem(
+        LobstersListItem(
           item = dbModel,
           isSaved = isPostSaved,
           isRead = { false },

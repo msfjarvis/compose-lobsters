@@ -59,7 +59,7 @@ fun DatabasePosts(
             key = { it.shortId },
             contentType = { "LobstersItem" },
           ) { item ->
-            ListItem(
+            LobstersListItem(
               item = item,
               isSaved = { true },
               isRead = { false },

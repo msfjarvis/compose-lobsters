@@ -21,7 +21,7 @@ import me.saket.swipe.SwipeAction
 import me.saket.swipe.SwipeableActionsBox
 
 @Composable
-fun ListItem(
+fun LobstersListItem(
   item: SavedPost,
   isSaved: (SavedPost) -> Boolean,
   isRead: suspend (String) -> Boolean,

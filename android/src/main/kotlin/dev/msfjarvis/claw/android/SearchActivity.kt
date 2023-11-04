@@ -15,6 +15,7 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
@@ -56,8 +57,10 @@ class SearchActivity : ComponentActivity() {
       ) {
         val navController = rememberNavController()
         val postActions = rememberPostActions(urlLauncher, navController, viewModel)
+        val listState = rememberLazyListState()
         SearchList(
           items = viewModel.searchResults,
+          listState = listState,
           isPostSaved = viewModel::isPostSaved,
           postActions = postActions,
           searchQuery = viewModel.searchQuery,

@@ -6,18 +6,25 @@
  */
 package dev.msfjarvis.claw.android.ui.lists
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.SearchBar
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.SearchOff
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.isTraversalGroup
@@ -27,15 +34,15 @@ import androidx.compose.ui.zIndex
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import dev.msfjarvis.claw.common.posts.PostActions
+import dev.msfjarvis.claw.common.ui.SearchBar
 import dev.msfjarvis.claw.database.local.SavedPost
 import dev.msfjarvis.claw.model.LobstersPost
-import dev.msfjarvis.claw.model.toSavedPost
 import kotlinx.coroutines.flow.Flow
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchList(
   items: Flow<PagingData<LobstersPost>>,
+  listState: LazyListState,
   isPostSaved: (SavedPost) -> Boolean,
   postActions: PostActions,
   searchQuery: String,
@@ -51,30 +58,36 @@ fun SearchList(
     // Clear search field when navigating away
     onDispose { setSearchQuery("") }
   }
+
   var searchActive by remember { mutableStateOf(false) }
-  Column(
-    modifier = modifier.semantics { isTraversalGroup = true }.zIndex(1f).fillMaxWidth(),
-  ) {
+  Column(modifier = modifier.semantics { isTraversalGroup = true }.zIndex(1f).fillMaxWidth()) {
     SearchBar(
-      query = searchQuery,
-      onQueryChange = setSearchQuery,
+      value = searchQuery,
+      onValueChange = setSearchQuery,
       onSearch = {
         triggerSearch(it)
         searchActive = true
       },
-      active = searchActive,
-      onActiveChange = { searchActive = it },
       modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp).testTag("search_bar"),
-    ) {
-      lazyPagingItems.itemSnapshotList.items.forEach { item ->
-        val dbModel = item.toSavedPost()
-        LobstersListItem(
-          item = dbModel,
-          isSaved = isPostSaved,
-          isRead = { false },
-          postActions = postActions,
-        )
-        HorizontalDivider()
+    )
+    if (searchActive) {
+      NetworkPosts(
+        lazyPagingItems = lazyPagingItems,
+        listState = listState,
+        isPostSaved = isPostSaved,
+        isPostRead = { false },
+        postActions = postActions,
+      )
+    } else {
+      Box(modifier = Modifier.fillMaxSize()) {
+        Column(modifier = Modifier.align(Alignment.Center)) {
+          Icon(
+            imageVector = Icons.Filled.SearchOff,
+            contentDescription = "No search results",
+            modifier = Modifier.align(Alignment.CenterHorizontally).size(36.dp),
+          )
+          Text(text = "Nothing to see here", style = MaterialTheme.typography.headlineSmall)
+        }
       }
     }
   }

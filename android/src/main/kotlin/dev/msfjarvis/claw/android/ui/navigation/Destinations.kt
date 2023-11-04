@@ -35,6 +35,10 @@ sealed class Destinations {
     override val route: String = "datatransfer"
   }
 
+  object Search : Destinations() {
+    override val route: String = "search"
+  }
+
   companion object {
     val startDestination
       get() = Hottest

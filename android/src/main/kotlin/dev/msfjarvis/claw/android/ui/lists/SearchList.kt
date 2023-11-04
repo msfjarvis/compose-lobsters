@@ -19,7 +19,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -54,11 +53,6 @@ fun SearchList(
     setSearchQuery(query)
     lazyPagingItems.refresh()
   }
-  DisposableEffect(true) {
-    // Clear search field when navigating away
-    onDispose { setSearchQuery("") }
-  }
-
   var searchActive by remember { mutableStateOf(false) }
   Column(modifier = modifier.semantics { isTraversalGroup = true }.zIndex(1f).fillMaxWidth()) {
     SearchBar(

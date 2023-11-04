@@ -18,6 +18,7 @@ sqldelight {
       packageName.set("dev.msfjarvis.claw.database")
       schemaOutputDirectory.set(file("src/main/sqldelight/databases"))
       verifyMigrations.set(true)
+      dialect(libs.sqldelight.dialect338)
     }
   }
 }

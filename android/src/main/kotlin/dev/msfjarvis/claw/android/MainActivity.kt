@@ -20,7 +20,7 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.deliveryhero.whetstone.Whetstone
 import com.deliveryhero.whetstone.activity.ContributesActivityInjector
-import dev.msfjarvis.claw.android.ui.LobstersApp
+import dev.msfjarvis.claw.android.ui.screens.LobstersPostsScreen
 import dev.msfjarvis.claw.common.comments.HTMLConverter
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
@@ -56,7 +56,7 @@ class MainActivity : ComponentActivity() {
         dynamicColor = true,
         providedValues = arrayOf(LocalUriHandler provides urlLauncher),
       ) {
-        LobstersApp(
+        LobstersPostsScreen(
           urlLauncher = urlLauncher,
           htmlConverter = htmlConverter,
           windowSizeClass = windowSizeClass,

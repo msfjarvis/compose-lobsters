@@ -28,10 +28,10 @@ import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 import dev.msfjarvis.claw.common.theme.DarkThemeColors
 import dev.msfjarvis.claw.common.theme.LightThemeColors
-import dev.msfjarvis.claw.database.local.SavedPost
+import dev.msfjarvis.claw.model.UIPost
 
 class SavedPostsWidget(
-  private val posts: List<SavedPost>,
+  private val posts: List<UIPost>,
 ) : GlanceAppWidget() {
   override suspend fun provideGlance(context: Context, id: GlanceId) {
     provideContent {

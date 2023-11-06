@@ -46,14 +46,14 @@ import dev.msfjarvis.claw.common.posts.TagRow
 import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.common.ui.ThemedRichText
 import dev.msfjarvis.claw.model.LinkMetadata
-import dev.msfjarvis.claw.model.LobstersPostDetails
+import dev.msfjarvis.claw.model.UIPost
 import java.time.Instant
 import java.time.temporal.TemporalAccessor
 import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 internal fun CommentsHeader(
-  postDetails: LobstersPostDetails,
+  post: UIPost,
   postActions: PostActions,
   htmlConverter: HTMLConverter,
   modifier: Modifier = Modifier,
@@ -61,9 +61,9 @@ internal fun CommentsHeader(
   val uriHandler = LocalUriHandler.current
   val linkMetadata by
     produceState(
-      initialValue = LinkMetadata(postDetails.url, null),
+      initialValue = LinkMetadata(post.url, null),
     ) {
-      runSuspendCatching { postActions.getLinkMetadata(postDetails.url) }
+      runSuspendCatching { postActions.getLinkMetadata(post.url) }
         .onSuccess { metadata -> value = metadata }
     }
 
@@ -72,8 +72,8 @@ internal fun CommentsHeader(
       modifier = Modifier.padding(16.dp).fillMaxWidth(),
       verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-      PostTitle(title = postDetails.title, isRead = false)
-      TagRow(tags = postDetails.tags.toImmutableList())
+      PostTitle(title = post.title, isRead = false)
+      TagRow(tags = post.tags.toImmutableList())
       Spacer(Modifier.height(4.dp))
 
       if (linkMetadata.url.isNotBlank()) {
@@ -81,23 +81,23 @@ internal fun CommentsHeader(
           linkMetadata = linkMetadata,
           modifier =
             Modifier.clickable {
-              postActions.viewPost(postDetails.shortId, linkMetadata.url, postDetails.commentsUrl)
+              postActions.viewPost(post.shortId, linkMetadata.url, post.commentsUrl)
             },
         )
         Spacer(Modifier.height(4.dp))
       }
 
-      if (postDetails.description.isNotBlank()) {
-        ThemedRichText(htmlConverter.convertHTMLToMarkdown(postDetails.description))
+      if (post.description.isNotBlank()) {
+        ThemedRichText(htmlConverter.convertHTMLToMarkdown(post.description))
         Spacer(Modifier.height(4.dp))
       }
       Submitter(
-        text = AnnotatedString("Submitted by ${postDetails.submitter.username}"),
-        avatarUrl = "https://lobste.rs/${postDetails.submitter.avatarUrl}",
-        contentDescription = "User avatar for ${postDetails.submitter.username}",
+        text = AnnotatedString("Submitted by ${post.submitter.username}"),
+        avatarUrl = "https://lobste.rs/${post.submitter.avatarUrl}",
+        contentDescription = "User avatar for ${post.submitter.username}",
         modifier =
           Modifier.clickable {
-            uriHandler.openUri("https://lobste.rs/u/${postDetails.submitter.username}")
+            uriHandler.openUri("https://lobste.rs/u/${post.submitter.username}")
           },
       )
     }

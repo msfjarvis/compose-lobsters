@@ -7,9 +7,8 @@
 package dev.msfjarvis.claw.common.posts
 
 import androidx.compose.runtime.Stable
-import dev.msfjarvis.claw.database.local.SavedPost
 import dev.msfjarvis.claw.model.LinkMetadata
-import dev.msfjarvis.claw.model.LobstersPostDetails
+import dev.msfjarvis.claw.model.UIPost
 
 @Stable
 interface PostActions {
@@ -19,9 +18,9 @@ interface PostActions {
 
   fun viewCommentsPage(commentsUrl: String)
 
-  fun toggleSave(post: SavedPost)
+  fun toggleSave(post: UIPost)
 
-  suspend fun getComments(postId: String): LobstersPostDetails
+  suspend fun getComments(postId: String): UIPost
 
   suspend fun getLinkMetadata(url: String): LinkMetadata
 }

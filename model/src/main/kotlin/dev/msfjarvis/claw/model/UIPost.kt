@@ -4,33 +4,14 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
-@file:Suppress("LongParameterList")
-
 package dev.msfjarvis.claw.model
 
-import dev.drewhamilton.poko.Poko
 import dev.msfjarvis.claw.database.local.SavedPost
+import io.mcarle.konvert.api.KonvertFrom
 import io.mcarle.konvert.api.KonvertTo
 import io.mcarle.konvert.api.Mapping
 import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 
-@Serializable
-@Poko
-@KonvertTo(
-  value = UIPost::class,
-  mappings =
-    [
-      Mapping(
-        target = "submitterName",
-        expression = "it.submitter.username",
-      ),
-      Mapping(
-        target = "submitterAvatarUrl",
-        expression = "it.submitter.avatarUrl",
-      ),
-    ],
-)
 @KonvertTo(
   value = SavedPost::class,
   mappings =
@@ -45,7 +26,7 @@ import kotlinx.serialization.Serializable
       ),
     ],
 )
-class LobstersPostDetails(
+data class UIPost(
   val shortId: String,
   val createdAt: String,
   val title: String,
@@ -55,5 +36,26 @@ class LobstersPostDetails(
   val commentsUrl: String,
   @SerialName("submitter_user") val submitter: User,
   val tags: List<String>,
-  val comments: List<Comment>,
-)
+  val comments: List<Comment> = emptyList(),
+  val isSaved: Boolean = false,
+) {
+  @KonvertFrom(
+    value = SavedPost::class,
+    mappings =
+      [
+        Mapping(
+          target = "submitter",
+          expression = "User(it.submitterName, \"\", null, it.submitterAvatarUrl, \"\")"
+        ),
+        Mapping(
+          target = "commentCount",
+          expression = "it.commentCount ?: 0",
+        ),
+        Mapping(
+          target = "isSaved",
+          expression = "true",
+        ),
+      ],
+  )
+  companion object
+}

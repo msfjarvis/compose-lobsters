@@ -27,14 +27,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.ui.decorations.MonthHeader
-import dev.msfjarvis.claw.database.local.SavedPost
+import dev.msfjarvis.claw.model.UIPost
 import java.time.Month
 import kotlinx.collections.immutable.ImmutableMap
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DatabasePosts(
-  items: ImmutableMap<Month, List<SavedPost>>,
+  items: ImmutableMap<Month, List<UIPost>>,
   listState: LazyListState,
   postActions: PostActions,
   modifier: Modifier = Modifier,
@@ -61,7 +61,6 @@ fun DatabasePosts(
           ) { item ->
             LobstersListItem(
               item = item,
-              isSaved = { true },
               isRead = { false },
               postActions = postActions,
             )

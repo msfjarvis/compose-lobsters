@@ -16,14 +16,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import dev.msfjarvis.claw.common.posts.LobstersCard
 import dev.msfjarvis.claw.common.posts.PostActions
-import dev.msfjarvis.claw.database.local.SavedPost
+import dev.msfjarvis.claw.model.UIPost
 import me.saket.swipe.SwipeAction
 import me.saket.swipe.SwipeableActionsBox
 
 @Composable
 fun LobstersListItem(
-  item: SavedPost,
-  isSaved: (SavedPost) -> Boolean,
+  item: UIPost,
   isRead: suspend (String) -> Boolean,
   postActions: PostActions,
   modifier: Modifier = Modifier,
@@ -40,7 +39,6 @@ fun LobstersListItem(
   ) {
     LobstersCard(
       post = item,
-      isSaved = isSaved(item),
       isRead = read,
       postActions = postActions,
       modifier = modifier,

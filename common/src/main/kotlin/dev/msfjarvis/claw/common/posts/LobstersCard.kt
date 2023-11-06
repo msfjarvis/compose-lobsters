@@ -51,22 +51,20 @@ import androidx.compose.ui.unit.dp
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
-import dev.msfjarvis.claw.database.local.SavedPost
 import dev.msfjarvis.claw.model.LinkMetadata
-import dev.msfjarvis.claw.model.LobstersPostDetails
+import dev.msfjarvis.claw.model.UIPost
 import dev.msfjarvis.claw.model.User
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 fun LobstersCard(
-  post: SavedPost,
-  isSaved: Boolean,
+  post: UIPost,
   isRead: Boolean,
   postActions: PostActions,
   modifier: Modifier = Modifier,
 ) {
-  var localSavedState by remember(post, isSaved) { mutableStateOf(isSaved) }
+  var localSavedState by remember(post) { mutableStateOf(post.isSaved) }
   Box(
     modifier =
       modifier
@@ -112,15 +110,15 @@ fun LobstersCard(
 }
 
 @Composable
-fun PostDetails(post: SavedPost, isRead: Boolean, modifier: Modifier = Modifier) {
+fun PostDetails(post: UIPost, isRead: Boolean, modifier: Modifier = Modifier) {
   Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
     PostTitle(title = post.title, isRead = isRead)
     TagRow(tags = post.tags.toImmutableList())
     Spacer(Modifier.height(4.dp))
     Submitter(
-      text = AnnotatedString("Submitted by ${post.submitterName}"),
-      avatarUrl = "https://lobste.rs/${post.submitterAvatarUrl}",
-      contentDescription = "User avatar for ${post.submitterName}",
+      text = AnnotatedString("Submitted by ${post.submitter.username}"),
+      avatarUrl = "https://lobste.rs/${post.submitter.avatarUrl}",
+      contentDescription = "User avatar for ${post.submitter.username}",
     )
   }
 }
@@ -254,20 +252,19 @@ fun LobstersCardPreview() {
   LobstersTheme {
     LobstersCard(
       post =
-        SavedPost(
+        UIPost(
           shortId = "ooga",
           title = "Simple Anomaly Detection Using Plain SQL",
           url = "https://hakibenita.com/sql-anomaly-detection",
           createdAt = "2020-09-21T08:04:24.000-05:00",
           commentCount = 1,
           commentsUrl = "https://lobste.rs/s/q1hh1g/simple_anomaly_detection_using_plain_sql",
-          submitterName = "Haki",
-          submitterAvatarUrl = "/avatars/Haki-100.png",
+          submitter = User("Haki", "", "", "/avatars/Haki-100.png", ""),
           tags = listOf("databases", "apis"),
           description = "",
+          isSaved = true,
         ),
       isRead = true,
-      isSaved = true,
       postActions =
         object : PostActions {
           override fun viewPost(postId: String, postUrl: String, commentsUrl: String) {}
@@ -276,10 +273,10 @@ fun LobstersCardPreview() {
 
           override fun viewCommentsPage(commentsUrl: String) {}
 
-          override fun toggleSave(post: SavedPost) {}
+          override fun toggleSave(post: UIPost) {}
 
-          override suspend fun getComments(postId: String): LobstersPostDetails {
-            return LobstersPostDetails(
+          override suspend fun getComments(postId: String): UIPost {
+            return UIPost(
               shortId = "ooga",
               title = "Simple Anomaly Detection Using Plain SQL",
               url = "https://hakibenita.com/sql-anomaly-detection",

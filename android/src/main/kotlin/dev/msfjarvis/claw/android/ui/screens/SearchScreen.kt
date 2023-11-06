@@ -47,7 +47,6 @@ fun SearchScreen(
         SearchList(
           items = viewModel.searchResults,
           listState = listState,
-          isPostSaved = viewModel::isPostSaved,
           postActions = postActions,
           searchQuery = viewModel.searchQuery,
           setSearchQuery = { query -> viewModel.searchQuery = query },

@@ -36,12 +36,12 @@ import dev.msfjarvis.claw.common.ui.NetworkError
 import dev.msfjarvis.claw.common.ui.ProgressBar
 import dev.msfjarvis.claw.database.local.PostComments
 import dev.msfjarvis.claw.model.Comment
-import dev.msfjarvis.claw.model.LobstersPostDetails
+import dev.msfjarvis.claw.model.UIPost
 
 @Suppress("LongParameterList")
 @Composable
 private fun CommentsPageInternal(
-  details: LobstersPostDetails,
+  details: UIPost,
   postActions: PostActions,
   htmlConverter: HTMLConverter,
   commentState: PostComments?,
@@ -55,7 +55,7 @@ private fun CommentsPageInternal(
     LazyColumn(modifier = modifier, contentPadding = PaddingValues(bottom = 24.dp)) {
       item {
         CommentsHeader(
-          postDetails = details,
+          post = details,
           postActions = postActions,
           htmlConverter = htmlConverter,
         )
@@ -123,7 +123,7 @@ fun CommentsPage(
   when (postDetails) {
     is Success<*> -> {
       CommentsPageInternal(
-        details = (postDetails as Success<LobstersPostDetails>).data,
+        details = (postDetails as Success<UIPost>).data,
         postActions = postActions,
         htmlConverter = htmlConverter,
         commentState = commentState,

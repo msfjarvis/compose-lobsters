@@ -27,9 +27,7 @@ import androidx.paging.compose.itemKey
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.ui.NetworkError
 import dev.msfjarvis.claw.common.ui.ProgressBar
-import dev.msfjarvis.claw.database.local.SavedPost
-import dev.msfjarvis.claw.model.LobstersPost
-import dev.msfjarvis.claw.model.toSavedPost
+import dev.msfjarvis.claw.model.UIPost
 import eu.bambooapps.material3.pullrefresh.PullRefreshIndicator
 import eu.bambooapps.material3.pullrefresh.pullRefresh
 import eu.bambooapps.material3.pullrefresh.rememberPullRefreshState
@@ -37,9 +35,8 @@ import eu.bambooapps.material3.pullrefresh.rememberPullRefreshState
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NetworkPosts(
-  lazyPagingItems: LazyPagingItems<LobstersPost>,
+  lazyPagingItems: LazyPagingItems<UIPost>,
   listState: LazyListState,
-  isPostSaved: (SavedPost) -> Boolean,
   isPostRead: suspend (String) -> Boolean,
   postActions: PostActions,
   modifier: Modifier = Modifier,
@@ -66,10 +63,8 @@ fun NetworkPosts(
         ) { index ->
           val item = lazyPagingItems[index]
           if (item != null) {
-            val dbModel = item.toSavedPost()
             LobstersListItem(
-              item = dbModel,
-              isSaved = isPostSaved,
+              item = item,
               isRead = isPostRead,
               postActions = postActions,
             )

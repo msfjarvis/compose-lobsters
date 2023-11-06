@@ -32,14 +32,14 @@ import androidx.glance.text.TextAlign
 import androidx.glance.text.TextStyle
 import dev.msfjarvis.claw.android.MainActivity
 import dev.msfjarvis.claw.android.MainActivity.Companion.NAVIGATION_KEY
-import dev.msfjarvis.claw.database.local.SavedPost
+import dev.msfjarvis.claw.model.UIPost
 
 private val destinationKey = Key<String>(NAVIGATION_KEY)
 
 @Composable
 @GlanceComposable
 fun WidgetListEntry(
-  post: SavedPost,
+  post: UIPost,
   modifier: GlanceModifier = GlanceModifier,
 ) {
   val titleStyle = MaterialTheme.typography.titleMedium
@@ -69,21 +69,18 @@ fun WidgetListEntry(
             fontStyle = titleStyle.fontStyle.toGlance(),
           )
       )
-      post.commentCount?.let { count ->
-        Text(
-          text = "$count comments",
-          modifier =
-            GlanceModifier.wrapContentWidth().padding(end = 4.dp).clickable(commentsAction),
-          style =
-            TextStyle(
-              color = GlanceTheme.colors.onSurfaceVariant,
-              fontSize = subtitleStyle.fontSize,
-              fontWeight = subtitleStyle.fontWeight.toGlance(),
-              fontStyle = subtitleStyle.fontStyle.toGlance(),
-              textAlign = TextAlign.End,
-            )
-        )
-      }
+      Text(
+        text = "${post.commentCount} comments",
+        modifier = GlanceModifier.wrapContentWidth().padding(end = 4.dp).clickable(commentsAction),
+        style =
+          TextStyle(
+            color = GlanceTheme.colors.onSurfaceVariant,
+            fontSize = subtitleStyle.fontSize,
+            fontWeight = subtitleStyle.fontWeight.toGlance(),
+            fontStyle = subtitleStyle.fontStyle.toGlance(),
+            textAlign = TextAlign.End,
+          )
+      )
     }
   }
 }

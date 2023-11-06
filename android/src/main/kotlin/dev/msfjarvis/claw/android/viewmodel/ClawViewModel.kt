@@ -16,6 +16,9 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import androidx.paging.map
 import com.deliveryhero.whetstone.app.ApplicationScope
 import com.deliveryhero.whetstone.viewmodel.ContributesViewModel
 import com.slack.eithernet.ApiResult.Failure
@@ -29,8 +32,12 @@ import dev.msfjarvis.claw.android.paging.SearchPagingSource
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.core.injection.IODispatcher
 import dev.msfjarvis.claw.core.injection.MainDispatcher
-import dev.msfjarvis.claw.database.local.SavedPost
 import dev.msfjarvis.claw.model.Comment
+import dev.msfjarvis.claw.model.LobstersPost
+import dev.msfjarvis.claw.model.UIPost
+import dev.msfjarvis.claw.model.fromSavedPost
+import dev.msfjarvis.claw.model.toSavedPost
+import dev.msfjarvis.claw.model.toUIPost
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
@@ -43,9 +50,11 @@ import javax.inject.Inject
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.toImmutableMap
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -81,22 +90,26 @@ constructor(
     }
 
   val hottestPosts
-    get() = hottestPostsPager.flow
+    get() = hottestPostsPager.flow.map(::mapUIPost).cachedIn(viewModelScope)
 
   val newestPosts
-    get() = newestPostsPager.flow
+    get() = newestPostsPager.flow.map(::mapUIPost).cachedIn(viewModelScope)
 
   val savedPosts
     get() =
-      savedPostsRepository.savedPosts.map {
-        it.sortedByDescending { post -> post.createdAt.toLocalDateTime() }
-      }
+      savedPostsRepository.savedPosts
+        .map {
+          it
+            .sortedByDescending { post -> post.createdAt.toLocalDateTime() }
+            .map(UIPost.Companion::fromSavedPost)
+        }
+        .shareIn(viewModelScope, started = SharingStarted.Lazily, Int.MAX_VALUE)
 
   val savedPostsByMonth
     get() = savedPosts.map(::mapSavedPosts)
 
   val searchResults
-    get() = searchResultsPager.flow
+    get() = searchResultsPager.flow.map(::mapUIPost)
 
   var searchQuery by mutableStateOf("")
 
@@ -106,30 +119,34 @@ constructor(
   init {
     viewModelScope.launch {
       savedPosts.collectLatest {
-        _savedPostsMutex.withLock { _savedPosts = it.map(SavedPost::shortId) }
+        _savedPostsMutex.withLock { _savedPosts = it.map(UIPost::shortId) }
       }
     }
   }
 
-  private fun mapSavedPosts(items: List<SavedPost>): ImmutableMap<Month, List<SavedPost>> {
-    val sorted =
-      items.sortedWith { post1, post2 ->
-        post2.createdAt.toLocalDateTime().compareTo(post1.createdAt.toLocalDateTime())
-      }
+  private fun mapUIPost(pagingData: PagingData<LobstersPost>): PagingData<UIPost> {
+    return pagingData.map { post ->
+      val uiPost = post.toUIPost()
+      uiPost.copy(isSaved = isPostSaved(uiPost))
+    }
+  }
+
+  private fun mapSavedPosts(items: List<UIPost>): ImmutableMap<Month, List<UIPost>> {
+    val sorted = items.sortedByDescending { post -> post.createdAt.toLocalDateTime() }
     return sorted.groupBy { post -> post.createdAt.toLocalDateTime().month }.toImmutableMap()
   }
 
-  fun isPostSaved(post: SavedPost): Boolean {
+  private fun isPostSaved(post: UIPost): Boolean {
     return _savedPosts.contains(post.shortId)
   }
 
-  fun toggleSave(post: SavedPost) {
+  fun toggleSave(post: UIPost) {
     viewModelScope.launch(ioDispatcher) {
       val saved = isPostSaved(post)
       if (saved) {
-        savedPostsRepository.removePost(post)
+        savedPostsRepository.removePost(post.toSavedPost())
       } else {
-        savedPostsRepository.savePost(post)
+        savedPostsRepository.savePost(post.toSavedPost())
       }
       val newPosts = savedPosts.first()
       withContext(mainDispatcher) {
@@ -141,7 +158,7 @@ constructor(
   suspend fun getPostComments(postId: String) =
     withContext(ioDispatcher) {
       when (val result = api.getPostDetails(postId)) {
-        is Success -> result.value
+        is Success -> result.value.toUIPost()
         is Failure.NetworkFailure -> throw result.error
         is Failure.UnknownFailure -> throw result.error
         is Failure.HttpFailure -> {

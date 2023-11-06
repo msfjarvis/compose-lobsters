@@ -30,9 +30,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.msfjarvis.claw.common.theme.LobstersTheme
+import dev.msfjarvis.claw.common.ui.preview.DevicePreviews
+import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
 
 @Composable
 fun SearchBar(
@@ -63,7 +64,8 @@ fun SearchBar(
   )
 }
 
-@Preview
+@DevicePreviews
+@ThemePreviews
 @Composable
 fun SearchBarPreview() {
   LobstersTheme {
@@ -73,7 +75,7 @@ fun SearchBarPreview() {
         value = value,
         onValueChange = { value = it },
         onSearch = {},
-        modifier = Modifier.align(Alignment.TopCenter)
+        modifier = Modifier.align(Alignment.TopCenter).fillMaxWidth()
       )
     }
   }

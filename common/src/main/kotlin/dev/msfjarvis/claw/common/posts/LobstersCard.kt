@@ -36,6 +36,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -48,6 +52,9 @@ import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
 import dev.msfjarvis.claw.database.local.SavedPost
+import dev.msfjarvis.claw.model.LinkMetadata
+import dev.msfjarvis.claw.model.LobstersPostDetails
+import dev.msfjarvis.claw.model.User
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 
@@ -56,16 +63,15 @@ fun LobstersCard(
   post: SavedPost,
   isSaved: Boolean,
   isRead: Boolean,
-  viewComments: (String) -> Unit,
-  toggleSave: (SavedPost) -> Unit,
-  viewPost: (String, String, String) -> Unit,
+  postActions: PostActions,
   modifier: Modifier = Modifier,
 ) {
+  var localSavedState by remember(post, isSaved) { mutableStateOf(isSaved) }
   Box(
     modifier =
       modifier
         .fillMaxWidth()
-        .clickable { viewPost(post.shortId, post.url, post.commentsUrl) }
+        .clickable { postActions.viewPost(post.shortId, post.url, post.commentsUrl) }
         .background(MaterialTheme.colorScheme.background)
         .padding(start = 16.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
   ) {
@@ -84,8 +90,12 @@ fun LobstersCard(
         horizontalAlignment = Alignment.CenterHorizontally,
       ) {
         SaveButton(
-          isSaved = isSaved,
-          modifier = Modifier.clickable(role = Role.Button) { toggleSave(post) },
+          isSaved = localSavedState,
+          modifier =
+            Modifier.clickable(role = Role.Button) {
+              localSavedState = !localSavedState
+              postActions.toggleSave(post)
+            },
         )
         HorizontalDivider(modifier = Modifier.width(48.dp))
         CommentsButton(
@@ -93,7 +103,7 @@ fun LobstersCard(
           modifier =
             Modifier.clickable(
               role = Role.Button,
-              onClick = { viewComments(post.shortId) },
+              onClick = { postActions.viewComments(post.shortId) },
             ),
         )
       }
@@ -257,9 +267,35 @@ fun LobstersCardPreview() {
         ),
       isRead = true,
       isSaved = true,
-      viewPost = { _, _, _ -> },
-      viewComments = {},
-      toggleSave = {},
+      postActions =
+        object : PostActions {
+          override fun viewPost(postId: String, postUrl: String, commentsUrl: String) {}
+
+          override fun viewComments(postId: String) {}
+
+          override fun viewCommentsPage(commentsUrl: String) {}
+
+          override fun toggleSave(post: SavedPost) {}
+
+          override suspend fun getComments(postId: String): LobstersPostDetails {
+            return LobstersPostDetails(
+              shortId = "ooga",
+              title = "Simple Anomaly Detection Using Plain SQL",
+              url = "https://hakibenita.com/sql-anomaly-detection",
+              createdAt = "2020-09-21T08:04:24.000-05:00",
+              commentCount = 1,
+              commentsUrl = "https://lobste.rs/s/q1hh1g/simple_anomaly_detection_using_plain_sql",
+              tags = listOf("databases", "apis"),
+              description = "",
+              submitter = User("Haki", "", "", "", ""),
+              comments = emptyList(),
+            )
+          }
+
+          override suspend fun getLinkMetadata(url: String): LinkMetadata {
+            return LinkMetadata("", "")
+          }
+        },
     )
   }
 }

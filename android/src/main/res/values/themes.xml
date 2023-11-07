@@ -13,7 +13,7 @@
     <item name="postSplashScreenTheme">@style/Theme.Claw</item>
   </style>
 
-  <style name="Platform.Theme.Claw" parent="android:Theme.Material.Light.NoActionBar" />
+  <style name="Platform.Theme.Claw" parent="android:Theme.Material.NoActionBar" />
 
   <style name="Base.Theme.Claw" parent="Platform.Theme.Claw">
     <item name="android:windowActionModeOverlay">true</item>

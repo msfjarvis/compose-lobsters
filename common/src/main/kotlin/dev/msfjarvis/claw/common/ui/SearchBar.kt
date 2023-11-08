@@ -22,12 +22,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -42,6 +45,7 @@ fun SearchBar(
   onSearch: (String) -> Unit,
   modifier: Modifier = Modifier,
 ) {
+  val focusRequester = remember { FocusRequester() }
   TextField(
     value = value,
     onValueChange = onValueChange,
@@ -60,8 +64,10 @@ fun SearchBar(
         imeAction = ImeAction.Search,
       ),
     singleLine = true,
-    modifier = modifier.focusable(),
+    modifier = modifier.focusable().focusRequester(focusRequester),
   )
+
+  LaunchedEffect(Unit) { focusRequester.requestFocus() }
 }
 
 @DevicePreviews

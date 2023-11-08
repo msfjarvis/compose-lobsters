@@ -15,14 +15,13 @@ import com.android.build.api.variant.HasUnitTestBuilder
 import com.android.build.api.variant.LibraryAndroidComponentsExtension
 import com.android.build.gradle.BaseExtension
 import dev.msfjarvis.claw.gradle.LintConfig.configureLint
+import org.gradle.accessors.dm.LibrariesForLibs
 import org.gradle.android.AndroidCacheFixPlugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.findByType
-import org.gradle.kotlin.dsl.getByType
 
 class AndroidCommonPlugin : Plugin<Project> {
 
@@ -59,10 +58,9 @@ class AndroidCommonPlugin : Plugin<Project> {
     }
     project.extensions.findByType<ApplicationExtension>()?.lint?.configureLint(project)
     project.extensions.findByType<LibraryExtension>()?.lint?.configureLint(project)
-    val catalog = project.extensions.getByType<VersionCatalogsExtension>()
-    val libs = catalog.named("libs")
-    project.dependencies.addProvider("lintChecks", libs.findLibrary("slack-compose-lints").get())
-    project.dependencies.addProvider("lintChecks", libs.findLibrary("slack-lints").get())
+    val libs = project.extensions.getByName("libs") as LibrariesForLibs
+    project.dependencies.addProvider("lintChecks", libs.slack.compose.lints)
+    project.dependencies.addProvider("lintChecks", libs.slack.lints)
   }
 
   private fun Project.configureSlimTests() {

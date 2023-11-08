@@ -10,20 +10,18 @@ import com.android.build.api.variant.ApplicationAndroidComponentsExtension
 import io.sentry.android.gradle.extensions.InstrumentationFeature
 import io.sentry.android.gradle.extensions.SentryPluginExtension
 import java.util.EnumSet
+import org.gradle.accessors.dm.LibrariesForLibs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.getByType
 
 @Suppress("Unused")
 class SentryPlugin : Plugin<Project> {
 
   override fun apply(project: Project) {
     project.pluginManager.withPlugin("com.android.application") {
-      val catalog = project.extensions.getByType<VersionCatalogsExtension>()
-      val libs = catalog.named("libs")
+      val libs = project.extensions.getByName("libs") as LibrariesForLibs
       project.extensions.configure<ApplicationAndroidComponentsExtension> {
         onVariants(selector().all()) { variant ->
           val sentryDsn = project.providers.environmentVariable(SENTRY_DSN_PROPERTY)
@@ -52,13 +50,11 @@ class SentryPlugin : Plugin<Project> {
         experimentalGuardsquareSupport.set(false)
         autoInstallation {
           enabled.set(true)
-          sentryVersion.set(libs.findVersion("sentry-sdk").get().requiredVersion)
+          sentryVersion.set(libs.versions.sentry.sdk)
         }
         includeDependenciesReport.set(true)
       }
-      with(project.dependencies) {
-        addProvider("implementation", platform(libs.findLibrary("sentry-bom").get()))
-      }
+      with(project.dependencies) { addProvider("implementation", platform(libs.sentry.bom)) }
     }
   }
 

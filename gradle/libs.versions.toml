@@ -1,6 +1,7 @@
 [versions]
 agp = "8.3.0-alpha13"
 benchmark = "1.2.0"
+circuit = "0.16.0"
 coil = "2.5.0"
 # @keep used for kotlinCompilerExtensionVersion
 composeCompiler = "1.5.4-dev-k1.9.20-50f08dfa4b4"
@@ -57,6 +58,14 @@ build-sentry = "io.sentry.android.gradle:io.sentry.android.gradle.gradle.plugin:
 build-spotless = "com.diffplug.spotless:spotless-plugin-gradle:6.22.0"
 build-vcu = "nl.littlerobots.version-catalog-update:nl.littlerobots.version-catalog-update.gradle.plugin:0.8.1"
 build-versions = "com.github.ben-manes:gradle-versions-plugin:0.49.0"
+circuit-backstack = { module = "com.slack.circuit:circuit-backstack", version.ref = "circuit" }
+circuit-foundation = { module = "com.slack.circuit:circuit-foundation", version.ref = "circuit" }
+circuit-overlay = { module = "com.slack.circuit:circuit-overlay", version.ref = "circuit" }
+circuit-retained = { module = "com.slack.circuit:circuit-retained", version.ref = "circuit" }
+circuit-runtime = { module = "com.slack.circuit:circuit-runtime", version.ref = "circuit" }
+circuit-runtime-presenter = { module = "com.slack.circuit:circuit-runtime-presenter", version.ref = "circuit" }
+circuit-runtime-ui = { module = "com.slack.circuit:circuit-runtime-ui", version.ref = "circuit" }
+circuit-test = { module = "com.slack.circuit:circuit-test", version.ref = "circuit" }
 coil = { module = "io.coil-kt:coil", version.ref = "coil" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 compose-richtext-markdown = { module = "com.halilibo.compose-richtext:richtext-commonmark", version.ref = "richtext" }

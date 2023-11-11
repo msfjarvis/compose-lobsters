@@ -57,6 +57,7 @@ class ClawViewModel
 @Inject
 constructor(
   private val api: LobstersApi,
+  val shioriRepository: ShioriRepository,
   private val searchApi: LobstersSearchApi,
   private val commentsRepository: CommentsRepository,
   private val readPostsRepository: ReadPostsRepository,

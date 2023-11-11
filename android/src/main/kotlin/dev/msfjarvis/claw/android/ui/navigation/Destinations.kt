@@ -39,6 +39,10 @@ sealed class Destinations {
     override val route: String = "search"
   }
 
+  object ShioriConfig : Destinations() {
+    override val route: String = "shiori_config"
+  }
+
   companion object {
     val startDestination
       get() = Hottest

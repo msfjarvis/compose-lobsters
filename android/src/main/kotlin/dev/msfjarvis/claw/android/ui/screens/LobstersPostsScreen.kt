@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Bookmarks
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.ImportExport
 import androidx.compose.material.icons.filled.MoreVert
@@ -79,6 +80,7 @@ import dev.msfjarvis.claw.android.ui.lists.NetworkPosts
 import dev.msfjarvis.claw.android.ui.navigation.ClawNavigationType
 import dev.msfjarvis.claw.android.ui.navigation.Destinations
 import dev.msfjarvis.claw.android.ui.rememberPostActions
+import dev.msfjarvis.claw.android.ui.shiori.ShioriConfigScreen
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.common.comments.CommentsPage
@@ -217,6 +219,19 @@ fun LobstersPostsScreen(
                   )
                 }
               )
+              DropdownMenuItem(
+                text = { Text("Shiori") },
+                onClick = {
+                  navController.navigate(Destinations.ShioriConfig.route)
+                  expanded = false
+                },
+                leadingIcon = {
+                  Icon(
+                    imageVector = Icons.Filled.Bookmarks,
+                    contentDescription = "Shiori",
+                  )
+                },
+              )
             }
           }
         },
@@ -324,6 +339,9 @@ fun LobstersPostsScreen(
             exportPosts = viewModel::exportPosts,
             snackbarHostState = snackbarHostState,
           )
+        }
+        composable(route = Destinations.ShioriConfig.route) {
+          ShioriConfigScreen(repository = viewModel.shioriRepository)
         }
       }
     }

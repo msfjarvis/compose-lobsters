@@ -31,7 +31,7 @@ class KotlinCommonPlugin : Plugin<Project> {
         compilerOptions {
           allWarningsAsErrors.set(true)
           freeCompilerArgs.addAll(ADDITIONAL_COMPILER_ARGS)
-          languageVersion.set(KotlinVersion.KOTLIN_1_8)
+          languageVersion.set(KotlinVersion.KOTLIN_1_9)
         }
       }
       withType<Test>().configureEach {

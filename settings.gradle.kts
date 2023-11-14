@@ -169,4 +169,5 @@ include(
   "database:core",
   "database:impl",
   "model",
+  "search",
 )

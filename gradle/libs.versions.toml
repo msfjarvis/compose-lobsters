@@ -1,6 +1,6 @@
 [versions]
 agp = "8.3.0-alpha13"
-benchmark = "1.2.0"
+benchmark = "1.2.1"
 coil = "2.5.0"
 # @keep used for kotlinCompilerExtensionVersion
 composeCompiler = "1.5.4-dev-k1.9.20-50f08dfa4b4"
@@ -20,9 +20,9 @@ whetstone = "0.8.0"
 workmanager = "2.9.0-rc01"
 
 [libraries]
-androidx-activity-compose = "androidx.activity:activity-compose:1.8.0"
+androidx-activity-compose = "androidx.activity:activity-compose:1.8.1"
 androidx-benchmark-macro-junit4 = { module = "androidx.benchmark:benchmark-macro-junit4", version.ref = "benchmark" }
-androidx-browser = "androidx.browser:browser:1.6.0"
+androidx-browser = "androidx.browser:browser:1.7.0"
 androidx-compose-animation = { module = "androidx.compose.animation:animation" }
 androidx-compose-bom = "dev.chrisbanes.compose:compose-bom:2023.11.00-alpha01"
 androidx-compose-foundation = { module = "androidx.compose.foundation:foundation" }

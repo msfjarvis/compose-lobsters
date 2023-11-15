@@ -52,12 +52,6 @@ pluginManagement {
         includeModule("com.jraska.module.graph.assertion", "plugin")
       }
     }
-    exclusiveContent {
-      forRepository {
-        maven("https://storage.googleapis.com/r8-releases/raw/main") { name = "R8 mainline" }
-      }
-      filter { includeModule("com.android.tools", "r8") }
-    }
     includeBuild("build-logic")
     mavenCentral()
     maven("https://oss.sonatype.org/content/repositories/snapshots/") {

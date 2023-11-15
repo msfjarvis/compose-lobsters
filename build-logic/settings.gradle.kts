@@ -43,10 +43,6 @@ dependencyResolutionManagement {
         includeModule("gradle.plugin.org.gradle.android", "android-cache-fix-gradle-plugin")
       }
     }
-    exclusiveContent {
-      forRepository { maven("https://storage.googleapis.com/r8-releases/raw/main") }
-      filter { includeModule("com.android.tools", "r8") }
-    }
     mavenCentral()
   }
   versionCatalogs { create("libs") { from(files("../gradle/libs.versions.toml")) } }

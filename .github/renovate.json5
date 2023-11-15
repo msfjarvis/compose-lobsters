@@ -46,7 +46,6 @@
     },
     {
       "matchPackageNames": [
-        "com.android.tools:r8",
         "com.squareup.anvil",
         "dev.chrisbanes.compose:compose-bom",
       ],

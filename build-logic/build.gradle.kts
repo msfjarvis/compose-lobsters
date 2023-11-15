@@ -65,7 +65,6 @@ dependencies {
   implementation(libs.build.agp)
   implementation(libs.build.cachefix)
   implementation(libs.build.kotlin.gradle)
-  implementation(libs.build.r8)
   implementation(libs.build.semver)
   implementation(libs.build.sentry)
   implementation(libs.build.spotless)

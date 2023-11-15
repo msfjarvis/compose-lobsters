@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+*   Add brand new icon by dzuk
 *   Significantly improve scrolling performance when there are a lot of saved posts
 *   Improve how the app interacts with system bars
 *   Enable logging of SQLite queries

@@ -7,8 +7,8 @@
 <resources>
 
   <style name="Theme.Claw.SplashScreen" parent="Theme.SplashScreen">
-    <item name="windowSplashScreenBackground">#FF6C0000</item>
-    <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher_foreground</item>
+    <item name="windowSplashScreenBackground">@color/icon_background</item>
+    <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
     <item name="windowSplashScreenAnimationDuration">1000</item>
     <item name="postSplashScreenTheme">@style/Theme.Claw</item>
   </style>

@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -30,7 +31,6 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -186,7 +186,6 @@ private fun SaveButton(
 }
 
 @Composable
-@OptIn(ExperimentalMaterial3Api::class)
 private fun CommentsButton(
   commentCount: Int?,
   modifier: Modifier = Modifier,
@@ -197,6 +196,8 @@ private fun CommentsButton(
       if (commentCount != null) {
         Badge(
           containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+          // Required to make the badge label look visually okay
+          modifier = Modifier.absoluteOffset(y = (-8).dp),
         ) {
           Text(
             text = commentCount.toString(),

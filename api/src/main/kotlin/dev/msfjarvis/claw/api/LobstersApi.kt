@@ -12,16 +12,15 @@ import dev.msfjarvis.claw.model.LobstersPostDetails
 import dev.msfjarvis.claw.model.User
 import retrofit2.http.GET
 import retrofit2.http.Path
-import retrofit2.http.Query
 
 /** Simple interface defining an API for lobste.rs */
 interface LobstersApi {
 
-  @GET("hottest.json")
-  suspend fun getHottestPosts(@Query("page") page: Int): ApiResult<List<LobstersPost>, Unit>
+  @GET("page/{page}.json")
+  suspend fun getHottestPosts(@Path("page") page: Int): ApiResult<List<LobstersPost>, Unit>
 
-  @GET("newest.json")
-  suspend fun getNewestPosts(@Query("page") page: Int): ApiResult<List<LobstersPost>, Unit>
+  @GET("newest/page/{page}.json")
+  suspend fun getNewestPosts(@Path("page") page: Int): ApiResult<List<LobstersPost>, Unit>
 
   @GET("s/{postId}.json")
   suspend fun getPostDetails(@Path("postId") postId: String): ApiResult<LobstersPostDetails, Unit>

@@ -20,6 +20,7 @@ import dev.msfjarvis.claw.core.network.NapierLogger
 import dev.msfjarvis.claw.core.network.UserAgentInterceptor
 import io.sentry.android.okhttp.SentryOkHttpInterceptor
 import java.net.Socket
+import javax.inject.Qualifier
 import javax.net.SocketFactory
 import okhttp3.Cache
 import okhttp3.CertificatePinner
@@ -67,7 +68,8 @@ interface OkHttpModule {
     fun provideClient(
       cache: Cache,
       socketFactory: SocketFactory,
-      interceptors: Set<@JvmSuppressWildcards Interceptor>,
+      @OkHttpInterceptor interceptors: Set<@JvmSuppressWildcards Interceptor>,
+      networkInterceptors: Set<@JvmSuppressWildcards Interceptor>,
       certificatePinner: CertificatePinner,
     ): OkHttpClient {
       return OkHttpClient.Builder()
@@ -76,7 +78,8 @@ interface OkHttpModule {
           followSslRedirects(true)
           retryOnConnectionFailure(true)
           cache(cache)
-          interceptors.forEach(::addNetworkInterceptor)
+          interceptors.forEach(::addInterceptor)
+          networkInterceptors.forEach(::addNetworkInterceptor)
           socketFactory(socketFactory)
           certificatePinner(certificatePinner)
         }
@@ -96,3 +99,5 @@ interface OkHttpModule {
     }
   }
 }
+
+@Qualifier @Retention(AnnotationRetention.RUNTIME) annotation class OkHttpInterceptor

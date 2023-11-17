@@ -14,7 +14,11 @@ import com.squareup.anvil.annotations.ContributesTo
 import com.squareup.anvil.annotations.optional.ForScope
 import dagger.Module
 import dagger.Provides
+import dagger.multibindings.IntoSet
 import dev.msfjarvis.claw.android.shiori.ShioriSettings
+import dev.msfjarvis.claw.android.shiori.ShioriURLInterceptor
+import dev.msfjarvis.claw.core.injection.OkHttpInterceptor
+import okhttp3.Interceptor
 
 @Module
 @ContributesTo(ApplicationScope::class)
@@ -39,5 +43,12 @@ object ShioriModule {
       EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
       EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM,
     ) as EncryptedSharedPreferences
+  }
+
+  @Provides
+  @IntoSet
+  @OkHttpInterceptor
+  fun provideUrlRewriter(shioriSettings: ShioriSettings): Interceptor {
+    return ShioriURLInterceptor(shioriSettings)
   }
 }

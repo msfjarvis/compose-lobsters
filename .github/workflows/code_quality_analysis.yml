@@ -72,7 +72,7 @@ jobs:
           cache-read-only: true
 
       - name: Setup python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@3542bca2639a428e1796aaa6a2ffef0c0f575566 # v3
         with:
           python-version: 3.8
 
@@ -82,6 +82,6 @@ jobs:
           args: . --sarif --output results.sarif || true
 
       - name: Upload mobsfscan report
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@66b90a5db151a8042fa97405c6cf843bbe433f7b # v2
         with:
           sarif_file: results.sarif

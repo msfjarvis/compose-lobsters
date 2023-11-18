@@ -27,7 +27,6 @@ import dev.msfjarvis.claw.android.paging.LobstersPagingSource.Companion.PAGE_SIZ
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource.Companion.STARTING_PAGE_INDEX
 import dev.msfjarvis.claw.android.paging.SearchPagingSource
 import dev.msfjarvis.claw.api.LobstersApi
-import dev.msfjarvis.claw.api.LobstersSearchApi
 import dev.msfjarvis.claw.core.injection.IODispatcher
 import dev.msfjarvis.claw.core.injection.MainDispatcher
 import dev.msfjarvis.claw.database.local.SavedPost
@@ -57,7 +56,6 @@ class ClawViewModel
 @Inject
 constructor(
   private val api: LobstersApi,
-  private val searchApi: LobstersSearchApi,
   private val commentsRepository: CommentsRepository,
   private val readPostsRepository: ReadPostsRepository,
   private val savedPostsRepository: SavedPostsRepository,
@@ -79,7 +77,7 @@ constructor(
     }
   private val searchResultsPager =
     Pager(PagingConfig(pageSize = PAGE_SIZE), initialKey = STARTING_PAGE_INDEX) {
-      searchPagingSourceFactory.create { searchApi.searchPosts(searchQuery, it) }
+      searchPagingSourceFactory.create { searchQuery }
     }
 
   val hottestPosts

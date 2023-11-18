@@ -14,6 +14,7 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource.Companion.PAGE_SIZE
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource.Companion.STARTING_PAGE_INDEX
+import dev.msfjarvis.claw.api.LobstersSearchApi
 import dev.msfjarvis.claw.core.injection.IODispatcher
 import dev.msfjarvis.claw.model.LobstersPost
 import java.io.IOException
@@ -21,15 +22,16 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
 /**
- * Duplicate of [LobstersPagingSource] with an additional optimization to not continue loading
- * further pages if nothing is found in the current one. This is required to prevent the app from
- * hammering the search endpoint with up to 70 consecutive requests for the search results of a
- * blank query.
+ * Specialized variant of [LobstersPagingSource] to prevent hammering the Lobsters search endpoint
+ * with unnecessary requests. Rather than abstract out the API call this paging source takes in the
+ * relevant parameters to short-circuit when there is no query specified in order to avoid calling
+ * the API at all.
  */
 class SearchPagingSource
 @AssistedInject
 constructor(
-  @Assisted private val remoteFetcher: RemoteFetcher<LobstersPost>,
+  private val searchApi: LobstersSearchApi,
+  @Assisted private val queryProvider: () -> String,
   @IODispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : PagingSource<Int, LobstersPost>() {
   override fun getRefreshKey(state: PagingState<Int, LobstersPost>): Int? {
@@ -39,8 +41,14 @@ constructor(
   }
 
   override suspend fun load(params: LoadParams<Int>): LoadResult<Int, LobstersPost> {
+    val searchQuery = queryProvider()
+    // If there is no query, we don't need to call the API at all.
+    if (searchQuery.isEmpty()) {
+      return LoadResult.Page(itemsBefore = 0, data = emptyList(), prevKey = null, nextKey = null)
+    }
     val page = params.key ?: STARTING_PAGE_INDEX
-    return when (val result = withContext(ioDispatcher) { remoteFetcher.getItemsAtPage(page) }) {
+    val result = withContext(ioDispatcher) { searchApi.searchPosts(searchQuery, page) }
+    return when (result) {
       is ApiResult.Success -> {
         // Optimization: prevent fetching more pages if we found no items, this means
         // there is no active search query.
@@ -62,6 +70,6 @@ constructor(
 
   @AssistedFactory
   interface Factory {
-    fun create(remoteFetcher: RemoteFetcher<LobstersPost>): SearchPagingSource
+    fun create(queryProvider: () -> String): SearchPagingSource
   }
 }

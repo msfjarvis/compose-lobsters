@@ -10,12 +10,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 *   Add brand new icon by dzuk
+*   Fix a pagination bug that caused the app to only fetch the first 20 posts
+    from lobsters and repeat them.
 *   Significantly improve scrolling performance when there are a lot of saved posts
-*   Improve how the app interacts with system bars
-*   Enable logging of SQLite queries
+*   Move search feature to its own screen
+*   Make top app and bottom system bars use the same color
+*   Improve search implementation to reduce unnecessary API calls
+*   Upgrade to Compose November releases
 *   Start work on integrating Shiori (https://github.com/go-shiori/shiori/) as a
     remote backup target for saved posts
-*   Make top app bar color match bottom bar
+*   Enable logging of SQLite queries
 
 ## [1.37.0] - 2023-10-06
 

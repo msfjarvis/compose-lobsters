@@ -5,5 +5,5 @@
  ~ https://opensource.org/licenses/MIT.
  -->
 <resources>
-  <color name="icon_background">#540C00</color>
+  <color name="ic_launcher_background">#540C00</color>
 </resources>

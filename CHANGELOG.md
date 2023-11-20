@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.38.0] - 2023-11-20
+
 ### Changed
 
 *   Add brand new icon by dzuk
@@ -332,7 +334,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 *   Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.37.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.38.0...HEAD
+
+[1.38.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.37.0...v1.38.0
 
 [1.37.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.36.0...v1.37.0
 

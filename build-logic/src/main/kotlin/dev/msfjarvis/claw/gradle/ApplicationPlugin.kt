@@ -43,7 +43,9 @@ class ApplicationPlugin : Plugin<Project> {
             )
           )
         }
-        named("release") { isMinifyEnabled = true }
+        named("release") {
+          isMinifyEnabled = !project.providers.environmentVariable("DISABLE_MINIFY").isPresent
+        }
         named("debug") {
           applicationIdSuffix = ".debug"
           versionNameSuffix = "-debug"

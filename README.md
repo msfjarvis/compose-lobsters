@@ -18,35 +18,6 @@ Unofficial Android app for read-only access to [lobste.rs](https://lobste.rs), b
      alt="A grid of screenshots from the app, in clockwise order: the main screen, the comments page, the search page and the saved posts page"
      width="550" />
 
-## Module dependency graph
-
-```mermaid
-%%{
-  init: {
-    'theme': 'dark'
-  }
-}%%
-
-graph TB
-
-  subgraph database
-    core
-    impl
-  end
-  model --> core
-  benchmark --> android
-  impl --> core
-  android --> api
-  android --> common
-  android --> core
-  android --> impl
-  android --> model
-  android --> benchmark
-  api --> model
-  common --> core
-  common --> model
-```
-
 ## License
 
 See [LICENSE](LICENSE)

@@ -14,6 +14,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.withGroovyBuilder
 import org.gradle.kotlin.dsl.withType
 
 @Suppress("Unused")
@@ -26,13 +27,15 @@ class SpotlessPlugin : Plugin<Project> {
     project.pluginManager.apply(SpotlessPlugin::class)
     project.extensions.configure<SpotlessExtension> {
       kotlin {
-        ktfmt(KTFMT_VERSION).googleStyle()
+        // https://github.com/diffplug/spotless/pull/1890#issuecomment-1827263031
+        @Suppress("INACCESSIBLE_TYPE") ktfmt(KTFMT_VERSION).withGroovyBuilder { "googleStyle"() }
         target("**/*.kt")
         targetExclude("**/build/", "/spotless/")
         licenseHeaderFile(project.file("spotless/license.kt"))
       }
       kotlinGradle {
-        ktfmt(KTFMT_VERSION).googleStyle()
+        // https://github.com/diffplug/spotless/pull/1890#issuecomment-1827263031
+        @Suppress("INACCESSIBLE_TYPE") ktfmt(KTFMT_VERSION).withGroovyBuilder { "googleStyle"() }
         target("**/*.kts")
         targetExclude("**/build/")
         licenseHeaderFile(project.file("spotless/license.kt"), "import|plugins|@file")

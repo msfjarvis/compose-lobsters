@@ -17,7 +17,7 @@ sentry-sdk = "6.34.0"
 serialization = "1.6.1"
 sqldelight = "2.0.0"
 whetstone = "0.8.0"
-workmanager = "2.9.0-rc01"
+workmanager = "2.9.0"
 
 [libraries]
 androidx-activity-compose = "androidx.activity:activity-compose:1.8.1"

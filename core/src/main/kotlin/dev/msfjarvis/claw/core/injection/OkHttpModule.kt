@@ -18,7 +18,7 @@ import dagger.multibindings.IntoSet
 import dev.msfjarvis.claw.core.network.DelegatingSocketFactory
 import dev.msfjarvis.claw.core.network.NapierLogger
 import dev.msfjarvis.claw.core.network.UserAgentInterceptor
-import io.sentry.android.okhttp.SentryOkHttpInterceptor
+import io.sentry.okhttp.SentryOkHttpInterceptor
 import java.net.Socket
 import javax.net.SocketFactory
 import okhttp3.Cache

@@ -47,7 +47,7 @@ class SentryPlugin : Plugin<Project> {
           forceInstrumentDependencies.set(false)
           features.set(EnumSet.allOf(InstrumentationFeature::class.java))
         }
-        experimentalGuardsquareSupport.set(false)
+        dexguardEnabled.set(false)
         autoInstallation {
           enabled.set(true)
           sentryVersion.set(libs.versions.sentry.sdk)

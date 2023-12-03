@@ -95,6 +95,7 @@ dependencies {
   implementation(projects.core)
   implementation(projects.database.impl)
   implementation(projects.model)
+  implementation(projects.web)
 
   kapt(libs.dagger.compiler)
 

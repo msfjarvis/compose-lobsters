@@ -11,6 +11,7 @@ junit = "5.10.1"
 konvert = "2.4.0"
 kotlin = "1.9.21"
 kotlinResult = "1.1.18"
+lifecycle = "2.7.0-rc01"
 retrofit = "2.9.0"
 richtext = "0.17.0"
 sentry-sdk = "7.0.0"
@@ -36,7 +37,10 @@ androidx-compose-ui = { module = "androidx.compose.ui:ui" }
 androidx-compose-ui-text = { module = "androidx.compose.ui:ui-text" }
 androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+androidx-compose-ui-util = { module = "androidx.compose.ui:ui-util" }
 androidx-core-splashscreen = "androidx.core:core-splashscreen:1.0.1"
+androidx-lifecycle-common = { module = "androidx.lifecycle:lifecycle-common", version.ref = "lifecycle" }
+androidx-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime", version.ref = "lifecycle" }
 androidx-lifecycle-compose = "androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2"
 androidx-navigation-compose = "androidx.navigation:navigation-compose:2.7.5"
 androidx-paging-compose = "androidx.paging:paging-compose:3.2.1"
@@ -73,6 +77,7 @@ junit-legacy = "junit:junit:4.13.2"
 konvert-api = { module = "io.mcarle:konvert-api", version.ref = "konvert" }
 konvert-processor = { module = "io.mcarle:konvert", version.ref = "konvert" }
 kotlinx-collections-immutable = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.6"
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "serialization" }

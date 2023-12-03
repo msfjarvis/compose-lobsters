@@ -163,4 +163,5 @@ include(
   "database:core",
   "database:impl",
   "model",
+  "web",
 )

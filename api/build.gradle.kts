@@ -27,7 +27,6 @@ dependencies {
   implementation(libs.jsoup)
 
   testImplementation(testFixtures(libs.eithernet))
-  testImplementation(libs.testcontainers)
   testImplementation(libs.kotlinx.coroutines.test)
   testImplementation(libs.kotlinx.serialization.json)
   testImplementation(libs.retrofit.kotlinxSerializationConverter)

@@ -179,6 +179,9 @@ constructor(
 
   suspend fun exportPosts(output: OutputStream) = dataTransferRepository.exportPosts(output)
 
+  suspend fun exportPostsAsHtml(output: OutputStream) =
+    dataTransferRepository.exportPostsAsHTML(output)
+
   fun markPostAsRead(postId: String) {
     viewModelScope.launch { readPostsRepository.markRead(postId) }
   }

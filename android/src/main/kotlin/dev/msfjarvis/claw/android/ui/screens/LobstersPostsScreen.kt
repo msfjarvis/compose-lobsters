@@ -322,6 +322,7 @@ fun LobstersPostsScreen(
             context = context,
             importPosts = viewModel::importPosts,
             exportPosts = viewModel::exportPosts,
+            exportPostsAsHtml = viewModel::exportPostsAsHtml,
             snackbarHostState = snackbarHostState,
           )
         }

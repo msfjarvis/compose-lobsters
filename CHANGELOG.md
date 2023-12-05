@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+*   Add HTML bookmarks as an export format
+
 ## [1.38.0] - 2023-11-20
 
 ### Changed

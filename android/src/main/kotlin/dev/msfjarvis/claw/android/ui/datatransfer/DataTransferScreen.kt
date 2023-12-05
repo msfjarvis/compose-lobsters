@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.Upload
+import androidx.compose.material.icons.filled.WebStories
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.SnackbarHostState
@@ -30,25 +31,28 @@ import java.io.OutputStream
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-private const val MIME_TYPE = "application/json"
+private const val JSON_MIME_TYPE = "application/json"
+private const val HTML_MIME_TYPE = "application/html"
 
 @Composable
 fun DataTransferScreen(
   context: Context,
   importPosts: suspend (InputStream) -> Unit,
   exportPosts: suspend (OutputStream) -> Unit,
+  exportPostsAsHtml: suspend (OutputStream) -> Unit,
   snackbarHostState: SnackbarHostState,
   modifier: Modifier = Modifier,
 ) {
   val coroutineScope = rememberCoroutineScope()
   Column(modifier = modifier) {
-    ImportOption(context, coroutineScope, importPosts, snackbarHostState)
-    ExportOption(context, coroutineScope, exportPosts, snackbarHostState)
+    JsonImportOption(context, coroutineScope, importPosts, snackbarHostState)
+    JsonExportOption(context, coroutineScope, exportPosts, snackbarHostState)
+    HtmlExportOption(context, coroutineScope, exportPostsAsHtml, snackbarHostState)
   }
 }
 
 @Composable
-private fun ImportOption(
+private fun JsonImportOption(
   context: Context,
   coroutineScope: CoroutineScope,
   importPosts: suspend (InputStream) -> Unit,
@@ -72,19 +76,64 @@ private fun ImportOption(
     description = "Import saved posts from a previously generated export",
     icon = Icons.Filled.Download,
   ) {
-    importAction.launch(MIME_TYPE)
+    importAction.launch(JSON_MIME_TYPE)
   }
 }
 
 @Composable
-private fun ExportOption(
+private fun JsonExportOption(
+  context: Context,
+  coroutineScope: CoroutineScope,
+  exportPosts: suspend (OutputStream) -> Unit,
+  snackbarHostState: SnackbarHostState,
+) {
+  GenericExportOption(
+    title = "Export posts to file",
+    description = "Write all saved posts into a JSON file that can be imported at a later date",
+    icon = Icons.Filled.Upload,
+    fileName = "claw-export.json",
+    mimeType = JSON_MIME_TYPE,
+    context = context,
+    coroutineScope = coroutineScope,
+    exportPosts = exportPosts,
+    snackbarHostState = snackbarHostState,
+  )
+}
+
+@Composable
+private fun HtmlExportOption(
+  context: Context,
+  coroutineScope: CoroutineScope,
+  exportPosts: suspend (OutputStream) -> Unit,
+  snackbarHostState: SnackbarHostState,
+) {
+  GenericExportOption(
+    title = "Export posts as bookmarks",
+    description = "Write all saved posts into a HTML file that can be imported by web browsers",
+    icon = Icons.Filled.WebStories,
+    fileName = "claw-export.html",
+    mimeType = HTML_MIME_TYPE,
+    context = context,
+    coroutineScope = coroutineScope,
+    exportPosts = exportPosts,
+    snackbarHostState = snackbarHostState,
+  )
+}
+
+@Composable
+private fun GenericExportOption(
+  title: String,
+  description: String,
+  icon: ImageVector,
+  fileName: String,
+  mimeType: String,
   context: Context,
   coroutineScope: CoroutineScope,
   exportPosts: suspend (OutputStream) -> Unit,
   snackbarHostState: SnackbarHostState,
 ) {
   val exportAction =
-    rememberLauncherForActivityResult(CreateDocument(MIME_TYPE)) { uri ->
+    rememberLauncherForActivityResult(CreateDocument(mimeType)) { uri ->
       if (uri == null) {
         coroutineScope.launch { snackbarHostState.showSnackbarDismissing("No file selected") }
         return@rememberLauncherForActivityResult
@@ -97,11 +146,11 @@ private fun ExportOption(
       }
     }
   SettingsActionItem(
-    title = "Export posts to file",
-    description = "Write all saved posts into a JSON file that can be imported at a later date",
-    icon = Icons.Filled.Upload,
+    title = title,
+    description = description,
+    icon = icon,
   ) {
-    exportAction.launch("claw-export.json")
+    exportAction.launch(fileName)
   }
 }
 

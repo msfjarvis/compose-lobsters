@@ -45,7 +45,7 @@ fun rememberPostActions(
         viewModel.markPostAsRead(postId)
         val currentRoute = navController.currentDestination?.route
         val newRoute =
-          Destinations.Comments.route.replace(Destinations.Comments.placeholder, postId)
+          Destinations.Comments.route.replace(Destinations.Comments.PLACEHOLDER, postId)
         if (currentRoute != Destinations.Comments.route) navController.navigate(newRoute)
       }
 

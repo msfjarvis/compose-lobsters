@@ -9,34 +9,34 @@ package dev.msfjarvis.claw.android.ui.navigation
 sealed class Destinations {
   abstract val route: String
 
-  object Hottest : Destinations() {
+  data object Hottest : Destinations() {
     override val route = "hottest"
   }
 
-  object Newest : Destinations() {
+  data object Newest : Destinations() {
     override val route = "newest"
   }
 
-  object Saved : Destinations() {
+  data object Saved : Destinations() {
     override val route = "saved"
   }
 
-  object Comments : Destinations() {
-    const val placeholder = "{postId}"
-    override val route = "comments/$placeholder"
+  data object Comments : Destinations() {
+    const val PLACEHOLDER = "{postId}"
+    override val route = "comments/$PLACEHOLDER"
   }
 
-  object User : Destinations() {
-    const val placeholder = "{username}"
-    override val route = "user/$placeholder"
+  data object User : Destinations() {
+    const val PLACEHOLDER = "{username}"
+    override val route = "user/$PLACEHOLDER"
   }
 
-  object DataTransfer : Destinations() {
-    override val route: String = "datatransfer"
+  data object DataTransfer : Destinations() {
+    override val route = "datatransfer"
   }
 
-  object Search : Destinations() {
-    override val route: String = "search"
+  data object Search : Destinations() {
+    override val route = "search"
   }
 
   companion object {

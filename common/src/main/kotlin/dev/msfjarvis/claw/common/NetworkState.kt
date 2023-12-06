@@ -11,5 +11,5 @@ internal sealed class NetworkState {
 
   class Error(val error: Throwable, val description: String) : NetworkState()
 
-  object Loading : NetworkState()
+  data object Loading : NetworkState()
 }

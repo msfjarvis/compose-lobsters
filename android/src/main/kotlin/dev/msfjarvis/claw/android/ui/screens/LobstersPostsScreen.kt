@@ -120,7 +120,7 @@ fun LobstersPostsScreen(
   LaunchedEffect(false) {
     if (postIdOverride != null) {
       navController.navigate(
-        Destinations.Comments.route.replace(Destinations.Comments.placeholder, postIdOverride)
+        Destinations.Comments.route.replace(Destinations.Comments.PLACEHOLDER, postIdOverride)
       )
     }
   }
@@ -284,8 +284,8 @@ fun LobstersPostsScreen(
           arguments = listOf(navArgument("postId") { type = NavType.StringType }),
           deepLinks =
             listOf(
-              navDeepLink { uriPattern = "$uri/s/${Destinations.Comments.placeholder}/.*" },
-              navDeepLink { uriPattern = "$uri/s/${Destinations.Comments.placeholder}" },
+              navDeepLink { uriPattern = "$uri/s/${Destinations.Comments.PLACEHOLDER}/.*" },
+              navDeepLink { uriPattern = "$uri/s/${Destinations.Comments.PLACEHOLDER}" },
             ),
         ) { backStackEntry ->
           val postId =
@@ -305,7 +305,7 @@ fun LobstersPostsScreen(
           route = Destinations.User.route,
           arguments = listOf(navArgument("username") { type = NavType.StringType }),
           deepLinks =
-            listOf(navDeepLink { uriPattern = "$uri/u/${Destinations.User.placeholder}" }),
+            listOf(navDeepLink { uriPattern = "$uri/u/${Destinations.User.PLACEHOLDER}" }),
         ) { backStackEntry ->
           val username =
             requireNotNull(backStackEntry.arguments?.getString("username")) {

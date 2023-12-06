@@ -73,7 +73,7 @@ private fun JsonImportOption(
     }
   SettingsActionItem(
     title = "Import saved posts",
-    description = "Import saved posts from a previously generated export",
+    description = "Import saved posts from a previously generated JSON export",
     icon = Icons.Filled.Download,
   ) {
     importAction.launch(JSON_MIME_TYPE)

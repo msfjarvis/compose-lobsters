@@ -6,7 +6,7 @@
  */
 plugins { `kotlin-dsl` }
 
-kotlin.jvmToolchain { languageVersion.set(JavaLanguageVersion.of(21)) }
+kotlin.jvmToolchain { languageVersion.set(JavaLanguageVersion.of(17)) }
 
 gradlePlugin {
   plugins {

@@ -110,7 +110,7 @@ android-test = { id = "com.android.test", version.ref = "agp" }
 anvil = "com.squareup.anvil:2.4.8"
 baselineprofile = { id = "androidx.baselineprofile", version.ref = "benchmark" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-ksp = "com.google.devtools.ksp:1.9.21-1.0.15"
+ksp = "com.google.devtools.ksp:1.9.21-1.0.16"
 licensee = "app.cash.licensee:1.8.0"
 modulegraphassert = "com.jraska.module.graph.assertion:2.5.0"
 poko = "dev.drewhamilton.poko:0.15.1"

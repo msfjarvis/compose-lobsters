@@ -35,18 +35,22 @@
       ],
       "matchPackageNames": [
       ],
-      "groupName": "androidx"
+      "groupName": "AndroidX"
     },
     {
       "matchPackagePatterns": [
         "^io.sentry",
         "^sentry",
       ],
-      "groupName": "sentry"
+      "groupName": "Sentry"
     },
     {
       "matchPackageNames": [
         "com.squareup.anvil",
+        // alpha17 and alpha18 have regressions with installing APKs
+        // https://issuetracker.google.com/issues/315337463
+        "com.android.test",
+        "com.android.tools.build:gradle",
       ],
       "enabled": false,
     },

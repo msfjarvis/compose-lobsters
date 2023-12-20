@@ -29,7 +29,7 @@ jobs:
         java-version: 18
 
     - name: Run unit tests
-      uses: gradle/gradle-build-action@8cbcb9948b5892387aed077daf6f90e1f0ba5b27 # v2.11.0
+      uses: gradle/gradle-build-action@982da8e78c05368c70dac0351bb82647a9e9a5d2 # v2.11.1
       with:
         arguments: --no-configuration-cache --stacktrace check -PslimTests
         gradle-home-cache-cleanup: true
@@ -94,7 +94,7 @@ jobs:
         AGE_SECRET_KEY: ${{ secrets.AGE_SECRET_KEY }}
 
     - name: Build release app
-      uses: gradle/gradle-build-action@8cbcb9948b5892387aed077daf6f90e1f0ba5b27 # v2.11.0
+      uses: gradle/gradle-build-action@982da8e78c05368c70dac0351bb82647a9e9a5d2 # v2.11.1
       env:
         SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       with:

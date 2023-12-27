@@ -72,7 +72,7 @@ class AndroidCommonPlugin : Plugin<Project> {
       beforeVariants(selector().all()) {
         if (it.name == "debug") return@beforeVariants
         (it as HasUnitTestBuilder).enableUnitTest = false
-        it.androidTest.enable = false
+        it.enableAndroidTest = false
       }
     }
 
@@ -81,7 +81,7 @@ class AndroidCommonPlugin : Plugin<Project> {
       beforeVariants(selector().all()) {
         if (it.name == "debug") return@beforeVariants
         (it as HasUnitTestBuilder).enableUnitTest = false
-        it.androidTest.enable = false
+        it.enableAndroidTest = false
       }
     }
   }

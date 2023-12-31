@@ -52,7 +52,12 @@ class SearchActivity : ComponentActivity() {
         dynamicColor = true,
         providedValues = arrayOf(LocalUriHandler provides urlLauncher),
       ) {
-        SearchScreen(urlLauncher, htmlConverter, { webUri = it })
+        SearchScreen(
+          urlLauncher = urlLauncher,
+          htmlConverter = htmlConverter,
+          setWebUri = { webUri = it },
+          viewModel = viewModel,
+        )
       }
     }
   }

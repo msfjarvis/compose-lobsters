@@ -8,7 +8,24 @@
 
 rootProject.name = "build-logic"
 
-plugins { id("org.gradle.toolchains.foojay-resolver-convention") version "0.8.0" }
+pluginManagement {
+  plugins { id("org.gradle.toolchains.foojay-resolver-convention") version "0.8.0" }
+  repositories {
+    exclusiveContent {
+      forRepository { gradlePluginPortal() }
+      filter {
+        includeModule(
+          "org.gradle.toolchains.foojay-resolver-convention",
+          "org.gradle.toolchains.foojay-resolver-convention.gradle.plugin",
+        )
+        includeModule("org.gradle.toolchains", "foojay-resolver")
+        includeModule("org.gradle.kotlin.kotlin-dsl", "org.gradle.kotlin.kotlin-dsl.gradle.plugin")
+        includeModule("org.gradle.kotlin", "gradle-kotlin-dsl-plugins")
+      }
+    }
+    mavenCentral { mavenContent { releasesOnly() } }
+  }
+}
 
 dependencyResolutionManagement {
   repositories {

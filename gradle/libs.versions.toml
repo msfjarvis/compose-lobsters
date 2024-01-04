@@ -9,7 +9,7 @@ dagger = "2.50"
 glance = "1.0.0"
 junit = "5.10.1"
 konvert = "2.4.0"
-kotlin = "1.9.21"
+kotlin = "1.9.22"
 kotlinResult = "1.1.18"
 lifecycle = "2.7.0-rc02"
 retrofit = "2.9.0"
@@ -110,10 +110,10 @@ android-test = { id = "com.android.test", version.ref = "agp" }
 anvil = "com.squareup.anvil:2.4.8"
 baselineprofile = { id = "androidx.baselineprofile", version.ref = "benchmark" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-ksp = "com.google.devtools.ksp:1.9.21-1.0.16"
+ksp = "com.google.devtools.ksp:1.9.22-1.0.16"
 licensee = "app.cash.licensee:1.8.0"
 modulegraphassert = "com.jraska.module.graph.assertion:2.5.0"
-poko = "dev.drewhamilton.poko:0.15.1"
+poko = "dev.drewhamilton.poko:0.15.2"
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 tracelog = "dev.msfjarvis.tracelog:0.1.3"
 whetstone = { id = "dev.msfjarvis.whetstone", version.ref = "whetstone" }

@@ -45,10 +45,10 @@
       "groupName": "Sentry"
     },
     {
-      "matchPackageNames": [
-        "com.squareup.anvil",
+      "matchPackagePatterns": [
+        "^com.squareup.anvil"
       ],
-      "enabled": false,
+      "allowedVersions": "!/.*-1-8$/",
     },
   ],
   "regexManagers": [

@@ -1,5 +1,5 @@
 /*
- * Copyright © 2023 Harsh Shandilya.
+ * Copyright © 2023-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -191,6 +191,7 @@ public fun WebView(
     factory = { context ->
       (factory?.invoke(context) ?: WebView(context))
         .apply {
+          settings.allowContentAccess = false
           onCreated(this)
 
           this.layoutParams = layoutParams
@@ -213,7 +214,7 @@ public fun WebView(
  * A parent class implementation of WebViewClient that can be subclassed to add custom behaviour.
  *
  * As Accompanist Web needs to set its own web client to function, it provides this intermediary
- * class that can be overriden if further custom behaviour is required.
+ * class that can be overridden if further custom behaviour is required.
  */
 public open class AccompanistWebViewClient : WebViewClient() {
   public open lateinit var state: WebViewState

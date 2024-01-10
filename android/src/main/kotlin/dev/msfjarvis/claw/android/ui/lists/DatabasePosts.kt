@@ -1,5 +1,5 @@
 /*
- * Copyright © 2021-2023 Harsh Shandilya.
+ * Copyright © 2021-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -28,13 +28,12 @@ import androidx.compose.ui.unit.dp
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.ui.decorations.MonthHeader
 import dev.msfjarvis.claw.database.local.SavedPost
-import java.time.Month
 import kotlinx.collections.immutable.ImmutableMap
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DatabasePosts(
-  items: ImmutableMap<Month, List<SavedPost>>,
+  items: ImmutableMap<String, List<SavedPost>>,
   listState: LazyListState,
   postActions: PostActions,
   modifier: Modifier = Modifier,
@@ -53,7 +52,7 @@ fun DatabasePosts(
     } else {
       LazyColumn(state = listState) {
         items.forEach { (month, posts) ->
-          stickyHeader(contentType = "month-header") { MonthHeader(month = month) }
+          stickyHeader(contentType = "month-header") { MonthHeader(label = month) }
           items(
             items = posts,
             key = { it.shortId },

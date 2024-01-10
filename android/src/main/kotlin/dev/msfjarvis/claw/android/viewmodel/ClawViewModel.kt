@@ -1,5 +1,5 @@
 /*
- * Copyright © 2021-2023 Harsh Shandilya.
+ * Copyright © 2021-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -11,6 +11,8 @@ import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.text.capitalize
+import androidx.compose.ui.text.intl.Locale
 import androidx.glance.appwidget.updateAll
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
@@ -36,7 +38,6 @@ import java.io.InputStream
 import java.io.OutputStream
 import java.net.HttpURLConnection
 import java.time.LocalDateTime
-import java.time.Month
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
@@ -87,10 +88,7 @@ constructor(
     get() = newestPostsPager.flow
 
   val savedPosts
-    get() =
-      savedPostsRepository.savedPosts.map {
-        it.sortedByDescending { post -> post.createdAt.toLocalDateTime() }
-      }
+    get() = savedPostsRepository.savedPosts
 
   val savedPostsByMonth
     get() = savedPosts.map(::mapSavedPosts)
@@ -111,12 +109,25 @@ constructor(
     }
   }
 
-  private fun mapSavedPosts(items: List<SavedPost>): ImmutableMap<Month, List<SavedPost>> {
+  private fun mapSavedPosts(items: List<SavedPost>): ImmutableMap<String, List<SavedPost>> {
     val sorted =
       items.sortedWith { post1, post2 ->
-        post2.createdAt.toLocalDateTime().compareTo(post1.createdAt.toLocalDateTime())
+        val post1Date = post1.createdAt.toLocalDateTime()
+        val post2Date = post2.createdAt.toLocalDateTime()
+        if (post2Date.isBefore(post1Date)) {
+          -1
+        } else if (post2Date.isAfter(post1Date)) {
+          1
+        } else {
+          0
+        }
       }
-    return sorted.groupBy { post -> post.createdAt.toLocalDateTime().month }.toImmutableMap()
+    return sorted
+      .groupBy { post ->
+        val time = post.createdAt.toLocalDateTime()
+        "${time.month.name.lowercase().capitalize(Locale.current)} ${time.year}"
+      }
+      .toImmutableMap()
   }
 
   fun isPostSaved(post: SavedPost): Boolean {

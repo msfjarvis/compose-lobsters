@@ -55,7 +55,7 @@ fun WidgetListEntry(
       modifier =
         GlanceModifier.fillMaxWidth()
           .background(GlanceTheme.colors.surfaceVariant)
-          .cornerRadius(16.dp)
+          .cornerRadius(4.dp)
           .padding(8.dp),
     ) {
       Text(

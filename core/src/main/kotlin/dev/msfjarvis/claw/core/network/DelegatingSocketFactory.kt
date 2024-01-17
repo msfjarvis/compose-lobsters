@@ -1,5 +1,5 @@
 /*
- * Copyright © 2022 Harsh Shandilya.
+ * Copyright © 2022-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -29,7 +29,7 @@ open class DelegatingSocketFactory(private val delegate: SocketFactory) : Socket
     host: String,
     port: Int,
     localAddress: InetAddress,
-    localPort: Int
+    localPort: Int,
   ): Socket {
     val socket = delegate.createSocket(host, port, localAddress, localPort)
     return configureSocket(socket)
@@ -44,7 +44,7 @@ open class DelegatingSocketFactory(private val delegate: SocketFactory) : Socket
     host: InetAddress,
     port: Int,
     localAddress: InetAddress,
-    localPort: Int
+    localPort: Int,
   ): Socket {
     val socket = delegate.createSocket(host, port, localAddress, localPort)
     return configureSocket(socket)

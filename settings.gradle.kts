@@ -28,7 +28,7 @@ pluginManagement {
         includeModule("dev.iurysouza", "modulegraph")
         includeModule(
           "com.jraska.module.graph.assertion",
-          "com.jraska.module.graph.assertion.gradle.plugin"
+          "com.jraska.module.graph.assertion.gradle.plugin",
         )
         includeModule("com.gradle", "gradle-enterprise-gradle-plugin")
         includeModule("com.gradle.enterprise", "com.gradle.enterprise.gradle.plugin")

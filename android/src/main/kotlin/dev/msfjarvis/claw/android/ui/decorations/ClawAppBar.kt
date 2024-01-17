@@ -1,5 +1,5 @@
 /*
- * Copyright © 2021-2023 Harsh Shandilya.
+ * Copyright © 2021-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -46,9 +46,5 @@ fun ClawAppBar(
 @ThemePreviews
 @Composable
 fun ClawAppBarPreview() {
-  LobstersTheme {
-    ClawAppBar(
-      title = { Text("Claw", fontWeight = FontWeight.Bold) },
-    )
-  }
+  LobstersTheme { ClawAppBar(title = { Text("Claw", fontWeight = FontWeight.Bold) }) }
 }

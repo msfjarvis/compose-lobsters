@@ -1,5 +1,5 @@
 /*
- * Copyright © 2021-2023 Harsh Shandilya.
+ * Copyright © 2021-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -162,7 +162,7 @@ fun LobstersPostsScreen(
               navItems.none { it.route == currentDestination }
           ) {
             IconButton(
-              onClick = { if (!navController.popBackStack()) context.getActivity()?.finish() },
+              onClick = { if (!navController.popBackStack()) context.getActivity()?.finish() }
             ) {
               Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
@@ -202,7 +202,7 @@ fun LobstersPostsScreen(
                     imageVector = Icons.Filled.ImportExport,
                     contentDescription = "Data transfer options",
                   )
-                }
+                },
               )
               DropdownMenuItem(
                 text = { Text("Search posts") },
@@ -211,11 +211,8 @@ fun LobstersPostsScreen(
                   expanded = false
                 },
                 leadingIcon = {
-                  Icon(
-                    imageVector = Icons.Filled.Search,
-                    contentDescription = "Search posts",
-                  )
-                }
+                  Icon(imageVector = Icons.Filled.Search, contentDescription = "Search posts")
+                },
               )
             }
           }
@@ -273,11 +270,7 @@ fun LobstersPostsScreen(
         }
         composable(route = Destinations.Saved.route) {
           setWebUri(null)
-          DatabasePosts(
-            items = savedPosts,
-            listState = savedListState,
-            postActions = postActions,
-          )
+          DatabasePosts(items = savedPosts, listState = savedListState, postActions = postActions)
         }
         composable(
           route = Destinations.Comments.route,
@@ -304,18 +297,14 @@ fun LobstersPostsScreen(
         composable(
           route = Destinations.User.route,
           arguments = listOf(navArgument("username") { type = NavType.StringType }),
-          deepLinks =
-            listOf(navDeepLink { uriPattern = "$uri/u/${Destinations.User.PLACEHOLDER}" }),
+          deepLinks = listOf(navDeepLink { uriPattern = "$uri/u/${Destinations.User.PLACEHOLDER}" }),
         ) { backStackEntry ->
           val username =
             requireNotNull(backStackEntry.arguments?.getString("username")) {
               "Navigating to ${Destinations.User.route} without necessary 'username' argument"
             }
           setWebUri("https://lobste.rs/u/$username")
-          UserProfile(
-            username = username,
-            getProfile = viewModel::getUserProfile,
-          )
+          UserProfile(username = username, getProfile = viewModel::getUserProfile)
         }
         composable(route = Destinations.DataTransfer.route) {
           DataTransferScreen(

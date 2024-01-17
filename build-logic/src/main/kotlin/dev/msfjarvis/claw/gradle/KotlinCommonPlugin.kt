@@ -1,5 +1,5 @@
 /*
- * Copyright © 2022-2023 Harsh Shandilya.
+ * Copyright © 2022-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -43,10 +43,7 @@ class KotlinCommonPlugin : Plugin<Project> {
   }
 
   companion object {
-    private val ADDITIONAL_COMPILER_ARGS =
-      listOf(
-        "-opt-in=kotlin.RequiresOptIn",
-      )
+    private val ADDITIONAL_COMPILER_ARGS = listOf("-opt-in=kotlin.RequiresOptIn")
 
     val JVM_TOOLCHAIN_ACTION =
       Action<JavaToolchainSpec> { languageVersion.set(JavaLanguageVersion.of(17)) }

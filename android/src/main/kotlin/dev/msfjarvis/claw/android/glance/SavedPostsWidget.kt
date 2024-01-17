@@ -1,5 +1,5 @@
 /*
- * Copyright © 2023 Harsh Shandilya.
+ * Copyright © 2023-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -30,9 +30,7 @@ import dev.msfjarvis.claw.common.theme.DarkThemeColors
 import dev.msfjarvis.claw.common.theme.LightThemeColors
 import dev.msfjarvis.claw.database.local.SavedPost
 
-class SavedPostsWidget(
-  private val posts: List<SavedPost>,
-) : GlanceAppWidget() {
+class SavedPostsWidget(private val posts: List<SavedPost>) : GlanceAppWidget() {
   override suspend fun provideGlance(context: Context, id: GlanceId) {
     provideContent {
       GlanceTheme(
@@ -51,7 +49,7 @@ class SavedPostsWidget(
         GlanceModifier.fillMaxSize()
           .background(GlanceTheme.colors.background)
           .appWidgetBackground(),
-      horizontalAlignment = Alignment.CenterHorizontally
+      horizontalAlignment = Alignment.CenterHorizontally,
     ) {
       item {
         val style = MaterialTheme.typography.titleLarge

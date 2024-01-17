@@ -1,5 +1,5 @@
 /*
- * Copyright © 2021-2023 Harsh Shandilya.
+ * Copyright © 2021-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -56,9 +56,7 @@ fun NetworkPosts(
         modifier = Modifier.align(Alignment.Center),
       )
     } else {
-      LazyColumn(
-        state = listState,
-      ) {
+      LazyColumn(state = listState) {
         items(
           count = lazyPagingItems.itemCount,
           key = lazyPagingItems.itemKey { it.shortId },
@@ -83,7 +81,7 @@ fun NetworkPosts(
               modifier =
                 Modifier.fillMaxWidth()
                   .wrapContentWidth(Alignment.CenterHorizontally)
-                  .padding(vertical = 16.dp),
+                  .padding(vertical = 16.dp)
             )
           }
         }

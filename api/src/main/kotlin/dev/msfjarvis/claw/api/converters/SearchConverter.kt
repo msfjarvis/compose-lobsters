@@ -1,5 +1,5 @@
 /*
- * Copyright © 2023 Harsh Shandilya.
+ * Copyright © 2023-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -77,7 +77,7 @@ object SearchConverter : Converter<ResponseBody, List<LobstersPost>> {
     override fun responseBodyConverter(
       type: Type,
       annotations: Array<out Annotation>,
-      retrofit: Retrofit
+      retrofit: Retrofit,
     ): Converter<ResponseBody, List<LobstersPost>> {
       return SearchConverter
     }

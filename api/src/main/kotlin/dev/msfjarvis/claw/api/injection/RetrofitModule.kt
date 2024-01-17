@@ -1,5 +1,5 @@
 /*
- * Copyright © 2023 Harsh Shandilya.
+ * Copyright © 2023-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -91,10 +91,7 @@ object RetrofitModule {
   @Provides
   @SearchApi
   fun provideConverters(): List<@JvmSuppressWildcards Converter.Factory> =
-    listOf(
-      ApiResultConverterFactory,
-      SearchConverter.Factory,
-    )
+    listOf(ApiResultConverterFactory, SearchConverter.Factory)
 
   @Provides @Named("LobstersURL") fun provideLobstersUrl(): String = LobstersApi.BASE_URL
 }

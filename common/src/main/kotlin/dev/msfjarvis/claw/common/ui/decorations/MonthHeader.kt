@@ -22,10 +22,7 @@ import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
 import dev.msfjarvis.claw.common.ui.surfaceColorAtNavigationBarElevation
 
 @Composable
-fun MonthHeader(
-  label: String,
-  modifier: Modifier = Modifier,
-) {
+fun MonthHeader(label: String, modifier: Modifier = Modifier) {
   Box(
     modifier
       .fillMaxWidth()

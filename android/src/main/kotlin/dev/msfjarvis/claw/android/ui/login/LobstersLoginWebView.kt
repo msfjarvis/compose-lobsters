@@ -1,5 +1,5 @@
 /*
- * Copyright © 2023 Harsh Shandilya.
+ * Copyright © 2023-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -20,9 +20,7 @@ import okhttp3.HttpUrl.Companion.toHttpUrl
 
 @Suppress("Unused")
 @Composable
-fun LobstersLoginWebView(
-  modifier: Modifier = Modifier,
-) {
+fun LobstersLoginWebView(modifier: Modifier = Modifier) {
   val state = rememberWebViewState(url = "https://lobste.rs/login")
   val webClient = remember {
     object : AccompanistWebViewClient() {
@@ -43,10 +41,5 @@ fun LobstersLoginWebView(
       }
     }
   }
-  WebView(
-    state = state,
-    client = webClient,
-    modifier = modifier,
-    captureBackPresses = false,
-  )
+  WebView(state = state, client = webClient, modifier = modifier, captureBackPresses = false)
 }

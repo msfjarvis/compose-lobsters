@@ -1,5 +1,5 @@
 /*
- * Copyright © 2021-2023 Harsh Shandilya.
+ * Copyright © 2021-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -73,17 +73,13 @@ fun LobstersCard(
         .fillMaxWidth()
         .clickable { postActions.viewPost(post.shortId, post.url, post.commentsUrl) }
         .background(MaterialTheme.colorScheme.background)
-        .padding(start = 16.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
+        .padding(start = 16.dp, top = 16.dp, end = 4.dp, bottom = 16.dp)
   ) {
     Row(
       horizontalArrangement = Arrangement.spacedBy(8.dp),
       verticalAlignment = Alignment.CenterVertically,
     ) {
-      PostDetails(
-        modifier = Modifier.weight(1f),
-        post = post,
-        isRead = isRead,
-      )
+      PostDetails(modifier = Modifier.weight(1f), post = post, isRead = isRead)
       Column(
         modifier = Modifier.wrapContentHeight(),
         verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -126,11 +122,7 @@ fun PostDetails(post: SavedPost, isRead: Boolean, modifier: Modifier = Modifier)
 }
 
 @Composable
-internal fun PostTitle(
-  title: String,
-  isRead: Boolean,
-  modifier: Modifier = Modifier,
-) {
+internal fun PostTitle(title: String, isRead: Boolean, modifier: Modifier = Modifier) {
   Text(
     text = title,
     modifier = modifier,
@@ -169,10 +161,7 @@ internal fun Submitter(
 }
 
 @Composable
-private fun SaveButton(
-  isSaved: Boolean,
-  modifier: Modifier = Modifier,
-) {
+private fun SaveButton(isSaved: Boolean, modifier: Modifier = Modifier) {
   Crossfade(targetState = isSaved, label = "save-button") { saved ->
     Box(modifier = modifier.padding(12.dp)) {
       Icon(
@@ -186,10 +175,7 @@ private fun SaveButton(
 }
 
 @Composable
-private fun CommentsButton(
-  commentCount: Int?,
-  modifier: Modifier = Modifier,
-) {
+private fun CommentsButton(commentCount: Int?, modifier: Modifier = Modifier) {
   BadgedBox(
     modifier = modifier.padding(12.dp),
     badge = {
@@ -219,10 +205,7 @@ private fun CommentsButton(
 
 @Composable
 @OptIn(ExperimentalLayoutApi::class)
-internal fun TagRow(
-  tags: ImmutableList<String>,
-  modifier: Modifier = Modifier,
-) {
+internal fun TagRow(tags: ImmutableList<String>, modifier: Modifier = Modifier) {
   FlowRow(
     modifier = modifier,
     horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -233,10 +216,7 @@ internal fun TagRow(
 }
 
 @Composable
-private fun TagText(
-  tag: String,
-  modifier: Modifier = Modifier,
-) {
+private fun TagText(tag: String, modifier: Modifier = Modifier) {
   Text(
     text = tag,
     modifier =

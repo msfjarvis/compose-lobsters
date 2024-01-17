@@ -1,5 +1,5 @@
 /*
- * Copyright © 2022-2023 Harsh Shandilya.
+ * Copyright © 2022-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -17,7 +17,7 @@ internal data class CommentNode(
   val children: MutableList<CommentNode> = mutableListOf(),
   val isUnread: Boolean = false,
   var isExpanded: Boolean = true,
-  var indentLevel: Int
+  var indentLevel: Int,
 ) {
   fun addChild(child: CommentNode) {
     if (comment.shortId == child.comment.parentComment) {
@@ -32,7 +32,7 @@ internal data class CommentNode(
 
 internal fun createListNode(
   comments: List<Comment>,
-  commentState: PostComments?
+  commentState: PostComments?,
 ): MutableList<CommentNode> {
   val commentNodes = mutableListOf<CommentNode>()
   val isUnread = { id: String -> commentState?.commentIds?.contains(id) == false }
@@ -43,7 +43,7 @@ internal fun createListNode(
         CommentNode(
           comment = comments[i],
           isUnread = isUnread(comments[i].shortId),
-          indentLevel = 1
+          indentLevel = 1,
         )
       )
     } else {
@@ -52,7 +52,7 @@ internal fun createListNode(
           CommentNode(
             comment = comments[i],
             isUnread = isUnread(comments[i].shortId),
-            indentLevel = it.indentLevel + 1
+            indentLevel = it.indentLevel + 1,
           )
         )
       }
@@ -86,11 +86,7 @@ internal fun LazyListScope.nodes(
   toggleExpanded: (CommentNode) -> Unit,
 ) {
   nodes.forEach { node ->
-    node(
-      node = node,
-      htmlConverter = htmlConverter,
-      toggleExpanded = toggleExpanded,
-    )
+    node(node = node, htmlConverter = htmlConverter, toggleExpanded = toggleExpanded)
   }
 }
 
@@ -104,18 +100,10 @@ private fun LazyListScope.node(
     return
   }
   item {
-    CommentEntry(
-      commentNode = node,
-      htmlConverter = htmlConverter,
-      toggleExpanded = toggleExpanded,
-    )
+    CommentEntry(commentNode = node, htmlConverter = htmlConverter, toggleExpanded = toggleExpanded)
     HorizontalDivider()
   }
   if (node.children.isNotEmpty()) {
-    nodes(
-      node.children,
-      htmlConverter = htmlConverter,
-      toggleExpanded = toggleExpanded,
-    )
+    nodes(node.children, htmlConverter = htmlConverter, toggleExpanded = toggleExpanded)
   }
 }

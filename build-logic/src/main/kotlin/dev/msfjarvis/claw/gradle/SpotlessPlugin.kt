@@ -1,5 +1,5 @@
 /*
- * Copyright © 2022-2023 Harsh Shandilya.
+ * Copyright © 2022-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -45,7 +45,7 @@ class SpotlessPlugin : Plugin<Project> {
         endWithNewline()
         licenseHeaderFile(
           project.file("spotless/license.xml"),
-          "<(adaptive-icon|appwidget-provider|data-extraction-rules|full-backup-content|manifest|vector|resources)"
+          "<(adaptive-icon|appwidget-provider|data-extraction-rules|full-backup-content|manifest|vector|resources)",
         )
       }
     }
@@ -55,6 +55,6 @@ class SpotlessPlugin : Plugin<Project> {
   }
 
   private companion object {
-    private const val KTFMT_VERSION = "0.46"
+    private const val KTFMT_VERSION = "0.47"
   }
 }

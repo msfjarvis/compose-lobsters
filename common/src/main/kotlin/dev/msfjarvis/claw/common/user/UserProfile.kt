@@ -1,5 +1,5 @@
 /*
- * Copyright © 2022-2023 Harsh Shandilya.
+ * Copyright © 2022-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -50,12 +50,8 @@ fun UserProfile(
         .fold(
           success = { profile -> value = Success(profile) },
           failure = {
-            value =
-              Error(
-                error = it,
-                description = "Failed to load profile for $username",
-              )
-          }
+            value = Error(error = it, description = "Failed to load profile for $username")
+          },
         )
     }
   when (user) {
@@ -81,10 +77,7 @@ fun UserProfile(
 }
 
 @Composable
-private fun UserProfileInternal(
-  user: User,
-  modifier: Modifier = Modifier,
-) {
+private fun UserProfileInternal(user: User, modifier: Modifier = Modifier) {
   Surface(modifier = modifier) {
     Column(
       horizontalAlignment = Alignment.CenterHorizontally,
@@ -97,17 +90,10 @@ private fun UserProfileInternal(
         contentDescription = "Avatar of ${user.username}",
         modifier = Modifier.requiredSize(120.dp).clip(CircleShape),
       )
-      Text(
-        text = user.username,
-        style = MaterialTheme.typography.displaySmall,
-      )
-      ThemedRichText(
-        text = user.about,
-      )
+      Text(text = user.username, style = MaterialTheme.typography.displaySmall)
+      ThemedRichText(text = user.about)
       user.invitedBy?.let { invitedBy ->
-        ThemedRichText(
-          text = "Invited by [${invitedBy}](https://lobste.rs/u/${user.invitedBy})",
-        )
+        ThemedRichText(text = "Invited by [${invitedBy}](https://lobste.rs/u/${user.invitedBy})")
       }
     }
   }

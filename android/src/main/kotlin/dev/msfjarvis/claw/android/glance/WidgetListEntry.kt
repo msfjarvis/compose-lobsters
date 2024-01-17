@@ -39,10 +39,7 @@ private val destinationKey = Key<String>(NAVIGATION_KEY)
 
 @Composable
 @GlanceComposable
-fun WidgetListEntry(
-  post: SavedPost,
-  modifier: GlanceModifier = GlanceModifier,
-) {
+fun WidgetListEntry(post: SavedPost, modifier: GlanceModifier = GlanceModifier) {
   val titleStyle = MaterialTheme.typography.titleMedium
   val commentsAction =
     actionStartActivity<MainActivity>(actionParametersOf(destinationKey to post.shortId))
@@ -67,12 +64,12 @@ fun WidgetListEntry(
             fontSize = titleStyle.fontSize,
             fontWeight = titleStyle.fontWeight.toGlance(),
             fontStyle = titleStyle.fontStyle.toGlance(),
-          )
+          ),
       )
       Image(
         provider = ImageProvider(R.drawable.ic_comment),
         contentDescription = "${post.commentCount ?: 0} comments",
-        modifier = GlanceModifier.padding(end = 4.dp).clickable(commentsAction)
+        modifier = GlanceModifier.padding(end = 4.dp).clickable(commentsAction),
       )
     }
   }

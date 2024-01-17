@@ -1,5 +1,5 @@
 /*
- * Copyright © 2023 Harsh Shandilya.
+ * Copyright © 2023-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -37,12 +37,7 @@ constructor(
 
   suspend fun importPosts(input: InputStream) {
     val posts: List<SavedPost> =
-      withContext(ioDispatcher) {
-        json.decodeFromStream(
-          serializer,
-          input,
-        )
-      }
+      withContext(ioDispatcher) { json.decodeFromStream(serializer, input) }
     withContext(dbDispatcher) {
       savedPostQueries.transaction { posts.forEach(savedPostQueries::insertOrReplacePost) }
     }

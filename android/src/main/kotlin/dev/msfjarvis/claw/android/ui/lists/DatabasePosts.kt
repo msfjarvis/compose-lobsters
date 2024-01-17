@@ -53,11 +53,7 @@ fun DatabasePosts(
       LazyColumn(state = listState) {
         items.forEach { (month, posts) ->
           stickyHeader(contentType = "month-header") { MonthHeader(label = month) }
-          items(
-            items = posts,
-            key = { it.shortId },
-            contentType = { "LobstersItem" },
-          ) { item ->
+          items(items = posts, key = { it.shortId }, contentType = { "LobstersItem" }) { item ->
             LobstersListItem(
               item = item,
               isSaved = { true },

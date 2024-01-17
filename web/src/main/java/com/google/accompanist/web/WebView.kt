@@ -103,7 +103,7 @@ public fun WebView(
       onDispose,
       client,
       chromeClient,
-      factory
+      factory,
     )
   }
 }
@@ -166,7 +166,7 @@ public fun WebView(
                 content.data,
                 content.mimeType,
                 content.encoding,
-                content.historyUrl
+                content.historyUrl,
               )
             }
             is WebContent.Post -> {
@@ -204,7 +204,7 @@ public fun WebView(
         .also { state.webView = it }
     },
     modifier = modifier,
-    onRelease = { onDispose(it) }
+    onRelease = { onDispose(it) },
   )
 }
 
@@ -248,7 +248,7 @@ public open class AccompanistWebViewClient : WebViewClient() {
   override fun onReceivedError(
     view: WebView,
     request: WebResourceRequest?,
-    error: WebResourceError?
+    error: WebResourceError?,
   ) {
     super.onReceivedError(view, request, error)
 
@@ -298,7 +298,7 @@ public sealed class WebContent {
     val baseUrl: String? = null,
     val encoding: String = "utf-8",
     val mimeType: String? = null,
-    val historyUrl: String? = null
+    val historyUrl: String? = null,
   ) : WebContent()
 
   public data class Post(val url: String, val postData: ByteArray) : WebContent() {
@@ -417,7 +417,7 @@ public class WebViewNavigator(
 
     data class LoadUrl(
       val url: String,
-      val additionalHttpHeaders: Map<String, String> = emptyMap()
+      val additionalHttpHeaders: Map<String, String> = emptyMap(),
     ) : NavigationEvent
 
     data class LoadHtml(
@@ -425,7 +425,7 @@ public class WebViewNavigator(
       val baseUrl: String? = null,
       val mimeType: String? = null,
       val encoding: String? = "utf-8",
-      val historyUrl: String? = null
+      val historyUrl: String? = null,
     ) : NavigationEvent
 
     data class PostUrl(val url: String, val postData: ByteArray) : NavigationEvent {
@@ -466,7 +466,7 @@ public class WebViewNavigator(
               event.html,
               event.mimeType,
               event.encoding,
-              event.historyUrl
+              event.historyUrl,
             )
           is NavigationEvent.LoadUrl -> {
             loadUrl(event.url, event.additionalHttpHeaders)
@@ -497,7 +497,7 @@ public class WebViewNavigator(
     baseUrl: String? = null,
     mimeType: String? = null,
     encoding: String? = "utf-8",
-    historyUrl: String? = null
+    historyUrl: String? = null,
   ) {
     coroutineScope.launch {
       navigationEvents.emit(NavigationEvent.LoadHtml(html, baseUrl, mimeType, encoding, historyUrl))
@@ -546,7 +546,7 @@ public data class WebViewError(
   /** The request the error came from. */
   val request: WebResourceRequest?,
   /** The error that was reported. */
-  val error: WebResourceError
+  val error: WebResourceError,
 )
 
 /**
@@ -559,7 +559,7 @@ public data class WebViewError(
 @Composable
 public fun rememberWebViewState(
   url: String,
-  additionalHttpHeaders: ImmutableMap<String, String> = persistentMapOf()
+  additionalHttpHeaders: ImmutableMap<String, String> = persistentMapOf(),
 ): WebViewState =
   // Rather than using .apply {} here we will recreate the state, this prevents
   // a recomposition loop when the webview updates the url itself.
@@ -581,7 +581,7 @@ public fun rememberWebViewStateWithHTMLData(
   baseUrl: String? = null,
   encoding: String = "utf-8",
   mimeType: String? = null,
-  historyUrl: String? = null
+  historyUrl: String? = null,
 ): WebViewState =
   remember { WebViewState(WebContent.Data(data, baseUrl, encoding, mimeType, historyUrl)) }
     .apply { this.content = WebContent.Data(data, baseUrl, encoding, mimeType, historyUrl) }
@@ -619,7 +619,7 @@ public val WebStateSaver: Saver<WebViewState, Any> = run {
       mapOf(
         pageTitleKey to it.pageTitle,
         lastLoadedUrlKey to it.lastLoadedUrl,
-        stateBundle to viewState
+        stateBundle to viewState,
       )
     },
     restore = {
@@ -628,6 +628,6 @@ public val WebStateSaver: Saver<WebViewState, Any> = run {
         this.lastLoadedUrl = it[lastLoadedUrlKey] as String?
         this.viewState = it[stateBundle] as Bundle?
       }
-    }
+    },
   )
 }

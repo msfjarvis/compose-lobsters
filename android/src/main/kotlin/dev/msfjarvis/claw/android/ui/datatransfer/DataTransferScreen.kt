@@ -1,5 +1,5 @@
 /*
- * Copyright © 2023 Harsh Shandilya.
+ * Copyright © 2023-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -145,11 +145,7 @@ private fun GenericExportOption(
         }
       }
     }
-  SettingsActionItem(
-    title = title,
-    description = description,
-    icon = icon,
-  ) {
+  SettingsActionItem(title = title, description = description, icon = icon) {
     exportAction.launch(fileName)
   }
 }
@@ -167,11 +163,7 @@ private fun SettingsActionItem(
     supportingContent = { description?.let { Text(it) } },
     leadingContent = {
       icon?.let {
-        Icon(
-          imageVector = icon,
-          contentDescription = null,
-          modifier = Modifier.height(32.dp),
-        )
+        Icon(imageVector = icon, contentDescription = null, modifier = Modifier.height(32.dp))
       }
     },
     modifier = modifier.clickable { onClick?.invoke() },
@@ -179,9 +171,7 @@ private fun SettingsActionItem(
 }
 
 /** Shows a Snackbar but dismisses any existing ones first. */
-private suspend fun SnackbarHostState.showSnackbarDismissing(
-  text: String,
-) {
+private suspend fun SnackbarHostState.showSnackbarDismissing(text: String) {
   currentSnackbarData?.dismiss()
   showSnackbar(text)
 }

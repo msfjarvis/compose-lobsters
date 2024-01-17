@@ -1,5 +1,5 @@
 /*
- * Copyright © 2023 Harsh Shandilya.
+ * Copyright © 2023-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -59,10 +59,7 @@ fun SearchBar(
     },
     keyboardActions = KeyboardActions(onSearch = { onSearch(value) }),
     keyboardOptions =
-      KeyboardOptions(
-        keyboardType = KeyboardType.Text,
-        imeAction = ImeAction.Search,
-      ),
+      KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Search),
     singleLine = true,
     modifier = modifier.focusable().focusRequester(focusRequester),
   )
@@ -81,7 +78,7 @@ fun SearchBarPreview() {
         value = value,
         onValueChange = { value = it },
         onSearch = {},
-        modifier = Modifier.align(Alignment.TopCenter).fillMaxWidth()
+        modifier = Modifier.align(Alignment.TopCenter).fillMaxWidth(),
       )
     }
   }

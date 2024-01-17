@@ -1,5 +1,5 @@
 /*
- * Copyright © 2023 Harsh Shandilya.
+ * Copyright © 2023-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -45,7 +45,7 @@ fun PasswordField(
           if (isPasswordVisible) rememberVectorPainter(Icons.Filled.VisibilityOff)
           else rememberVectorPainter(Icons.Filled.Visibility),
         contentDescription = null,
-        modifier = Modifier.clickable { isPasswordVisible = !isPasswordVisible }
+        modifier = Modifier.clickable { isPasswordVisible = !isPasswordVisible },
       )
     },
     modifier = modifier,
@@ -57,10 +57,6 @@ fun PasswordField(
 private fun PasswordFieldPreview() {
   LobstersTheme {
     var value by remember { mutableStateOf("") }
-    PasswordField(
-      value = value,
-      label = "Password",
-      onValueChange = { value = it },
-    )
+    PasswordField(value = value, label = "Password", onValueChange = { value = it })
   }
 }

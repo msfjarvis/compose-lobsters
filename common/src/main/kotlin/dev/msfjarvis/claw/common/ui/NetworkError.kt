@@ -1,5 +1,5 @@
 /*
- * Copyright © 2022-2023 Harsh Shandilya.
+ * Copyright © 2022-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -29,11 +29,7 @@ import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
 import io.github.aakira.napier.Napier
 
 @Composable
-fun NetworkError(
-  label: String,
-  error: Throwable,
-  modifier: Modifier = Modifier,
-) {
+fun NetworkError(label: String, error: Throwable, modifier: Modifier = Modifier) {
   LaunchedEffect(true) { Napier.e(error, "NetworkError") { "Failed to load posts" } }
   var showDialog by remember { mutableStateOf(false) }
   Column(verticalArrangement = Arrangement.spacedBy(4.dp), modifier = modifier) {
@@ -60,15 +56,10 @@ fun NetworkError(
             Modifier.clickable {
               clipboard.setText(AnnotatedString(error.stackTraceToString()))
               showDialog = false
-            }
+            },
         )
       },
-      text = {
-        Text(
-          text = "${error.message}",
-          style = MaterialTheme.typography.bodyLarge,
-        )
-      }
+      text = { Text(text = "${error.message}", style = MaterialTheme.typography.bodyLarge) },
     )
   }
 }

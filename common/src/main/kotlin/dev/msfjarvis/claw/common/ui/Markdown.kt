@@ -23,10 +23,7 @@ import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
 
 @Composable
-internal fun ThemedRichText(
-  text: String,
-  modifier: Modifier = Modifier,
-) {
+internal fun ThemedRichText(text: String, modifier: Modifier = Modifier) {
   val linkStyle =
     SpanStyle(
       background = MaterialTheme.colorScheme.surfaceVariant,
@@ -39,10 +36,7 @@ internal fun ThemedRichText(
     LocalTextStyle provides MaterialTheme.typography.bodyLarge,
     LocalContentColor provides MaterialTheme.colorScheme.onBackground,
   ) {
-    RichText(
-      modifier = modifier,
-      style = RichTextStyle.Default.copy(stringStyle = stringStyle),
-    ) {
+    RichText(modifier = modifier, style = RichTextStyle.Default.copy(stringStyle = stringStyle)) {
       Markdown(text)
     }
   }

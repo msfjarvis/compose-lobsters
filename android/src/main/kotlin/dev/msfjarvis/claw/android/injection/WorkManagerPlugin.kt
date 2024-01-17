@@ -1,5 +1,5 @@
 /*
- * Copyright © 2022 Harsh Shandilya.
+ * Copyright © 2022-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -17,18 +17,14 @@ import dev.msfjarvis.claw.core.injection.AppPlugin
 import javax.inject.Inject
 
 @ContributesMultibinding(ApplicationScope::class)
-class WorkManagerPlugin
-@Inject
-constructor(
-  private val workerFactory: WorkerFactory,
-) : AppPlugin {
+class WorkManagerPlugin @Inject constructor(private val workerFactory: WorkerFactory) : AppPlugin {
   override fun apply(application: Application) {
     WorkManager.initialize(
       application,
       Configuration.Builder()
         .setWorkerFactory(workerFactory)
         .setMinimumLoggingLevel(Log.DEBUG)
-        .build()
+        .build(),
     )
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright © 2021-2023 Harsh Shandilya.
+ * Copyright © 2021-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -60,9 +60,7 @@ internal fun CommentsHeader(
 ) {
   val uriHandler = LocalUriHandler.current
   val linkMetadata by
-    produceState(
-      initialValue = LinkMetadata(postDetails.url, null),
-    ) {
+    produceState(initialValue = LinkMetadata(postDetails.url, null)) {
       runSuspendCatching { postActions.getLinkMetadata(postDetails.url) }
         .onSuccess { metadata -> value = metadata }
     }
@@ -105,10 +103,7 @@ internal fun CommentsHeader(
 }
 
 @Composable
-private fun PostLink(
-  linkMetadata: LinkMetadata,
-  modifier: Modifier = Modifier,
-) {
+private fun PostLink(linkMetadata: LinkMetadata, modifier: Modifier = Modifier) {
   Box(
     modifier.background(
       color = MaterialTheme.colorScheme.secondary,
@@ -155,7 +150,7 @@ internal fun CommentEntry(
           end = CommentEntryPadding,
           top = CommentEntryPadding,
           bottom = CommentEntryPadding,
-        ),
+        )
   ) {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
       Submitter(
@@ -175,7 +170,7 @@ internal fun CommentEntry(
       if (commentNode.isExpanded) {
         ThemedRichText(
           text = htmlConverter.convertHTMLToMarkdown(comment.comment),
-          modifier = Modifier.padding(top = 8.dp)
+          modifier = Modifier.padding(top = 8.dp),
         )
       }
     }
@@ -228,11 +223,7 @@ fun buildCommenterString(
     if (isUnread) {
       append(' ')
       withStyle(
-        style =
-          SpanStyle(
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.error,
-          )
+        style = SpanStyle(fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.error)
       ) {
         append("(unread)")
       }

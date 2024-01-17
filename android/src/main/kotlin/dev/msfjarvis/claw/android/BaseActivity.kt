@@ -42,16 +42,8 @@ abstract class BaseActivity : ComponentActivity() {
     preLaunch()
     Whetstone.inject(this)
     enableEdgeToEdge(
-      statusBarStyle =
-        SystemBarStyle.light(
-          Color.TRANSPARENT,
-          Color.TRANSPARENT,
-        ),
-      navigationBarStyle =
-        SystemBarStyle.light(
-          Color.TRANSPARENT,
-          Color.TRANSPARENT,
-        ),
+      statusBarStyle = SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT),
+      navigationBarStyle = SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT),
     )
     setContent {
       LobstersTheme(

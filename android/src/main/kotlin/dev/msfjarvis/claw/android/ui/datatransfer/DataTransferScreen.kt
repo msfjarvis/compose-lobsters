@@ -151,7 +151,7 @@ private fun GenericExportOption(
 }
 
 @Composable
-private fun SettingsActionItem(
+fun SettingsActionItem(
   title: String,
   modifier: Modifier = Modifier,
   description: String? = null,

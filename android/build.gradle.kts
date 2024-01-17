@@ -1,5 +1,5 @@
 /*
- * Copyright © 2021-2023 Harsh Shandilya.
+ * Copyright © 2021-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -15,6 +15,7 @@ plugins {
   id("dev.msfjarvis.claw.kotlin-kapt")
   id("dev.msfjarvis.claw.sentry")
   id("dev.msfjarvis.claw.versioning-plugin")
+  alias(libs.plugins.aboutlibraries)
   alias(libs.plugins.anvil)
   alias(libs.plugins.modulegraphassert)
   alias(libs.plugins.whetstone)
@@ -67,6 +68,7 @@ whetstone {
 dependencies {
   implementation(platform(libs.androidx.compose.bom))
   implementation(platform(libs.okhttp.bom))
+  implementation(libs.aboutLibraries.m3)
   implementation(libs.androidx.activity.compose)
   implementation(libs.androidx.compose.glance)
   implementation(libs.androidx.compose.glance.m3)

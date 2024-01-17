@@ -1,5 +1,5 @@
 /*
- * Copyright © 2021-2023 Harsh Shandilya.
+ * Copyright © 2021-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -37,6 +37,14 @@ sealed class Destinations {
 
   data object Search : Destinations() {
     override val route = "search"
+  }
+
+  data object Settings : Destinations() {
+    override val route = "settings"
+  }
+
+  data object AboutLibraries : Destinations() {
+    override val route = "about_libraries"
   }
 
   companion object {

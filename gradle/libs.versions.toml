@@ -1,4 +1,5 @@
 [versions]
+aboutLibraries = "10.10.0"
 agp = "8.3.0-beta02"
 benchmark = "1.2.2"
 coil = "2.5.0"
@@ -21,6 +22,7 @@ whetstone = "0.8.0"
 workmanager = "2.9.0"
 
 [libraries]
+aboutLibraries-m3 = { module = "com.mikepenz:aboutlibraries-compose-m3", version.ref = "aboutLibraries" }
 androidx-activity-compose = "androidx.activity:activity-compose:1.8.2"
 androidx-benchmark-macro-junit4 = { module = "androidx.benchmark:benchmark-macro-junit4", version.ref = "benchmark" }
 androidx-browser = "androidx.browser:browser:1.7.0"
@@ -106,6 +108,7 @@ truth = "com.google.truth:truth:1.2.0"
 unfurl = "me.saket.unfurl:unfurl:1.7.0"
 
 [plugins]
+aboutlibraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "aboutLibraries" }
 android-test = { id = "com.android.test", version.ref = "agp" }
 anvil = "com.squareup.anvil:2.4.9"
 baselineprofile = { id = "androidx.baselineprofile", version.ref = "benchmark" }

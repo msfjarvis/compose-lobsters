@@ -21,6 +21,11 @@ pluginManagement {
     exclusiveContent {
       forRepository { gradlePluginPortal() }
       filter {
+        includeModule("com.mikepenz.aboutlibraries.plugin", "aboutlibraries-plugin")
+        includeModule(
+          "com.mikepenz.aboutlibraries.plugin",
+          "com.mikepenz.aboutlibraries.plugin.gradle.plugin",
+        )
         includeModule("com.github.ben-manes", "gradle-versions-plugin")
         includeModule("org.gradle.android.cache-fix", "org.gradle.android.cache-fix.gradle.plugin")
         includeModule("gradle.plugin.org.gradle.android", "android-cache-fix-gradle-plugin")

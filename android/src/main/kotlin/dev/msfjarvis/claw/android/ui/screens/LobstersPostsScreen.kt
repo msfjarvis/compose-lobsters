@@ -13,22 +13,20 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.ImportExport
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.NewReleases
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material.icons.filled.Whatshot
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.NewReleases
 import androidx.compose.material.icons.outlined.Whatshot
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -41,10 +39,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -65,6 +61,7 @@ import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.deliveryhero.whetstone.compose.injectedViewModel
+import com.mikepenz.aboutlibraries.ui.compose.m3.LibrariesContainer
 import dev.msfjarvis.claw.android.MainActivity
 import dev.msfjarvis.claw.android.R
 import dev.msfjarvis.claw.android.SearchActivity
@@ -185,35 +182,14 @@ fun LobstersPostsScreen(
           }
         },
         actions = {
-          var expanded by remember { mutableStateOf(false) }
           if (navItems.any { it.route == currentDestination }) {
-            IconButton(onClick = { expanded = true }) {
-              Icon(Icons.Default.MoreVert, contentDescription = "Extra options")
+            IconButton(
+              onClick = { context.startActivity(Intent(context, SearchActivity::class.java)) }
+            ) {
+              Icon(imageVector = Icons.Filled.Search, contentDescription = "Search posts")
             }
-            DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-              DropdownMenuItem(
-                text = { Text("Backup and restore") },
-                onClick = {
-                  navController.navigate(Destinations.DataTransfer.route)
-                  expanded = false
-                },
-                leadingIcon = {
-                  Icon(
-                    imageVector = Icons.Filled.ImportExport,
-                    contentDescription = "Data transfer options",
-                  )
-                },
-              )
-              DropdownMenuItem(
-                text = { Text("Search posts") },
-                onClick = {
-                  context.startActivity(Intent(context, SearchActivity::class.java))
-                  expanded = false
-                },
-                leadingIcon = {
-                  Icon(imageVector = Icons.Filled.Search, contentDescription = "Search posts")
-                },
-              )
+            IconButton(onClick = { navController.navigate(Destinations.Settings.route) }) {
+              Icon(imageVector = Icons.Filled.Tune, contentDescription = "Settings")
             }
           }
         },
@@ -314,6 +290,15 @@ fun LobstersPostsScreen(
             exportPostsAsHtml = viewModel::exportPostsAsHtml,
             snackbarHostState = snackbarHostState,
           )
+        }
+        composable(route = Destinations.Settings.route) {
+          SettingsScreen(
+            openLibrariesScreen = { navController.navigate(Destinations.AboutLibraries.route) },
+            openDataTransferScreen = { navController.navigate(Destinations.DataTransfer.route) },
+          )
+        }
+        composable(route = Destinations.AboutLibraries.route) {
+          LibrariesContainer(modifier = Modifier.fillMaxSize())
         }
       }
     }

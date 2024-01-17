@@ -1,5 +1,5 @@
 /*
- * Copyright © 2023 Harsh Shandilya.
+ * Copyright © 2023-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -14,6 +14,8 @@ import androidx.compose.ui.unit.dp
 import androidx.glance.GlanceComposable
 import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
+import androidx.glance.Image
+import androidx.glance.ImageProvider
 import androidx.glance.action.ActionParameters.Key
 import androidx.glance.action.actionParametersOf
 import androidx.glance.action.actionStartActivity
@@ -26,12 +28,11 @@ import androidx.glance.layout.Box
 import androidx.glance.layout.Row
 import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.padding
-import androidx.glance.layout.wrapContentWidth
 import androidx.glance.text.Text
-import androidx.glance.text.TextAlign
 import androidx.glance.text.TextStyle
 import dev.msfjarvis.claw.android.MainActivity
 import dev.msfjarvis.claw.android.MainActivity.Companion.NAVIGATION_KEY
+import dev.msfjarvis.claw.android.R
 import dev.msfjarvis.claw.database.local.SavedPost
 
 private val destinationKey = Key<String>(NAVIGATION_KEY)
@@ -43,7 +44,6 @@ fun WidgetListEntry(
   modifier: GlanceModifier = GlanceModifier,
 ) {
   val titleStyle = MaterialTheme.typography.titleMedium
-  val subtitleStyle = MaterialTheme.typography.labelLarge
   val commentsAction =
     actionStartActivity<MainActivity>(actionParametersOf(destinationKey to post.shortId))
   val postAction =
@@ -69,21 +69,11 @@ fun WidgetListEntry(
             fontStyle = titleStyle.fontStyle.toGlance(),
           )
       )
-      post.commentCount?.let { count ->
-        Text(
-          text = "$count comments",
-          modifier =
-            GlanceModifier.wrapContentWidth().padding(end = 4.dp).clickable(commentsAction),
-          style =
-            TextStyle(
-              color = GlanceTheme.colors.onSurfaceVariant,
-              fontSize = subtitleStyle.fontSize,
-              fontWeight = subtitleStyle.fontWeight.toGlance(),
-              fontStyle = subtitleStyle.fontStyle.toGlance(),
-              textAlign = TextAlign.End,
-            )
-        )
-      }
+      Image(
+        provider = ImageProvider(R.drawable.ic_comment),
+        contentDescription = "${post.commentCount ?: 0} comments",
+        modifier = GlanceModifier.padding(end = 4.dp).clickable(commentsAction)
+      )
     }
   }
 }

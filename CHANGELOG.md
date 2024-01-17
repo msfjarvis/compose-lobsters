@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 *   Add HTML bookmarks as an export format
+*   Rework widget item layout for consistent touch targets
 
 ## [1.38.0] - 2023-11-20
 

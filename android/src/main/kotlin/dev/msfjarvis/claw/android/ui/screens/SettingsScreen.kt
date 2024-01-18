@@ -6,35 +6,181 @@
  */
 package dev.msfjarvis.claw.android.ui.screens
 
+import android.content.Context
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.LibraryBooks
-import androidx.compose.material.icons.filled.ImportExport
+import androidx.compose.material.icons.filled.Upload
+import androidx.compose.material.icons.filled.WebStories
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import dev.msfjarvis.claw.android.ui.datatransfer.SettingsActionItem
+import androidx.compose.ui.unit.dp
+import java.io.InputStream
+import java.io.OutputStream
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
+
+private const val JSON_MIME_TYPE = "application/json"
+private const val HTML_MIME_TYPE = "application/html"
 
 @Composable
 fun SettingsScreen(
+  context: Context,
   openLibrariesScreen: () -> Unit,
-  openDataTransferScreen: () -> Unit,
+  snackbarHostState: SnackbarHostState,
+  importPosts: suspend (InputStream) -> Unit,
+  exportPostsAsJson: suspend (OutputStream) -> Unit,
+  exportPostsAsHtml: suspend (OutputStream) -> Unit,
   modifier: Modifier = Modifier,
 ) {
+  val coroutineScope = rememberCoroutineScope()
   Box(modifier = modifier.fillMaxSize()) {
     Column {
-      SettingsActionItem(
-        title = "Data transfer",
-        description = "Export and import your saved posts",
-        icon = Icons.Filled.ImportExport,
-        onClick = openDataTransferScreen,
+      ListItem(
+        headlineContent = { Text("Libraries") },
+        leadingContent = {
+          Icon(
+            imageVector = Icons.AutoMirrored.Filled.LibraryBooks,
+            contentDescription = null,
+            modifier = Modifier.height(32.dp),
+          )
+        },
+        modifier = Modifier.clickable(onClick = openLibrariesScreen),
       )
-      SettingsActionItem(
-        title = "Libraries",
-        icon = Icons.AutoMirrored.Filled.LibraryBooks,
-        onClick = openLibrariesScreen,
+      Text(
+        text = "Data transfer",
+        style = MaterialTheme.typography.labelMedium,
+        modifier = Modifier.padding(all = 16.dp),
+      )
+      Row(horizontalArrangement = Arrangement.SpaceAround, modifier = Modifier.fillMaxWidth()) {
+        ImportPosts(context, coroutineScope, snackbarHostState, importPosts)
+        ExportPosts(
+          context,
+          coroutineScope,
+          snackbarHostState,
+          exportPostsAsJson,
+          exportPostsAsHtml,
+        )
+      }
+    }
+  }
+}
+
+@Composable
+private fun ImportPosts(
+  context: Context,
+  coroutineScope: CoroutineScope,
+  snackbarHostState: SnackbarHostState,
+  importPosts: suspend (InputStream) -> Unit,
+) {
+  val importAction =
+    rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+      if (uri == null) {
+        coroutineScope.launch { snackbarHostState.showSnackbarDismissing("No file selected") }
+        return@rememberLauncherForActivityResult
+      }
+      coroutineScope.launch {
+        context.contentResolver.openInputStream(uri)?.use { stream ->
+          importPosts(stream)
+          snackbarHostState.showSnackbarDismissing("Successfully imported posts")
+        }
+      }
+    }
+  ElevatedButton(onClick = { importAction.launch(JSON_MIME_TYPE) }) { Text(text = "Import") }
+}
+
+@Composable
+private fun ExportPosts(
+  context: Context,
+  coroutineScope: CoroutineScope,
+  snackbarHostState: SnackbarHostState,
+  exportPostsAsJson: suspend (OutputStream) -> Unit,
+  exportPostsAsHtml: suspend (OutputStream) -> Unit,
+) {
+  val jsonExportAction =
+    rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument(JSON_MIME_TYPE)) { uri
+      ->
+      if (uri == null) {
+        coroutineScope.launch { snackbarHostState.showSnackbarDismissing("No file selected") }
+        return@rememberLauncherForActivityResult
+      }
+      coroutineScope.launch {
+        context.contentResolver.openOutputStream(uri)?.use { stream ->
+          exportPostsAsJson(stream)
+          snackbarHostState.showSnackbarDismissing("Successfully exported posts")
+        }
+      }
+    }
+  val htmlExportAction =
+    rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument(HTML_MIME_TYPE)) { uri
+      ->
+      if (uri == null) {
+        coroutineScope.launch { snackbarHostState.showSnackbarDismissing("No file selected") }
+        return@rememberLauncherForActivityResult
+      }
+      coroutineScope.launch {
+        context.contentResolver.openOutputStream(uri)?.use { stream ->
+          exportPostsAsHtml(stream)
+          snackbarHostState.showSnackbarDismissing("Successfully exported posts")
+        }
+      }
+    }
+  var expanded by remember { mutableStateOf(false) }
+  ElevatedButton(onClick = { expanded = true }) {
+    Text(text = "Export")
+    DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
+      DropdownMenuItem(
+        text = { Text("JSON") },
+        onClick = {
+          expanded = false
+          jsonExportAction.launch("claw-export.json")
+        },
+        leadingIcon = {
+          Icon(imageVector = Icons.Filled.Upload, contentDescription = "Export as JSON")
+        },
+      )
+      DropdownMenuItem(
+        text = { Text("Bookmarks") },
+        onClick = {
+          expanded = false
+          htmlExportAction.launch("claw-export.html")
+        },
+        leadingIcon = {
+          Icon(
+            imageVector = Icons.Filled.WebStories,
+            contentDescription = "Export as browser bookmarks",
+          )
+        },
       )
     }
   }
+}
+
+/** Shows a Snackbar but dismisses any existing ones first. */
+private suspend fun SnackbarHostState.showSnackbarDismissing(text: String) {
+  currentSnackbarData?.dismiss()
+  showSnackbar(text)
 }

@@ -43,7 +43,7 @@ constructor(
     }
   }
 
-  suspend fun exportPosts(output: OutputStream) {
+  suspend fun exportPostsAsJson(output: OutputStream) {
     val posts = withContext(dbDispatcher) { savedPostQueries.selectAllPosts().executeAsList() }
     withContext(ioDispatcher) { json.encodeToStream(serializer, posts, output) }
   }

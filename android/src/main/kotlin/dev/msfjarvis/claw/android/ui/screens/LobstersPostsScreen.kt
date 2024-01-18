@@ -65,7 +65,6 @@ import com.mikepenz.aboutlibraries.ui.compose.m3.LibrariesContainer
 import dev.msfjarvis.claw.android.MainActivity
 import dev.msfjarvis.claw.android.R
 import dev.msfjarvis.claw.android.SearchActivity
-import dev.msfjarvis.claw.android.ui.datatransfer.DataTransferScreen
 import dev.msfjarvis.claw.android.ui.decorations.ClawAppBar
 import dev.msfjarvis.claw.android.ui.decorations.ClawNavigationBar
 import dev.msfjarvis.claw.android.ui.decorations.ClawNavigationRail
@@ -282,19 +281,14 @@ fun LobstersPostsScreen(
           setWebUri("https://lobste.rs/u/$username")
           UserProfile(username = username, getProfile = viewModel::getUserProfile)
         }
-        composable(route = Destinations.DataTransfer.route) {
-          DataTransferScreen(
-            context = context,
-            importPosts = viewModel::importPosts,
-            exportPosts = viewModel::exportPosts,
-            exportPostsAsHtml = viewModel::exportPostsAsHtml,
-            snackbarHostState = snackbarHostState,
-          )
-        }
         composable(route = Destinations.Settings.route) {
           SettingsScreen(
+            context = context,
             openLibrariesScreen = { navController.navigate(Destinations.AboutLibraries.route) },
-            openDataTransferScreen = { navController.navigate(Destinations.DataTransfer.route) },
+            importPosts = viewModel::importPosts,
+            exportPostsAsJson = viewModel::exportPostsAsJson,
+            exportPostsAsHtml = viewModel::exportPostsAsHtml,
+            snackbarHostState = snackbarHostState,
           )
         }
         composable(route = Destinations.AboutLibraries.route) {

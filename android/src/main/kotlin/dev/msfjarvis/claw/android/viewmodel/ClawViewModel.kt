@@ -188,7 +188,8 @@ constructor(
 
   suspend fun importPosts(input: InputStream) = dataTransferRepository.importPosts(input)
 
-  suspend fun exportPosts(output: OutputStream) = dataTransferRepository.exportPosts(output)
+  suspend fun exportPostsAsJson(output: OutputStream) =
+    dataTransferRepository.exportPostsAsJson(output)
 
   suspend fun exportPostsAsHtml(output: OutputStream) =
     dataTransferRepository.exportPostsAsHTML(output)

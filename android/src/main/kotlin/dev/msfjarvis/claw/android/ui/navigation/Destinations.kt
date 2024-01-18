@@ -31,10 +31,6 @@ sealed class Destinations {
     override val route = "user/$PLACEHOLDER"
   }
 
-  data object DataTransfer : Destinations() {
-    override val route = "datatransfer"
-  }
-
   data object Search : Destinations() {
     override val route = "search"
   }

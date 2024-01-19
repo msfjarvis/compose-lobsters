@@ -14,20 +14,21 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.LibraryBooks
-import androidx.compose.material.icons.filled.Upload
-import androidx.compose.material.icons.filled.WebStories
+import androidx.compose.material.icons.filled.Bookmarks
+import androidx.compose.material.icons.filled.Code
+import androidx.compose.material.icons.filled.ImportExport
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -70,31 +71,42 @@ fun SettingsScreen(
         },
         modifier = Modifier.clickable(onClick = openLibrariesScreen),
       )
-      Text(
-        text = "Data transfer",
-        style = MaterialTheme.typography.labelMedium,
-        modifier = Modifier.padding(all = 16.dp),
+      ListItem(
+        headlineContent = { Text("Data transfer") },
+        leadingContent = {
+          Icon(
+            imageVector = Icons.Filled.ImportExport,
+            contentDescription = null,
+            modifier = Modifier.height(32.dp),
+          )
+        },
+        supportingContent = {
+          Row(
+            horizontalArrangement = Arrangement.spacedBy(32.dp),
+            modifier = Modifier.fillMaxWidth(),
+          ) {
+            ImportPosts(context, coroutineScope, snackbarHostState, importPosts)
+            ExportPosts(
+              context,
+              coroutineScope,
+              snackbarHostState,
+              exportPostsAsJson,
+              exportPostsAsHtml,
+            )
+          }
+        },
       )
-      Row(horizontalArrangement = Arrangement.SpaceAround, modifier = Modifier.fillMaxWidth()) {
-        ImportPosts(context, coroutineScope, snackbarHostState, importPosts)
-        ExportPosts(
-          context,
-          coroutineScope,
-          snackbarHostState,
-          exportPostsAsJson,
-          exportPostsAsHtml,
-        )
-      }
     }
   }
 }
 
 @Composable
-private fun ImportPosts(
+private fun RowScope.ImportPosts(
   context: Context,
   coroutineScope: CoroutineScope,
   snackbarHostState: SnackbarHostState,
   importPosts: suspend (InputStream) -> Unit,
+  modifier: Modifier = Modifier,
 ) {
   val importAction =
     rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
@@ -109,16 +121,23 @@ private fun ImportPosts(
         }
       }
     }
-  ElevatedButton(onClick = { importAction.launch(JSON_MIME_TYPE) }) { Text(text = "Import") }
+  OutlinedButton(
+    onClick = { importAction.launch(JSON_MIME_TYPE) },
+    shape = MaterialTheme.shapes.extraSmall,
+    modifier = modifier.fillMaxWidth(0.30f).weight(0.5f),
+  ) {
+    Text(text = "Import")
+  }
 }
 
 @Composable
-private fun ExportPosts(
+private fun RowScope.ExportPosts(
   context: Context,
   coroutineScope: CoroutineScope,
   snackbarHostState: SnackbarHostState,
   exportPostsAsJson: suspend (OutputStream) -> Unit,
   exportPostsAsHtml: suspend (OutputStream) -> Unit,
+  modifier: Modifier = Modifier,
 ) {
   val jsonExportAction =
     rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument(JSON_MIME_TYPE)) { uri
@@ -149,7 +168,11 @@ private fun ExportPosts(
       }
     }
   var expanded by remember { mutableStateOf(false) }
-  ElevatedButton(onClick = { expanded = true }) {
+  OutlinedButton(
+    onClick = { expanded = true },
+    shape = MaterialTheme.shapes.extraSmall,
+    modifier = modifier.fillMaxWidth(0.30f).weight(0.5f),
+  ) {
     Text(text = "Export")
     DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
       DropdownMenuItem(
@@ -159,7 +182,7 @@ private fun ExportPosts(
           jsonExportAction.launch("claw-export.json")
         },
         leadingIcon = {
-          Icon(imageVector = Icons.Filled.Upload, contentDescription = "Export as JSON")
+          Icon(imageVector = Icons.Filled.Code, contentDescription = "Export as JSON")
         },
       )
       DropdownMenuItem(
@@ -170,7 +193,7 @@ private fun ExportPosts(
         },
         leadingIcon = {
           Icon(
-            imageVector = Icons.Filled.WebStories,
+            imageVector = Icons.Filled.Bookmarks,
             contentDescription = "Export as browser bookmarks",
           )
         },

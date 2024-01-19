@@ -19,7 +19,7 @@ function generate_grid() {
     "${SCREENSHOT_DIR}"/CommentsPage.png \
     "${SCREENSHOT_DIR}"/SavedPosts.png \
     "${SCREENSHOT_DIR}"/SearchPage.png \
-    "${1:?}.png"
+    "${1:?}.png" || true
 
   # Convert the resulting PNG to WebP
   cwebp "${1:?}.png" -o "${1:?}.webp"

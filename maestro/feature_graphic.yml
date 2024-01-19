@@ -10,7 +10,6 @@ appId: dev.msfjarvis.claw.android
 - takeScreenshot: "HottestPosts"
 - tapOn: "Saved"
 - takeScreenshot: "SavedPosts"
-- tapOn: "Extra options"
 - tapOn: "Search posts"
 - inputText: "Nix"
 - pressKey: Enter

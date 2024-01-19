@@ -13,12 +13,13 @@ function generate_grid() {
   "${SCRIPT_DIR}"/run-maestro-flows.sh feature_graphic.yml
 
   # Use imagemagick to stitch the screenshots in a grid
-  montage -tile 2x0 -geometry +0+0 \
+  montage -tile 3x0 -geometry +0+0 \
     -border 0 -density 300 \
     "${SCREENSHOT_DIR}"/HottestPosts.png \
     "${SCREENSHOT_DIR}"/CommentsPage.png \
     "${SCREENSHOT_DIR}"/SavedPosts.png \
     "${SCREENSHOT_DIR}"/SearchPage.png \
+    "${SCREENSHOT_DIR}"/SettingsPage.png \
     "${1:?}.png" || true
 
   # Convert the resulting PNG to WebP

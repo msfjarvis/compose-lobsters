@@ -9,6 +9,7 @@ appId: dev.msfjarvis.claw.android
     index: 1
 - takeScreenshot: "HottestPosts"
 - tapOn: "Saved"
+- waitForAnimationToEnd
 - takeScreenshot: "SavedPosts"
 - tapOn: "Search posts"
 - inputText: "Nix"
@@ -16,6 +17,12 @@ appId: dev.msfjarvis.claw.android
 - hideKeyboard
 - waitForAnimationToEnd
 - takeScreenshot: "SearchPage"
+- back
+- tapOn: "Settings"
+- tapOn: "Export"
+- takeScreenshot: "SettingsPage"
+- tapOn:
+    point: "50%,50%"
 - back
 - tapOn: "Hottest"
 - tapOn: "Open comments"

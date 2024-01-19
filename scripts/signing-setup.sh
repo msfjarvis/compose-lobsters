@@ -7,10 +7,10 @@ KEY_FILE="$(mktemp)"
 
 trap "rm -rf ${KEY_FILE} 2>/dev/null" INT TERM EXIT
 
-echo "${ENCRYPT_KEY:?}" >"${KEY_FILE}"
+echo "${ENCRYPT_KEY:?}" > "${KEY_FILE}"
 
 function decrypt() {
-  if ! command -v age 1>/dev/null; then
+  if ! command -v age 1> /dev/null; then
     echo "age not installed"
     exit 1
   fi

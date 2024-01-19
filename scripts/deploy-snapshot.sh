@@ -15,7 +15,7 @@ function overwrite_remote_tag() {
 }
 
 function has_release() {
-  gh release view "${NIGHTLY_TAG}" &>/dev/null
+  gh release view "${NIGHTLY_TAG}" &> /dev/null
   echo "$?"
 }
 

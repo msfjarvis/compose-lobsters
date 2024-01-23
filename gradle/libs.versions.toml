@@ -59,7 +59,7 @@ build-cachefix = "org.gradle.android.cache-fix:org.gradle.android.cache-fix.grad
 build-kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 build-semver = "com.vdurmont:semver4j:3.1.0"
 build-sentry = "io.sentry.android.gradle:io.sentry.android.gradle.gradle.plugin:4.2.0"
-build-spotless = "com.diffplug.spotless:spotless-plugin-gradle:6.24.0"
+build-spotless = "com.diffplug.spotless:spotless-plugin-gradle:6.25.0"
 coil = { module = "io.coil-kt:coil", version.ref = "coil" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 compose-richtext-markdown = { module = "com.halilibo.compose-richtext:richtext-commonmark", version.ref = "richtext" }

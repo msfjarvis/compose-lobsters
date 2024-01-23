@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.39.0] - 2024-01-23
+
 ### Changed
 
 *   Add HTML bookmarks as an export format
@@ -342,7 +344,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 *   Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.38.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.39.0...HEAD
+
+[1.39.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.38.0...v1.39.0
 
 [1.38.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.37.0...v1.38.0
 

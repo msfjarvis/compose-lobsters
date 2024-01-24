@@ -77,6 +77,7 @@ dependencyResolutionManagement {
         includeGroupByRegex("com.android.*")
         includeGroup("com.google.android.gms")
         includeModule("com.google.android.material", "material")
+        includeGroup("com.google.testing.platform")
       }
     }
     exclusiveContent {

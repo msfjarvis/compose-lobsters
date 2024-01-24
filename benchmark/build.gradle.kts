@@ -1,12 +1,10 @@
 /*
- * Copyright © 2022-2023 Harsh Shandilya.
+ * Copyright © 2022-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
 @file:Suppress("UnstableApiUsage")
-
-import com.android.build.api.dsl.ManagedVirtualDevice
 
 plugins {
   id(libs.plugins.android.test.get().pluginId)
@@ -30,21 +28,11 @@ android {
       matchingFallbacks += "release"
     }
   }
-
-  testOptions.managedDevices.devices {
-    create<ManagedVirtualDevice>("api31") {
-      device = "Pixel 6"
-      apiLevel = 31
-      systemImageSource = "aosp"
-    }
-  }
-
   targetProjectPath = ":android"
 }
 
 baselineProfile {
-  managedDevices += "api31"
-  useConnectedDevices = false
+  useConnectedDevices = true
   enableEmulatorDisplay = false
 }
 

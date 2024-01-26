@@ -40,6 +40,6 @@ fun MonthHeader(label: String, modifier: Modifier = Modifier) {
 @DevicePreviews
 @ThemePreviews
 @Composable
-fun MonthHeaderPreview() {
+private fun MonthHeaderPreview() {
   LobstersTheme { MonthHeader("April 2023") }
 }

@@ -230,7 +230,7 @@ private fun TagText(tag: String, modifier: Modifier = Modifier) {
 
 @ThemePreviews
 @Composable
-fun LobstersCardPreview() {
+private fun LobstersCardPreview() {
   LobstersTheme {
     LobstersCard(
       post =

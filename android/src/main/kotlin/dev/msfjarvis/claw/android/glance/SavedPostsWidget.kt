@@ -29,6 +29,8 @@ import androidx.glance.text.TextStyle
 import dev.msfjarvis.claw.common.theme.DarkThemeColors
 import dev.msfjarvis.claw.common.theme.LightThemeColors
 import dev.msfjarvis.claw.database.local.SavedPost
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 
 class SavedPostsWidget(private val posts: List<SavedPost>) : GlanceAppWidget() {
   override suspend fun provideGlance(context: Context, id: GlanceId) {
@@ -37,35 +39,33 @@ class SavedPostsWidget(private val posts: List<SavedPost>) : GlanceAppWidget() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) GlanceTheme.colors
         else ColorProviders(light = LightThemeColors, dark = DarkThemeColors)
       ) {
-        WidgetHost()
+        WidgetHost(posts.toImmutableList())
       }
     }
   }
+}
 
-  @Composable
-  private fun WidgetHost() {
-    LazyColumn(
-      modifier =
-        GlanceModifier.fillMaxSize()
-          .background(GlanceTheme.colors.background)
-          .appWidgetBackground(),
-      horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-      item {
-        val style = MaterialTheme.typography.titleLarge
-        Text(
-          text = "Saved posts",
-          style =
-            TextStyle(
-              color = GlanceTheme.colors.onBackground,
-              fontSize = style.fontSize,
-              fontWeight = style.fontWeight.toGlance(),
-              fontStyle = style.fontStyle.toGlance(),
-            ),
-          modifier = GlanceModifier.padding(vertical = 8.dp),
-        )
-      }
-      items(posts) { post -> WidgetListEntry(post = post) }
+@Composable
+fun WidgetHost(posts: ImmutableList<SavedPost>, modifier: GlanceModifier = GlanceModifier) {
+  LazyColumn(
+    modifier =
+      modifier.fillMaxSize().background(GlanceTheme.colors.background).appWidgetBackground(),
+    horizontalAlignment = Alignment.CenterHorizontally,
+  ) {
+    item {
+      val style = MaterialTheme.typography.titleLarge
+      Text(
+        text = "Saved posts",
+        style =
+          TextStyle(
+            color = GlanceTheme.colors.onBackground,
+            fontSize = style.fontSize,
+            fontWeight = style.fontWeight.toGlance(),
+            fontStyle = style.fontStyle.toGlance(),
+          ),
+        modifier = GlanceModifier.padding(vertical = 8.dp),
+      )
     }
+    items(posts) { post -> WidgetListEntry(post = post) }
   }
 }

@@ -54,6 +54,10 @@ gradlePlugin {
       id = "dev.msfjarvis.claw.versioning-plugin"
       implementationClass = "dev.msfjarvis.claw.gradle.versioning.VersioningPlugin"
     }
+    register("versions") {
+      id = "dev.msfjarvis.claw.versions"
+      implementationClass = "dev.msfjarvis.claw.gradle.DependencyUpdatesPlugin"
+    }
   }
 }
 
@@ -64,6 +68,7 @@ dependencies {
   implementation(libs.build.semver)
   implementation(libs.build.sentry)
   implementation(libs.build.spotless)
+  implementation(libs.build.vcu)
 
   // Expose the generated version catalog API to the plugin.
   implementation(files(libs::class.java.superclass.protectionDomain.codeSource.location))

@@ -37,13 +37,23 @@ class VersioningPlugin : Plugin<Project> {
       val contents = providers.fileContents(propFile).asText
       val versionProps = Properties().also { it.load(contents.get().byteInputStream()) }
       val versionName =
-        requireNotNull(versionProps.getProperty(VERSIONING_PROP_VERSION_NAME)) {
-          "version.properties must contain a '$VERSIONING_PROP_VERSION_NAME' property"
-        }
+        providers
+          .gradleProperty("VERSION_NAME")
+          .orElse(
+            requireNotNull(versionProps.getProperty(VERSIONING_PROP_VERSION_NAME)) {
+              "version.properties must contain a '$VERSIONING_PROP_VERSION_NAME' property"
+            }
+          )
       val versionCode =
-        requireNotNull(versionProps.getProperty(VERSIONING_PROP_VERSION_CODE).toInt()) {
-          "version.properties must contain a '$VERSIONING_PROP_VERSION_CODE' property"
-        }
+        providers
+          .gradleProperty("VERSION_CODE")
+          .orElse(
+            requireNotNull(versionProps.getProperty(VERSIONING_PROP_VERSION_CODE)) {
+              "version.properties must contain a '$VERSIONING_PROP_VERSION_CODE' property"
+            }
+          )
+          .map(String::toInt)
+
       project.plugins.withType<AppPlugin> {
         androidAppPluginApplied.set(true)
         extensions.configure<ApplicationAndroidComponentsExtension> {
@@ -57,30 +67,30 @@ class VersioningPlugin : Plugin<Project> {
           }
         }
       }
-      val version = Version.parse(versionName)
+      val version = versionName.map(Version::parse)
       tasks.register<VersioningTask>("clearPreRelease") {
         description = "Remove the pre-release suffix from the version"
-        semverString.set(version.toStableVersion().toString())
+        semverString.set(version.get().toStableVersion().toString())
         propertyFile.set(propFile)
       }
       tasks.register<VersioningTask>("bumpMajor") {
         description = "Increment the major version"
-        semverString.set(version.nextMajorVersion().toString())
+        semverString.set(version.get().nextMajorVersion().toString())
         propertyFile.set(propFile)
       }
       tasks.register<VersioningTask>("bumpMinor") {
         description = "Increment the minor version"
-        semverString.set(version.nextMinorVersion().toString())
+        semverString.set(version.get().nextMinorVersion().toString())
         propertyFile.set(propFile)
       }
       tasks.register<VersioningTask>("bumpPatch") {
         description = "Increment the patch version"
-        semverString.set(version.nextPatchVersion().toString())
+        semverString.set(version.get().nextPatchVersion().toString())
         propertyFile.set(propFile)
       }
       tasks.register<VersioningTask>("bumpSnapshot") {
         description = "Increment the minor version and add the `SNAPSHOT` suffix"
-        semverString.set(version.nextMinorVersion("SNAPSHOT").toString())
+        semverString.set(version.get().nextMinorVersion("SNAPSHOT").toString())
         propertyFile.set(propFile)
       }
       afterEvaluate {

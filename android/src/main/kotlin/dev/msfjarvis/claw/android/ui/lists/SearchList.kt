@@ -1,5 +1,5 @@
 /*
- * Copyright © 2023 Harsh Shandilya.
+ * Copyright © 2023-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -21,15 +21,13 @@ import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.ui.SearchBar
-import dev.msfjarvis.claw.database.local.SavedPost
-import dev.msfjarvis.claw.model.LobstersPost
+import dev.msfjarvis.claw.model.UIPost
 import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun SearchList(
-  items: Flow<PagingData<LobstersPost>>,
+  items: Flow<PagingData<UIPost>>,
   listState: LazyListState,
-  isPostSaved: (SavedPost) -> Boolean,
   postActions: PostActions,
   searchQuery: String,
   setSearchQuery: (String) -> Unit,
@@ -50,8 +48,6 @@ fun SearchList(
     NetworkPosts(
       lazyPagingItems = lazyPagingItems,
       listState = listState,
-      isPostSaved = isPostSaved,
-      isPostRead = { false },
       postActions = postActions,
     )
   }

@@ -28,11 +28,11 @@ import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 import dev.msfjarvis.claw.common.theme.DarkThemeColors
 import dev.msfjarvis.claw.common.theme.LightThemeColors
-import dev.msfjarvis.claw.database.local.SavedPost
+import dev.msfjarvis.claw.model.UIPost
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 
-class SavedPostsWidget(private val posts: List<SavedPost>) : GlanceAppWidget() {
+class SavedPostsWidget(private val posts: List<UIPost>) : GlanceAppWidget() {
   override suspend fun provideGlance(context: Context, id: GlanceId) {
     provideContent {
       GlanceTheme(
@@ -46,7 +46,7 @@ class SavedPostsWidget(private val posts: List<SavedPost>) : GlanceAppWidget() {
 }
 
 @Composable
-fun WidgetHost(posts: ImmutableList<SavedPost>, modifier: GlanceModifier = GlanceModifier) {
+fun WidgetHost(posts: ImmutableList<UIPost>, modifier: GlanceModifier = GlanceModifier) {
   LazyColumn(
     modifier =
       modifier.fillMaxSize().background(GlanceTheme.colors.background).appWidgetBackground(),

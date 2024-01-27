@@ -1,5 +1,5 @@
 /*
- * Copyright © 2022-2023 Harsh Shandilya.
+ * Copyright © 2022-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -16,9 +16,8 @@ import dev.msfjarvis.claw.android.ui.navigation.Destinations
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
-import dev.msfjarvis.claw.database.local.SavedPost
 import dev.msfjarvis.claw.model.LinkMetadata
-import dev.msfjarvis.claw.model.LobstersPostDetails
+import dev.msfjarvis.claw.model.UIPost
 
 fun Context.getActivity(): ComponentActivity? {
   return when (this) {
@@ -59,11 +58,11 @@ fun rememberPostActions(
         urlLauncher.openUri(commentsUrl.replaceAfterLast('/', "r"))
       }
 
-      override fun toggleSave(post: SavedPost) {
+      override fun toggleSave(post: UIPost) {
         viewModel.toggleSave(post)
       }
 
-      override suspend fun getComments(postId: String): LobstersPostDetails {
+      override suspend fun getComments(postId: String): UIPost {
         return viewModel.getPostComments(postId)
       }
 

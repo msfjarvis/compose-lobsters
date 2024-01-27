@@ -1,5 +1,5 @@
 /*
- * Copyright © 2022-2023 Harsh Shandilya.
+ * Copyright © 2022-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -18,6 +18,8 @@ import dev.msfjarvis.claw.android.glance.SavedPostsWidget
 import dev.msfjarvis.claw.android.viewmodel.SavedPostsRepository
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.model.LobstersPostDetails
+import dev.msfjarvis.claw.model.UIPost
+import dev.msfjarvis.claw.model.fromSavedPost
 import dev.msfjarvis.claw.model.toSavedPost
 import javax.inject.Inject
 import kotlinx.coroutines.flow.first
@@ -44,7 +46,10 @@ constructor(
       .filterIsInstance<Success<LobstersPostDetails>>()
       .map { result -> result.value.toSavedPost() }
       .let { savedPostsRepository.savePosts(it) }
-    SavedPostsWidget(savedPostsRepository.savedPosts.first().take(50)).updateAll(applicationContext)
+    SavedPostsWidget(
+        savedPostsRepository.savedPosts.first().take(50).map(UIPost.Companion::fromSavedPost)
+      )
+      .updateAll(applicationContext)
     return Result.success()
   }
 }

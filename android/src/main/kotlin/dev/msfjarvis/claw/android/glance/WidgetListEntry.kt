@@ -33,13 +33,13 @@ import androidx.glance.text.TextStyle
 import dev.msfjarvis.claw.android.MainActivity
 import dev.msfjarvis.claw.android.MainActivity.Companion.NAVIGATION_KEY
 import dev.msfjarvis.claw.android.R
-import dev.msfjarvis.claw.database.local.SavedPost
+import dev.msfjarvis.claw.model.UIPost
 
 private val destinationKey = Key<String>(NAVIGATION_KEY)
 
 @Composable
 @GlanceComposable
-fun WidgetListEntry(post: SavedPost, modifier: GlanceModifier = GlanceModifier) {
+fun WidgetListEntry(post: UIPost, modifier: GlanceModifier = GlanceModifier) {
   val titleStyle = MaterialTheme.typography.titleMedium
   val commentsAction =
     actionStartActivity<MainActivity>(actionParametersOf(destinationKey to post.shortId))
@@ -68,7 +68,7 @@ fun WidgetListEntry(post: SavedPost, modifier: GlanceModifier = GlanceModifier) 
       )
       Image(
         provider = ImageProvider(R.drawable.ic_comment),
-        contentDescription = "${post.commentCount ?: 0} comments",
+        contentDescription = "${post.commentCount} comments",
         modifier = GlanceModifier.padding(end = 4.dp).clickable(commentsAction),
       )
     }

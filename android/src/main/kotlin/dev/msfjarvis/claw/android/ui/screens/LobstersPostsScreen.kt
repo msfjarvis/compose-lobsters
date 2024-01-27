@@ -228,8 +228,6 @@ fun LobstersPostsScreen(
           NetworkPosts(
             lazyPagingItems = hottestPosts,
             listState = hottestListState,
-            isPostSaved = viewModel::isPostSaved,
-            isPostRead = viewModel::isPostRead,
             postActions = postActions,
           )
         }
@@ -238,8 +236,6 @@ fun LobstersPostsScreen(
           NetworkPosts(
             lazyPagingItems = newestPosts,
             listState = newestListState,
-            isPostSaved = viewModel::isPostSaved,
-            isPostRead = viewModel::isPostRead,
             postActions = postActions,
           )
         }

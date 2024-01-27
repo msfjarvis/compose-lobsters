@@ -27,13 +27,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.ui.decorations.MonthHeader
-import dev.msfjarvis.claw.database.local.SavedPost
+import dev.msfjarvis.claw.model.UIPost
 import kotlinx.collections.immutable.ImmutableMap
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun DatabasePosts(
-  items: ImmutableMap<String, List<SavedPost>>,
+  items: ImmutableMap<String, List<UIPost>>,
   listState: LazyListState,
   postActions: PostActions,
   modifier: Modifier = Modifier,
@@ -54,12 +54,7 @@ fun DatabasePosts(
         items.forEach { (month, posts) ->
           stickyHeader(contentType = "month-header") { MonthHeader(label = month) }
           items(items = posts, key = { it.shortId }, contentType = { "LobstersItem" }) { item ->
-            LobstersListItem(
-              item = item,
-              isSaved = { true },
-              isRead = { false },
-              postActions = postActions,
-            )
+            LobstersListItem(item = item, postActions = postActions)
             HorizontalDivider()
           }
         }

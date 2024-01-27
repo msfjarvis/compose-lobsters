@@ -29,13 +29,16 @@ jobs:
         distribution: temurin
         java-version: 18
 
-    - name: Run unit tests
-      uses: gradle/gradle-build-action@a8f75513eafdebd8141bd1cd4e30fcd194af8dfa # v2.12.0
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v3-beta
       with:
-        arguments: --no-configuration-cache --stacktrace check -PslimTests
-        gradle-home-cache-cleanup: true
         cache-read-only: ${{ github.ref != 'refs/heads/main' }}
+        gradle-home-cache-cleanup: true
+        add-job-summary: always
         dependency-graph: generate-and-submit
+
+    - name: Run unit tests
+      run: ./gradlew --no-configuration-cache --stacktrace check -PslimTests
 
     - name: (Fail-only) Upload test report
       if: failure()
@@ -87,26 +90,24 @@ jobs:
         distribution: temurin
         java-version: 18
 
-    - name: Decrypt secrets
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v3-beta
+      with:
+        cache-read-only: ${{ github.ref != 'refs/heads/main' }}
+        gradle-home-cache-cleanup: true
+        add-job-summary: always
+        dependency-graph: generate-and-submit
+
+    - name: Build release APK
       run: |
         ./scripts/setup-age.sh
         ./scripts/signing-setup.sh "$AGE_SECRET_KEY"
+
+        ./gradlew --no-configuration-cache --stacktrace collectReleaseApks
+
+        ./scripts/signing-cleanup.sh
+        ./scripts/deploy-snapshot.sh
       env:
         AGE_SECRET_KEY: ${{ secrets.AGE_SECRET_KEY }}
-
-    - name: Build release app
-      uses: gradle/gradle-build-action@a8f75513eafdebd8141bd1cd4e30fcd194af8dfa # v2.12.0
-      env:
-        SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
-      with:
-        arguments: --no-configuration-cache --stacktrace collectReleaseApks
-        gradle-home-cache-cleanup: true
-        cache-read-only: ${{ github.ref != 'refs/heads/main' }}
-
-    - name: Clean secrets
-      run: scripts/signing-cleanup.sh
-
-    - name: Deploy snapshot
-      run: scripts/deploy-snapshot.sh
-      env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SENTRY_DSN: ${{ secrets.SENTRY_DSN }}

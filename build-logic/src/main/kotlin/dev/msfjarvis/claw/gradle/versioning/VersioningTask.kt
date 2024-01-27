@@ -1,12 +1,12 @@
 /*
- * Copyright © 2022 Harsh Shandilya.
+ * Copyright © 2022-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
 package dev.msfjarvis.claw.gradle.versioning
 
-import com.vdurmont.semver4j.Semver
+import com.github.zafarkhaja.semver.Version
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.Property
@@ -22,11 +22,11 @@ abstract class VersioningTask : DefaultTask() {
   @get:OutputFile abstract val propertyFile: RegularFileProperty
 
   /** Generate the Android 'versionCode' property */
-  private fun Semver.androidCode(): Int {
-    return major * 1_00_00 + minor * 1_00 + patch
+  private fun Version.androidCode(): Long {
+    return majorVersion() * 1_00_00 + minorVersion() * 1_00 + patchVersion()
   }
 
-  private fun Semver.toPropFileText(): String {
+  private fun Version.toPropFileText(): String {
     val newVersionCode = androidCode()
     val newVersionName = toString()
     return buildString {
@@ -46,6 +46,6 @@ abstract class VersioningTask : DefaultTask() {
 
   @TaskAction
   fun execute() {
-    propertyFile.get().asFile.writeText(Semver(semverString.get()).toPropFileText())
+    propertyFile.get().asFile.writeText(Version.parse(semverString.get()).toPropFileText())
   }
 }

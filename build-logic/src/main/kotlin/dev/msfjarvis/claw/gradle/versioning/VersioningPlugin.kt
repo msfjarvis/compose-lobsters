@@ -70,27 +70,27 @@ class VersioningPlugin : Plugin<Project> {
       val version = versionName.map(Version::parse)
       tasks.register<VersioningTask>("clearPreRelease") {
         description = "Remove the pre-release suffix from the version"
-        semverString.set(version.get().toStableVersion().toString())
+        semverString.set(version.map(Version::toStableVersion).map(Version::toString))
         propertyFile.set(propFile)
       }
       tasks.register<VersioningTask>("bumpMajor") {
         description = "Increment the major version"
-        semverString.set(version.get().nextMajorVersion().toString())
+        semverString.set(version.map(Version::nextMajorVersion).map(Version::toString))
         propertyFile.set(propFile)
       }
       tasks.register<VersioningTask>("bumpMinor") {
         description = "Increment the minor version"
-        semverString.set(version.get().nextMinorVersion().toString())
+        semverString.set(version.map(Version::nextMinorVersion).map(Version::toString))
         propertyFile.set(propFile)
       }
       tasks.register<VersioningTask>("bumpPatch") {
         description = "Increment the patch version"
-        semverString.set(version.get().nextPatchVersion().toString())
+        semverString.set(version.map(Version::nextPatchVersion).map(Version::toString))
         propertyFile.set(propFile)
       }
       tasks.register<VersioningTask>("bumpSnapshot") {
         description = "Increment the minor version and add the `SNAPSHOT` suffix"
-        semverString.set(version.get().nextMinorVersion("SNAPSHOT").toString())
+        semverString.set(version.map { it.nextMinorVersion("SNAPSHOT") }.map(Version::toString))
         propertyFile.set(propFile)
       }
       afterEvaluate {

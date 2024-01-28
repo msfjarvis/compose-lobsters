@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+*   Update to Compose January releases
+
 ## [1.39.0] - 2024-01-23
 
 ### Changed
@@ -15,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 *   Rework widget item layout for consistent touch targets
 *   Add attribution for libraries used in the app
 *   Redesign settings screen
-*   Update to Compose January releases
+*   Update to Compose December releases
 
 ## [1.38.0] - 2023-11-20
 

@@ -70,7 +70,7 @@ fun SearchBar(
 @DevicePreviews
 @ThemePreviews
 @Composable
-fun SearchBarPreview() {
+private fun SearchBarPreview() {
   LobstersTheme {
     Box(Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.background).padding(8.dp)) {
       var value by remember { mutableStateOf("") }

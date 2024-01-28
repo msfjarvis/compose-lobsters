@@ -15,6 +15,7 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.platform.LocalUriHandler
 import com.deliveryhero.whetstone.Whetstone
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
@@ -24,6 +25,7 @@ import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 import javax.inject.Inject
 
 /** A base class that encapsulates all activities used by Claw. */
+@Stable
 abstract class BaseActivity : ComponentActivity() {
 
   @Inject lateinit var urlLauncher: UrlLauncher

@@ -1,5 +1,5 @@
 /*
- * Copyright © 2023 Harsh Shandilya.
+ * Copyright © 2023-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -39,8 +39,6 @@ object LintConfig {
     disable += "AndroidGradlePluginVersion"
     disable += "GradleDependency"
     disable += "NewerVersionAvailable"
-    // Jetpack Compose lints are incompatible with AGP 8.3.0-alpha06
-    disable += "ObsoleteLintCustomCheck"
   }
 
   fun configureRootProject(project: Project) {

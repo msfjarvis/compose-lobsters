@@ -11,24 +11,16 @@ import androidx.compose.material.icons.automirrored.filled.Reply
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.produceState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import dev.msfjarvis.claw.common.posts.LobstersCard
 import dev.msfjarvis.claw.common.posts.PostActions
-import dev.msfjarvis.claw.database.local.SavedPost
+import dev.msfjarvis.claw.model.UIPost
 import me.saket.swipe.SwipeAction
 import me.saket.swipe.SwipeableActionsBox
 
 @Composable
-fun LobstersListItem(
-  item: SavedPost,
-  isSaved: (SavedPost) -> Boolean,
-  isRead: suspend (String) -> Boolean,
-  postActions: PostActions,
-  modifier: Modifier = Modifier,
-) {
-  val read by produceState(false, item.shortId) { value = isRead(item.shortId) }
+fun LobstersListItem(item: UIPost, postActions: PostActions, modifier: Modifier = Modifier) {
   val commentsAction =
     SwipeAction(
       icon = rememberVectorPainter(Icons.AutoMirrored.Filled.Reply),
@@ -36,12 +28,6 @@ fun LobstersListItem(
       onSwipe = { postActions.viewCommentsPage(item.commentsUrl) },
     )
   SwipeableActionsBox(endActions = listOf(commentsAction)) {
-    LobstersCard(
-      post = item,
-      isSaved = isSaved(item),
-      isRead = read,
-      postActions = postActions,
-      modifier = modifier,
-    )
+    LobstersCard(post = item, postActions = postActions, modifier = modifier)
   }
 }

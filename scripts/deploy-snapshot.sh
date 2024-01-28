@@ -2,7 +2,7 @@
 
 set -euxo pipefail
 
-NIGHTLY_TAG="nightly"
+NIGHTLY_TAG="latest"
 CURRENT_REV="$(git rev-parse --short HEAD)"
 ASSET_DIRECTORY="${GITHUB_WORKSPACE:?}/android/apk"
 

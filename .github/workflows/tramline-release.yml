@@ -1,0 +1,50 @@
+name: Android release build
+
+on:
+  workflow_dispatch:
+    inputs:
+      versionName:
+        description: 'User-facing release version name'
+        required: true
+        default: ""
+      versionCode:
+        description: 'versionCode or build number'
+        required: true
+        default: ''
+
+jobs:
+  signed-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+
+      - name: Set up JDK
+        uses: actions/setup-java@387ac29b308b003ca37ba93a6cab5eb57c8f5f93 # v4.0.0
+        with:
+          distribution: temurin
+          java-version: 18
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3-beta
+        with:
+          cache-read-only: true
+          gradle-home-cache-cleanup: true
+
+      - name: Build release app
+        run: |
+          ./scripts/setup-age.sh
+          ./scripts/signing-setup.sh "$AGE_SECRET_KEY"
+          ./gradlew --no-configuration-cache --stacktrace collectReleaseBundle
+          ./scripts/signing-cleanup.sh
+        env:
+          AGE_SECRET_KEY: ${{ secrets.AGE_SECRET_KEY }}
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+          ORG_GRADLE_PROJECT_VERSION_NAME: ${{ github.event.inputs.versionName }}
+          ORG_GRADLE_PROJECT_VERSION_CODE: ${{ github.event.inputs.versionCode }}
+
+      - name: Upload app bundle
+        uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8 # v4.3.0
+        with:
+          name: release-aab
+          path: android/build/outputs/bundle/release/android-release.aab

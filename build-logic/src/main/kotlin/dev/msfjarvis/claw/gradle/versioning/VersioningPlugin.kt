@@ -1,5 +1,5 @@
 /*
- * Copyright © 2022-2023 Harsh Shandilya.
+ * Copyright © 2022-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -9,7 +9,7 @@ package dev.msfjarvis.claw.gradle.versioning
 import com.android.build.api.variant.ApplicationAndroidComponentsExtension
 import com.android.build.api.variant.VariantOutputConfiguration
 import com.android.build.gradle.internal.plugins.AppPlugin
-import com.vdurmont.semver4j.Semver
+import com.github.zafarkhaja.semver.Version
 import java.util.Properties
 import java.util.concurrent.atomic.AtomicBoolean
 import org.gradle.api.Plugin
@@ -37,13 +37,23 @@ class VersioningPlugin : Plugin<Project> {
       val contents = providers.fileContents(propFile).asText
       val versionProps = Properties().also { it.load(contents.get().byteInputStream()) }
       val versionName =
-        requireNotNull(versionProps.getProperty(VERSIONING_PROP_VERSION_NAME)) {
-          "version.properties must contain a '$VERSIONING_PROP_VERSION_NAME' property"
-        }
+        providers
+          .gradleProperty("VERSION_NAME")
+          .orElse(
+            requireNotNull(versionProps.getProperty(VERSIONING_PROP_VERSION_NAME)) {
+              "version.properties must contain a '$VERSIONING_PROP_VERSION_NAME' property"
+            }
+          )
       val versionCode =
-        requireNotNull(versionProps.getProperty(VERSIONING_PROP_VERSION_CODE).toInt()) {
-          "version.properties must contain a '$VERSIONING_PROP_VERSION_CODE' property"
-        }
+        providers
+          .gradleProperty("VERSION_CODE")
+          .orElse(
+            requireNotNull(versionProps.getProperty(VERSIONING_PROP_VERSION_CODE)) {
+              "version.properties must contain a '$VERSIONING_PROP_VERSION_CODE' property"
+            }
+          )
+          .map(String::toInt)
+
       project.plugins.withType<AppPlugin> {
         androidAppPluginApplied.set(true)
         extensions.configure<ApplicationAndroidComponentsExtension> {
@@ -57,30 +67,30 @@ class VersioningPlugin : Plugin<Project> {
           }
         }
       }
-      val version = Semver(versionName)
+      val version = versionName.map(Version::parse)
       tasks.register<VersioningTask>("clearPreRelease") {
         description = "Remove the pre-release suffix from the version"
-        semverString.set(version.withClearedSuffix().toString())
+        semverString.set(version.map(Version::toStableVersion).map(Version::toString))
         propertyFile.set(propFile)
       }
       tasks.register<VersioningTask>("bumpMajor") {
         description = "Increment the major version"
-        semverString.set(version.withIncMajor().withClearedSuffix().toString())
+        semverString.set(version.map(Version::nextMajorVersion).map(Version::toString))
         propertyFile.set(propFile)
       }
       tasks.register<VersioningTask>("bumpMinor") {
         description = "Increment the minor version"
-        semverString.set(version.withIncMinor().withClearedSuffix().toString())
+        semverString.set(version.map(Version::nextMinorVersion).map(Version::toString))
         propertyFile.set(propFile)
       }
       tasks.register<VersioningTask>("bumpPatch") {
         description = "Increment the patch version"
-        semverString.set(version.withIncPatch().withClearedSuffix().toString())
+        semverString.set(version.map(Version::nextPatchVersion).map(Version::toString))
         propertyFile.set(propFile)
       }
       tasks.register<VersioningTask>("bumpSnapshot") {
         description = "Increment the minor version and add the `SNAPSHOT` suffix"
-        semverString.set(version.withIncMinor().withSuffix("SNAPSHOT").toString())
+        semverString.set(version.map { it.nextMinorVersion("SNAPSHOT") }.map(Version::toString))
         propertyFile.set(propFile)
       }
       afterEvaluate {

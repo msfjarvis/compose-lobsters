@@ -18,6 +18,14 @@ import kotlinx.serialization.Serializable
 @Serializable
 @Poko
 @KonvertTo(
+  value = UIPost::class,
+  mappings =
+    [
+      Mapping(target = "submitterName", expression = "it.submitter.username"),
+      Mapping(target = "submitterAvatarUrl", expression = "it.submitter.avatarUrl"),
+    ],
+)
+@KonvertTo(
   value = SavedPost::class,
   mappings =
     [

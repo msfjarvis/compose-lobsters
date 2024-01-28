@@ -27,17 +27,17 @@ jobs:
         distribution: temurin
         java-version: 18
 
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v3-beta
+      with:
+        cache-read-only: ${{ github.ref != 'refs/heads/main' }}
+        gradle-home-cache-cleanup: true
+
     - name: Set up Git author
       shell: bash
       run: |
         git config user.name "GitHub Actions"
         git config user.email noreply@github.com
-
-    - name: Setup Gradle caching
-      uses: gradle/gradle-build-action@982da8e78c05368c70dac0351bb82647a9e9a5d2 # v2.11.1
-      with:
-        gradle-home-cache-cleanup: true
-        cache-read-only: true
 
     - name: Decrypt secrets
       run: |

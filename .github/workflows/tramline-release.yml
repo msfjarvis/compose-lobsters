@@ -32,8 +32,13 @@ jobs:
           gradle-home-cache-cleanup: true
 
       - name: Build release app
-        run: ./gradlew --no-configuration-cache --stacktrace collectReleaseBundle
+        run: |
+          ./scripts/setup-age.sh
+          ./scripts/signing-setup.sh "$AGE_SECRET_KEY"
+          ./gradlew --no-configuration-cache --stacktrace collectReleaseBundle
+          ./scripts/signing-cleanup.sh
         env:
+          AGE_SECRET_KEY: ${{ secrets.AGE_SECRET_KEY }}
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
           ORG_GRADLE_PROJECT_VERSION_NAME: ${{ github.event.inputs.versionName }}
           ORG_GRADLE_PROJECT_VERSION_CODE: ${{ github.event.inputs.versionCode }}

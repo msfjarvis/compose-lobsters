@@ -42,16 +42,16 @@ androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling
 androidx-compose-ui-util = { module = "androidx.compose.ui:ui-util" }
 androidx-core-splashscreen = "androidx.core:core-splashscreen:1.1.0-alpha02"
 androidx-lifecycle-common = { module = "androidx.lifecycle:lifecycle-common", version.ref = "lifecycle" }
-androidx-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime", version.ref = "lifecycle" }
 androidx-lifecycle-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
+androidx-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime", version.ref = "lifecycle" }
 androidx-navigation-compose = "androidx.navigation:navigation-compose:2.8.0-alpha01"
 androidx-paging-compose = "androidx.paging:paging-compose:3.3.0-alpha02"
 androidx-profileinstaller = "androidx.profileinstaller:profileinstaller:1.3.1"
-androidx-test-core = "androidx.test:core:1.6.0-alpha04"
-androidx-test-espresso-core = "androidx.test.espresso:espresso-core:3.6.0-alpha02"
-androidx-test-ext-junit = "androidx.test.ext:junit:1.2.0-alpha02"
-androidx-test-rules = "androidx.test:rules:1.6.0-alpha02"
-androidx-test-runner = "androidx.test:runner:1.6.0-alpha05"
+androidx-test-core = "androidx.test:core:1.6.0-alpha05"
+androidx-test-espresso-core = "androidx.test.espresso:espresso-core:3.6.0-alpha03"
+androidx-test-ext-junit = "androidx.test.ext:junit:1.2.0-alpha03"
+androidx-test-rules = "androidx.test:rules:1.6.0-alpha03"
+androidx-test-runner = "androidx.test:runner:1.6.0-alpha06"
 androidx-test-uiautomator = "androidx.test.uiautomator:uiautomator:2.3.0-beta01"
 androidx-work-runtime = { module = "androidx.work:work-runtime", version.ref = "workmanager" }
 build-agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }
@@ -76,13 +76,13 @@ junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", vers
 junit-legacy = "junit:junit:4.13.2"
 konvert-api = { module = "io.mcarle:konvert-api", version.ref = "konvert" }
 konvert-processor = { module = "io.mcarle:konvert", version.ref = "konvert" }
+kotlinResult-coroutines = { module = "com.michael-bull.kotlin-result:kotlin-result-coroutines", version.ref = "kotlinResult" }
 kotlinx-collections-immutable = "org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.7"
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "serialization" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
-kotlinResult-coroutines = { module = "com.michael-bull.kotlin-result:kotlin-result-coroutines", version.ref = "kotlinResult" }
 material3-pulltorefresh = "eu.bambooapps:compose-material3-pullrefresh:1.0.1"
 napier = "io.github.aakira:napier:2.7.1"
 okhttp-bom = "com.squareup.okhttp3:okhttp-bom:4.12.0"
@@ -112,7 +112,7 @@ anvil = "com.squareup.anvil:2.4.9"
 baselineprofile = { id = "androidx.baselineprofile", version.ref = "benchmark" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = "com.google.devtools.ksp:1.9.22-1.0.17"
-licensee = "app.cash.licensee:1.8.0"
+licensee = "app.cash.licensee:1.9.0"
 modulegraphassert = "com.jraska.module.graph.assertion:2.5.0"
 poko = "dev.drewhamilton.poko:0.15.2"
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }

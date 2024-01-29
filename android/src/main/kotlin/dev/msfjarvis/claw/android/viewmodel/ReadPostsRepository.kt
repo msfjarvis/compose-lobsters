@@ -6,6 +6,8 @@
  */
 package dev.msfjarvis.claw.android.viewmodel
 
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
 import dev.msfjarvis.claw.core.injection.DatabaseDispatcher
 import dev.msfjarvis.claw.database.local.ReadPostsQueries
 import javax.inject.Inject
@@ -18,12 +20,9 @@ constructor(
   private val readPostsQueries: ReadPostsQueries,
   @DatabaseDispatcher private val dbDispatcher: CoroutineDispatcher,
 ) {
+  val readPosts = readPostsQueries.selectAllPosts().asFlow().mapToList(dbDispatcher)
 
   suspend fun markRead(postId: String) {
     withContext(dbDispatcher) { readPostsQueries.markRead(postId) }
-  }
-
-  fun isRead(postId: String): Boolean {
-    return readPostsQueries.isRead(postId).executeAsOneOrNull() != null
   }
 }

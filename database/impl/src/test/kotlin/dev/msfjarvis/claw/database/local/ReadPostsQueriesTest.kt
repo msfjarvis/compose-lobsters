@@ -1,5 +1,5 @@
 /*
- * Copyright © 2023 Harsh Shandilya.
+ * Copyright © 2023-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -23,8 +23,8 @@ class ReadPostsQueriesTest {
   fun `mark post as read`() {
     val id = UUID.randomUUID().toString()
     postQueries.markRead(id)
-    assertThat(postQueries.isRead(id).executeAsOne()).isNotNull()
+    assertThat(postQueries.selectAllPosts().executeAsList()).contains(id)
     postQueries.markUnread(id)
-    assertThat(postQueries.isRead(id).executeAsOneOrNull()).isNull()
+    assertThat(postQueries.selectAllPosts().executeAsList()).doesNotContain(id)
   }
 }

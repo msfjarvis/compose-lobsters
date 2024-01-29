@@ -57,8 +57,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 
 @ContributesViewModel
@@ -84,7 +82,7 @@ constructor(
         pagingSourceFactory = { pagingSourceFactory.create(api::getHottestPosts) },
       )
       .flow
-      .map(::mapUIPost)
+      .map(::mapToUIPost)
       .cachedIn(viewModelScope)
 
   val newestPosts =
@@ -94,7 +92,7 @@ constructor(
         pagingSourceFactory = { pagingSourceFactory.create(api::getNewestPosts) },
       )
       .flow
-      .map(::mapUIPost)
+      .map(::mapToUIPost)
       .cachedIn(viewModelScope)
   val searchResults =
     Pager(
@@ -103,38 +101,33 @@ constructor(
         pagingSourceFactory = { searchPagingSourceFactory.create { searchQuery } },
       )
       .flow
-      .map(::mapUIPost)
+      .map(::mapToUIPost)
 
-  val savedPosts
-    get() =
-      savedPostsRepository.savedPosts
-        .map { it.map(UIPost.Companion::fromSavedPost) }
-        .shareIn(viewModelScope, started = SharingStarted.Lazily, Int.MAX_VALUE)
+  val savedPosts =
+    savedPostsRepository.savedPosts
+      .map { it.map(UIPost.Companion::fromSavedPost) }
+      .shareIn(viewModelScope, started = SharingStarted.Lazily, Int.MAX_VALUE)
 
-  val savedPostsByMonth
-    get() = savedPosts.map(::mapSavedPosts)
+  val savedPostsByMonth = savedPosts.map(::groupSavedPosts)
 
   var searchQuery by mutableStateOf("")
 
-  private val _savedPostsMutex = Mutex()
+  private var _readPosts = emptyList<String>()
   private var _savedPosts = emptyList<String>()
 
   init {
-    viewModelScope.launch {
-      savedPosts.collectLatest {
-        _savedPostsMutex.withLock { _savedPosts = it.map(UIPost::shortId) }
-      }
-    }
+    viewModelScope.launch { savedPosts.collectLatest { _savedPosts = it.map(UIPost::shortId) } }
+    viewModelScope.launch { readPostsRepository.readPosts.collectLatest { _readPosts = it } }
   }
 
-  private fun mapUIPost(pagingData: PagingData<LobstersPost>): PagingData<UIPost> {
+  private fun mapToUIPost(pagingData: PagingData<LobstersPost>): PagingData<UIPost> {
     return pagingData.map { post ->
       val uiPost = post.toUIPost()
       uiPost.copy(isSaved = isPostSaved(uiPost), isRead = isPostRead(uiPost))
     }
   }
 
-  private fun mapSavedPosts(items: List<UIPost>): ImmutableMap<String, List<UIPost>> {
+  private fun groupSavedPosts(items: List<UIPost>): ImmutableMap<String, List<UIPost>> {
     val sorted =
       items.sortedWith { post1, post2 ->
         val post1Date = post1.createdAt.toLocalDateTime()
@@ -159,7 +152,9 @@ constructor(
     return _savedPosts.contains(post.shortId)
   }
 
-  private fun isPostRead(post: UIPost) = readPostsRepository.isRead(post.shortId)
+  private fun isPostRead(post: UIPost): Boolean {
+    return _readPosts.contains(post.shortId)
+  }
 
   fun toggleSave(post: UIPost) {
     viewModelScope.launch(ioDispatcher) {

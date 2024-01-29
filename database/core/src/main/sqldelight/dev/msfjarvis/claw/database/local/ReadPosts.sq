@@ -2,16 +2,15 @@ CREATE TABLE ReadPosts(
   id TEXT NOT NULL PRIMARY KEY
 );
 
+selectAllPosts:
+SELECT *
+FROM ReadPosts;
+
 markRead:
-INSERT OR REPLACE
+INSERT OR IGNORE
 INTO ReadPosts(id)
 VALUES (?);
 
 markUnread:
 DELETE FROM ReadPosts
-WHERE id = ?;
-
-isRead:
-SELECT *
-FROM ReadPosts
 WHERE id = ?;

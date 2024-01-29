@@ -36,8 +36,3 @@ deletePost:
 DELETE
 FROM SavedPost
 WHERE shortId = ?;
-
-selectPost:
-SELECT *
-FROM SavedPost
-WHERE shortId = ?;

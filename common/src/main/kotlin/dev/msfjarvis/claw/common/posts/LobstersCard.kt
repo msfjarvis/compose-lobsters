@@ -58,13 +58,23 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 
 @Composable
-fun LobstersCard(post: UIPost, postActions: PostActions, modifier: Modifier = Modifier) {
+fun LobstersCard(
+  post: UIPost,
+  postActions: PostActions,
+  refresh: () -> Unit,
+  modifier: Modifier = Modifier,
+) {
+  var localReadState by remember(post) { mutableStateOf(post.isRead) }
   var localSavedState by remember(post) { mutableStateOf(post.isSaved) }
   Box(
     modifier =
       modifier
         .fillMaxWidth()
-        .clickable { postActions.viewPost(post.shortId, post.url, post.commentsUrl) }
+        .clickable {
+          postActions.viewPost(post.shortId, post.url, post.commentsUrl)
+          localReadState = true
+          refresh()
+        }
         .background(MaterialTheme.colorScheme.background)
         .padding(start = 16.dp, top = 16.dp, end = 4.dp, bottom = 16.dp)
   ) {
@@ -72,7 +82,7 @@ fun LobstersCard(post: UIPost, postActions: PostActions, modifier: Modifier = Mo
       horizontalArrangement = Arrangement.spacedBy(8.dp),
       verticalAlignment = Alignment.CenterVertically,
     ) {
-      PostDetails(modifier = Modifier.weight(1f), post = post)
+      PostDetails(post = post, isRead = localReadState, modifier = Modifier.weight(1f))
       Column(
         modifier = Modifier.wrapContentHeight(),
         verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -84,6 +94,7 @@ fun LobstersCard(post: UIPost, postActions: PostActions, modifier: Modifier = Mo
             Modifier.clickable(role = Role.Button) {
               localSavedState = !localSavedState
               postActions.toggleSave(post)
+              refresh()
             },
         )
         HorizontalDivider(modifier = Modifier.width(48.dp))
@@ -92,7 +103,11 @@ fun LobstersCard(post: UIPost, postActions: PostActions, modifier: Modifier = Mo
           modifier =
             Modifier.clickable(
               role = Role.Button,
-              onClick = { postActions.viewComments(post.shortId) },
+              onClick = {
+                postActions.viewComments(post.shortId)
+                localReadState = true
+                refresh()
+              },
             ),
         )
       }
@@ -101,9 +116,9 @@ fun LobstersCard(post: UIPost, postActions: PostActions, modifier: Modifier = Mo
 }
 
 @Composable
-fun PostDetails(post: UIPost, modifier: Modifier = Modifier) {
+fun PostDetails(post: UIPost, isRead: Boolean, modifier: Modifier = Modifier) {
   Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
-    PostTitle(title = post.title, isRead = post.isRead)
+    PostTitle(title = post.title, isRead = isRead)
     TagRow(tags = post.tags.toImmutableList())
     Spacer(Modifier.height(4.dp))
     Submitter(
@@ -269,6 +284,7 @@ private fun LobstersCardPreview() {
             return LinkMetadata("", "")
           }
         },
+      refresh = {},
     )
   }
 }

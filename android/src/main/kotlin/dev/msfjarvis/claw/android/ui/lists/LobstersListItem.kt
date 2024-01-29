@@ -20,7 +20,12 @@ import me.saket.swipe.SwipeAction
 import me.saket.swipe.SwipeableActionsBox
 
 @Composable
-fun LobstersListItem(item: UIPost, postActions: PostActions, modifier: Modifier = Modifier) {
+fun LobstersListItem(
+  item: UIPost,
+  postActions: PostActions,
+  refresh: () -> Unit,
+  modifier: Modifier = Modifier,
+) {
   val commentsAction =
     SwipeAction(
       icon = rememberVectorPainter(Icons.AutoMirrored.Filled.Reply),
@@ -28,6 +33,6 @@ fun LobstersListItem(item: UIPost, postActions: PostActions, modifier: Modifier 
       onSwipe = { postActions.viewCommentsPage(item.commentsUrl) },
     )
   SwipeableActionsBox(endActions = listOf(commentsAction)) {
-    LobstersCard(post = item, postActions = postActions, modifier = modifier)
+    LobstersCard(post = item, postActions = postActions, refresh = refresh, modifier = modifier)
   }
 }

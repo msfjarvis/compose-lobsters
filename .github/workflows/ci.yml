@@ -30,7 +30,7 @@ jobs:
         java-version: 18
 
     - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@v3-beta
+      uses: gradle/actions/setup-gradle@v3.0.0-rc.2
       with:
         cache-read-only: ${{ github.ref != 'refs/heads/main' }}
         gradle-home-cache-cleanup: true
@@ -91,7 +91,7 @@ jobs:
         java-version: 18
 
     - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@v3-beta
+      uses: gradle/actions/setup-gradle@v3.0.0-rc.2
       with:
         cache-read-only: ${{ github.ref != 'refs/heads/main' }}
         gradle-home-cache-cleanup: true

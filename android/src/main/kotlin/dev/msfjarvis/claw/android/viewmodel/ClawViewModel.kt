@@ -84,7 +84,6 @@ constructor(
       .flow
       .map(::mapToUIPost)
       .cachedIn(viewModelScope)
-
   val newestPosts =
     Pager(
         config = PagingConfig(pageSize = PAGE_SIZE),
@@ -102,12 +101,10 @@ constructor(
       )
       .flow
       .map(::mapToUIPost)
-
   val savedPosts =
     savedPostsRepository.savedPosts
       .map { it.map(UIPost.Companion::fromSavedPost) }
       .shareIn(viewModelScope, started = SharingStarted.Lazily, Int.MAX_VALUE)
-
   val savedPostsByMonth = savedPosts.map(::groupSavedPosts)
 
   var searchQuery by mutableStateOf("")

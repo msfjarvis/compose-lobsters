@@ -42,7 +42,7 @@ fun NetworkPosts(
 ) {
   ReportDrawnWhen { lazyPagingItems.itemCount > 0 }
   val refreshLoadState = lazyPagingItems.loadState.refresh
-  val isRefreshing = refreshLoadState == LoadState.Loading
+  val isRefreshing = refreshLoadState == LoadState.Loading && lazyPagingItems.itemCount == 0
   val pullRefreshState = rememberPullRefreshState(isRefreshing, lazyPagingItems::refresh)
   Box(modifier = modifier.fillMaxSize().pullRefresh(pullRefreshState)) {
     if (lazyPagingItems.itemCount == 0 && refreshLoadState is LoadState.Error) {
@@ -60,8 +60,11 @@ fun NetworkPosts(
         ) { index ->
           val item = lazyPagingItems[index]
           if (item != null) {
-            LobstersListItem(item = item, postActions = postActions)
-
+            LobstersListItem(
+              item = item,
+              postActions = postActions,
+              refresh = { lazyPagingItems.refresh() },
+            )
             HorizontalDivider()
           }
         }

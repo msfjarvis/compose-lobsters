@@ -16,6 +16,7 @@ fun setupDatabase(): LobstersDatabase {
   LobstersDatabase.Schema.create(driver)
   return LobstersDatabase(
     driver,
+    NewestPosts.Adapter(CSVAdapter()),
     PostComments.Adapter(CSVAdapter()),
     SavedPost.Adapter(IntColumnAdapter, CSVAdapter()),
   )

@@ -11,6 +11,8 @@ import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides
 import dev.msfjarvis.claw.database.LobstersDatabase
+import dev.msfjarvis.claw.database.local.NewestPosts
+import dev.msfjarvis.claw.database.local.NewestPostsQueries
 import dev.msfjarvis.claw.database.local.PostCommentsQueries
 import dev.msfjarvis.claw.database.local.ReadPostsQueries
 import dev.msfjarvis.claw.database.local.SavedPostQueries
@@ -34,5 +36,10 @@ object QueriesModule {
   @Provides
   fun provideReadPostsQueries(@InternalDatabaseApi database: LobstersDatabase): ReadPostsQueries {
     return database.readPostsQueries
+  }
+
+  @Provides
+  fun provideCachedPostsQueries(@InternalDatabaseApi database: LobstersDatabase): NewestPostsQueries {
+    return database.newestPostsQueries
   }
 }

@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 *   Update to Compose January releases
+*   Improve performance of frequently invoked database queries
+*   Refactor UI data model to improve state handling
 
 ## [1.39.0] - 2024-01-23
 

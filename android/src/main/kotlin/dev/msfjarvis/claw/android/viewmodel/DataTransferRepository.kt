@@ -6,17 +6,16 @@
  */
 package dev.msfjarvis.claw.android.viewmodel
 
-import dev.msfjarvis.claw.core.injection.DatabaseDispatcher
 import dev.msfjarvis.claw.core.injection.IODispatcher
 import dev.msfjarvis.claw.database.SavedPostSerializer
 import dev.msfjarvis.claw.database.local.SavedPost
-import dev.msfjarvis.claw.database.local.SavedPostQueries
 import java.io.InputStream
 import java.io.OutputStream
 import java.time.Instant
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.builtins.ListSerializer
@@ -29,8 +28,7 @@ class DataTransferRepository
 @Inject
 constructor(
   private val json: Json,
-  private val savedPostQueries: SavedPostQueries,
-  @DatabaseDispatcher private val dbDispatcher: CoroutineDispatcher,
+  private val savedPostsRepository: SavedPostsRepository,
   @IODispatcher private val ioDispatcher: CoroutineDispatcher,
 ) {
   private val serializer = ListSerializer(SavedPostSerializer)
@@ -38,13 +36,11 @@ constructor(
   suspend fun importPosts(input: InputStream) {
     val posts: List<SavedPost> =
       withContext(ioDispatcher) { json.decodeFromStream(serializer, input) }
-    withContext(dbDispatcher) {
-      savedPostQueries.transaction { posts.forEach(savedPostQueries::insertOrReplacePost) }
-    }
+    savedPostsRepository.savePosts(posts)
   }
 
   suspend fun exportPostsAsJson(output: OutputStream) {
-    val posts = withContext(dbDispatcher) { savedPostQueries.selectAllPosts().executeAsList() }
+    val posts = savedPostsRepository.savedPosts.first()
     withContext(ioDispatcher) { json.encodeToStream(serializer, posts, output) }
   }
 
@@ -55,7 +51,7 @@ constructor(
       return instant.toEpochMilli()
     }
 
-    val posts = withContext(dbDispatcher) { savedPostQueries.selectAllPosts().executeAsList() }
+    val posts = savedPostsRepository.savedPosts.first()
     val header =
       """
       <!DOCTYPE NETSCAPE-Bookmark-file-1>

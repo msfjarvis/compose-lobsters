@@ -1,5 +1,5 @@
 /*
- * Copyright © 2021-2023 Harsh Shandilya.
+ * Copyright © 2021-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -34,19 +34,12 @@ class ClawApplication : Application(), ApplicationComponentOwner {
     plugins.forEach { plugin -> plugin.apply(this) }
     val postUpdateWorkRequest =
       PeriodicWorkRequestBuilder<SavedPostUpdaterWorker>(POST_REFRESH_PERIOD, TimeUnit.HOURS)
-        .setConstraints(
-          Constraints.Builder()
-            .setRequiresCharging(false)
-            .setRequiresBatteryNotLow(true)
-            .setRequiredNetworkType(NetworkType.CONNECTED)
-            .setRequiresDeviceIdle(true)
-            .build()
-        )
+        .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())
         .build()
     WorkManager.getInstance(this)
       .enqueueUniquePeriodicWork(
         "updateSavedPosts",
-        ExistingPeriodicWorkPolicy.UPDATE,
+        ExistingPeriodicWorkPolicy.KEEP,
         postUpdateWorkRequest,
       )
   }

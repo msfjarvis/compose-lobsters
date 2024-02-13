@@ -160,7 +160,7 @@ constructor(
       } else {
         savedPostsRepository.savePost(post.toSavedPost())
       }
-      withContext(mainDispatcher) { SavedPostsWidget(savedPosts).updateAll(getApplication()) }
+      withContext(mainDispatcher) { SavedPostsWidget().updateAll(getApplication()) }
     }
   }
 

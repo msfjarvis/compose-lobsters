@@ -18,12 +18,9 @@ import dev.msfjarvis.claw.android.glance.SavedPostsWidget
 import dev.msfjarvis.claw.android.viewmodel.SavedPostsRepository
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.model.LobstersPostDetails
-import dev.msfjarvis.claw.model.UIPost
-import dev.msfjarvis.claw.model.fromSavedPost
 import dev.msfjarvis.claw.model.toSavedPost
 import javax.inject.Inject
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 
 /**
  * WorkManager-backed [CoroutineWorker] that gets all the posts from [SavedPostsRepository], fetches
@@ -47,10 +44,7 @@ constructor(
       .filterIsInstance<Success<LobstersPostDetails>>()
       .map { result -> result.value.toSavedPost() }
       .let { savedPostsRepository.savePosts(it) }
-    SavedPostsWidget(
-        savedPostsRepository.savedPosts.map { it.map(UIPost.Companion::fromSavedPost) }
-      )
-      .updateAll(applicationContext)
+    SavedPostsWidget().updateAll(applicationContext)
     return Result.success()
   }
 }

@@ -30,19 +30,17 @@ import dev.msfjarvis.claw.common.theme.DarkThemeColors
 import dev.msfjarvis.claw.common.theme.LightThemeColors
 import dev.msfjarvis.claw.model.UIPost
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.toImmutableList
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
+import kotlinx.collections.immutable.persistentListOf
 
-class SavedPostsWidget(private val posts: Flow<List<UIPost>>) : GlanceAppWidget() {
+class SavedPostsWidget : GlanceAppWidget() {
   override suspend fun provideGlance(context: Context, id: GlanceId) {
-    val postWindow = posts.first().take(50).toImmutableList()
+    // val postWindow = posts.first().take(50).toImmutableList()
     provideContent {
       GlanceTheme(
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) GlanceTheme.colors
         else ColorProviders(light = LightThemeColors, dark = DarkThemeColors)
       ) {
-        WidgetHost(postWindow)
+        WidgetHost(persistentListOf())
       }
     }
   }

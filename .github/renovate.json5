@@ -33,8 +33,6 @@
       "matchPackagePatterns": [
         "^androidx.*",
       ],
-      "matchPackageNames": [
-      ],
       "groupName": "AndroidX"
     },
     {
@@ -49,6 +47,12 @@
         "^com.squareup.anvil"
       ],
       "allowedVersions": "!/.*-1-8$/",
+    },
+    {
+      "matchPackagePatterns": [
+        "^androidx.glance",
+      ],
+      "allowedVersions": "<=1.0.0",
     },
   ],
   "regexManagers": [

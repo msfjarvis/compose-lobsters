@@ -23,6 +23,7 @@ import dev.msfjarvis.claw.model.fromSavedPost
 import dev.msfjarvis.claw.model.toSavedPost
 import javax.inject.Inject
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 
 /**
  * WorkManager-backed [CoroutineWorker] that gets all the posts from [SavedPostsRepository], fetches
@@ -47,7 +48,7 @@ constructor(
       .map { result -> result.value.toSavedPost() }
       .let { savedPostsRepository.savePosts(it) }
     SavedPostsWidget(
-        savedPostsRepository.savedPosts.first().take(50).map(UIPost.Companion::fromSavedPost)
+        savedPostsRepository.savedPosts.map { it.map(UIPost.Companion::fromSavedPost) }
       )
       .updateAll(applicationContext)
     return Result.success()

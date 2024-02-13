@@ -53,7 +53,6 @@ import kotlinx.collections.immutable.toImmutableMap
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
@@ -161,10 +160,7 @@ constructor(
       } else {
         savedPostsRepository.savePost(post.toSavedPost())
       }
-      val newPosts = savedPosts.first()
-      withContext(mainDispatcher) {
-        SavedPostsWidget(newPosts.take(50)).updateAll(getApplication())
-      }
+      withContext(mainDispatcher) { SavedPostsWidget(savedPosts).updateAll(getApplication()) }
     }
   }
 

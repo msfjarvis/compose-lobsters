@@ -5,7 +5,7 @@ benchmark = "1.2.3"
 coil = "2.5.0"
 # @keep used for kotlinCompilerExtensionVersion
 composeCompiler = "1.5.9"
-coroutines = "1.8.0-RC2"
+coroutines = "1.8.0"
 dagger = "2.50"
 glance = "1.0.0"
 junit = "5.10.2"

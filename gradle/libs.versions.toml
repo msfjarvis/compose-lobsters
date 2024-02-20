@@ -1,5 +1,5 @@
 [versions]
-aboutLibraries = "11.1.0-b01"
+aboutLibraries = "11.1.0-b03"
 agp = "8.3.0-rc02"
 benchmark = "1.2.3"
 coil = "2.5.0"

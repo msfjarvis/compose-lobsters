@@ -32,6 +32,11 @@ android {
     useLiveLiterals = false
     kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
   }
+  buildTypes.create("internal") {
+    matchingFallbacks += "release"
+    signingConfig = signingConfigs["debug"]
+    applicationIdSuffix = ".internal"
+  }
 }
 
 baselineProfile {

@@ -32,8 +32,11 @@ android {
     useLiveLiterals = false
     kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
   }
-  // kotlinx.serialization 1.6.0-RC regression
-  packagingOptions.resources.pickFirsts += "**/*.bin"
+  buildTypes.create("internal") {
+    matchingFallbacks += "release"
+    signingConfig = signingConfigs["debug"]
+    applicationIdSuffix = ".internal"
+  }
 }
 
 baselineProfile {

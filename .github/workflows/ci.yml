@@ -16,7 +16,7 @@ concurrency:
 
 jobs:
   check:
-    runs-on: ubuntu-latest
+    runs-on: macos-14
     steps:
     - name: Checkout repository
       uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
@@ -48,7 +48,7 @@ jobs:
           path: '**/build/reports/tests/**'
 
   dependency-review:
-    runs-on: ubuntu-latest
+    runs-on: macos-14
     needs:
       - check
     steps:
@@ -62,7 +62,7 @@ jobs:
           head-ref: ${{ github.ref }}
 
   validate-changelog:
-    runs-on: ubuntu-latest
+    runs-on: macos-14
     steps:
       - name: Checkout repository
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
@@ -74,7 +74,7 @@ jobs:
           validation_level: error
 
   deploy-release-snapshot:
-    runs-on: ubuntu-latest
+    runs-on: macos-14
     if: "github.event_name == 'push' && github.event.ref == 'refs/heads/main'"
     needs:
       - check

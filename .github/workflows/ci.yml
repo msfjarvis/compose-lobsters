@@ -16,7 +16,7 @@ concurrency:
 
 jobs:
   check:
-    runs-on: ubuntu-latest
+    runs-on: macos-14
     steps:
     - name: Checkout repository
       uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
@@ -24,7 +24,7 @@ jobs:
         fetch-depth: 0
 
     - name: Set up JDK
-      uses: actions/setup-java@387ac29b308b003ca37ba93a6cab5eb57c8f5f93 # v4.0.0
+      uses: actions/setup-java@9704b39bf258b59bc04b50fa2dd55e9ed76b47a8 # v4.1.0
       with:
         distribution: temurin
         java-version: 18
@@ -37,6 +37,12 @@ jobs:
         add-job-summary: always
         dependency-graph: generate-and-submit
 
+    - name: Check changelog format
+      uses: mindsers/changelog-reader-action@b97ce03a10d9bdbb07beb491c76a5a01d78cd3ef # v2.2.2
+      with:
+        path: ./CHANGELOG.md
+        validation_level: error
+
     - name: Run unit tests
       run: ./gradlew --no-configuration-cache --stacktrace check -PslimTests
 
@@ -48,7 +54,8 @@ jobs:
           path: '**/build/reports/tests/**'
 
   dependency-review:
-    runs-on: ubuntu-latest
+    runs-on: macos-14
+    if: "github.event_name == 'push' && github.event.ref != 'refs/heads/main'"
     needs:
       - check
     steps:
@@ -61,31 +68,17 @@ jobs:
           base-ref: refs/heads/main
           head-ref: ${{ github.ref }}
 
-  validate-changelog:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
-
-      - name: Check changelog format
-        uses: mindsers/changelog-reader-action@b97ce03a10d9bdbb07beb491c76a5a01d78cd3ef # v2.2.2
-        with:
-          path: ./CHANGELOG.md
-          validation_level: error
-
   deploy-release-snapshot:
-    runs-on: ubuntu-latest
+    runs-on: macos-14
     if: "github.event_name == 'push' && github.event.ref == 'refs/heads/main'"
     needs:
       - check
-      - validate-changelog
-      - dependency-review
     steps:
     - name: Checkout repository
       uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
 
     - name: Set up JDK
-      uses: actions/setup-java@387ac29b308b003ca37ba93a6cab5eb57c8f5f93 # v4.0.0
+      uses: actions/setup-java@9704b39bf258b59bc04b50fa2dd55e9ed76b47a8 # v4.1.0
       with:
         distribution: temurin
         java-version: 18

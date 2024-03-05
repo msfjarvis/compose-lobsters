@@ -1,5 +1,5 @@
 /*
- * Copyright © 2022-2023 Harsh Shandilya.
+ * Copyright © 2022-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -33,26 +33,22 @@ class ApplicationPlugin : Plugin<Project> {
         buildConfig = true
       }
 
-      buildTypes {
-        all {
-          setProguardFiles(
-            listOf(
-              "proguard-android-optimize.pro",
-              "proguard-rules.pro",
-              "proguard-rules-missing-classes.pro",
-            )
+      buildTypes.configureEach {
+        setProguardFiles(
+          listOf(
+            "proguard-android-optimize.pro",
+            "proguard-rules.pro",
+            "proguard-rules-missing-classes.pro",
           )
-        }
-        named("release") {
+        )
+        if (name == "release") {
           isMinifyEnabled = !project.providers.environmentVariable("DISABLE_MINIFY").isPresent
-        }
-        named("debug") {
+        } else if (name == "debug") {
           applicationIdSuffix = ".debug"
           versionNameSuffix = "-debug"
           isMinifyEnabled = false
         }
       }
-
       project.configureBuildSigning()
     }
   }

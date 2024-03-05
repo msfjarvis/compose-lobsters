@@ -4,7 +4,10 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
-plugins { `kotlin-dsl` }
+plugins {
+  `kotlin-dsl`
+  alias(libs.plugins.android.lint)
+}
 
 kotlin.jvmToolchain(17)
 
@@ -61,6 +64,8 @@ gradlePlugin {
   }
 }
 
+lint.baseline = project.file("lint-baseline.xml")
+
 dependencies {
   implementation(libs.build.agp)
   implementation(libs.build.cachefix)
@@ -72,4 +77,6 @@ dependencies {
 
   // Expose the generated version catalog API to the plugin.
   implementation(files(libs::class.java.superclass.protectionDomain.codeSource.location))
+
+  lintChecks(libs.androidx.lint)
 }

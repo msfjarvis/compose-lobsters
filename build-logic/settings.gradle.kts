@@ -23,6 +23,14 @@ pluginManagement {
         includeModule("org.gradle.kotlin", "gradle-kotlin-dsl-plugins")
       }
     }
+    exclusiveContent {
+      forRepository { google() }
+      filter {
+        includeGroup("androidx.databinding")
+        includeGroupByRegex("com.android.*")
+        includeGroup("com.google.testing.platform")
+      }
+    }
     mavenCentral { mavenContent { releasesOnly() } }
   }
 }
@@ -33,6 +41,7 @@ dependencyResolutionManagement {
       forRepository(::google)
       filter {
         includeGroup("androidx.databinding")
+        includeGroup("androidx.lint")
         includeGroupByRegex("com.android.*")
         includeGroup("com.google.testing.platform")
       }

@@ -6,32 +6,29 @@
  */
 package dev.msfjarvis.claw.gradle.signing
 
-import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
+import com.android.build.api.dsl.ApplicationBuildType
+import com.android.build.api.dsl.CommonExtension
 import java.util.Properties
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.configure
 
 private const val KEYSTORE_CONFIG_PATH = "keystore.properties"
 
 /** Configure signing for all build types. */
-@Suppress("UnstableApiUsage")
 internal fun Project.configureBuildSigning() {
   val keystoreConfigFile = rootProject.layout.projectDirectory.file(KEYSTORE_CONFIG_PATH)
   if (keystoreConfigFile.asFile.exists()) {
-    extensions.configure<BaseAppModuleExtension> {
+    extensions.configure<CommonExtension<*, ApplicationBuildType, *, *, *, *>>("android") {
       val contents = providers.fileContents(keystoreConfigFile).asText
       val keystoreProperties = Properties()
       keystoreProperties.load(contents.get().byteInputStream())
-      signingConfigs {
-        register("release") {
+      val releaseSigningConfig =
+        signingConfigs.register("release") {
           keyAlias = keystoreProperties["keyAlias"] as String
           keyPassword = keystoreProperties["keyPassword"] as String
           storeFile = rootProject.file(keystoreProperties["storeFile"] as String)
           storePassword = keystoreProperties["storePassword"] as String
         }
-      }
-      val signingConfig = signingConfigs.getByName("release")
-      buildTypes.configureEach { setSigningConfig(signingConfig) }
+      buildTypes.configureEach { signingConfig = releaseSigningConfig.get() }
     }
   }
 }

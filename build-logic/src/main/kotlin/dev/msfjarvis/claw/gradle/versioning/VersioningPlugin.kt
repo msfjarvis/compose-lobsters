@@ -8,7 +8,6 @@ package dev.msfjarvis.claw.gradle.versioning
 
 import com.android.build.api.variant.ApplicationAndroidComponentsExtension
 import com.android.build.api.variant.VariantOutputConfiguration
-import com.android.build.gradle.internal.plugins.AppPlugin
 import com.github.zafarkhaja.semver.Version
 import java.util.Properties
 import java.util.concurrent.atomic.AtomicBoolean
@@ -16,13 +15,12 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.register
-import org.gradle.kotlin.dsl.withType
 
 /**
- * A Gradle [Plugin] that takes a [Project] with the [AppPlugin] applied and dynamically sets the
- * versionCode and versionName properties based on values read from a [VERSIONING_PROP_FILE] file in
- * the [Project.getProjectDir] directory. It also adds Gradle tasks to bump the major, minor, and
- * patch versions along with one to prepare the next snapshot.
+ * A Gradle [Plugin] that takes a [Project] with the `com.android.application` applied and
+ * dynamically sets the versionCode and versionName properties based on values read from a
+ * [VERSIONING_PROP_FILE] file in the [Project.getProjectDir] directory. It also adds Gradle tasks
+ * to bump the major, minor, and patch versions along with one to prepare the next snapshot.
  */
 @Suppress("Unused")
 class VersioningPlugin : Plugin<Project> {
@@ -54,7 +52,7 @@ class VersioningPlugin : Plugin<Project> {
           )
           .map(String::toInt)
 
-      project.plugins.withType<AppPlugin> {
+      project.pluginManager.withPlugin("com.android.application") {
         androidAppPluginApplied.set(true)
         extensions.configure<ApplicationAndroidComponentsExtension> {
           onVariants { variant ->

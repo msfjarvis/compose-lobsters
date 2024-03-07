@@ -9,9 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-*   Update to Compose January releases
+*   Update to Compose March releases
 *   Improve performance of frequently invoked database queries
 *   Refactor UI data model to improve state handling
+*   Make saved posts update in the background more often
+*   Consolidate widget display logic
+*   Rework some theming logic to align with new Material guidelines
 
 ## [1.39.0] - 2024-01-23
 

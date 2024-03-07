@@ -51,10 +51,8 @@ import javax.inject.Inject
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.toImmutableMap
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -100,11 +98,9 @@ constructor(
       )
       .flow
       .map(::mapToUIPost)
-  val savedPosts =
-    savedPostsRepository.savedPosts
-      .map { it.map(UIPost.Companion::fromSavedPost) }
-      .shareIn(viewModelScope, started = SharingStarted.Lazily, Int.MAX_VALUE)
-  val savedPostsByMonth = savedPosts.map(::groupSavedPosts)
+  val savedPosts = savedPostsRepository.savedPosts.map { it.map(UIPost.Companion::fromSavedPost) }
+  val savedPostsByMonth
+    get() = savedPosts.map(::groupSavedPosts)
 
   var searchQuery by mutableStateOf("")
 

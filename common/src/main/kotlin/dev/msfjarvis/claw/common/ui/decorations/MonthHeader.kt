@@ -19,7 +19,6 @@ import androidx.compose.ui.unit.dp
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.preview.DevicePreviews
 import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
-import dev.msfjarvis.claw.common.ui.surfaceColorAtNavigationBarElevation
 
 @Composable
 fun MonthHeader(label: String, modifier: Modifier = Modifier) {
@@ -27,7 +26,7 @@ fun MonthHeader(label: String, modifier: Modifier = Modifier) {
     modifier
       .fillMaxWidth()
       .wrapContentHeight()
-      .background(MaterialTheme.colorScheme.surfaceColorAtNavigationBarElevation())
+      .background(MaterialTheme.colorScheme.surfaceContainerHighest)
   ) {
     Text(
       text = label,

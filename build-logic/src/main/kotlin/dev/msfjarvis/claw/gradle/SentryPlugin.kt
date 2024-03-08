@@ -1,5 +1,5 @@
 /*
- * Copyright © 2023 Harsh Shandilya.
+ * Copyright © 2023-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -53,6 +53,16 @@ class SentryPlugin : Plugin<Project> {
           sentryVersion.set(libs.versions.sentry.sdk)
         }
         includeDependenciesReport.set(true)
+        includeSourceContext.set(true)
+        autoUploadSourceContext.set(true)
+        additionalSourceDirsForSourceContext.set(emptySet())
+        debug.set(false)
+        org.set("claw")
+        projectName.set("compose-lobsters")
+        authToken.set(project.providers.environmentVariable("SENTRY_AUTH_TOKEN"))
+        url.set(null)
+        telemetry.set(false)
+        telemetryDsn.set(null)
       }
       with(project.dependencies) { addProvider("implementation", platform(libs.sentry.bom)) }
     }

@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.41.0] - 2024-03-07
+
+### Fixed
+
+*   Downgrade dependency that was pulling in extraneous storage
+    permissions which the app does not require.
+
 ## [1.40.0] - 2024-03-07
 
 ### Changed
@@ -355,7 +362,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 *   Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.40.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.41.0...HEAD
+
+[1.41.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.40.0...v1.41.0
 
 [1.40.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.39.0...v1.40.0
 

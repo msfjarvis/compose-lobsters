@@ -35,11 +35,12 @@ jobs:
         run: |
           ./scripts/setup-age.sh
           ./scripts/signing-setup.sh "$AGE_SECRET_KEY"
-          ./gradlew --no-configuration-cache --stacktrace collectReleaseBundle
+          ./gradlew --no-configuration-cache --stacktrace -PsentryUploadMappings collectReleaseBundle
           ./scripts/signing-cleanup.sh
         env:
           AGE_SECRET_KEY: ${{ secrets.AGE_SECRET_KEY }}
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           ORG_GRADLE_PROJECT_VERSION_NAME: ${{ github.event.inputs.versionName }}
           ORG_GRADLE_PROJECT_VERSION_CODE: ${{ github.event.inputs.versionCode }}
 

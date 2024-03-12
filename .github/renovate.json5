@@ -28,7 +28,6 @@
         "org.jetbrains.kotlin.plugin.serialization",
       ],
       "groupName": "Kotlin and Compose",
-      "enabled": false,
     },
     {
       "matchPackagePatterns": [

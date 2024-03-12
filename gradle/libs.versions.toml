@@ -10,7 +10,7 @@ dagger = "2.51"
 glance = "1.0.0"
 junit = "5.10.2"
 konvert = "3.0.1"
-kotlin = "1.9.22"
+kotlin = "1.9.23"
 kotlinResult = "1.1.20"
 lifecycle = "2.7.0"
 retrofit = "2.9.0"
@@ -114,7 +114,7 @@ android-test = { id = "com.android.test", version.ref = "agp" }
 anvil = "com.squareup.anvil:2.5.0-beta03"
 baselineprofile = { id = "androidx.baselineprofile", version.ref = "benchmark" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-ksp = "com.google.devtools.ksp:1.9.22-1.0.18"
+ksp = "com.google.devtools.ksp:1.9.23-1.0.19"
 licensee = "app.cash.licensee:1.9.1"
 modulegraphassert = "com.jraska.module.graph.assertion:2.5.0"
 poko = "dev.drewhamilton.poko:0.15.2"

@@ -18,7 +18,7 @@ richtext = "1.0.0-alpha01"
 sentry-sdk = "7.6.0"
 serialization = "1.6.3"
 sqldelight = "2.0.1"
-whetstone = "0.9.0-SNAPSHOT"
+whetstone = "0.9.0-beta01"
 workmanager = "2.10.0-alpha01"
 
 [libraries]
@@ -111,7 +111,7 @@ unfurl = "me.saket.unfurl:unfurl:1.7.0"
 aboutlibraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "aboutLibraries" }
 android-lint = { id = "com.android.lint", version.ref = "agp" }
 android-test = { id = "com.android.test", version.ref = "agp" }
-anvil = "com.squareup.anvil:2.5.0-beta03"
+anvil = "com.squareup.anvil:2.5.0-beta04"
 baselineprofile = { id = "androidx.baselineprofile", version.ref = "benchmark" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = "com.google.devtools.ksp:1.9.23-1.0.19"

@@ -1,5 +1,5 @@
 /*
- * Copyright © 2021-2023 Harsh Shandilya.
+ * Copyright © 2021-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -14,9 +14,12 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource.Companion.PAGE_SIZE
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource.Companion.STARTING_PAGE_INDEX
+import dev.msfjarvis.claw.android.viewmodel.ReadPostsRepository
+import dev.msfjarvis.claw.android.viewmodel.SavedPostsRepository
 import dev.msfjarvis.claw.api.LobstersSearchApi
 import dev.msfjarvis.claw.core.injection.IODispatcher
-import dev.msfjarvis.claw.model.LobstersPost
+import dev.msfjarvis.claw.model.UIPost
+import dev.msfjarvis.claw.model.toUIPost
 import java.io.IOException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -33,14 +36,16 @@ constructor(
   private val searchApi: LobstersSearchApi,
   @Assisted private val queryProvider: () -> String,
   @IODispatcher private val ioDispatcher: CoroutineDispatcher,
-) : PagingSource<Int, LobstersPost>() {
-  override fun getRefreshKey(state: PagingState<Int, LobstersPost>): Int? {
+  private val savedPostsRepository: SavedPostsRepository,
+  private val readPostsRepository: ReadPostsRepository,
+) : PagingSource<Int, UIPost>() {
+  override fun getRefreshKey(state: PagingState<Int, UIPost>): Int? {
     return state.anchorPosition?.let { anchorPosition ->
       (anchorPosition / PAGE_SIZE).coerceAtLeast(STARTING_PAGE_INDEX)
     }
   }
 
-  override suspend fun load(params: LoadParams<Int>): LoadResult<Int, LobstersPost> {
+  override suspend fun load(params: LoadParams<Int>): LoadResult<Int, UIPost> {
     val searchQuery = queryProvider()
     // If there is no query, we don't need to call the API at all.
     if (searchQuery.isEmpty()) {
@@ -55,7 +60,15 @@ constructor(
         val nextKey = if (result.value.isEmpty()) null else page + 1
         LoadResult.Page(
           itemsBefore = (page - 1) * PAGE_SIZE,
-          data = result.value,
+          data =
+            result.value.map {
+              it
+                .toUIPost()
+                .copy(
+                  isSaved = savedPostsRepository.isPostSaved(it.shortId),
+                  isRead = readPostsRepository.isPostRead(it.shortId),
+                )
+            },
           prevKey = if (page == STARTING_PAGE_INDEX) null else page - 1,
           nextKey = nextKey,
         )

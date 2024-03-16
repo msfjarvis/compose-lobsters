@@ -1,5 +1,5 @@
 /*
- * Copyright © 2021-2023 Harsh Shandilya.
+ * Copyright © 2021-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -13,8 +13,12 @@ import com.slack.eithernet.ApiResult.Success
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import dev.msfjarvis.claw.android.viewmodel.ReadPostsRepository
+import dev.msfjarvis.claw.android.viewmodel.SavedPostsRepository
 import dev.msfjarvis.claw.core.injection.IODispatcher
 import dev.msfjarvis.claw.model.LobstersPost
+import dev.msfjarvis.claw.model.UIPost
+import dev.msfjarvis.claw.model.toUIPost
 import java.io.IOException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -24,15 +28,25 @@ class LobstersPagingSource
 constructor(
   @Assisted private val remoteFetcher: RemoteFetcher<LobstersPost>,
   @IODispatcher private val ioDispatcher: CoroutineDispatcher,
-) : PagingSource<Int, LobstersPost>() {
+  private val savedPostsRepository: SavedPostsRepository,
+  private val readPostsRepository: ReadPostsRepository,
+) : PagingSource<Int, UIPost>() {
 
-  override suspend fun load(params: LoadParams<Int>): LoadResult<Int, LobstersPost> {
+  override suspend fun load(params: LoadParams<Int>): LoadResult<Int, UIPost> {
     val page = params.key ?: STARTING_PAGE_INDEX
     return when (val result = withContext(ioDispatcher) { remoteFetcher.getItemsAtPage(page) }) {
       is Success ->
         LoadResult.Page(
           itemsBefore = (page - 1) * PAGE_SIZE,
-          data = result.value,
+          data =
+            result.value.map {
+              it
+                .toUIPost()
+                .copy(
+                  isSaved = savedPostsRepository.isPostSaved(it.shortId),
+                  isRead = readPostsRepository.isPostRead(it.shortId),
+                )
+            },
           prevKey = if (page == STARTING_PAGE_INDEX) null else page - 1,
           nextKey = page + 1,
         )
@@ -43,7 +57,7 @@ constructor(
     }
   }
 
-  override fun getRefreshKey(state: PagingState<Int, LobstersPost>): Int? {
+  override fun getRefreshKey(state: PagingState<Int, UIPost>): Int? {
     return state.anchorPosition?.let { anchorPosition ->
       (anchorPosition / PAGE_SIZE).coerceAtLeast(STARTING_PAGE_INDEX)
     }

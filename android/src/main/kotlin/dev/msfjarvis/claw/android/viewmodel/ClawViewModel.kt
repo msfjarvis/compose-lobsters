@@ -18,9 +18,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import androidx.paging.map
 import com.deliveryhero.whetstone.app.ApplicationScope
 import com.deliveryhero.whetstone.viewmodel.ContributesViewModel
 import com.slack.eithernet.ApiResult.Failure
@@ -35,10 +33,8 @@ import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.core.injection.IODispatcher
 import dev.msfjarvis.claw.core.injection.MainDispatcher
 import dev.msfjarvis.claw.model.Comment
-import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.UIPost
 import dev.msfjarvis.claw.model.fromSavedPost
-import dev.msfjarvis.claw.model.toSavedPost
 import dev.msfjarvis.claw.model.toUIPost
 import java.io.IOException
 import java.io.InputStream
@@ -79,7 +75,6 @@ constructor(
         pagingSourceFactory = { pagingSourceFactory.create(api::getHottestPosts) },
       )
       .flow
-      .map(::mapToUIPost)
       .cachedIn(viewModelScope)
   val newestPosts =
     Pager(
@@ -88,7 +83,6 @@ constructor(
         pagingSourceFactory = { pagingSourceFactory.create(api::getNewestPosts) },
       )
       .flow
-      .map(::mapToUIPost)
       .cachedIn(viewModelScope)
   val searchResults =
     Pager(
@@ -97,7 +91,6 @@ constructor(
         pagingSourceFactory = { searchPagingSourceFactory.create { searchQuery } },
       )
       .flow
-      .map(::mapToUIPost)
   val savedPosts = savedPostsRepository.savedPosts.map { it.map(UIPost.Companion::fromSavedPost) }
   val savedPostsByMonth
     get() = savedPosts.map(::groupSavedPosts)
@@ -110,13 +103,6 @@ constructor(
   init {
     viewModelScope.launch { savedPosts.collectLatest { _savedPosts = it.map(UIPost::shortId) } }
     viewModelScope.launch { readPostsRepository.readPosts.collectLatest { _readPosts = it } }
-  }
-
-  private fun mapToUIPost(pagingData: PagingData<LobstersPost>): PagingData<UIPost> {
-    return pagingData.map { post ->
-      val uiPost = post.toUIPost()
-      uiPost.copy(isSaved = isPostSaved(uiPost), isRead = isPostRead(uiPost))
-    }
   }
 
   private fun groupSavedPosts(items: List<UIPost>): ImmutableMap<String, List<UIPost>> {
@@ -140,22 +126,9 @@ constructor(
       .toImmutableMap()
   }
 
-  private fun isPostSaved(post: UIPost): Boolean {
-    return _savedPosts.contains(post.shortId)
-  }
-
-  private fun isPostRead(post: UIPost): Boolean {
-    return _readPosts.contains(post.shortId)
-  }
-
   fun toggleSave(post: UIPost) {
-    viewModelScope.launch(ioDispatcher) {
-      val saved = isPostSaved(post)
-      if (saved) {
-        savedPostsRepository.removePost(post.toSavedPost())
-      } else {
-        savedPostsRepository.savePost(post.toSavedPost())
-      }
+    viewModelScope.launch {
+      savedPostsRepository.toggleSave(post)
       withContext(mainDispatcher) { SavedPostsWidget(savedPosts).updateAll(getApplication()) }
     }
   }

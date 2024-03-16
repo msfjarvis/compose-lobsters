@@ -25,25 +25,33 @@ class SentryPlugin : Plugin<Project> {
       project.extensions.configure<ApplicationAndroidComponentsExtension> {
         onVariants(selector().all()) { variant ->
           val sentryDsn = project.providers.environmentVariable(SENTRY_DSN_PROPERTY)
+          val enableSentry =
+            project.providers.gradleProperty(SENTRY_ENABLE_GRADLE_PROPERTY).isPresent
           variant.manifestPlaceholders.put("sentryDsn", sentryDsn.getOrElse(""))
-          variant.manifestPlaceholders.put("enableSentry", "${variant.name == "release"}")
+          variant.manifestPlaceholders.put(
+            "sentryEnvironment",
+            when {
+              variant.name.contains("release", true) && enableSentry -> "production"
+              variant.name.contains("release", true) && !enableSentry -> "nightly"
+              else -> "dev"
+            },
+          )
         }
       }
       project.plugins.apply(io.sentry.android.gradle.SentryPlugin::class)
       project.extensions.configure<SentryPluginExtension> {
-        val enableMappings =
-          project.providers.gradleProperty(SENTRY_UPLOAD_MAPPINGS_PROPERTY).isPresent
-        includeProguardMapping.set(enableMappings)
-        autoUploadProguardMapping.set(enableMappings)
+        includeProguardMapping.set(true)
+        autoUploadProguardMapping.set(true)
         uploadNativeSymbols.set(false)
         autoUploadNativeSymbols.set(false)
         includeNativeSources.set(false)
         ignoredVariants.set(emptySet())
-        ignoredBuildTypes.set(setOf("benchmark", "debug"))
+        ignoredBuildTypes.set(setOf("benchmark"))
         ignoredFlavors.set(emptySet())
         tracingInstrumentation {
           enabled.set(true)
           debug.set(false)
+          logcat.enabled.set(true)
           forceInstrumentDependencies.set(false)
           features.set(EnumSet.allOf(InstrumentationFeature::class.java))
         }
@@ -64,13 +72,16 @@ class SentryPlugin : Plugin<Project> {
         telemetry.set(false)
         telemetryDsn.set(null)
       }
-      with(project.dependencies) { addProvider("implementation", platform(libs.sentry.bom)) }
+      with(project.dependencies) {
+        addProvider("implementation", platform(libs.sentry.bom))
+        addProvider("implementation", libs.sentry.android)
+      }
     }
   }
 
   private companion object {
 
     private const val SENTRY_DSN_PROPERTY = "SENTRY_DSN"
-    private const val SENTRY_UPLOAD_MAPPINGS_PROPERTY = "sentryUploadMappings"
+    private const val SENTRY_ENABLE_GRADLE_PROPERTY = "enableSentry"
   }
 }

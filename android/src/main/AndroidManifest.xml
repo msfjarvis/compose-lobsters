@@ -178,17 +178,19 @@
     <!-- enable automatic breadcrumbs for user interactions (clicks, swipes, scrolls) -->
     <meta-data
       android:name="io.sentry.traces.user-interaction.enable"
-      android:value="${enableSentry}" />
+      android:value="true" />
     <meta-data
       android:name="io.sentry.breadcrumbs.user-interaction"
-      android:value="${enableSentry}" />
+      android:value="true" />
     <!-- enable screenshot for crashes -->
     <meta-data
       android:name="io.sentry.attach-screenshot"
-      android:value="${enableSentry}" />
+      android:value="true" />
     <!-- enable view hierarchy for crashes -->
     <meta-data
       android:name="io.sentry.attach-view-hierarchy"
-      android:value="${enableSentry}" />
+      android:value="true" />
+    <!-- set the environment for this build -->
+    <meta-data android:name="io.sentry.environment" android:value="${sentryEnvironment}" />
   </application>
 </manifest>

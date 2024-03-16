@@ -19,19 +19,11 @@ import kotlinx.serialization.Serializable
 @Poko
 @KonvertTo(
   value = UIPost::class,
-  mappings =
-    [
-      Mapping(target = "submitterName", expression = "it.submitter.username"),
-      Mapping(target = "submitterAvatarUrl", expression = "it.submitter.avatarUrl"),
-    ],
+  mappings = [Mapping(target = "submitterName", expression = "it.submitter")],
 )
 @KonvertTo(
   value = SavedPost::class,
-  mappings =
-    [
-      Mapping(target = "submitterName", expression = "it.submitter.username"),
-      Mapping(target = "submitterAvatarUrl", expression = "it.submitter.avatarUrl"),
-    ],
+  mappings = [Mapping(target = "submitterName", expression = "it.submitter")],
 )
 class LobstersPostDetails(
   val shortId: String,
@@ -41,7 +33,7 @@ class LobstersPostDetails(
   val description: String,
   val commentCount: Int,
   val commentsUrl: String,
-  @SerialName("submitter_user") val submitter: User,
+  @SerialName("submitter_user") val submitter: String,
   val tags: List<String>,
   val comments: List<Comment>,
 )

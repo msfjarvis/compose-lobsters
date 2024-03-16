@@ -8,7 +8,6 @@ package dev.msfjarvis.claw.api.converters
 
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.model.LobstersPost
-import dev.msfjarvis.claw.model.User
 import java.lang.reflect.Type
 import okhttp3.ResponseBody
 import org.jsoup.Jsoup
@@ -32,8 +31,7 @@ object SearchConverter : Converter<ResponseBody, List<LobstersPost>> {
     val url = titleElement.attr("href")
     val tags = elem.select("span.tags > a").map(Element::text)
     val (commentCount, commentsUrl) = getCommentsData(elem.select("span.comments_label"))
-    val submitter =
-      getSubmitter(elem.select("div.byline").first() ?: error("No byline element found"))
+    val submitter = elem.select("div.byline > a.u-author").text()
     return LobstersPost(
       shortId = shortId,
       title = title,
@@ -53,24 +51,6 @@ object SearchConverter : Converter<ResponseBody, List<LobstersPost>> {
     val countString = linkElement.text().trimStart().substringBefore(" ")
     val commentsUrl = LobstersApi.BASE_URL + linkElement.attr("href")
     return (countString.toIntOrNull() ?: 0) to commentsUrl
-  }
-
-  /**
-   * Make a bare-bones [User] object given a byline [elem]. We only need this to be usable for
-   * displaying in a list.
-   */
-  private fun getSubmitter(elem: Element): User {
-    val userElement = elem.select("a.u-author")
-    val avatarElement = elem.select("img.avatar")
-    val username = userElement.text()
-    val avatarUrl = avatarElement.attr("src")
-    return User(
-      username = username,
-      about = "",
-      invitedBy = null,
-      avatarUrl = avatarUrl,
-      createdAt = "",
-    )
   }
 
   object Factory : Converter.Factory() {

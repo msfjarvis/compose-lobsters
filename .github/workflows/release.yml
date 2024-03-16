@@ -70,7 +70,7 @@ jobs:
         SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
         SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       run: |
-        ./gradlew --no-configuration-cache collectReleaseApks collectReleaseBundle -PsentryUploadMappings
+        ./gradlew --no-configuration-cache collectReleaseApks collectReleaseBundle -PenableSentry
 
     - name: Clean secrets
       run: scripts/signing-cleanup.sh

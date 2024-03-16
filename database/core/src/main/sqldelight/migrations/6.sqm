@@ -2,6 +2,8 @@ import kotlin.Int;
 import kotlin.String;
 import kotlin.collections.List;
 
+ALTER TABLE SavedPost RENAME TO SavedPost_Old;
+
 CREATE TABLE IF NOT EXISTS SavedPost(
   shortId TEXT NOT NULL PRIMARY KEY,
   title TEXT NOT NULL,
@@ -14,24 +16,8 @@ CREATE TABLE IF NOT EXISTS SavedPost(
   description TEXT NOT NULL DEFAULT ""
 );
 
-insertOrReplacePost:
-INSERT OR REPLACE
-INTO SavedPost
-VALUES ?;
+INSERT INTO SavedPost(shortId, title, url, createdAt, commentCount, commentsUrl, submitterName, tags, description)
+SELECT shortId, title, url, createdAt, commentCount, commentsUrl, submitterName, tags, description
+FROM SavedPost_Old;
 
-selectAllPosts:
-SELECT *
-FROM SavedPost;
-
-selectCount:
-SELECT COUNT(*)
-FROM SavedPost;
-
-deleteAllPosts:
-DELETE
-FROM SavedPost;
-
-deletePost:
-DELETE
-FROM SavedPost
-WHERE shortId = ?;
+DROP TABLE SavedPost_Old;

@@ -122,7 +122,6 @@ class SavedPostQueriesTest {
           commentCount = 0,
           commentsUrl = "test_comments_url",
           submitterName = "test_user_$i",
-          submitterAvatarUrl = "test_avatar_url",
           tags = listOf(),
           description = "",
         )

@@ -1,5 +1,5 @@
 /*
- * Copyright © 2023 Harsh Shandilya.
+ * Copyright © 2023-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -32,7 +32,6 @@ object SavedPostSerializer : KSerializer<SavedPost> {
       element<Int?>("commentCount", isOptional = true)
       element<String>("commentsUrl")
       element<String>("submitterName")
-      element<String>("submitterAvatarUrl")
       element<List<String>>("tags")
       element<String>("description")
     }
@@ -46,7 +45,6 @@ object SavedPostSerializer : KSerializer<SavedPost> {
       var commentCount: Int? = null
       var commentsUrl = ""
       var submitterName = ""
-      var submitterAvatarUrl = ""
       var tags = emptyList<String>()
       var description = ""
       while (true) {
@@ -58,9 +56,8 @@ object SavedPostSerializer : KSerializer<SavedPost> {
           4 -> commentCount = decodeNullableSerializableElement(descriptor, 4, Int.serializer())
           5 -> commentsUrl = decodeStringElement(descriptor, 5)
           6 -> submitterName = decodeStringElement(descriptor, 6)
-          7 -> submitterAvatarUrl = decodeStringElement(descriptor, 7)
-          8 -> tags = decodeSerializableElement(descriptor, 8, delegateSerializer)
-          9 -> description = decodeStringElement(descriptor, 9)
+          7 -> tags = decodeSerializableElement(descriptor, 7, delegateSerializer)
+          8 -> description = decodeStringElement(descriptor, 8)
           CompositeDecoder.DECODE_DONE -> break
           else -> error("Unexpected index: $index")
         }
@@ -73,7 +70,6 @@ object SavedPostSerializer : KSerializer<SavedPost> {
         commentCount = commentCount,
         commentsUrl = commentsUrl,
         submitterName = submitterName,
-        submitterAvatarUrl = submitterAvatarUrl,
         tags = tags,
         description = description,
       )
@@ -89,9 +85,8 @@ object SavedPostSerializer : KSerializer<SavedPost> {
       encodeNullableSerializableElement(descriptor, 4, Int.serializer(), value.commentCount)
       encodeStringElement(descriptor, 5, value.commentsUrl)
       encodeStringElement(descriptor, 6, value.submitterName)
-      encodeStringElement(descriptor, 7, value.submitterAvatarUrl)
-      encodeSerializableElement(descriptor, 8, delegateSerializer, value.tags)
-      encodeStringElement(descriptor, 9, value.description)
+      encodeSerializableElement(descriptor, 7, delegateSerializer, value.tags)
+      encodeStringElement(descriptor, 8, value.description)
     }
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright © 2023 Harsh Shandilya.
+ * Copyright © 2023-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -52,7 +52,6 @@ class SavedPostSerializerTest {
         commentCount = 13,
         commentsUrl = "https://lobste.rs/s/nbigsf/fun_format_friday_you_now_have_super",
         submitterName = "LenFalken",
-        submitterAvatarUrl = "/avatars/LenFalken-100.png",
         tags = listOf("ask", "programming"),
         description =
           "<p>You suddenly have in your possession a super computer. What comes next? What projects are suddenly possible for you? What performance tests can you now explore?</p>\n",

@@ -1,5 +1,5 @@
 /*
- * Copyright © 2022-2023 Harsh Shandilya.
+ * Copyright © 2022-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -33,7 +33,7 @@ class ApiTest {
     val posts = api.getHottestPosts(1)
     assertIs<Success<List<LobstersPost>>>(posts)
     val commentsOnlyPosts = posts.value.asSequence().filter { it.url.isEmpty() }.toSet()
-    assertThat(commentsOnlyPosts).hasSize(2)
+    assertThat(commentsOnlyPosts).hasSize(1)
   }
 
   @Test

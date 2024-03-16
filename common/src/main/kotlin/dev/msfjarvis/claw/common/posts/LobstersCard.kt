@@ -53,7 +53,6 @@ import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
 import dev.msfjarvis.claw.model.LinkMetadata
 import dev.msfjarvis.claw.model.UIPost
-import dev.msfjarvis.claw.model.User
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 
@@ -122,9 +121,9 @@ fun PostDetails(post: UIPost, isRead: Boolean, modifier: Modifier = Modifier) {
     TagRow(tags = post.tags.toImmutableList())
     Spacer(Modifier.height(4.dp))
     Submitter(
-      text = AnnotatedString("Submitted by ${post.submitter.username}"),
-      avatarUrl = "https://lobste.rs/${post.submitter.avatarUrl}",
-      contentDescription = "User avatar for ${post.submitter.username}",
+      text = AnnotatedString("Submitted by ${post.submitter}"),
+      avatarUrl = "https://lobste.rs/avatars/${post.submitter}-100.png",
+      contentDescription = "User avatar for ${post.submitter}",
     )
   }
 }
@@ -249,7 +248,7 @@ private fun LobstersCardPreview() {
           createdAt = "2020-09-21T08:04:24.000-05:00",
           commentCount = 1,
           commentsUrl = "https://lobste.rs/s/q1hh1g/simple_anomaly_detection_using_plain_sql",
-          submitter = User("Haki", "", "", "/avatars/Haki-100.png", ""),
+          submitter = "Haki",
           tags = listOf("databases", "apis"),
           description = "",
           isSaved = true,
@@ -275,7 +274,7 @@ private fun LobstersCardPreview() {
               commentsUrl = "https://lobste.rs/s/q1hh1g/simple_anomaly_detection_using_plain_sql",
               tags = listOf("databases", "apis"),
               description = "",
-              submitter = User("Haki", "", "", "", ""),
+              submitter = "Haki",
               comments = emptyList(),
             )
           }

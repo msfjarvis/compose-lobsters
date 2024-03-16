@@ -33,7 +33,7 @@ class ApiTest {
     val posts = api.getHottestPosts(1)
     assertIs<Success<List<LobstersPost>>>(posts)
     val commentsOnlyPosts = posts.value.asSequence().filter { it.url.isEmpty() }.toSet()
-    assertThat(commentsOnlyPosts).hasSize(2)
+    assertThat(commentsOnlyPosts).hasSize(1)
   }
 
   @Test

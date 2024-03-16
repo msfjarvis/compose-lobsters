@@ -90,13 +90,11 @@ internal fun CommentsHeader(
         Spacer(Modifier.height(4.dp))
       }
       Submitter(
-        text = AnnotatedString("Submitted by ${post.submitter.username}"),
-        avatarUrl = "https://lobste.rs/${post.submitter.avatarUrl}",
-        contentDescription = "User avatar for ${post.submitter.username}",
+        text = AnnotatedString("Submitted by ${post.submitter}"),
+        avatarUrl = "https://lobste.rs/avatars/${post.submitter}-100.png",
+        contentDescription = "User avatar for ${post.submitter}",
         modifier =
-          Modifier.clickable {
-            uriHandler.openUri("https://lobste.rs/u/${post.submitter.username}")
-          },
+          Modifier.clickable { uriHandler.openUri("https://lobste.rs/u/${post.submitter}") },
       )
     }
   }
@@ -156,16 +154,15 @@ internal fun CommentEntry(
       Submitter(
         text =
           buildCommenterString(
-            commenterName = comment.user.username,
+            commenterName = comment.user,
             score = comment.score,
             isUnread = commentNode.isUnread,
             createdAt = comment.createdAt,
             updatedAt = comment.updatedAt,
           ),
-        avatarUrl = "https://lobste.rs/${comment.user.avatarUrl}",
-        contentDescription = "User avatar for ${comment.user.username}",
-        modifier =
-          Modifier.clickable { uriHandler.openUri("https://lobste.rs/u/${comment.user.username}") },
+        avatarUrl = "https://lobste.rs/avatars/${comment.user}-100.png",
+        contentDescription = "User avatar for ${comment.user}",
+        modifier = Modifier.clickable { uriHandler.openUri("https://lobste.rs/u/${comment.user}") },
       )
       if (commentNode.isExpanded) {
         ThemedRichText(

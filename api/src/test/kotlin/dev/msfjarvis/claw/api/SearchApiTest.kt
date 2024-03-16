@@ -10,7 +10,6 @@ import com.google.common.truth.Truth.assertThat
 import com.slack.eithernet.ApiResult
 import com.slack.eithernet.test.newEitherNetController
 import dev.msfjarvis.claw.model.LobstersPost
-import dev.msfjarvis.claw.model.User
 import dev.msfjarvis.claw.util.TestUtils.assertIs
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -38,7 +37,7 @@ class SearchApiTest {
           createdAt = "",
           commentCount = 3,
           commentsUrl = "https://lobste.rs/s/gjlsdg/chatgpt_visits_emacs_doctor",
-          submitter = User("xenodium", "", null, "/avatars/xenodium-16.png", ""),
+          submitter = "xenodium",
           tags = listOf("ai", "emacs"),
           description = "",
         ),
@@ -50,7 +49,7 @@ class SearchApiTest {
           createdAt = "",
           commentCount = 0,
           commentsUrl = "https://lobste.rs/s/astcqf/implementing_question_answering_system",
-          submitter = User("asteroid", "", null, "/avatars/asteroid-16.png", ""),
+          submitter = "asteroid",
           tags = listOf("ai"),
           description = "",
         ),

@@ -14,11 +14,7 @@ import kotlinx.serialization.SerialName
 
 @KonvertTo(
   value = SavedPost::class,
-  mappings =
-    [
-      Mapping(target = "submitterName", expression = "it.submitter.username"),
-      Mapping(target = "submitterAvatarUrl", expression = "it.submitter.avatarUrl"),
-    ],
+  mappings = [Mapping(target = "submitterName", expression = "it.submitter")],
 )
 data class UIPost(
   val shortId: String,
@@ -28,7 +24,7 @@ data class UIPost(
   val description: String,
   val commentCount: Int,
   val commentsUrl: String,
-  @SerialName("submitter_user") val submitter: User,
+  @SerialName("submitter_user") val submitter: String,
   val tags: List<String>,
   val comments: List<Comment> = emptyList(),
   val isSaved: Boolean = false,
@@ -38,10 +34,7 @@ data class UIPost(
     value = SavedPost::class,
     mappings =
       [
-        Mapping(
-          target = "submitter",
-          expression = "User(it.submitterName, \"\", null, it.submitterAvatarUrl, \"\")",
-        ),
+        Mapping(target = "submitter", expression = "it.submitterName"),
         Mapping(target = "commentCount", expression = "it.commentCount ?: 0"),
         Mapping(target = "isSaved", expression = "true"),
       ],

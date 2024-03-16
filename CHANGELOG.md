@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+*   Fix crash when trying to open a comments-only post from 
+    the home screen widget
+
 ## [1.42.0] - 2024-03-16
 
 ### Fixed

@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.42.0] - 2024-03-16
+
 ### Fixed
 
 *   Adapt to changes in lobste.rs API
@@ -366,7 +368,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 *   Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.41.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.42.0...HEAD
+
+[1.42.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.41.0...v1.42.0
 
 [1.41.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.40.0...v1.41.0
 

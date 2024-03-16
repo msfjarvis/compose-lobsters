@@ -9,9 +9,7 @@ Unofficial Android app for read-only access to [lobste.rs](https://lobste.rs), b
 </a>
 
 > [!NOTE]
-> Snapshots from the development branch can be obtained [here](https://github.com/msfjarvis/compose-lobsters/releases/tag/latest).
->
-> They are also published in the Google Play 'Open Testing' channel, which can be opted into via this link: [[Android]](https://play.google.com/store/apps/details?id=dev.msfjarvis.claw.android) [[Web]](https://play.google.com/apps/testing/dev.msfjarvis.claw.android)
+> Daily builds are published to the Google Play 'Open Testing' channel (if there are any changes), which can be opted into via this link: [[Android]](https://play.google.com/store/apps/details?id=dev.msfjarvis.claw.android) [[Web]](https://play.google.com/apps/testing/dev.msfjarvis.claw.android)
 
 <img src="https://github.com/msfjarvis/compose-lobsters/blob/main/.github/readme_feature_light.webp#gh-light-mode-only"
      alt="A grid of screenshots from the app, in clockwise order: the main screen, the comments page, the search page and the saved posts page"

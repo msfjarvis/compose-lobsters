@@ -43,9 +43,10 @@ fun WidgetListEntry(post: UIPost, modifier: GlanceModifier = GlanceModifier) {
   val titleStyle = MaterialTheme.typography.titleMedium
   val commentsAction =
     actionStartActivity<MainActivity>(actionParametersOf(destinationKey to post.shortId))
+  // If the URL starts with a /, it's a relative URL and we should open the comments page directly.
   val postAction =
-    if (post.url.isNotEmpty()) actionStartActivity(Intent(Intent.ACTION_VIEW, Uri.parse(post.url)))
-    else commentsAction
+    if (post.url.startsWith('/')) commentsAction
+    else actionStartActivity(Intent(Intent.ACTION_VIEW, Uri.parse(post.url)))
   Box(modifier.padding(8.dp)) {
     Row(
       verticalAlignment = Alignment.CenterVertically,

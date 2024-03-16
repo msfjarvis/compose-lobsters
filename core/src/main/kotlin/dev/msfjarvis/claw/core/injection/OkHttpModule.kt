@@ -1,5 +1,5 @@
 /*
- * Copyright © 2022-2023 Harsh Shandilya.
+ * Copyright © 2022-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -92,7 +92,9 @@ interface OkHttpModule {
     @Provides
     @IntoSet
     fun provideSentryInterceptor(): Interceptor {
-      return SentryOkHttpInterceptor()
+      // Disable capturing of failed requests since there is no real upstream for this app,
+      // if something is going wrong it is almost always someone else's problem.
+      return SentryOkHttpInterceptor(captureFailedRequests = false)
     }
   }
 }

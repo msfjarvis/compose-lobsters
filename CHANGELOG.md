@@ -7,9 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.43.0] - 2024-03-17
+
 ### Fixed
 
-*   Fix crash when trying to open a comments-only post from 
+*   Fix crash when trying to open a comments-only post from
     the home screen widget
 
 ## [1.42.0] - 2024-03-16
@@ -373,7 +375,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 *   Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.42.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.43.0...HEAD
+
+[1.43.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.42.0...v1.43.0
 
 [1.42.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.41.0...v1.42.0
 

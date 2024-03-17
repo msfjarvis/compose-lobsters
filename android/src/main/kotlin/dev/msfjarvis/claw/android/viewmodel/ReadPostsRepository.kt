@@ -25,4 +25,8 @@ constructor(
   suspend fun markRead(postId: String) {
     withContext(dbDispatcher) { readPostsQueries.markRead(postId) }
   }
+
+  suspend fun isPostRead(shortId: String): Boolean {
+    return withContext(dbDispatcher) { readPostsQueries.isPostRead(shortId).executeAsOne() }
+  }
 }

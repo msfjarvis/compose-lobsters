@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+*   Fixed a bug in the database code that was triggering crashes for
+    a subset of upgrading users
+
 ## [1.43.0] - 2024-03-17
 
 ### Fixed

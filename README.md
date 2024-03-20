@@ -8,6 +8,12 @@ Unofficial Android app for read-only access to [lobste.rs](https://lobste.rs), b
        height="80" />
 </a>
 
+<a href="https://android.izzysoft.de/repo/apk/dev.msfjarvis.claw.android">
+  <img src="./.github/izzy-badge.png"
+       alt="Get it on IzzyOnDroid"
+       height="80" />
+</a>
+
 > [!NOTE]
 > Daily builds are published to the Google Play 'Open Testing' channel (if there are any changes), which can be opted into via this link: [[Android]](https://play.google.com/store/apps/details?id=dev.msfjarvis.claw.android) [[Web]](https://play.google.com/apps/testing/dev.msfjarvis.claw.android)
 

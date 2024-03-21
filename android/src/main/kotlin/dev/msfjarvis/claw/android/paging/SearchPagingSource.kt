@@ -39,11 +39,6 @@ constructor(
   private val savedPostsRepository: SavedPostsRepository,
   private val readPostsRepository: ReadPostsRepository,
 ) : PagingSource<Int, UIPost>() {
-  override fun getRefreshKey(state: PagingState<Int, UIPost>): Int? {
-    return state.anchorPosition?.let { anchorPosition ->
-      (anchorPosition / PAGE_SIZE).coerceAtLeast(STARTING_PAGE_INDEX)
-    }
-  }
 
   override suspend fun load(params: LoadParams<Int>): LoadResult<Int, UIPost> {
     val searchQuery = queryProvider()
@@ -78,6 +73,12 @@ constructor(
       is ApiResult.Failure.HttpFailure,
       is ApiResult.Failure.ApiFailure ->
         LoadResult.Error(IOException("API returned an invalid response"))
+    }
+  }
+
+  override fun getRefreshKey(state: PagingState<Int, UIPost>): Int? {
+    return state.anchorPosition?.let { anchorPosition ->
+      (anchorPosition / PAGE_SIZE).coerceAtLeast(STARTING_PAGE_INDEX)
     }
   }
 

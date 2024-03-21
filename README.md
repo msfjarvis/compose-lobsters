@@ -9,7 +9,7 @@ Unofficial Android app for read-only access to [lobste.rs](https://lobste.rs), b
 </a>
 
 <a href="https://android.izzysoft.de/repo/apk/dev.msfjarvis.claw.android">
-  <img src="./.github/izzy-badge.png"
+  <img src="./.github/izzy-badge.webp"
        alt="Get it on IzzyOnDroid"
        height="80" />
 </a>

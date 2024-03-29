@@ -116,7 +116,7 @@ anvil = "com.squareup.anvil:2.5.0-beta04"
 baselineprofile = { id = "androidx.baselineprofile", version.ref = "benchmark" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = "com.google.devtools.ksp:1.9.23-1.0.19"
-licensee = "app.cash.licensee:1.10.0"
+licensee = "app.cash.licensee:1.11.0"
 modulegraphassert = "com.jraska.module.graph.assertion:2.5.0"
 poko = "dev.drewhamilton.poko:0.15.2"
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }

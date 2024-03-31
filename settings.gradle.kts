@@ -14,8 +14,8 @@ pluginManagement {
         includeGroup("androidx.baselineprofile")
         includeGroup("androidx.benchmark")
         includeGroup("androidx.databinding")
-        includeGroupByRegex("com.android.*")
         includeGroup("com.google.testing.platform")
+        includeGroupAndSubgroups("com.android")
       }
     }
     exclusiveContent {
@@ -73,8 +73,8 @@ dependencyResolutionManagement {
   repositories {
     google {
       content {
-        includeGroupByRegex("androidx.*")
-        includeGroupByRegex("com.android.*")
+        includeGroupAndSubgroups("androidx")
+        includeGroupAndSubgroups("com.android")
         includeGroup("com.google.android.gms")
         includeModule("com.google.android.material", "material")
         includeGroup("com.google.testing.platform")

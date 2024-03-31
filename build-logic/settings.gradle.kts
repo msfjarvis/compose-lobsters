@@ -27,8 +27,8 @@ pluginManagement {
       forRepository { google() }
       filter {
         includeGroup("androidx.databinding")
-        includeGroupByRegex("com.android.*")
         includeGroup("com.google.testing.platform")
+        includeGroupAndSubgroups("com.android")
       }
     }
     mavenCentral { mavenContent { releasesOnly() } }

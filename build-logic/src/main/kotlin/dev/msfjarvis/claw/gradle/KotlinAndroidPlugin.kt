@@ -1,5 +1,5 @@
 /*
- * Copyright © 2022-2023 Harsh Shandilya.
+ * Copyright © 2022-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -30,10 +30,14 @@ class KotlinAndroidPlugin : Plugin<Project> {
     val composeCompilerVersion = libs.versions.composeCompiler.get()
     val kotlinVersion = libs.versions.kotlin.get()
     val matches = COMPOSE_COMPILER_VERSION_REGEX.find(composeCompilerVersion)
-    if (matches != null) {
-      val (compilerKotlinVersion) = matches.destructured
-      if (compilerKotlinVersion != kotlinVersion) {
-        project.tasks.withType<KotlinCompile>().configureEach {
+    project.tasks.withType<KotlinCompile>().configureEach {
+      compilerOptions.freeCompilerArgs.addAll(
+        "-P",
+        "plugin:androidx.compose.compiler.plugins.kotlin:experimentalStrongSkipping=true",
+      )
+      if (matches != null) {
+        val (compilerKotlinVersion) = matches.destructured
+        if (compilerKotlinVersion != kotlinVersion) {
           compilerOptions.freeCompilerArgs.addAll(
             "-P",
             "plugin:androidx.compose.compiler.plugins.kotlin:suppressKotlinVersionCompatibilityCheck=$kotlinVersion",

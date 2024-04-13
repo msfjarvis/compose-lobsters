@@ -39,3 +39,4 @@ runs:
         cache-read-only: ${{ inputs.cache-read-only }}
         add-job-summary: always
         dependency-graph: ${{ inputs.dependency-graph }}
+        validate-wrappers: true

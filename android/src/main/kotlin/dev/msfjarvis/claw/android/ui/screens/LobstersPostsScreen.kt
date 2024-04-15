@@ -129,7 +129,9 @@ fun LobstersPostsScreen(
         icon = Icons.Outlined.Whatshot,
         selectedIcon = Icons.Filled.Whatshot,
       ) {
-        coroutineScope.launch { hottestListState.animateScrollToItem(index = 0) }
+        coroutineScope.launch {
+          if (hottestPosts.itemCount > 0) hottestListState.animateScrollToItem(index = 0)
+        }
       },
       NavigationItem(
         label = "Newest",
@@ -137,7 +139,9 @@ fun LobstersPostsScreen(
         icon = Icons.Outlined.NewReleases,
         selectedIcon = Icons.Filled.NewReleases,
       ) {
-        coroutineScope.launch { newestListState.animateScrollToItem(index = 0) }
+        coroutineScope.launch {
+          if (newestPosts.itemCount > 0) newestListState.animateScrollToItem(index = 0)
+        }
       },
       NavigationItem(
         label = "Saved",
@@ -145,7 +149,9 @@ fun LobstersPostsScreen(
         icon = Icons.Outlined.FavoriteBorder,
         selectedIcon = Icons.Filled.Favorite,
       ) {
-        coroutineScope.launch { savedListState.animateScrollToItem(index = 0) }
+        coroutineScope.launch {
+          if (savedPosts.isNotEmpty()) savedListState.animateScrollToItem(index = 0)
+        }
       },
     )
 

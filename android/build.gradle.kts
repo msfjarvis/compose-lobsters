@@ -68,7 +68,6 @@ whetstone {
 }
 
 dependencies {
-  implementation(platform(libs.androidx.compose.bom))
   implementation(platform(libs.okhttp.bom))
   implementation(libs.aboutLibraries.m3)
   implementation(libs.androidx.activity.compose)

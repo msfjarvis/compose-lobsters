@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+*   Upgrade to Compose April releases
+
 ### Fixed
 
 *   Fixed a crash when clicking an item on the bottom navigation bar

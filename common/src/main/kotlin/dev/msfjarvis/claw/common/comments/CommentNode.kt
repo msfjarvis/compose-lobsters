@@ -84,9 +84,15 @@ internal fun LazyListScope.nodes(
   nodes: List<CommentNode>,
   htmlConverter: HTMLConverter,
   toggleExpanded: (CommentNode) -> Unit,
+  openUserProfile: (String) -> Unit,
 ) {
   nodes.forEach { node ->
-    node(node = node, htmlConverter = htmlConverter, toggleExpanded = toggleExpanded)
+    node(
+      node = node,
+      htmlConverter = htmlConverter,
+      toggleExpanded = toggleExpanded,
+      openUserProfile = openUserProfile,
+    )
   }
 }
 
@@ -94,16 +100,27 @@ private fun LazyListScope.node(
   node: CommentNode,
   htmlConverter: HTMLConverter,
   toggleExpanded: (CommentNode) -> Unit,
+  openUserProfile: (String) -> Unit,
 ) {
   // Skip the node if neither the node nor its parent is expanded
   if (!node.isExpanded && node.parent?.isExpanded == false) {
     return
   }
   item {
-    CommentEntry(commentNode = node, htmlConverter = htmlConverter, toggleExpanded = toggleExpanded)
+    CommentEntry(
+      commentNode = node,
+      htmlConverter = htmlConverter,
+      toggleExpanded = toggleExpanded,
+      openUserProfile = openUserProfile,
+    )
     HorizontalDivider()
   }
   if (node.children.isNotEmpty()) {
-    nodes(node.children, htmlConverter = htmlConverter, toggleExpanded = toggleExpanded)
+    nodes(
+      node.children,
+      htmlConverter = htmlConverter,
+      toggleExpanded = toggleExpanded,
+      openUserProfile = openUserProfile,
+    )
   }
 }

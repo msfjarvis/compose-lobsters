@@ -67,6 +67,11 @@ fun SearchScreen(
           htmlConverter = htmlConverter,
           getSeenComments = viewModel::getSeenComments,
           markSeenComments = viewModel::markSeenComments,
+          openUserProfile = { username: String ->
+            navController.navigate(
+              Destinations.User.route.replace(Destinations.User.PLACEHOLDER, username)
+            )
+          },
         )
       }
     }

@@ -261,6 +261,11 @@ fun LobstersPostsScreen(
             htmlConverter = htmlConverter,
             getSeenComments = viewModel::getSeenComments,
             markSeenComments = viewModel::markSeenComments,
+            openUserProfile = {
+              navController.navigate(
+                Destinations.User.route.replace(Destinations.User.PLACEHOLDER, it)
+              )
+            },
           )
         }
         composable(
@@ -272,7 +277,15 @@ fun LobstersPostsScreen(
               "Navigating to ${Destinations.User.route} without necessary 'username' argument"
             }
           setWebUri("https://lobste.rs/u/$username")
-          UserProfile(username = username, getProfile = viewModel::getUserProfile)
+          UserProfile(
+            username = username,
+            getProfile = viewModel::getUserProfile,
+            openUserProfile = {
+              navController.navigate(
+                Destinations.User.route.replace(Destinations.User.PLACEHOLDER, it)
+              )
+            },
+          )
         }
         composable(route = Destinations.Settings.route) {
           SettingsScreen(

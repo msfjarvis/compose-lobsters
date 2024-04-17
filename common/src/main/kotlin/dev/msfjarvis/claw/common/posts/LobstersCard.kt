@@ -260,7 +260,7 @@ private fun LobstersCardPreview() {
 
           override fun viewComments(postId: String) {}
 
-          override fun viewCommentsPage(commentsUrl: String) {}
+          override fun viewCommentsPage(post: UIPost) {}
 
           override fun toggleSave(post: UIPost) {}
 

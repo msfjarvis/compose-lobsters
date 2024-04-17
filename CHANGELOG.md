@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 *   Fixed a crash when clicking an item on the bottom navigation bar
     too quickly
+*   Removed buggy deeplinks
 
 ## [1.44.0] - 2024-03-19
 

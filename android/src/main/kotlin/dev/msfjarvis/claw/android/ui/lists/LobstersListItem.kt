@@ -10,7 +10,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Reply
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import dev.msfjarvis.claw.common.posts.LobstersCard
@@ -30,7 +29,7 @@ fun LobstersListItem(
     SwipeAction(
       icon = rememberVectorPainter(Icons.AutoMirrored.Filled.Reply),
       background = MaterialTheme.colorScheme.tertiary,
-      onSwipe = { postActions.viewCommentsPage(item.commentsUrl) },
+      onSwipe = { postActions.viewCommentsPage(item) },
     )
   SwipeableActionsBox(endActions = listOf(commentsAction)) {
     LobstersCard(post = item, postActions = postActions, refresh = refresh, modifier = modifier)

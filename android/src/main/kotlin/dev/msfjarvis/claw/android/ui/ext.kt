@@ -48,14 +48,8 @@ fun rememberPostActions(
         if (currentRoute != Destinations.Comments.route) navController.navigate(newRoute)
       }
 
-      override fun viewCommentsPage(commentsUrl: String) {
-        // Post links from lobste.rs are of the form $baseUrl/s/$postId/$postTitle
-        // Interestingly, lobste.rs does not actually care for the value of $postTitle, and will
-        // happily accept both a missing as well as a completely arbitrary $postTitle. We
-        // leverage this to create a new URL format which looks like
-        // $baseUrl/s/$postId/$postTitle/r, and does not trigger our deeplinks,
-        // instead opening in the custom tab as we want it to.
-        urlLauncher.openUri(commentsUrl.replaceAfterLast('/', "r"))
+      override fun viewCommentsPage(post: UIPost) {
+        urlLauncher.openUri(post.commentsUrl)
       }
 
       override fun toggleSave(post: UIPost) {

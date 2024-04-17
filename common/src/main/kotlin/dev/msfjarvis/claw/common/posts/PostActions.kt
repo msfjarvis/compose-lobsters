@@ -16,7 +16,7 @@ interface PostActions {
 
   fun viewComments(postId: String)
 
-  fun viewCommentsPage(commentsUrl: String)
+  fun viewCommentsPage(post: UIPost)
 
   fun toggleSave(post: UIPost)
 

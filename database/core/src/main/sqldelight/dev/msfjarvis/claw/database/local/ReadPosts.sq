@@ -2,13 +2,6 @@ CREATE TABLE IF NOT EXISTS ReadPosts(
   id TEXT NOT NULL PRIMARY KEY
 );
 
-isPostRead:
-SELECT EXISTS(
-  SELECT 1
-  FROM ReadPosts
-  WHERE id = ?
-) AS isRead;
-
 selectAllPosts:
 SELECT *
 FROM ReadPosts;

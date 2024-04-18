@@ -16,11 +16,13 @@ import dagger.assisted.AssistedInject
 import dev.msfjarvis.claw.android.viewmodel.ReadPostsRepository
 import dev.msfjarvis.claw.android.viewmodel.SavedPostsRepository
 import dev.msfjarvis.claw.core.injection.IODispatcher
+import dev.msfjarvis.claw.database.local.SavedPost
 import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.UIPost
 import dev.msfjarvis.claw.model.toUIPost
 import java.io.IOException
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 
 class LobstersPagingSource
@@ -31,8 +33,16 @@ constructor(
   private val savedPostsRepository: SavedPostsRepository,
   private val readPostsRepository: ReadPostsRepository,
 ) : PagingSource<Int, UIPost>() {
+  private lateinit var savedPosts: List<String>
+  private lateinit var readPosts: List<String>
 
   override suspend fun load(params: LoadParams<Int>): LoadResult<Int, UIPost> {
+    if (!::savedPosts.isInitialized) {
+      savedPosts = savedPostsRepository.savedPosts.first().map(SavedPost::shortId)
+    }
+    if (!::readPosts.isInitialized) {
+      readPosts = readPostsRepository.readPosts.first()
+    }
     val page = params.key ?: STARTING_PAGE_INDEX
     return when (val result = withContext(ioDispatcher) { remoteFetcher.getItemsAtPage(page) }) {
       is Success ->
@@ -43,8 +53,8 @@ constructor(
               it
                 .toUIPost()
                 .copy(
-                  isSaved = savedPostsRepository.isPostSaved(it.shortId),
-                  isRead = readPostsRepository.isPostRead(it.shortId),
+                  isSaved = savedPosts.contains(it.shortId),
+                  isRead = readPosts.contains(it.shortId),
                 )
             },
           prevKey = if (page == STARTING_PAGE_INDEX) null else page - 1,

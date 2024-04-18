@@ -29,7 +29,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -56,9 +55,9 @@ internal fun CommentsHeader(
   post: UIPost,
   postActions: PostActions,
   htmlConverter: HTMLConverter,
+  openUserProfile: (String) -> Unit,
   modifier: Modifier = Modifier,
 ) {
-  val uriHandler = LocalUriHandler.current
   val linkMetadata by
     produceState(initialValue = LinkMetadata(post.url, null)) {
       runSuspendCatching { postActions.getLinkMetadata(post.url) }
@@ -93,8 +92,7 @@ internal fun CommentsHeader(
         text = AnnotatedString("Submitted by ${post.submitter}"),
         avatarUrl = "https://lobste.rs/avatars/${post.submitter}-100.png",
         contentDescription = "User avatar for ${post.submitter}",
-        modifier =
-          Modifier.clickable { uriHandler.openUri("https://lobste.rs/u/${post.submitter}") },
+        modifier = Modifier.clickable { openUserProfile(post.submitter) },
       )
     }
   }
@@ -133,9 +131,9 @@ internal fun CommentEntry(
   commentNode: CommentNode,
   htmlConverter: HTMLConverter,
   toggleExpanded: (CommentNode) -> Unit,
+  openUserProfile: (String) -> Unit,
   modifier: Modifier = Modifier,
 ) {
-  val uriHandler = LocalUriHandler.current
   val comment = commentNode.comment
   Box(
     modifier =
@@ -162,7 +160,7 @@ internal fun CommentEntry(
           ),
         avatarUrl = "https://lobste.rs/avatars/${comment.user}-100.png",
         contentDescription = "User avatar for ${comment.user}",
-        modifier = Modifier.clickable { uriHandler.openUri("https://lobste.rs/u/${comment.user}") },
+        modifier = Modifier.clickable { openUserProfile(comment.user) },
       )
       if (commentNode.isExpanded) {
         ThemedRichText(

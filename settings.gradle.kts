@@ -57,12 +57,12 @@ pluginManagement {
 
 plugins {
   id("org.gradle.toolchains.foojay-resolver-convention") version "0.8.0"
-  id("com.gradle.develocity") version "3.17.1"
+  id("com.gradle.develocity") version "3.17.2"
 }
 
 develocity {
   buildScan {
-    termsOfUseUrl = "https://gradle.com/legal/terms-of-use/"
+    termsOfUseUrl = "https://gradle.com/help/legal-terms-of-use"
     termsOfUseAgree = if (System.getenv("GITHUB_WORKFLOW").isNullOrEmpty()) "no" else "yes"
     publishing.onlyIf { !System.getenv("GITHUB_WORKFLOW").isNullOrEmpty() }
   }

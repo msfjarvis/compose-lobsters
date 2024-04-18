@@ -22,11 +22,11 @@ object MetadataExtractorModule {
   fun provideUnfurlLogger(): UnfurlLogger {
     return object : UnfurlLogger {
       override fun log(message: String) {
-        Napier.d { message }
+        Napier.d(tag = "Unfurler") { message }
       }
 
       override fun log(e: Throwable, message: String) {
-        Napier.e(e) { message }
+        Napier.e(tag = "Unfurler", throwable = e) { message }
       }
     }
   }

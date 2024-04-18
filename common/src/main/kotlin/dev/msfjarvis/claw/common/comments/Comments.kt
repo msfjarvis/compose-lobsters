@@ -46,6 +46,7 @@ private fun CommentsPageInternal(
   htmlConverter: HTMLConverter,
   commentState: PostComments?,
   markSeenComments: (String, List<Comment>) -> Unit,
+  openUserProfile: (String) -> Unit,
   modifier: Modifier = Modifier,
 ) {
   val commentNodes = createListNode(details.comments, commentState).toMutableStateList()
@@ -54,7 +55,12 @@ private fun CommentsPageInternal(
   Surface(color = MaterialTheme.colorScheme.surfaceVariant) {
     LazyColumn(modifier = modifier, contentPadding = PaddingValues(bottom = 24.dp)) {
       item {
-        CommentsHeader(post = details, postActions = postActions, htmlConverter = htmlConverter)
+        CommentsHeader(
+          post = details,
+          postActions = postActions,
+          htmlConverter = htmlConverter,
+          openUserProfile = openUserProfile,
+        )
       }
 
       if (commentNodes.isNotEmpty()) {
@@ -79,6 +85,7 @@ private fun CommentsPageInternal(
               commentNodes.add(index, parent)
             }
           },
+          openUserProfile = openUserProfile,
         )
       } else {
         item {
@@ -104,6 +111,7 @@ fun CommentsPage(
   getSeenComments: suspend (String) -> PostComments?,
   markSeenComments: (String, List<Comment>) -> Unit,
   modifier: Modifier = Modifier,
+  openUserProfile: (String) -> Unit,
 ) {
   val postDetails by
     produceState<NetworkState>(Loading) {
@@ -124,6 +132,7 @@ fun CommentsPage(
         htmlConverter = htmlConverter,
         commentState = commentState,
         markSeenComments = markSeenComments,
+        openUserProfile = openUserProfile,
         modifier = modifier.fillMaxSize(),
       )
     }

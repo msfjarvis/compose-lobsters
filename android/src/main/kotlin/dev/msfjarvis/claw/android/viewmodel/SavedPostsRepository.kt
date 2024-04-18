@@ -45,10 +45,6 @@ constructor(
     }
   }
 
-  suspend fun isPostSaved(postId: String): Boolean {
-    return withContext(dbDispatcher) { savedPostQueries.isPostSaved(postId).executeAsOne() }
-  }
-
   private companion object {
     private const val TAG = "SavedPostsRepository"
   }

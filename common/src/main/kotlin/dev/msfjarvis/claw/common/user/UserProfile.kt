@@ -24,6 +24,8 @@ import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.LinkAnnotation
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
 import com.github.michaelbull.result.coroutines.runSuspendCatching
 import com.github.michaelbull.result.fold
@@ -42,6 +44,7 @@ import dev.msfjarvis.claw.model.User
 fun UserProfile(
   username: String,
   getProfile: suspend (username: String) -> User,
+  openUserProfile: (String) -> Unit,
   modifier: Modifier = Modifier,
 ) {
   val user by
@@ -56,7 +59,11 @@ fun UserProfile(
     }
   when (user) {
     is Success<*> -> {
-      UserProfileInternal(user = (user as Success<User>).data, modifier = modifier)
+      UserProfileInternal(
+        user = (user as Success<User>).data,
+        openUserProfile = openUserProfile,
+        modifier = modifier,
+      )
     }
     is Error -> {
       val error = user as Error
@@ -77,7 +84,11 @@ fun UserProfile(
 }
 
 @Composable
-private fun UserProfileInternal(user: User, modifier: Modifier = Modifier) {
+private fun UserProfileInternal(
+  user: User,
+  openUserProfile: (String) -> Unit,
+  modifier: Modifier = Modifier,
+) {
   Surface(modifier = modifier) {
     Column(
       horizontalAlignment = Alignment.CenterHorizontally,
@@ -93,7 +104,19 @@ private fun UserProfileInternal(user: User, modifier: Modifier = Modifier) {
       Text(text = user.username, style = MaterialTheme.typography.displaySmall)
       ThemedRichText(text = user.about)
       user.invitedBy?.let { invitedBy ->
-        ThemedRichText(text = "Invited by [${invitedBy}](https://lobste.rs/u/${user.invitedBy})")
+        Text(
+          text =
+            buildAnnotatedString {
+              append("Invited by ")
+              pushLink(
+                LinkAnnotation.Clickable(
+                  tag = "username",
+                  linkInteractionListener = { openUserProfile(invitedBy) },
+                )
+              )
+              append(invitedBy)
+            }
+        )
       }
     }
   }

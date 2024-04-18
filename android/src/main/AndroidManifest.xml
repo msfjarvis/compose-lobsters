@@ -32,108 +32,8 @@
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
-
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-
-        <data android:host="lobste.rs" />
-        <data android:pathPattern="/s/......" />
-        <data android:scheme="https" />
-      </intent-filter>
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-
-        <data android:host="lobste.rs" />
-        <data android:pathPattern="/s/....../" />
-        <data android:scheme="https" />
-      </intent-filter>
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-
-        <data android:host="lobste.rs" />
-        <data android:pathPattern="/s/....../...*" />
-        <data android:scheme="https" />
-      </intent-filter>
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-
-        <data android:host="lobste.rs" />
-        <data android:pathPattern="/s/......" />
-        <data android:scheme="https" />
-      </intent-filter>
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-
-        <data android:host="lobste.rs" />
-        <data android:pathPattern="/s/....../" />
-        <data android:scheme="https" />
-      </intent-filter>
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-
-        <data android:host="lobste.rs" />
-        <data android:pathPattern="/s/....../...*" />
-        <data android:scheme="https" />
-      </intent-filter>
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-
-        <data android:host="lobste.rs" />
-        <data android:pathPattern="/s/......" />
-        <data android:scheme="https" />
-      </intent-filter>
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-
-        <data android:host="lobste.rs" />
-        <data android:pathPattern="/s/....../" />
-        <data android:scheme="https" />
-      </intent-filter>
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-
-        <data android:host="lobste.rs" />
-        <data android:pathPattern="/s/....../...*" />
-        <data android:scheme="https" />
-      </intent-filter>
-      <intent-filter>
-        <action android:name="android.intent.action.VIEW" />
-
-        <category android:name="android.intent.category.DEFAULT" />
-        <category android:name="android.intent.category.BROWSABLE" />
-
-        <data android:host="lobste.rs" />
-        <data android:pathPattern="/u/......*" />
-        <data android:scheme="https" />
-      </intent-filter>
     </activity>
+
     <activity
       android:name=".SearchActivity"
       android:configChanges="colorMode|density|fontScale|keyboard|keyboardHidden|layoutDirection|locale|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"
@@ -161,6 +61,7 @@
         android:value="androidx.startup"
         tools:node="remove" />
     </provider>
+
     <receiver
       android:name=".glance.WidgetReceiver"
       android:exported="true">
@@ -171,6 +72,7 @@
         android:name="android.appwidget.provider"
         android:resource="@xml/saved_posts_widget_info" />
     </receiver>
+
     <!-- Required: set your sentry.io project identifier (DSN) -->
     <meta-data
       android:name="io.sentry.dsn"

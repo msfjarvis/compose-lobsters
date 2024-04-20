@@ -76,7 +76,7 @@ fun LobstersCard(
           refresh()
         }
         .background(MaterialTheme.colorScheme.background)
-        .padding(start = 16.dp, top = 16.dp, end = 4.dp, bottom = 16.dp)
+        .padding(start = 8.dp)
   ) {
     Row(
       horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -171,7 +171,7 @@ internal fun Submitter(
 @Composable
 private fun SaveButton(isSaved: Boolean, modifier: Modifier = Modifier) {
   Crossfade(targetState = isSaved, label = "save-button") { saved ->
-    Box(modifier = modifier.padding(12.dp)) {
+    Box(modifier = modifier.padding(vertical = 12.dp)) {
       Icon(
         imageVector = if (saved) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
         tint = MaterialTheme.colorScheme.secondary,
@@ -185,7 +185,7 @@ private fun SaveButton(isSaved: Boolean, modifier: Modifier = Modifier) {
 @Composable
 private fun CommentsButton(commentCount: Int?, modifier: Modifier = Modifier) {
   BadgedBox(
-    modifier = modifier.padding(12.dp),
+    modifier = modifier.padding(vertical = 12.dp),
     badge = {
       if (commentCount != null) {
         Badge(

@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
@@ -21,16 +22,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
+import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemContentType
 import androidx.paging.compose.itemKey
 import dev.msfjarvis.claw.common.posts.PostActions
+import dev.msfjarvis.claw.common.posts.TEST_POST
+import dev.msfjarvis.claw.common.posts.TEST_POST_ACTIONS
+import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.NetworkError
 import dev.msfjarvis.claw.common.ui.ProgressBar
+import dev.msfjarvis.claw.common.ui.preview.DevicePreviews
 import dev.msfjarvis.claw.model.UIPost
 import eu.bambooapps.material3.pullrefresh.PullRefreshIndicator
 import eu.bambooapps.material3.pullrefresh.pullRefresh
 import eu.bambooapps.material3.pullrefresh.rememberPullRefreshState
+import kotlinx.coroutines.flow.MutableStateFlow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -85,6 +93,20 @@ fun NetworkPosts(
       state = pullRefreshState,
       modifier = Modifier.align(Alignment.TopCenter),
       shadowElevation = 6.dp, // From M2 implementation
+    )
+  }
+}
+
+@DevicePreviews
+@Composable
+private fun ListPreview() {
+  val items = List(20) { TEST_POST.copy(shortId = "${TEST_POST.shortId}${it}") }
+  val flow = MutableStateFlow(PagingData.from(items))
+  LobstersTheme {
+    NetworkPosts(
+      lazyPagingItems = flow.collectAsLazyPagingItems(),
+      listState = rememberLazyListState(),
+      postActions = TEST_POST_ACTIONS,
     )
   }
 }

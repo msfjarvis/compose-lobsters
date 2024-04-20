@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 *   Upgrade to Compose April releases
+*   Story items are now more compact so you can see more items
+    on your screen.
 
 ### Fixed
 

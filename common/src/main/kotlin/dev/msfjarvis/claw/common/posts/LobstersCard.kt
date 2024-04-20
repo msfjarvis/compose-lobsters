@@ -6,6 +6,7 @@
  */
 package dev.msfjarvis.claw.common.posts
 
+import androidx.annotation.VisibleForTesting
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -235,55 +236,55 @@ private fun TagText(tag: String, modifier: Modifier = Modifier) {
   )
 }
 
+@VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+val TEST_POST_ACTIONS =
+  object : PostActions {
+    override fun viewPost(postId: String, postUrl: String, commentsUrl: String) {}
+
+    override fun viewComments(postId: String) {}
+
+    override fun viewCommentsPage(post: UIPost) {}
+
+    override fun toggleSave(post: UIPost) {}
+
+    override suspend fun getComments(postId: String): UIPost {
+      return UIPost(
+        shortId = "ooga",
+        title = "Simple Anomaly Detection Using Plain SQL",
+        url = "https://hakibenita.com/sql-anomaly-detection",
+        createdAt = "2020-09-21T08:04:24.000-05:00",
+        commentCount = 1,
+        commentsUrl = "https://lobste.rs/s/q1hh1g/simple_anomaly_detection_using_plain_sql",
+        tags = listOf("databases", "apis"),
+        description = "",
+        submitter = "Haki",
+        comments = emptyList(),
+      )
+    }
+
+    override suspend fun getLinkMetadata(url: String): LinkMetadata {
+      return LinkMetadata("", "")
+    }
+  }
+
+@VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+val TEST_POST =
+  UIPost(
+    shortId = "ooga",
+    title = "Simple Anomaly Detection Using Plain SQL",
+    url = "https://hakibenita.com/sql-anomaly-detection",
+    createdAt = "2020-09-21T08:04:24.000-05:00",
+    commentCount = 1,
+    commentsUrl = "https://lobste.rs/s/q1hh1g/simple_anomaly_detection_using_plain_sql",
+    submitter = "Haki",
+    tags = listOf("databases", "apis"),
+    description = "",
+    isSaved = true,
+    isRead = true,
+  )
+
 @ThemePreviews
 @Composable
 private fun LobstersCardPreview() {
-  LobstersTheme {
-    LobstersCard(
-      post =
-        UIPost(
-          shortId = "ooga",
-          title = "Simple Anomaly Detection Using Plain SQL",
-          url = "https://hakibenita.com/sql-anomaly-detection",
-          createdAt = "2020-09-21T08:04:24.000-05:00",
-          commentCount = 1,
-          commentsUrl = "https://lobste.rs/s/q1hh1g/simple_anomaly_detection_using_plain_sql",
-          submitter = "Haki",
-          tags = listOf("databases", "apis"),
-          description = "",
-          isSaved = true,
-          isRead = true,
-        ),
-      postActions =
-        object : PostActions {
-          override fun viewPost(postId: String, postUrl: String, commentsUrl: String) {}
-
-          override fun viewComments(postId: String) {}
-
-          override fun viewCommentsPage(post: UIPost) {}
-
-          override fun toggleSave(post: UIPost) {}
-
-          override suspend fun getComments(postId: String): UIPost {
-            return UIPost(
-              shortId = "ooga",
-              title = "Simple Anomaly Detection Using Plain SQL",
-              url = "https://hakibenita.com/sql-anomaly-detection",
-              createdAt = "2020-09-21T08:04:24.000-05:00",
-              commentCount = 1,
-              commentsUrl = "https://lobste.rs/s/q1hh1g/simple_anomaly_detection_using_plain_sql",
-              tags = listOf("databases", "apis"),
-              description = "",
-              submitter = "Haki",
-              comments = emptyList(),
-            )
-          }
-
-          override suspend fun getLinkMetadata(url: String): LinkMetadata {
-            return LinkMetadata("", "")
-          }
-        },
-      refresh = {},
-    )
-  }
+  LobstersTheme { LobstersCard(post = TEST_POST, postActions = TEST_POST_ACTIONS, refresh = {}) }
 }

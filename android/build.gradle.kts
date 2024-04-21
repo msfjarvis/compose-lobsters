@@ -36,6 +36,7 @@ android {
     matchingFallbacks += "release"
     signingConfig = signingConfigs["debug"]
     applicationIdSuffix = ".internal"
+    debuggable(true)
   }
 }
 

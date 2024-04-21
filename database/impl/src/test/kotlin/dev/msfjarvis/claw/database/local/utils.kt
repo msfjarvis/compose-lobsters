@@ -1,5 +1,5 @@
 /*
- * Copyright © 2023 Harsh Shandilya.
+ * Copyright © 2023-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -16,7 +16,8 @@ fun setupDatabase(): LobstersDatabase {
   LobstersDatabase.Schema.create(driver)
   return LobstersDatabase(
     driver,
-    PostComments.Adapter(CSVAdapter()),
-    SavedPost.Adapter(IntColumnAdapter, CSVAdapter()),
+    PostCommentsAdapter = PostComments.Adapter(CSVAdapter()),
+    SavedPostAdapter = SavedPost.Adapter(IntColumnAdapter, CSVAdapter()),
+    NewestPostsAdapter = NewestPosts.Adapter(IntColumnAdapter, IntColumnAdapter, CSVAdapter()),
   )
 }

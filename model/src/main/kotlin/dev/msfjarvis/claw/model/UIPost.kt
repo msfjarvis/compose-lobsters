@@ -6,6 +6,7 @@
  */
 package dev.msfjarvis.claw.model
 
+import dev.msfjarvis.claw.database.local.NewestPosts
 import dev.msfjarvis.claw.database.local.SavedPost
 import io.mcarle.konvert.api.KonvertFrom
 import io.mcarle.konvert.api.KonvertTo
@@ -39,5 +40,6 @@ data class UIPost(
         Mapping(target = "isSaved", expression = "true"),
       ],
   )
+  @KonvertFrom(value = NewestPosts::class)
   companion object
 }

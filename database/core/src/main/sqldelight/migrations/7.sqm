@@ -1,0 +1,21 @@
+import kotlin.Boolean;
+import kotlin.Int;
+import kotlin.String;
+import kotlin.collections.List;
+
+CREATE TABLE IF NOT EXISTS NewestPosts(
+  shortId TEXT NOT NULL,
+  page INTEGER AS Int NOT NULL,
+  createdAt TEXT NOT NULL,
+  title TEXT NOT NULL,
+  url TEXT NOT NULL,
+  commentCount INTEGER AS Int NOT NULL,
+  description TEXT NOT NULL,
+  commentsUrl TEXT NOT NULL,
+  submitter TEXT NOT NULL,
+  tags TEXT AS List<String> NOT NULL,
+  isRead INTEGER AS Boolean NOT NULL,
+  isSaved INTEGER AS Boolean NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS NewestPosts_page ON NewestPosts(page);

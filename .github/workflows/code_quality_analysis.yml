@@ -29,7 +29,7 @@ jobs:
         cache-read-only: true
 
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@c7f9125735019aa87cfc361530512d50ea439c71 # v3.25.1
+      uses: github/codeql-action/init@8f596b4ae3cb3c588a5c46780b86dd53fef16c52 # v3.25.2
       with:
         languages: java
         tools: latest
@@ -41,7 +41,7 @@ jobs:
         ./gradlew assembleDebug assembleInternal
 
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@c7f9125735019aa87cfc361530512d50ea439c71 # v3.25.1
+      uses: github/codeql-action/analyze@8f596b4ae3cb3c588a5c46780b86dd53fef16c52 # v3.25.2
       with:
         category: "/language:java"
   mobsfscan:
@@ -62,6 +62,6 @@ jobs:
           args: . --sarif --output results.sarif || true
 
       - name: Upload mobsfscan report
-        uses: github/codeql-action/upload-sarif@c7f9125735019aa87cfc361530512d50ea439c71 # v3.25.1
+        uses: github/codeql-action/upload-sarif@8f596b4ae3cb3c588a5c46780b86dd53fef16c52 # v3.25.2
         with:
           sarif_file: results.sarif

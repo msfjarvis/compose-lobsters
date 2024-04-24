@@ -48,6 +48,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.NetworkImage
@@ -82,7 +83,12 @@ fun LobstersCard(
       horizontalArrangement = Arrangement.spacedBy(8.dp),
       verticalAlignment = Alignment.CenterVertically,
     ) {
-      PostDetails(post = post, isRead = localReadState, modifier = Modifier.weight(1f))
+      PostDetails(
+        post = post,
+        isRead = localReadState,
+        singleLineTitle = true,
+        modifier = Modifier.weight(1f),
+      )
       Column(
         modifier = Modifier.wrapContentHeight(),
         verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -116,9 +122,14 @@ fun LobstersCard(
 }
 
 @Composable
-fun PostDetails(post: UIPost, isRead: Boolean, modifier: Modifier = Modifier) {
+fun PostDetails(
+  post: UIPost,
+  isRead: Boolean,
+  singleLineTitle: Boolean,
+  modifier: Modifier = Modifier,
+) {
   Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
-    PostTitle(title = post.title, isRead = isRead)
+    PostTitle(title = post.title, isRead = isRead, singleLineTitle = singleLineTitle)
     TagRow(tags = post.tags.toImmutableList())
     Spacer(Modifier.height(4.dp))
     Submitter(
@@ -130,13 +141,20 @@ fun PostDetails(post: UIPost, isRead: Boolean, modifier: Modifier = Modifier) {
 }
 
 @Composable
-internal fun PostTitle(title: String, isRead: Boolean, modifier: Modifier = Modifier) {
+internal fun PostTitle(
+  title: String,
+  isRead: Boolean,
+  singleLineTitle: Boolean,
+  modifier: Modifier = Modifier,
+) {
   Text(
     text = title,
     modifier = modifier,
     style = MaterialTheme.typography.titleMedium,
     fontWeight = if (isRead) FontWeight.Normal else FontWeight.Bold,
     color = MaterialTheme.colorScheme.onBackground,
+    maxLines = if (singleLineTitle) 1 else Int.MAX_VALUE,
+    overflow = TextOverflow.Ellipsis,
   )
 }
 

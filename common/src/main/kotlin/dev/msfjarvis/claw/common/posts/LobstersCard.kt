@@ -76,7 +76,7 @@ fun LobstersCard(
           refresh()
         }
         .background(MaterialTheme.colorScheme.background)
-        .padding(start = 8.dp)
+        .padding(start = 8.dp, bottom = 2.dp)
   ) {
     Row(
       horizontalArrangement = Arrangement.spacedBy(8.dp),

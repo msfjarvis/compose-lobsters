@@ -18,7 +18,6 @@ import dagger.multibindings.IntoSet
 import dev.msfjarvis.claw.core.network.DelegatingSocketFactory
 import dev.msfjarvis.claw.core.network.NapierLogger
 import dev.msfjarvis.claw.core.network.UserAgentInterceptor
-import io.sentry.okhttp.SentryOkHttpInterceptor
 import java.net.Socket
 import javax.net.SocketFactory
 import okhttp3.Cache
@@ -87,14 +86,6 @@ interface OkHttpModule {
     @IntoSet
     fun provideHttpLoggingInterceptor(logger: HttpLoggingInterceptor.Logger): Interceptor {
       return HttpLoggingInterceptor(logger).setLevel(HttpLoggingInterceptor.Level.BASIC)
-    }
-
-    @Provides
-    @IntoSet
-    fun provideSentryInterceptor(): Interceptor {
-      // Disable capturing of failed requests since there is no real upstream for this app,
-      // if something is going wrong it is almost always someone else's problem.
-      return SentryOkHttpInterceptor(captureFailedRequests = false)
     }
   }
 }

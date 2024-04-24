@@ -43,7 +43,7 @@ jobs:
         echo VERSION="${VERSION}" >> $GITHUB_ENV
 
     - name: Update changelog
-      uses: msfjarvis/keep-a-changelog-new-release@78cddbe3549f1c9263a2d754446d3765e865c518 # v2.1.1
+      uses: msfjarvis/keep-a-changelog-new-release@e60399f488b25149c0963a4e22fff928a9277ce7 # v2.2.0
       with:
         tag: v${{ env.VERSION }}
         version: ${{ env.VERSION }}

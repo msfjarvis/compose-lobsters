@@ -23,8 +23,7 @@ import javax.inject.Inject
 @ContributesAppInjector(generateAppComponent = true)
 class ClawApplication : Application(), ApplicationComponentOwner {
 
-  override val applicationComponent by
-    lazy(LazyThreadSafetyMode.NONE) { GeneratedApplicationComponent.create(this) }
+  override val applicationComponent = GeneratedApplicationComponent.create(this)
 
   @Inject lateinit var plugins: Set<@JvmSuppressWildcards AppPlugin>
 

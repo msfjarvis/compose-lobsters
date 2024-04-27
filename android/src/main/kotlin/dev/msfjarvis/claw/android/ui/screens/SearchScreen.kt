@@ -24,6 +24,7 @@ import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.common.comments.CommentsPage
 import dev.msfjarvis.claw.common.comments.HTMLConverter
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
+import dev.msfjarvis.claw.common.user.UserProfile
 
 @Composable
 fun SearchScreen(
@@ -70,6 +71,25 @@ fun SearchScreen(
           openUserProfile = { username: String ->
             navController.navigate(
               Destinations.User.route.replace(Destinations.User.PLACEHOLDER, username)
+            )
+          },
+        )
+      }
+      composable(
+        route = Destinations.User.route,
+        arguments = listOf(navArgument("username") { type = NavType.StringType }),
+      ) { backStackEntry ->
+        val username =
+          requireNotNull(backStackEntry.arguments?.getString("username")) {
+            "Navigating to ${Destinations.User.route} without necessary 'username' argument"
+          }
+        setWebUri("https://lobste.rs/u/$username")
+        UserProfile(
+          username = username,
+          getProfile = viewModel::getUserProfile,
+          openUserProfile = {
+            navController.navigate(
+              Destinations.User.route.replace(Destinations.User.PLACEHOLDER, it)
             )
           },
         )

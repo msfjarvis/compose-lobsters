@@ -1,5 +1,5 @@
 /*
- * Copyright © 2021-2023 Harsh Shandilya.
+ * Copyright © 2021-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -13,6 +13,7 @@ import app.cash.sqldelight.logs.LogSqliteDriver
 import com.deliveryhero.whetstone.app.ApplicationScope
 import com.squareup.anvil.annotations.ContributesTo
 import com.squareup.anvil.annotations.optional.ForScope
+import com.squareup.anvil.annotations.optional.SingleIn
 import dagger.Module
 import dagger.Provides
 import dev.msfjarvis.claw.database.LobstersDatabase
@@ -28,7 +29,9 @@ object DatabaseModule {
 
   private const val LOBSTERS_DATABASE_NAME = "SavedPosts.db"
 
-  @[Provides InternalDatabaseApi]
+  @Provides
+  @InternalDatabaseApi
+  @SingleIn(ApplicationScope::class)
   fun provideDatabase(@ForScope(ApplicationScope::class) context: Context): LobstersDatabase {
     val driver =
       LogSqliteDriver(

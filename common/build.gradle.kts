@@ -32,6 +32,9 @@ androidComponents { beforeVariants { (it as HasUnitTestBuilder).enableUnitTest =
 anvil { generateDaggerFactories.set(true) }
 
 dependencies {
+  api(libs.androidx.compose.ui)
+  api(libs.dagger)
+  api(libs.javax.inject)
   api(projects.core)
   api(projects.database.core)
   api(projects.model)
@@ -44,12 +47,15 @@ dependencies {
   implementation(libs.androidx.compose.material3)
   implementation(libs.androidx.compose.runtime)
   implementation(libs.androidx.compose.ui.text)
+  implementation(libs.androidx.core)
+  implementation(libs.coil)
   implementation(libs.coil.compose)
   implementation(libs.compose.richtext.markdown)
   implementation(libs.compose.richtext.material3)
   implementation(libs.compose.richtext.ui)
   implementation(libs.kotlinx.collections.immutable)
   implementation(libs.kotlinx.coroutines.core)
+  implementation(libs.kotlinResult)
   implementation(libs.kotlinResult.coroutines)
   implementation(libs.napier)
 

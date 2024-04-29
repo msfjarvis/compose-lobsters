@@ -8,4 +8,5 @@ plugins {
   id("dev.msfjarvis.claw.spotless")
   id("dev.msfjarvis.claw.versions")
   id("dev.msfjarvis.claw.kotlin-common")
+  alias(libs.plugins.dependencyAnalysis)
 }

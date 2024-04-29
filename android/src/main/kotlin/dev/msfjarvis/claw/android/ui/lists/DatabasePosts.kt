@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Inbox
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -54,6 +55,7 @@ fun DatabasePosts(
           stickyHeader(contentType = "month-header") { MonthHeader(label = month) }
           items(items = posts, key = { it.shortId }, contentType = { "LobstersItem" }) { item ->
             LobstersListItem(item = item, refresh = {}, postActions = postActions)
+            HorizontalDivider()
           }
         }
       }

@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Navigating to user profiles now works when invoked from the search
   results page
+- Fix occasional crashes due to the app incorrectly trying to open
+  multiple database connections
 
 ## [1.46.0] - 2024-04-24
 

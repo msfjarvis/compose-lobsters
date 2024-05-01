@@ -1,10 +1,10 @@
 [versions]
 aboutLibraries = "11.1.4"
 agp = "8.5.0-alpha07"
-benchmark = "1.3.0-alpha03"
+benchmark = "1.3.0-alpha04"
 coil = "2.6.0"
 # @keep used for kotlinCompilerExtensionVersion
-composeCompiler = "1.5.12"
+composeCompiler = "1.5.13"
 coroutines = "1.8.1-Beta"
 dagger = "2.51.1"
 glance = "1.0.0"
@@ -12,7 +12,7 @@ junit = "5.10.2"
 konvert = "3.2.0"
 kotlin = "1.9.23"
 kotlinResult = "2.0.0"
-lifecycle = "2.8.0-beta01"
+lifecycle = "2.8.0-rc01"
 retrofit = "2.11.0"
 richtext = "1.0.0-alpha01"
 sentry-sdk = "7.8.0"
@@ -41,14 +41,14 @@ androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 androidx-compose-ui-unit = { module = "androidx.compose.ui:ui-unit" }
 androidx-compose-ui-util = { module = "androidx.compose.ui:ui-util" }
-androidx-core = "androidx.core:core:1.13.0"
+androidx-core = "androidx.core:core:1.13.1"
 androidx-core-splashscreen = "androidx.core:core-splashscreen:1.2.0-alpha01"
 androidx-lifecycle-common = { module = "androidx.lifecycle:lifecycle-common", version.ref = "lifecycle" }
 androidx-lifecycle-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 androidx-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime", version.ref = "lifecycle" }
 androidx-lint = "androidx.lint:lint-gradle:1.0.0-alpha01"
-androidx-navigation-compose = "androidx.navigation:navigation-compose:2.8.0-alpha07"
-androidx-paging-compose = "androidx.paging:paging-compose:3.3.0-beta01"
+androidx-navigation-compose = "androidx.navigation:navigation-compose:2.8.0-alpha08"
+androidx-paging-compose = "androidx.paging:paging-compose:3.3.0-rc01"
 androidx-profileinstaller = "androidx.profileinstaller:profileinstaller:1.4.0-alpha01"
 androidx-test-core = "androidx.test:core:1.6.0-alpha06"
 androidx-test-espresso-core = "androidx.test.espresso:espresso-core:3.6.0-alpha04"

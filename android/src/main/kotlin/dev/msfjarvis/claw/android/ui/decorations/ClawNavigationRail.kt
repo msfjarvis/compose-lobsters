@@ -22,7 +22,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.navigation.NavController
-import dev.msfjarvis.claw.android.ui.navigation.Destinations
+import androidx.navigation.compose.currentBackStackEntryAsState
+import dev.msfjarvis.claw.android.ui.matches
 import kotlinx.collections.immutable.ImmutableList
 
 @Composable
@@ -49,12 +50,14 @@ fun ClawNavigationRail(
     modifier = Modifier,
   ) {
     NavigationRail(modifier = modifier) {
+      val navBackStackEntry = navController.currentBackStackEntryAsState().value
+      val currentDestination = navBackStackEntry?.destination
       Spacer(Modifier.weight(1f))
       items.forEach { navItem ->
-        val isCurrentDestination = navController.currentDestination?.route == navItem.route
+        val isSelected = currentDestination.matches(navItem.destination)
         NavigationRailItem(
           icon = {
-            Crossfade(isCurrentDestination, label = "nav-label") {
+            Crossfade(isSelected, label = "nav-label") {
               Icon(
                 imageVector = if (it) navItem.selectedIcon else navItem.icon,
                 contentDescription = navItem.label.replaceFirstChar(Char::uppercase),
@@ -62,16 +65,15 @@ fun ClawNavigationRail(
             }
           },
           label = { Text(text = navItem.label) },
-          selected = isCurrentDestination,
+          selected = isSelected,
           onClick = {
-            if (isCurrentDestination) {
+            if (isSelected) {
               navItem.listStateResetCallback()
             } else {
-              navController.graph.startDestinationRoute?.let { startDestination ->
-                navController.popBackStack(startDestination, false)
-              }
-              if (navItem.route != Destinations.startDestination.route) {
-                navController.navigate(navItem.route)
+              navController.navigate(navItem.destination) {
+                popUpTo(navController.graph.startDestinationId) { saveState = true }
+                launchSingleTop = true
+                restoreState = true
               }
             }
           },

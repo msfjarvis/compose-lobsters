@@ -51,26 +51,33 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
+import androidx.navigation.toRoute
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.deliveryhero.whetstone.compose.injectedViewModel
 import com.mikepenz.aboutlibraries.ui.compose.m3.LibrariesContainer
 import dev.msfjarvis.claw.android.MainActivity
 import dev.msfjarvis.claw.android.R
 import dev.msfjarvis.claw.android.SearchActivity
+import dev.msfjarvis.claw.android.ui.any
 import dev.msfjarvis.claw.android.ui.decorations.ClawNavigationBar
 import dev.msfjarvis.claw.android.ui.decorations.ClawNavigationRail
 import dev.msfjarvis.claw.android.ui.decorations.NavigationItem
 import dev.msfjarvis.claw.android.ui.getActivity
 import dev.msfjarvis.claw.android.ui.lists.DatabasePosts
 import dev.msfjarvis.claw.android.ui.lists.NetworkPosts
+import dev.msfjarvis.claw.android.ui.navigation.AboutLibraries
 import dev.msfjarvis.claw.android.ui.navigation.ClawNavigationType
-import dev.msfjarvis.claw.android.ui.navigation.Destinations
+import dev.msfjarvis.claw.android.ui.navigation.Comments
+import dev.msfjarvis.claw.android.ui.navigation.Hottest
+import dev.msfjarvis.claw.android.ui.navigation.Newest
+import dev.msfjarvis.claw.android.ui.navigation.Saved
+import dev.msfjarvis.claw.android.ui.navigation.Settings
+import dev.msfjarvis.claw.android.ui.navigation.User
+import dev.msfjarvis.claw.android.ui.none
 import dev.msfjarvis.claw.android.ui.rememberPostActions
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.common.comments.CommentsPage
@@ -79,6 +86,7 @@ import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 import dev.msfjarvis.claw.common.user.UserProfile
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
@@ -96,11 +104,11 @@ fun LobstersPostsScreen(
   val newestListState = rememberLazyListState()
   val savedListState = rememberLazyListState()
   val navController = rememberNavController()
+  val navBackStackEntry = navController.currentBackStackEntryAsState().value
+  val currentDestination = navBackStackEntry?.destination
   val coroutineScope = rememberCoroutineScope()
   val snackbarHostState = remember { SnackbarHostState() }
   val postActions = rememberPostActions(context, urlLauncher, navController, viewModel)
-  val backStackEntry by navController.currentBackStackEntryAsState()
-  val currentDestination = backStackEntry?.destination?.route
 
   val hottestPosts = viewModel.hottestPosts.collectAsLazyPagingItems()
   val newestPosts = viewModel.newestPosts.collectAsLazyPagingItems()
@@ -111,9 +119,7 @@ fun LobstersPostsScreen(
   val postIdOverride = context.getActivity()?.intent?.extras?.getString(MainActivity.NAVIGATION_KEY)
   LaunchedEffect(Unit) {
     if (postIdOverride != null) {
-      navController.navigate(
-        Destinations.Comments.route.replace(Destinations.Comments.PLACEHOLDER, postIdOverride)
-      )
+      navController.navigate(Comments(postIdOverride))
     }
   }
 
@@ -121,7 +127,7 @@ fun LobstersPostsScreen(
     persistentListOf(
       NavigationItem(
         label = "Hottest",
-        route = Destinations.Hottest.route,
+        destination = Hottest,
         icon = Icons.Outlined.Whatshot,
         selectedIcon = Icons.Filled.Whatshot,
       ) {
@@ -131,7 +137,7 @@ fun LobstersPostsScreen(
       },
       NavigationItem(
         label = "Newest",
-        route = Destinations.Newest.route,
+        destination = Newest,
         icon = Icons.Outlined.NewReleases,
         selectedIcon = Icons.Filled.NewReleases,
       ) {
@@ -141,13 +147,14 @@ fun LobstersPostsScreen(
       },
       NavigationItem(
         label = "Saved",
-        route = Destinations.Saved.route,
+        destination = Saved,
         icon = Icons.Outlined.FavoriteBorder,
         selectedIcon = Icons.Filled.Favorite,
       ) {
         coroutineScope.launch { if (savedPosts.isNotEmpty()) savedListState.scrollToItem(0) }
       },
     )
+  val navDestinations = navItems.map(NavigationItem::destination).toPersistentList()
 
   Scaffold(
     topBar = {
@@ -155,8 +162,7 @@ fun LobstersPostsScreen(
         modifier = Modifier.shadow(8.dp),
         navigationIcon = {
           if (
-            navController.previousBackStackEntry != null &&
-              navItems.none { it.route == currentDestination }
+            navController.previousBackStackEntry != null && currentDestination.none(navDestinations)
           ) {
             IconButton(
               onClick = { if (!navController.popBackStack()) context.getActivity()?.finish() }
@@ -175,18 +181,18 @@ fun LobstersPostsScreen(
           }
         },
         title = {
-          if (navItems.any { it.route == currentDestination }) {
+          if (currentDestination.any(navDestinations)) {
             Text(text = stringResource(R.string.app_name), fontWeight = FontWeight.Bold)
           }
         },
         actions = {
-          if (navItems.any { it.route == currentDestination }) {
+          if (currentDestination.any(navDestinations)) {
             IconButton(
               onClick = { context.startActivity(Intent(context, SearchActivity::class.java)) }
             ) {
               Icon(imageVector = Icons.Filled.Search, contentDescription = "Search posts")
             }
-            IconButton(onClick = { navController.navigate(Destinations.Settings.route) }) {
+            IconButton(onClick = { navController.navigate(Settings) }) {
               Icon(imageVector = Icons.Filled.Tune, contentDescription = "Settings")
             }
           }
@@ -198,7 +204,7 @@ fun LobstersPostsScreen(
         ClawNavigationBar(
           navController = navController,
           items = navItems,
-          isVisible = navItems.any { it.route == currentDestination },
+          isVisible = currentDestination.any(navDestinations),
         )
       }
     },
@@ -210,18 +216,18 @@ fun LobstersPostsScreen(
         ClawNavigationRail(
           navController = navController,
           items = navItems,
-          isVisible = navItems.any { it.route == currentDestination },
+          isVisible = currentDestination.any(navDestinations),
         )
       }
 
       NavHost(
         navController = navController,
-        startDestination = Destinations.startDestination.route,
+        startDestination = Hottest,
         // Make animations 2x faster than default specs
         enterTransition = { fadeIn(animationSpec = tween(350)) },
         exitTransition = { fadeOut(animationSpec = tween(350)) },
       ) {
-        composable(route = Destinations.Hottest.route) {
+        composable<Hottest> {
           setWebUri("https://lobste.rs/")
           NetworkPosts(
             lazyPagingItems = hottestPosts,
@@ -229,7 +235,7 @@ fun LobstersPostsScreen(
             postActions = postActions,
           )
         }
-        composable(route = Destinations.Newest.route) {
+        composable<Newest> {
           setWebUri("https://lobste.rs/")
           NetworkPosts(
             lazyPagingItems = newestPosts,
@@ -237,18 +243,12 @@ fun LobstersPostsScreen(
             postActions = postActions,
           )
         }
-        composable(route = Destinations.Saved.route) {
+        composable<Saved> {
           setWebUri(null)
           DatabasePosts(items = savedPosts, listState = savedListState, postActions = postActions)
         }
-        composable(
-          route = Destinations.Comments.route,
-          arguments = listOf(navArgument("postId") { type = NavType.StringType }),
-        ) { backStackEntry ->
-          val postId =
-            requireNotNull(backStackEntry.arguments?.getString("postId")) {
-              "Navigating to ${Destinations.Comments.route} without necessary 'postId' argument"
-            }
+        composable<Comments> { backStackEntry ->
+          val postId = backStackEntry.toRoute<Comments>().postId
           setWebUri("https://lobste.rs/s/$postId")
           CommentsPage(
             postId = postId,
@@ -256,45 +256,29 @@ fun LobstersPostsScreen(
             htmlConverter = htmlConverter,
             getSeenComments = viewModel::getSeenComments,
             markSeenComments = viewModel::markSeenComments,
-            openUserProfile = {
-              navController.navigate(
-                Destinations.User.route.replace(Destinations.User.PLACEHOLDER, it)
-              )
-            },
+            openUserProfile = { navController.navigate(User(it)) },
           )
         }
-        composable(
-          route = Destinations.User.route,
-          arguments = listOf(navArgument("username") { type = NavType.StringType }),
-        ) { backStackEntry ->
-          val username =
-            requireNotNull(backStackEntry.arguments?.getString("username")) {
-              "Navigating to ${Destinations.User.route} without necessary 'username' argument"
-            }
+        composable<User> { backStackEntry ->
+          val username = backStackEntry.toRoute<User>().username
           setWebUri("https://lobste.rs/u/$username")
           UserProfile(
             username = username,
             getProfile = viewModel::getUserProfile,
-            openUserProfile = {
-              navController.navigate(
-                Destinations.User.route.replace(Destinations.User.PLACEHOLDER, it)
-              )
-            },
+            openUserProfile = { navController.navigate(User(it)) },
           )
         }
-        composable(route = Destinations.Settings.route) {
+        composable<Settings> {
           SettingsScreen(
             context = context,
-            openLibrariesScreen = { navController.navigate(Destinations.AboutLibraries.route) },
+            openLibrariesScreen = { navController.navigate(AboutLibraries) },
             importPosts = viewModel::importPosts,
             exportPostsAsJson = viewModel::exportPostsAsJson,
             exportPostsAsHtml = viewModel::exportPostsAsHtml,
             snackbarHostState = snackbarHostState,
           )
         }
-        composable(route = Destinations.AboutLibraries.route) {
-          LibrariesContainer(modifier = Modifier.fillMaxSize())
-        }
+        composable<AboutLibraries> { LibrariesContainer(modifier = Modifier.fillMaxSize()) }
       }
     }
   }

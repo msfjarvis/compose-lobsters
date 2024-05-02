@@ -22,7 +22,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
 import androidx.navigation.NavController
-import dev.msfjarvis.claw.android.ui.navigation.Destinations
+import androidx.navigation.compose.currentBackStackEntryAsState
+import dev.msfjarvis.claw.android.ui.matches
+import dev.msfjarvis.claw.android.ui.navigation.Destination
 import kotlinx.collections.immutable.ImmutableList
 
 const val AnimationDuration = 100
@@ -51,11 +53,13 @@ fun ClawNavigationBar(
     modifier = Modifier,
   ) {
     NavigationBar(modifier = modifier) {
+      val navBackStackEntry = navController.currentBackStackEntryAsState().value
+      val currentDestination = navBackStackEntry?.destination
       items.forEach { navItem ->
-        val isCurrentDestination = navController.currentDestination?.route == navItem.route
+        val isSelected = currentDestination.matches(navItem.destination)
         NavigationBarItem(
           icon = {
-            Crossfade(isCurrentDestination, label = "nav-label") {
+            Crossfade(isSelected, label = "nav-label") {
               Icon(
                 imageVector = if (it) navItem.selectedIcon else navItem.icon,
                 contentDescription = navItem.label.replaceFirstChar(Char::uppercase),
@@ -63,16 +67,15 @@ fun ClawNavigationBar(
             }
           },
           label = { Text(text = navItem.label) },
-          selected = isCurrentDestination,
+          selected = isSelected,
           onClick = {
-            if (isCurrentDestination) {
+            if (isSelected) {
               navItem.listStateResetCallback()
             } else {
-              navController.graph.startDestinationRoute?.let { startDestination ->
-                navController.popBackStack(startDestination, false)
-              }
-              if (navItem.route != Destinations.startDestination.route) {
-                navController.navigate(navItem.route)
+              navController.navigate(navItem.destination) {
+                popUpTo(navController.graph.startDestinationId) { saveState = true }
+                launchSingleTop = true
+                restoreState = true
               }
             }
           },
@@ -85,7 +88,7 @@ fun ClawNavigationBar(
 
 class NavigationItem(
   val label: String,
-  val route: String,
+  val destination: Destination,
   val icon: ImageVector,
   val selectedIcon: ImageVector,
   val listStateResetCallback: () -> Unit,

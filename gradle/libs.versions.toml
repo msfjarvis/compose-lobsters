@@ -13,6 +13,7 @@ kotlin = "2.0.0"
 kotlinResult = "2.0.0"
 leakcanary = "3.0-alpha-6"
 lifecycle = "2.8.1"
+navigation = "2.8.0-beta02"
 retrofit = "2.11.0"
 richtext = "1.0.0-alpha01"
 sentry-sdk = "7.9.0"
@@ -47,7 +48,7 @@ androidx-lifecycle-common = { module = "androidx.lifecycle:lifecycle-common", ve
 androidx-lifecycle-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 androidx-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime", version.ref = "lifecycle" }
 androidx-lint = "androidx.lint:lint-gradle:1.0.0-alpha01"
-androidx-navigation-compose = "androidx.navigation:navigation-compose:2.8.0-beta02"
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }
 androidx-paging-compose = "androidx.paging:paging-compose:3.3.0"
 androidx-profileinstaller = "androidx.profileinstaller:profileinstaller:1.4.0-alpha01"
 androidx-test-core = "androidx.test:core:1.6.0-beta01"
@@ -125,6 +126,7 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 ksp = "com.google.devtools.ksp:2.0.0-1.0.21"
 licensee = "app.cash.licensee:1.11.0"
 modulegraphassert = "com.jraska.module.graph.assertion:2.5.0"
+navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigation" }
 poko = "dev.drewhamilton.poko:0.16.0"
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 tracelog = "dev.msfjarvis.tracelog:0.1.3"

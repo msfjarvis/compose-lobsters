@@ -33,7 +33,7 @@ class KotlinAndroidPlugin : Plugin<Project> {
     project.tasks.withType<KotlinCompile>().configureEach {
       compilerOptions.freeCompilerArgs.addAll(
         "-P",
-        "plugin:androidx.compose.compiler.plugins.kotlin:experimentalStrongSkipping=true",
+        "plugin:androidx.compose.compiler.plugins.kotlin:strongSkipping=true",
       )
       if (matches != null) {
         val (compilerKotlinVersion) = matches.destructured

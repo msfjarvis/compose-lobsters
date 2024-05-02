@@ -20,6 +20,8 @@ plugins {
   alias(libs.plugins.baselineprofile)
   alias(libs.plugins.licensee)
   alias(libs.plugins.tracelog)
+  alias(libs.plugins.kotlin.serialization)
+  alias(libs.plugins.navigation.safeargs)
 }
 
 android {

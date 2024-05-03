@@ -14,6 +14,7 @@ pluginManagement {
         includeGroup("androidx.baselineprofile")
         includeGroup("androidx.benchmark")
         includeGroup("androidx.databinding")
+        includeGroupAndSubgroups("androidx.navigation")
         includeGroup("com.google.testing.platform")
         includeGroupAndSubgroups("com.android")
       }

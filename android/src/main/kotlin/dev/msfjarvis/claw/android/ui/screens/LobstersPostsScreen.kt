@@ -283,7 +283,7 @@ fun LobstersPostsScreen(
             snackbarHostState = snackbarHostState,
           )
         }
-        composable<Settings> { LibrariesContainer(modifier = Modifier.fillMaxSize()) }
+        composable<AboutLibraries> { LibrariesContainer(modifier = Modifier.fillMaxSize()) }
       }
     }
   }

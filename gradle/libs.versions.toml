@@ -1,6 +1,6 @@
 [versions]
 aboutLibraries = "11.1.4"
-agp = "8.5.0-alpha07"
+agp = "8.5.0-alpha08"
 benchmark = "1.3.0-alpha04"
 coil = "2.6.0"
 # @keep used for kotlinCompilerExtensionVersion

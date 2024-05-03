@@ -71,7 +71,7 @@ internal fun setExpanded(commentNode: CommentNode, expanded: Boolean): CommentNo
   return commentNode
 }
 
-internal fun findTopMostParent(node: CommentNode): CommentNode {
+internal tailrec fun findTopMostParent(node: CommentNode): CommentNode {
   val parent = node.parent
   return if (parent != null) {
     findTopMostParent(parent)

@@ -106,7 +106,7 @@ private fun LazyListScope.node(
   if (!node.isExpanded && node.parent?.isExpanded == false) {
     return
   }
-  item {
+  item(key = node.comment.shortId) {
     CommentEntry(
       commentNode = node,
       htmlConverter = htmlConverter,

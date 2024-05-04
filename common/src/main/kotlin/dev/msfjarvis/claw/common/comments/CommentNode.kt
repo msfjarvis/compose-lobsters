@@ -71,7 +71,7 @@ internal fun setExpanded(commentNode: CommentNode, expanded: Boolean): CommentNo
   return commentNode
 }
 
-internal fun findTopMostParent(node: CommentNode): CommentNode {
+internal tailrec fun findTopMostParent(node: CommentNode): CommentNode {
   val parent = node.parent
   return if (parent != null) {
     findTopMostParent(parent)
@@ -106,7 +106,7 @@ private fun LazyListScope.node(
   if (!node.isExpanded && node.parent?.isExpanded == false) {
     return
   }
-  item {
+  item(key = node.comment.shortId) {
     CommentEntry(
       commentNode = node,
       htmlConverter = htmlConverter,

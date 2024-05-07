@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Bring back dividers between posts (I regret my earlier choices)
-- Upgrade to Compose May releases
+- Upgrade to Compose May stable releases
 
 ### Fixed
 

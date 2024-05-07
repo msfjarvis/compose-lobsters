@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material3.MaterialTheme
@@ -24,8 +25,10 @@ import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.LinkAnnotation
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.github.michaelbull.result.coroutines.runSuspendCatching
 import com.github.michaelbull.result.fold
@@ -104,18 +107,42 @@ private fun UserProfileInternal(
       Text(text = user.username, style = MaterialTheme.typography.displaySmall)
       ThemedRichText(text = user.about)
       user.invitedBy?.let { invitedBy ->
-        Text(
-          text =
-            buildAnnotatedString {
-              append("Invited by ")
-              pushLink(
-                LinkAnnotation.Clickable(
-                  tag = "username",
-                  linkInteractionListener = { openUserProfile(invitedBy) },
-                )
+        val text = buildAnnotatedString {
+          val style =
+            with(MaterialTheme.typography.bodyMedium) {
+              SpanStyle(
+                MaterialTheme.colorScheme.onPrimaryContainer,
+                fontSize,
+                fontWeight,
+                fontStyle,
+                fontSynthesis,
+                fontFamily,
+                fontFeatureSettings,
+                letterSpacing,
+                baselineShift,
+                textGeometricTransform,
+                localeList,
+                background,
+                textDecoration,
+                shadow,
               )
-              append(invitedBy)
             }
+          withStyle(style = style) { append("Invited by ") }
+          pushStringAnnotation(tag = "URL", annotation = invitedBy)
+          withStyle(style = style.copy(textDecoration = TextDecoration.Underline)) {
+            append(invitedBy)
+          }
+          pop()
+        }
+
+        ClickableText(
+          text = text,
+          onClick = { offset ->
+            text
+              .getStringAnnotations(tag = "URL", start = offset, end = offset)
+              .firstOrNull()
+              ?.let { annotation -> openUserProfile(annotation.item) }
+          },
         )
       }
     }

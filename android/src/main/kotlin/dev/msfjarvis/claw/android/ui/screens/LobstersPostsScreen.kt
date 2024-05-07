@@ -119,7 +119,7 @@ fun LobstersPostsScreen(
   val navigationType = ClawNavigationType.fromSize(windowSizeClass.widthSizeClass)
 
   val postIdOverride = context.getActivity()?.intent?.extras?.getString(MainActivity.NAVIGATION_KEY)
-  LaunchedEffect(false) {
+  LaunchedEffect(Unit) {
     if (postIdOverride != null) {
       navController.navigate(Comments(postIdOverride))
     }

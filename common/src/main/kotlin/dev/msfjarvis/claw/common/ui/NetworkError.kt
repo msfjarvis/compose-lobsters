@@ -30,7 +30,7 @@ import io.github.aakira.napier.Napier
 
 @Composable
 fun NetworkError(label: String, error: Throwable, modifier: Modifier = Modifier) {
-  LaunchedEffect(true) { Napier.e(error, "NetworkError") { "Failed to load posts" } }
+  LaunchedEffect(Unit) { Napier.e(error, "NetworkError") { "Failed to load posts" } }
   var showDialog by remember { mutableStateOf(false) }
   Column(verticalArrangement = Arrangement.spacedBy(4.dp), modifier = modifier) {
     Text(

@@ -110,31 +110,33 @@ private fun UserProfileInternal(
       Text(text = user.username, style = MaterialTheme.typography.displaySmall)
       ThemedRichText(text = user.about)
       user.invitedBy?.let { invitedBy ->
+        val linkTextStyle =
+          with(LocalTextStyle.current) {
+            SpanStyle(
+              LocalContentColor.current,
+              fontSize,
+              fontWeight,
+              fontStyle,
+              fontSynthesis,
+              fontFamily,
+              fontFeatureSettings,
+              letterSpacing,
+              baselineShift,
+              textGeometricTransform,
+              localeList,
+              background,
+              textDecoration,
+              shadow,
+            )
+          }
         val text = buildAnnotatedString {
-          val style =
-            with(LocalTextStyle.current) {
-              SpanStyle(
-                LocalContentColor.current,
-                fontSize,
-                fontWeight,
-                fontStyle,
-                fontSynthesis,
-                fontFamily,
-                fontFeatureSettings,
-                letterSpacing,
-                baselineShift,
-                textGeometricTransform,
-                localeList,
-                background,
-                textDecoration,
-                shadow,
-              )
-            }
-          withStyle(style = style) { append("Invited by ") }
+          withStyle(linkTextStyle) { append("Invited by ") }
           pushStringAnnotation(tag = "URL", annotation = invitedBy)
           withStyle(
-            style =
-              style.copy(textDecoration = TextDecoration.Underline, fontWeight = FontWeight.Bold)
+            linkTextStyle.copy(
+              textDecoration = TextDecoration.Underline,
+              fontWeight = FontWeight.Bold,
+            )
           ) {
             append(invitedBy)
           }

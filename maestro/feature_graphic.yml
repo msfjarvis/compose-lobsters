@@ -12,11 +12,13 @@ appId: dev.msfjarvis.claw.android
 - waitForAnimationToEnd
 - takeScreenshot: "SavedPosts"
 - tapOn: "Search posts"
-- inputText: "Nix"
+- inputText: "Rust"
 - pressKey: Enter
 - hideKeyboard
 - waitForAnimationToEnd
 - takeScreenshot: "SearchPage"
+- back
+# TODO: figure out why do I need to press back twice
 - back
 - tapOn: "Settings"
 - tapOn: "Export"

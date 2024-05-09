@@ -11,7 +11,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -27,13 +26,14 @@ import androidx.compose.material.icons.filled.Whatshot
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.NewReleases
 import androidx.compose.material.icons.outlined.Whatshot
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -41,10 +41,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -76,14 +75,13 @@ import dev.msfjarvis.claw.android.ui.rememberPostActions
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.common.comments.CommentsPage
 import dev.msfjarvis.claw.common.comments.HTMLConverter
-import dev.msfjarvis.claw.common.ui.decorations.ClawAppBar
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 import dev.msfjarvis.claw.common.user.UserProfile
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun LobstersPostsScreen(
   urlLauncher: UrlLauncher,
@@ -155,7 +153,8 @@ fun LobstersPostsScreen(
 
   Scaffold(
     topBar = {
-      ClawAppBar(
+      TopAppBar(
+        modifier = Modifier.shadow(8.dp),
         navigationIcon = {
           if (
             navController.previousBackStackEntry != null &&
@@ -169,19 +168,17 @@ fun LobstersPostsScreen(
                 contentDescription = "Go back to previous screen",
               )
             }
+          } else {
+            Icon(
+              painter = painterResource(id = R.drawable.ic_launcher_foreground),
+              contentDescription = "The app icon for Claw",
+              modifier = Modifier.size(48.dp),
+            )
           }
         },
         title = {
           if (navItems.any { it.route == currentDestination }) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-              Image(
-                painter = painterResource(id = R.drawable.ic_launcher_foreground),
-                contentDescription = null,
-                modifier = Modifier.size(48.dp),
-                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface),
-              )
-              Text(text = stringResource(R.string.app_name), fontWeight = FontWeight.Bold)
-            }
+            Text(text = stringResource(R.string.app_name), fontWeight = FontWeight.Bold)
           }
         },
         actions = {

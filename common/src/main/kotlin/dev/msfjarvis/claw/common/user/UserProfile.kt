@@ -16,6 +16,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -27,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
@@ -109,9 +112,9 @@ private fun UserProfileInternal(
       user.invitedBy?.let { invitedBy ->
         val text = buildAnnotatedString {
           val style =
-            with(MaterialTheme.typography.bodyMedium) {
+            with(LocalTextStyle.current) {
               SpanStyle(
-                MaterialTheme.colorScheme.onPrimaryContainer,
+                LocalContentColor.current,
                 fontSize,
                 fontWeight,
                 fontStyle,
@@ -129,7 +132,10 @@ private fun UserProfileInternal(
             }
           withStyle(style = style) { append("Invited by ") }
           pushStringAnnotation(tag = "URL", annotation = invitedBy)
-          withStyle(style = style.copy(textDecoration = TextDecoration.Underline)) {
+          withStyle(
+            style =
+              style.copy(textDecoration = TextDecoration.Underline, fontWeight = FontWeight.Bold)
+          ) {
             append(invitedBy)
           }
           pop()

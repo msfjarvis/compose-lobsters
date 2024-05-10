@@ -115,7 +115,7 @@ unfurl = "me.saket.unfurl:unfurl:1.7.0"
 aboutlibraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "aboutLibraries" }
 android-lint = { id = "com.android.lint", version.ref = "agp" }
 android-test = { id = "com.android.test", version.ref = "agp" }
-anvil = "com.squareup.anvil:2.5.0-beta08"
+anvil = "com.squareup.anvil:2.5.0-beta09"
 baselineprofile = { id = "androidx.baselineprofile", version.ref = "benchmark" }
 dependencyAnalysis = "com.autonomousapps.dependency-analysis:1.31.0"
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

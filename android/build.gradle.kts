@@ -6,6 +6,8 @@
  */
 @file:Suppress("UnstableApiUsage")
 
+import dev.msfjarvis.claw.gradle.addTestDependencies
+
 plugins {
   id("dev.msfjarvis.claw.android-application")
   id("dev.msfjarvis.claw.rename-artifacts")
@@ -14,6 +16,7 @@ plugins {
   id("dev.msfjarvis.claw.sentry")
   id("dev.msfjarvis.claw.versioning-plugin")
   alias(libs.plugins.aboutlibraries)
+  alias(libs.plugins.android.junit5)
   alias(libs.plugins.anvil)
   alias(libs.plugins.modulegraphassert)
   alias(libs.plugins.whetstone)
@@ -25,6 +28,7 @@ plugins {
 android {
   namespace = "dev.msfjarvis.claw.android"
   defaultConfig.applicationId = "dev.msfjarvis.claw.android"
+  defaultConfig.testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   buildFeatures.compose = true
   composeOptions {
     useLiveLiterals = false
@@ -113,4 +117,9 @@ dependencies {
   implementation(projects.web)
 
   kapt(libs.dagger.compiler)
+
+  addTestDependencies(project)
+  androidTestImplementation(libs.androidx.test.espresso.core)
+  androidTestImplementation(libs.androidx.test.uiautomator)
+  androidTestImplementation(libs.leakcanary.android.test)
 }

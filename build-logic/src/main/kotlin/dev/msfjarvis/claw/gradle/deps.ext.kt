@@ -1,5 +1,5 @@
 /*
- * Copyright © 2023 Harsh Shandilya.
+ * Copyright © 2023-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -16,19 +16,23 @@ import org.gradle.kotlin.dsl.exclude
 /** Extension function to configure JUnit5 dependencies with the Truth assertion library. */
 fun DependencyHandlerScope.addTestDependencies(project: Project) {
   val libs = project.extensions.getByName("libs") as LibrariesForLibs
-  addProvider("testImplementation", libs.junit.jupiter.api)
-  addProvider<MinimalExternalModuleDependency, ExternalModuleDependency>(
-    "testImplementation",
-    libs.truth,
-  ) {
-    exclude(group = "junit", module = "junit")
-  }
-  addProvider("testRuntimeOnly", libs.junit.jupiter.engine)
-  addProvider<MinimalExternalModuleDependency, ExternalModuleDependency>(
-    "testRuntimeOnly",
-    libs.junit.legacy,
-  ) {
-    // See https://github.com/google/truth/issues/333
-    because("Truth needs it")
-  }
+  arrayOf("test", "androidTest")
+    .filter { sourceSet -> project.configurations.findByName("${sourceSet}Implementation") != null }
+    .forEach { sourceSet ->
+      addProvider("${sourceSet}Implementation", libs.junit.jupiter.api)
+      addProvider<MinimalExternalModuleDependency, ExternalModuleDependency>(
+        "${sourceSet}Implementation",
+        libs.truth,
+      ) {
+        exclude(group = "junit", module = "junit")
+      }
+      addProvider("${sourceSet}RuntimeOnly", libs.junit.jupiter.engine)
+      addProvider<MinimalExternalModuleDependency, ExternalModuleDependency>(
+        "${sourceSet}RuntimeOnly",
+        libs.junit.legacy,
+      ) {
+        // See https://github.com/google/truth/issues/333
+        because("Truth needs it")
+      }
+    }
 }

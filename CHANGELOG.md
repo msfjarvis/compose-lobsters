@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.47.0] - 2024-05-14
+
 ### Changed
 
 - Bring back dividers between posts (I regret my earlier choices)
@@ -421,7 +423,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.46.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.47.0...HEAD
+[1.47.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.46.0...v1.47.0
 [1.46.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.45.0...v1.46.0
 [1.45.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.44.0...v1.45.0
 [1.44.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.43.0...v1.44.0

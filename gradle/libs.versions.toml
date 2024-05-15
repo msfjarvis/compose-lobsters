@@ -5,7 +5,7 @@ android-junit5 = "1.10.0.0"
 benchmark = "1.3.0-alpha05"
 coil = "2.6.0"
 # @keep used for kotlinCompilerExtensionVersion
-composeCompiler = "1.5.14-dev-k1.9.24-50022def4af"
+composeCompiler = "1.5.14"
 coroutines = "1.8.1"
 dagger = "2.51.1"
 glance = "1.0.0"

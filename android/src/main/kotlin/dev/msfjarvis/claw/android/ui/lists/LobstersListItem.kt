@@ -8,6 +8,7 @@ package dev.msfjarvis.claw.android.ui.lists
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Reply
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -31,7 +32,13 @@ fun LobstersListItem(
       background = MaterialTheme.colorScheme.tertiary,
       onSwipe = { postActions.viewCommentsPage(item) },
     )
-  SwipeableActionsBox(endActions = listOf(commentsAction)) {
+  val shareAction =
+    SwipeAction(
+      icon = rememberVectorPainter(Icons.Filled.Share),
+      background = MaterialTheme.colorScheme.tertiary,
+      onSwipe = { postActions.share(item) },
+    )
+  SwipeableActionsBox(startActions = listOf(shareAction), endActions = listOf(commentsAction)) {
     LobstersCard(post = item, postActions = postActions, refresh = refresh, modifier = modifier)
   }
 }

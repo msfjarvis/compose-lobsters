@@ -265,6 +265,8 @@ val TEST_POST_ACTIONS =
 
     override fun toggleSave(post: UIPost) {}
 
+    override fun share(post: UIPost) {}
+
     override suspend fun getComments(postId: String): UIPost {
       return UIPost(
         shortId = "ooga",

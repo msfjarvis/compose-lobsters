@@ -91,16 +91,16 @@ fun LobstersPostsScreen(
   modifier: Modifier = Modifier,
   viewModel: ClawViewModel = injectedViewModel(),
 ) {
+  val context = LocalContext.current
   val hottestListState = rememberLazyListState()
   val newestListState = rememberLazyListState()
   val savedListState = rememberLazyListState()
   val navController = rememberNavController()
   val coroutineScope = rememberCoroutineScope()
   val snackbarHostState = remember { SnackbarHostState() }
-  val postActions = rememberPostActions(urlLauncher, navController, viewModel)
+  val postActions = rememberPostActions(context, urlLauncher, navController, viewModel)
   val backStackEntry by navController.currentBackStackEntryAsState()
   val currentDestination = backStackEntry?.destination?.route
-  val context = LocalContext.current
 
   val hottestPosts = viewModel.hottestPosts.collectAsLazyPagingItems()
   val newestPosts = viewModel.newestPosts.collectAsLazyPagingItems()

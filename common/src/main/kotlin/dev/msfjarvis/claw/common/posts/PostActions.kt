@@ -20,6 +20,8 @@ interface PostActions {
 
   fun toggleSave(post: UIPost)
 
+  fun share(post: UIPost)
+
   suspend fun getComments(postId: String): UIPost
 
   suspend fun getLinkMetadata(url: String): LinkMetadata

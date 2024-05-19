@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -35,7 +36,7 @@ fun SearchScreen(
   viewModel: ClawViewModel = injectedViewModel(),
 ) {
   val navController = rememberNavController()
-  val postActions = rememberPostActions(urlLauncher, navController, viewModel)
+  val postActions = rememberPostActions(LocalContext.current, urlLauncher, navController, viewModel)
   val listState = rememberLazyListState()
   Scaffold(modifier = modifier) { paddingValues ->
     NavHost(

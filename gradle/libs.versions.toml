@@ -4,8 +4,6 @@ agp = "8.4.1"
 android-junit5 = "1.10.0.0"
 benchmark = "1.3.0-alpha05"
 coil = "2.6.0"
-# @keep used for kotlinCompilerExtensionVersion
-composeCompiler = "1.5.14"
 coroutines = "1.8.1"
 dagger = "2.51.1"
 glance = "1.0.0"
@@ -122,6 +120,7 @@ android-test = { id = "com.android.test", version.ref = "agp" }
 anvil = "com.squareup.anvil:2.5.0-beta09"
 baselineprofile = { id = "androidx.baselineprofile", version.ref = "benchmark" }
 dependencyAnalysis = "com.autonomousapps.dependency-analysis:1.31.0"
+kotlin-composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = "com.google.devtools.ksp:2.0.0-1.0.21"
 licensee = "app.cash.licensee:1.11.0"

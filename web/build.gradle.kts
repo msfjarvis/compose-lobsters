@@ -9,12 +9,12 @@
 plugins {
   id("dev.msfjarvis.claw.android-library")
   id("dev.msfjarvis.claw.kotlin-android")
+  alias(libs.plugins.kotlin.composeCompiler)
 }
 
 android {
   namespace = "com.google.accompanist.web"
   buildFeatures.compose = true
-  composeOptions.kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
   kotlin.explicitApi()
   // Don't quite care
   lint.disable += "DeprecatedCall"

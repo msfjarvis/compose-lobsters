@@ -23,6 +23,7 @@ plugins {
   alias(libs.plugins.baselineprofile)
   alias(libs.plugins.licensee)
   alias(libs.plugins.tracelog)
+  alias(libs.plugins.kotlin.composeCompiler)
 }
 
 android {
@@ -30,10 +31,7 @@ android {
   defaultConfig.applicationId = "dev.msfjarvis.claw.android"
   defaultConfig.testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   buildFeatures.compose = true
-  composeOptions {
-    useLiveLiterals = false
-    kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
-  }
+  composeOptions { useLiveLiterals = false }
   buildTypes.create("internal") {
     matchingFallbacks += "release"
     signingConfig = signingConfigs["debug"]

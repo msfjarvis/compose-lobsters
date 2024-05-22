@@ -13,6 +13,7 @@ plugins {
   id("dev.msfjarvis.claw.kotlin-android")
   alias(libs.plugins.anvil)
   alias(libs.plugins.whetstone)
+  alias(libs.plugins.kotlin.composeCompiler)
 }
 
 android {
@@ -20,10 +21,7 @@ android {
     androidResources = true
     compose = true
   }
-  composeOptions {
-    useLiveLiterals = false
-    kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
-  }
+  composeOptions { useLiveLiterals = false }
   namespace = "dev.msfjarvis.claw.common"
 }
 

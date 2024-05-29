@@ -46,6 +46,8 @@ baselineProfile {
   from(projects.benchmark.dependencyProject)
 }
 
+composeCompiler { enableStrongSkippingMode = true }
+
 licensee {
   allow("Apache-2.0")
   allow("MIT")

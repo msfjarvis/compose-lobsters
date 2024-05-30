@@ -22,8 +22,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.navigation.NavController
-import androidx.navigation.compose.currentBackStackEntryAsState
-import dev.msfjarvis.claw.android.ui.navigation.matches
+import dev.msfjarvis.claw.android.ui.navigation.Destinations
 import kotlinx.collections.immutable.ImmutableList
 
 @Composable
@@ -50,14 +49,12 @@ fun ClawNavigationRail(
     modifier = Modifier,
   ) {
     NavigationRail(modifier = modifier) {
-      val navBackStackEntry = navController.currentBackStackEntryAsState().value
-      val currentDestination = navBackStackEntry?.destination
       Spacer(Modifier.weight(1f))
       items.forEach { navItem ->
-        val isSelected = currentDestination.matches(navItem.destination)
+        val isCurrentDestination = navController.currentDestination?.route == navItem.route
         NavigationRailItem(
           icon = {
-            Crossfade(isSelected, label = "nav-label") {
+            Crossfade(isCurrentDestination, label = "nav-label") {
               Icon(
                 imageVector = if (it) navItem.selectedIcon else navItem.icon,
                 contentDescription = navItem.label.replaceFirstChar(Char::uppercase),
@@ -65,15 +62,16 @@ fun ClawNavigationRail(
             }
           },
           label = { Text(text = navItem.label) },
-          selected = isSelected,
+          selected = isCurrentDestination,
           onClick = {
-            if (isSelected) {
+            if (isCurrentDestination) {
               navItem.listStateResetCallback()
             } else {
-              navController.navigate(navItem.destination) {
-                popUpTo(navController.graph.startDestinationId) { saveState = true }
-                launchSingleTop = true
-                restoreState = true
+              navController.graph.startDestinationRoute?.let { startDestination ->
+                navController.popBackStack(startDestination, false)
+              }
+              if (navItem.route != Destinations.startDestination.route) {
+                navController.navigate(navItem.route)
               }
             }
           },

@@ -24,8 +24,6 @@ plugins {
   alias(libs.plugins.licensee)
   alias(libs.plugins.tracelog)
   alias(libs.plugins.kotlin.composeCompiler)
-  alias(libs.plugins.kotlin.serialization)
-  alias(libs.plugins.navigation.safeargs)
 }
 
 android {

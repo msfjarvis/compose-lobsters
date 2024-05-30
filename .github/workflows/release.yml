@@ -5,7 +5,7 @@ on:
       inAppUpdatePriority:
         description: 'In app update priority (0-5)'
         type: number
-        default: "0"
+        default: 0
         required: false
 
 concurrency:
@@ -59,7 +59,7 @@ jobs:
         SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
         SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       run: |
-        ./gradlew --no-configuration-cache collectReleaseApks collectReleaseBundle -PenableSentry
+        ./gradlew --no-configuration-cache assembleRelease collectReleaseApks collectReleaseBundle -PenableSentry
 
     - name: Clean secrets
       run: scripts/signing-cleanup.sh

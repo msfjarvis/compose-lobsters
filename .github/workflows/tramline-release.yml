@@ -25,7 +25,7 @@ jobs:
         run: |
           ./scripts/setup-age.sh
           ./scripts/signing-setup.sh "$AGE_SECRET_KEY"
-          ./gradlew --no-configuration-cache --stacktrace -PenableSentry collectReleaseBundle
+          ./gradlew --no-configuration-cache --stacktrace assembleRelease collectReleaseBundle -PenableSentry
           ./scripts/signing-cleanup.sh
         env:
           AGE_SECRET_KEY: ${{ secrets.AGE_SECRET_KEY }}

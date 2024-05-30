@@ -247,3 +247,4 @@ keystore.properties
 distribution/
 screenshots/
 claw-export.json
+.kotlin/

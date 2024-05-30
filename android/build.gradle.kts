@@ -24,6 +24,8 @@ plugins {
   alias(libs.plugins.licensee)
   alias(libs.plugins.tracelog)
   alias(libs.plugins.kotlin.composeCompiler)
+  alias(libs.plugins.kotlin.serialization)
+  alias(libs.plugins.navigation.safeargs)
 }
 
 android {
@@ -45,6 +47,8 @@ baselineProfile {
   saveInSrc = true
   from(projects.benchmark.dependencyProject)
 }
+
+composeCompiler { enableStrongSkippingMode = true }
 
 licensee {
   allow("Apache-2.0")

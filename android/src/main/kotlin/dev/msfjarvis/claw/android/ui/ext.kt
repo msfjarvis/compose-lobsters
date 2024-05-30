@@ -13,7 +13,7 @@ import androidx.activity.ComponentActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.NavController
-import dev.msfjarvis.claw.android.ui.navigation.Destinations
+import dev.msfjarvis.claw.android.ui.navigation.Comments
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
@@ -44,10 +44,7 @@ fun rememberPostActions(
 
       override fun viewComments(postId: String) {
         viewModel.markPostAsRead(postId)
-        val currentRoute = navController.currentDestination?.route
-        val newRoute =
-          Destinations.Comments.route.replace(Destinations.Comments.PLACEHOLDER, postId)
-        if (currentRoute != Destinations.Comments.route) navController.navigate(newRoute)
+        navController.navigate(Comments(postId))
       }
 
       override fun viewCommentsPage(post: UIPost) {

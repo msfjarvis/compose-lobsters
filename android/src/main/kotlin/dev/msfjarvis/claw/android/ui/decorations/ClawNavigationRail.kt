@@ -23,7 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import dev.msfjarvis.claw.android.ui.matches
+import dev.msfjarvis.claw.android.ui.navigation.matches
 import kotlinx.collections.immutable.ImmutableList
 
 @Composable

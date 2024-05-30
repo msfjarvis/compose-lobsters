@@ -23,8 +23,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import dev.msfjarvis.claw.android.ui.matches
 import dev.msfjarvis.claw.android.ui.navigation.Destination
+import dev.msfjarvis.claw.android.ui.navigation.matches
 import kotlinx.collections.immutable.ImmutableList
 
 const val AnimationDuration = 100

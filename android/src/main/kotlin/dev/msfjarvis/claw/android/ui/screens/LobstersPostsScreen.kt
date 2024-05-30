@@ -62,7 +62,6 @@ import com.mikepenz.aboutlibraries.ui.compose.m3.LibrariesContainer
 import dev.msfjarvis.claw.android.MainActivity
 import dev.msfjarvis.claw.android.R
 import dev.msfjarvis.claw.android.SearchActivity
-import dev.msfjarvis.claw.android.ui.any
 import dev.msfjarvis.claw.android.ui.decorations.ClawNavigationBar
 import dev.msfjarvis.claw.android.ui.decorations.ClawNavigationRail
 import dev.msfjarvis.claw.android.ui.decorations.NavigationItem
@@ -77,7 +76,8 @@ import dev.msfjarvis.claw.android.ui.navigation.Newest
 import dev.msfjarvis.claw.android.ui.navigation.Saved
 import dev.msfjarvis.claw.android.ui.navigation.Settings
 import dev.msfjarvis.claw.android.ui.navigation.User
-import dev.msfjarvis.claw.android.ui.none
+import dev.msfjarvis.claw.android.ui.navigation.any
+import dev.msfjarvis.claw.android.ui.navigation.none
 import dev.msfjarvis.claw.android.ui.rememberPostActions
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.common.comments.CommentsPage

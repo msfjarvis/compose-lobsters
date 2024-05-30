@@ -145,9 +145,7 @@ fun LobstersPostsScreen(
         icon = Icons.Outlined.FavoriteBorder,
         selectedIcon = Icons.Filled.Favorite,
       ) {
-        coroutineScope.launch {
-          if (savedPosts.isNotEmpty()) savedListState.animateScrollToItem(index = 0)
-        }
+        coroutineScope.launch { if (savedPosts.isNotEmpty()) savedListState.scrollToItem(0) }
       },
     )
 

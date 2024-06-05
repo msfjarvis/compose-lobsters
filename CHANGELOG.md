@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Swiping a post from left to right now offers a share action
 
+### Fixed
+
+- Try to workaround an infrequent crash when scrolling hottest/newest posts
+
 ### Changed
 
 - Upgrade to Kotlin 2.0.0

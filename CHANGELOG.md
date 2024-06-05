@@ -7,9 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.48.0] - 2024-06-05
+
 ### Added
 
 - Swiping a post from left to right now offers a share action
+
+### Fixed
+
+- Try to workaround an infrequent crash when scrolling hottest/newest posts
 
 ### Changed
 
@@ -432,7 +438,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.47.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.48.0...HEAD
+[1.48.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.47.0...v1.48.0
 [1.47.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.46.0...v1.47.0
 [1.46.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.45.0...v1.46.0
 [1.45.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.44.0...v1.45.0

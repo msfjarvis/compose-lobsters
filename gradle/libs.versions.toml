@@ -122,7 +122,7 @@ baselineprofile = { id = "androidx.baselineprofile", version.ref = "benchmark" }
 dependencyAnalysis = "com.autonomousapps.dependency-analysis:1.32.0"
 kotlin-composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-ksp = "com.google.devtools.ksp:2.0.0-1.0.21"
+ksp = "com.google.devtools.ksp:2.0.0-1.0.22"
 licensee = "app.cash.licensee:1.11.0"
 modulegraphassert = "com.jraska.module.graph.assertion:2.5.0"
 poko = "dev.drewhamilton.poko:0.16.0"

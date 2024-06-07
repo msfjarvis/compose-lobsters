@@ -18,7 +18,14 @@ android { namespace = "dev.msfjarvis.claw.data.store" }
 anvil { generateDaggerFactories.set(true) }
 
 dependencies {
-  implementation(libs.store)
+  api(projects.api)
+  api(projects.core)
+  api(projects.model)
+  api(libs.eithernet)
+  api(libs.javax.inject)
+  api(libs.store)
+
+  implementation(libs.kotlinx.coroutines.android)
 
   addTestDependencies(project)
 }

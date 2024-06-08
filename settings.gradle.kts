@@ -51,6 +51,11 @@ pluginManagement {
       content { includeGroup("dev.msfjarvis.whetstone") }
       mavenContent { snapshotsOnly() }
     }
+    maven("https://s01.oss.sonatype.org/content/repositories/snapshots/") {
+      name = "Sonatype S01 Snapshots"
+      content { includeGroup("com.squareup.invert") }
+      mavenContent { snapshotsOnly() }
+    }
     mavenCentral { mavenContent { releasesOnly() } }
   }
 }

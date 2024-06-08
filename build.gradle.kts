@@ -9,4 +9,5 @@ plugins {
   id("dev.msfjarvis.claw.versions")
   id("dev.msfjarvis.claw.kotlin-common")
   alias(libs.plugins.dependencyAnalysis)
+  alias(libs.plugins.invert)
 }

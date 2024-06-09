@@ -6,13 +6,18 @@
  */
 plugins {
   id("dev.msfjarvis.claw.kotlin-jvm")
+  alias(libs.plugins.anvil)
   alias(libs.plugins.kotlin.serialization)
   alias(libs.plugins.poko)
   alias(libs.plugins.ksp)
 }
 
+anvil { generateDaggerFactories.set(true) }
+
 dependencies {
   compileOnly(libs.konvert.annotations)
+  api(libs.dagger)
+  api(libs.javax.inject)
   api(projects.database.core)
   implementation(libs.konvert.api)
   implementation(libs.kotlinx.serialization.core)

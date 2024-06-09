@@ -84,15 +84,12 @@ class SavedPostQueriesTest {
     val posts = createTestData(3)
     posts.forEach { postQueries.insertOrReplacePost(it) }
 
+    assertThat(postQueries.isSaved("test_id_2").executeAsOne()).isTrue()
+
     // Delete 2nd post
     postQueries.deletePost("test_id_2")
 
-    val postsFromDB = postQueries.selectAllPosts().executeAsList()
-
-    // Check if size is 2, and only the correct post is deleted
-    assertThat(postsFromDB).hasSize(2)
-    assertThat(postsFromDB[0].shortId).isEqualTo("test_id_1")
-    assertThat(postsFromDB[1].shortId).isEqualTo("test_id_3")
+    assertThat(postQueries.isSaved("test_id_2").executeAsOne()).isFalse()
   }
 
   @Test

@@ -6,6 +6,13 @@ selectAllPosts:
 SELECT *
 FROM ReadPosts;
 
+isRead:
+SELECT EXISTS(
+  SELECT 1
+  FROM ReadPosts
+  WHERE id = ?
+);
+
 markRead:
 INSERT OR IGNORE
 INTO ReadPosts(id)

@@ -23,6 +23,13 @@ selectAllPosts:
 SELECT *
 FROM SavedPost;
 
+isSaved:
+SELECT EXISTS(
+  SELECT 1
+  FROM SavedPost
+  WHERE shortId = ?
+);
+
 selectCount:
 SELECT COUNT(*)
 FROM SavedPost;

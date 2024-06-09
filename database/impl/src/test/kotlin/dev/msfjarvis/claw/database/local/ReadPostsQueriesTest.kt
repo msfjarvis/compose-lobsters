@@ -24,7 +24,9 @@ class ReadPostsQueriesTest {
     val id = UUID.randomUUID().toString()
     postQueries.markRead(id)
     assertThat(postQueries.selectAllPosts().executeAsList()).contains(id)
+    assertThat(postQueries.isRead(id).executeAsOne()).isTrue()
     postQueries.markUnread(id)
     assertThat(postQueries.selectAllPosts().executeAsList()).doesNotContain(id)
+    assertThat(postQueries.isRead(id).executeAsOne()).isFalse()
   }
 }

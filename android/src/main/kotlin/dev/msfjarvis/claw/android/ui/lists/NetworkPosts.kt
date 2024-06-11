@@ -63,7 +63,7 @@ fun NetworkPosts(
       LazyColumn(state = listState) {
         items(
           count = lazyPagingItems.itemCount,
-          key = lazyPagingItems.itemKey { item -> "${item.shortId}-${item.hashCode()}" },
+          key = lazyPagingItems.itemKey { it.shortId },
           contentType = lazyPagingItems.itemContentType { "LobstersItem" },
         ) { index ->
           val item = lazyPagingItems[index]

@@ -106,6 +106,7 @@ dependencies {
   implementation(libs.okhttp.loggingInterceptor)
   implementation(libs.retrofit)
   implementation(libs.sqldelight.extensions.coroutines)
+  implementation(libs.store.paging)
   implementation(libs.swipe)
   implementation(libs.unfurl)
   implementation(projects.api)
@@ -114,6 +115,7 @@ dependencies {
   implementation(projects.database.core)
   implementation(projects.database.impl)
   implementation(projects.model)
+  implementation(projects.store)
   implementation(projects.web)
 
   kapt(libs.dagger.compiler)

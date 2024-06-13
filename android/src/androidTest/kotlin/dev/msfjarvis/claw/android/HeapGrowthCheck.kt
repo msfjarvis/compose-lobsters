@@ -18,14 +18,14 @@ import leakcanary.repeatingAndroidInProcessScenario
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.RegisterExtension
-import shark.ObjectGrowthDetector
-import shark.forAndroidHeap
+import shark.HeapDiff
 
 class HeapGrowthCheck {
   @JvmField
   @RegisterExtension
+  @Suppress("Unused")
   val scenarioExtension = ActivityScenarioExtension.launch<MainActivity>()
-  private val detector = ObjectGrowthDetector.forAndroidHeap().repeatingAndroidInProcessScenario()
+  private val detector = HeapDiff.repeatingAndroidInProcessScenario()
   private lateinit var device: UiDevice
 
   @BeforeEach

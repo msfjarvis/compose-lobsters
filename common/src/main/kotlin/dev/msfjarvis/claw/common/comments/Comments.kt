@@ -76,7 +76,7 @@ private fun CommentsPageInternal(
           nodes = commentNodes,
           htmlConverter = htmlConverter,
           toggleExpanded = { node ->
-            val newNode = setExpanded(node, !node.isExpanded)
+            val newNode = node.setExpanded(!node.isExpanded)
             val parent = findTopMostParent(newNode)
             val index =
               commentNodes.indexOf(commentNodes.find { it.comment.url == parent.comment.url })

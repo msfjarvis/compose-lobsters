@@ -36,6 +36,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -77,7 +78,7 @@ fun LobstersCard(
           refresh()
         }
         .background(MaterialTheme.colorScheme.background)
-        .padding(start = 8.dp)
+        .padding(start = 8.dp, top = 2.dp, bottom = 2.dp)
   ) {
     Row(
       horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -91,7 +92,6 @@ fun LobstersCard(
       )
       Column(
         modifier = Modifier.wrapContentHeight(),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
       ) {
         SaveButton(
@@ -189,7 +189,7 @@ internal fun Submitter(
 @Composable
 private fun SaveButton(isSaved: Boolean, modifier: Modifier = Modifier) {
   Crossfade(targetState = isSaved, label = "save-button") { saved ->
-    Box(modifier = modifier.padding(vertical = 12.dp)) {
+    Box(modifier = modifier.minimumInteractiveComponentSize()) {
       Icon(
         imageVector = if (saved) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
         tint = MaterialTheme.colorScheme.secondary,
@@ -201,22 +201,19 @@ private fun SaveButton(isSaved: Boolean, modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun CommentsButton(commentCount: Int?, modifier: Modifier = Modifier) {
+private fun CommentsButton(commentCount: Int, modifier: Modifier = Modifier) {
   BadgedBox(
-    modifier = modifier.padding(vertical = 12.dp),
+    modifier = modifier.minimumInteractiveComponentSize(),
     badge = {
-      if (commentCount != null) {
-        Badge(
-          containerColor = MaterialTheme.colorScheme.tertiaryContainer,
-          // Required to make the badge label look visually okay
-          modifier = Modifier.absoluteOffset(y = (-8).dp),
-        ) {
-          Text(
-            text = commentCount.toString(),
-            color = MaterialTheme.colorScheme.onTertiaryContainer,
-            style = MaterialTheme.typography.labelMedium,
-          )
-        }
+      Badge(
+        containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+        modifier = Modifier.absoluteOffset(y = (-8).dp),
+      ) {
+        Text(
+          text = commentCount.toString(),
+          color = MaterialTheme.colorScheme.onTertiaryContainer,
+          style = MaterialTheme.typography.labelMedium,
+        )
       }
     },
   ) {

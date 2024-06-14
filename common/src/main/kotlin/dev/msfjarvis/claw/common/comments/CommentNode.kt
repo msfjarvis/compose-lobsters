@@ -19,6 +19,7 @@ internal data class CommentNode(
   var isExpanded: Boolean = true,
   var indentLevel: Int,
 ) {
+
   fun addChild(child: CommentNode) {
     if (comment.shortId == child.comment.parentComment) {
       children.add(child)
@@ -27,6 +28,15 @@ internal data class CommentNode(
       child.indentLevel += 1
       children.lastOrNull()?.addChild(child)
     }
+  }
+
+  fun setExpanded(expanded: Boolean): CommentNode {
+    this.isExpanded = expanded
+
+    if (children.isNotEmpty()) {
+      children.forEach { it.setExpanded(expanded) }
+    }
+    return this
   }
 }
 
@@ -60,15 +70,6 @@ internal fun createListNode(
   }
 
   return commentNodes
-}
-
-internal fun setExpanded(commentNode: CommentNode, expanded: Boolean): CommentNode {
-  commentNode.isExpanded = expanded
-
-  if (commentNode.children.isNotEmpty()) {
-    commentNode.children.forEach { setExpanded(it, expanded) }
-  }
-  return commentNode
 }
 
 internal tailrec fun findTopMostParent(node: CommentNode): CommentNode {

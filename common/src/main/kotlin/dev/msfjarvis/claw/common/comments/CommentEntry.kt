@@ -130,7 +130,7 @@ private val CommentEntryPadding = 16f.dp
 internal fun CommentEntry(
   commentNode: CommentNode,
   htmlConverter: HTMLConverter,
-  toggleExpanded: (CommentNode) -> Unit,
+  @Suppress("UNUSED_PARAMETER") toggleExpanded: (CommentNode) -> Unit,
   openUserProfile: (String) -> Unit,
   modifier: Modifier = Modifier,
 ) {
@@ -139,7 +139,7 @@ internal fun CommentEntry(
     modifier =
       modifier
         .fillMaxWidth()
-        .clickable { toggleExpanded(commentNode) }
+        /*.clickable { toggleExpanded(commentNode) }*/
         .background(MaterialTheme.colorScheme.background)
         .padding(
           start = CommentEntryPadding * commentNode.indentLevel,

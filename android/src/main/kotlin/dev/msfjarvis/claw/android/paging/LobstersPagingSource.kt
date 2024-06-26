@@ -13,6 +13,7 @@ import com.slack.eithernet.ApiResult.Success
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import dev.msfjarvis.claw.android.ui.toError
 import dev.msfjarvis.claw.android.viewmodel.ReadPostsRepository
 import dev.msfjarvis.claw.android.viewmodel.SavedPostsRepository
 import dev.msfjarvis.claw.core.injection.IODispatcher
@@ -62,7 +63,7 @@ constructor(
         )
       is Failure.NetworkFailure -> LoadResult.Error(result.error)
       is Failure.UnknownFailure -> LoadResult.Error(result.error)
-      is Failure.HttpFailure,
+      is Failure.HttpFailure -> LoadResult.Error(result.toError())
       is Failure.ApiFailure -> LoadResult.Error(IOException("API returned an invalid response"))
     }
   }

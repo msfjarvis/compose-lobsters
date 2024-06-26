@@ -29,5 +29,6 @@ class LobstersPost(
   val commentCount: Int,
   val commentsUrl: String,
   @SerialName("submitter_user") val submitter: String,
+  @SerialName("user_is_author") val userIsAuthor: Boolean,
   val tags: List<String>,
 )

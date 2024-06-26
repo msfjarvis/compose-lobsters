@@ -32,6 +32,11 @@ object SearchConverter : Converter<ResponseBody, List<LobstersPost>> {
     val tags = elem.select("span.tags > a").map(Element::text)
     val (commentCount, commentsUrl) = getCommentsData(elem.select("span.comments_label"))
     val submitter = elem.select("div.byline > a.u-author").text()
+    val userIsAuthor =
+      (elem.select("div.byline > span").first()?.text() ?: "").contains(
+        "authored",
+        ignoreCase = true,
+      )
     return LobstersPost(
       shortId = shortId,
       title = title,
@@ -43,6 +48,7 @@ object SearchConverter : Converter<ResponseBody, List<LobstersPost>> {
       // The value of these fields is irrelevant for our use case
       createdAt = "",
       description = "",
+      userIsAuthor = userIsAuthor,
     )
   }
 

@@ -29,6 +29,7 @@ import dev.msfjarvis.claw.android.paging.LobstersPagingSource
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource.Companion.PAGE_SIZE
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource.Companion.STARTING_PAGE_INDEX
 import dev.msfjarvis.claw.android.paging.SearchPagingSource
+import dev.msfjarvis.claw.android.ui.toError
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.core.injection.IODispatcher
 import dev.msfjarvis.claw.core.injection.MainDispatcher
@@ -39,7 +40,6 @@ import dev.msfjarvis.claw.model.toUIPost
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
-import java.net.HttpURLConnection
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -139,13 +139,7 @@ constructor(
         is Success -> result.value.toUIPost()
         is Failure.NetworkFailure -> throw result.error
         is Failure.UnknownFailure -> throw result.error
-        is Failure.HttpFailure -> {
-          if (result.code == HttpURLConnection.HTTP_NOT_FOUND) {
-            throw IOException("Story was removed by moderator")
-          } else {
-            throw IOException("API returned an invalid response")
-          }
-        }
+        is Failure.HttpFailure -> throw result.toError()
         is Failure.ApiFailure -> throw IOException("API returned an invalid response")
       }
     }
@@ -165,7 +159,7 @@ constructor(
         is Success -> result.value
         is Failure.NetworkFailure -> throw result.error
         is Failure.UnknownFailure -> throw result.error
-        is Failure.HttpFailure,
+        is Failure.HttpFailure -> throw result.toError()
         is Failure.ApiFailure -> throw IOException("API returned an invalid response")
       }
     }

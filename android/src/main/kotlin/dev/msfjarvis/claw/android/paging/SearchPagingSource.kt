@@ -14,6 +14,7 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource.Companion.PAGE_SIZE
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource.Companion.STARTING_PAGE_INDEX
+import dev.msfjarvis.claw.android.ui.toError
 import dev.msfjarvis.claw.android.viewmodel.ReadPostsRepository
 import dev.msfjarvis.claw.android.viewmodel.SavedPostsRepository
 import dev.msfjarvis.claw.api.LobstersSearchApi
@@ -80,7 +81,7 @@ constructor(
       }
       is ApiResult.Failure.NetworkFailure -> LoadResult.Error(result.error)
       is ApiResult.Failure.UnknownFailure -> LoadResult.Error(result.error)
-      is ApiResult.Failure.HttpFailure,
+      is ApiResult.Failure.HttpFailure -> LoadResult.Error(result.toError())
       is ApiResult.Failure.ApiFailure ->
         LoadResult.Error(IOException("API returned an invalid response"))
     }

@@ -103,12 +103,10 @@ private fun LazyListScope.node(
   toggleExpanded: (CommentNode) -> Unit,
   openUserProfile: (String) -> Unit,
 ) {
-  /*
-    // Skip the node if neither the node nor its parent is expanded
-    if (!node.isExpanded && node.parent?.isExpanded == false) {
-      return
-    }
-  */
+  // Skip the node if neither the node nor its parent is expanded
+  if (!node.isExpanded && node.parent?.isExpanded == false) {
+    return
+  }
   item(key = node.comment.shortId) {
     CommentEntry(
       commentNode = node,

@@ -111,7 +111,7 @@ sqldelight-primitiveAdapters = { module = "app.cash.sqldelight:primitive-adapter
 sqlite-android = "com.github.requery:sqlite-android:3.45.0"
 store = { module = "org.mobilenativefoundation.store:store5", version.ref = "store" }
 swipe = "me.saket.swipe:swipe:1.3.0"
-truth = "com.google.truth:truth:1.4.2"
+truth = "com.google.truth:truth:1.4.3"
 unfurl = "me.saket.unfurl:unfurl:1.7.0"
 
 [plugins]

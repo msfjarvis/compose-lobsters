@@ -40,6 +40,7 @@ class SearchApiTest {
           submitter = "xenodium",
           tags = listOf("ai", "emacs"),
           description = "",
+          userIsAuthor = true,
         ),
         LobstersPost(
           shortId = "astcqf",
@@ -52,6 +53,7 @@ class SearchApiTest {
           submitter = "asteroid",
           tags = listOf("ai"),
           description = "",
+          userIsAuthor = false,
         ),
       )
   }

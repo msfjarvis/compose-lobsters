@@ -29,6 +29,7 @@ data class UIPost(
   val comments: List<Comment> = emptyList(),
   val isSaved: Boolean = false,
   val isRead: Boolean = false,
+  val userIsAuthor: Boolean = false,
 ) {
   @KonvertFrom(
     value = SavedPost::class,

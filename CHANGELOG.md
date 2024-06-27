@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Change submitter text to 'authored' when applicable
+
 ## [1.48.0] - 2024-06-05
 
 ### Added

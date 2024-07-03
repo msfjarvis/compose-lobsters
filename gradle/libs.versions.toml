@@ -8,11 +8,12 @@ coroutines = "1.9.0-RC"
 dagger = "2.51.1"
 glance = "1.0.0"
 junit = "5.10.3"
-konvert = "3.2.1"
+konvert = "3.2.2"
 kotlin = "2.0.0"
 kotlinResult = "2.0.0"
 leakcanary = "3.0-alpha-8"
 lifecycle = "2.8.3"
+navigation = "2.8.0-beta04"
 retrofit = "2.11.0"
 richtext = "1.0.0-alpha01"
 sentry-sdk = "7.11.0"
@@ -48,7 +49,7 @@ androidx-lifecycle-common = { module = "androidx.lifecycle:lifecycle-common", ve
 androidx-lifecycle-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 androidx-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime", version.ref = "lifecycle" }
 androidx-lint = "androidx.lint:lint-gradle:1.0.0-alpha01"
-androidx-navigation-compose = "androidx.navigation:navigation-compose:2.8.0-beta04"
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }
 androidx-paging-compose = "androidx.paging:paging-compose:3.3.0"
 androidx-profileinstaller = "androidx.profileinstaller:profileinstaller:1.4.0-alpha01"
 androidx-test-core = "androidx.test:core:1.6.1"
@@ -62,7 +63,7 @@ build-agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 build-cachefix = "org.gradle.android.cache-fix:org.gradle.android.cache-fix.gradle.plugin:3.0.1"
 build-kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 build-semver = "com.github.zafarkhaja:java-semver:0.10.2"
-build-sentry = "io.sentry.android.gradle:io.sentry.android.gradle.gradle.plugin:4.8.0"
+build-sentry = "io.sentry.android.gradle:io.sentry.android.gradle.gradle.plugin:4.9.0"
 build-spotless = "com.diffplug.spotless:spotless-plugin-gradle:6.25.0"
 build-vcu = "nl.littlerobots.version-catalog-update:nl.littlerobots.version-catalog-update.gradle.plugin:0.8.4"
 coil = { module = "io.coil-kt:coil", version.ref = "coil" }
@@ -128,6 +129,7 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 ksp = "com.google.devtools.ksp:2.0.0-1.0.22"
 licensee = "app.cash.licensee:1.11.0"
 modulegraphassert = "com.jraska.module.graph.assertion:2.5.0"
+navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigation" }
 poko = "dev.drewhamilton.poko:0.16.0"
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 tracelog = "dev.msfjarvis.tracelog:0.1.3"

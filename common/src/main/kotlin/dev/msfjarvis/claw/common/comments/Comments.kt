@@ -6,6 +6,7 @@
  */
 package dev.msfjarvis.claw.common.comments
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,6 +23,7 @@ import androidx.compose.runtime.produceState
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -49,8 +51,18 @@ private fun CommentsPageInternal(
   openUserProfile: (String) -> Unit,
   modifier: Modifier = Modifier,
 ) {
+  val context = LocalContext.current
   val commentNodes = createListNode(details.comments, commentState).toMutableStateList()
-  LaunchedEffect(key1 = commentNodes) { markSeenComments(details.shortId, details.comments) }
+  LaunchedEffect(key1 = commentNodes) {
+    if (details.comments.isNotEmpty() && !commentState?.commentIds.isNullOrEmpty()) {
+      val unreadCount = details.comments.size - (commentState?.commentIds?.size ?: 0)
+      if (unreadCount > 0) {
+        val text = "$unreadCount unread comments"
+        Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
+      }
+    }
+    markSeenComments(details.shortId, details.comments)
+  }
 
   Surface(color = MaterialTheme.colorScheme.surfaceVariant) {
     LazyColumn(modifier = modifier, contentPadding = PaddingValues(bottom = 24.dp)) {

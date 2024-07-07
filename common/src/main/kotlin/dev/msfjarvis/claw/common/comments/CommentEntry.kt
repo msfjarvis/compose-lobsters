@@ -30,11 +30,8 @@ import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.github.michaelbull.result.coroutines.runSuspendCatching
 import com.github.michaelbull.result.onSuccess
@@ -140,7 +137,10 @@ internal fun CommentEntry(
       modifier
         .fillMaxWidth()
         .clickable { toggleExpanded(commentNode) }
-        .background(MaterialTheme.colorScheme.background)
+        .background(
+          if (commentNode.isUnread) MaterialTheme.colorScheme.surfaceBright
+          else MaterialTheme.colorScheme.background
+        )
         .padding(
           start = CommentEntryPadding * commentNode.indentLevel,
           end = CommentEntryPadding,
@@ -154,7 +154,6 @@ internal fun CommentEntry(
           buildCommenterString(
             commenterName = comment.user,
             score = comment.score,
-            isUnread = commentNode.isUnread,
             createdAt = comment.createdAt,
             updatedAt = comment.updatedAt,
           ),
@@ -176,7 +175,6 @@ internal fun CommentEntry(
 fun buildCommenterString(
   commenterName: String,
   score: Int,
-  isUnread: Boolean,
   createdAt: TemporalAccessor,
   updatedAt: TemporalAccessor,
 ): AnnotatedString {
@@ -214,14 +212,6 @@ fun buildCommenterString(
       append(' ')
       append(updatedRelative.toString())
       append(')')
-    }
-    if (isUnread) {
-      append(' ')
-      withStyle(
-        style = SpanStyle(fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.error)
-      ) {
-        append("(unread)")
-      }
     }
   }
 }

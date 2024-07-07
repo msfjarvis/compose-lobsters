@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Change submitter text to 'authored' when applicable
+- Unread comments now have a brighter background rather than a text badge
+- Opening posts you have previously seen will show the number of new comments since last visit 
 
 ## [1.48.0] - 2024-06-05
 

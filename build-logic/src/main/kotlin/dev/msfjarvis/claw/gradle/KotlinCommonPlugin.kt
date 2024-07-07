@@ -29,7 +29,7 @@ class KotlinCommonPlugin : Plugin<Project> {
     project.tasks.run {
       withType<KotlinCompile>().configureEach {
         compilerOptions {
-          allWarningsAsErrors.set(true)
+          allWarningsAsErrors.set(project.providers.environmentVariable("CI").isPresent)
           freeCompilerArgs.addAll(ADDITIONAL_COMPILER_ARGS)
           languageVersion.set(KotlinVersion.KOTLIN_1_9)
         }

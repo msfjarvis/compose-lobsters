@@ -13,8 +13,10 @@ import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.BottomAppBarScrollBehavior
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,11 +31,13 @@ import kotlinx.collections.immutable.ImmutableList
 
 const val AnimationDuration = 100
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ClawNavigationBar(
   navController: NavController,
   items: ImmutableList<NavigationItem>,
   isVisible: Boolean,
+  scrollBehavior: BottomAppBarScrollBehavior,
   modifier: Modifier = Modifier,
 ) {
   AnimatedVisibility(
@@ -52,7 +56,7 @@ fun ClawNavigationBar(
       ),
     modifier = Modifier,
   ) {
-    NavigationBar(modifier = modifier) {
+    BottomAppBar(modifier = modifier, scrollBehavior = scrollBehavior) {
       val navBackStackEntry = navController.currentBackStackEntryAsState().value
       val currentDestination = navBackStackEntry?.destination
       items.forEach { navItem ->

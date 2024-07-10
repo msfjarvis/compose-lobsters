@@ -26,6 +26,7 @@ import androidx.compose.material.icons.filled.Whatshot
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.NewReleases
 import androidx.compose.material.icons.outlined.Whatshot
+import androidx.compose.material3.BottomAppBarDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -44,6 +45,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -109,6 +111,8 @@ fun LobstersPostsScreen(
   val coroutineScope = rememberCoroutineScope()
   val snackbarHostState = remember { SnackbarHostState() }
   val postActions = rememberPostActions(context, urlLauncher, navController, viewModel)
+
+  val scrollBehavior = BottomAppBarDefaults.exitAlwaysScrollBehavior()
 
   val hottestPosts = viewModel.hottestPosts.collectAsLazyPagingItems()
   val newestPosts = viewModel.newestPosts.collectAsLazyPagingItems()
@@ -205,11 +209,15 @@ fun LobstersPostsScreen(
           navController = navController,
           items = navItems,
           isVisible = currentDestination.any(navDestinations),
+          scrollBehavior = scrollBehavior,
         )
       }
     },
     snackbarHost = { SnackbarHost(snackbarHostState) },
-    modifier = modifier.semantics { testTagsAsResourceId = true },
+    modifier =
+      modifier.nestedScroll(scrollBehavior.nestedScrollConnection).semantics {
+        testTagsAsResourceId = true
+      },
   ) { paddingValues ->
     Row(modifier = Modifier.padding(paddingValues)) {
       AnimatedVisibility(visible = navigationType == ClawNavigationType.NAVIGATION_RAIL) {

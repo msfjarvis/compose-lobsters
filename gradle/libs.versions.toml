@@ -9,7 +9,7 @@ dagger = "2.51.1"
 glance = "1.0.0"
 junit = "5.10.3"
 konvert = "3.2.2"
-kotlin = "2.0.20-Beta1"
+kotlin = "2.0.20-Beta2"
 kotlinResult = "2.0.0"
 leakcanary = "3.0-alpha-8"
 lifecycle = "2.8.3"
@@ -126,7 +126,7 @@ dependencyAnalysis = "com.autonomousapps.dependency-analysis:1.32.0"
 invert = "com.squareup.invert:0.0.1-dev"
 kotlin-composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-ksp = "com.google.devtools.ksp:2.0.20-Beta1-1.0.22"
+ksp = "com.google.devtools.ksp:2.0.20-Beta2-1.0.23"
 licensee = "app.cash.licensee:1.11.0"
 modulegraphassert = "com.jraska.module.graph.assertion:2.5.0"
 navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigation" }

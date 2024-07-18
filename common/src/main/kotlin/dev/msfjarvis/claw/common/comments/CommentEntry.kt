@@ -138,7 +138,7 @@ internal fun CommentEntry(
         .fillMaxWidth()
         .clickable { toggleExpanded(commentNode) }
         .background(
-          if (commentNode.isUnread) MaterialTheme.colorScheme.surfaceBright
+          if (commentNode.isUnread) MaterialTheme.colorScheme.surfaceContainerHigh
           else MaterialTheme.colorScheme.background
         )
         .padding(

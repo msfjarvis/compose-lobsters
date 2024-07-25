@@ -12,8 +12,8 @@ konvert = "3.2.2"
 kotlin = "2.0.0"
 kotlinResult = "2.0.0"
 leakcanary = "3.0-alpha-8"
-lifecycle = "2.8.3"
-navigation = "2.8.0-beta05"
+lifecycle = "2.8.4"
+navigation = "2.8.0-beta06"
 retrofit = "2.11.0"
 richtext = "1.0.0-alpha01"
 sentry-sdk = "7.12.0"
@@ -25,7 +25,7 @@ workmanager = "2.10.0-alpha02"
 
 [libraries]
 aboutLibraries-m3 = { module = "com.mikepenz:aboutlibraries-compose-m3", version.ref = "aboutLibraries" }
-androidx-activity-compose = "androidx.activity:activity-compose:1.9.0"
+androidx-activity-compose = "androidx.activity:activity-compose:1.9.1"
 androidx-benchmark-macro-junit4 = { module = "androidx.benchmark:benchmark-macro-junit4", version.ref = "benchmark" }
 androidx-browser = "androidx.browser:browser:1.8.0"
 androidx-compose-animation = { module = "androidx.compose.animation:animation" }
@@ -50,7 +50,7 @@ androidx-lifecycle-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-
 androidx-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime", version.ref = "lifecycle" }
 androidx-lint = "androidx.lint:lint-gradle:1.0.0-alpha01"
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }
-androidx-paging-compose = "androidx.paging:paging-compose:3.3.0"
+androidx-paging-compose = "androidx.paging:paging-compose:3.3.1"
 androidx-profileinstaller = "androidx.profileinstaller:profileinstaller:1.4.0-alpha01"
 androidx-test-core = "androidx.test:core:1.6.1"
 androidx-test-espresso-core = "androidx.test.espresso:espresso-core:3.6.1"

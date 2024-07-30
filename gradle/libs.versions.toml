@@ -120,7 +120,7 @@ aboutlibraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "abo
 android-lint = { id = "com.android.lint", version.ref = "agp" }
 android-junit5 = { id = "de.mannodermaus.android-junit5", version.ref = "android-junit5" }
 android-test = { id = "com.android.test", version.ref = "agp" }
-anvil = "com.squareup.anvil:2.5.0-beta10"
+anvil = "com.squareup.anvil:2.5.0-beta11"
 baselineprofile = { id = "androidx.baselineprofile", version.ref = "benchmark" }
 dependencyAnalysis = "com.autonomousapps.dependency-analysis:1.33.0"
 invert = "com.squareup.invert:0.0.1-dev"

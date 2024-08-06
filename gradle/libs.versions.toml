@@ -123,7 +123,7 @@ dependencyAnalysis = "com.autonomousapps.dependency-analysis:1.33.0"
 invert = "com.squareup.invert:0.0.1-dev"
 kotlin-composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-ksp = "com.google.devtools.ksp:2.0.0-1.0.24"
+ksp = "com.google.devtools.ksp:2.0.10-1.0.24"
 licensee = "app.cash.licensee:1.11.0"
 modulegraphassert = "com.jraska.module.graph.assertion:2.6.0"
 navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigation" }

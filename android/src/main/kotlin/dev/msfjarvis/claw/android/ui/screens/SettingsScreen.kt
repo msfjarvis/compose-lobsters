@@ -61,17 +61,6 @@ fun SettingsScreen(
   Box(modifier = modifier.fillMaxSize()) {
     Column {
       ListItem(
-        headlineContent = { Text("Libraries") },
-        leadingContent = {
-          Icon(
-            imageVector = Icons.AutoMirrored.Filled.LibraryBooks,
-            contentDescription = null,
-            modifier = Modifier.height(32.dp),
-          )
-        },
-        modifier = Modifier.clickable(onClick = openLibrariesScreen),
-      )
-      ListItem(
         headlineContent = { Text("Data transfer") },
         leadingContent = {
           Icon(
@@ -95,6 +84,17 @@ fun SettingsScreen(
             )
           }
         },
+      )
+      ListItem(
+        headlineContent = { Text("Libraries") },
+        leadingContent = {
+          Icon(
+            imageVector = Icons.AutoMirrored.Filled.LibraryBooks,
+            contentDescription = null,
+            modifier = Modifier.height(32.dp),
+          )
+        },
+        modifier = Modifier.clickable(onClick = openLibrariesScreen),
       )
     }
   }

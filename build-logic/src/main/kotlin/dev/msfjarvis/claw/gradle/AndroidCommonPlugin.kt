@@ -1,5 +1,5 @@
 /*
- * Copyright © 2022-2023 Harsh Shandilya.
+ * Copyright © 2022-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -26,7 +26,7 @@ import org.gradle.kotlin.dsl.findByType
 class AndroidCommonPlugin : Plugin<Project> {
 
   private companion object {
-    const val COMPILE_SDK = 34
+    const val COMPILE_SDK = 35
     const val MIN_SDK = 26
     const val TARGET_SDK = 34
     const val SLIM_TESTS_PROPERTY = "slimTests"

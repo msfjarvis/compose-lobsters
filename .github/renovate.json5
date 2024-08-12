@@ -59,6 +59,12 @@
       ],
       "allowedVersions": "<=1.0.0",
     },
+    {
+      "matchPackagePatterns": [
+        "^me.saket.unfurl",
+      ],
+      "allowedVersions": "<2.0.0",
+    },
   ],
   "regexManagers": [
     {

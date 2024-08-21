@@ -14,7 +14,7 @@ internal data class CommentNode(
   var parent: CommentNode? = null,
   val children: MutableList<CommentNode> = mutableListOf(),
   val isUnread: Boolean = false,
-  var indentLevel: Int,
+  val indentLevel: Int,
 ) {
 
   fun addChild(child: CommentNode) {
@@ -22,8 +22,16 @@ internal data class CommentNode(
       children.add(child)
       child.parent = this
     } else {
-      child.indentLevel += 1
-      children.lastOrNull()?.addChild(child)
+      children
+        .lastOrNull()
+        ?.addChild(
+          CommentNode(
+            comment = child.comment,
+            parent = child.parent,
+            isUnread = child.isUnread,
+            indentLevel = child.indentLevel + 1,
+          )
+        )
     }
   }
 }
@@ -45,12 +53,12 @@ internal fun createListNode(
         )
       )
     } else {
-      commentNodes.lastOrNull()?.let {
-        it.addChild(
+      commentNodes.lastOrNull()?.let { commentNode ->
+        commentNode.addChild(
           CommentNode(
             comment = comments[i],
             isUnread = isUnread(comments[i].shortId),
-            indentLevel = it.indentLevel + 1,
+            indentLevel = commentNode.indentLevel + 1,
           )
         )
       }

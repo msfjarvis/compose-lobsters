@@ -14,7 +14,6 @@ internal data class CommentNode(
   var parent: CommentNode? = null,
   val children: MutableList<CommentNode> = mutableListOf(),
   val isUnread: Boolean = false,
-  var isExpanded: Boolean = true,
   var indentLevel: Int,
 ) {
 

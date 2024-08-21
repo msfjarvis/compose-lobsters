@@ -6,7 +6,6 @@
  */
 package dev.msfjarvis.claw.common.comments
 
-import android.text.format.DateUtils
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -27,10 +26,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.github.michaelbull.result.coroutines.runSuspendCatching
@@ -43,8 +40,6 @@ import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.common.ui.ThemedRichText
 import dev.msfjarvis.claw.model.LinkMetadata
 import dev.msfjarvis.claw.model.UIPost
-import java.time.Instant
-import java.time.temporal.TemporalAccessor
 import kotlinx.collections.immutable.toImmutableList
 
 @Composable
@@ -117,101 +112,6 @@ private fun PostLink(linkMetadata: LinkMetadata, modifier: Modifier = Modifier) 
         color = MaterialTheme.colorScheme.onSecondary,
         style = MaterialTheme.typography.labelLarge,
       )
-    }
-  }
-}
-
-private val CommentEntryPadding = 16f.dp
-
-@Composable
-internal fun CommentEntry(
-  commentNode: CommentNode,
-  htmlConverter: HTMLConverter,
-  toggleExpanded: (CommentNode) -> Unit,
-  openUserProfile: (String) -> Unit,
-  modifier: Modifier = Modifier,
-) {
-  val comment = commentNode.comment
-  Box(
-    modifier =
-      modifier
-        .fillMaxWidth()
-        .clickable { toggleExpanded(commentNode) }
-        .background(
-          if (commentNode.isUnread) MaterialTheme.colorScheme.surfaceContainerHigh
-          else MaterialTheme.colorScheme.background
-        )
-        .padding(
-          start = CommentEntryPadding * commentNode.indentLevel,
-          end = CommentEntryPadding,
-          top = CommentEntryPadding,
-          bottom = CommentEntryPadding,
-        )
-  ) {
-    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-      Submitter(
-        text =
-          buildCommenterString(
-            commenterName = comment.user,
-            score = comment.score,
-            createdAt = comment.createdAt,
-            updatedAt = comment.updatedAt,
-          ),
-        avatarUrl = "https://lobste.rs/avatars/${comment.user}-100.png",
-        contentDescription = "User avatar for ${comment.user}",
-        modifier = Modifier.clickable { openUserProfile(comment.user) },
-      )
-      if (commentNode.isExpanded) {
-        ThemedRichText(
-          text = htmlConverter.convertHTMLToMarkdown(comment.comment),
-          modifier = Modifier.padding(top = 8.dp),
-        )
-      }
-    }
-  }
-}
-
-@Composable
-fun buildCommenterString(
-  commenterName: String,
-  score: Int,
-  createdAt: TemporalAccessor,
-  updatedAt: TemporalAccessor,
-): AnnotatedString {
-  val now = System.currentTimeMillis()
-  val createdRelative =
-    remember(createdAt) {
-      DateUtils.getRelativeTimeSpanString(
-        Instant.from(createdAt).toEpochMilli(),
-        now,
-        DateUtils.MINUTE_IN_MILLIS,
-      )
-    }
-  val updatedRelative =
-    remember(updatedAt) {
-      DateUtils.getRelativeTimeSpanString(
-        Instant.from(updatedAt).toEpochMilli(),
-        now,
-        DateUtils.MINUTE_IN_MILLIS,
-      )
-    }
-  return buildAnnotatedString {
-    append(commenterName)
-    append(' ')
-    append('•')
-    append(' ')
-    append("$score points")
-    append(' ')
-    append('•')
-    append(' ')
-    append(createdRelative.toString())
-    if (updatedRelative != createdRelative) {
-      append(' ')
-      append('(')
-      append("Updated")
-      append(' ')
-      append(updatedRelative.toString())
-      append(')')
     }
   }
 }

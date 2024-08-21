@@ -38,10 +38,10 @@ internal data class CommentNode(
 
 internal fun createListNode(
   comments: List<Comment>,
-  commentState: PostComments?,
+  commentState: PostComments,
 ): MutableList<CommentNode> {
   val commentNodes = mutableListOf<CommentNode>()
-  val isUnread = { id: String -> commentState?.commentIds?.contains(id) == false }
+  val isUnread = { id: String -> !commentState.commentIds.contains(id) }
 
   for (i in comments.indices) {
     if (comments[i].parentComment == null) {

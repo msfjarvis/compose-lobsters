@@ -32,7 +32,7 @@ fun CommentsPage(
   postId: String,
   postActions: PostActions,
   htmlConverter: HTMLConverter,
-  getSeenComments: suspend (String) -> PostComments?,
+  getSeenComments: suspend (String) -> PostComments,
   markSeenComments: (String, List<Comment>) -> Unit,
   modifier: Modifier = Modifier,
   openUserProfile: (String) -> Unit,
@@ -46,7 +46,9 @@ fun CommentsPage(
         )
     }
   val commentState by
-    produceState<PostComments?>(initialValue = null) { value = getSeenComments(postId) }
+    produceState(initialValue = PostComments(postId, emptyList())) {
+      value = getSeenComments(postId)
+    }
 
   when (postDetails) {
     is Success<*> -> {

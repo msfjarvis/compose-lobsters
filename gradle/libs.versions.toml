@@ -1,13 +1,13 @@
 [versions]
 aboutLibraries = "11.2.2"
 agp = "8.5.2"
-android-junit5 = "1.10.2.0"
+android-junit5 = "1.11.0.0"
 benchmark = "1.3.0-rc01"
 coil = "2.7.0"
-coroutines = "1.9.0-RC"
+coroutines = "1.9.0-RC.2"
 dagger = "2.52"
 glance = "1.0.0"
-junit = "5.10.3"
+junit = "5.11.0"
 konvert = "3.2.2"
 kotlin = "2.0.10"
 kotlinResult = "2.0.0"
@@ -16,7 +16,7 @@ lifecycle = "2.8.4"
 navigation = "2.8.0-beta07"
 retrofit = "2.11.0"
 richtext = "1.0.0-alpha01"
-sentry-sdk = "7.13.0"
+sentry-sdk = "7.14.0"
 serialization = "1.7.1"
 store = "5.1.0-alpha04"
 sqldelight = "2.0.2"
@@ -54,7 +54,7 @@ androidx-test-core = "androidx.test:core:1.6.1"
 androidx-test-espresso-core = "androidx.test.espresso:espresso-core:3.6.1"
 androidx-test-ext-junit = "androidx.test.ext:junit:1.2.1"
 androidx-test-rules = "androidx.test:rules:1.6.1"
-androidx-test-runner = "androidx.test:runner:1.6.1"
+androidx-test-runner = "androidx.test:runner:1.6.2"
 androidx-test-uiautomator = "androidx.test.uiautomator:uiautomator:2.3.0"
 androidx-work-runtime = { module = "androidx.work:work-runtime", version.ref = "workmanager" }
 build-agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }
@@ -62,7 +62,7 @@ build-cachefix = "org.gradle.android.cache-fix:org.gradle.android.cache-fix.grad
 build-kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 build-semver = "com.github.zafarkhaja:java-semver:0.10.2"
 build-sentry = "io.sentry.android.gradle:io.sentry.android.gradle.gradle.plugin:4.11.0"
-build-spotless = "com.diffplug.spotless:spotless-plugin-gradle:6.25.0"
+build-spotless = "com.diffplug.spotless:spotless-plugin-gradle:7.0.0.BETA1"
 build-vcu = "nl.littlerobots.version-catalog-update:nl.littlerobots.version-catalog-update.gradle.plugin:0.8.4"
 coil = { module = "io.coil-kt:coil", version.ref = "coil" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
@@ -110,7 +110,7 @@ sqlite-android = "com.github.requery:sqlite-android:3.45.0"
 store = { module = "org.mobilenativefoundation.store:store5", version.ref = "store" }
 swipe = "me.saket.swipe:swipe:1.3.0"
 truth = "com.google.truth:truth:1.4.4"
-unfurl = "me.saket.unfurl:unfurl:2.0.0"
+unfurl = "me.saket.unfurl:unfurl:2.2.0"
 
 [plugins]
 aboutlibraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "aboutLibraries" }

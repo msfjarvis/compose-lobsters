@@ -6,8 +6,6 @@
  */
 package dev.msfjarvis.claw.common.comments
 
-import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.material3.HorizontalDivider
 import dev.msfjarvis.claw.database.local.PostComments
 import dev.msfjarvis.claw.model.Comment
 
@@ -16,8 +14,7 @@ internal data class CommentNode(
   var parent: CommentNode? = null,
   val children: MutableList<CommentNode> = mutableListOf(),
   val isUnread: Boolean = false,
-  var isExpanded: Boolean = true,
-  var indentLevel: Int,
+  val indentLevel: Int,
 ) {
 
   fun addChild(child: CommentNode) {
@@ -25,27 +22,26 @@ internal data class CommentNode(
       children.add(child)
       child.parent = this
     } else {
-      child.indentLevel += 1
-      children.lastOrNull()?.addChild(child)
+      children
+        .lastOrNull()
+        ?.addChild(
+          CommentNode(
+            comment = child.comment,
+            parent = child.parent,
+            isUnread = child.isUnread,
+            indentLevel = child.indentLevel + 1,
+          )
+        )
     }
-  }
-
-  fun setExpanded(expanded: Boolean): CommentNode {
-    this.isExpanded = expanded
-
-    if (children.isNotEmpty()) {
-      children.forEach { it.setExpanded(expanded) }
-    }
-    return this
   }
 }
 
 internal fun createListNode(
   comments: List<Comment>,
-  commentState: PostComments?,
+  commentState: PostComments,
 ): MutableList<CommentNode> {
   val commentNodes = mutableListOf<CommentNode>()
-  val isUnread = { id: String -> commentState?.commentIds?.contains(id) == false }
+  val isUnread = { id: String -> !commentState.commentIds.contains(id) }
 
   for (i in comments.indices) {
     if (comments[i].parentComment == null) {
@@ -57,71 +53,16 @@ internal fun createListNode(
         )
       )
     } else {
-      commentNodes.lastOrNull()?.let {
-        it.addChild(
+      commentNodes.lastOrNull()?.let { commentNode ->
+        commentNode.addChild(
           CommentNode(
             comment = comments[i],
             isUnread = isUnread(comments[i].shortId),
-            indentLevel = it.indentLevel + 1,
+            indentLevel = commentNode.indentLevel + 1,
           )
         )
       }
     }
   }
-
   return commentNodes
-}
-
-internal tailrec fun findTopMostParent(node: CommentNode): CommentNode {
-  val parent = node.parent
-  return if (parent != null) {
-    findTopMostParent(parent)
-  } else {
-    node
-  }
-}
-
-internal fun LazyListScope.nodes(
-  nodes: List<CommentNode>,
-  htmlConverter: HTMLConverter,
-  toggleExpanded: (CommentNode) -> Unit,
-  openUserProfile: (String) -> Unit,
-) {
-  nodes.forEach { node ->
-    node(
-      node = node,
-      htmlConverter = htmlConverter,
-      toggleExpanded = toggleExpanded,
-      openUserProfile = openUserProfile,
-    )
-  }
-}
-
-private fun LazyListScope.node(
-  node: CommentNode,
-  htmlConverter: HTMLConverter,
-  toggleExpanded: (CommentNode) -> Unit,
-  openUserProfile: (String) -> Unit,
-) {
-  // Skip the node if neither the node nor its parent is expanded
-  if (!node.isExpanded && node.parent?.isExpanded == false) {
-    return
-  }
-  item(key = node.comment.shortId) {
-    CommentEntry(
-      commentNode = node,
-      htmlConverter = htmlConverter,
-      toggleExpanded = toggleExpanded,
-      openUserProfile = openUserProfile,
-    )
-    HorizontalDivider()
-  }
-  if (node.children.isNotEmpty()) {
-    nodes(
-      node.children,
-      htmlConverter = htmlConverter,
-      toggleExpanded = toggleExpanded,
-      openUserProfile = openUserProfile,
-    )
-  }
 }

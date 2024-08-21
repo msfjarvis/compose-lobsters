@@ -7,11 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Opening posts you have previously seen will show the number of new comments since last visit
+
 ### Changed
 
 - Change submitter text to 'authored' when applicable
 - Unread comments now have a brighter background rather than a text badge
-- Opening posts you have previously seen will show the number of new comments since last visit
 - Bottom navigation's visibility now interacts with the scroll behavior of the post lists
 
 ## [1.48.0] - 2024-06-05

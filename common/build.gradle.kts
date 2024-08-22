@@ -29,8 +29,6 @@ androidComponents { beforeVariants { (it as HasUnitTestBuilder).enableUnitTest =
 
 anvil { generateDaggerFactories.set(true) }
 
-composeCompiler { enableStrongSkippingMode = true }
-
 dependencies {
   api(libs.androidx.compose.ui)
   api(libs.dagger)

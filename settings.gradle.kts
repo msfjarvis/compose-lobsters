@@ -50,6 +50,7 @@ pluginManagement {
     maven("https://oss.sonatype.org/content/repositories/snapshots/") {
       name = "Sonatype Snapshots"
       content { includeGroup("dev.msfjarvis.whetstone") }
+      content { includeGroup("dev.drewhamilton.poko") }
       mavenContent { snapshotsOnly() }
     }
     maven("https://s01.oss.sonatype.org/content/repositories/snapshots/") {
@@ -97,6 +98,7 @@ dependencyResolutionManagement {
     maven("https://oss.sonatype.org/content/repositories/snapshots/") {
       name = "Sonatype Snapshots"
       content { includeGroup("dev.msfjarvis.whetstone") }
+      content { includeGroup("dev.drewhamilton.poko") }
       mavenContent { snapshotsOnly() }
     }
     mavenCentral { mavenContent { releasesOnly() } }

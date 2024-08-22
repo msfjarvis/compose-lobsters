@@ -32,7 +32,7 @@ class KotlinKaptPlugin : Plugin<Project> {
             // https://github.com/google/dagger/commit/0d2505a727b54f47b8677f42dd4fc5c1924e37f5
             option("-Adagger.experimentalDaggerErrorMessages=enabled")
             // KAPT nests errors causing real issues to be suppressed in CI logs
-            option("-Xmaxerrs", 500)
+            option("-Xmaxerrs", "500")
             // Enables per-module validation for faster error detection
             // https://github.com/google/dagger/commit/325b516ac6a53d3fc973d247b5231fafda9870a2
             option("-Adagger.moduleBindingValidation=ERROR")

@@ -70,6 +70,10 @@ fun rememberPostActions(
         context.startActivity(shareIntent)
       }
 
+      override fun isPostRead(post: UIPost): Boolean = viewModel.isPostRead(post)
+
+      override fun isPostSaved(post: UIPost): Boolean = viewModel.isPostSaved(post)
+
       override suspend fun getComments(postId: String): UIPost {
         return viewModel.getPostComments(postId)
       }

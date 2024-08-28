@@ -22,6 +22,10 @@ interface PostActions {
 
   fun share(post: UIPost)
 
+  fun isPostRead(post: UIPost): Boolean
+
+  fun isPostSaved(post: UIPost): Boolean
+
   suspend fun getComments(postId: String): UIPost
 
   suspend fun getLinkMetadata(url: String): LinkMetadata

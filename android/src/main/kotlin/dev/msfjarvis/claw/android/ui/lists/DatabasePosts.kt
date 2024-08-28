@@ -54,7 +54,7 @@ fun DatabasePosts(
         items.forEach { (month, posts) ->
           stickyHeader(contentType = "month-header") { MonthHeader(label = month) }
           items(items = posts, key = { it.shortId }, contentType = { "LobstersItem" }) { item ->
-            LobstersListItem(item = item, refresh = {}, postActions = postActions)
+            LobstersListItem(item = item, postActions = postActions)
             HorizontalDivider()
           }
         }

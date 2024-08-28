@@ -73,11 +73,7 @@ fun NetworkPosts(
         ) { index ->
           val item = lazyPagingItems[index]
           if (item != null) {
-            LobstersListItem(
-              item = item,
-              postActions = postActions,
-              refresh = { lazyPagingItems.refresh() },
-            )
+            LobstersListItem(item = item, postActions = postActions)
             HorizontalDivider()
           }
         }

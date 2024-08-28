@@ -16,6 +16,7 @@ import dev.msfjarvis.claw.model.toSavedPost
 import io.github.aakira.napier.Napier
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.withContext
 
 class SavedPostsRepository
@@ -27,7 +28,7 @@ constructor(
   val savedPosts = savedPostQueries.selectAllPosts().asFlow().mapToList(dbDispatcher)
 
   suspend fun toggleSave(post: UIPost) {
-    if (post.isSaved) {
+    if (savedPosts.firstOrNull().orEmpty().any { it.shortId == post.shortId }) {
       Napier.d(tag = TAG) { "Removing post: ${post.shortId}" }
       withContext(dbDispatcher) { savedPostQueries.deletePost(post.shortId) }
     } else {

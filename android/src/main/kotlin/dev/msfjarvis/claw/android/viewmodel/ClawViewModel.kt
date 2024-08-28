@@ -133,6 +133,14 @@ constructor(
     }
   }
 
+  fun isPostRead(post: UIPost): Boolean {
+    return _readPosts.contains(post.shortId)
+  }
+
+  fun isPostSaved(post: UIPost): Boolean {
+    return _savedPosts.contains(post.shortId)
+  }
+
   suspend fun getPostComments(postId: String) =
     withContext(ioDispatcher) {
       when (val result = api.getPostDetails(postId)) {

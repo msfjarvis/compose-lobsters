@@ -27,8 +27,6 @@ data class UIPost(
   @SerialName("submitter_user") val submitter: String,
   val tags: List<String>,
   val comments: List<Comment> = emptyList(),
-  val isSaved: Boolean = false,
-  val isRead: Boolean = false,
   val userIsAuthor: Boolean = false,
 ) {
   @KonvertFrom(
@@ -37,7 +35,6 @@ data class UIPost(
       [
         Mapping(target = "submitter", expression = "it.submitterName"),
         Mapping(target = "commentCount", expression = "it.commentCount ?: 0"),
-        Mapping(target = "isSaved", expression = "true"),
       ],
   )
   companion object

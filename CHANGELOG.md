@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Opening posts you have previously seen will show the number of new comments since last visit
 
+### Fixed
+
+- Saving posts no longer triggers a page refresh that invalidates scroll position
+
 ### Changed
 
 - Change submitter text to 'authored' when applicable

@@ -7,6 +7,7 @@
 package dev.msfjarvis.claw.android.ui.lists
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListState
@@ -32,6 +33,7 @@ fun SearchList(
   searchQuery: String,
   setSearchQuery: (String) -> Unit,
   modifier: Modifier = Modifier,
+  contentPadding: PaddingValues = PaddingValues(),
 ) {
   val lazyPagingItems = items.collectAsLazyPagingItems()
   val triggerSearch = { query: String ->
@@ -49,6 +51,7 @@ fun SearchList(
       lazyPagingItems = lazyPagingItems,
       listState = listState,
       postActions = postActions,
+      contentPadding = contentPadding,
     )
   }
 }

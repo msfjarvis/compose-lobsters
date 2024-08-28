@@ -38,6 +38,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -60,23 +61,14 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 
 @Composable
-fun LobstersCard(
-  post: UIPost,
-  postActions: PostActions,
-  refresh: () -> Unit,
-  modifier: Modifier = Modifier,
-) {
-  var localReadState by remember(post) { mutableStateOf(post.isRead) }
-  var localSavedState by remember(post) { mutableStateOf(post.isSaved) }
+fun LobstersCard(post: UIPost, postActions: PostActions, modifier: Modifier = Modifier) {
+  val readState by remember(post.shortId) { derivedStateOf { postActions.isPostRead(post) } }
+  val savedState by remember(post.shortId) { derivedStateOf { postActions.isPostSaved(post) } }
   Box(
     modifier =
       modifier
         .fillMaxWidth()
-        .clickable {
-          postActions.viewPost(post.shortId, post.url, post.commentsUrl)
-          localReadState = true
-          refresh()
-        }
+        .clickable { postActions.viewPost(post.shortId, post.url, post.commentsUrl) }
         .background(MaterialTheme.colorScheme.background)
         .padding(start = 8.dp, top = 2.dp, bottom = 2.dp)
   ) {
@@ -86,7 +78,7 @@ fun LobstersCard(
     ) {
       PostDetails(
         post = post,
-        isRead = localReadState,
+        isRead = { readState },
         singleLineTitle = true,
         modifier = Modifier.weight(1f),
       )
@@ -94,26 +86,14 @@ fun LobstersCard(
         modifier = Modifier.wrapContentHeight(),
         horizontalAlignment = Alignment.CenterHorizontally,
       ) {
-        SaveButton(
-          isSaved = localSavedState,
-          modifier =
-            Modifier.clickable(role = Role.Button) {
-              localSavedState = !localSavedState
-              postActions.toggleSave(post)
-              refresh()
-            },
-        )
+        SaveButton(isSaved = { savedState }, onClick = { postActions.toggleSave(post) })
         HorizontalDivider(modifier = Modifier.width(48.dp))
         CommentsButton(
           commentCount = post.commentCount,
           modifier =
             Modifier.clickable(
               role = Role.Button,
-              onClick = {
-                postActions.viewComments(post.shortId)
-                localReadState = true
-                refresh()
-              },
+              onClick = { postActions.viewComments(post.shortId) },
             ),
         )
       }
@@ -124,12 +104,12 @@ fun LobstersCard(
 @Composable
 fun PostDetails(
   post: UIPost,
-  isRead: Boolean,
+  isRead: () -> Boolean,
   singleLineTitle: Boolean,
   modifier: Modifier = Modifier,
 ) {
   Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
-    PostTitle(title = post.title, isRead = isRead, singleLineTitle = singleLineTitle)
+    PostTitle(title = post.title, isRead = isRead(), singleLineTitle = singleLineTitle)
     TagRow(tags = post.tags.toImmutableList())
     Spacer(Modifier.height(4.dp))
     Submitter(
@@ -190,14 +170,19 @@ internal fun Submitter(
 }
 
 @Composable
-private fun SaveButton(isSaved: Boolean, modifier: Modifier = Modifier) {
-  Crossfade(targetState = isSaved, label = "save-button") { saved ->
+private fun SaveButton(isSaved: () -> Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
+  var localSavedState by remember { mutableStateOf(isSaved()) }
+  Crossfade(targetState = localSavedState, label = "save-button") { saved ->
     Box(modifier = modifier.minimumInteractiveComponentSize()) {
       Icon(
         imageVector = if (saved) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
         tint = MaterialTheme.colorScheme.secondary,
         contentDescription = if (saved) "Remove from saved posts" else "Add to saved posts",
-        modifier = Modifier.align(Alignment.Center).testTag("save_button"),
+        modifier =
+          Modifier.align(Alignment.Center).testTag("save_button").clickable(role = Role.Button) {
+            onClick()
+            localSavedState = !localSavedState
+          },
       )
     }
   }
@@ -267,6 +252,14 @@ val TEST_POST_ACTIONS =
 
     override fun share(post: UIPost) {}
 
+    override fun isPostRead(post: UIPost): Boolean {
+      return true
+    }
+
+    override fun isPostSaved(post: UIPost): Boolean {
+      return true
+    }
+
     override suspend fun getComments(postId: String): UIPost {
       return UIPost(
         shortId = "ooga",
@@ -299,12 +292,10 @@ val TEST_POST =
     submitter = "Haki",
     tags = listOf("databases", "apis"),
     description = "",
-    isSaved = true,
-    isRead = true,
   )
 
 @ThemePreviews
 @Composable
 private fun LobstersCardPreview() {
-  LobstersTheme { LobstersCard(post = TEST_POST, postActions = TEST_POST_ACTIONS, refresh = {}) }
+  LobstersTheme { LobstersCard(post = TEST_POST, postActions = TEST_POST_ACTIONS) }
 }

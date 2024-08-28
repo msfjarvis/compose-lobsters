@@ -13,31 +13,37 @@ import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.BottomAppBarScrollBehavior
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.HazeStyle
+import dev.chrisbanes.haze.hazeChild
 import dev.msfjarvis.claw.android.ui.navigation.Destination
 import dev.msfjarvis.claw.android.ui.navigation.matches
+import dev.msfjarvis.claw.common.ui.FloatingNavigationBar
 import kotlinx.collections.immutable.ImmutableList
 
 const val AnimationDuration = 100
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ClawNavigationBar(
   navController: NavController,
   items: ImmutableList<NavigationItem>,
   isVisible: Boolean,
-  scrollBehavior: BottomAppBarScrollBehavior,
+  hazeState: HazeState,
   modifier: Modifier = Modifier,
 ) {
   AnimatedVisibility(
@@ -54,40 +60,60 @@ fun ClawNavigationBar(
         targetOffsetY = { fullHeight -> fullHeight },
         animationSpec = tween(durationMillis = AnimationDuration, easing = FastOutLinearInEasing),
       ),
-    modifier = Modifier,
-  ) {
-    BottomAppBar(modifier = modifier, scrollBehavior = scrollBehavior) {
-      val navBackStackEntry = navController.currentBackStackEntryAsState().value
-      val currentDestination = navBackStackEntry?.destination
-      items.forEach { navItem ->
-        val isSelected = currentDestination.matches(navItem.destination)
-        NavigationBarItem(
-          icon = {
-            Crossfade(isSelected, label = "nav-label") {
-              Icon(
-                imageVector = if (it) navItem.selectedIcon else navItem.icon,
-                contentDescription = navItem.label.replaceFirstChar(Char::uppercase),
-              )
-            }
-          },
-          label = { Text(text = navItem.label) },
-          selected = isSelected,
-          onClick = {
-            if (isSelected) {
-              navItem.listStateResetCallback()
-            } else {
-              navController.navigate(navItem.destination) {
-                popUpTo(navController.graph.startDestinationId) { saveState = true }
-                launchSingleTop = true
-                restoreState = true
+    label = "",
+    content = {
+      FloatingNavigationBar(
+        tonalElevation = 16.dp,
+        shape = MaterialTheme.shapes.extraLarge,
+        modifier =
+          modifier
+            .padding(horizontal = 16.dp)
+            .navigationBarsPadding()
+            .clip(MaterialTheme.shapes.extraLarge)
+            .hazeChild(
+              hazeState,
+              style =
+                HazeStyle(
+                  backgroundColor = MaterialTheme.colorScheme.surface,
+                  tints = emptyList(),
+                  blurRadius = 24.dp,
+                  noiseFactor = 0f,
+                ),
+            ),
+        containerColor = Color.Transparent,
+      ) {
+        val navBackStackEntry = navController.currentBackStackEntryAsState().value
+        val currentDestination = navBackStackEntry?.destination
+        items.forEach { navItem ->
+          val isSelected = currentDestination.matches(navItem.destination)
+          NavigationBarItem(
+            icon = {
+              Crossfade(isSelected, label = "nav-label") {
+                Icon(
+                  imageVector = if (it) navItem.selectedIcon else navItem.icon,
+                  contentDescription = navItem.label.replaceFirstChar(Char::uppercase),
+                )
               }
-            }
-          },
-          modifier = Modifier.testTag(navItem.label.uppercase()),
-        )
+            },
+            label = { Text(text = navItem.label) },
+            selected = isSelected,
+            onClick = {
+              if (isSelected) {
+                navItem.listStateResetCallback()
+              } else {
+                navController.navigate(navItem.destination) {
+                  popUpTo(navController.graph.startDestinationId) { saveState = true }
+                  launchSingleTop = true
+                  restoreState = true
+                }
+              }
+            },
+            modifier = Modifier.testTag(navItem.label.uppercase()),
+          )
+        }
       }
-    }
-  }
+    },
+  )
 }
 
 class NavigationItem(

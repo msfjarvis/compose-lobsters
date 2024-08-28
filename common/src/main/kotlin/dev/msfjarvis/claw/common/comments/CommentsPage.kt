@@ -7,6 +7,7 @@
 package dev.msfjarvis.claw.common.comments
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -34,6 +35,7 @@ fun CommentsPage(
   htmlConverter: HTMLConverter,
   getSeenComments: suspend (String) -> PostComments,
   markSeenComments: (String, List<Comment>) -> Unit,
+  contentPadding: PaddingValues,
   modifier: Modifier = Modifier,
   openUserProfile: (String) -> Unit,
 ) {
@@ -59,6 +61,7 @@ fun CommentsPage(
         commentState = commentState,
         markSeenComments = markSeenComments,
         openUserProfile = openUserProfile,
+        contentPadding = contentPadding,
         modifier = modifier.fillMaxSize(),
       )
     }

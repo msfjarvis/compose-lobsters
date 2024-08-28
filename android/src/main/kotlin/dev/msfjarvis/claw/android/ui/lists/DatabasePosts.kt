@@ -10,6 +10,7 @@ import androidx.activity.compose.ReportDrawn
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -36,6 +37,7 @@ fun DatabasePosts(
   items: ImmutableMap<String, List<UIPost>>,
   listState: LazyListState,
   postActions: PostActions,
+  contentPadding: PaddingValues,
   modifier: Modifier = Modifier,
 ) {
   ReportDrawn()
@@ -50,11 +52,11 @@ fun DatabasePosts(
         Text(text = "No saved posts", style = MaterialTheme.typography.headlineSmall)
       }
     } else {
-      LazyColumn(state = listState) {
+      LazyColumn(state = listState, contentPadding = contentPadding) {
         items.forEach { (month, posts) ->
           stickyHeader(contentType = "month-header") { MonthHeader(label = month) }
           items(items = posts, key = { it.shortId }, contentType = { "LobstersItem" }) { item ->
-            LobstersListItem(item = item, refresh = {}, postActions = postActions)
+            LobstersListItem(item = item, postActions = postActions)
             HorizontalDivider()
           }
         }

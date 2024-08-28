@@ -13,11 +13,13 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.LibraryBooks
 import androidx.compose.material.icons.filled.Bookmarks
@@ -55,10 +57,11 @@ fun SettingsScreen(
   importPosts: suspend (InputStream) -> Unit,
   exportPostsAsJson: suspend (OutputStream) -> Unit,
   exportPostsAsHtml: suspend (OutputStream) -> Unit,
+  contentPadding: PaddingValues,
   modifier: Modifier = Modifier,
 ) {
   val coroutineScope = rememberCoroutineScope()
-  Box(modifier = modifier.fillMaxSize()) {
+  Box(modifier = modifier.padding(contentPadding).fillMaxSize()) {
     Column {
       ListItem(
         headlineContent = { Text("Data transfer") },

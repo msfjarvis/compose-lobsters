@@ -7,7 +7,7 @@
 package dev.msfjarvis.claw.android.ui.lists
 
 import androidx.activity.compose.ReportDrawnWhen
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -17,7 +17,12 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -35,9 +40,6 @@ import dev.msfjarvis.claw.common.ui.NetworkError
 import dev.msfjarvis.claw.common.ui.ProgressBar
 import dev.msfjarvis.claw.common.ui.preview.DevicePreviews
 import dev.msfjarvis.claw.model.UIPost
-import eu.bambooapps.material3.pullrefresh.PullRefreshIndicator
-import eu.bambooapps.material3.pullrefresh.pullRefresh
-import eu.bambooapps.material3.pullrefresh.rememberPullRefreshState
 import kotlinx.coroutines.flow.MutableStateFlow
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -46,21 +48,33 @@ fun NetworkPosts(
   lazyPagingItems: LazyPagingItems<UIPost>,
   listState: LazyListState,
   postActions: PostActions,
+  contentPadding: PaddingValues,
   modifier: Modifier = Modifier,
 ) {
   ReportDrawnWhen { lazyPagingItems.itemCount > 0 }
-  val refreshLoadState = lazyPagingItems.loadState.refresh
-  val isRefreshing = refreshLoadState == LoadState.Loading && lazyPagingItems.itemCount == 0
-  val pullRefreshState = rememberPullRefreshState(isRefreshing, lazyPagingItems::refresh)
-  Box(modifier = modifier.fillMaxSize().pullRefresh(pullRefreshState)) {
+  val refreshLoadState by rememberUpdatedState(lazyPagingItems.loadState.refresh)
+  val state = rememberPullToRefreshState()
+  PullToRefreshBox(
+    modifier = modifier.fillMaxSize(),
+    isRefreshing = refreshLoadState == LoadState.Loading,
+    state = state,
+    onRefresh = { lazyPagingItems.refresh() },
+    indicator = {
+      PullToRefreshDefaults.Indicator(
+        state = state,
+        isRefreshing = refreshLoadState == LoadState.Loading,
+        modifier = Modifier.align(Alignment.TopCenter),
+      )
+    },
+  ) {
     if (lazyPagingItems.itemCount == 0 && refreshLoadState is LoadState.Error) {
       NetworkError(
         label = "Failed to load posts",
-        error = refreshLoadState.error,
+        error = (refreshLoadState as LoadState.Error).error,
         modifier = Modifier.align(Alignment.Center),
       )
     } else {
-      LazyColumn(state = listState) {
+      LazyColumn(contentPadding = contentPadding, state = listState) {
         items(
           count = lazyPagingItems.itemCount,
           key = lazyPagingItems.itemKey { it.shortId },
@@ -68,11 +82,7 @@ fun NetworkPosts(
         ) { index ->
           val item = lazyPagingItems[index]
           if (item != null) {
-            LobstersListItem(
-              item = item,
-              postActions = postActions,
-              refresh = { lazyPagingItems.refresh() },
-            )
+            LobstersListItem(item = item, postActions = postActions)
             HorizontalDivider()
           }
         }
@@ -88,12 +98,6 @@ fun NetworkPosts(
         }
       }
     }
-    PullRefreshIndicator(
-      refreshing = isRefreshing,
-      state = pullRefreshState,
-      modifier = Modifier.align(Alignment.TopCenter),
-      shadowElevation = 6.dp, // From M2 implementation
-    )
   }
 }
 
@@ -107,6 +111,7 @@ private fun ListPreview() {
       lazyPagingItems = flow.collectAsLazyPagingItems(),
       listState = rememberLazyListState(),
       postActions = TEST_POST_ACTIONS,
+      contentPadding = PaddingValues(),
     )
   }
 }

@@ -52,6 +52,7 @@ internal fun CommentsPageInternal(
   commentState: PostComments,
   markSeenComments: (String, List<Comment>) -> Unit,
   openUserProfile: (String) -> Unit,
+  contentPadding: PaddingValues,
   modifier: Modifier = Modifier,
 ) {
   val context = LocalContext.current
@@ -68,7 +69,7 @@ internal fun CommentsPageInternal(
   }
 
   Surface(color = MaterialTheme.colorScheme.surfaceVariant) {
-    LazyColumn(modifier = modifier, contentPadding = PaddingValues(bottom = 24.dp)) {
+    LazyColumn(modifier = modifier, contentPadding = contentPadding) {
       item {
         CommentsHeader(
           post = details,

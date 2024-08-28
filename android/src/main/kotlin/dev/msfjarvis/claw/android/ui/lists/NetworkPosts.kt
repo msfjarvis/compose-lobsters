@@ -18,6 +18,9 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -49,14 +52,18 @@ fun NetworkPosts(
   modifier: Modifier = Modifier,
 ) {
   ReportDrawnWhen { lazyPagingItems.itemCount > 0 }
-  val refreshLoadState = lazyPagingItems.loadState.refresh
-  val isRefreshing = refreshLoadState == LoadState.Loading && lazyPagingItems.itemCount == 0
+  val isRefreshing by
+    remember(lazyPagingItems) {
+      derivedStateOf {
+        lazyPagingItems.loadState.refresh == LoadState.Loading && lazyPagingItems.itemCount == 0
+      }
+    }
   val pullRefreshState = rememberPullRefreshState(isRefreshing, lazyPagingItems::refresh)
   Box(modifier = modifier.fillMaxSize().pullRefresh(pullRefreshState)) {
-    if (lazyPagingItems.itemCount == 0 && refreshLoadState is LoadState.Error) {
+    if (lazyPagingItems.itemCount == 0 && lazyPagingItems.loadState.refresh is LoadState.Error) {
       NetworkError(
         label = "Failed to load posts",
-        error = refreshLoadState.error,
+        error = (lazyPagingItems.loadState.refresh as LoadState.Error).error,
         modifier = Modifier.align(Alignment.Center),
       )
     } else {

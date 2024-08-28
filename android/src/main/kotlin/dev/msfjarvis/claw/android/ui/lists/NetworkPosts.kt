@@ -7,7 +7,6 @@
 package dev.msfjarvis.claw.android.ui.lists
 
 import androidx.activity.compose.ReportDrawnWhen
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -17,10 +16,12 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -38,9 +39,6 @@ import dev.msfjarvis.claw.common.ui.NetworkError
 import dev.msfjarvis.claw.common.ui.ProgressBar
 import dev.msfjarvis.claw.common.ui.preview.DevicePreviews
 import dev.msfjarvis.claw.model.UIPost
-import eu.bambooapps.material3.pullrefresh.PullRefreshIndicator
-import eu.bambooapps.material3.pullrefresh.pullRefresh
-import eu.bambooapps.material3.pullrefresh.rememberPullRefreshState
 import kotlinx.coroutines.flow.MutableStateFlow
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -52,16 +50,25 @@ fun NetworkPosts(
   modifier: Modifier = Modifier,
 ) {
   ReportDrawnWhen { lazyPagingItems.itemCount > 0 }
-  val isRefreshing by
-    remember(lazyPagingItems) {
-      derivedStateOf { lazyPagingItems.loadState.refresh == LoadState.Loading }
-    }
-  val pullRefreshState = rememberPullRefreshState(isRefreshing, lazyPagingItems::refresh)
-  Box(modifier = modifier.fillMaxSize().pullRefresh(pullRefreshState)) {
-    if (lazyPagingItems.itemCount == 0 && lazyPagingItems.loadState.refresh is LoadState.Error) {
+  val refreshLoadState by rememberUpdatedState(lazyPagingItems.loadState.refresh)
+  val state = rememberPullToRefreshState()
+  PullToRefreshBox(
+    modifier = modifier.fillMaxSize(),
+    isRefreshing = refreshLoadState == LoadState.Loading,
+    state = state,
+    onRefresh = { lazyPagingItems.refresh() },
+    indicator = {
+      PullToRefreshDefaults.Indicator(
+        state = state,
+        isRefreshing = refreshLoadState == LoadState.Loading,
+        modifier = Modifier.align(Alignment.TopCenter),
+      )
+    },
+  ) {
+    if (lazyPagingItems.itemCount == 0 && refreshLoadState is LoadState.Error) {
       NetworkError(
         label = "Failed to load posts",
-        error = (lazyPagingItems.loadState.refresh as LoadState.Error).error,
+        error = (refreshLoadState as LoadState.Error).error,
         modifier = Modifier.align(Alignment.Center),
       )
     } else {
@@ -89,12 +96,6 @@ fun NetworkPosts(
         }
       }
     }
-    PullRefreshIndicator(
-      refreshing = isRefreshing,
-      state = pullRefreshState,
-      modifier = Modifier.align(Alignment.TopCenter),
-      shadowElevation = 6.dp, // From M2 implementation
-    )
   }
 }
 

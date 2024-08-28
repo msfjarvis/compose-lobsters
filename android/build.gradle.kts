@@ -100,7 +100,6 @@ dependencies {
   implementation(libs.kotlinx.coroutines.core)
   implementation(libs.kotlinx.serialization.core)
   implementation(libs.kotlinx.serialization.json)
-  implementation(libs.material3.pulltorefresh)
   implementation(libs.napier)
   implementation(libs.okhttp.core)
   implementation(libs.okhttp.loggingInterceptor)

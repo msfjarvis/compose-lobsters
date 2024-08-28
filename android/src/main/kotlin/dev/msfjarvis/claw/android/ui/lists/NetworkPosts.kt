@@ -54,9 +54,7 @@ fun NetworkPosts(
   ReportDrawnWhen { lazyPagingItems.itemCount > 0 }
   val isRefreshing by
     remember(lazyPagingItems) {
-      derivedStateOf {
-        lazyPagingItems.loadState.refresh == LoadState.Loading && lazyPagingItems.itemCount == 0
-      }
+      derivedStateOf { lazyPagingItems.loadState.refresh == LoadState.Loading }
     }
   val pullRefreshState = rememberPullRefreshState(isRefreshing, lazyPagingItems::refresh)
   Box(modifier = modifier.fillMaxSize().pullRefresh(pullRefreshState)) {

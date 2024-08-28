@@ -100,7 +100,6 @@ fun LobstersCard(
             Modifier.clickable(role = Role.Button) {
               localSavedState = !localSavedState
               postActions.toggleSave(post)
-              refresh()
             },
         )
         HorizontalDivider(modifier = Modifier.width(48.dp))

@@ -13,7 +13,6 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
@@ -26,7 +25,6 @@ import androidx.compose.material.icons.filled.Whatshot
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.NewReleases
 import androidx.compose.material.icons.outlined.Whatshot
-import androidx.compose.material3.BottomAppBarDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -45,7 +43,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -61,6 +58,8 @@ import androidx.navigation.toRoute
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.deliveryhero.whetstone.compose.injectedViewModel
 import com.mikepenz.aboutlibraries.ui.compose.m3.LibrariesContainer
+import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.haze
 import dev.msfjarvis.claw.android.MainActivity
 import dev.msfjarvis.claw.android.R
 import dev.msfjarvis.claw.android.SearchActivity
@@ -111,8 +110,7 @@ fun LobstersPostsScreen(
   val coroutineScope = rememberCoroutineScope()
   val snackbarHostState = remember { SnackbarHostState() }
   val postActions = rememberPostActions(context, urlLauncher, navController, viewModel)
-
-  val scrollBehavior = BottomAppBarDefaults.exitAlwaysScrollBehavior()
+  val hazeState = remember { HazeState() }
 
   val hottestPosts = viewModel.hottestPosts.collectAsLazyPagingItems()
   val newestPosts = viewModel.newestPosts.collectAsLazyPagingItems()
@@ -209,17 +207,14 @@ fun LobstersPostsScreen(
           navController = navController,
           items = navItems,
           isVisible = currentDestination.any(navDestinations),
-          scrollBehavior = scrollBehavior,
+          hazeState = hazeState,
         )
       }
     },
     snackbarHost = { SnackbarHost(snackbarHostState) },
-    modifier =
-      modifier.nestedScroll(scrollBehavior.nestedScrollConnection).semantics {
-        testTagsAsResourceId = true
-      },
-  ) { paddingValues ->
-    Row(modifier = Modifier.padding(paddingValues)) {
+    modifier = modifier.semantics { testTagsAsResourceId = true },
+  ) { contentPadding ->
+    Row {
       AnimatedVisibility(visible = navigationType == ClawNavigationType.NAVIGATION_RAIL) {
         ClawNavigationRail(
           navController = navController,
@@ -234,6 +229,7 @@ fun LobstersPostsScreen(
         // Make animations 2x faster than default specs
         enterTransition = { fadeIn(animationSpec = tween(350)) },
         exitTransition = { fadeOut(animationSpec = tween(350)) },
+        modifier = Modifier.haze(hazeState),
       ) {
         composable<Hottest> {
           setWebUri("https://lobste.rs/")
@@ -241,6 +237,7 @@ fun LobstersPostsScreen(
             lazyPagingItems = hottestPosts,
             listState = hottestListState,
             postActions = postActions,
+            contentPadding = contentPadding,
           )
         }
         composable<Newest> {
@@ -249,11 +246,17 @@ fun LobstersPostsScreen(
             lazyPagingItems = newestPosts,
             listState = newestListState,
             postActions = postActions,
+            contentPadding = contentPadding,
           )
         }
         composable<Saved> {
           setWebUri(null)
-          DatabasePosts(items = savedPosts, listState = savedListState, postActions = postActions)
+          DatabasePosts(
+            items = savedPosts,
+            listState = savedListState,
+            postActions = postActions,
+            contentPadding = contentPadding,
+          )
         }
         composable<Comments> { backStackEntry ->
           val postId = backStackEntry.toRoute<Comments>().postId
@@ -264,6 +267,7 @@ fun LobstersPostsScreen(
             htmlConverter = htmlConverter,
             getSeenComments = viewModel::getSeenComments,
             markSeenComments = viewModel::markSeenComments,
+            contentPadding = contentPadding,
             openUserProfile = { navController.navigate(User(it)) },
           )
         }
@@ -273,6 +277,7 @@ fun LobstersPostsScreen(
           UserProfile(
             username = username,
             getProfile = viewModel::getUserProfile,
+            contentPadding = contentPadding,
             openUserProfile = { navController.navigate(User(it)) },
           )
         }
@@ -284,9 +289,12 @@ fun LobstersPostsScreen(
             exportPostsAsJson = viewModel::exportPostsAsJson,
             exportPostsAsHtml = viewModel::exportPostsAsHtml,
             snackbarHostState = snackbarHostState,
+            contentPadding = contentPadding,
           )
         }
-        composable<AboutLibraries> { LibrariesContainer(modifier = Modifier.fillMaxSize()) }
+        composable<AboutLibraries> {
+          LibrariesContainer(contentPadding = contentPadding, modifier = Modifier.fillMaxSize())
+        }
       }
     }
   }

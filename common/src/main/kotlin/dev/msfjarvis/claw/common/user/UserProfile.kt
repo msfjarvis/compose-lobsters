@@ -9,6 +9,7 @@ package dev.msfjarvis.claw.common.user
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
@@ -45,6 +46,7 @@ fun UserProfile(
   username: String,
   getProfile: suspend (username: String) -> User,
   openUserProfile: (String) -> Unit,
+  contentPadding: PaddingValues,
   modifier: Modifier = Modifier,
 ) {
   val user by
@@ -67,7 +69,7 @@ fun UserProfile(
     }
     is Error -> {
       val error = user as Error
-      Box(modifier = Modifier.fillMaxSize()) {
+      Box(modifier = Modifier.padding(contentPadding).fillMaxSize()) {
         NetworkError(
           label = error.description,
           error = error.error,

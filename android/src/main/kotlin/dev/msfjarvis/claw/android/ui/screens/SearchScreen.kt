@@ -6,7 +6,6 @@
  */
 package dev.msfjarvis.claw.android.ui.screens
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -39,12 +38,8 @@ fun SearchScreen(
   val navController = rememberNavController()
   val postActions = rememberPostActions(LocalContext.current, urlLauncher, navController, viewModel)
   val listState = rememberLazyListState()
-  Scaffold(modifier = modifier) { paddingValues ->
-    NavHost(
-      navController = navController,
-      startDestination = Search,
-      modifier = Modifier.padding(paddingValues),
-    ) {
+  Scaffold(modifier = modifier) { contentPadding ->
+    NavHost(navController = navController, startDestination = Search) {
       composable<Search> {
         setWebUri("https://lobste.rs/search")
         SearchList(
@@ -52,6 +47,7 @@ fun SearchScreen(
           listState = listState,
           postActions = postActions,
           searchQuery = viewModel.searchQuery,
+          contentPadding = contentPadding,
           setSearchQuery = { query -> viewModel.searchQuery = query },
         )
       }
@@ -65,6 +61,7 @@ fun SearchScreen(
           getSeenComments = viewModel::getSeenComments,
           markSeenComments = viewModel::markSeenComments,
           openUserProfile = { navController.navigate(User(it)) },
+          contentPadding = contentPadding,
         )
       }
       composable<User> { backStackEntry ->
@@ -74,6 +71,7 @@ fun SearchScreen(
           username = username,
           getProfile = viewModel::getUserProfile,
           openUserProfile = { navController.navigate(User(it)) },
+          contentPadding = contentPadding,
         )
       }
     }

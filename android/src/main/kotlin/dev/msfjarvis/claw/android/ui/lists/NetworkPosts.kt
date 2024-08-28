@@ -7,6 +7,7 @@
 package dev.msfjarvis.claw.android.ui.lists
 
 import androidx.activity.compose.ReportDrawnWhen
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -47,6 +48,7 @@ fun NetworkPosts(
   lazyPagingItems: LazyPagingItems<UIPost>,
   listState: LazyListState,
   postActions: PostActions,
+  contentPadding: PaddingValues,
   modifier: Modifier = Modifier,
 ) {
   ReportDrawnWhen { lazyPagingItems.itemCount > 0 }
@@ -72,7 +74,7 @@ fun NetworkPosts(
         modifier = Modifier.align(Alignment.Center),
       )
     } else {
-      LazyColumn(state = listState) {
+      LazyColumn(contentPadding = contentPadding, state = listState) {
         items(
           count = lazyPagingItems.itemCount,
           key = lazyPagingItems.itemKey { it.shortId },
@@ -109,6 +111,7 @@ private fun ListPreview() {
       lazyPagingItems = flow.collectAsLazyPagingItems(),
       listState = rememberLazyListState(),
       postActions = TEST_POST_ACTIONS,
+      contentPadding = PaddingValues(),
     )
   }
 }

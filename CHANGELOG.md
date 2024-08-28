@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Change submitter text to 'authored' when applicable
 - Unread comments now have a brighter background rather than a text badge
-- Bottom navigation's visibility now interacts with the scroll behavior of the post lists
+- Bottom navigation bar has been redesigned
 
 ## [1.48.0] - 2024-06-05
 

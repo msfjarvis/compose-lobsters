@@ -95,6 +95,8 @@ dependencies {
   implementation(libs.copydown)
   implementation(libs.dagger)
   implementation(libs.eithernet)
+  implementation(libs.haze)
+  implementation(libs.haze.materials)
   implementation(libs.javax.inject)
   implementation(libs.kotlinx.collections.immutable)
   implementation(libs.kotlinx.coroutines.core)

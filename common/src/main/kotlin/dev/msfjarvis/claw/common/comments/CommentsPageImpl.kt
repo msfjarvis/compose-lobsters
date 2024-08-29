@@ -14,7 +14,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.HorizontalDivider
@@ -80,7 +82,7 @@ internal fun CommentsPageInternal(
       }
 
       if (commentNodes.isNotEmpty()) {
-        item {
+        item(key = "comments_header") {
           Text(
             text = "Comments",
             style = MaterialTheme.typography.labelLarge,
@@ -88,7 +90,11 @@ internal fun CommentsPageInternal(
           )
         }
 
-        commentNodes.forEach { node -> item { Node(node, htmlConverter, openUserProfile) } }
+        commentNodes.forEach { node ->
+          item(key = node.comment.shortId) { Node(node, htmlConverter, openUserProfile) }
+        }
+
+        item(key = "bottom_spacer") { Spacer(modifier = Modifier.height(16.dp)) }
       } else {
         item {
           Text(

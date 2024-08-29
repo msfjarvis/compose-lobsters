@@ -80,7 +80,7 @@ internal fun CommentsPageInternal(
       }
 
       if (commentNodes.isNotEmpty()) {
-        item {
+        item(key = "comments_header") {
           Text(
             text = "Comments",
             style = MaterialTheme.typography.labelLarge,
@@ -88,7 +88,9 @@ internal fun CommentsPageInternal(
           )
         }
 
-        commentNodes.forEach { node -> item { Node(node, htmlConverter, openUserProfile) } }
+        commentNodes.forEach { node ->
+          item(key = node.comment.shortId) { Node(node, htmlConverter, openUserProfile) }
+        }
       } else {
         item {
           Text(

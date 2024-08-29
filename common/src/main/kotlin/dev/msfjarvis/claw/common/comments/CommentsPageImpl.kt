@@ -15,9 +15,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
@@ -94,7 +96,9 @@ internal fun CommentsPageInternal(
           item(key = node.comment.shortId) { Node(node, htmlConverter, openUserProfile) }
         }
 
-        item(key = "bottom_spacer") { Spacer(modifier = Modifier.height(16.dp)) }
+        item(key = "bottom_spacer") {
+          Spacer(modifier = Modifier.windowInsetsBottomHeight(WindowInsets.systemBars))
+        }
       } else {
         item {
           Text(

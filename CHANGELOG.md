@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.49.0] - 2024-08-29
+
 ### Added
 
 - Opening posts you have previously seen will show the number of new comments since last visit
@@ -452,7 +454,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.48.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.49.0...HEAD
+[1.49.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.48.0...v1.49.0
 [1.48.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.47.0...v1.48.0
 [1.47.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.46.0...v1.47.0
 [1.46.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.45.0...v1.46.0

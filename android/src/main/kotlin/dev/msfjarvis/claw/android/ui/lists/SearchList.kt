@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -32,15 +33,18 @@ fun SearchList(
   postActions: PostActions,
   searchQuery: String,
   setSearchQuery: (String) -> Unit,
+  contentPadding: PaddingValues,
   modifier: Modifier = Modifier,
-  contentPadding: PaddingValues = PaddingValues(),
 ) {
   val lazyPagingItems = items.collectAsLazyPagingItems()
   val triggerSearch = { query: String ->
     setSearchQuery(query)
     lazyPagingItems.refresh()
   }
-  Column(modifier = modifier.semantics { isTraversalGroup = true }.zIndex(1f).fillMaxWidth()) {
+  Column(
+    modifier =
+      modifier.systemBarsPadding().semantics { isTraversalGroup = true }.zIndex(1f).fillMaxWidth()
+  ) {
     SearchBar(
       value = searchQuery,
       onValueChange = setSearchQuery,

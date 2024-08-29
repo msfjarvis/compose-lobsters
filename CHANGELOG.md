@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Search bar draws under the status bar when hiding keyboard
+- Bottom of the comments page is cut off by the navigation bar
+- Rare crash in comments page
+
 ## [1.49.0] - 2024-08-29
 
 ### Added

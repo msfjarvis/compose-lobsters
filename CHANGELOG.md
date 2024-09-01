@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Pull to refresh indicator is no longer hiding behind the top app bar
+
 ## [1.50.0] - 2024-08-30
 
 ### Fixed

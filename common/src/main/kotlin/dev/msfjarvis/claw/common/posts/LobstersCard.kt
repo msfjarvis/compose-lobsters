@@ -70,7 +70,7 @@ fun LobstersCard(post: UIPost, postActions: PostActions, modifier: Modifier = Mo
         .fillMaxWidth()
         .clickable { postActions.viewPost(post.shortId, post.url, post.commentsUrl) }
         .background(MaterialTheme.colorScheme.background)
-        .padding(start = 8.dp, top = 2.dp, bottom = 2.dp)
+        .padding(start = 8.dp, top = 4.dp, bottom = 4.dp)
   ) {
     Row(
       horizontalArrangement = Arrangement.spacedBy(8.dp),

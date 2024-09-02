@@ -19,16 +19,14 @@ import androidx.compose.ui.semantics.isTraversalGroup
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import androidx.paging.PagingData
-import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.LazyPagingItems
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.ui.SearchBar
 import dev.msfjarvis.claw.model.UIPost
-import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun SearchList(
-  items: Flow<PagingData<UIPost>>,
+  lazyPagingItems: LazyPagingItems<UIPost>,
   listState: LazyListState,
   postActions: PostActions,
   searchQuery: String,
@@ -36,7 +34,6 @@ fun SearchList(
   contentPadding: PaddingValues,
   modifier: Modifier = Modifier,
 ) {
-  val lazyPagingItems = items.collectAsLazyPagingItems()
   val triggerSearch = { query: String ->
     setSearchQuery(query)
     lazyPagingItems.refresh()

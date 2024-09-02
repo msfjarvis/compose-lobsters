@@ -26,6 +26,7 @@ plugins {
   alias(libs.plugins.kotlin.composeCompiler)
   alias(libs.plugins.kotlin.serialization)
   alias(libs.plugins.navigation.safeargs)
+  alias(libs.plugins.screenshot)
 }
 
 android {
@@ -40,6 +41,7 @@ android {
     applicationIdSuffix = ".internal"
     debuggable(true)
   }
+  experimentalProperties["android.experimental.enableScreenshotTest"] = true
 }
 
 baselineProfile {
@@ -118,6 +120,8 @@ dependencies {
   implementation(projects.web)
 
   kapt(libs.dagger.compiler)
+
+  screenshotTestImplementation(libs.androidx.compose.ui.tooling)
 
   addTestDependencies(project)
   androidTestImplementation(libs.androidx.test.espresso.core)

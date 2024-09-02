@@ -15,6 +15,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.deliveryhero.whetstone.compose.injectedViewModel
 import dev.msfjarvis.claw.android.ui.lists.SearchList
 import dev.msfjarvis.claw.android.ui.navigation.Comments
@@ -38,12 +39,13 @@ fun SearchScreen(
   val navController = rememberNavController()
   val postActions = rememberPostActions(LocalContext.current, urlLauncher, navController, viewModel)
   val listState = rememberLazyListState()
+  val searchResults = viewModel.searchResults.collectAsLazyPagingItems()
   Scaffold(modifier = modifier) { contentPadding ->
     NavHost(navController = navController, startDestination = Search) {
       composable<Search> {
         setWebUri("https://lobste.rs/search")
         SearchList(
-          items = viewModel.searchResults,
+          lazyPagingItems = searchResults,
           listState = listState,
           postActions = postActions,
           searchQuery = viewModel.searchQuery,

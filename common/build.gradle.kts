@@ -7,6 +7,7 @@
 @file:Suppress("UnstableApiUsage")
 
 import com.android.build.api.variant.HasUnitTestBuilder
+import dev.msfjarvis.claw.gradle.addTestDependencies
 
 plugins {
   id("dev.msfjarvis.claw.android-library")
@@ -14,6 +15,7 @@ plugins {
   alias(libs.plugins.anvil)
   alias(libs.plugins.whetstone)
   alias(libs.plugins.kotlin.composeCompiler)
+  alias(libs.plugins.screenshot)
 }
 
 android {
@@ -23,6 +25,7 @@ android {
   }
   composeOptions { useLiveLiterals = false }
   namespace = "dev.msfjarvis.claw.common"
+  experimentalProperties["android.experimental.enableScreenshotTest"] = true
 }
 
 androidComponents { beforeVariants { (it as HasUnitTestBuilder).enableUnitTest = false } }
@@ -57,7 +60,11 @@ dependencies {
   implementation(libs.kotlinResult.coroutines)
   implementation(libs.napier)
 
+  screenshotTestImplementation(libs.androidx.compose.ui.tooling)
+
   compileOnly(libs.androidx.compose.ui.tooling.preview)
 
   runtimeOnly(libs.androidx.compose.ui.tooling)
+
+  addTestDependencies(project)
 }

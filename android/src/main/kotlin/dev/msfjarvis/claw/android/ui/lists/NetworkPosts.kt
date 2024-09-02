@@ -63,7 +63,7 @@ fun NetworkPosts(
       PullToRefreshDefaults.Indicator(
         state = state,
         isRefreshing = refreshLoadState == LoadState.Loading,
-        modifier = Modifier.align(Alignment.TopCenter),
+        modifier = Modifier.align(Alignment.TopCenter).padding(contentPadding),
       )
     },
   ) {

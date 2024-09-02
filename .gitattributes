@@ -3,3 +3,4 @@
 **/clawicons/** linguist-generated
 android/src/main/baseline-prof.txt linguist-generated -diff
 android/src/main/generated/** linguist-generated -diff
+**/screenshotTest/**/*.png filter=lfs diff=lfs merge=lfs -text

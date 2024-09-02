@@ -7,6 +7,7 @@
 @file:Suppress("UnstableApiUsage")
 
 import com.android.build.api.variant.HasUnitTestBuilder
+import dev.msfjarvis.claw.gradle.addTestDependencies
 
 plugins {
   id("dev.msfjarvis.claw.android-library")
@@ -64,4 +65,6 @@ dependencies {
   compileOnly(libs.androidx.compose.ui.tooling.preview)
 
   runtimeOnly(libs.androidx.compose.ui.tooling)
+
+  addTestDependencies(project)
 }

@@ -74,7 +74,7 @@ dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
 dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
 eithernet = "com.slack.eithernet:eithernet:1.9.0"
 haze = "dev.chrisbanes.haze:haze:0.9.0-beta01"
-haze-materials = "dev.chrisbanes.haze:haze-materials:0.9.0-alpha08"
+haze-materials = "dev.chrisbanes.haze:haze-materials:0.9.0-beta01"
 javax-inject = "javax.inject:javax.inject:1"
 jsoup = "org.jsoup:jsoup:1.18.1"
 junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit" }

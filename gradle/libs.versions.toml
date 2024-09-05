@@ -12,8 +12,8 @@ konvert = "3.2.2"
 kotlin = "2.0.20"
 kotlinResult = "2.0.0"
 leakcanary = "3.0-alpha-8"
-lifecycle = "2.8.4"
-navigation = "2.8.0-rc01"
+lifecycle = "2.8.5"
+navigation = "2.8.0"
 retrofit = "2.11.0"
 richtext = "1.0.0-alpha01"
 sentry-sdk = "7.14.0"
@@ -21,11 +21,11 @@ serialization = "1.7.2"
 store = "5.1.0-alpha04"
 sqldelight = "2.0.2"
 whetstone = "0.9.0-beta02"
-workmanager = "2.10.0-alpha02"
+workmanager = "2.10.0-alpha03"
 
 [libraries]
 aboutLibraries-m3 = { module = "com.mikepenz:aboutlibraries-compose-m3", version.ref = "aboutLibraries" }
-androidx-activity-compose = "androidx.activity:activity-compose:1.9.1"
+androidx-activity-compose = "androidx.activity:activity-compose:1.9.2"
 androidx-benchmark-macro-junit4 = { module = "androidx.benchmark:benchmark-macro-junit4", version.ref = "benchmark" }
 androidx-browser = "androidx.browser:browser:1.8.0"
 androidx-compose-animation = { module = "androidx.compose.animation:animation" }
@@ -44,12 +44,12 @@ androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling
 androidx-compose-ui-unit = { module = "androidx.compose.ui:ui-unit" }
 androidx-compose-ui-util = { module = "androidx.compose.ui:ui-util" }
 androidx-core = "androidx.core:core:1.13.1"
-androidx-core-splashscreen = "androidx.core:core-splashscreen:1.2.0-alpha01"
+androidx-core-splashscreen = "androidx.core:core-splashscreen:1.2.0-alpha02"
 androidx-lifecycle-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
-androidx-lint = "androidx.lint:lint-gradle:1.0.0-alpha01"
+androidx-lint = "androidx.lint:lint-gradle:1.0.0-alpha02"
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }
 androidx-paging-compose = "androidx.paging:paging-compose:3.3.2"
-androidx-profileinstaller = "androidx.profileinstaller:profileinstaller:1.4.0-beta01"
+androidx-profileinstaller = "androidx.profileinstaller:profileinstaller:1.4.0-rc01"
 androidx-test-core = "androidx.test:core:1.6.1"
 androidx-test-espresso-core = "androidx.test.espresso:espresso-core:3.6.1"
 androidx-test-ext-junit = "androidx.test.ext:junit:1.2.1"

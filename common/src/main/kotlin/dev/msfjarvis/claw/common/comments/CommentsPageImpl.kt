@@ -65,7 +65,11 @@ internal fun CommentsPageInternal(
     if (details.comments.isNotEmpty() && commentState.commentIds.isNotEmpty()) {
       val unreadCount = details.comments.size - commentState.commentIds.size
       if (unreadCount > 0) {
-        val text = "$unreadCount unread comments"
+        val text =
+          when (unreadCount) {
+            1 -> "$unreadCount unread comment"
+            else -> "$unreadCount unread comments"
+          }
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
       }
     }

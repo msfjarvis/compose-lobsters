@@ -54,6 +54,12 @@
       "allowedVersions": "!/.*-1-8$/",
     },
     {
+      "matchDepNames": [
+        "androidx.compose:compose-bom",
+      ],
+      "allowedVersions": "/.*-alpha$/",
+    },
+    {
       "matchPackagePatterns": [
         "^androidx.glance",
       ],
@@ -71,17 +77,6 @@
       "datasourceTemplate": "maven",
       "depNameTemplate": "com.facebook:ktfmt",
       "registryUrlTemplate": "https://repo1.maven.org/maven2/",
-    },
-    {
-      "fileMatch": [
-        "gradle/libs.versions.toml"
-      ],
-      "matchStrings": [
-        "composeCompiler = \"(?<currentValue>.*)\""
-      ],
-      "datasourceTemplate": "maven",
-      "depNameTemplate": "androidx.compose.compiler:compiler",
-      "registryUrlTemplate": "https://maven.google.com",
     },
   ],
 }

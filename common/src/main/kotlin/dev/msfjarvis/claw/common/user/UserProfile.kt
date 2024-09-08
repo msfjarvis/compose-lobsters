@@ -64,7 +64,7 @@ fun UserProfile(
       UserProfileInternal(
         user = (user as Success<User>).data,
         openUserProfile = openUserProfile,
-        modifier = modifier,
+        modifier = modifier.padding(contentPadding),
       )
     }
     is Error -> {
@@ -78,7 +78,7 @@ fun UserProfile(
       }
     }
     Loading -> {
-      Box(modifier = Modifier.fillMaxSize()) {
+      Box(modifier = Modifier.fillMaxSize().padding(contentPadding)) {
         ProgressBar(modifier = Modifier.align(Alignment.Center))
       }
     }

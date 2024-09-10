@@ -25,21 +25,14 @@ import org.gradle.kotlin.dsl.findByType
 
 class AndroidCommonPlugin : Plugin<Project> {
 
-  private companion object {
-    const val COMPILE_SDK = 35
-    const val MIN_SDK = 26
-    const val TARGET_SDK = 34
-    const val SLIM_TESTS_PROPERTY = "slimTests"
-  }
-
   override fun apply(project: Project) {
     project.configureSlimTests()
     project.pluginManager.apply(AndroidCacheFixPlugin::class)
     project.extensions.configure<BaseExtension> {
-      compileSdkVersion(COMPILE_SDK)
+      compileSdkVersion(35)
       defaultConfig {
-        minSdk = MIN_SDK
-        targetSdk = TARGET_SDK
+        minSdk = 26
+        targetSdk = 35
       }
 
       packagingOptions {
@@ -64,7 +57,7 @@ class AndroidCommonPlugin : Plugin<Project> {
   }
 
   private fun Project.configureSlimTests() {
-    if (!providers.gradleProperty(SLIM_TESTS_PROPERTY).isPresent) {
+    if (!providers.gradleProperty("slimTests").isPresent) {
       return
     }
     // Disable unit test tasks on the release build type for Android Library projects

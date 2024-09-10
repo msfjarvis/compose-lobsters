@@ -28,9 +28,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -61,6 +61,7 @@ internal fun CommentsPageInternal(
 ) {
   val context = LocalContext.current
   val commentNodes = createListNode(details.comments, commentState)
+  val collapsedComments = remember { mutableStateListOf<CommentNode>() }
   LaunchedEffect(key1 = commentNodes) {
     if (details.comments.isNotEmpty() && commentState.commentIds.isNotEmpty()) {
       val unreadCount = details.comments.size - commentState.commentIds.size
@@ -97,7 +98,21 @@ internal fun CommentsPageInternal(
         }
 
         commentNodes.forEach { node ->
-          item(key = node.comment.shortId) { Node(node, htmlConverter, openUserProfile) }
+          item(key = node.comment.shortId) {
+            Node(
+              node = node,
+              htmlConverter = htmlConverter,
+              isChildrenShown = { !collapsedComments.contains(it) },
+              toggleChildrenShown = {
+                if (collapsedComments.contains(it)) {
+                  collapsedComments.remove(it)
+                } else {
+                  collapsedComments.add(it)
+                }
+              },
+              openUserProfile = openUserProfile,
+            )
+          }
         }
 
         item(key = "bottom_spacer") {
@@ -126,23 +141,26 @@ internal fun CommentsPageInternal(
 private fun Node(
   node: CommentNode,
   htmlConverter: HTMLConverter,
+  isChildrenShown: (CommentNode) -> Boolean,
+  toggleChildrenShown: (CommentNode) -> Unit,
   openUserProfile: (String) -> Unit,
   modifier: Modifier = Modifier,
 ) {
+  val shown by produceState(true) { value = isChildrenShown(node) }
   Column(horizontalAlignment = Alignment.CenterHorizontally) {
-    var isChildrenShown by remember { mutableStateOf(true) }
-
     NodeBox(
       node = node,
-      isExpanded = isChildrenShown,
+      isExpanded = isChildrenShown(node),
       htmlConverter = htmlConverter,
       openUserProfile,
-      modifier = modifier.clickable(onClick = { isChildrenShown = !isChildrenShown }),
+      modifier = modifier.clickable(onClick = { toggleChildrenShown(node) }),
     )
 
-    if (isChildrenShown) {
+    if (isChildrenShown(node)) {
       Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
-        node.children.forEach { model -> Node(model, htmlConverter, openUserProfile) }
+        node.children.forEach { model ->
+          Node(model, htmlConverter, isChildrenShown, toggleChildrenShown, openUserProfile)
+        }
       }
     }
   }

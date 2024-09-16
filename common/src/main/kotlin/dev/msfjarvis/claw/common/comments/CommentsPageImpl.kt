@@ -53,7 +53,7 @@ internal fun CommentsPageInternal(
   details: UIPost,
   postActions: PostActions,
   htmlConverter: HTMLConverter,
-  commentState: PostComments,
+  commentState: PostComments?,
   markSeenComments: (String, List<Comment>) -> Unit,
   openUserProfile: (String) -> Unit,
   contentPadding: PaddingValues,
@@ -62,8 +62,8 @@ internal fun CommentsPageInternal(
   val context = LocalContext.current
   val commentNodes = createListNode(details.comments, commentState)
   LaunchedEffect(key1 = commentNodes) {
-    if (details.comments.isNotEmpty() && commentState.commentIds.isNotEmpty()) {
-      val unreadCount = details.comments.size - commentState.commentIds.size
+    if (details.comments.isNotEmpty() && !commentState?.commentIds.isNullOrEmpty()) {
+      val unreadCount = details.comments.size - (commentState?.commentIds?.size ?: 0)
       if (unreadCount > 0) {
         val text =
           when (unreadCount) {

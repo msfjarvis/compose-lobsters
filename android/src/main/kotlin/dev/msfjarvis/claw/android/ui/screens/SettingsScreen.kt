@@ -40,6 +40,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import dev.msfjarvis.claw.common.theme.LobstersTheme
+import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
 import java.io.InputStream
 import java.io.OutputStream
 import kotlinx.coroutines.CoroutineScope
@@ -209,4 +211,12 @@ private fun RowScope.ExportPosts(
 private suspend fun SnackbarHostState.showSnackbarDismissing(text: String) {
   currentSnackbarData?.dismiss()
   showSnackbar(text)
+}
+
+@ThemePreviews
+@Composable
+private fun SettingsScreenPreview() {
+  LobstersTheme {
+    SettingsScreen({}, SnackbarHostState(), { null }, { null }, {}, {}, {}, PaddingValues())
+  }
 }

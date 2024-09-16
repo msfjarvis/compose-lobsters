@@ -283,13 +283,15 @@ fun LobstersPostsScreen(
         }
         composable<Settings> {
           SettingsScreen(
-            context = context,
+            openInputStream = context.contentResolver::openInputStream,
+            openOutputStream = context.contentResolver::openOutputStream,
             openLibrariesScreen = { navController.navigate(AboutLibraries) },
             importPosts = viewModel::importPosts,
             exportPostsAsJson = viewModel::exportPostsAsJson,
             exportPostsAsHtml = viewModel::exportPostsAsHtml,
             snackbarHostState = snackbarHostState,
             contentPadding = contentPadding,
+            modifier = Modifier.fillMaxSize(),
           )
         }
         composable<AboutLibraries> {

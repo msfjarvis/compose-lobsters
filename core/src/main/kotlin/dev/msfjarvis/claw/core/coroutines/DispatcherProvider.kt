@@ -1,5 +1,5 @@
 /*
- * Copyright © 2022-2023 Harsh Shandilya.
+ * Copyright © 2022-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -11,10 +11,8 @@ package dev.msfjarvis.claw.core.coroutines
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 /** Interface to allow abstracting individual [CoroutineDispatcher]s out of class dependencies. */
-@OptIn(ExperimentalCoroutinesApi::class)
 interface DispatcherProvider {
 
   fun main(): CoroutineDispatcher = Dispatchers.Main
@@ -23,7 +21,8 @@ interface DispatcherProvider {
 
   fun io(): CoroutineDispatcher = Dispatchers.IO
 
-  fun database(): CoroutineDispatcher = Dispatchers.IO.limitedParallelism(1)
+  fun database(): CoroutineDispatcher =
+    Dispatchers.IO.limitedParallelism(1, name = "DatabaseDispatcher")
 }
 
 /** Concrete type for [DispatcherProvider] with all the defaults from the class. */

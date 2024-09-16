@@ -6,7 +6,7 @@
  */
 package dev.msfjarvis.claw.android.ui.screens
 
-import android.content.Context
+import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -41,6 +40,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import dev.msfjarvis.claw.common.theme.LobstersTheme
+import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
 import java.io.InputStream
 import java.io.OutputStream
 import kotlinx.coroutines.CoroutineScope
@@ -51,9 +52,10 @@ private const val HTML_MIME_TYPE = "application/html"
 
 @Composable
 fun SettingsScreen(
-  context: Context,
   openLibrariesScreen: () -> Unit,
   snackbarHostState: SnackbarHostState,
+  openInputStream: (Uri) -> InputStream?,
+  openOutputStream: (Uri) -> OutputStream?,
   importPosts: suspend (InputStream) -> Unit,
   exportPostsAsJson: suspend (OutputStream) -> Unit,
   exportPostsAsHtml: suspend (OutputStream) -> Unit,
@@ -61,7 +63,7 @@ fun SettingsScreen(
   modifier: Modifier = Modifier,
 ) {
   val coroutineScope = rememberCoroutineScope()
-  Box(modifier = modifier.padding(contentPadding).fillMaxSize()) {
+  Box(modifier = modifier.padding(contentPadding)) {
     Column {
       ListItem(
         headlineContent = { Text("Data transfer") },
@@ -77,11 +79,11 @@ fun SettingsScreen(
             horizontalArrangement = Arrangement.spacedBy(32.dp),
             modifier = Modifier.fillMaxWidth(),
           ) {
-            ImportPosts(context, coroutineScope, snackbarHostState, importPosts)
+            ImportPosts(openInputStream, coroutineScope, snackbarHostState, importPosts)
             ExportPosts(
-              context,
               coroutineScope,
               snackbarHostState,
+              openOutputStream,
               exportPostsAsJson,
               exportPostsAsHtml,
             )
@@ -105,7 +107,7 @@ fun SettingsScreen(
 
 @Composable
 private fun RowScope.ImportPosts(
-  context: Context,
+  openInputStream: (Uri) -> InputStream?,
   coroutineScope: CoroutineScope,
   snackbarHostState: SnackbarHostState,
   importPosts: suspend (InputStream) -> Unit,
@@ -118,7 +120,7 @@ private fun RowScope.ImportPosts(
         return@rememberLauncherForActivityResult
       }
       coroutineScope.launch {
-        context.contentResolver.openInputStream(uri)?.use { stream ->
+        openInputStream(uri)?.use { stream ->
           importPosts(stream)
           snackbarHostState.showSnackbarDismissing("Successfully imported posts")
         }
@@ -135,9 +137,9 @@ private fun RowScope.ImportPosts(
 
 @Composable
 private fun RowScope.ExportPosts(
-  context: Context,
   coroutineScope: CoroutineScope,
   snackbarHostState: SnackbarHostState,
+  openOutputStream: (Uri) -> OutputStream?,
   exportPostsAsJson: suspend (OutputStream) -> Unit,
   exportPostsAsHtml: suspend (OutputStream) -> Unit,
   modifier: Modifier = Modifier,
@@ -150,7 +152,7 @@ private fun RowScope.ExportPosts(
         return@rememberLauncherForActivityResult
       }
       coroutineScope.launch {
-        context.contentResolver.openOutputStream(uri)?.use { stream ->
+        openOutputStream(uri)?.use { stream ->
           exportPostsAsJson(stream)
           snackbarHostState.showSnackbarDismissing("Successfully exported posts")
         }
@@ -164,7 +166,7 @@ private fun RowScope.ExportPosts(
         return@rememberLauncherForActivityResult
       }
       coroutineScope.launch {
-        context.contentResolver.openOutputStream(uri)?.use { stream ->
+        openOutputStream(uri)?.use { stream ->
           exportPostsAsHtml(stream)
           snackbarHostState.showSnackbarDismissing("Successfully exported posts")
         }
@@ -209,4 +211,12 @@ private fun RowScope.ExportPosts(
 private suspend fun SnackbarHostState.showSnackbarDismissing(text: String) {
   currentSnackbarData?.dismiss()
   showSnackbar(text)
+}
+
+@ThemePreviews
+@Composable
+private fun SettingsScreenPreview() {
+  LobstersTheme {
+    SettingsScreen({}, SnackbarHostState(), { null }, { null }, {}, {}, {}, PaddingValues())
+  }
 }

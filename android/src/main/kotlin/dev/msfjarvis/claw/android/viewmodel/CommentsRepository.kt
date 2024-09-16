@@ -22,10 +22,7 @@ constructor(
 ) {
 
   suspend fun getSeenComments(postId: String) =
-    withContext(dbDispatcher) {
-      postCommentsQueries.getCommentIds(postId).executeAsOneOrNull()
-        ?: PostComments(postId = postId, commentIds = emptyList())
-    }
+    withContext(dbDispatcher) { postCommentsQueries.getCommentIds(postId).executeAsOneOrNull() }
 
   suspend fun markSeenComments(postId: String, comments: List<Comment>) {
     withContext(dbDispatcher) {

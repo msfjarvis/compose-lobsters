@@ -65,14 +65,10 @@ internal class CommentNode(
 
 internal fun createListNode(
   comments: List<Comment>,
-  commentState: PostComments,
+  commentState: PostComments?,
 ): MutableList<CommentNode> {
-  // Only check unread state if there any comments read in the first place. This somewhat restores
-  // the first view behavior from when `commentState` was nullable.
-  val hasUnread = commentState.commentIds.isNotEmpty()
-  val isUnread =
-    if (hasUnread) ({ id: String -> !commentState.commentIds.contains(id) }) else { _ -> false }
   val commentNodes = mutableListOf<CommentNode>()
+  val isUnread = { id: String -> commentState?.commentIds?.contains(id) == false }
 
   for (i in comments.indices) {
     if (comments[i].parentComment == null) {

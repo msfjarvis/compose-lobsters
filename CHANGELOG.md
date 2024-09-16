@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Pull to refresh indicator is no longer hiding behind the top app bar
 - User profile page correctly renders contents below the top app bar
+- Revert unread comment handling changes that caused false positives
 
 ## [1.50.0] - 2024-08-30
 

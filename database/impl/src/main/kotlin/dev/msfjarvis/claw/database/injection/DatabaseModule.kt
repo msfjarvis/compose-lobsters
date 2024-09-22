@@ -22,6 +22,7 @@ import dev.msfjarvis.claw.database.local.SavedPost
 import dev.msfjarvis.claw.database.model.CSVAdapter
 import io.github.aakira.napier.Napier
 import io.requery.android.database.sqlite.RequerySQLiteOpenHelperFactory
+import io.requery.android.database.sqlite.SQLiteDatabase
 
 @Module
 @ContributesTo(ApplicationScope::class)
@@ -33,6 +34,7 @@ object DatabaseModule {
   @InternalDatabaseApi
   @SingleIn(ApplicationScope::class)
   fun provideDatabase(@ForScope(ApplicationScope::class) context: Context): LobstersDatabase {
+    System.loadLibrary(SQLiteDatabase.LIBRARY_NAME)
     val driver =
       LogSqliteDriver(
         AndroidSqliteDriver(

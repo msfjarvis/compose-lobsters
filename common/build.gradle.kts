@@ -23,7 +23,6 @@ android {
     androidResources = true
     compose = true
   }
-  composeOptions { useLiveLiterals = false }
   namespace = "dev.msfjarvis.claw.common"
   experimentalProperties["android.experimental.enableScreenshotTest"] = true
 }

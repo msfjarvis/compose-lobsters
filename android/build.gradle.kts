@@ -7,6 +7,7 @@
 @file:Suppress("UnstableApiUsage")
 
 import dev.msfjarvis.claw.gradle.addTestDependencies
+import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
 
 plugins {
   id("dev.msfjarvis.claw.android-application")
@@ -48,6 +49,8 @@ baselineProfile {
   saveInSrc = true
   from(projects.benchmark.dependencyProject)
 }
+
+composeCompiler { featureFlags.addAll(ComposeFeatureFlag.OptimizeNonSkippingGroups) }
 
 licensee {
   allow("Apache-2.0")

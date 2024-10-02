@@ -10,8 +10,6 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
 import androidx.activity.ComponentActivity
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.navigation.NavController
 import com.slack.eithernet.ApiResult
 import dev.msfjarvis.claw.android.ui.navigation.Comments
@@ -31,56 +29,53 @@ fun Context.getActivity(): ComponentActivity? {
   }
 }
 
-@Composable
-fun rememberPostActions(
+fun PostActions(
   context: Context,
   urlLauncher: UrlLauncher,
   navController: NavController,
   viewModel: ClawViewModel,
 ): PostActions {
-  return remember {
-    object : PostActions {
-      override fun viewPost(postId: String, postUrl: String, commentsUrl: String) {
-        viewModel.markPostAsRead(postId)
-        urlLauncher.openUri(postUrl.ifEmpty { commentsUrl })
-      }
+  return object : PostActions {
+    override fun viewPost(postId: String, postUrl: String, commentsUrl: String) {
+      viewModel.markPostAsRead(postId)
+      urlLauncher.openUri(postUrl.ifEmpty { commentsUrl })
+    }
 
-      override fun viewComments(postId: String) {
-        viewModel.markPostAsRead(postId)
-        navController.navigate(Comments(postId))
-      }
+    override fun viewComments(postId: String) {
+      viewModel.markPostAsRead(postId)
+      navController.navigate(Comments(postId))
+    }
 
-      override fun viewCommentsPage(post: UIPost) {
-        urlLauncher.openUri(post.commentsUrl)
-      }
+    override fun viewCommentsPage(post: UIPost) {
+      urlLauncher.openUri(post.commentsUrl)
+    }
 
-      override fun toggleSave(post: UIPost) {
-        viewModel.toggleSave(post)
-      }
+    override fun toggleSave(post: UIPost) {
+      viewModel.toggleSave(post)
+    }
 
-      override fun share(post: UIPost) {
-        val sendIntent: Intent =
-          Intent().apply {
-            action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, post.url.ifEmpty { post.commentsUrl })
-            putExtra(Intent.EXTRA_TITLE, post.title)
-            type = "text/plain"
-          }
-        val shareIntent = Intent.createChooser(sendIntent, null)
-        context.startActivity(shareIntent)
-      }
+    override fun share(post: UIPost) {
+      val sendIntent: Intent =
+        Intent().apply {
+          action = Intent.ACTION_SEND
+          putExtra(Intent.EXTRA_TEXT, post.url.ifEmpty { post.commentsUrl })
+          putExtra(Intent.EXTRA_TITLE, post.title)
+          type = "text/plain"
+        }
+      val shareIntent = Intent.createChooser(sendIntent, null)
+      context.startActivity(shareIntent)
+    }
 
-      override fun isPostRead(post: UIPost): Boolean = viewModel.isPostRead(post)
+    override fun isPostRead(post: UIPost): Boolean = viewModel.isPostRead(post)
 
-      override fun isPostSaved(post: UIPost): Boolean = viewModel.isPostSaved(post)
+    override fun isPostSaved(post: UIPost): Boolean = viewModel.isPostSaved(post)
 
-      override suspend fun getComments(postId: String): UIPost {
-        return viewModel.getPostComments(postId)
-      }
+    override suspend fun getComments(postId: String): UIPost {
+      return viewModel.getPostComments(postId)
+    }
 
-      override suspend fun getLinkMetadata(url: String): LinkMetadata {
-        return viewModel.getLinkMetadata(url)
-      }
+    override suspend fun getLinkMetadata(url: String): LinkMetadata {
+      return viewModel.getLinkMetadata(url)
     }
   }
 }

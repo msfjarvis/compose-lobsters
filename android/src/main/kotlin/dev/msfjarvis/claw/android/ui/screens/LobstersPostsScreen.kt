@@ -63,6 +63,7 @@ import dev.chrisbanes.haze.haze
 import dev.msfjarvis.claw.android.MainActivity
 import dev.msfjarvis.claw.android.R
 import dev.msfjarvis.claw.android.SearchActivity
+import dev.msfjarvis.claw.android.ui.PostActions
 import dev.msfjarvis.claw.android.ui.decorations.ClawNavigationBar
 import dev.msfjarvis.claw.android.ui.decorations.ClawNavigationRail
 import dev.msfjarvis.claw.android.ui.decorations.NavigationItem
@@ -79,7 +80,6 @@ import dev.msfjarvis.claw.android.ui.navigation.Settings
 import dev.msfjarvis.claw.android.ui.navigation.User
 import dev.msfjarvis.claw.android.ui.navigation.any
 import dev.msfjarvis.claw.android.ui.navigation.none
-import dev.msfjarvis.claw.android.ui.rememberPostActions
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.common.comments.CommentsPage
 import dev.msfjarvis.claw.common.comments.HTMLConverter
@@ -109,7 +109,7 @@ fun LobstersPostsScreen(
   val currentDestination = navBackStackEntry?.destination
   val coroutineScope = rememberCoroutineScope()
   val snackbarHostState = remember { SnackbarHostState() }
-  val postActions = rememberPostActions(context, urlLauncher, navController, viewModel)
+  val postActions = remember { PostActions(context, urlLauncher, navController, viewModel) }
   val hazeState = remember { HazeState() }
 
   val hottestPosts = viewModel.hottestPosts.collectAsLazyPagingItems()

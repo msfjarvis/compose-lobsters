@@ -36,8 +36,7 @@ runs:
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@d156388eb19639ec20ade50009f3d199ce1e2808 # v4
       with:
-        gradle-home-cache-cleanup: true
-        cache-read-only: ${{ inputs.cache-read-only }}
         add-job-summary: always
+        cache-read-only: ${{ inputs.cache-read-only }}
         dependency-graph: ${{ inputs.dependency-graph }}
         validate-wrappers: true

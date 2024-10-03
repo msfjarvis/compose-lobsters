@@ -9,6 +9,7 @@ package dev.msfjarvis.claw.android.ui.screens
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
@@ -17,11 +18,11 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.deliveryhero.whetstone.compose.injectedViewModel
+import dev.msfjarvis.claw.android.ui.PostActions
 import dev.msfjarvis.claw.android.ui.lists.SearchList
 import dev.msfjarvis.claw.android.ui.navigation.Comments
 import dev.msfjarvis.claw.android.ui.navigation.Search
 import dev.msfjarvis.claw.android.ui.navigation.User
-import dev.msfjarvis.claw.android.ui.rememberPostActions
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.common.comments.CommentsPage
 import dev.msfjarvis.claw.common.comments.HTMLConverter
@@ -36,8 +37,9 @@ fun SearchScreen(
   modifier: Modifier = Modifier,
   viewModel: ClawViewModel = injectedViewModel(),
 ) {
+  val context = LocalContext.current
   val navController = rememberNavController()
-  val postActions = rememberPostActions(LocalContext.current, urlLauncher, navController, viewModel)
+  val postActions = remember { PostActions(context, urlLauncher, navController, viewModel) }
   val listState = rememberLazyListState()
   val searchResults = viewModel.searchResults.collectAsLazyPagingItems()
   Scaffold(modifier = modifier) { contentPadding ->

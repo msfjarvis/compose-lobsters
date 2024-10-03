@@ -1,20 +1,20 @@
 [versions]
 aboutLibraries = "11.2.3"
-agp = "8.6.1"
+agp = "8.7.0"
 android-junit5 = "1.11.0.0"
-benchmark = "1.3.1"
+benchmark = "1.3.2"
 coil = "2.7.0"
 coroutines = "1.9.0"
 dagger = "2.52"
 glance = "1.0.0"
-haze = "0.9.0-beta01"
+haze = "0.9.0-beta02"
 junit = "5.11.1"
 konvert = "3.2.2"
 kotlin = "2.0.20"
 kotlinResult = "2.0.0"
 leakcanary = "3.0-alpha-8"
 lifecycle = "2.8.6"
-navigation = "2.8.1"
+navigation = "2.8.2"
 retrofit = "2.11.0"
 richtext = "1.0.0-alpha01"
 sentry-sdk = "7.14.0"
@@ -22,7 +22,7 @@ serialization = "1.7.3"
 store = "5.1.0-alpha04"
 sqldelight = "2.0.2"
 whetstone = "0.9.0-beta02"
-workmanager = "2.10.0-alpha04"
+workmanager = "2.10.0-beta01"
 
 [libraries]
 aboutLibraries-m3 = { module = "com.mikepenz:aboutlibraries-compose-m3", version.ref = "aboutLibraries" }
@@ -50,7 +50,7 @@ androidx-lifecycle-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-
 androidx-lint = "androidx.lint:lint-gradle:1.0.0-alpha02"
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }
 androidx-paging-compose = "androidx.paging:paging-compose:3.3.2"
-androidx-profileinstaller = "androidx.profileinstaller:profileinstaller:1.4.0"
+androidx-profileinstaller = "androidx.profileinstaller:profileinstaller:1.4.1"
 androidx-test-core = "androidx.test:core:1.6.1"
 androidx-test-espresso-core = "androidx.test.espresso:espresso-core:3.6.1"
 androidx-test-ext-junit = "androidx.test.ext:junit:1.2.1"
@@ -101,8 +101,8 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 retrofit-kotlinxSerializationConverter = { module = "com.squareup.retrofit2:converter-kotlinx-serialization", version.ref = "retrofit" }
 sentry-android = { module = "io.sentry:sentry-android", version.ref = "sentry-sdk" }
 sentry-bom = { module = "io.sentry:sentry-bom", version.ref = "sentry-sdk" }
-slack-compose-lints = "com.slack.lint.compose:compose-lint-checks:1.3.1"
-slack-lints = "com.slack.lint:slack-lint-checks:0.7.4"
+slack-compose-lints = "com.slack.lint.compose:compose-lint-checks:1.4.1"
+slack-lints = "com.slack.lint:slack-lint-checks:0.8.0"
 sqldelight-androidDriver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
 sqldelight-dialect338 = { module = "app.cash.sqldelight:sqlite-3-38-dialect", version.ref = "sqldelight" }
 sqldelight-extensions-coroutines = { module = "app.cash.sqldelight:coroutines-extensions-jvm", version.ref = "sqldelight" }

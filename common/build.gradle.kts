@@ -8,6 +8,7 @@
 
 import com.android.build.api.variant.HasUnitTestBuilder
 import dev.msfjarvis.claw.gradle.addTestDependencies
+import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
 
 plugins {
   id("dev.msfjarvis.claw.android-library")
@@ -23,7 +24,6 @@ android {
     androidResources = true
     compose = true
   }
-  composeOptions { useLiveLiterals = false }
   namespace = "dev.msfjarvis.claw.common"
   experimentalProperties["android.experimental.enableScreenshotTest"] = true
 }
@@ -31,6 +31,8 @@ android {
 androidComponents { beforeVariants { (it as HasUnitTestBuilder).enableUnitTest = false } }
 
 anvil { generateDaggerFactories.set(true) }
+
+composeCompiler { featureFlags.addAll(ComposeFeatureFlag.OptimizeNonSkippingGroups) }
 
 dependencies {
   api(libs.androidx.compose.ui)

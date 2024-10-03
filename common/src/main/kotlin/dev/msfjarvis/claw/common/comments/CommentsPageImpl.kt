@@ -8,6 +8,12 @@ package dev.msfjarvis.claw.common.comments
 
 import android.text.format.DateUtils
 import android.widget.Toast
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -21,6 +27,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -28,9 +35,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -39,6 +43,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.posts.Submitter
 import dev.msfjarvis.claw.common.ui.ThemedRichText
@@ -47,6 +52,8 @@ import dev.msfjarvis.claw.model.Comment
 import dev.msfjarvis.claw.model.UIPost
 import java.time.Instant
 import java.time.temporal.TemporalAccessor
+
+private const val AnimationDuration = 100
 
 @Composable
 internal fun CommentsPageInternal(
@@ -57,10 +64,19 @@ internal fun CommentsPageInternal(
   markSeenComments: (String, List<Comment>) -> Unit,
   openUserProfile: (String) -> Unit,
   contentPadding: PaddingValues,
+  commentsHandler: CommentsHandler,
   modifier: Modifier = Modifier,
 ) {
+
+  LaunchedEffect(Unit) { commentsHandler.createListNode(details.comments, commentState) }
+
+  val onToggleExpandedState = { shortId: String, isExpanded: Boolean ->
+    commentsHandler.updateListNode(shortId, isExpanded)
+  }
+
   val context = LocalContext.current
-  val commentNodes = createListNode(details.comments, commentState)
+  val commentNodes by commentsHandler.listItems.collectAsStateWithLifecycle()
+
   LaunchedEffect(key1 = commentNodes) {
     if (details.comments.isNotEmpty() && !commentState?.commentIds.isNullOrEmpty()) {
       val unreadCount = details.comments.size - (commentState?.commentIds?.size ?: 0)
@@ -96,8 +112,8 @@ internal fun CommentsPageInternal(
           )
         }
 
-        commentNodes.forEach { node ->
-          item(key = node.comment.shortId) { Node(node, htmlConverter, openUserProfile) }
+        items(items = commentNodes, key = { node -> node.comment.shortId }) { node ->
+          Node(node, htmlConverter, openUserProfile, onToggleExpandedState)
         }
 
         item(key = "bottom_spacer") {
@@ -127,22 +143,30 @@ private fun Node(
   node: CommentNode,
   htmlConverter: HTMLConverter,
   openUserProfile: (String) -> Unit,
+  onToggleExpandedState: (String, Boolean) -> Unit,
   modifier: Modifier = Modifier,
 ) {
   Column(horizontalAlignment = Alignment.CenterHorizontally) {
-    var isChildrenShown by remember { mutableStateOf(true) }
-
     NodeBox(
       node = node,
-      isExpanded = isChildrenShown,
+      isExpanded = node.isExpanded,
       htmlConverter = htmlConverter,
       openUserProfile,
-      modifier = modifier.clickable(onClick = { isChildrenShown = !isChildrenShown }),
+      modifier =
+        modifier.clickable(
+          onClick = { onToggleExpandedState(node.comment.shortId, !node.isExpanded) }
+        ),
     )
 
-    if (isChildrenShown) {
+    AnimatedVisibility(
+      visible = node.isExpanded,
+      enter = fadeIn(tween(AnimationDuration)) + expandVertically(tween(AnimationDuration)),
+      exit = fadeOut(tween(AnimationDuration)) + shrinkVertically(tween(AnimationDuration)),
+    ) {
       Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
-        node.children.forEach { model -> Node(model, htmlConverter, openUserProfile) }
+        node.children.forEach { model ->
+          Node(model, htmlConverter, openUserProfile, onToggleExpandedState)
+        }
       }
     }
   }

@@ -6,15 +6,15 @@
  */
 package dev.msfjarvis.claw.common.comments
 
-import dev.msfjarvis.claw.database.local.PostComments
 import dev.msfjarvis.claw.model.Comment
 
-internal class CommentNode(
+internal data class CommentNode(
   val comment: Comment,
   private var parent: CommentNode? = null,
   val children: MutableList<CommentNode> = mutableListOf(),
   val isUnread: Boolean = false,
   val indentLevel: Int,
+  val isExpanded: Boolean = true,
 ) {
 
   fun addChild(child: CommentNode) {
@@ -50,6 +50,7 @@ internal class CommentNode(
     if (children != other.children) return false
     if (isUnread != other.isUnread) return false
     if (indentLevel != other.indentLevel) return false
+    if (isExpanded != other.isExpanded) return false
 
     return true
   }
@@ -59,37 +60,7 @@ internal class CommentNode(
     result = 31 * result + children.hashCode()
     result = 31 * result + isUnread.hashCode()
     result = 31 * result + indentLevel
+    result = 31 * result + isExpanded.hashCode()
     return result
   }
-}
-
-internal fun createListNode(
-  comments: List<Comment>,
-  commentState: PostComments?,
-): MutableList<CommentNode> {
-  val commentNodes = mutableListOf<CommentNode>()
-  val isUnread = { id: String -> commentState?.commentIds?.contains(id) == false }
-
-  for (i in comments.indices) {
-    if (comments[i].parentComment == null) {
-      commentNodes.add(
-        CommentNode(
-          comment = comments[i],
-          isUnread = isUnread(comments[i].shortId),
-          indentLevel = 1,
-        )
-      )
-    } else {
-      commentNodes.lastOrNull()?.let { commentNode ->
-        commentNode.addChild(
-          CommentNode(
-            comment = comments[i],
-            isUnread = isUnread(comments[i].shortId),
-            indentLevel = commentNode.indentLevel + 1,
-          )
-        )
-      }
-    }
-  }
-  return commentNodes
 }

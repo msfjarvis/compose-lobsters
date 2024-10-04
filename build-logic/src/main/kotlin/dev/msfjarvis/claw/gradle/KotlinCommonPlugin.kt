@@ -17,11 +17,11 @@ import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-@Suppress("Unused")
+@Suppress("Unused", "UnstableApiUsage")
 class KotlinCommonPlugin : Plugin<Project> {
 
   override fun apply(project: Project) {
-    if (project.rootProject == project) {
+    if (project.isolated.rootProject == project.isolated) {
       LintConfig.configureRootProject(project)
     } else if (project.name != "benchmark") {
       LintConfig.configureSubProject(project)

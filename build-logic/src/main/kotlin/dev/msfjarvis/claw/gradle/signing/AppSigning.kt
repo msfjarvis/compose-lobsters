@@ -14,8 +14,9 @@ import org.gradle.api.Project
 private const val KEYSTORE_CONFIG_PATH = "keystore.properties"
 
 /** Configure signing for all build types. */
+@Suppress("UnstableApiUsage")
 internal fun Project.configureBuildSigning() {
-  val keystoreConfigFile = rootProject.layout.projectDirectory.file(KEYSTORE_CONFIG_PATH)
+  val keystoreConfigFile = isolated.rootProject.projectDirectory.file(KEYSTORE_CONFIG_PATH)
   if (keystoreConfigFile.asFile.exists()) {
     extensions.configure<CommonExtension<*, ApplicationBuildType, *, *, *, *>>("android") {
       val contents = providers.fileContents(keystoreConfigFile).asText
@@ -25,7 +26,10 @@ internal fun Project.configureBuildSigning() {
         signingConfigs.register("release") {
           keyAlias = keystoreProperties["keyAlias"] as String
           keyPassword = keystoreProperties["keyPassword"] as String
-          storeFile = rootProject.file(keystoreProperties["storeFile"] as String)
+          storeFile =
+            isolated.rootProject.projectDirectory
+              .file(keystoreProperties["storeFile"] as String)
+              .asFile
           storePassword = keystoreProperties["storePassword"] as String
         }
       buildTypes.configureEach { signingConfig = releaseSigningConfig.get() }

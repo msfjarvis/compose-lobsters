@@ -16,11 +16,11 @@ import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.withType
 
-@Suppress("Unused")
+@Suppress("Unused", "UnstableApiUsage")
 class SpotlessPlugin : Plugin<Project> {
 
   override fun apply(project: Project) {
-    if (project.rootProject != project) {
+    if (project.isolated.rootProject != project.isolated) {
       throw GradleException("Spotless plugin must only be applied to the root project.")
     }
     project.pluginManager.apply(SpotlessPlugin::class)

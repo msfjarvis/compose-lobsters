@@ -1,5 +1,5 @@
 /*
- * Copyright © 2023 Harsh Shandilya.
+ * Copyright © 2023-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -19,8 +19,9 @@ object CSRFTokenConverter : Converter<ResponseBody, CSRFToken> {
     val token =
       Jsoup.parse(value.string(), LobstersApi.BASE_URL)
         .select("meta[name=\"csrf-token\"]")
-        .first()!!
-        .attr("content")
+        .firstOrNull()
+        ?.attr("content")
+        .orEmpty()
     return CSRFToken(token)
   }
 

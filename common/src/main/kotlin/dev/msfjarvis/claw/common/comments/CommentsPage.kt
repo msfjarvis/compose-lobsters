@@ -60,6 +60,7 @@ fun CommentsPage(
         markSeenComments = markSeenComments,
         openUserProfile = openUserProfile,
         contentPadding = contentPadding,
+        commentsHandler = CommentsHandler(),
         modifier = modifier.fillMaxSize(),
       )
     }

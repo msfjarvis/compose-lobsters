@@ -47,14 +47,22 @@ internal class CommentsHandler {
   }
 
   fun updateListNode(shortId: String, isExpanded: Boolean) {
+    fun updateNode(node: CommentNode): CommentNode {
+      if (node.comment.shortId == shortId) {
+        return node.copy(isExpanded = isExpanded)
+      }
+      val updatedChildren = node.children.map { updateNode(it) }.toMutableList()
+      return node.copy(children = updatedChildren)
+    }
+
     val listNode = _listItems.value.toMutableList()
-    val index = listNode.indexOfFirst { it.comment.shortId == shortId }
-
-    if (index != -1) {
-      val commentNode = listNode[index].copy(isExpanded = isExpanded)
-      listNode[index] = commentNode
-
-      _listItems.value = listNode.toList()
+    for (i in listNode.indices) {
+      val node = listNode[i]
+      if (node.comment.shortId == shortId || node.children.any { it.comment.shortId == shortId }) {
+        listNode[i] = updateNode(node)
+        _listItems.value = listNode.toList()
+        return
+      }
     }
   }
 }

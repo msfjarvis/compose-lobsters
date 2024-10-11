@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixes
+
+- Add a workaround for rare crashes while loading SQLite with older devices
+- Fix comments page resetting collapsed state while scrolling
+
 ## [1.51.0] - 2024-09-22
 
 ### Fixed

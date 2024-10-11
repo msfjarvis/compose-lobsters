@@ -17,7 +17,7 @@ import javax.inject.Inject
 class SentryAndroidPlugin @Inject constructor() : AppPlugin {
   override fun apply(application: Application) {
     SentryAndroid.init(application) { options ->
-      options.experimental.sessionReplay.errorSampleRate = 1.0
+      options.experimental.sessionReplay.onErrorSampleRate = 1.0
       options.experimental.sessionReplay.sessionSampleRate = 0.1
     }
   }

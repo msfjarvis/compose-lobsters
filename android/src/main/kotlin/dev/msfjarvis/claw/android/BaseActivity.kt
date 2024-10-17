@@ -17,11 +17,16 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.paging.compose.LazyPagingItems
 import com.deliveryhero.whetstone.Whetstone
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.common.comments.HTMLConverter
+import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
+import dev.msfjarvis.claw.database.local.PostComments
+import dev.msfjarvis.claw.model.Comment
+import dev.msfjarvis.claw.model.UIPost
 import javax.inject.Inject
 
 /** A base class that encapsulates all activities used by Claw. */
@@ -31,6 +36,17 @@ abstract class BaseActivity : ComponentActivity() {
   @Inject lateinit var urlLauncher: UrlLauncher
   @Inject lateinit var htmlConverter: HTMLConverter
   @Inject lateinit var viewModel: ClawViewModel
+
+//  @Inject lateinit var lazyPagingItems: LazyPagingItems<UIPost>
+//  @Inject lateinit var postActions: PostActions
+
+//  @Inject lateinit var getSeenComments: (String) -> PostComments?
+//  @Inject lateinit var markSeenComments: (String, List<Comment>) -> Unit
+//  @Inject lateinit var openUserProfile: (String) -> Unit
+//  var getSeenComments: String? = null
+//  var markSeenComments: String?, List<Comment>? = null
+//  var openUserProfile: String? = null
+
   var webUri: String? = null
 
   /** Entrypoint to show a [Composable] as this [ComponentActivity]'s view. */

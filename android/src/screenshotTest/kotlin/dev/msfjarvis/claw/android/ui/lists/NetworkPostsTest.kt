@@ -31,6 +31,7 @@ class NetworkPostsTest {
         listState = rememberLazyListState(),
         postActions = TEST_POST_ACTIONS,
         contentPadding = PaddingValues(),
+        onPostClick = {}
       )
     }
   }

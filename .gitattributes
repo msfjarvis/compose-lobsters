@@ -1,6 +1,5 @@
 * text=auto eol=lf
-**/dependencies/** linguist-generated
-**/clawicons/** linguist-generated
+**/*.html linguist-vendored
 android/src/main/baseline-prof.txt linguist-generated -diff
 android/src/main/generated/** linguist-generated -diff
 **/screenshotTest/**/*.png filter=lfs diff=lfs merge=lfs -text

@@ -47,7 +47,8 @@ android {
 baselineProfile {
   mergeIntoMain = true
   saveInSrc = true
-  from(projects.benchmark.dependencyProject)
+  // dependencyProject is deprecated, needs new APIs in the baseline profile plugin.
+  @Suppress("deprecation") from(projects.benchmark.dependencyProject)
 }
 
 composeCompiler { featureFlags.addAll(ComposeFeatureFlag.OptimizeNonSkippingGroups) }

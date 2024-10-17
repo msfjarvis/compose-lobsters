@@ -54,12 +54,6 @@
       "allowedVersions": "!/.*-1-8$/",
     },
     {
-      "matchDepNames": [
-        "androidx.compose:compose-bom",
-      ],
-      "allowedVersions": "/.*-alpha$/",
-    },
-    {
       "matchPackagePatterns": [
         "^androidx.glance",
       ],

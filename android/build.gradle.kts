@@ -6,6 +6,7 @@
  */
 @file:Suppress("UnstableApiUsage")
 
+import com.android.build.api.dsl.ApplicationExtension
 import dev.msfjarvis.claw.gradle.addTestDependencies
 import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
 
@@ -30,7 +31,8 @@ plugins {
   alias(libs.plugins.screenshot)
 }
 
-android {
+// Directly using the generated `android` accessor lights up bright red
+extensions.configure<ApplicationExtension> {
   namespace = "dev.msfjarvis.claw.android"
   defaultConfig.applicationId = "dev.msfjarvis.claw.android"
   defaultConfig.testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -39,7 +41,7 @@ android {
     matchingFallbacks += "release"
     signingConfig = signingConfigs["debug"]
     applicationIdSuffix = ".internal"
-    debuggable(true)
+    isDebuggable = true
   }
   experimentalProperties["android.experimental.enableScreenshotTest"] = true
 }
@@ -47,7 +49,8 @@ android {
 baselineProfile {
   mergeIntoMain = true
   saveInSrc = true
-  from(projects.benchmark.dependencyProject)
+  // dependencyProject is deprecated, needs new APIs in the baseline profile plugin.
+  @Suppress("deprecation") from(projects.benchmark.dependencyProject)
 }
 
 composeCompiler { featureFlags.addAll(ComposeFeatureFlag.OptimizeNonSkippingGroups) }

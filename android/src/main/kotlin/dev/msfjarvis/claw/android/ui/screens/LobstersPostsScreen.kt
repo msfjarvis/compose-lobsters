@@ -167,7 +167,7 @@ fun LobstersPostsScreen(
             navController.previousBackStackEntry != null && currentDestination.none(navDestinations)
           ) {
             IconButton(
-              onClick = { if (!navController.popBackStack()) context.getActivity()?.finish() }
+              onClick = { if (!navController.navigateUp()) context.getActivity()?.finish() }
             ) {
               Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,

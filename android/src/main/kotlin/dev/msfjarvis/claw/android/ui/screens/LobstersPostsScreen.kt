@@ -90,6 +90,7 @@ import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.launch
 
+
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun LobstersPostsScreen(
@@ -238,6 +239,7 @@ fun LobstersPostsScreen(
             listState = hottestListState,
             postActions = postActions,
             contentPadding = contentPadding,
+            onPostClick = {postId -> navController.navigate(Comments(postId))}
           )
         }
         composable<Newest> {
@@ -247,6 +249,7 @@ fun LobstersPostsScreen(
             listState = newestListState,
             postActions = postActions,
             contentPadding = contentPadding,
+            onPostClick = {postId -> navController.navigate(Comments(postId))}
           )
         }
         composable<Saved> {

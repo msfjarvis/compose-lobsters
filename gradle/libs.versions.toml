@@ -22,7 +22,7 @@ serialization = "1.7.3"
 store = "5.1.0-alpha05"
 sqldelight = "2.0.2"
 whetstone = "0.9.0-beta02"
-workmanager = "2.10.0-beta01"
+workmanager = "2.10.0-rc01"
 
 [libraries]
 aboutLibraries-m3 = { module = "com.mikepenz:aboutlibraries-compose-m3", version.ref = "aboutLibraries" }
@@ -63,8 +63,8 @@ build-cachefix = "org.gradle.android.cache-fix:org.gradle.android.cache-fix.grad
 build-kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 build-semver = "com.github.zafarkhaja:java-semver:0.10.2"
 build-sentry = "io.sentry.android.gradle:io.sentry.android.gradle.gradle.plugin:4.12.0"
-build-spotless = "com.diffplug.spotless:spotless-plugin-gradle:7.0.0.BETA3"
-build-vcu = "nl.littlerobots.version-catalog-update:nl.littlerobots.version-catalog-update.gradle.plugin:0.8.4"
+build-spotless = "com.diffplug.spotless:spotless-plugin-gradle:7.0.0.BETA4"
+build-vcu = "nl.littlerobots.version-catalog-update:nl.littlerobots.version-catalog-update.gradle.plugin:0.8.5"
 coil = { module = "io.coil-kt:coil", version.ref = "coil" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 compose-richtext-markdown = { module = "com.halilibo.compose-richtext:richtext-commonmark", version.ref = "richtext" }
@@ -121,7 +121,7 @@ android-junit5 = { id = "de.mannodermaus.android-junit5", version.ref = "android
 android-test = { id = "com.android.test", version.ref = "agp" }
 anvil = "com.squareup.anvil:2.5.0-beta11"
 baselineprofile = { id = "androidx.baselineprofile", version.ref = "benchmark" }
-dependencyAnalysis = "com.autonomousapps.dependency-analysis:2.2.0"
+dependencyAnalysis = "com.autonomousapps.dependency-analysis:2.3.0"
 invert = "com.squareup.invert:0.0.1-dev"
 kotlin-composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

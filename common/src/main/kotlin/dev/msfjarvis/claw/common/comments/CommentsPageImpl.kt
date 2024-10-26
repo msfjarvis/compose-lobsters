@@ -64,11 +64,12 @@ internal fun CommentsPageInternal(
   markSeenComments: (String, List<Comment>) -> Unit,
   openUserProfile: (String) -> Unit,
   contentPadding: PaddingValues,
-  commentsHandler: CommentsHandler,
   modifier: Modifier = Modifier,
 ) {
-
-  LaunchedEffect(Unit) { commentsHandler.createListNode(details.comments, commentState) }
+  val commentsHandler = CommentsHandler()
+  LaunchedEffect(key1 = details, key2 = commentState) {
+    commentsHandler.createListNode(details.comments, commentState)
+  }
 
   val onToggleExpandedState = { shortId: String, isExpanded: Boolean ->
     commentsHandler.updateListNode(shortId, isExpanded)
@@ -77,7 +78,7 @@ internal fun CommentsPageInternal(
   val context = LocalContext.current
   val commentNodes by commentsHandler.listItems.collectAsStateWithLifecycle()
 
-  LaunchedEffect(key1 = commentNodes) {
+  LaunchedEffect(key1 = details, key2 = commentState) {
     if (details.comments.isNotEmpty() && !commentState?.commentIds.isNullOrEmpty()) {
       val unreadCount = details.comments.size - (commentState?.commentIds?.size ?: 0)
       if (unreadCount > 0) {

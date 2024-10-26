@@ -6,12 +6,16 @@
  */
 package dev.msfjarvis.claw.android
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.deliveryhero.whetstone.activity.ContributesActivityInjector
 import dev.msfjarvis.claw.android.ui.screens.LobstersPostsScreen
+import dev.msfjarvis.claw.android.ui.screens.TwoPaneLayout
 
 @ContributesActivityInjector
 class MainActivity : BaseActivity() {
@@ -20,12 +24,25 @@ class MainActivity : BaseActivity() {
   @Composable
   override fun Content() {
     val windowSizeClass = calculateWindowSizeClass(this)
-    LobstersPostsScreen(
-      urlLauncher = urlLauncher,
-      htmlConverter = htmlConverter,
-      windowSizeClass = windowSizeClass,
-      setWebUri = { url -> webUri = url },
-    )
+
+    when (windowSizeClass.widthSizeClass) {
+      WindowWidthSizeClass.Compact -> {
+        LobstersPostsScreen(
+          urlLauncher = urlLauncher,
+          htmlConverter = htmlConverter,
+          windowSizeClass = windowSizeClass,
+          setWebUri = { url -> webUri = url },
+        )
+      }
+
+      else -> {
+        TwoPaneLayout(
+          urlLauncher = urlLauncher,
+          htmlConverter = htmlConverter,
+          modifier = Modifier.fillMaxSize(),
+        )
+      }
+    }
   }
 
   override fun preLaunch() {

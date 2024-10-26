@@ -51,7 +51,7 @@ internal fun CommentsHeader(
   modifier: Modifier = Modifier,
 ) {
   val linkMetadata by
-    produceState(initialValue = LinkMetadata(post.url, null)) {
+    produceState(initialValue = LinkMetadata(post.url, null), key1 = post) {
       runSuspendCatching { postActions.getLinkMetadata(post.url) }
         .onSuccess { metadata -> value = metadata }
     }

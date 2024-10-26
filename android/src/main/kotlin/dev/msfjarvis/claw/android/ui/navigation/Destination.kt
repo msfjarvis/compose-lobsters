@@ -6,22 +6,24 @@
  */
 package dev.msfjarvis.claw.android.ui.navigation
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 
-sealed interface Destination
+sealed interface Destination : Parcelable
 
-@Serializable data object Hottest : Destination
+@Parcelize @Serializable data object Hottest : Destination
 
-@Serializable data object Newest : Destination
+@Parcelize @Serializable data object Newest : Destination
 
-@Serializable data object Saved : Destination
+@Parcelize @Serializable data object Saved : Destination
 
-@Serializable data class Comments(val postId: String) : Destination
+@Parcelize @Serializable data class Comments(val postId: String) : Destination
 
-@Serializable data class User(val username: String) : Destination
+@Parcelize @Serializable data class User(val username: String) : Destination
 
-@Serializable data object Search : Destination
+@Parcelize @Serializable data object Search : Destination
 
-@Serializable data object Settings : Destination
+@Parcelize @Serializable data object Settings : Destination
 
-@Serializable data object AboutLibraries : Destination
+@Parcelize @Serializable data object AboutLibraries : Destination

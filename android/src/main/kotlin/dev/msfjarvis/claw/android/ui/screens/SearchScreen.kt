@@ -43,7 +43,6 @@ fun SearchScreen(
   val listState = rememberLazyListState()
   val searchResults = viewModel.searchResults.collectAsLazyPagingItems()
 
-  val onPostClick: (String) -> Unit = { postId -> navController.navigate("comments/$postId") }
   Scaffold(modifier = modifier) { contentPadding ->
     NavHost(navController = navController, startDestination = Search) {
       composable<Search> {
@@ -55,7 +54,6 @@ fun SearchScreen(
           searchQuery = viewModel.searchQuery,
           contentPadding = contentPadding,
           setSearchQuery = { query -> viewModel.searchQuery = query },
-          onPostClick = onPostClick,
         )
       }
       composable<Comments> { backStackEntry ->

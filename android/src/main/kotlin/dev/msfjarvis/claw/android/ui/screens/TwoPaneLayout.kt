@@ -4,8 +4,11 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
+@file:OptIn(ExperimentalMaterial3AdaptiveApi::class)
+
 package dev.msfjarvis.claw.android.ui.screens
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,13 +21,16 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
-import androidx.compose.material3.adaptive.navigation.NavigableListDetailPaneScaffold
+import androidx.compose.material3.adaptive.layout.AnimatedPane
+import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffold
+import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffoldRole
+import androidx.compose.material3.adaptive.layout.PaneAdaptedValue
+import androidx.compose.material3.adaptive.navigation.BackNavigationBehavior
+import androidx.compose.material3.adaptive.navigation.ThreePaneScaffoldNavigator
 import androidx.compose.material3.adaptive.navigation.rememberListDetailPaneScaffoldNavigator
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -37,14 +43,22 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.deliveryhero.whetstone.compose.injectedViewModel
 import dev.msfjarvis.claw.android.R
 import dev.msfjarvis.claw.android.ui.TwoPaneLayoutPostActions
-import dev.msfjarvis.claw.android.ui.lists.NetworkPostsForTwoPaneLayout
+import dev.msfjarvis.claw.android.ui.lists.NetworkPosts
+import dev.msfjarvis.claw.android.ui.navigation.Comments
 import dev.msfjarvis.claw.android.ui.navigation.User
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.common.comments.CommentsPage
 import dev.msfjarvis.claw.common.comments.HTMLConverter
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
+import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3AdaptiveApi::class, ExperimentalMaterial3Api::class)
+private fun ThreePaneScaffoldNavigator<*>.isListExpanded() =
+  scaffoldValue[ListDetailPaneScaffoldRole.List] == PaneAdaptedValue.Expanded
+
+private fun ThreePaneScaffoldNavigator<*>.isDetailExpanded() =
+  scaffoldValue[ListDetailPaneScaffoldRole.Detail] == PaneAdaptedValue.Expanded
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TwoPaneLayout(
   urlLauncher: UrlLauncher,
@@ -52,23 +66,30 @@ fun TwoPaneLayout(
   modifier: Modifier = Modifier,
   viewModel: ClawViewModel = injectedViewModel(),
 ) {
-
   val context = LocalContext.current
   val hottestListState = rememberLazyListState()
   val navController = rememberNavController()
+  val coroutineScope = rememberCoroutineScope()
+  val hottestPosts = viewModel.hottestPosts.collectAsLazyPagingItems()
+  val navigator = rememberListDetailPaneScaffoldNavigator<Comments>()
+  val backBehavior =
+    if (navigator.isListExpanded() && navigator.isDetailExpanded()) {
+      BackNavigationBehavior.PopUntilContentChange
+    } else {
+      BackNavigationBehavior.PopUntilScaffoldValueChange
+    }
 
-  // Track the selected postId as a mutable state
-  var selectedPostId by remember { mutableStateOf<String?>(null) }
-
-  // Initialize postActions with selectedPostId as a mutable state
   val postActions = remember {
-    TwoPaneLayoutPostActions(context, urlLauncher, viewModel, { selectedPostId = it })
+    TwoPaneLayoutPostActions(context, urlLauncher, viewModel) {
+      coroutineScope.launch {
+        navigator.navigateTo(pane = ListDetailPaneScaffoldRole.Detail, contentKey = Comments(it))
+      }
+    }
   }
 
-  val hottestPosts = viewModel.hottestPosts.collectAsLazyPagingItems()
-
-  // Navigator state
-  val navigator = rememberListDetailPaneScaffoldNavigator<Any>()
+  BackHandler(navigator.canNavigateBack(backBehavior)) {
+    coroutineScope.launch { navigator.navigateBack(backBehavior) }
+  }
 
   Scaffold(
     topBar = {
@@ -84,40 +105,46 @@ fun TwoPaneLayout(
       )
     },
     content = { paddingValues ->
-      NavigableListDetailPaneScaffold(
+      ListDetailPaneScaffold(
         modifier = modifier.padding(paddingValues),
-        navigator = navigator,
+        directive = navigator.scaffoldDirective,
+        value = navigator.scaffoldValue,
         listPane = {
-          NetworkPostsForTwoPaneLayout(
-            lazyPagingItems = hottestPosts,
-            listState = hottestListState,
-            postActions = postActions,
-            contentPadding = PaddingValues(),
-            modifier = Modifier.fillMaxSize(),
-          ) { postId ->
-            selectedPostId = postId // Update selectedPostId on click
-          }
-        },
-        detailPane = {
-          selectedPostId?.let { postId ->
-            CommentsPage(
-              postId = postId,
+          AnimatedPane {
+            NetworkPosts(
+              lazyPagingItems = hottestPosts,
+              listState = hottestListState,
               postActions = postActions,
-              htmlConverter = htmlConverter,
-              getSeenComments = viewModel::getSeenComments,
-              markSeenComments = viewModel::markSeenComments,
-              openUserProfile = { navController.navigate(User(it)) },
               contentPadding = PaddingValues(),
               modifier = Modifier.fillMaxSize(),
             )
           }
-            ?: Box(Modifier.fillMaxSize()) {
-              // Placeholder when no post is selected
-              Text(
-                text = "Select a post to view comments",
-                modifier = Modifier.align(Alignment.Center),
-              )
+        },
+        detailPane = {
+          AnimatedPane {
+            when (val contentKey = navigator.currentDestination?.contentKey) {
+              null -> {
+                Box(Modifier.fillMaxSize()) {
+                  Text(
+                    text = "Select a post to view comments",
+                    modifier = Modifier.align(Alignment.Center),
+                  )
+                }
+              }
+              else -> {
+                CommentsPage(
+                  postId = contentKey.postId,
+                  postActions = postActions,
+                  htmlConverter = htmlConverter,
+                  getSeenComments = viewModel::getSeenComments,
+                  markSeenComments = viewModel::markSeenComments,
+                  openUserProfile = { navController.navigate(User(it)) },
+                  contentPadding = PaddingValues(),
+                  modifier = Modifier.fillMaxSize(),
+                )
+              }
             }
+          }
         },
       )
     },

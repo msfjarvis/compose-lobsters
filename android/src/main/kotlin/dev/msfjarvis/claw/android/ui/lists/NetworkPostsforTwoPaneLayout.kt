@@ -45,7 +45,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NetworkPosts(
+fun NetworkPostsForTwoPaneLayout(
   lazyPagingItems: LazyPagingItems<UIPost>,
   listState: LazyListState,
   postActions: PostActions,
@@ -89,7 +89,7 @@ fun NetworkPosts(
               postActions = postActions,
               modifier =
                 Modifier.clickable {
-                  onPostClick(item.shortId) // Trigger the click listener
+                  onPostClick(item.shortId) // Trigger the click listener)
                 },
             )
             HorizontalDivider()
@@ -116,7 +116,7 @@ private fun ListPreview() {
   val items = List(20) { TEST_POST.copy(shortId = "${TEST_POST.shortId}${it}") }
   val flow = MutableStateFlow(PagingData.from(items))
   LobstersTheme {
-    NetworkPosts(
+    NetworkPostsForTwoPaneLayout(
       lazyPagingItems = flow.collectAsLazyPagingItems(),
       listState = rememberLazyListState(),
       postActions = TEST_POST_ACTIONS,

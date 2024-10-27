@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- A brand new tablet-specific UI — Thanks [@ThanaReka](https://github.com/@ThanaReka)
+
 ### Fixes
 
 - Add a workaround for rare crashes while loading SQLite with older devices

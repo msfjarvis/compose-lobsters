@@ -40,7 +40,7 @@ fun CommentsPage(
   openUserProfile: (String) -> Unit,
 ) {
   val postDetails by
-    produceState<NetworkState>(Loading) {
+    produceState<NetworkState>(Loading, key1 = postId) {
       runSuspendCatching { postActions.getComments(postId) }
         .fold(
           success = { details -> value = Success(details) },
@@ -48,7 +48,9 @@ fun CommentsPage(
         )
     }
   val commentState by
-    produceState<PostComments?>(initialValue = null) { value = getSeenComments(postId) }
+    produceState<PostComments?>(initialValue = null, key1 = postId) {
+      value = getSeenComments(postId)
+    }
 
   when (postDetails) {
     is Success<*> -> {
@@ -60,7 +62,6 @@ fun CommentsPage(
         markSeenComments = markSeenComments,
         openUserProfile = openUserProfile,
         contentPadding = contentPadding,
-        commentsHandler = CommentsHandler(),
         modifier = modifier.fillMaxSize(),
       )
     }

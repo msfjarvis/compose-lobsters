@@ -94,7 +94,7 @@ fun TwoPaneLayoutPostActions(
 
     override fun viewComments(postId: String) {
       viewModel.markPostAsRead(postId)
-      setSelectedPost(postId) // Update selectedPostId
+      setSelectedPost(postId)
     }
 
     override fun viewCommentsPage(post: UIPost) {

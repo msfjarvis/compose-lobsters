@@ -33,7 +33,6 @@ fun SearchList(
   setSearchQuery: (String) -> Unit,
   contentPadding: PaddingValues,
   modifier: Modifier = Modifier,
-  onPostClick: (String) -> Unit,
 ) {
   val triggerSearch = { query: String ->
     setSearchQuery(query)
@@ -54,7 +53,6 @@ fun SearchList(
       listState = listState,
       postActions = postActions,
       contentPadding = contentPadding,
-      onPostClick = onPostClick,
     )
   }
 }

@@ -7,7 +7,6 @@
 package dev.msfjarvis.claw.android.ui.lists
 
 import androidx.activity.compose.ReportDrawnWhen
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -51,7 +50,6 @@ fun NetworkPosts(
   postActions: PostActions,
   contentPadding: PaddingValues,
   modifier: Modifier = Modifier,
-  onPostClick: (String) -> Unit,
 ) {
   ReportDrawnWhen { lazyPagingItems.itemCount > 0 }
   val refreshLoadState by rememberUpdatedState(lazyPagingItems.loadState.refresh)
@@ -84,14 +82,7 @@ fun NetworkPosts(
         ) { index ->
           val item = lazyPagingItems[index]
           if (item != null) {
-            LobstersListItem(
-              item = item,
-              postActions = postActions,
-              modifier =
-                Modifier.clickable {
-                  onPostClick(item.shortId) // Trigger the click listener
-                },
-            )
+            LobstersListItem(item = item, postActions = postActions)
             HorizontalDivider()
           }
         }
@@ -121,7 +112,6 @@ private fun ListPreview() {
       listState = rememberLazyListState(),
       postActions = TEST_POST_ACTIONS,
       contentPadding = PaddingValues(),
-      onPostClick = {},
     )
   }
 }

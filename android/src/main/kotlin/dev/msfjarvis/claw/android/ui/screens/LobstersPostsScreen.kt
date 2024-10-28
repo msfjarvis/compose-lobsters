@@ -39,7 +39,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.LocalContext
@@ -90,7 +89,7 @@ import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LobstersPostsScreen(
   urlLauncher: UrlLauncher,
@@ -238,7 +237,6 @@ fun LobstersPostsScreen(
             listState = hottestListState,
             postActions = postActions,
             contentPadding = contentPadding,
-            onPostClick = { postId -> navController.navigate(Comments(postId)) },
           )
         }
         composable<Newest> {
@@ -248,7 +246,6 @@ fun LobstersPostsScreen(
             listState = newestListState,
             postActions = postActions,
             contentPadding = contentPadding,
-            onPostClick = { postId -> navController.navigate(Comments(postId)) },
           )
         }
         composable<Saved> {

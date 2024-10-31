@@ -7,6 +7,7 @@
 package dev.msfjarvis.claw.android.ui.screens
 
 import android.content.Intent
+import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -66,7 +67,6 @@ import dev.msfjarvis.claw.android.ui.PostActions
 import dev.msfjarvis.claw.android.ui.decorations.ClawNavigationBar
 import dev.msfjarvis.claw.android.ui.decorations.ClawNavigationRail
 import dev.msfjarvis.claw.android.ui.decorations.NavigationItem
-import dev.msfjarvis.claw.android.ui.getActivity
 import dev.msfjarvis.claw.android.ui.lists.DatabasePosts
 import dev.msfjarvis.claw.android.ui.lists.NetworkPosts
 import dev.msfjarvis.claw.android.ui.navigation.AboutLibraries
@@ -100,6 +100,7 @@ fun LobstersPostsScreen(
   viewModel: ClawViewModel = injectedViewModel(),
 ) {
   val context = LocalContext.current
+  val activity = LocalActivity.current
   val hottestListState = rememberLazyListState()
   val newestListState = rememberLazyListState()
   val savedListState = rememberLazyListState()
@@ -117,7 +118,7 @@ fun LobstersPostsScreen(
 
   val navigationType = ClawNavigationType.fromSize(windowSizeClass.widthSizeClass)
 
-  val postIdOverride = context.getActivity()?.intent?.extras?.getString(MainActivity.NAVIGATION_KEY)
+  val postIdOverride = activity?.intent?.extras?.getString(MainActivity.NAVIGATION_KEY)
   LaunchedEffect(Unit) {
     if (postIdOverride != null) {
       navController.navigate(Comments(postIdOverride))
@@ -165,9 +166,7 @@ fun LobstersPostsScreen(
           if (
             navController.previousBackStackEntry != null && currentDestination.none(navDestinations)
           ) {
-            IconButton(
-              onClick = { if (!navController.popBackStack()) context.getActivity()?.finish() }
-            ) {
+            IconButton(onClick = { if (!navController.popBackStack()) activity?.finish() }) {
               Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = "Go back to previous screen",

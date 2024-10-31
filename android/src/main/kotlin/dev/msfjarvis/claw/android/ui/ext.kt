@@ -7,9 +7,7 @@
 package dev.msfjarvis.claw.android.ui
 
 import android.content.Context
-import android.content.ContextWrapper
 import android.content.Intent
-import androidx.activity.ComponentActivity
 import androidx.navigation.NavController
 import com.slack.eithernet.ApiResult
 import dev.msfjarvis.claw.android.ui.navigation.Comments
@@ -20,14 +18,6 @@ import dev.msfjarvis.claw.model.LinkMetadata
 import dev.msfjarvis.claw.model.UIPost
 import java.io.IOException
 import java.net.HttpURLConnection
-
-fun Context.getActivity(): ComponentActivity? {
-  return when (this) {
-    is ComponentActivity -> this
-    is ContextWrapper -> baseContext.getActivity()
-    else -> null
-  }
-}
 
 fun PostActions(
   context: Context,

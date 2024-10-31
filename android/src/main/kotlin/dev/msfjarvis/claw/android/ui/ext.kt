@@ -21,7 +21,7 @@ fun PostActions(
   context: Context,
   urlLauncher: UrlLauncher,
   viewModel: ClawViewModel,
-  viewComments: (String) -> Unit,
+  navigateToComments: (String) -> Unit,
 ): PostActions {
   return object : PostActions {
     override fun viewPost(postId: String, postUrl: String, commentsUrl: String) {
@@ -31,7 +31,7 @@ fun PostActions(
 
     override fun viewComments(postId: String) {
       viewModel.markPostAsRead(postId)
-      viewComments(postId)
+      navigateToComments(postId)
     }
 
     override fun viewCommentsPage(post: UIPost) {

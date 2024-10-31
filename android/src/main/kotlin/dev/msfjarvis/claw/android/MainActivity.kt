@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.deliveryhero.whetstone.activity.ContributesActivityInjector
 import dev.msfjarvis.claw.android.ui.screens.LobstersPostsScreen
-import dev.msfjarvis.claw.android.ui.screens.TwoPaneLayout
+import dev.msfjarvis.claw.android.ui.screens.TabletScreen
 
 @ContributesActivityInjector
 class MainActivity : BaseActivity() {
@@ -36,7 +36,7 @@ class MainActivity : BaseActivity() {
       }
 
       else -> {
-        TwoPaneLayout(
+        TabletScreen(
           urlLauncher = urlLauncher,
           htmlConverter = htmlConverter,
           modifier = Modifier.fillMaxSize(),

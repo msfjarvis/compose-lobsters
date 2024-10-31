@@ -109,7 +109,9 @@ fun LobstersPostsScreen(
   val currentDestination = navBackStackEntry?.destination
   val coroutineScope = rememberCoroutineScope()
   val snackbarHostState = remember { SnackbarHostState() }
-  val postActions = remember { PostActions(context, urlLauncher, navController, viewModel) }
+  val postActions = remember {
+    PostActions(context, urlLauncher, viewModel) { navController.navigate(Comments(it)) }
+  }
   val hazeState = remember { HazeState() }
 
   val hottestPosts = viewModel.hottestPosts.collectAsLazyPagingItems()

@@ -8,9 +8,7 @@ package dev.msfjarvis.claw.android.ui
 
 import android.content.Context
 import android.content.Intent
-import androidx.navigation.NavController
 import com.slack.eithernet.ApiResult
-import dev.msfjarvis.claw.android.ui.navigation.Comments
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
@@ -22,8 +20,8 @@ import java.net.HttpURLConnection
 fun PostActions(
   context: Context,
   urlLauncher: UrlLauncher,
-  navController: NavController,
   viewModel: ClawViewModel,
+  viewComments: (String) -> Unit,
 ): PostActions {
   return object : PostActions {
     override fun viewPost(postId: String, postUrl: String, commentsUrl: String) {
@@ -33,7 +31,7 @@ fun PostActions(
 
     override fun viewComments(postId: String) {
       viewModel.markPostAsRead(postId)
-      navController.navigate(Comments(postId))
+      viewComments(postId)
     }
 
     override fun viewCommentsPage(post: UIPost) {
@@ -46,57 +44,6 @@ fun PostActions(
 
     override fun share(post: UIPost) {
       val sendIntent: Intent =
-        Intent().apply {
-          action = Intent.ACTION_SEND
-          putExtra(Intent.EXTRA_TEXT, post.url.ifEmpty { post.commentsUrl })
-          putExtra(Intent.EXTRA_TITLE, post.title)
-          type = "text/plain"
-        }
-      val shareIntent = Intent.createChooser(sendIntent, null)
-      context.startActivity(shareIntent)
-    }
-
-    override fun isPostRead(post: UIPost): Boolean = viewModel.isPostRead(post)
-
-    override fun isPostSaved(post: UIPost): Boolean = viewModel.isPostSaved(post)
-
-    override suspend fun getComments(postId: String): UIPost {
-      return viewModel.getPostComments(postId)
-    }
-
-    override suspend fun getLinkMetadata(url: String): LinkMetadata {
-      return viewModel.getLinkMetadata(url)
-    }
-  }
-}
-
-fun TwoPaneLayoutPostActions(
-  context: Context,
-  urlLauncher: UrlLauncher,
-  viewModel: ClawViewModel,
-  setSelectedPost: (String) -> Unit,
-): PostActions {
-  return object : PostActions {
-    override fun viewPost(postId: String, postUrl: String, commentsUrl: String) {
-      viewModel.markPostAsRead(postId)
-      urlLauncher.openUri(postUrl.ifEmpty { commentsUrl })
-    }
-
-    override fun viewComments(postId: String) {
-      viewModel.markPostAsRead(postId)
-      setSelectedPost(postId)
-    }
-
-    override fun viewCommentsPage(post: UIPost) {
-      urlLauncher.openUri(post.commentsUrl)
-    }
-
-    override fun toggleSave(post: UIPost) {
-      viewModel.toggleSave(post)
-    }
-
-    override fun share(post: UIPost) {
-      val sendIntent =
         Intent().apply {
           action = Intent.ACTION_SEND
           putExtra(Intent.EXTRA_TEXT, post.url.ifEmpty { post.commentsUrl })

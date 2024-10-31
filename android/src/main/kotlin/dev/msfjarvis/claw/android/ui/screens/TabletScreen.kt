@@ -42,7 +42,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.deliveryhero.whetstone.compose.injectedViewModel
 import dev.msfjarvis.claw.android.R
-import dev.msfjarvis.claw.android.ui.TwoPaneLayoutPostActions
+import dev.msfjarvis.claw.android.ui.PostActions
 import dev.msfjarvis.claw.android.ui.lists.NetworkPosts
 import dev.msfjarvis.claw.android.ui.navigation.Comments
 import dev.msfjarvis.claw.android.ui.navigation.User
@@ -60,7 +60,7 @@ private fun ThreePaneScaffoldNavigator<*>.isDetailExpanded() =
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TwoPaneLayout(
+fun TabletScreen(
   urlLauncher: UrlLauncher,
   htmlConverter: HTMLConverter,
   modifier: Modifier = Modifier,
@@ -80,7 +80,7 @@ fun TwoPaneLayout(
     }
 
   val postActions = remember {
-    TwoPaneLayoutPostActions(context, urlLauncher, viewModel) {
+    PostActions(context, urlLauncher, viewModel) {
       coroutineScope.launch {
         navigator.navigateTo(pane = ListDetailPaneScaffoldRole.Detail, contentKey = Comments(it))
       }

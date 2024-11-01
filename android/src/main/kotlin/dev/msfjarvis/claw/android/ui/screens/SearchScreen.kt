@@ -39,7 +39,9 @@ fun SearchScreen(
 ) {
   val context = LocalContext.current
   val navController = rememberNavController()
-  val postActions = remember { PostActions(context, urlLauncher, navController, viewModel) }
+  val postActions = remember {
+    PostActions(context, urlLauncher, viewModel) { navController.navigate(Comments(it)) }
+  }
   val listState = rememberLazyListState()
   val searchResults = viewModel.searchResults.collectAsLazyPagingItems()
 

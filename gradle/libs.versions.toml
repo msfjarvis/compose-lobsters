@@ -10,7 +10,7 @@ dagger = "2.52"
 glance = "1.0.0"
 haze = "0.9.0-rc02"
 junit = "5.11.3"
-konvert = "3.2.2"
+konvert = "3.2.3"
 kotlin = "2.0.21"
 kotlinResult = "2.0.0"
 leakcanary = "3.0-alpha-8"
@@ -125,7 +125,7 @@ android-lint = { id = "com.android.lint", version.ref = "agp" }
 android-test = { id = "com.android.test", version.ref = "agp" }
 anvil = "com.squareup.anvil:2.5.0-beta11"
 baselineprofile = { id = "androidx.baselineprofile", version.ref = "benchmark" }
-dependencyAnalysis = "com.autonomousapps.dependency-analysis:2.4.0"
+dependencyAnalysis = "com.autonomousapps.dependency-analysis:2.4.1"
 invert = "com.squareup.invert:0.0.1-dev"
 kotlin-composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

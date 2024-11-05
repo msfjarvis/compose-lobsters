@@ -39,7 +39,7 @@ class CoilAppPlugin @Inject constructor() : AppPlugin {
   }
 
   private companion object {
-    private const val MEMORY_CACHE_RATIO = 0.25
-    private const val DISK_CACHE_MAX_SIZE = 25L * 1024 * 1024 // 25 MB
+    private const val MEMORY_CACHE_RATIO = 0.10 // 10% of application heap
+    private const val DISK_CACHE_MAX_SIZE = 100L * 1024 * 1024 // 100 MB
   }
 }

@@ -4,7 +4,7 @@ agp = "8.7.2"
 android-junit5 = "1.11.2.0"
 androidx-test = "1.6.1"
 benchmark = "1.4.0-alpha04"
-coil = "2.7.0"
+coil3 = "3.0.0"
 coroutines = "1.9.0"
 dagger = "2.52"
 glance = "1.0.0"
@@ -69,8 +69,9 @@ build-semver = "com.github.zafarkhaja:java-semver:0.10.2"
 build-sentry = "io.sentry.android.gradle:io.sentry.android.gradle.gradle.plugin:4.13.0"
 build-spotless = "com.diffplug.spotless:spotless-plugin-gradle:7.0.0.BETA4"
 build-vcu = "nl.littlerobots.version-catalog-update:nl.littlerobots.version-catalog-update.gradle.plugin:0.8.5"
-coil = { module = "io.coil-kt:coil", version.ref = "coil" }
-coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
+coil3 = { module = "io.coil-kt.coil3:coil", version.ref = "coil3" }
+coil3-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil3" }
+coil3-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil3" }
 compose-richtext-markdown = { module = "com.halilibo.compose-richtext:richtext-commonmark", version.ref = "richtext" }
 compose-richtext-material3 = { module = "com.halilibo.compose-richtext:richtext-ui-material3", version.ref = "richtext" }
 compose-richtext-ui = { module = "com.halilibo.compose-richtext:richtext-ui", version.ref = "richtext" }

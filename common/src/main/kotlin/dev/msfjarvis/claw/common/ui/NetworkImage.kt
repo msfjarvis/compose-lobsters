@@ -1,5 +1,5 @@
 /*
- * Copyright © 2021-2023 Harsh Shandilya.
+ * Copyright © 2021-2024 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.RenderVectorGroup
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
-import coil.compose.AsyncImage
+import coil3.compose.AsyncImage
 
 @Composable
 internal fun NetworkImage(

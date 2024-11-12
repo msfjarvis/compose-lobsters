@@ -28,6 +28,7 @@ import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -77,6 +78,7 @@ internal fun CommentsPageInternal(
 
   val context = LocalContext.current
   val commentNodes by commentsHandler.listItems.collectAsStateWithLifecycle()
+  val commentListState = rememberLazyListState()
 
   LaunchedEffect(key1 = details, key2 = commentState) {
     if (details.comments.isNotEmpty() && !commentState?.commentIds.isNullOrEmpty()) {
@@ -94,7 +96,7 @@ internal fun CommentsPageInternal(
   }
 
   Surface(color = MaterialTheme.colorScheme.surfaceVariant) {
-    LazyColumn(modifier = modifier, contentPadding = contentPadding) {
+    LazyColumn(modifier = modifier, contentPadding = contentPadding, state = commentListState) {
       item {
         CommentsHeader(
           post = details,

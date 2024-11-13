@@ -36,4 +36,5 @@ class LobstersPostDetails(
   @SerialName("submitter_user") val submitter: String,
   val tags: List<String>,
   val comments: List<Comment>,
+  @SerialName("user_is_author") val userIsAuthor: Boolean = false,
 )

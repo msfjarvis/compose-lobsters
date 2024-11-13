@@ -17,16 +17,22 @@ internal class CommentsHandler {
   private val _listItems: MutableStateFlow<List<CommentNode>> = MutableStateFlow(emptyList())
   val listItems: StateFlow<List<CommentNode>> = _listItems.asStateFlow()
 
-  fun createListNode(comments: List<Comment>, commentState: PostComments?) {
+  fun createListNode(
+    comments: List<Comment>,
+    commentState: PostComments?,
+    isPostAuthor: (Comment) -> Boolean,
+  ) {
     val commentNodes = mutableListOf<CommentNode>()
     val isUnread = { id: String -> commentState?.commentIds?.contains(id) == false }
 
     for (i in comments.indices) {
-      if (comments[i].parentComment == null) {
+      val comment = comments[i]
+      if (comment.parentComment == null) {
         commentNodes.add(
           CommentNode(
-            comment = comments[i],
-            isUnread = isUnread(comments[i].shortId),
+            comment = comment,
+            isPostAuthor = isPostAuthor(comment),
+            isUnread = isUnread(comment.shortId),
             indentLevel = 1,
           )
         )
@@ -34,8 +40,9 @@ internal class CommentsHandler {
         commentNodes.lastOrNull()?.let { commentNode ->
           commentNode.addChild(
             CommentNode(
-              comment = comments[i],
-              isUnread = isUnread(comments[i].shortId),
+              comment = comment,
+              isPostAuthor = isPostAuthor(comment),
+              isUnread = isUnread(comment.shortId),
               indentLevel = commentNode.indentLevel + 1,
             )
           )

@@ -27,7 +27,7 @@ data class UIPost(
   @SerialName("submitter_user") val submitter: String,
   val tags: List<String>,
   val comments: List<Comment> = emptyList(),
-  val userIsAuthor: Boolean = false,
+  @SerialName("user_is_author") val userIsAuthor: Boolean = false,
 ) {
   @KonvertFrom(
     value = SavedPost::class,

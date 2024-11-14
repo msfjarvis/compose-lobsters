@@ -38,11 +38,14 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.msfjarvis.claw.common.posts.PostActions
@@ -69,7 +72,9 @@ internal fun CommentsPageInternal(
 ) {
   val commentsHandler = CommentsHandler()
   LaunchedEffect(key1 = details, key2 = commentState) {
-    commentsHandler.createListNode(details.comments, commentState)
+    commentsHandler.createListNode(details.comments, commentState) { comment ->
+      details.userIsAuthor && comment.user == details.submitter
+    }
   }
 
   val onToggleExpandedState = { shortId: String, isExpanded: Boolean ->
@@ -221,6 +226,8 @@ private fun CommentEntry(
             score = comment.score,
             createdAt = comment.createdAt,
             updatedAt = comment.updatedAt,
+            nameColorOverride =
+              if (commentNode.isPostAuthor) MaterialTheme.colorScheme.tertiary else null,
           ),
         avatarUrl = "https://lobste.rs/avatars/${comment.user}-100.png",
         contentDescription = "User avatar for ${comment.user}",
@@ -241,6 +248,7 @@ private fun buildCommenterString(
   score: Int,
   createdAt: TemporalAccessor,
   updatedAt: TemporalAccessor,
+  nameColorOverride: Color? = null,
 ): AnnotatedString {
   val now = System.currentTimeMillis()
   val createdRelative =
@@ -256,7 +264,11 @@ private fun buildCommenterString(
       DateUtils.MINUTE_IN_MILLIS,
     )
   return buildAnnotatedString {
-    append(commenterName)
+    if (nameColorOverride != null) {
+      withStyle(SpanStyle(color = nameColorOverride)) { append(commenterName) }
+    } else {
+      append(commenterName)
+    }
     append(' ')
     append('•')
     append(' ')

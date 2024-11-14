@@ -10,11 +10,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - A brand new tablet-specific UI — Thanks [@ThanaReka](https://github.com/@ThanaReka)
+- Usernames of story authors are highlighted in comments
 
 ### Fixes
 
 - Add a workaround for rare crashes while loading SQLite with older devices
 - Fix comments page resetting collapsed state while scrolling
+- Images are cached for longer on disk
 
 ## [1.51.0] - 2024-09-22
 

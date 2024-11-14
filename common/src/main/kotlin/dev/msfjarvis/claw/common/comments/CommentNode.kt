@@ -10,6 +10,7 @@ import dev.msfjarvis.claw.model.Comment
 
 internal data class CommentNode(
   val comment: Comment,
+  val isPostAuthor: Boolean,
   private var parent: CommentNode? = null,
   val children: MutableList<CommentNode> = mutableListOf(),
   val isUnread: Boolean = false,
@@ -27,6 +28,7 @@ internal data class CommentNode(
         ?.addChild(
           CommentNode(
             comment = child.comment,
+            isPostAuthor = child.isPostAuthor,
             parent = child.parent,
             isUnread = child.isUnread,
             indentLevel = child.indentLevel + 1,

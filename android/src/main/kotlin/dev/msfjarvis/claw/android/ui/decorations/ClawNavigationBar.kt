@@ -28,6 +28,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.hazeChild
@@ -80,7 +81,8 @@ fun ClawNavigationBar(
                   noiseFactor = 0f,
                 ),
             ),
-        containerColor = Color.Transparent,
+        containerColor =
+          if (HazeDefaults.blurEnabled()) Color.Transparent else MaterialTheme.colorScheme.surface,
       ) {
         val navBackStackEntry = navController.currentBackStackEntryAsState().value
         val currentDestination = navBackStackEntry?.destination

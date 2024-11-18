@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add a workaround for rare crashes while loading SQLite with older devices
 - Fix comments page resetting collapsed state while scrolling
 - Images are cached for longer on disk
+- Navigation bar now renders a solid background on API levels 31 and below
 
 ## [1.51.0] - 2024-09-22
 

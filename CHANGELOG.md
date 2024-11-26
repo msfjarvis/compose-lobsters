@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.52.0] - 2024-11-26
+
 ### Added
 
 - A brand new tablet-specific UI — Thanks [@ThanaReka](https://github.com/@ThanaReka)
@@ -482,7 +484,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.51.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.52.0...HEAD
+[1.52.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.51.0...v1.52.0
 [1.51.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.50.0...v1.51.0
 [1.50.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.49.0...v1.50.0
 [1.49.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.48.0...v1.49.0

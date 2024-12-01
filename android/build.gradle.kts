@@ -54,7 +54,12 @@ baselineProfile {
   @Suppress("deprecation") from(projects.benchmark.dependencyProject)
 }
 
-composeCompiler { featureFlags.addAll(ComposeFeatureFlag.OptimizeNonSkippingGroups) }
+composeCompiler {
+  featureFlags.addAll(
+    ComposeFeatureFlag.OptimizeNonSkippingGroups,
+    ComposeFeatureFlag.PausableComposition,
+  )
+}
 
 licensee {
   allow("Apache-2.0")

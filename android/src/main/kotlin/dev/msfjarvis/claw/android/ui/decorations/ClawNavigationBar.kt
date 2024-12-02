@@ -32,6 +32,7 @@ import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.hazeChild
+import dev.msfjarvis.claw.android.ui.navigation.AppDestinations
 import dev.msfjarvis.claw.android.ui.navigation.Destination
 import dev.msfjarvis.claw.android.ui.navigation.matches
 import dev.msfjarvis.claw.common.ui.FloatingNavigationBar
@@ -118,10 +119,22 @@ fun ClawNavigationBar(
   )
 }
 
-class NavigationItem(
+class NavigationItem
+private constructor(
+  val icon: ImageVector,
   val label: String,
   val destination: Destination,
-  val icon: ImageVector,
   val selectedIcon: ImageVector,
   val listStateResetCallback: () -> Unit,
-)
+) {
+  constructor(
+    destination: AppDestinations,
+    listStateResetCallback: () -> Unit,
+  ) : this(
+    destination.icon,
+    destination.label,
+    destination.destination,
+    destination.selectedIcon,
+    listStateResetCallback,
+  ) {}
+}

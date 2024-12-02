@@ -18,14 +18,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.NewReleases
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Tune
-import androidx.compose.material.icons.filled.Whatshot
-import androidx.compose.material.icons.outlined.FavoriteBorder
-import androidx.compose.material.icons.outlined.NewReleases
-import androidx.compose.material.icons.outlined.Whatshot
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -70,6 +64,7 @@ import dev.msfjarvis.claw.android.ui.decorations.NavigationItem
 import dev.msfjarvis.claw.android.ui.lists.DatabasePosts
 import dev.msfjarvis.claw.android.ui.lists.NetworkPosts
 import dev.msfjarvis.claw.android.ui.navigation.AboutLibraries
+import dev.msfjarvis.claw.android.ui.navigation.AppDestinations
 import dev.msfjarvis.claw.android.ui.navigation.ClawNavigationType
 import dev.msfjarvis.claw.android.ui.navigation.Comments
 import dev.msfjarvis.claw.android.ui.navigation.Hottest
@@ -129,32 +124,17 @@ fun LobstersPostsScreen(
 
   val navItems =
     persistentListOf(
-      NavigationItem(
-        label = "Hottest",
-        destination = Hottest,
-        icon = Icons.Outlined.Whatshot,
-        selectedIcon = Icons.Filled.Whatshot,
-      ) {
+      NavigationItem(AppDestinations.HOTTEST) {
         coroutineScope.launch {
           if (hottestPosts.itemCount > 0) hottestListState.animateScrollToItem(index = 0)
         }
       },
-      NavigationItem(
-        label = "Newest",
-        destination = Newest,
-        icon = Icons.Outlined.NewReleases,
-        selectedIcon = Icons.Filled.NewReleases,
-      ) {
+      NavigationItem(AppDestinations.NEWEST) {
         coroutineScope.launch {
           if (newestPosts.itemCount > 0) newestListState.animateScrollToItem(index = 0)
         }
       },
-      NavigationItem(
-        label = "Saved",
-        destination = Saved,
-        icon = Icons.Outlined.FavoriteBorder,
-        selectedIcon = Icons.Filled.Favorite,
-      ) {
+      NavigationItem(AppDestinations.SAVED) {
         coroutineScope.launch { if (savedPosts.isNotEmpty()) savedListState.scrollToItem(0) }
       },
     )

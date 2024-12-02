@@ -32,7 +32,12 @@ androidComponents { beforeVariants { (it as HasUnitTestBuilder).enableUnitTest =
 
 anvil { generateDaggerFactories.set(true) }
 
-composeCompiler { featureFlags.addAll(ComposeFeatureFlag.OptimizeNonSkippingGroups) }
+composeCompiler {
+  featureFlags.addAll(
+    ComposeFeatureFlag.OptimizeNonSkippingGroups,
+    ComposeFeatureFlag.PausableComposition,
+  )
+}
 
 dependencies {
   api(libs.androidx.compose.ui)

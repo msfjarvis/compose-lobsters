@@ -21,6 +21,7 @@ jobs:
         token: ${{ secrets.POST_RELEASE_GH_TOKEN }}
         fetch-depth: 0
         cache-read-only: ${{ github.ref != 'refs/heads/main' }}
+        persist-credentials: true
 
     - name: Set up Git author
       shell: bash

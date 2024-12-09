@@ -17,6 +17,10 @@ inputs:
     description: 'dependency-graph input for gradle/actions/setup-gradle'
     required: false
     default: 'disabled'
+  persist-credentials:
+    description: 'Control the actions/checkout persist-credentials setting'
+    required: false
+    default: false
 runs:
   using: "composite"
   steps:
@@ -26,6 +30,7 @@ runs:
         fetch-depth: ${{ inputs.fetch-depth }}
         token: ${{ inputs.token }}
         lfs: true
+        persist-credentials: ${{ inputs.persist-credentials }}
 
     - name: Set up JDK
       uses: actions/setup-java@8df1039502a15bceb9433410b1a100fbe190c53b # v4.5.0

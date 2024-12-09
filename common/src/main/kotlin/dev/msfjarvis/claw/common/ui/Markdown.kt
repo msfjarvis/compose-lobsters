@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import com.halilibo.richtext.commonmark.Markdown
@@ -24,14 +25,14 @@ import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
 
 @Composable
 internal fun ThemedRichText(text: String, modifier: Modifier = Modifier) {
-  val linkStyle =
+  val linkSpanStyle =
     SpanStyle(
       background = MaterialTheme.colorScheme.surfaceVariant,
       color = MaterialTheme.colorScheme.onSurface,
       fontWeight = FontWeight.Bold,
       textDecoration = TextDecoration.Underline,
     )
-  val stringStyle = RichTextStringStyle.Default.copy(linkStyle = linkStyle)
+  val stringStyle = RichTextStringStyle(linkStyle = TextLinkStyles(linkSpanStyle))
   CompositionLocalProvider(
     LocalTextStyle provides MaterialTheme.typography.bodyLarge,
     LocalContentColor provides MaterialTheme.colorScheme.onBackground,

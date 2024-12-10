@@ -25,9 +25,10 @@ dependencies {
   api(projects.model)
 
   implementation(libs.eithernet)
+  implementation(libs.eithernet.integration.retrofit)
   implementation(libs.jsoup)
 
-  testImplementation(testFixtures(libs.eithernet))
+  testImplementation(libs.eithernet.test.fixtures)
   testImplementation(libs.kotlinx.coroutines.test)
   testImplementation(libs.kotlinx.serialization.core)
   testImplementation(libs.kotlinx.serialization.json)

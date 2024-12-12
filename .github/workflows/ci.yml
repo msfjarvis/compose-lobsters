@@ -32,7 +32,7 @@ jobs:
         validation_level: error
 
     - name: Run unit tests
-      run: ./gradlew --no-configuration-cache --stacktrace check -PslimTests
+      run: ./gradlew --no-configuration-cache --stacktrace :build-logic:check check -PslimTests
 
     - name: (Fail-only) Upload test report
       if: failure()

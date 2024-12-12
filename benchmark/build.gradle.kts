@@ -10,6 +10,7 @@ plugins {
   id(libs.plugins.android.test.get().pluginId)
   id("dev.msfjarvis.claw.kotlin-android")
   alias(libs.plugins.baselineprofile)
+  alias(libs.plugins.dependencyAnalysis)
 }
 
 android {

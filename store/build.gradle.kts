@@ -11,6 +11,7 @@ plugins {
   id("dev.msfjarvis.claw.kotlin-android")
   alias(libs.plugins.anvil)
   alias(libs.plugins.whetstone)
+  alias(libs.plugins.dependencyAnalysis)
 }
 
 android { namespace = "dev.msfjarvis.claw.data.store" }

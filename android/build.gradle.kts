@@ -30,6 +30,7 @@ plugins {
   alias(libs.plugins.kotlin.serialization)
   alias(libs.plugins.navigation.safeargs)
   alias(libs.plugins.screenshot)
+  alias(libs.plugins.dependencyAnalysis)
 }
 
 // Directly using the generated `android` accessor lights up bright red

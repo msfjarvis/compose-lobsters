@@ -129,7 +129,7 @@ android-lint = { id = "com.android.lint", version.ref = "agp" }
 android-test = { id = "com.android.test", version.ref = "agp" }
 anvil = "com.squareup.anvil:2.5.0"
 baselineprofile = { id = "androidx.baselineprofile", version.ref = "benchmark" }
-dependencyAnalysis = "com.autonomousapps.dependency-analysis:2.6.0"
+dependencyAnalysis = "com.autonomousapps.dependency-analysis:2.6.1"
 invert = "com.squareup.invert:0.0.1-dev"
 kotlin-composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

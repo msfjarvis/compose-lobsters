@@ -43,7 +43,12 @@ class KotlinCommonPlugin : Plugin<Project> {
   }
 
   companion object {
-    private val ADDITIONAL_COMPILER_ARGS = listOf("-opt-in=kotlin.RequiresOptIn")
+    private val ADDITIONAL_COMPILER_ARGS =
+      listOf(
+        "-opt-in=kotlin.RequiresOptIn",
+        "-Xjspecify-annotations=strict",
+        "-Xtype-enhancement-improvements-strict-mode",
+      )
 
     val JVM_TOOLCHAIN_ACTION =
       Action<JavaToolchainSpec> { languageVersion.set(JavaLanguageVersion.of(17)) }

@@ -17,6 +17,7 @@ plugins {
   alias(libs.plugins.whetstone)
   alias(libs.plugins.kotlin.composeCompiler)
   alias(libs.plugins.screenshot)
+  alias(libs.plugins.dependencyAnalysis)
 }
 
 android {

@@ -30,6 +30,7 @@ plugins {
   alias(libs.plugins.kotlin.serialization)
   alias(libs.plugins.navigation.safeargs)
   alias(libs.plugins.screenshot)
+  alias(libs.plugins.dependencyAnalysis)
 }
 
 // Directly using the generated `android` accessor lights up bright red
@@ -67,7 +68,6 @@ licensee {
   ignoreDependencies("com.michael-bull.kotlin-result") { because("kotlin-result is ISC licensed") }
   ignoreDependencies("org.commonmark") { because("Commonmark is BSD licensed") }
   allowUrl("https://jsoup.org/license") { because("Jsoup is MIT licensed") }
-  allowUrl("https://opensource.org/licenses/MIT") { because("That's the MIT license text") }
 }
 
 moduleGraphAssert {

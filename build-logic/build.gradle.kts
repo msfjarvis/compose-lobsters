@@ -7,6 +7,7 @@
 plugins {
   `kotlin-dsl`
   alias(libs.plugins.android.lint)
+  alias(libs.plugins.dependencyAnalysis)
 }
 
 kotlin.jvmToolchain(17)

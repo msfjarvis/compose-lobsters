@@ -12,6 +12,7 @@ plugins {
   id("dev.msfjarvis.claw.android-library")
   id("dev.msfjarvis.claw.kotlin-android")
   alias(libs.plugins.kotlin.composeCompiler)
+  alias(libs.plugins.dependencyAnalysis)
 }
 
 android {

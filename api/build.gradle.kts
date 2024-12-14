@@ -11,6 +11,7 @@ plugins {
   id("dev.msfjarvis.claw.kotlin-android")
   alias(libs.plugins.anvil)
   alias(libs.plugins.whetstone)
+  alias(libs.plugins.dependencyAnalysis)
 }
 
 android { namespace = "dev.msfjarvis.claw.api" }
@@ -25,9 +26,10 @@ dependencies {
   api(projects.model)
 
   implementation(libs.eithernet)
+  implementation(libs.eithernet.integration.retrofit)
   implementation(libs.jsoup)
 
-  testImplementation(testFixtures(libs.eithernet))
+  testImplementation(libs.eithernet.test.fixtures)
   testImplementation(libs.kotlinx.coroutines.test)
   testImplementation(libs.kotlinx.serialization.core)
   testImplementation(libs.kotlinx.serialization.json)

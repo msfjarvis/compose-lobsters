@@ -1,77 +1,77 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended",
-    ":dependencyDashboard",
-    "helpers:pinGitHubActionDigests",
-    "github>msfjarvis/shared-workflows//renovate/automerge"
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  extends: [
+    'config:recommended',
+    ':dependencyDashboard',
+    'helpers:pinGitHubActionDigests',
+    'github>msfjarvis/shared-workflows//renovate/automerge',
   ],
-  "branchConcurrentLimit": 15,
-  "github-actions": {
-    "fileMatch": [
-       ".github/reusable-workflows/.+\\.ya?ml$",
+  branchConcurrentLimit: 15,
+  'github-actions': {
+    fileMatch: [
+      '.github/reusable-workflows/.+\\.ya?ml$',
     ],
   },
-  "packageRules": [
+  packageRules: [
     {
       matchDatasources: [
-        "maven"
+        'maven',
       ],
       registryUrls: [
-        "https://maven.google.com/",
-        "https://repo1.maven.org/maven2",
-        "https://plugins.gradle.org/m2/",
-        "https://jitpack.io",
+        'https://maven.google.com/',
+        'https://repo1.maven.org/maven2',
+        'https://plugins.gradle.org/m2/',
+        'https://jitpack.io',
       ],
     },
     {
-      "matchDepNames": [
-        "com.google.devtools.ksp",
-        "dev.drewhamilton.poko",
-        "org.jetbrains.kotlin:kotlin-gradle-plugin",
-        "org.jetbrains.kotlin.plugin.compose",
-        "org.jetbrains.kotlin.plugin.serialization",
+      matchDepNames: [
+        'com.google.devtools.ksp',
+        'dev.drewhamilton.poko',
+        'org.jetbrains.kotlin:kotlin-gradle-plugin',
+        'org.jetbrains.kotlin.plugin.compose',
+        'org.jetbrains.kotlin.plugin.serialization',
       ],
-      "groupName": "Kotlin and Compose",
+      groupName: 'Kotlin and Compose',
     },
     {
-      "matchPackagePatterns": [
-        "^androidx.*",
+      groupName: 'AndroidX',
+      matchPackageNames: [
+        '/^androidx.*/',
       ],
-      "groupName": "AndroidX"
     },
     {
-      "matchPackagePatterns": [
-        "^io.sentry",
-        "^sentry",
+      groupName: 'Sentry',
+      matchPackageNames: [
+        '/^io.sentry/',
+        '/^sentry/',
       ],
-      "groupName": "Sentry"
     },
     {
-      "matchPackagePatterns": [
-        "^com.squareup.anvil"
+      allowedVersions: '!/.*-1-8$/',
+      matchPackageNames: [
+        '/^com.squareup.anvil/',
       ],
-      "allowedVersions": "!/.*-1-8$/",
     },
     {
-      "matchPackagePatterns": [
-        "^androidx.glance",
+      allowedVersions: '<=1.0.0',
+      matchPackageNames: [
+        '/^androidx.glance/',
       ],
-      "allowedVersions": "<=1.0.0",
     },
   ],
-  "customManagers": [
+  customManagers: [
     {
-      "customType": "regex",
-      "fileMatch": [
-        "SpotlessPlugin\.kt$"
+      customType: 'regex',
+      fileMatch: [
+        'SpotlessPlugin.kt$',
       ],
-      "matchStrings": [
-        "KTFMT_VERSION = \"(?<currentValue>.*)\""
+      matchStrings: [
+        'KTFMT_VERSION = "(?<currentValue>.*)"',
       ],
-      "datasourceTemplate": "maven",
-      "depNameTemplate": "com.facebook:ktfmt",
-      "registryUrlTemplate": "https://repo1.maven.org/maven2/",
+      datasourceTemplate: 'maven',
+      depNameTemplate: 'com.facebook:ktfmt',
+      registryUrlTemplate: 'https://repo1.maven.org/maven2/',
     },
   ],
 }

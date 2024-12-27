@@ -137,7 +137,7 @@ ksp = "com.google.devtools.ksp:2.1.0-1.0.29"
 licensee = "app.cash.licensee:1.12.0"
 modulegraphassert = "com.jraska.module.graph.assertion:2.7.1"
 navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigation" }
-poko = "dev.drewhamilton.poko:0.18.1"
+poko = "dev.drewhamilton.poko:0.18.2"
 screenshot = "com.android.compose.screenshot:0.0.1-alpha08"
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 tracelog = "dev.msfjarvis.tracelog:0.1.3"

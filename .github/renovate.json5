@@ -35,27 +35,27 @@
       "groupName": "Kotlin and Compose",
     },
     {
-      "matchPackagePatterns": [
-        "^androidx.*",
+      "matchPackageNames": [
+        "/^androidx.*/",
       ],
       "groupName": "AndroidX"
     },
     {
-      "matchPackagePatterns": [
-        "^io.sentry",
-        "^sentry",
+      "matchPackageNames": [
+        "/^io.sentry/",
+        "/^sentry/",
       ],
       "groupName": "Sentry"
     },
     {
-      "matchPackagePatterns": [
-        "^com.squareup.anvil"
+      "matchPackageNames": [
+        "/^com.squareup.anvil/"
       ],
       "allowedVersions": "!/.*-1-8$/",
     },
     {
-      "matchPackagePatterns": [
-        "^androidx.glance",
+      "matchPackageNames": [
+        "/^androidx.glance/",
       ],
       "allowedVersions": "<=1.0.0",
     },

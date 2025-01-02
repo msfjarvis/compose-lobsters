@@ -1,5 +1,5 @@
 /*
- * Copyright © 2021-2024 Harsh Shandilya.
+ * Copyright © 2021-2025 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -98,6 +98,7 @@ dependencies {
   implementation(libs.androidx.compose.material3.adaptive)
   implementation(libs.androidx.compose.material3.adaptive.layout)
   implementation(libs.androidx.compose.material3.adaptive.navigation)
+  implementation(libs.androidx.compose.material3.adaptive.navigation.suite)
   implementation(libs.androidx.compose.runtime)
   implementation(libs.androidx.compose.ui)
   implementation(libs.androidx.compose.ui.text)

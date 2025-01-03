@@ -59,6 +59,7 @@ jobs:
       env:
         SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
         SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         ./gradlew --no-configuration-cache assembleRelease collectReleaseApks collectReleaseBundle -PenableSentry
 

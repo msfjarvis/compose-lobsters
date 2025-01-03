@@ -48,6 +48,8 @@ extensions.configure<ApplicationExtension> {
   experimentalProperties["android.experimental.enableScreenshotTest"] = true
 }
 
+aboutLibraries.gitHubApiToken = providers.environmentVariable("GITHUB_TOKEN").orNull
+
 baselineProfile {
   mergeIntoMain = true
   saveInSrc = true

@@ -59,6 +59,12 @@
       ],
       "allowedVersions": "<=1.0.0",
     },
+    {
+      "matchPackageNames": [
+        "/.*aboutlibraries.*/",
+      ],
+      "allowedVersions": "<11.3.0",
+    },
   ],
   "customManagers": [
     {

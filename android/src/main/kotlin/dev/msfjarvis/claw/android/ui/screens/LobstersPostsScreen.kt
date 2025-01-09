@@ -1,5 +1,5 @@
 /*
- * Copyright © 2021-2024 Harsh Shandilya.
+ * Copyright © 2021-2025 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -53,7 +53,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.deliveryhero.whetstone.compose.injectedViewModel
 import com.mikepenz.aboutlibraries.ui.compose.m3.LibrariesContainer
 import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.haze
+import dev.chrisbanes.haze.hazeSource
 import dev.msfjarvis.claw.android.MainActivity
 import dev.msfjarvis.claw.android.R
 import dev.msfjarvis.claw.android.SearchActivity
@@ -209,7 +209,7 @@ fun LobstersPostsScreen(
         // Make animations 2x faster than default specs
         enterTransition = { fadeIn(animationSpec = tween(350)) },
         exitTransition = { fadeOut(animationSpec = tween(350)) },
-        modifier = Modifier.haze(hazeState),
+        modifier = Modifier.hazeSource(hazeState),
       ) {
         composable<Hottest> {
           setWebUri("https://lobste.rs/")

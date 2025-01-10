@@ -1,5 +1,5 @@
 /*
- * Copyright © 2022-2024 Harsh Shandilya.
+ * Copyright © 2022-2025 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -31,7 +31,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.HazeStyle
-import dev.chrisbanes.haze.hazeChild
+import dev.chrisbanes.haze.hazeEffect
 import dev.msfjarvis.claw.android.ui.navigation.AppDestinations
 import dev.msfjarvis.claw.android.ui.navigation.Destination
 import dev.msfjarvis.claw.android.ui.navigation.matches
@@ -72,7 +72,7 @@ fun ClawNavigationBar(
             .padding(horizontal = 16.dp)
             .navigationBarsPadding()
             .clip(MaterialTheme.shapes.extraLarge)
-            .hazeChild(
+            .hazeEffect(
               hazeState,
               style =
                 HazeStyle(

@@ -79,5 +79,5 @@ dependencies {
   // Expose the generated version catalog API to the plugin.
   implementation(files(libs::class.java.superclass.protectionDomain.codeSource.location))
 
-  lintChecks(libs.androidx.lint)
+  lintChecks(libs.androidx.lint.gradle)
 }

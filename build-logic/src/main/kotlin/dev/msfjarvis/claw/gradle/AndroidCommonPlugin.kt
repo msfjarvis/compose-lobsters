@@ -1,5 +1,5 @@
 /*
- * Copyright © 2022-2024 Harsh Shandilya.
+ * Copyright © 2022-2025 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -52,6 +52,7 @@ class AndroidCommonPlugin : Plugin<Project> {
     project.extensions.findByType<ApplicationExtension>()?.lint?.configureLint(project)
     project.extensions.findByType<LibraryExtension>()?.lint?.configureLint(project)
     val libs = project.extensions.getByName("libs") as LibrariesForLibs
+    project.dependencies.addProvider("lintChecks", libs.android.security.lints)
     project.dependencies.addProvider("lintChecks", libs.slack.compose.lints)
     project.dependencies.addProvider("lintChecks", libs.slack.lints)
   }

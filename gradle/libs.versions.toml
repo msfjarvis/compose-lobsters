@@ -28,6 +28,7 @@ workmanager = "2.10.0"
 
 [libraries]
 aboutLibraries-m3 = { module = "com.mikepenz:aboutlibraries-compose-m3", version.ref = "aboutLibraries" }
+android-security-lints = "com.android.security.lint:lint:1.0.3"
 androidx-activity-compose = "androidx.activity:activity-compose:1.10.0-rc01"
 androidx-benchmark-macro-junit4 = { module = "androidx.benchmark:benchmark-macro-junit4", version.ref = "benchmark" }
 androidx-browser = "androidx.browser:browser:1.8.0"
@@ -53,7 +54,7 @@ androidx-compose-ui-util = { module = "androidx.compose.ui:ui-util" }
 androidx-core = "androidx.core:core:1.15.0"
 androidx-core-splashscreen = "androidx.core:core-splashscreen:1.2.0-alpha02"
 androidx-lifecycle-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
-androidx-lint = "androidx.lint:lint-gradle:1.0.0-alpha03"
+androidx-lint-gradle = "androidx.lint:lint-gradle:1.0.0-alpha03"
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }
 androidx-paging-compose = "androidx.paging:paging-compose:3.3.5"
 androidx-profileinstaller = "androidx.profileinstaller:profileinstaller:1.4.1"

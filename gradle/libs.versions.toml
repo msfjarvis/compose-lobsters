@@ -9,7 +9,7 @@ coroutines = "1.10.1"
 dagger = "2.55"
 eithernet = "2.0.0"
 glance = "1.0.0"
-haze = "1.2.0"
+haze = "1.2.1"
 junit = "5.11.4"
 konvert = "4.0.1"
 kotlin = "2.1.0"
@@ -70,7 +70,7 @@ build-cachefix = "org.gradle.android.cache-fix:org.gradle.android.cache-fix.grad
 build-kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 build-semver = "com.github.zafarkhaja:java-semver:0.10.2"
 build-sentry = "io.sentry.android.gradle:io.sentry.android.gradle.gradle.plugin:4.14.1"
-build-spotless = "com.diffplug.spotless:spotless-plugin-gradle:7.0.1"
+build-spotless = "com.diffplug.spotless:spotless-plugin-gradle:7.0.2"
 build-vcu = "nl.littlerobots.version-catalog-update:nl.littlerobots.version-catalog-update.gradle.plugin:0.8.5"
 coil3 = { module = "io.coil-kt.coil3:coil", version.ref = "coil3" }
 coil3-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil3" }
@@ -137,7 +137,7 @@ kotlin-composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.r
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = "com.google.devtools.ksp:2.1.0-1.0.29"
 licensee = "app.cash.licensee:1.12.0"
-modulegraphassert = "com.jraska.module.graph.assertion:2.7.1"
+modulegraphassert = "com.jraska.module.graph.assertion:2.7.2"
 navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigation" }
 poko = "dev.drewhamilton.poko:0.18.2"
 screenshot = "com.android.compose.screenshot:0.0.1-alpha08"

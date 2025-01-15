@@ -51,7 +51,7 @@ androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 androidx-compose-ui-unit = { module = "androidx.compose.ui:ui-unit" }
 androidx-compose-ui-util = { module = "androidx.compose.ui:ui-util" }
-androidx-core = "androidx.core:core:1.15.0"
+androidx-core = "androidx.core:core:1.16.0-alpha01"
 androidx-core-splashscreen = "androidx.core:core-splashscreen:1.2.0-alpha02"
 androidx-lifecycle-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 androidx-lint-gradle = "androidx.lint:lint-gradle:1.0.0-alpha03"

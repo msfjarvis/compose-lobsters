@@ -137,7 +137,7 @@ kotlin-composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.r
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = "com.google.devtools.ksp:2.1.0-1.0.29"
 licensee = "app.cash.licensee:1.12.0"
-modulegraphassert = "com.jraska.module.graph.assertion:2.7.2"
+modulegraphassert = "com.jraska.module.graph.assertion:2.7.3"
 navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigation" }
 poko = "dev.drewhamilton.poko:0.18.2"
 screenshot = "com.android.compose.screenshot:0.0.1-alpha08"

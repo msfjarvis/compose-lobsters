@@ -29,7 +29,7 @@ workmanager = "2.10.0"
 [libraries]
 aboutLibraries-m3 = { module = "com.mikepenz:aboutlibraries-compose-m3", version.ref = "aboutLibraries" }
 android-security-lints = "com.android.security.lint:lint:1.0.3"
-androidx-activity-compose = "androidx.activity:activity-compose:1.10.0-rc01"
+androidx-activity-compose = "androidx.activity:activity-compose:1.10.0"
 androidx-benchmark-macro-junit4 = { module = "androidx.benchmark:benchmark-macro-junit4", version.ref = "benchmark" }
 androidx-browser = "androidx.browser:browser:1.8.0"
 androidx-compose-animation = { module = "androidx.compose.animation:animation" }
@@ -51,7 +51,7 @@ androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 androidx-compose-ui-unit = { module = "androidx.compose.ui:ui-unit" }
 androidx-compose-ui-util = { module = "androidx.compose.ui:ui-util" }
-androidx-core = "androidx.core:core:1.15.0"
+androidx-core = "androidx.core:core:1.16.0-alpha01"
 androidx-core-splashscreen = "androidx.core:core-splashscreen:1.2.0-alpha02"
 androidx-lifecycle-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 androidx-lint-gradle = "androidx.lint:lint-gradle:1.0.0-alpha03"
@@ -137,7 +137,7 @@ kotlin-composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.r
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = "com.google.devtools.ksp:2.1.0-1.0.29"
 licensee = "app.cash.licensee:1.12.0"
-modulegraphassert = "com.jraska.module.graph.assertion:2.7.2"
+modulegraphassert = "com.jraska.module.graph.assertion:2.7.3"
 navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigation" }
 poko = "dev.drewhamilton.poko:0.18.2"
 screenshot = "com.android.compose.screenshot:0.0.1-alpha08"

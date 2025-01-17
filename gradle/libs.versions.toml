@@ -33,7 +33,7 @@ androidx-activity-compose = "androidx.activity:activity-compose:1.10.0"
 androidx-benchmark-macro-junit4 = { module = "androidx.benchmark:benchmark-macro-junit4", version.ref = "benchmark" }
 androidx-browser = "androidx.browser:browser:1.8.0"
 androidx-compose-animation = { module = "androidx.compose.animation:animation" }
-androidx-compose-bom = "androidx.compose:compose-bom-alpha:2024.12.01"
+androidx-compose-bom = "androidx.compose:compose-bom-alpha:2025.01.00"
 androidx-compose-foundation = { module = "androidx.compose.foundation:foundation" }
 androidx-compose-glance = { module = "androidx.glance:glance-appwidget", version.ref = "glance" }
 androidx-compose-glance-m3 = { module = "androidx.glance:glance-material3", version.ref = "glance" }

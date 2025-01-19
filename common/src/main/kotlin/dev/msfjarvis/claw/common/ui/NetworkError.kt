@@ -1,11 +1,12 @@
 /*
- * Copyright © 2022-2024 Harsh Shandilya.
+ * Copyright © 2022-2025 Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
 package dev.msfjarvis.claw.common.ui
 
+import android.content.ClipData
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,15 +19,17 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalClipboardManager
-import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.platform.ClipEntry
+import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.unit.dp
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
 import io.github.aakira.napier.Napier
+import kotlinx.coroutines.launch
 
 @Composable
 fun NetworkError(label: String, error: Throwable, modifier: Modifier = Modifier) {
@@ -46,7 +49,8 @@ fun NetworkError(label: String, error: Throwable, modifier: Modifier = Modifier)
     }
   }
   if (showDialog) {
-    val clipboard = LocalClipboardManager.current
+    val coroutineScope = rememberCoroutineScope()
+    val clipboard = LocalClipboard.current
     AlertDialog(
       onDismissRequest = { showDialog = false },
       confirmButton = {
@@ -54,7 +58,11 @@ fun NetworkError(label: String, error: Throwable, modifier: Modifier = Modifier)
           text = "Copy stacktrace",
           modifier =
             Modifier.clickable {
-              clipboard.setText(AnnotatedString(error.stackTraceToString()))
+              coroutineScope.launch {
+                clipboard.setClipEntry(
+                  ClipEntry(ClipData.newPlainText("Stacktrace", error.stackTraceToString()))
+                )
+              }
               showDialog = false
             },
         )

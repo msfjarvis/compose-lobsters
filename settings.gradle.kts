@@ -1,5 +1,5 @@
 /*
- * Copyright © 2021-2024 Harsh Shandilya.
+ * Copyright © Harsh Shandilya.
  * Use of this source code is governed by an MIT-style
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
@@ -64,7 +64,7 @@ pluginManagement {
 
 plugins {
   id("org.gradle.toolchains.foojay-resolver-convention") version "0.9.0"
-  id("com.gradle.develocity") version "3.19"
+  id("com.gradle.develocity") version "3.19.1"
 }
 
 develocity {

@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Upgrade to Compose 2025-01 releases
+- Upgrade all dependencies
+
 ## [1.53.0] - 2024-11-30
 
 ### Fixed

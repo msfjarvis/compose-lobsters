@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.54.0] - 2025-01-31
+
 ### Fixed
 
 - Upgrade to Compose 2025-01 releases
@@ -495,7 +497,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.53.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.54.0...HEAD
+[1.54.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.53.0...v1.54.0
 [1.53.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.52.0...v1.53.0
 [1.52.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.51.0...v1.52.0
 [1.51.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.50.0...v1.51.0

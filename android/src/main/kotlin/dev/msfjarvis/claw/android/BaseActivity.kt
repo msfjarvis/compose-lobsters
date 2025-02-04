@@ -19,7 +19,6 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.core.net.toUri
 import com.deliveryhero.whetstone.Whetstone
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
-import dev.msfjarvis.claw.common.comments.HTMLConverter
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 import javax.inject.Inject
@@ -29,7 +28,6 @@ import javax.inject.Inject
 abstract class BaseActivity : ComponentActivity() {
 
   @Inject lateinit var urlLauncher: UrlLauncher
-  @Inject lateinit var htmlConverter: HTMLConverter
   @Inject lateinit var viewModel: ClawViewModel
   var webUri: String? = null
 

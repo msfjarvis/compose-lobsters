@@ -59,6 +59,7 @@ dependencies {
   implementation(libs.compose.richtext.markdown)
   implementation(libs.compose.richtext.material3)
   implementation(libs.compose.richtext.ui)
+  implementation(libs.htmlconverter)
   implementation(libs.kotlinx.collections.immutable)
   implementation(libs.kotlinx.coroutines.core)
   implementation(libs.kotlinResult)

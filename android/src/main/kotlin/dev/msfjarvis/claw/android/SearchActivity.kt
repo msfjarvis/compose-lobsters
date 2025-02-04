@@ -14,11 +14,6 @@ import dev.msfjarvis.claw.android.ui.screens.SearchScreen
 class SearchActivity : BaseActivity() {
   @Composable
   override fun Content() {
-    SearchScreen(
-      urlLauncher = urlLauncher,
-      htmlConverter = htmlConverter,
-      setWebUri = { webUri = it },
-      viewModel = viewModel,
-    )
+    SearchScreen(urlLauncher = urlLauncher, setWebUri = { webUri = it }, viewModel = viewModel)
   }
 }

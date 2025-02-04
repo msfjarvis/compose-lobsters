@@ -40,7 +40,6 @@ import dev.msfjarvis.claw.android.ui.navigation.Settings
 import dev.msfjarvis.claw.android.ui.navigation.User
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.common.comments.CommentsPage
-import dev.msfjarvis.claw.common.comments.HTMLConverter
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 import dev.msfjarvis.claw.common.user.UserProfile
 import kotlinx.collections.immutable.persistentMapOf
@@ -48,7 +47,6 @@ import kotlinx.collections.immutable.persistentMapOf
 @Composable
 fun TabletScreen2(
   urlLauncher: UrlLauncher,
-  htmlConverter: HTMLConverter,
   setWebUri: (String?) -> Unit,
   modifier: Modifier = Modifier,
   viewModel: ClawViewModel = injectedViewModel(),
@@ -140,7 +138,6 @@ fun TabletScreen2(
         CommentsPage(
           postId = postId,
           postActions = postActions,
-          htmlConverter = htmlConverter,
           getSeenComments = viewModel::getSeenComments,
           markSeenComments = viewModel::markSeenComments,
           contentPadding = contentPadding,

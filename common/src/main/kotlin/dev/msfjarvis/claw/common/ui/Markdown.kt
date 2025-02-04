@@ -50,17 +50,33 @@ internal fun ThemedRichText(text: String, modifier: Modifier = Modifier) {
 internal fun ThemedRichTextPreview() {
   val text =
     """
-    <h3 id="heading">Heading</h3>
-
-    <p>This is a paragraph body</p>
-
-    <pre><code>This is a code block</code></pre>
-
-    <p>This is an <code>inline code block</code></p>
-
-    <p><a href="https://github.com/msfjarvis/compose-lobsters">This is a link</a></p>
-
-    <p><img src="https://avatars.githubusercontent.com/u/13348378?v=4" alt="Image"></p>
+    <h1>Hello <strong>HTML Converter</strong> for Compose</h1>
+    <p>This the first paragraph of the sample app running on <strong>Nothing</strong>!</p>
+    <ul>
+        <li><strong>Bold</strong></li>
+        <li><em>Italic</em></li>
+        <li><u>Underline</u></li>
+        <li><del>Strikethrough</del></li>
+        <li><code>Code</code></li>
+        <li><a href="https://www.wikipedia.org/">Hyperlink with custom styling</a></li>
+        <li><big>Bigger</big> and <small>smaller</small> text</li>
+        <li><sup>Super</sup>text and <sub>sub</sub>text</li>
+        <li>A nested ordered list:
+            <ol>
+                <li>Item 1</li>
+                <li>Item 2</li>
+            </ol>
+        </li>
+    </ul>
+    <dl>
+        <dt>Term</dt>
+        <dd>Description.</dd>
+    </dl>
+    A few HTML entities: &raquo; &copy; &laquo; &check;
+    <blockquote>A blockquote, indented relatively to the main text.</blockquote>
+    <pre>Preformatted text, preserving
+    line breaks...    and spaces.</pre>
+    <p>You reached the end of the document.<br />Thank you for reading!</p>
     """
       .trimIndent()
 

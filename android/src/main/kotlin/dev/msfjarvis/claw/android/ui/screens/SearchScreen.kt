@@ -25,14 +25,12 @@ import dev.msfjarvis.claw.android.ui.navigation.Search
 import dev.msfjarvis.claw.android.ui.navigation.User
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.common.comments.CommentsPage
-import dev.msfjarvis.claw.common.comments.HTMLConverter
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 import dev.msfjarvis.claw.common.user.UserProfile
 
 @Composable
 fun SearchScreen(
   urlLauncher: UrlLauncher,
-  htmlConverter: HTMLConverter,
   setWebUri: (String?) -> Unit,
   modifier: Modifier = Modifier,
   viewModel: ClawViewModel = injectedViewModel(),
@@ -64,11 +62,10 @@ fun SearchScreen(
         CommentsPage(
           postId = postId,
           postActions = postActions,
-          htmlConverter = htmlConverter,
           getSeenComments = viewModel::getSeenComments,
           markSeenComments = viewModel::markSeenComments,
-          openUserProfile = { navController.navigate(User(it)) },
           contentPadding = contentPadding,
+          openUserProfile = { navController.navigate(User(it)) },
         )
       }
       composable<User> { backStackEntry ->

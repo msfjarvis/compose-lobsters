@@ -46,7 +46,6 @@ import kotlinx.collections.immutable.toImmutableList
 internal fun CommentsHeader(
   post: UIPost,
   postActions: PostActions,
-  htmlConverter: HTMLConverter,
   openUserProfile: (String) -> Unit,
   modifier: Modifier = Modifier,
 ) {
@@ -77,7 +76,7 @@ internal fun CommentsHeader(
       }
 
       if (post.description.isNotBlank()) {
-        ThemedRichText(htmlConverter.convertHTMLToMarkdown(post.description))
+        ThemedRichText(post.description)
         Spacer(Modifier.height(4.dp))
       }
       Submitter(

@@ -31,29 +31,29 @@ class SearchApiTest {
     private val results =
       listOf(
         LobstersPost(
-          shortId = "gjlsdg",
-          title = "ChatGPT visits the Emacs doctor",
-          url = "https://xenodium.com/chatgpt-visits-the-emacs-doctor/",
+          shortId = "vvky3g",
           createdAt = "",
-          commentCount = 3,
-          commentsUrl = "https://lobste.rs/s/gjlsdg/chatgpt_visits_emacs_doctor",
-          submitter = "xenodium",
-          tags = listOf("ai", "emacs"),
+          title = "2024 State of Rust Survey Results",
+          url = "https://blog.rust-lang.org/2025/02/13/2024-State-Of-Rust-Survey-results.html",
           description = "",
-          userIsAuthor = true,
+          commentCount = 10,
+          commentsUrl = "https://lobste.rs/s/vvky3g/2024_state_rust_survey_results",
+          submitter = "obsoleszenz",
+          userIsAuthor = false,
+          tags = listOf("rust"),
         ),
         LobstersPost(
-          shortId = "astcqf",
-          title =
-            "Implementing a question-answering system for PDF documents using ChatGPT and Redis",
-          url = "https://mstack.nl/blog/20230623-chatgpt-question-pdf-document/",
+          shortId = "wjoric",
           createdAt = "",
-          commentCount = 0,
-          commentsUrl = "https://lobste.rs/s/astcqf/implementing_question_answering_system",
-          submitter = "asteroid",
-          tags = listOf("ai"),
+          title = "New hack uses prompt injection to corrupt Gemini’s long-term memory",
+          url =
+            "https://arstechnica.com/security/2025/02/new-hack-uses-prompt-injection-to-corrupt-geminis-long-term-memory/",
           description = "",
+          commentCount = 0,
+          commentsUrl = "https://lobste.rs/s/wjoric/new_hack_uses_prompt_injection_corrupt",
+          submitter = "laktak",
           userIsAuthor = false,
+          tags = listOf("ai"),
         ),
       )
   }

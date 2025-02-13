@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Adapt to lobsters API change
+
 ## [1.54.0] - 2025-01-31
 
 ### Fixed

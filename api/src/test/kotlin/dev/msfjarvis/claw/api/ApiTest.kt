@@ -33,7 +33,7 @@ class ApiTest {
     val posts = api.getHottestPosts(1)
     assertIs<Success<List<LobstersPost>>>(posts)
     val commentsOnlyPosts = posts.value.asSequence().filter { it.url.isEmpty() }.toSet()
-    assertThat(commentsOnlyPosts).hasSize(1)
+    assertThat(commentsOnlyPosts).hasSize(0)
   }
 
   @Test
@@ -56,7 +56,7 @@ class ApiTest {
     assertIs<Success<CSRFToken>>(token)
     assertThat(token.value.value)
       .isEqualTo(
-        "OZWykgFemPVeOSNmB53-ccKXe458X7xCInO1-qzFU6nk_9RCSrSQqS9OPmA5_pyy8qD3IYAIZ7XfAM3gdhJpkQ"
+        "RPe1m3JaXAq0ti7t15hNixpLvmgJ793Ti6y4fOpxtfenyXQK3WU19m7MJb8RGoIf-tC3C9Ilwb8pv0WJUWLbNA"
       )
   }
 }

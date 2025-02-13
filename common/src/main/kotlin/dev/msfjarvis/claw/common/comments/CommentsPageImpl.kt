@@ -225,7 +225,7 @@ private fun CommentEntry(
             commenterName = comment.user,
             score = comment.score,
             createdAt = comment.createdAt,
-            updatedAt = comment.lastEditedAt,
+            updatedAt = comment.updatedAt,
             nameColorOverride =
               if (commentNode.isPostAuthor) MaterialTheme.colorScheme.tertiary else null,
           ),

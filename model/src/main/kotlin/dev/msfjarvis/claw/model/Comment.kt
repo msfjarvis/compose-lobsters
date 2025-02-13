@@ -22,7 +22,7 @@ class Comment(
   val url: String,
   val score: Int,
   @Serializable(with = JavaInstantSerializer::class) val createdAt: TemporalAccessor,
-  @Serializable(with = JavaInstantSerializer::class) val lastEditedAt: TemporalAccessor,
+  @Serializable(with = JavaInstantSerializer::class) val updatedAt: TemporalAccessor,
   val parentComment: String?,
   @SerialName("commenting_user") val user: String,
 )

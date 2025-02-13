@@ -11,6 +11,7 @@ pluginManagement {
     exclusiveContent {
       forRepository { google() }
       filter {
+        includeGroup("androidx.annotation")
         includeGroup("androidx.baselineprofile")
         includeGroup("androidx.benchmark")
         includeGroup("androidx.databinding")

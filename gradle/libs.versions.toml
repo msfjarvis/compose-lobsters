@@ -1,6 +1,6 @@
 [versions]
 aboutLibraries = "11.2.3"
-agp = "8.8.0"
+agp = "8.8.1"
 android-junit5 = "1.11.3.0"
 androidx-test = "1.6.1"
 benchmark = "1.4.0-alpha08"
@@ -133,7 +133,7 @@ dependencyAnalysis = "com.autonomousapps.dependency-analysis:2.8.2"
 invert = "com.squareup.invert:0.0.1-dev"
 kotlin-composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-ksp = "com.google.devtools.ksp:2.1.10-1.0.29"
+ksp = "com.google.devtools.ksp:2.1.10-1.0.30"
 licensee = "app.cash.licensee:1.12.0"
 modulegraphassert = "com.jraska.module.graph.assertion:2.7.3"
 navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigation" }

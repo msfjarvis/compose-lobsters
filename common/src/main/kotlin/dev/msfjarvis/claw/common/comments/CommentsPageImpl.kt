@@ -225,7 +225,7 @@ private fun CommentEntry(
             commenterName = comment.user,
             score = comment.score,
             createdAt = comment.createdAt,
-            updatedAt = comment.lastEditedAt,
+            lastEditedAt = comment.lastEditedAt,
             nameColorOverride =
               if (commentNode.isPostAuthor) MaterialTheme.colorScheme.tertiary else null,
           ),
@@ -247,7 +247,7 @@ private fun buildCommenterString(
   commenterName: String,
   score: Int,
   createdAt: TemporalAccessor,
-  updatedAt: TemporalAccessor,
+  lastEditedAt: TemporalAccessor,
   nameColorOverride: Color? = null,
 ): AnnotatedString {
   val now = System.currentTimeMillis()
@@ -257,9 +257,9 @@ private fun buildCommenterString(
       now,
       DateUtils.MINUTE_IN_MILLIS,
     )
-  val updatedRelative =
+  val lastEditedRelative =
     DateUtils.getRelativeTimeSpanString(
-      Instant.from(updatedAt).toEpochMilli(),
+      Instant.from(lastEditedAt).toEpochMilli(),
       now,
       DateUtils.MINUTE_IN_MILLIS,
     )
@@ -277,12 +277,12 @@ private fun buildCommenterString(
     append('•')
     append(' ')
     append(createdRelative.toString())
-    if (updatedRelative != createdRelative) {
+    if (lastEditedRelative != createdRelative) {
       append(' ')
       append('(')
-      append("Updated")
+      append("Edited")
       append(' ')
-      append(updatedRelative.toString())
+      append(lastEditedRelative.toString())
       append(')')
     }
   }

@@ -32,7 +32,6 @@ import dev.msfjarvis.claw.model.UIPost
 fun CommentsPage(
   postId: String,
   postActions: PostActions,
-  htmlConverter: HTMLConverter,
   getSeenComments: suspend (String) -> PostComments?,
   markSeenComments: (String, List<Comment>) -> Unit,
   contentPadding: PaddingValues,
@@ -57,7 +56,6 @@ fun CommentsPage(
       CommentsPageInternal(
         details = (postDetails as Success<UIPost>).data,
         postActions = postActions,
-        htmlConverter = htmlConverter,
         commentState = commentState,
         markSeenComments = markSeenComments,
         openUserProfile = openUserProfile,

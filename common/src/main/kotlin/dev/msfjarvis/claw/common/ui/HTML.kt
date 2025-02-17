@@ -6,16 +6,23 @@
  */
 package dev.msfjarvis.claw.common.ui
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.text.InlineTextContent
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.Placeholder
+import androidx.compose.ui.text.PlaceholderVerticalAlign
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.unit.sp
 import be.digitalia.compose.htmlconverter.HtmlStyle
 import be.digitalia.compose.htmlconverter.htmlToAnnotatedString
 import dev.msfjarvis.claw.common.theme.LobstersTheme
@@ -30,15 +37,51 @@ internal fun ThemedRichText(text: String, modifier: Modifier = Modifier) {
       fontWeight = FontWeight.Bold,
       textDecoration = TextDecoration.Underline,
     )
+  val annotatedString =
+    remember(text) {
+      htmlToAnnotatedString(
+        html = text,
+        compactMode = false,
+        style = HtmlStyle(TextLinkStyles(linkSpanStyle)),
+      )
+    }
+  val inlineContent =
+    mapOf(
+      "blockquote" to
+        InlineTextContent(
+          placeholder =
+            Placeholder(
+              width = 0.sp,
+              height = 0.sp,
+              placeholderVerticalAlign = PlaceholderVerticalAlign.AboveBaseline,
+            )
+        ) {
+          Box(modifier = Modifier.background(Color.Black)) {}
+        }
+    )
+
+  // Get all span styles
+  val spanStyles = annotatedString.spanStyles
+
+  // Print all span styles
+  println("Span Styles:")
+  spanStyles.forEach { span ->
+    println("Span: ${span.item}, Start: ${span.start}, End: ${span.end}")
+  }
+
+  // Get all string annotations (e.g., URL)
+  val stringAnnotations =
+    annotatedString.getStringAnnotations(tag = "URL", start = 0, end = annotatedString.length)
+
+  // Print all string annotations
+  println("String Annotations:")
+  stringAnnotations.forEach { annotation ->
+    println("Annotation: ${annotation.item}, Start: ${annotation.start}, End: ${annotation.end}")
+  }
+
   Text(
-    text =
-      remember(text) {
-        htmlToAnnotatedString(
-          html = text,
-          compactMode = false,
-          style = HtmlStyle(TextLinkStyles(linkSpanStyle)),
-        )
-      },
+    text = annotatedString,
+    inlineContent = inlineContent,
     style = MaterialTheme.typography.bodyLarge,
     color = contentColorFor(MaterialTheme.colorScheme.background),
     modifier = modifier,

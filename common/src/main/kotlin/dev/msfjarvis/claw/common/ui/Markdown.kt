@@ -6,20 +6,18 @@
  */
 package dev.msfjarvis.claw.common.ui
 
-import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
-import com.halilibo.richtext.commonmark.Markdown
-import com.halilibo.richtext.ui.RichTextStyle
-import com.halilibo.richtext.ui.material3.RichText
-import com.halilibo.richtext.ui.string.RichTextStringStyle
+import be.digitalia.compose.htmlconverter.HtmlStyle
+import be.digitalia.compose.htmlconverter.htmlToAnnotatedString
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
 
@@ -32,15 +30,19 @@ internal fun ThemedRichText(text: String, modifier: Modifier = Modifier) {
       fontWeight = FontWeight.Bold,
       textDecoration = TextDecoration.Underline,
     )
-  val stringStyle = RichTextStringStyle(linkStyle = TextLinkStyles(linkSpanStyle))
-  CompositionLocalProvider(
-    LocalTextStyle provides MaterialTheme.typography.bodyLarge,
-    LocalContentColor provides MaterialTheme.colorScheme.onBackground,
-  ) {
-    RichText(modifier = modifier, style = RichTextStyle.Default.copy(stringStyle = stringStyle)) {
-      Markdown(text)
-    }
-  }
+  Text(
+    text =
+      remember(text) {
+        htmlToAnnotatedString(
+          html = text,
+          compactMode = false,
+          style = HtmlStyle(TextLinkStyles(linkSpanStyle)),
+        )
+      },
+    style = MaterialTheme.typography.bodyLarge,
+    color = contentColorFor(MaterialTheme.colorScheme.background),
+    modifier = modifier,
+  )
 }
 
 @ThemePreviews
@@ -48,19 +50,34 @@ internal fun ThemedRichText(text: String, modifier: Modifier = Modifier) {
 internal fun ThemedRichTextPreview() {
   val text =
     """
-      ### Heading
-      This is a paragraph body
-
-      ```
-      This is a code block
-      ```
-
-      This is an `inline code block`
-
-      [This is a link](https://github.com/msfjarvis/compose-lobsters)
-
-      ![Image](https://avatars.githubusercontent.com/u/13348378?v=4)
-  """
+    <h1>Hello <strong>HTML Converter</strong> for Compose</h1>
+    <p>This the first paragraph of the sample app running on <strong>Nothing</strong>!</p>
+    <ul>
+        <li><strong>Bold</strong></li>
+        <li><em>Italic</em></li>
+        <li><u>Underline</u></li>
+        <li><del>Strikethrough</del></li>
+        <li><code>Code</code></li>
+        <li><a href="https://www.wikipedia.org/">Hyperlink with custom styling</a></li>
+        <li><big>Bigger</big> and <small>smaller</small> text</li>
+        <li><sup>Super</sup>text and <sub>sub</sub>text</li>
+        <li>A nested ordered list:
+            <ol>
+                <li>Item 1</li>
+                <li>Item 2</li>
+            </ol>
+        </li>
+    </ul>
+    <dl>
+        <dt>Term</dt>
+        <dd>Description.</dd>
+    </dl>
+    A few HTML entities: &raquo; &copy; &laquo; &check;
+    <blockquote>A blockquote, indented relatively to the main text.</blockquote>
+    <pre>Preformatted text, preserving
+    line breaks...    and spaces.</pre>
+    <p>You reached the end of the document.<br />Thank you for reading!</p>
+    """
       .trimIndent()
 
   LobstersTheme { ThemedRichText(text = text) }

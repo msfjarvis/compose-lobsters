@@ -15,8 +15,8 @@ konvert = "4.0.1"
 kotlin = "2.1.10"
 kotlinResult = "2.0.1"
 leakcanary = "3.0-alpha-8"
-lifecycle = "2.9.0-alpha10"
-navigation = "2.9.0-alpha06"
+lifecycle = "2.9.0-alpha11"
+navigation = "2.9.0-alpha07"
 retrofit = "2.11.0"
 richtext = "1.0.0-alpha02"
 sentry-sdk = "8.3.0"
@@ -28,7 +28,7 @@ workmanager = "2.10.0"
 [libraries]
 aboutLibraries-m3 = { module = "com.mikepenz:aboutlibraries-compose-m3", version.ref = "aboutLibraries" }
 android-security-lints = "com.android.security.lint:lint:1.0.3"
-androidx-activity-compose = "androidx.activity:activity-compose:1.10.0"
+androidx-activity-compose = "androidx.activity:activity-compose:1.10.1"
 androidx-benchmark-macro-junit4 = { module = "androidx.benchmark:benchmark-macro-junit4", version.ref = "benchmark" }
 androidx-browser = "androidx.browser:browser:1.8.0"
 androidx-compose-animation = { module = "androidx.compose.animation:animation" }
@@ -51,7 +51,7 @@ androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling
 androidx-compose-ui-unit = { module = "androidx.compose.ui:ui-unit" }
 androidx-compose-ui-util = { module = "androidx.compose.ui:ui-util" }
 androidx-core = "androidx.core:core:1.16.0-alpha02"
-androidx-core-splashscreen = "androidx.core:core-splashscreen:1.2.0-alpha02"
+androidx-core-splashscreen = "androidx.core:core-splashscreen:1.2.0-beta01"
 androidx-lifecycle-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 androidx-lint-gradle = "androidx.lint:lint-gradle:1.0.0-alpha03"
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }

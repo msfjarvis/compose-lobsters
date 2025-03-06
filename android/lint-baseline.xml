@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<issues format="6" by="lint 8.7.1" type="baseline" client="gradle" dependencies="true" name="AGP (8.7.1)" variant="all" version="8.7.1">
+<issues format="6" by="lint 8.8.2" type="baseline" client="gradle" dependencies="true" name="AGP (8.8.2)" variant="all" version="8.8.2">
+
+    <issue
+        id="InvalidPackage"
+        message="Invalid package reference in library; not included in Android: `java.net.http`. Referenced from `org.jsoup.helper.HttpClientExecutor`.">
+        <location
+            file="../../../.gradle/caches/modules-2/files-2.1/org.jsoup/jsoup/1.19.1/a66ce6265069c29783c30ca7c51ae15b68c36c5/jsoup-1.19.1.jar"/>
+    </issue>
+
+    <issue
+        id="InvalidPackage"
+        message="Invalid package reference in org.jsoup:jsoup; not included in Android: `java.net.http`. Referenced from `org.jsoup.helper.HttpClientExecutor`.">
+        <location
+            file="../../../.gradle/caches/modules-2/files-2.1/org.jsoup/jsoup/1.19.1/a66ce6265069c29783c30ca7c51ae15b68c36c5/jsoup-1.19.1.jar"/>
+    </issue>
 
     <issue
         id="VectorPath"

@@ -86,7 +86,7 @@ eithernet-test-fixtures = { module = "com.slack.eithernet:eithernet-test-fixture
 haze = { module = "dev.chrisbanes.haze:haze", version.ref = "haze" }
 haze-materials = { module = "dev.chrisbanes.haze:haze-materials", version.ref = "haze" }
 javax-inject = "javax.inject:javax.inject:1"
-jsoup = "org.jsoup:jsoup:1.18.3"
+jsoup = "org.jsoup:jsoup:1.19.1"
 junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit" }
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit" }
 junit-legacy = "junit:junit:4.13.2"

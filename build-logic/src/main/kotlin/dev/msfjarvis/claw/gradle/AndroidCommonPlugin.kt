@@ -11,6 +11,7 @@ package dev.msfjarvis.claw.gradle
 import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.LibraryExtension
 import com.android.build.api.variant.ApplicationAndroidComponentsExtension
+import com.android.build.api.variant.HasAndroidTestBuilder
 import com.android.build.api.variant.HasUnitTestBuilder
 import com.android.build.api.variant.LibraryAndroidComponentsExtension
 import com.android.build.gradle.BaseExtension
@@ -63,20 +64,19 @@ class AndroidCommonPlugin : Plugin<Project> {
     }
     // Disable unit test tasks on the release build type for Android Library projects
     extensions.findByType<LibraryAndroidComponentsExtension>()?.run {
-      beforeVariants(selector().all()) {
-        if (it.name == "debug") return@beforeVariants
-        (it as HasUnitTestBuilder).enableUnitTest = false
-        it.androidTest.enable = false
-      }
+      beforeVariants(selector().withBuildType("release"), ::disableTestsForVariant)
     }
 
     // Disable unit test tasks on the release build type for Android Application projects.
     extensions.findByType<ApplicationAndroidComponentsExtension>()?.run {
-      beforeVariants(selector().all()) {
-        if (it.name == "debug") return@beforeVariants
-        (it as HasUnitTestBuilder).enableUnitTest = false
-        it.androidTest.enable = false
-      }
+      beforeVariants(selector().withBuildType("release"), ::disableTestsForVariant)
     }
+  }
+
+  private fun <T> disableTestsForVariant(variant: T) where
+  T : HasUnitTestBuilder,
+  T : HasAndroidTestBuilder {
+    variant.enableAndroidTest = false
+    variant.enableUnitTest = false
   }
 }

@@ -16,7 +16,9 @@ import dev.msfjarvis.claw.core.coroutines.DispatcherProvider
 import javax.inject.Qualifier
 import kotlinx.coroutines.CoroutineDispatcher
 
-@Qualifier @Retention(AnnotationRetention.RUNTIME) annotation class DatabaseDispatcher
+@Qualifier @Retention(AnnotationRetention.RUNTIME) annotation class DatabaseReadDispatcher
+
+@Qualifier @Retention(AnnotationRetention.RUNTIME) annotation class DatabaseWriteDispatcher
 
 @Qualifier @Retention(AnnotationRetention.RUNTIME) annotation class MainDispatcher
 
@@ -36,9 +38,16 @@ interface CoroutineDispatcherModule {
       return dispatcherProvider.io()
     }
 
-    @[Provides DatabaseDispatcher]
-    fun provideDatabaseDispatcher(dispatcherProvider: DispatcherProvider): CoroutineDispatcher {
-      return dispatcherProvider.database()
+    @[Provides DatabaseReadDispatcher]
+    fun provideDatabaseReadDispatcher(dispatcherProvider: DispatcherProvider): CoroutineDispatcher {
+      return dispatcherProvider.databaseRead()
+    }
+
+    @[Provides DatabaseWriteDispatcher]
+    fun provideDatabaseWriteDispatcher(
+      dispatcherProvider: DispatcherProvider
+    ): CoroutineDispatcher {
+      return dispatcherProvider.databaseWrite()
     }
 
     @[Provides MainDispatcher]

@@ -21,8 +21,11 @@ interface DispatcherProvider {
 
   fun io(): CoroutineDispatcher = Dispatchers.IO
 
-  fun database(): CoroutineDispatcher =
-    Dispatchers.IO.limitedParallelism(1, name = "DatabaseDispatcher")
+  fun databaseRead(): CoroutineDispatcher =
+    Dispatchers.IO.limitedParallelism(4, name = "DatabaseRead")
+
+  fun databaseWrite(): CoroutineDispatcher =
+    Dispatchers.IO.limitedParallelism(1, name = "DatabaseWrite")
 }
 
 /** Concrete type for [DispatcherProvider] with all the defaults from the class. */

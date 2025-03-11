@@ -6,7 +6,8 @@
  */
 package dev.msfjarvis.claw.android.viewmodel
 
-import dev.msfjarvis.claw.core.injection.DatabaseDispatcher
+import dev.msfjarvis.claw.core.injection.DatabaseReadDispatcher
+import dev.msfjarvis.claw.core.injection.DatabaseWriteDispatcher
 import dev.msfjarvis.claw.database.local.PostComments
 import dev.msfjarvis.claw.database.local.PostCommentsQueries
 import dev.msfjarvis.claw.model.Comment
@@ -18,14 +19,15 @@ class CommentsRepository
 @Inject
 constructor(
   private val postCommentsQueries: PostCommentsQueries,
-  @DatabaseDispatcher private val dbDispatcher: CoroutineDispatcher,
+  @DatabaseReadDispatcher private val readDispatcher: CoroutineDispatcher,
+  @DatabaseWriteDispatcher private val writeDispatcher: CoroutineDispatcher,
 ) {
 
   suspend fun getSeenComments(postId: String) =
-    withContext(dbDispatcher) { postCommentsQueries.getCommentIds(postId).executeAsOneOrNull() }
+    withContext(readDispatcher) { postCommentsQueries.getCommentIds(postId).executeAsOneOrNull() }
 
   suspend fun markSeenComments(postId: String, comments: List<Comment>) {
-    withContext(dbDispatcher) {
+    withContext(writeDispatcher) {
       postCommentsQueries.rememberComments(PostComments(postId, comments.map { it.shortId }))
     }
   }

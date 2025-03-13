@@ -7,6 +7,7 @@
 package dev.msfjarvis.claw.database.injection
 
 import android.content.Context
+import androidx.sqlite.db.SupportSQLiteDatabase
 import app.cash.sqldelight.adapter.primitive.IntColumnAdapter
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import app.cash.sqldelight.logs.LogSqliteDriver
@@ -42,6 +43,13 @@ object DatabaseModule {
           context = context,
           name = LOBSTERS_DATABASE_NAME,
           factory = RequerySQLiteOpenHelperFactory(),
+          callback =
+            object : AndroidSqliteDriver.Callback(LobstersDatabase.Schema) {
+              override fun onConfigure(db: SupportSQLiteDatabase) {
+                super.onConfigure(db)
+                db.enableWriteAheadLogging()
+              }
+            },
         )
       ) { message ->
         Napier.d(tag = "SQLDelightQuery", message = message)

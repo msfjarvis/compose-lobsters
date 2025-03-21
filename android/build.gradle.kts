@@ -111,7 +111,6 @@ dependencies {
   implementation(libs.androidx.paging.compose)
   implementation(libs.androidx.profileinstaller)
   implementation(libs.androidx.work.runtime)
-  implementation(libs.copydown)
   implementation(libs.dagger)
   implementation(libs.eithernet)
   implementation(libs.haze)

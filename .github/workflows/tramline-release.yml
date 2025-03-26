@@ -18,7 +18,7 @@ jobs:
 
       - name: Configure Tramline
         id: tramline
-        uses: tramlinehq/deploy-action@v0.1.7
+        uses: tramlinehq/deploy-action@58cc98c188b9eda853e549ede6a8b2f58fe29516 # v0.1.7
         with:
           input: ${{ github.event.inputs.tramline-input }}
 

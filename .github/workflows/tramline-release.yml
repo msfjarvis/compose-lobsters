@@ -3,14 +3,9 @@ name: Android release build
 on:
   workflow_dispatch:
     inputs:
-      versionName:
-        description: 'User-facing release version name'
-        required: true
-        default: ""
-      versionCode:
-        description: 'versionCode or build number'
-        required: true
-        default: ''
+      tramline-input:
+        description: "Tramline input"
+        required: false
 
 jobs:
   signed-build:
@@ -20,6 +15,12 @@ jobs:
         uses: msfjarvis/compose-lobsters/.github/reusable-workflows/setup-gradle@main
         with:
           cache-read-only: true
+
+      - name: Configure Tramline
+        id: tramline
+        uses: tramlinehq/deploy-action@v0.1.7
+        with:
+          input: ${{ github.event.inputs.tramline-input }}
 
       - name: Build release app
         run: |
@@ -31,8 +32,8 @@ jobs:
           AGE_SECRET_KEY: ${{ secrets.AGE_SECRET_KEY }}
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          ORG_GRADLE_PROJECT_VERSION_NAME: ${{ github.event.inputs.versionName }}
-          ORG_GRADLE_PROJECT_VERSION_CODE: ${{ github.event.inputs.versionCode }}
+          ORG_GRADLE_PROJECT_VERSION_NAME: ${{ steps.tramline.outputs.version_name }}
+          ORG_GRADLE_PROJECT_VERSION_CODE: ${{ steps.tramline.outputs.version_code }}
 
       - name: Upload app bundle
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2

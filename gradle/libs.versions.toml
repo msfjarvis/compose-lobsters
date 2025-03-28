@@ -111,7 +111,7 @@ retrofit-kotlinxSerializationConverter = { module = "com.squareup.retrofit2:conv
 sentry-android = { module = "io.sentry:sentry-android", version.ref = "sentry-sdk" }
 sentry-bom = { module = "io.sentry:sentry-bom", version.ref = "sentry-sdk" }
 slack-compose-lints = "com.slack.lint.compose:compose-lint-checks:1.4.2"
-slack-lints = "com.slack.lint:slack-lint-checks:0.8.2"
+slack-lints = "com.slack.lint:slack-lint-checks:0.9.0"
 sqldelight-androidDriver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
 sqldelight-dialect338 = { module = "app.cash.sqldelight:sqlite-3-38-dialect", version.ref = "sqldelight" }
 sqldelight-extensions-coroutines = { module = "app.cash.sqldelight:coroutines-extensions-jvm", version.ref = "sqldelight" }
@@ -129,7 +129,7 @@ android-lint = { id = "com.android.lint", version.ref = "agp" }
 android-test = { id = "com.android.test", version.ref = "agp" }
 anvil = "com.squareup.anvil:2.5.1"
 baselineprofile = { id = "androidx.baselineprofile", version.ref = "benchmark" }
-dependencyAnalysis = "com.autonomousapps.dependency-analysis:2.13.2"
+dependencyAnalysis = "com.autonomousapps.dependency-analysis:2.13.3"
 invert = "com.squareup.invert:0.0.3-dev"
 kotlin-composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
@@ -137,7 +137,7 @@ ksp = "com.google.devtools.ksp:2.1.20-1.0.32"
 licensee = "app.cash.licensee:1.13.0"
 modulegraphassert = "com.jraska.module.graph.assertion:2.8.0"
 navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigation" }
-poko = "dev.drewhamilton.poko:0.18.3"
+poko = "dev.drewhamilton.poko:0.18.4"
 screenshot = "com.android.compose.screenshot:0.0.1-alpha09"
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 tracelog = "dev.msfjarvis.tracelog:0.1.3"

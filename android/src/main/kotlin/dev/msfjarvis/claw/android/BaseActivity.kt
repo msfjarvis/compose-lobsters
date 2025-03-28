@@ -8,7 +8,6 @@ package dev.msfjarvis.claw.android
 
 import android.app.assist.AssistContent
 import android.graphics.Color
-import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
@@ -17,6 +16,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.core.net.toUri
 import com.deliveryhero.whetstone.Whetstone
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.common.comments.HTMLConverter
@@ -59,9 +59,10 @@ abstract class BaseActivity : ComponentActivity() {
 
   override fun onProvideAssistContent(outContent: AssistContent?) {
     super.onProvideAssistContent(outContent)
+    val uri = webUri
     if (outContent != null) {
-      if (webUri != null) {
-        outContent.webUri = Uri.parse(webUri)
+      if (uri != null) {
+        outContent.webUri = uri.toUri()
       } else {
         outContent.webUri = null
       }

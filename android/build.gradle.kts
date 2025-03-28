@@ -67,6 +67,7 @@ composeCompiler {
 licensee {
   allow("Apache-2.0")
   allow("MIT")
+  allow("BSD-3-Clause")
   ignoreDependencies("com.michael-bull.kotlin-result") { because("kotlin-result is ISC licensed") }
   ignoreDependencies("org.commonmark") { because("Commonmark is BSD licensed") }
   allowUrl("https://jsoup.org/license") { because("Jsoup is MIT licensed") }

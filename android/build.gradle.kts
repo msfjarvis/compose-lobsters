@@ -29,7 +29,6 @@ plugins {
   alias(libs.plugins.kotlin.composeCompiler)
   alias(libs.plugins.kotlin.serialization)
   alias(libs.plugins.navigation.safeargs)
-  alias(libs.plugins.screenshot)
   alias(libs.plugins.dependencyAnalysis)
 }
 
@@ -45,7 +44,6 @@ extensions.configure<ApplicationExtension> {
     applicationIdSuffix = ".internal"
     isDebuggable = true
   }
-  experimentalProperties["android.experimental.enableScreenshotTest"] = true
 }
 
 aboutLibraries.gitHubApiToken = providers.environmentVariable("GITHUB_TOKEN").orNull
@@ -138,8 +136,6 @@ dependencies {
   implementation(projects.web)
 
   kapt(libs.dagger.compiler)
-
-  screenshotTestImplementation(libs.androidx.compose.ui.tooling)
 
   addTestDependencies(project)
   androidTestImplementation(libs.androidx.test.espresso.core)

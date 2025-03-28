@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<issues format="6" by="lint 8.8.2" type="baseline" client="gradle" dependencies="true" name="AGP (8.8.2)" variant="all" version="8.8.2">
+<issues format="6" by="lint 8.11.0-alpha03" type="baseline" client="gradle" dependencies="true" name="AGP (8.11.0-alpha03)" variant="all" version="8.11.0-alpha03">
 
     <issue
         id="InvalidPackage"
@@ -13,6 +13,27 @@
         message="Invalid package reference in org.jsoup:jsoup; not included in Android: `java.net.http`. Referenced from `org.jsoup.helper.HttpClientExecutor`.">
         <location
             file="../../../.gradle/caches/modules-2/files-2.1/org.jsoup/jsoup/1.19.1/a66ce6265069c29783c30ca7c51ae15b68c36c5/jsoup-1.19.1.jar"/>
+    </issue>
+
+    <issue
+        id="Aligned16KB"
+        message="The native library `arm64-v8a/libsqlite3x.so` (from `com.github.requery:sqlite-android:3.45.0`) is not 16 KB aligned">
+        <location
+            file="../../../../.gradle/caches/8.13/transforms/c495b95c8f6585090a414fcb2db0107b/transformed/sqlite-android-3.45.0/jni/arm64-v8a/libsqlite3x.so"/>
+    </issue>
+
+    <issue
+        id="Aligned16KB"
+        message="The native library `arm64-v8a/libsqlite3x.so` (from `com.github.requery:sqlite-android:3.45.0`) is not 16 KB aligned">
+        <location
+            file="../../../../.gradle/caches/8.13/transforms/c495b95c8f6585090a414fcb2db0107b/transformed/sqlite-android-3.45.0/jni/arm64-v8a/libsqlite3x.so"/>
+    </issue>
+
+    <issue
+        id="Aligned16KB"
+        message="The native library `arm64-v8a/libsqlite3x.so` (from `com.github.requery:sqlite-android:3.45.0`) is not 16 KB aligned">
+        <location
+            file="../../../../.gradle/caches/8.13/transforms/c495b95c8f6585090a414fcb2db0107b/transformed/sqlite-android-3.45.0/jni/arm64-v8a/libsqlite3x.so"/>
     </issue>
 
     <issue

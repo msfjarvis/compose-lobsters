@@ -29,7 +29,6 @@ plugins {
   alias(libs.plugins.kotlin.composeCompiler)
   alias(libs.plugins.kotlin.serialization)
   alias(libs.plugins.navigation.safeargs)
-  alias(libs.plugins.screenshot)
   alias(libs.plugins.dependencyAnalysis)
 }
 
@@ -45,7 +44,6 @@ extensions.configure<ApplicationExtension> {
     applicationIdSuffix = ".internal"
     isDebuggable = true
   }
-  experimentalProperties["android.experimental.enableScreenshotTest"] = true
 }
 
 aboutLibraries.gitHubApiToken = providers.environmentVariable("GITHUB_TOKEN").orNull
@@ -67,6 +65,7 @@ composeCompiler {
 licensee {
   allow("Apache-2.0")
   allow("MIT")
+  allow("BSD-3-Clause")
   ignoreDependencies("com.michael-bull.kotlin-result") { because("kotlin-result is ISC licensed") }
   ignoreDependencies("org.commonmark") { because("Commonmark is BSD licensed") }
   allowUrl("https://jsoup.org/license") { because("Jsoup is MIT licensed") }
@@ -137,8 +136,6 @@ dependencies {
   implementation(projects.web)
 
   kapt(libs.dagger.compiler)
-
-  screenshotTestImplementation(libs.androidx.compose.ui.tooling)
 
   addTestDependencies(project)
   androidTestImplementation(libs.androidx.test.espresso.core)

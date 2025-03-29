@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Improve database access concurrency
+- Upgrade to Compose 2025-03 releases
+
 ## [1.55.0] - 2025-02-13
 
 ### Fixed

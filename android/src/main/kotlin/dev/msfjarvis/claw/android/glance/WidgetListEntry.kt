@@ -7,10 +7,10 @@
 package dev.msfjarvis.claw.android.glance
 
 import android.content.Intent
-import android.net.Uri
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import androidx.glance.GlanceComposable
 import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
@@ -46,7 +46,7 @@ fun WidgetListEntry(post: UIPost, modifier: GlanceModifier = GlanceModifier) {
   // If the URL starts with a /, it's a relative URL and we should open the comments page directly.
   val postAction =
     if (post.url.startsWith('/')) commentsAction
-    else actionStartActivity(Intent(Intent.ACTION_VIEW, Uri.parse(post.url)))
+    else actionStartActivity(Intent(Intent.ACTION_VIEW, post.url.toUri()))
   Box(modifier.padding(8.dp)) {
     Row(
       verticalAlignment = Alignment.CenterVertically,

@@ -8,11 +8,11 @@ package dev.msfjarvis.claw.common.urllauncher
 
 import android.content.ActivityNotFoundException
 import android.content.Context
-import android.net.Uri
 import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.platform.UriHandler
+import androidx.core.net.toUri
 import io.github.aakira.napier.Napier
 
 @Stable
@@ -25,7 +25,7 @@ class UrlLauncher(private val context: Context) : UriHandler {
         .setColorScheme(CustomTabsIntent.COLOR_SCHEME_SYSTEM)
         .build()
     try {
-      customTabsIntent.launchUrl(context, Uri.parse(uri))
+      customTabsIntent.launchUrl(context, uri.toUri())
     } catch (e: ActivityNotFoundException) {
       val error = "Failed to open URL: $uri"
       Napier.d(throwable = e, tag = "UrlLauncher") { error }

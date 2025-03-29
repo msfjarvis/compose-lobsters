@@ -16,7 +16,6 @@ plugins {
   alias(libs.plugins.anvil)
   alias(libs.plugins.whetstone)
   alias(libs.plugins.kotlin.composeCompiler)
-  alias(libs.plugins.screenshot)
   alias(libs.plugins.dependencyAnalysis)
 }
 
@@ -26,7 +25,6 @@ android {
     compose = true
   }
   namespace = "dev.msfjarvis.claw.common"
-  experimentalProperties["android.experimental.enableScreenshotTest"] = true
 }
 
 androidComponents { beforeVariants { (it as HasUnitTestBuilder).enableUnitTest = false } }
@@ -68,8 +66,6 @@ dependencies {
   implementation(libs.kotlinResult)
   implementation(libs.kotlinResult.coroutines)
   implementation(libs.napier)
-
-  screenshotTestImplementation(libs.androidx.compose.ui.tooling)
 
   compileOnly(libs.androidx.compose.ui.tooling.preview)
 

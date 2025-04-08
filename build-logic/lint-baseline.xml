@@ -8,7 +8,7 @@
         errorLine2="                                ~~~~~~~~~~~">
         <location
             file="src/main/kotlin/dev/msfjarvis/claw/gradle/LintConfig.kt"
-            line="51"
+            line="53"
             column="33"/>
     </issue>
 

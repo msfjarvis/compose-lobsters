@@ -31,6 +31,8 @@ object LintConfig {
     if (!isJVM) {
       enable += "ComposeM2Api"
       error += "ComposeM2Api"
+      // The Lint baseline message changes too frequently for this
+      disable += "Aligned16KB"
     }
     baseline = project.file("lint-baseline.xml")
     // This is extremely annoying

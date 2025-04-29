@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<issues format="6" by="lint 8.11.0-alpha07" type="baseline" client="gradle" dependencies="true" name="AGP (8.11.0-alpha07)" variant="all" version="8.11.0-alpha07">
+<issues format="6" by="lint 8.11.0-alpha08" type="baseline" client="gradle" dependencies="true" name="AGP (8.11.0-alpha08)" variant="all" version="8.11.0-alpha08">
 
     <issue
         id="InvalidPackage"
         message="Invalid package reference in library; not included in Android: `java.net.http`. Referenced from `org.jsoup.helper.HttpClientExecutor`.">
         <location
-            file="../../../.gradle/caches/modules-2/files-2.1/org.jsoup/jsoup/1.19.1/a66ce6265069c29783c30ca7c51ae15b68c36c5/jsoup-1.19.1.jar"/>
+            file="../../../.gradle/caches/modules-2/files-2.1/org.jsoup/jsoup/1.20.1/769377896610be1736f8d6d51fc52a6042d1ce82/jsoup-1.20.1.jar"/>
     </issue>
 
     <issue
         id="InvalidPackage"
         message="Invalid package reference in org.jsoup:jsoup; not included in Android: `java.net.http`. Referenced from `org.jsoup.helper.HttpClientExecutor`.">
         <location
-            file="../../../.gradle/caches/modules-2/files-2.1/org.jsoup/jsoup/1.19.1/a66ce6265069c29783c30ca7c51ae15b68c36c5/jsoup-1.19.1.jar"/>
+            file="../../../.gradle/caches/modules-2/files-2.1/org.jsoup/jsoup/1.20.1/769377896610be1736f8d6d51fc52a6042d1ce82/jsoup-1.20.1.jar"/>
     </issue>
 
     <issue

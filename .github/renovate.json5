@@ -8,8 +8,8 @@
   ],
   "branchConcurrentLimit": 15,
   "github-actions": {
-    "fileMatch": [
-       ".github/reusable-workflows/.+\\.ya?ml$",
+    "managerFilePatterns": [
+       "/.github/reusable-workflows/.+\\.ya?ml$/",
     ],
   },
   "packageRules": [
@@ -69,8 +69,8 @@
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": [
-        "SpotlessPlugin\.kt$"
+      "managerFilePatterns": [
+        "/SpotlessPlugin\.kt$/"
       ],
       "matchStrings": [
         "KTFMT_VERSION = \"(?<currentValue>.*)\""

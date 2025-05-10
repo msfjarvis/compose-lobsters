@@ -66,7 +66,6 @@ import dev.msfjarvis.claw.android.ui.navigation.Saved
 import dev.msfjarvis.claw.android.ui.navigation.User
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.common.comments.CommentsPage
-import dev.msfjarvis.claw.common.comments.HTMLConverter
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
@@ -82,7 +81,6 @@ private fun ThreePaneScaffoldNavigator<*>.isDetailExpanded() =
 @Composable
 fun TabletScreen(
   urlLauncher: UrlLauncher,
-  htmlConverter: HTMLConverter,
   modifier: Modifier = Modifier,
   viewModel: ClawViewModel = injectedViewModel(),
 ) {
@@ -219,12 +217,11 @@ fun TabletScreen(
                   CommentsPage(
                     postId = contentKey.postId,
                     postActions = postActions,
-                    htmlConverter = htmlConverter,
                     getSeenComments = viewModel::getSeenComments,
                     markSeenComments = viewModel::markSeenComments,
-                    openUserProfile = { navController.navigate(User(it)) },
                     contentPadding = PaddingValues(),
                     modifier = Modifier.fillMaxSize(),
+                    openUserProfile = { navController.navigate(User(it)) },
                   )
                 }
               }

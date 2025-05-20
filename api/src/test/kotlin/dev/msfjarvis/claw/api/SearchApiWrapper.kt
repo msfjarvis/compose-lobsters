@@ -11,8 +11,8 @@ import com.slack.eithernet.test.EitherNetController
 import com.slack.eithernet.test.enqueue
 import dev.msfjarvis.claw.api.converters.SearchConverter
 import dev.msfjarvis.claw.util.TestUtils.getResource
-import okhttp3.MediaType
-import okhttp3.ResponseBody
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.ResponseBody.Companion.toResponseBody
 
 class SearchApiWrapper(controller: EitherNetController<LobstersSearchApi>) {
   val api = controller.api
@@ -21,7 +21,7 @@ class SearchApiWrapper(controller: EitherNetController<LobstersSearchApi>) {
     controller.enqueue(LobstersSearchApi::searchPosts) {
       success(
         SearchConverter.convert(
-          ResponseBody.create(MediaType.get("text/html"), getResource("search_chatgpt_page.html"))
+          getResource("search_chatgpt_page.html").toResponseBody("text/html".toMediaType())
         )
       )
     }

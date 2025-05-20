@@ -47,10 +47,7 @@ constructor(
       .filterIsInstance<Success<LobstersPostDetails>>()
       .map { result -> result.value.toSavedPost() }
       .let { savedPostsRepository.savePosts(it) }
-    SavedPostsWidget(
-        savedPostsRepository.savedPosts.map { it.map(UIPost.Companion::fromSavedPost) }
-      )
-      .updateAll(applicationContext)
+    SavedPostsWidget().updateAll(applicationContext)
     return Result.success()
   }
 }

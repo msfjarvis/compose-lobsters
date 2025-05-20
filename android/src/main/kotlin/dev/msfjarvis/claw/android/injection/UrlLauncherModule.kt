@@ -9,7 +9,7 @@ package dev.msfjarvis.claw.android.injection
 import android.content.Context
 import com.deliveryhero.whetstone.activity.ActivityScope
 import com.squareup.anvil.annotations.ContributesTo
-import com.squareup.anvil.annotations.optional.ForScope
+import com.deliveryhero.whetstone.ForScope
 import dagger.Module
 import dagger.Provides
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher

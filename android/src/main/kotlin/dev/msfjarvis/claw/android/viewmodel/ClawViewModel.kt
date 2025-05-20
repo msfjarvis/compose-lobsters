@@ -23,7 +23,7 @@ import com.deliveryhero.whetstone.app.ApplicationScope
 import com.deliveryhero.whetstone.viewmodel.ContributesViewModel
 import com.slack.eithernet.ApiResult.Failure
 import com.slack.eithernet.ApiResult.Success
-import com.squareup.anvil.annotations.optional.ForScope
+import com.deliveryhero.whetstone.ForScope
 import dev.msfjarvis.claw.android.glance.SavedPostsWidget
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource.Companion.PAGE_SIZE

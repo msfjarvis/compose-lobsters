@@ -10,7 +10,7 @@ import android.content.Context
 import android.net.TrafficStats
 import com.deliveryhero.whetstone.app.ApplicationScope
 import com.squareup.anvil.annotations.ContributesTo
-import com.squareup.anvil.annotations.optional.ForScope
+import com.deliveryhero.whetstone.ForScope
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

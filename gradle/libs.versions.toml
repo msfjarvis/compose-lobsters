@@ -22,7 +22,7 @@ richtext = "1.0.0-alpha02"
 sentry-sdk = "8.12.0"
 serialization = "1.8.1"
 sqldelight = "2.1.0"
-whetstone = "0.9.0-beta02"
+whetstone = "1.0.1"
 workmanager = "2.10.1"
 
 [libraries]
@@ -138,4 +138,4 @@ navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref 
 poko = "dev.drewhamilton.poko:0.18.7"
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 tracelog = "dev.msfjarvis.tracelog:0.1.3"
-whetstone = { id = "dev.msfjarvis.whetstone", version.ref = "whetstone" }
+whetstone = { id = "com.deliveryhero.whetstone", version.ref = "whetstone" }

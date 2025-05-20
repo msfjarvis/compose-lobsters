@@ -13,8 +13,8 @@ import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import app.cash.sqldelight.logs.LogSqliteDriver
 import com.deliveryhero.whetstone.app.ApplicationScope
 import com.squareup.anvil.annotations.ContributesTo
-import com.squareup.anvil.annotations.optional.ForScope
-import com.squareup.anvil.annotations.optional.SingleIn
+import com.deliveryhero.whetstone.ForScope
+import com.deliveryhero.whetstone.SingleIn
 import dagger.Module
 import dagger.Provides
 import dev.msfjarvis.claw.database.LobstersDatabase

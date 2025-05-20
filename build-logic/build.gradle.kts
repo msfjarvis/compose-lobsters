@@ -10,8 +10,6 @@ plugins {
   alias(libs.plugins.dependencyAnalysis)
 }
 
-kotlin.jvmToolchain(17)
-
 gradlePlugin {
   plugins {
     register("android-application") {

@@ -1,6 +1,6 @@
 [versions]
 aboutLibraries = "11.2.3"
-agp = "8.12.0-alpha01"
+agp = "8.12.0-alpha02"
 android-junit5 = "1.12.2.0"
 androidx-test = "1.7.0-alpha03"
 benchmark = "1.4.0-beta01"

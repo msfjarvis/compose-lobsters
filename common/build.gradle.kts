@@ -20,10 +20,8 @@ plugins {
 }
 
 android {
-  buildFeatures {
-    androidResources = true
-    compose = true
-  }
+  androidResources.enable = true
+  buildFeatures { compose = true }
   namespace = "dev.msfjarvis.claw.common"
 }
 

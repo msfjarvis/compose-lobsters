@@ -17,8 +17,8 @@ import dev.msfjarvis.claw.util.TestUtils.getResource
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonNamingStrategy
-import okhttp3.MediaType
-import okhttp3.ResponseBody
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.ResponseBody.Companion.toResponseBody
 
 @OptIn(ExperimentalSerializationApi::class)
 class ApiWrapper(controller: EitherNetController<LobstersApi>) {
@@ -41,7 +41,7 @@ class ApiWrapper(controller: EitherNetController<LobstersApi>) {
     controller.enqueue(LobstersApi::getCSRFToken) {
       success(
         CSRFTokenConverter.convert(
-          ResponseBody.create(MediaType.get("text/html"), getResource("csrf_page.html"))
+          getResource("csrf_page.html").toResponseBody("text/html".toMediaType())
         )
       )
     }

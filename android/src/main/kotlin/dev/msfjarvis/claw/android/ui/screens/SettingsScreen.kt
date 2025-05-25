@@ -11,7 +11,6 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -63,45 +62,43 @@ fun SettingsScreen(
   modifier: Modifier = Modifier,
 ) {
   val coroutineScope = rememberCoroutineScope()
-  Box(modifier = modifier.padding(contentPadding)) {
-    Column {
-      ListItem(
-        headlineContent = { Text("Data transfer") },
-        leadingContent = {
-          Icon(
-            imageVector = Icons.Filled.ImportExport,
-            contentDescription = null,
-            modifier = Modifier.height(32.dp),
+  Column(modifier.padding(contentPadding)) {
+    ListItem(
+      headlineContent = { Text("Data transfer") },
+      leadingContent = {
+        Icon(
+          imageVector = Icons.Filled.ImportExport,
+          contentDescription = null,
+          modifier = Modifier.height(32.dp),
+        )
+      },
+      supportingContent = {
+        Row(
+          horizontalArrangement = Arrangement.spacedBy(32.dp),
+          modifier = Modifier.fillMaxWidth(),
+        ) {
+          ImportPosts(openInputStream, coroutineScope, snackbarHostState, importPosts)
+          ExportPosts(
+            coroutineScope,
+            snackbarHostState,
+            openOutputStream,
+            exportPostsAsJson,
+            exportPostsAsHtml,
           )
-        },
-        supportingContent = {
-          Row(
-            horizontalArrangement = Arrangement.spacedBy(32.dp),
-            modifier = Modifier.fillMaxWidth(),
-          ) {
-            ImportPosts(openInputStream, coroutineScope, snackbarHostState, importPosts)
-            ExportPosts(
-              coroutineScope,
-              snackbarHostState,
-              openOutputStream,
-              exportPostsAsJson,
-              exportPostsAsHtml,
-            )
-          }
-        },
-      )
-      ListItem(
-        headlineContent = { Text("Libraries") },
-        leadingContent = {
-          Icon(
-            imageVector = Icons.AutoMirrored.Filled.LibraryBooks,
-            contentDescription = null,
-            modifier = Modifier.height(32.dp),
-          )
-        },
-        modifier = Modifier.clickable(onClick = openLibrariesScreen),
-      )
-    }
+        }
+      },
+    )
+    ListItem(
+      headlineContent = { Text("Libraries") },
+      leadingContent = {
+        Icon(
+          imageVector = Icons.AutoMirrored.Filled.LibraryBooks,
+          contentDescription = null,
+          modifier = Modifier.height(32.dp),
+        )
+      },
+      modifier = Modifier.clickable(onClick = openLibrariesScreen),
+    )
   }
 }
 
@@ -136,12 +133,12 @@ private fun RowScope.ImportPosts(
 }
 
 @Composable
-private fun RowScope.ExportPosts(
+private inline fun RowScope.ExportPosts(
   coroutineScope: CoroutineScope,
   snackbarHostState: SnackbarHostState,
-  openOutputStream: (Uri) -> OutputStream?,
-  exportPostsAsJson: suspend (OutputStream) -> Unit,
-  exportPostsAsHtml: suspend (OutputStream) -> Unit,
+  crossinline openOutputStream: (Uri) -> OutputStream?,
+  crossinline exportPostsAsJson: suspend (OutputStream) -> Unit,
+  crossinline exportPostsAsHtml: suspend (OutputStream) -> Unit,
   modifier: Modifier = Modifier,
 ) {
   val jsonExportAction =
@@ -208,7 +205,7 @@ private fun RowScope.ExportPosts(
 }
 
 /** Shows a Snackbar but dismisses any existing ones first. */
-private suspend fun SnackbarHostState.showSnackbarDismissing(text: String) {
+private suspend inline fun SnackbarHostState.showSnackbarDismissing(text: String) {
   currentSnackbarData?.dismiss()
   showSnackbar(text)
 }

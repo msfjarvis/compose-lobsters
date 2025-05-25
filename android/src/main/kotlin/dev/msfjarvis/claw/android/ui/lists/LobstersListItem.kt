@@ -16,6 +16,10 @@ import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.unit.dp
 import dev.msfjarvis.claw.common.posts.LobstersCard
 import dev.msfjarvis.claw.common.posts.PostActions
+import dev.msfjarvis.claw.common.posts.TEST_POST
+import dev.msfjarvis.claw.common.posts.TEST_POST_ACTIONS
+import dev.msfjarvis.claw.common.theme.LobstersTheme
+import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
 import dev.msfjarvis.claw.model.UIPost
 import me.saket.swipe.SwipeAction
 import me.saket.swipe.SwipeableActionsBox
@@ -42,4 +46,10 @@ fun LobstersListItem(item: UIPost, postActions: PostActions, modifier: Modifier 
   ) {
     LobstersCard(post = item, postActions = postActions, modifier = modifier)
   }
+}
+
+@ThemePreviews
+@Composable
+private fun ItemPreview() {
+  LobstersTheme { LobstersListItem(item = TEST_POST, postActions = TEST_POST_ACTIONS) }
 }

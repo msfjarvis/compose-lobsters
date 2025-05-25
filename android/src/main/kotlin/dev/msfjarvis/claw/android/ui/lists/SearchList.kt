@@ -10,15 +10,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.semantics.isTraversalGroup
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
 import androidx.paging.compose.LazyPagingItems
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.ui.SearchBar
@@ -38,10 +34,7 @@ fun SearchList(
     setSearchQuery(query)
     lazyPagingItems.refresh()
   }
-  Column(
-    modifier =
-      modifier.systemBarsPadding().semantics { isTraversalGroup = true }.zIndex(1f).fillMaxWidth()
-  ) {
+  Column(modifier.padding(contentPadding).fillMaxWidth()) {
     SearchBar(
       value = searchQuery,
       onValueChange = setSearchQuery,
@@ -52,7 +45,7 @@ fun SearchList(
       lazyPagingItems = lazyPagingItems,
       listState = listState,
       postActions = postActions,
-      contentPadding = contentPadding,
+      contentPadding = PaddingValues(0.dp),
     )
   }
 }

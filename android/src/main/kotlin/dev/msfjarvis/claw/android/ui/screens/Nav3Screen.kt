@@ -246,7 +246,12 @@ fun Nav3Screen(
             )
           }
           entry<Search> {
-            SearchScreen(urlLauncher = urlLauncher, setWebUri = setWebUri, viewModel = viewModel)
+            setWebUri("https://lobste.rs/search")
+            SearchScreen(
+              viewModel = viewModel,
+              postActions = postActions,
+              contentPadding = contentPadding,
+            )
           }
           entry<AboutLibraries> {
             LibrariesContainer(contentPadding = contentPadding, modifier = Modifier.fillMaxSize())

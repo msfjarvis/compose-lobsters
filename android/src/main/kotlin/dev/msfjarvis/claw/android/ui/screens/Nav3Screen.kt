@@ -78,7 +78,6 @@ import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 import dev.msfjarvis.claw.common.user.UserProfile
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
-import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -131,7 +130,6 @@ fun Nav3Screen(
         coroutineScope.launch { if (savedPosts.isNotEmpty()) savedListState.scrollToItem(0) }
       },
     )
-  val navDestinations = navItems.map(NavigationItem::destination).toPersistentList()
   // endregion
 
   val postActions = remember {

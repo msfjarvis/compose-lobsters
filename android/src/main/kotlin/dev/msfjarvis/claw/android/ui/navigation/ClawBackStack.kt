@@ -22,14 +22,33 @@ import io.github.aakira.napier.Napier
  * to the front while lists add behind. To counter these expectations with the actual backing data
  * structure, many APIs in this class inverse of identically named functions on [List].
  */
-class ClawBackStack<T : NavKey>(startRoute: T) {
+class ClawBackStack<T : NavKey>(private val startRoute: T) {
+  /**
+   * Marker interface for routes that occupy the "top" level of the back stack.
+   *
+   * This is used by [dev.msfjarvis.claw.android.ui.navigation.ClawBackStack.add] to ensure that
+   * duplicate instances of these routes do not end up in the back stack.
+   */
   interface TopLevelRoute
 
   val backStack = mutableStateListOf(startRoute)
 
-  /** Pushes a new destination onto the stack. */
+  /**
+   * Pushes a new destination onto the stack.
+   *
+   * Top level routes are specially handled to ensure that the distance between the incoming [route]
+   * and the [startRoute] cannot have anything in between. This prevents users from getting stuck in
+   * a frustratingly long stack of top level destinations that are so easily accessible that they
+   * have no reason to be on the stack.
+   */
   fun add(route: T) {
     logCurrentState("add")
+    if (route is TopLevelRoute) {
+      backStack.clear()
+      if (route != startRoute) {
+        backStack.add(startRoute)
+      }
+    }
     backStack.add(route)
   }
 

@@ -8,6 +8,12 @@ package dev.msfjarvis.claw.android.ui.screens
 
 import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -185,6 +191,10 @@ fun Nav3Screen(
       backStack = backStack,
       modifier = modifier,
       onBack = { backStack.removeLastOrNull() },
+      predictivePopTransitionSpec = {
+        slideInHorizontally(initialOffsetX = { -it }, animationSpec = tween(200)) togetherWith
+          slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(200))
+      },
       entryProvider =
         entryProvider {
           entry<Hottest> {
@@ -237,7 +247,20 @@ fun Nav3Screen(
               openUserProfile = { backStack.add(User(it)) },
             )
           }
-          entry<User> { dest ->
+          entry<User>(
+            metadata =
+              NavDisplay.transitionSpec {
+                slideInHorizontally(
+                  initialOffsetX = { it },
+                  animationSpec = tween(200),
+                ) togetherWith ExitTransition.KeepUntilTransitionsFinished
+              } +
+                NavDisplay.popTransitionSpec {
+                  // Slide old content down, revealing the new content in place underneath
+                  EnterTransition.None togetherWith
+                    slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(200))
+                }
+          ) { dest ->
             UserProfile(
               username = dest.username,
               getProfile = viewModel::getUserProfile,

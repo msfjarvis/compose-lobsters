@@ -15,10 +15,11 @@ import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.NewReleases
 import androidx.compose.material.icons.outlined.Whatshot
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.navigation3.runtime.NavKey
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 
-sealed interface Destination : Parcelable
+sealed interface Destination : Parcelable, NavKey
 
 @Parcelize @Serializable data object Hottest : Destination
 

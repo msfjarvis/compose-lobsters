@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
+import androidx.navigation3.runtime.NavKey
 import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.HazeStyle
@@ -40,7 +41,7 @@ const val AnimationDuration = 100
 
 @Composable
 fun ClawNavigationBar(
-  backStack: SnapshotStateList<Destination>,
+  backStack: SnapshotStateList<NavKey>,
   items: ImmutableList<NavigationItem>,
   isVisible: Boolean,
   hazeState: HazeState,

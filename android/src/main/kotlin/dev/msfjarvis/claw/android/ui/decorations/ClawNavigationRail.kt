@@ -22,12 +22,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
-import dev.msfjarvis.claw.android.ui.navigation.Destination
+import androidx.navigation3.runtime.NavKey
 import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun ClawNavigationRail(
-  backStack: SnapshotStateList<Destination>,
+  backStack: SnapshotStateList<NavKey>,
   items: ImmutableList<NavigationItem>,
   isVisible: Boolean,
   modifier: Modifier = Modifier,

@@ -72,7 +72,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3AdaptiveApi::class)
 @Composable
-fun Nav3Screen(
+fun LobstersPostsScreen(
   urlLauncher: UrlLauncher,
   windowSizeClass: WindowSizeClass,
   setWebUri: (String?) -> Unit,

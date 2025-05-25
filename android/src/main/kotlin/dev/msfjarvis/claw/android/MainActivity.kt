@@ -20,7 +20,7 @@ import androidx.core.net.toUri
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.deliveryhero.whetstone.Whetstone
 import com.deliveryhero.whetstone.activity.ContributesActivityInjector
-import dev.msfjarvis.claw.android.ui.screens.Nav3Screen
+import dev.msfjarvis.claw.android.ui.screens.LobstersPostsScreen
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 import javax.inject.Inject
@@ -46,7 +46,7 @@ class MainActivity : ComponentActivity() {
         providedValues = arrayOf(LocalUriHandler provides urlLauncher),
       ) {
         val windowSizeClass = calculateWindowSizeClass(this)
-        Nav3Screen(
+        LobstersPostsScreen(
           urlLauncher = urlLauncher,
           windowSizeClass = windowSizeClass,
           setWebUri = { url -> webUri = url },

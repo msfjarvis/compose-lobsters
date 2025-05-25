@@ -20,6 +20,9 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
+import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
+import androidx.compose.material3.adaptive.navigation3.ListDetailSceneStrategy
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -65,7 +68,7 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun Nav3Screen(
   urlLauncher: UrlLauncher,
@@ -148,14 +151,16 @@ fun Nav3Screen(
     NavDisplay(
       backStack = clawBackStack.backStack,
       modifier = modifier.hazeSource(hazeState),
-      onBack = { clawBackStack.removeLastOrNull() },
+      onBack = { keysToRemove -> repeat(keysToRemove) { clawBackStack.removeLastOrNull() } },
       predictivePopTransitionSpec = {
         slideInHorizontally(initialOffsetX = { -it }, animationSpec = tween(200)) togetherWith
           slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(200))
       },
       entryProvider =
         entryProvider {
-          entry<Hottest> {
+          entry<Hottest>(
+            metadata = ListDetailSceneStrategy.listPane(detailPlaceholder = { Placeholder() })
+          ) {
             setWebUri("https://lobste.rs/")
             NetworkPosts(
               lazyPagingItems = hottestPosts,
@@ -164,7 +169,9 @@ fun Nav3Screen(
               contentPadding = contentPadding,
             )
           }
-          entry<Newest> {
+          entry<Newest>(
+            metadata = ListDetailSceneStrategy.listPane(detailPlaceholder = { Placeholder() })
+          ) {
             setWebUri("https://lobste.rs/")
             NetworkPosts(
               lazyPagingItems = newestPosts,
@@ -173,7 +180,9 @@ fun Nav3Screen(
               contentPadding = contentPadding,
             )
           }
-          entry<Saved> {
+          entry<Saved>(
+            metadata = ListDetailSceneStrategy.listPane(detailPlaceholder = { Placeholder() })
+          ) {
             setWebUri(null)
             DatabasePosts(
               items = savedPosts,
@@ -182,20 +191,7 @@ fun Nav3Screen(
               contentPadding = contentPadding,
             )
           }
-          entry<Settings> {
-            SettingsScreen(
-              openInputStream = context.contentResolver::openInputStream,
-              openOutputStream = context.contentResolver::openOutputStream,
-              openLibrariesScreen = { clawBackStack.add(AboutLibraries) },
-              importPosts = viewModel::importPosts,
-              exportPostsAsJson = viewModel::exportPostsAsJson,
-              exportPostsAsHtml = viewModel::exportPostsAsHtml,
-              snackbarHostState = snackbarHostState,
-              contentPadding = contentPadding,
-              modifier = Modifier.fillMaxSize(),
-            )
-          }
-          entry<Comments> { dest ->
+          entry<Comments>(metadata = ListDetailSceneStrategy.detailPane()) { dest ->
             CommentsPage(
               postId = dest.postId,
               postActions = postActions,
@@ -217,7 +213,8 @@ fun Nav3Screen(
                   // Slide old content down, revealing the new content in place underneath
                   EnterTransition.None togetherWith
                     slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(200))
-                }
+                } +
+                ListDetailSceneStrategy.extraPane()
           ) { dest ->
             UserProfile(
               username = dest.username,
@@ -226,7 +223,20 @@ fun Nav3Screen(
               openUserProfile = { clawBackStack.add(User(it)) },
             )
           }
-          entry<Search> {
+          entry<Settings>(metadata = ListDetailSceneStrategy.extraPane()) {
+            SettingsScreen(
+              openInputStream = context.contentResolver::openInputStream,
+              openOutputStream = context.contentResolver::openOutputStream,
+              openLibrariesScreen = { clawBackStack.add(AboutLibraries) },
+              importPosts = viewModel::importPosts,
+              exportPostsAsJson = viewModel::exportPostsAsJson,
+              exportPostsAsHtml = viewModel::exportPostsAsHtml,
+              snackbarHostState = snackbarHostState,
+              contentPadding = contentPadding,
+              modifier = Modifier.fillMaxSize(),
+            )
+          }
+          entry<Search>(metadata = ListDetailSceneStrategy.extraPane()) {
             setWebUri("https://lobste.rs/search")
             SearchScreen(
               viewModel = viewModel,
@@ -234,10 +244,15 @@ fun Nav3Screen(
               contentPadding = contentPadding,
             )
           }
-          entry<AboutLibraries> {
+          entry<AboutLibraries>(metadata = ListDetailSceneStrategy.extraPane()) {
             LibrariesContainer(contentPadding = contentPadding, modifier = Modifier.fillMaxSize())
           }
         },
     )
   }
+}
+
+@Composable
+private fun Placeholder(modifier: Modifier = Modifier) {
+  Text(text = "Placeholder", modifier = modifier)
 }

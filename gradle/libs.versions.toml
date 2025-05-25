@@ -16,7 +16,6 @@ kotlin = "2.1.21"
 kotlinResult = "2.0.1"
 leakcanary = "3.0-alpha-8"
 lifecycle = "2.9.0"
-navigation = "2.9.0"
 navigation3 = "1.0.0-alpha02"
 retrofit = "3.0.0"
 richtext = "1.0.0-alpha02"
@@ -39,10 +38,6 @@ androidx-compose-glance = { module = "androidx.glance:glance-appwidget", version
 androidx-compose-glance-m3 = { module = "androidx.glance:glance-material3", version.ref = "glance" }
 androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
 androidx-compose-material3 = { module = "androidx.compose.material3:material3" }
-androidx-compose-material3-adaptive = { module = "androidx.compose.material3.adaptive:adaptive" }
-androidx-compose-material3-adaptive-layout = { module = "androidx.compose.material3.adaptive:adaptive-layout" }
-androidx-compose-material3-adaptive-navigation = { module = "androidx.compose.material3.adaptive:adaptive-navigation" }
-androidx-compose-material3-adaptive-navigation-suite = { module = "androidx.compose.material3:material3-adaptive-navigation-suite" }
 androidx-compose-material3-window-size = { module = "androidx.compose.material3:material3-window-size-class" }
 androidx-compose-runtime = { module = "androidx.compose.runtime:runtime" }
 androidx-compose-ui = { module = "androidx.compose.ui:ui" }
@@ -55,7 +50,6 @@ androidx-core = "androidx.core:core:1.16.0"
 androidx-core-splashscreen = "androidx.core:core-splashscreen:1.2.0-beta02"
 androidx-lifecycle-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 androidx-lint-gradle = "androidx.lint:lint-gradle:1.0.0-alpha05"
-androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }
 androidx-navigation3-runtime = { module = "androidx.navigation3:navigation3-runtime", version.ref = "navigation3" }
 androidx-navigation3-ui = { module = "androidx.navigation3:navigation3-ui", version.ref = "navigation3" }
 androidx-paging-compose = "androidx.paging:paging-compose:3.3.6"
@@ -137,7 +131,6 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 ksp = "com.google.devtools.ksp:2.1.21-2.0.1"
 licensee = "app.cash.licensee:1.13.0"
 modulegraphassert = "com.jraska.module.graph.assertion:2.8.0"
-navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigation" }
 poko = "dev.drewhamilton.poko:0.18.7"
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 tracelog = "dev.msfjarvis.tracelog:0.1.3"

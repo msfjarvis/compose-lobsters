@@ -8,7 +8,6 @@ package dev.msfjarvis.claw.android.ui.navigation
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.navigation3.runtime.NavKey
-import io.github.aakira.napier.Napier
 
 /**
  * Naive implementation of a simple navigation back stack, backed by a
@@ -20,7 +19,7 @@ import io.github.aakira.napier.Napier
  * Stacks function in a completely opposite order of lists, which means when you call
  * first/firstOrNull on a stack, you expect to receive the item you added *last*, since stacks add
  * to the front while lists add behind. To counter these expectations with the actual backing data
- * structure, many APIs in this class inverse of identically named functions on [List].
+ * structure, many APIs in this class are the inverse of identically named functions on [List].
  */
 class ClawBackStack(private val initialDestination: NavKey) {
   /**
@@ -42,7 +41,6 @@ class ClawBackStack(private val initialDestination: NavKey) {
    * accessible that they have no reason to be on the stack.
    */
   fun add(destination: NavKey) {
-    logCurrentState("add")
     if (destination is TopLevelDestination) {
       backStack.clear()
       if (destination != initialDestination) {
@@ -54,41 +52,11 @@ class ClawBackStack(private val initialDestination: NavKey) {
 
   /** Checks if the "top" item in the back stack is an instance of [TopLevelDestination]. */
   fun isOnTopLevelDestination(): Boolean {
-    logCurrentState("isOnTopLevelDestination")
     val top = firstOrNull()
-    return (top != null && top is TopLevelDestination)
+    return top != null && top is TopLevelDestination
   }
 
-  fun firstOrNull(): NavKey? {
-    logCurrentState("firstOrNull")
-    return backStack.lastOrNull()
-  }
+  fun firstOrNull() = backStack.lastOrNull()
 
-  fun lastOrNull(): NavKey? {
-    logCurrentState("lastOrNull")
-    return backStack.firstOrNull()
-  }
-
-  fun removeLastOrNull(): NavKey? {
-    logCurrentState("removeLastOrNull")
-    return backStack.removeLastOrNull()
-  }
-
-  // TODO(msfjarvis): Remove before shipping
-  private fun logCurrentState(methodName: String) {
-    val backStack = this.backStack
-    Napier.d(tag = LOG_TAG) {
-      buildString {
-        appendLine("State of ClawBackStack(${this@ClawBackStack})")
-        appendLine("Caller: $methodName")
-        appendLine("Top: ${backStack.firstOrNull()}")
-        appendLine("Bottom: ${backStack.lastOrNull()}")
-        appendLine("Current entries: ${backStack.joinToString(", ")}")
-      }
-    }
-  }
-
-  private companion object {
-    private const val LOG_TAG = "ClawBackStack"
-  }
+  fun removeLastOrNull() = backStack.removeLastOrNull()
 }

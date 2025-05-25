@@ -6,32 +6,65 @@
  */
 package dev.msfjarvis.claw.android
 
+import android.app.assist.AssistContent
+import android.graphics.Color
+import android.os.Bundle
+import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
+import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
-import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalUriHandler
+import androidx.core.net.toUri
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.deliveryhero.whetstone.Whetstone
 import com.deliveryhero.whetstone.activity.ContributesActivityInjector
 import dev.msfjarvis.claw.android.ui.screens.Nav3Screen
+import dev.msfjarvis.claw.common.theme.LobstersTheme
+import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
+import javax.inject.Inject
 
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @ContributesActivityInjector
-class MainActivity : BaseActivity() {
+class MainActivity : ComponentActivity() {
 
-  @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
-  @Composable
-  override fun Content() {
-    val windowSizeClass = calculateWindowSizeClass(this)
-    Nav3Screen(
-      urlLauncher = urlLauncher,
-      windowSizeClass = windowSizeClass,
-      setWebUri = { url -> webUri = url },
+  @Inject lateinit var urlLauncher: UrlLauncher
+  var webUri: String? = null
+
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    installSplashScreen()
+    Whetstone.inject(this)
+    enableEdgeToEdge(
+      statusBarStyle = SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT),
+      navigationBarStyle = SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT),
     )
+    setContent {
+      LobstersTheme(
+        dynamicColor = true,
+        providedValues = arrayOf(LocalUriHandler provides urlLauncher),
+      ) {
+        val windowSizeClass = calculateWindowSizeClass(this)
+        Nav3Screen(
+          urlLauncher = urlLauncher,
+          windowSizeClass = windowSizeClass,
+          setWebUri = { url -> webUri = url },
+        )
+      }
+    }
   }
 
-  override fun preLaunch() {
-    super.preLaunch()
-    enableEdgeToEdge()
-    installSplashScreen()
+  override fun onProvideAssistContent(outContent: AssistContent?) {
+    super.onProvideAssistContent(outContent)
+    val uri = webUri
+    if (outContent != null) {
+      if (uri != null) {
+        outContent.webUri = uri.toUri()
+      } else {
+        outContent.webUri = null
+      }
+    }
   }
 
   companion object {

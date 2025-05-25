@@ -53,6 +53,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.deliveryhero.whetstone.compose.injectedViewModel
 import com.mikepenz.aboutlibraries.ui.compose.m3.LibrariesContainer
 import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.hazeSource
 import dev.msfjarvis.claw.android.MainActivity
 import dev.msfjarvis.claw.android.R
 import dev.msfjarvis.claw.android.ui.PostActions
@@ -189,7 +190,7 @@ fun Nav3Screen(
   ) { contentPadding ->
     NavDisplay(
       backStack = backStack,
-      modifier = modifier,
+      modifier = modifier.hazeSource(hazeState),
       onBack = { backStack.removeLastOrNull() },
       predictivePopTransitionSpec = {
         slideInHorizontally(initialOffsetX = { -it }, animationSpec = tween(200)) togetherWith

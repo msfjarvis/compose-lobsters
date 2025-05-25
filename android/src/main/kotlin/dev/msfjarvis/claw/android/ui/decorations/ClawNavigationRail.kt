@@ -19,15 +19,15 @@ import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
-import androidx.navigation3.runtime.NavKey
+import dev.msfjarvis.claw.android.ui.navigation.ClawBackStack
+import dev.msfjarvis.claw.android.ui.navigation.Destination
 import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun ClawNavigationRail(
-  backStack: SnapshotStateList<NavKey>,
+  backStack: ClawBackStack<Destination>,
   items: ImmutableList<NavigationItem>,
   isVisible: Boolean,
   modifier: Modifier = Modifier,

@@ -21,11 +21,11 @@ import kotlinx.serialization.Serializable
 
 sealed interface Destination : Parcelable, NavKey
 
-@Parcelize @Serializable data object Hottest : Destination
+@Parcelize @Serializable data object Hottest : Destination, ClawBackStack.TopLevelRoute
 
-@Parcelize @Serializable data object Newest : Destination
+@Parcelize @Serializable data object Newest : Destination, ClawBackStack.TopLevelRoute
 
-@Parcelize @Serializable data object Saved : Destination
+@Parcelize @Serializable data object Saved : Destination, ClawBackStack.TopLevelRoute
 
 @Parcelize @Serializable data class Comments(val postId: String) : Destination
 

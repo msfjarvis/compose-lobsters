@@ -47,7 +47,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation3.runtime.entry
 import androidx.navigation3.runtime.entryProvider
-import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.deliveryhero.whetstone.compose.injectedViewModel
@@ -63,6 +62,7 @@ import dev.msfjarvis.claw.android.ui.lists.DatabasePosts
 import dev.msfjarvis.claw.android.ui.lists.NetworkPosts
 import dev.msfjarvis.claw.android.ui.navigation.AboutLibraries
 import dev.msfjarvis.claw.android.ui.navigation.AppDestinations
+import dev.msfjarvis.claw.android.ui.navigation.ClawBackStack
 import dev.msfjarvis.claw.android.ui.navigation.ClawNavigationType
 import dev.msfjarvis.claw.android.ui.navigation.Comments
 import dev.msfjarvis.claw.android.ui.navigation.Destination
@@ -90,7 +90,7 @@ fun Nav3Screen(
   modifier: Modifier = Modifier,
   viewModel: ClawViewModel = injectedViewModel(),
 ) {
-  val backStack = rememberNavBackStack<Destination>(Hottest)
+  val clawBackStack = ClawBackStack<Destination>(Hottest)
 
   // region Pain
   val context = LocalContext.current
@@ -111,7 +111,7 @@ fun Nav3Screen(
   val postIdOverride = activity?.intent?.extras?.getString(MainActivity.NAVIGATION_KEY)
   LaunchedEffect(Unit) {
     if (postIdOverride != null) {
-      backStack.add(Comments(postIdOverride))
+      clawBackStack.add(Comments(postIdOverride))
     }
   }
 
@@ -135,7 +135,7 @@ fun Nav3Screen(
   // endregion
 
   val postActions = remember {
-    PostActions(context, urlLauncher, viewModel) { backStack.add(Comments(it)) }
+    PostActions(context, urlLauncher, viewModel) { clawBackStack.add(Comments(it)) }
   }
 
   Scaffold(
@@ -143,8 +143,10 @@ fun Nav3Screen(
       TopAppBar(
         modifier = Modifier.shadow(8.dp),
         navigationIcon = {
-          if (backStack.firstOrNull() !in navDestinations) {
-            IconButton(onClick = { if (backStack.removeLastOrNull() == null) activity?.finish() }) {
+          if (!(clawBackStack.isOnTopLevelRoute())) {
+            IconButton(
+              onClick = { if (clawBackStack.removeLastOrNull() == null) activity?.finish() }
+            ) {
               Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = "Go back to previous screen",
@@ -159,16 +161,16 @@ fun Nav3Screen(
           }
         },
         title = {
-          if (backStack.firstOrNull() in navDestinations) {
+          if (clawBackStack.isOnTopLevelRoute()) {
             Text(text = stringResource(R.string.app_name), fontWeight = FontWeight.Bold)
           }
         },
         actions = {
-          if (backStack.firstOrNull() in navDestinations) {
-            IconButton(onClick = { backStack.add(Search) }) {
+          if (clawBackStack.isOnTopLevelRoute()) {
+            IconButton(onClick = { clawBackStack.add(Search) }) {
               Icon(imageVector = Icons.Filled.Search, contentDescription = "Search posts")
             }
-            IconButton(onClick = { backStack.add(Settings) }) {
+            IconButton(onClick = { clawBackStack.add(Settings) }) {
               Icon(imageVector = Icons.Filled.Tune, contentDescription = "Settings")
             }
           }
@@ -178,9 +180,9 @@ fun Nav3Screen(
     bottomBar = {
       AnimatedVisibility(visible = navigationType == ClawNavigationType.BOTTOM_NAVIGATION) {
         ClawNavigationBar(
-          backStack,
+          clawBackStack,
           items = navItems,
-          isVisible = backStack.firstOrNull() in navDestinations,
+          isVisible = clawBackStack.isOnTopLevelRoute(),
           hazeState = hazeState,
         )
       }
@@ -189,9 +191,9 @@ fun Nav3Screen(
     modifier = Modifier.semantics { testTagsAsResourceId = true },
   ) { contentPadding ->
     NavDisplay(
-      backStack = backStack,
+      backStack = clawBackStack.backStack,
       modifier = modifier.hazeSource(hazeState),
-      onBack = { backStack.removeLastOrNull() },
+      onBack = { clawBackStack.removeLastOrNull() },
       predictivePopTransitionSpec = {
         slideInHorizontally(initialOffsetX = { -it }, animationSpec = tween(200)) togetherWith
           slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(200))
@@ -229,7 +231,7 @@ fun Nav3Screen(
             SettingsScreen(
               openInputStream = context.contentResolver::openInputStream,
               openOutputStream = context.contentResolver::openOutputStream,
-              openLibrariesScreen = { backStack.add(AboutLibraries) },
+              openLibrariesScreen = { clawBackStack.add(AboutLibraries) },
               importPosts = viewModel::importPosts,
               exportPostsAsJson = viewModel::exportPostsAsJson,
               exportPostsAsHtml = viewModel::exportPostsAsHtml,
@@ -245,7 +247,7 @@ fun Nav3Screen(
               getSeenComments = viewModel::getSeenComments,
               markSeenComments = viewModel::markSeenComments,
               contentPadding = contentPadding,
-              openUserProfile = { backStack.add(User(it)) },
+              openUserProfile = { clawBackStack.add(User(it)) },
             )
           }
           entry<User>(
@@ -266,7 +268,7 @@ fun Nav3Screen(
               username = dest.username,
               getProfile = viewModel::getUserProfile,
               contentPadding = contentPadding,
-              openUserProfile = { backStack.add(User(it)) },
+              openUserProfile = { clawBackStack.add(User(it)) },
             )
           }
           entry<Search> {

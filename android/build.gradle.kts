@@ -100,6 +100,7 @@ dependencies {
   implementation(libs.androidx.compose.ui.util)
   implementation(libs.androidx.core.splashscreen)
   implementation(libs.androidx.lifecycle.compose)
+  implementation(libs.androidx.material3.navigation3)
   implementation(libs.androidx.navigation3.runtime)
   implementation(libs.androidx.navigation3.ui)
   implementation(libs.androidx.paging.compose)

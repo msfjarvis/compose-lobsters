@@ -102,6 +102,11 @@ dependencyResolutionManagement {
       name = "Compose Compiler Snapshots"
       content { includeGroup("androidx.compose.compiler") }
     }
+    maven("https://androidx.dev/snapshots/builds/13546692/artifacts/repository") {
+      name = "AndroidX Snapshots"
+      mavenContent { snapshotsOnly() }
+      content { includeGroup("androidx.compose.material3.adaptive") }
+    }
     maven("https://oss.sonatype.org/content/repositories/snapshots/") {
       name = "Sonatype Snapshots"
       content { includeGroup("dev.msfjarvis.whetstone") }

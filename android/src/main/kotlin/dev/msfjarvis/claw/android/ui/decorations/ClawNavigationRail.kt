@@ -21,14 +21,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
-import dev.msfjarvis.claw.android.ui.navigation.Destination
+import androidx.navigation3.runtime.NavKey
 import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun ClawNavigationRail(
   items: ImmutableList<NavigationItem>,
-  currentDestination: Destination?,
-  navigateTo: (Destination) -> Unit,
+  currentNavKey: NavKey?,
+  navigateTo: (NavKey) -> Unit,
   isVisible: Boolean,
   modifier: Modifier = Modifier,
 ) {
@@ -51,7 +51,7 @@ fun ClawNavigationRail(
     NavigationRail(modifier = modifier) {
       Spacer(Modifier.weight(1f))
       items.forEach { navItem ->
-        val isSelected = currentDestination == navItem.destination
+        val isSelected = currentNavKey == navItem.navKey
         NavigationRailItem(
           icon = {
             Crossfade(isSelected, label = "nav-label") {
@@ -67,7 +67,7 @@ fun ClawNavigationRail(
             if (isSelected) {
               navItem.listStateResetCallback()
             } else {
-              navigateTo(navItem.destination)
+              navigateTo(navItem.navKey)
             }
           },
           modifier = Modifier.testTag(navItem.label.uppercase()),

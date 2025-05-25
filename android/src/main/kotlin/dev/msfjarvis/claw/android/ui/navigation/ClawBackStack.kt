@@ -22,7 +22,7 @@ import io.github.aakira.napier.Napier
  * to the front while lists add behind. To counter these expectations with the actual backing data
  * structure, many APIs in this class inverse of identically named functions on [List].
  */
-class ClawBackStack<T : NavKey>(private val initialDestination: T) {
+class ClawBackStack(private val initialDestination: NavKey) {
   /**
    * Marker interface for destinations that occupy the "top" level of the back stack.
    *
@@ -41,7 +41,7 @@ class ClawBackStack<T : NavKey>(private val initialDestination: T) {
    * from getting stuck in a frustratingly long stack of top level destinations that are so easily
    * accessible that they have no reason to be on the stack.
    */
-  fun add(destination: T) {
+  fun add(destination: NavKey) {
     logCurrentState("add")
     if (destination is TopLevelDestination) {
       backStack.clear()
@@ -59,17 +59,17 @@ class ClawBackStack<T : NavKey>(private val initialDestination: T) {
     return (top != null && top is TopLevelDestination)
   }
 
-  fun firstOrNull(): T? {
+  fun firstOrNull(): NavKey? {
     logCurrentState("firstOrNull")
     return backStack.lastOrNull()
   }
 
-  fun lastOrNull(): T? {
+  fun lastOrNull(): NavKey? {
     logCurrentState("lastOrNull")
     return backStack.firstOrNull()
   }
 
-  fun removeLastOrNull(): T? {
+  fun removeLastOrNull(): NavKey? {
     logCurrentState("removeLastOrNull")
     return backStack.removeLastOrNull()
   }

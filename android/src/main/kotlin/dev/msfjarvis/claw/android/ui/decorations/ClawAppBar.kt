@@ -24,8 +24,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation3.runtime.NavKey
 import dev.msfjarvis.claw.android.R
-import dev.msfjarvis.claw.android.ui.navigation.Destination
 import dev.msfjarvis.claw.android.ui.navigation.Search
 import dev.msfjarvis.claw.android.ui.navigation.Settings
 
@@ -34,8 +34,8 @@ import dev.msfjarvis.claw.android.ui.navigation.Settings
 fun ClawAppBar(
   activity: Activity?,
   isTopLevel: Boolean,
-  navigateTo: (Destination) -> Unit,
-  popBackStack: () -> Destination?,
+  navigateTo: (NavKey) -> Unit,
+  popBackStack: () -> NavKey?,
   modifier: Modifier = Modifier,
 ) {
   TopAppBar(

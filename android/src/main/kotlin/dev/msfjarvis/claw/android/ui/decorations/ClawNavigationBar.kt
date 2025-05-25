@@ -26,12 +26,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
+import androidx.navigation3.runtime.NavKey
 import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.hazeEffect
 import dev.msfjarvis.claw.android.ui.navigation.AppDestinations
-import dev.msfjarvis.claw.android.ui.navigation.Destination
 import dev.msfjarvis.claw.common.ui.FloatingNavigationBar
 import kotlinx.collections.immutable.ImmutableList
 
@@ -40,8 +40,8 @@ const val AnimationDuration = 100
 @Composable
 fun ClawNavigationBar(
   items: ImmutableList<NavigationItem>,
-  currentDestination: Destination?,
-  navigateTo: (Destination) -> Unit,
+  currentNavKey: NavKey?,
+  navigateTo: (NavKey) -> Unit,
   isVisible: Boolean,
   hazeState: HazeState,
   modifier: Modifier = Modifier,
@@ -84,7 +84,7 @@ fun ClawNavigationBar(
           if (HazeDefaults.blurEnabled()) Color.Transparent else MaterialTheme.colorScheme.surface,
       ) {
         items.forEach { navItem ->
-          val isSelected = currentDestination == navItem.destination
+          val isSelected = currentNavKey == navItem.navKey
           NavigationBarItem(
             icon = {
               Crossfade(isSelected, label = "nav-label") {
@@ -100,7 +100,7 @@ fun ClawNavigationBar(
               if (isSelected) {
                 navItem.listStateResetCallback()
               } else {
-                navigateTo(navItem.destination)
+                navigateTo(navItem.navKey)
               }
             },
             modifier = Modifier.testTag(navItem.label.uppercase()),
@@ -115,7 +115,7 @@ class NavigationItem
 private constructor(
   val icon: ImageVector,
   val label: String,
-  val destination: Destination,
+  val navKey: NavKey,
   val selectedIcon: ImageVector,
   val listStateResetCallback: () -> Unit,
 ) {
@@ -125,7 +125,7 @@ private constructor(
   ) : this(
     destination.icon,
     destination.label,
-    destination.destination,
+    destination.navKey,
     destination.selectedIcon,
     listStateResetCallback,
   ) {}

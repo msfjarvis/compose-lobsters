@@ -51,7 +51,6 @@ import dev.msfjarvis.claw.android.ui.navigation.AppDestinations
 import dev.msfjarvis.claw.android.ui.navigation.ClawBackStack
 import dev.msfjarvis.claw.android.ui.navigation.ClawNavigationType
 import dev.msfjarvis.claw.android.ui.navigation.Comments
-import dev.msfjarvis.claw.android.ui.navigation.Destination
 import dev.msfjarvis.claw.android.ui.navigation.Hottest
 import dev.msfjarvis.claw.android.ui.navigation.Newest
 import dev.msfjarvis.claw.android.ui.navigation.Saved
@@ -75,7 +74,7 @@ fun Nav3Screen(
   modifier: Modifier = Modifier,
   viewModel: ClawViewModel = injectedViewModel(),
 ) {
-  val clawBackStack = ClawBackStack<Destination>(Hottest)
+  val clawBackStack = ClawBackStack(Hottest)
 
   // region Pain
   val context = LocalContext.current
@@ -136,7 +135,7 @@ fun Nav3Screen(
       AnimatedVisibility(visible = navigationType == ClawNavigationType.BOTTOM_NAVIGATION) {
         ClawNavigationBar(
           items = navItems,
-          currentDestination = currentDestination,
+          currentNavKey = currentDestination,
           navigateTo = { clawBackStack.add(it) },
           isVisible = clawBackStack.isOnTopLevelDestination(),
           hazeState = hazeState,

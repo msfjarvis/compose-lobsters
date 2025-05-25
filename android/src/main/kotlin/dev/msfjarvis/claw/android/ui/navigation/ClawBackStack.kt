@@ -22,41 +22,41 @@ import io.github.aakira.napier.Napier
  * to the front while lists add behind. To counter these expectations with the actual backing data
  * structure, many APIs in this class inverse of identically named functions on [List].
  */
-class ClawBackStack<T : NavKey>(private val startRoute: T) {
+class ClawBackStack<T : NavKey>(private val initialDestination: T) {
   /**
-   * Marker interface for routes that occupy the "top" level of the back stack.
+   * Marker interface for destinations that occupy the "top" level of the back stack.
    *
    * This is used by [dev.msfjarvis.claw.android.ui.navigation.ClawBackStack.add] to ensure that
-   * duplicate instances of these routes do not end up in the back stack.
+   * duplicate instances of these destinations do not end up in the back stack.
    */
-  interface TopLevelRoute
+  interface TopLevelDestination
 
-  val backStack = mutableStateListOf(startRoute)
+  val backStack = mutableStateListOf(initialDestination)
 
   /**
    * Pushes a new destination onto the stack.
    *
-   * Top level routes are specially handled to ensure that the distance between the incoming [route]
-   * and the [startRoute] cannot have anything in between. This prevents users from getting stuck in
-   * a frustratingly long stack of top level destinations that are so easily accessible that they
-   * have no reason to be on the stack.
+   * Top level destinations are specially handled to ensure that the distance between the incoming
+   * [destination] and the [initialDestination] cannot have anything in between. This prevents users
+   * from getting stuck in a frustratingly long stack of top level destinations that are so easily
+   * accessible that they have no reason to be on the stack.
    */
-  fun add(route: T) {
+  fun add(destination: T) {
     logCurrentState("add")
-    if (route is TopLevelRoute) {
+    if (destination is TopLevelDestination) {
       backStack.clear()
-      if (route != startRoute) {
-        backStack.add(startRoute)
+      if (destination != initialDestination) {
+        backStack.add(initialDestination)
       }
     }
-    backStack.add(route)
+    backStack.add(destination)
   }
 
-  /** Checks if the "top" item in the back stack is an instance of [TopLevelRoute]. */
-  fun isOnTopLevelRoute(): Boolean {
-    logCurrentState("hasTopLevelDestination")
+  /** Checks if the "top" item in the back stack is an instance of [TopLevelDestination]. */
+  fun isOnTopLevelDestination(): Boolean {
+    logCurrentState("isOnTopLevelDestination")
     val top = firstOrNull()
-    return (top != null && top is TopLevelRoute)
+    return (top != null && top is TopLevelDestination)
   }
 
   fun firstOrNull(): T? {

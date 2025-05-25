@@ -16,16 +16,17 @@ import androidx.compose.material.icons.outlined.NewReleases
 import androidx.compose.material.icons.outlined.Whatshot
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation3.runtime.NavKey
+import dev.msfjarvis.claw.android.ui.navigation.ClawBackStack.TopLevelDestination
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 
 sealed interface Destination : Parcelable, NavKey
 
-@Parcelize @Serializable data object Hottest : Destination, ClawBackStack.TopLevelRoute
+@Parcelize @Serializable data object Hottest : Destination, TopLevelDestination
 
-@Parcelize @Serializable data object Newest : Destination, ClawBackStack.TopLevelRoute
+@Parcelize @Serializable data object Newest : Destination, TopLevelDestination
 
-@Parcelize @Serializable data object Saved : Destination, ClawBackStack.TopLevelRoute
+@Parcelize @Serializable data object Saved : Destination, TopLevelDestination
 
 @Parcelize @Serializable data class Comments(val postId: String) : Destination
 

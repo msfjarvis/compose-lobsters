@@ -63,7 +63,6 @@ private const val AnimationDuration = 100
 internal fun CommentsPageInternal(
   details: UIPost,
   postActions: PostActions,
-  htmlConverter: HTMLConverter,
   commentState: PostComments?,
   markSeenComments: (String, List<Comment>) -> Unit,
   openUserProfile: (String) -> Unit,
@@ -103,12 +102,7 @@ internal fun CommentsPageInternal(
   Surface(color = MaterialTheme.colorScheme.surfaceVariant) {
     LazyColumn(modifier = modifier, contentPadding = contentPadding, state = commentListState) {
       item {
-        CommentsHeader(
-          post = details,
-          postActions = postActions,
-          htmlConverter = htmlConverter,
-          openUserProfile = openUserProfile,
-        )
+        CommentsHeader(post = details, postActions = postActions, openUserProfile = openUserProfile)
       }
 
       if (commentNodes.isNotEmpty()) {
@@ -121,7 +115,7 @@ internal fun CommentsPageInternal(
         }
 
         items(items = commentNodes, key = { node -> node.comment.shortId }) { node ->
-          Node(node, htmlConverter, openUserProfile, onToggleExpandedState)
+          Node(node, openUserProfile, onToggleExpandedState)
         }
 
         item(key = "bottom_spacer") {
@@ -149,7 +143,6 @@ internal fun CommentsPageInternal(
 @Composable
 private fun Node(
   node: CommentNode,
-  htmlConverter: HTMLConverter,
   openUserProfile: (String) -> Unit,
   onToggleExpandedState: (String, Boolean) -> Unit,
   modifier: Modifier = Modifier,
@@ -158,7 +151,6 @@ private fun Node(
     NodeBox(
       node = node,
       isExpanded = node.isExpanded,
-      htmlConverter = htmlConverter,
       openUserProfile,
       modifier =
         modifier.clickable(
@@ -172,9 +164,7 @@ private fun Node(
       exit = fadeOut(tween(AnimationDuration)) + shrinkVertically(tween(AnimationDuration)),
     ) {
       Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
-        node.children.forEach { model ->
-          Node(model, htmlConverter, openUserProfile, onToggleExpandedState)
-        }
+        node.children.forEach { model -> Node(model, openUserProfile, onToggleExpandedState) }
       }
     }
   }
@@ -184,11 +174,10 @@ private fun Node(
 private fun NodeBox(
   node: CommentNode,
   isExpanded: Boolean,
-  htmlConverter: HTMLConverter,
   openUserProfile: (String) -> Unit,
   modifier: Modifier = Modifier,
 ) {
-  CommentEntry(isExpanded, node, htmlConverter, openUserProfile, modifier)
+  CommentEntry(isExpanded, node, openUserProfile, modifier)
   HorizontalDivider()
 }
 
@@ -198,7 +187,6 @@ private val CommentEntryPadding = 16f.dp
 private fun CommentEntry(
   isExpanded: Boolean,
   commentNode: CommentNode,
-  htmlConverter: HTMLConverter,
   openUserProfile: (String) -> Unit,
   modifier: Modifier = Modifier,
 ) {
@@ -234,10 +222,7 @@ private fun CommentEntry(
         modifier = Modifier.clickable { openUserProfile(comment.user) },
       )
       if (isExpanded) {
-        ThemedRichText(
-          text = htmlConverter.convertHTMLToMarkdown(comment.comment),
-          modifier = Modifier.padding(top = 8.dp),
-        )
+        ThemedRichText(text = comment.comment, modifier = Modifier.padding(top = 8.dp))
       }
     }
   }

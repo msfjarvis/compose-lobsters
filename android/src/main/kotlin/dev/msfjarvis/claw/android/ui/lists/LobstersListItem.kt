@@ -13,6 +13,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.unit.dp
 import dev.msfjarvis.claw.common.posts.LobstersCard
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.model.UIPost
@@ -33,7 +34,12 @@ fun LobstersListItem(item: UIPost, postActions: PostActions, modifier: Modifier 
       background = MaterialTheme.colorScheme.tertiary,
       onSwipe = { postActions.share(item) },
     )
-  SwipeableActionsBox(startActions = listOf(shareAction), endActions = listOf(commentsAction)) {
+  SwipeableActionsBox(
+    startActions = listOf(shareAction),
+    endActions = listOf(commentsAction),
+    swipeThreshold = 80.dp,
+    backgroundUntilSwipeThreshold = MaterialTheme.colorScheme.surfaceVariant,
+  ) {
     LobstersCard(post = item, postActions = postActions, modifier = modifier)
   }
 }

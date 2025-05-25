@@ -77,7 +77,6 @@ coil3-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", versio
 compose-richtext-markdown = { module = "com.halilibo.compose-richtext:richtext-commonmark", version.ref = "richtext" }
 compose-richtext-material3 = { module = "com.halilibo.compose-richtext:richtext-ui-material3", version.ref = "richtext" }
 compose-richtext-ui = { module = "com.halilibo.compose-richtext:richtext-ui", version.ref = "richtext" }
-copydown = "io.github.furstenheim:copy_down:1.1"
 dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
 dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
 eithernet = { module = "com.slack.eithernet:eithernet", version.ref = "eithernet" }
@@ -85,6 +84,7 @@ eithernet-integration-retrofit = { module = "com.slack.eithernet:eithernet-integ
 eithernet-test-fixtures = { module = "com.slack.eithernet:eithernet-test-fixtures", version.ref = "eithernet" }
 haze = { module = "dev.chrisbanes.haze:haze", version.ref = "haze" }
 haze-materials = { module = "dev.chrisbanes.haze:haze-materials", version.ref = "haze" }
+htmlconverter = "be.digitalia.compose.htmlconverter:htmlconverter:1.0.4"
 javax-inject = "javax.inject:javax.inject:1"
 jsoup = "org.jsoup:jsoup:1.20.1"
 junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit" }

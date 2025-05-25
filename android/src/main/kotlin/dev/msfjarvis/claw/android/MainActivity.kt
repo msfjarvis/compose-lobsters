@@ -29,18 +29,13 @@ class MainActivity : BaseActivity() {
       WindowWidthSizeClass.Compact -> {
         LobstersPostsScreen(
           urlLauncher = urlLauncher,
-          htmlConverter = htmlConverter,
           windowSizeClass = windowSizeClass,
           setWebUri = { url -> webUri = url },
         )
       }
 
       else -> {
-        TabletScreen(
-          urlLauncher = urlLauncher,
-          htmlConverter = htmlConverter,
-          modifier = Modifier.fillMaxSize(),
-        )
+        TabletScreen(urlLauncher = urlLauncher, modifier = Modifier.fillMaxSize())
       }
     }
   }

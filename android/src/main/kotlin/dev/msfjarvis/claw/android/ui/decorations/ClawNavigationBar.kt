@@ -20,21 +20,19 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.compose.currentBackStackEntryAsState
 import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.hazeEffect
 import dev.msfjarvis.claw.android.ui.navigation.AppDestinations
 import dev.msfjarvis.claw.android.ui.navigation.Destination
-import dev.msfjarvis.claw.android.ui.navigation.matches
 import dev.msfjarvis.claw.common.ui.FloatingNavigationBar
 import kotlinx.collections.immutable.ImmutableList
 
@@ -42,7 +40,7 @@ const val AnimationDuration = 100
 
 @Composable
 fun ClawNavigationBar(
-  navController: NavController,
+  backStack: SnapshotStateList<Destination>,
   items: ImmutableList<NavigationItem>,
   isVisible: Boolean,
   hazeState: HazeState,
@@ -85,10 +83,9 @@ fun ClawNavigationBar(
         containerColor =
           if (HazeDefaults.blurEnabled()) Color.Transparent else MaterialTheme.colorScheme.surface,
       ) {
-        val navBackStackEntry = navController.currentBackStackEntryAsState().value
-        val currentDestination = navBackStackEntry?.destination
+        val currentDestination = backStack.firstOrNull()
         items.forEach { navItem ->
-          val isSelected = currentDestination.matches(navItem.destination)
+          val isSelected = currentDestination == navItem.destination
           NavigationBarItem(
             icon = {
               Crossfade(isSelected, label = "nav-label") {
@@ -104,11 +101,7 @@ fun ClawNavigationBar(
               if (isSelected) {
                 navItem.listStateResetCallback()
               } else {
-                navController.navigate(navItem.destination) {
-                  popUpTo(navController.graph.startDestinationId) { saveState = true }
-                  launchSingleTop = true
-                  restoreState = true
-                }
+                backStack.add(navItem.destination)
               }
             },
             modifier = Modifier.testTag(navItem.label.uppercase()),

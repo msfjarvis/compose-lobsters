@@ -6,16 +6,13 @@
  */
 package dev.msfjarvis.claw.android
 
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.deliveryhero.whetstone.activity.ContributesActivityInjector
-import dev.msfjarvis.claw.android.ui.screens.LobstersPostsScreen
-import dev.msfjarvis.claw.android.ui.screens.TabletScreen
+import dev.msfjarvis.claw.android.ui.screens.Nav3Screen
 
 @ContributesActivityInjector
 class MainActivity : BaseActivity() {
@@ -24,24 +21,16 @@ class MainActivity : BaseActivity() {
   @Composable
   override fun Content() {
     val windowSizeClass = calculateWindowSizeClass(this)
-
-    when (windowSizeClass.widthSizeClass) {
-      WindowWidthSizeClass.Compact -> {
-        LobstersPostsScreen(
-          urlLauncher = urlLauncher,
-          windowSizeClass = windowSizeClass,
-          setWebUri = { url -> webUri = url },
-        )
-      }
-
-      else -> {
-        TabletScreen(urlLauncher = urlLauncher, modifier = Modifier.fillMaxSize())
-      }
-    }
+    Nav3Screen(
+      urlLauncher = urlLauncher,
+      windowSizeClass = windowSizeClass,
+      setWebUri = { url -> webUri = url },
+    )
   }
 
   override fun preLaunch() {
     super.preLaunch()
+    enableEdgeToEdge()
     installSplashScreen()
   }
 

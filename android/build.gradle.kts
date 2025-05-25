@@ -107,6 +107,8 @@ dependencies {
   implementation(libs.androidx.core.splashscreen)
   implementation(libs.androidx.lifecycle.compose)
   implementation(libs.androidx.navigation.compose)
+  implementation(libs.androidx.navigation3.runtime)
+  implementation(libs.androidx.navigation3.ui)
   implementation(libs.androidx.paging.compose)
   implementation(libs.androidx.profileinstaller)
   implementation(libs.androidx.work.runtime)

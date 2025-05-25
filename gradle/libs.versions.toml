@@ -17,6 +17,7 @@ kotlinResult = "2.0.1"
 leakcanary = "3.0-alpha-8"
 lifecycle = "2.9.0"
 navigation = "2.9.0"
+navigation3 = "1.0.0-alpha02"
 retrofit = "3.0.0"
 richtext = "1.0.0-alpha02"
 sentry-sdk = "8.12.0"
@@ -55,6 +56,8 @@ androidx-core-splashscreen = "androidx.core:core-splashscreen:1.2.0-beta02"
 androidx-lifecycle-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 androidx-lint-gradle = "androidx.lint:lint-gradle:1.0.0-alpha05"
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }
+androidx-navigation3-runtime = { module = "androidx.navigation3:navigation3-runtime", version.ref = "navigation3" }
+androidx-navigation3-ui = { module = "androidx.navigation3:navigation3-ui", version.ref = "navigation3" }
 androidx-paging-compose = "androidx.paging:paging-compose:3.3.6"
 androidx-profileinstaller = "androidx.profileinstaller:profileinstaller:1.4.1"
 androidx-test-core = { module = "androidx.test:core", version.ref = "androidx-test" }

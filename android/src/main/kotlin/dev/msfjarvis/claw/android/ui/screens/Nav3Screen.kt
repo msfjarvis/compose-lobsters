@@ -23,6 +23,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.navigation3.ListDetailSceneStrategy
+import androidx.compose.material3.adaptive.navigation3.rememberListDetailSceneStrategy
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -34,6 +35,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entry
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
@@ -78,6 +80,7 @@ fun Nav3Screen(
   viewModel: ClawViewModel = injectedViewModel(),
 ) {
   val clawBackStack = ClawBackStack(Hottest)
+  val listDetailStrategy = rememberListDetailSceneStrategy<NavKey>()
 
   // region Pain
   val context = LocalContext.current
@@ -151,6 +154,7 @@ fun Nav3Screen(
     NavDisplay(
       backStack = clawBackStack.backStack,
       modifier = modifier.hazeSource(hazeState),
+      sceneStrategy = listDetailStrategy,
       onBack = { keysToRemove -> repeat(keysToRemove) { clawBackStack.removeLastOrNull() } },
       predictivePopTransitionSpec = {
         slideInHorizontally(initialOffsetX = { -it }, animationSpec = tween(200)) togetherWith

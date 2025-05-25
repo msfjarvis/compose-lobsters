@@ -16,6 +16,7 @@ concurrency:
 
 jobs:
   check:
+    if: "github.event.pull_request.draft == false"
     runs-on: macos-14
     steps:
     - name: Setup build environment

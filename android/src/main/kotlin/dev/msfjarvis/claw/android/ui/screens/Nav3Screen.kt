@@ -136,7 +136,7 @@ fun Nav3Screen(
       TopAppBar(
         modifier = Modifier.shadow(8.dp),
         navigationIcon = {
-          if (backStack.none { it in navDestinations }) {
+          if (backStack.firstOrNull() !in navDestinations) {
             IconButton(onClick = { if (backStack.removeLastOrNull() == null) activity?.finish() }) {
               Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
@@ -152,12 +152,12 @@ fun Nav3Screen(
           }
         },
         title = {
-          if (backStack.any { it in navDestinations }) {
+          if (backStack.firstOrNull() in navDestinations) {
             Text(text = stringResource(R.string.app_name), fontWeight = FontWeight.Bold)
           }
         },
         actions = {
-          if (backStack.any { it in navDestinations }) {
+          if (backStack.firstOrNull() in navDestinations) {
             IconButton(onClick = { backStack.add(Search) }) {
               Icon(imageVector = Icons.Filled.Search, contentDescription = "Search posts")
             }
@@ -173,7 +173,7 @@ fun Nav3Screen(
         ClawNavigationBar(
           backStack,
           items = navItems,
-          isVisible = backStack.any { it in navDestinations },
+          isVisible = backStack.firstOrNull() in navDestinations,
           hazeState = hazeState,
         )
       }

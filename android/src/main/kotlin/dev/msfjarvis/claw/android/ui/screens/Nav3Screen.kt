@@ -65,8 +65,6 @@ import dev.msfjarvis.claw.android.ui.navigation.Saved
 import dev.msfjarvis.claw.android.ui.navigation.Search
 import dev.msfjarvis.claw.android.ui.navigation.Settings
 import dev.msfjarvis.claw.android.ui.navigation.User
-import dev.msfjarvis.claw.android.ui.navigation.any
-import dev.msfjarvis.claw.android.ui.navigation.none
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.common.comments.CommentsPage
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher

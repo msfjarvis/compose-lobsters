@@ -19,16 +19,15 @@ import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
-import androidx.navigation.NavController
-import androidx.navigation.compose.currentBackStackEntryAsState
-import dev.msfjarvis.claw.android.ui.navigation.matches
+import dev.msfjarvis.claw.android.ui.navigation.Destination
 import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun ClawNavigationRail(
-  navController: NavController,
+  backStack: SnapshotStateList<Destination>,
   items: ImmutableList<NavigationItem>,
   isVisible: Boolean,
   modifier: Modifier = Modifier,
@@ -50,11 +49,10 @@ fun ClawNavigationRail(
     modifier = Modifier,
   ) {
     NavigationRail(modifier = modifier) {
-      val navBackStackEntry = navController.currentBackStackEntryAsState().value
-      val currentDestination = navBackStackEntry?.destination
+      val currentDestination = backStack.firstOrNull()
       Spacer(Modifier.weight(1f))
       items.forEach { navItem ->
-        val isSelected = currentDestination.matches(navItem.destination)
+        val isSelected = currentDestination == navItem.destination
         NavigationRailItem(
           icon = {
             Crossfade(isSelected, label = "nav-label") {
@@ -70,11 +68,7 @@ fun ClawNavigationRail(
             if (isSelected) {
               navItem.listStateResetCallback()
             } else {
-              navController.navigate(navItem.destination) {
-                popUpTo(navController.graph.startDestinationId) { saveState = true }
-                launchSingleTop = true
-                restoreState = true
-              }
+              backStack.add(navItem.destination)
             }
           },
           modifier = Modifier.testTag(navItem.label.uppercase()),

@@ -33,19 +33,6 @@
       </intent-filter>
     </activity>
 
-    <activity
-      android:name=".SearchActivity"
-      android:configChanges="colorMode|density|fontScale|keyboard|keyboardHidden|layoutDirection|locale|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"
-      android:exported="true"
-      android:label="Claw Search"
-      android:launchMode="singleTask"
-      android:taskAffinity=""
-      android:theme="@style/Theme.Claw">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
-      </intent-filter>
-    </activity>
-
     <provider
       android:name="androidx.startup.InitializationProvider"
       android:authorities="${applicationId}.androidx-startup"

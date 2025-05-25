@@ -9,7 +9,7 @@
 pluginManagement {
   repositories {
     exclusiveContent {
-      forRepository { google() }
+      forRepository { google { mavenContent { releasesOnly() } } }
       filter {
         includeGroup("androidx.annotation")
         includeGroup("androidx.baselineprofile")
@@ -80,6 +80,7 @@ dependencyResolutionManagement {
   repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
   repositories {
     google {
+      mavenContent { releasesOnly() }
       content {
         includeGroupAndSubgroups("androidx")
         includeGroupAndSubgroups("com.android")
@@ -89,12 +90,22 @@ dependencyResolutionManagement {
       }
     }
     exclusiveContent {
-      forRepository { maven("https://jitpack.io") { name = "JitPack" } }
+      forRepository {
+        maven("https://jitpack.io") {
+          name = "JitPack"
+          mavenContent { releasesOnly() }
+        }
+      }
       filter { includeGroup("com.github.requery") }
     }
     maven("https://androidx.dev/storage/compose-compiler/repository") {
       name = "Compose Compiler Snapshots"
       content { includeGroup("androidx.compose.compiler") }
+    }
+    maven("https://androidx.dev/snapshots/builds/13546692/artifacts/repository") {
+      name = "AndroidX Snapshots"
+      mavenContent { snapshotsOnly() }
+      content { includeGroup("androidx.compose.material3.adaptive") }
     }
     maven("https://oss.sonatype.org/content/repositories/snapshots/") {
       name = "Sonatype Snapshots"

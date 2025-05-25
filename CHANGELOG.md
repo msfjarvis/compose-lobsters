@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- The navigation stack has been completely rewritten to better
+  support larger screens. This also adds some nicer animations
+  and better support for predictive back. There will continue
+  to be iterative improvements in this area.
+
 ### Fixed
 
 - Improve database access concurrency

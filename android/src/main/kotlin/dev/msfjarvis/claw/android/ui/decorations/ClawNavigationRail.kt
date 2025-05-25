@@ -21,15 +21,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
-import androidx.navigation.NavController
-import androidx.navigation.compose.currentBackStackEntryAsState
-import dev.msfjarvis.claw.android.ui.navigation.matches
+import androidx.navigation3.runtime.NavKey
 import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun ClawNavigationRail(
-  navController: NavController,
   items: ImmutableList<NavigationItem>,
+  currentNavKey: NavKey?,
+  navigateTo: (NavKey) -> Unit,
   isVisible: Boolean,
   modifier: Modifier = Modifier,
 ) {
@@ -50,11 +49,9 @@ fun ClawNavigationRail(
     modifier = Modifier,
   ) {
     NavigationRail(modifier = modifier) {
-      val navBackStackEntry = navController.currentBackStackEntryAsState().value
-      val currentDestination = navBackStackEntry?.destination
       Spacer(Modifier.weight(1f))
       items.forEach { navItem ->
-        val isSelected = currentDestination.matches(navItem.destination)
+        val isSelected = currentNavKey == navItem.navKey
         NavigationRailItem(
           icon = {
             Crossfade(isSelected, label = "nav-label") {
@@ -70,11 +67,7 @@ fun ClawNavigationRail(
             if (isSelected) {
               navItem.listStateResetCallback()
             } else {
-              navController.navigate(navItem.destination) {
-                popUpTo(navController.graph.startDestinationId) { saveState = true }
-                launchSingleTop = true
-                restoreState = true
-              }
+              navigateTo(navItem.navKey)
             }
           },
           modifier = Modifier.testTag(navItem.label.uppercase()),

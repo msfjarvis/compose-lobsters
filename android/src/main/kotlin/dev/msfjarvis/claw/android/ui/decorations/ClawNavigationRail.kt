@@ -21,14 +21,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
-import dev.msfjarvis.claw.android.ui.navigation.ClawBackStack
 import dev.msfjarvis.claw.android.ui.navigation.Destination
 import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun ClawNavigationRail(
-  backStack: ClawBackStack<Destination>,
   items: ImmutableList<NavigationItem>,
+  currentDestination: Destination?,
+  navigateTo: (Destination) -> Unit,
   isVisible: Boolean,
   modifier: Modifier = Modifier,
 ) {
@@ -49,7 +49,6 @@ fun ClawNavigationRail(
     modifier = Modifier,
   ) {
     NavigationRail(modifier = modifier) {
-      val currentDestination = backStack.firstOrNull()
       Spacer(Modifier.weight(1f))
       items.forEach { navItem ->
         val isSelected = currentDestination == navItem.destination
@@ -68,7 +67,7 @@ fun ClawNavigationRail(
             if (isSelected) {
               navItem.listStateResetCallback()
             } else {
-              backStack.add(navItem.destination)
+              navigateTo(navItem.destination)
             }
           },
           modifier = Modifier.testTag(navItem.label.uppercase()),

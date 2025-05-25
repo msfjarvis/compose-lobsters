@@ -15,20 +15,11 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -36,14 +27,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation3.runtime.entry
 import androidx.navigation3.runtime.entryProvider
@@ -54,8 +40,8 @@ import com.mikepenz.aboutlibraries.ui.compose.m3.LibrariesContainer
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeSource
 import dev.msfjarvis.claw.android.MainActivity
-import dev.msfjarvis.claw.android.R
 import dev.msfjarvis.claw.android.ui.PostActions
+import dev.msfjarvis.claw.android.ui.decorations.ClawAppBar
 import dev.msfjarvis.claw.android.ui.decorations.ClawNavigationBar
 import dev.msfjarvis.claw.android.ui.decorations.NavigationItem
 import dev.msfjarvis.claw.android.ui.lists.DatabasePosts
@@ -138,48 +124,20 @@ fun Nav3Screen(
 
   Scaffold(
     topBar = {
-      TopAppBar(
-        modifier = Modifier.shadow(8.dp),
-        navigationIcon = {
-          if (!(clawBackStack.isOnTopLevelDestination())) {
-            IconButton(
-              onClick = { if (clawBackStack.removeLastOrNull() == null) activity?.finish() }
-            ) {
-              Icon(
-                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                contentDescription = "Go back to previous screen",
-              )
-            }
-          } else {
-            Icon(
-              painter = painterResource(id = R.drawable.ic_launcher_foreground),
-              contentDescription = "The app icon for Claw",
-              modifier = Modifier.size(48.dp),
-            )
-          }
-        },
-        title = {
-          if (clawBackStack.isOnTopLevelDestination()) {
-            Text(text = stringResource(R.string.app_name), fontWeight = FontWeight.Bold)
-          }
-        },
-        actions = {
-          if (clawBackStack.isOnTopLevelDestination()) {
-            IconButton(onClick = { clawBackStack.add(Search) }) {
-              Icon(imageVector = Icons.Filled.Search, contentDescription = "Search posts")
-            }
-            IconButton(onClick = { clawBackStack.add(Settings) }) {
-              Icon(imageVector = Icons.Filled.Tune, contentDescription = "Settings")
-            }
-          }
-        },
+      ClawAppBar(
+        activity = activity,
+        isTopLevel = clawBackStack.isOnTopLevelDestination(),
+        navigateTo = { clawBackStack.add(it) },
+        popBackStack = { clawBackStack.removeLastOrNull() },
       )
     },
     bottomBar = {
+      val currentDestination = clawBackStack.firstOrNull()
       AnimatedVisibility(visible = navigationType == ClawNavigationType.BOTTOM_NAVIGATION) {
         ClawNavigationBar(
-          clawBackStack,
           items = navItems,
+          currentDestination = currentDestination,
+          navigateTo = { clawBackStack.add(it) },
           isVisible = clawBackStack.isOnTopLevelDestination(),
           hazeState = hazeState,
         )

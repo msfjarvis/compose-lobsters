@@ -31,7 +31,6 @@ import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.hazeEffect
 import dev.msfjarvis.claw.android.ui.navigation.AppDestinations
-import dev.msfjarvis.claw.android.ui.navigation.ClawBackStack
 import dev.msfjarvis.claw.android.ui.navigation.Destination
 import dev.msfjarvis.claw.common.ui.FloatingNavigationBar
 import kotlinx.collections.immutable.ImmutableList
@@ -40,8 +39,9 @@ const val AnimationDuration = 100
 
 @Composable
 fun ClawNavigationBar(
-  backStack: ClawBackStack<Destination>,
   items: ImmutableList<NavigationItem>,
+  currentDestination: Destination?,
+  navigateTo: (Destination) -> Unit,
   isVisible: Boolean,
   hazeState: HazeState,
   modifier: Modifier = Modifier,
@@ -83,7 +83,6 @@ fun ClawNavigationBar(
         containerColor =
           if (HazeDefaults.blurEnabled()) Color.Transparent else MaterialTheme.colorScheme.surface,
       ) {
-        val currentDestination = backStack.firstOrNull()
         items.forEach { navItem ->
           val isSelected = currentDestination == navItem.destination
           NavigationBarItem(
@@ -101,7 +100,7 @@ fun ClawNavigationBar(
               if (isSelected) {
                 navItem.listStateResetCallback()
               } else {
-                backStack.add(navItem.destination)
+                navigateTo(navItem.destination)
               }
             },
             modifier = Modifier.testTag(navItem.label.uppercase()),

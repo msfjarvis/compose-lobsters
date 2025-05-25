@@ -9,7 +9,7 @@
 pluginManagement {
   repositories {
     exclusiveContent {
-      forRepository { google() }
+      forRepository { google { mavenContent { releasesOnly() } } }
       filter {
         includeGroup("androidx.annotation")
         includeGroup("androidx.baselineprofile")
@@ -80,6 +80,7 @@ dependencyResolutionManagement {
   repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
   repositories {
     google {
+      mavenContent { releasesOnly() }
       content {
         includeGroupAndSubgroups("androidx")
         includeGroupAndSubgroups("com.android")
@@ -89,7 +90,12 @@ dependencyResolutionManagement {
       }
     }
     exclusiveContent {
-      forRepository { maven("https://jitpack.io") { name = "JitPack" } }
+      forRepository {
+        maven("https://jitpack.io") {
+          name = "JitPack"
+          mavenContent { releasesOnly() }
+        }
+      }
       filter { includeGroup("com.github.requery") }
     }
     maven("https://androidx.dev/storage/compose-compiler/repository") {

@@ -20,12 +20,12 @@ anvil { generateDaggerFactories.set(true) }
 
 dependencies {
   api(libs.dagger)
+  api(libs.eithernet)
   api(libs.javax.inject)
   api(libs.okhttp.core)
   api(libs.retrofit)
   api(projects.model)
 
-  implementation(libs.eithernet)
   implementation(libs.eithernet.integration.retrofit)
   implementation(libs.jsoup)
 

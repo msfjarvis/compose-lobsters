@@ -29,8 +29,8 @@ import dev.msfjarvis.claw.android.paging.LobstersPagingSource
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource.Companion.PAGE_SIZE
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource.Companion.STARTING_PAGE_INDEX
 import dev.msfjarvis.claw.android.paging.SearchPagingSource
-import dev.msfjarvis.claw.android.ui.toError
 import dev.msfjarvis.claw.api.LobstersApi
+import dev.msfjarvis.claw.api.toError
 import dev.msfjarvis.claw.core.injection.IODispatcher
 import dev.msfjarvis.claw.core.injection.MainDispatcher
 import dev.msfjarvis.claw.model.Comment

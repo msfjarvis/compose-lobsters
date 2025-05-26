@@ -161,17 +161,6 @@ constructor(
   suspend fun getLinkMetadata(url: String) =
     withContext(ioDispatcher) { linkMetadataRepository.getLinkMetadata(url) }
 
-  suspend fun getUserProfile(username: String) =
-    withContext(ioDispatcher) {
-      when (val result = api.getUser(username)) {
-        is Success -> result.value
-        is Failure.NetworkFailure -> throw result.error
-        is Failure.UnknownFailure -> throw result.error
-        is Failure.HttpFailure -> throw result.toError()
-        is Failure.ApiFailure -> throw IOException("API returned an invalid response")
-      }
-    }
-
   suspend fun importPosts(input: InputStream) = dataTransferRepository.importPosts(input)
 
   suspend fun exportPostsAsJson(output: OutputStream) =

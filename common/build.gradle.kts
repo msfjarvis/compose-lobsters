@@ -25,6 +25,8 @@ android {
   namespace = "dev.msfjarvis.claw.common"
 }
 
+whetstone.addOns.compose = true
+
 androidComponents { beforeVariants { (it as HasUnitTestBuilder).enableUnitTest = false } }
 
 anvil { generateDaggerFactories.set(true) }
@@ -40,6 +42,7 @@ dependencies {
   api(libs.androidx.compose.ui)
   api(libs.dagger)
   api(libs.javax.inject)
+  api(projects.api)
   api(projects.core)
   api(projects.database.core)
   api(projects.model)

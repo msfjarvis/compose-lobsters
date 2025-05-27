@@ -20,17 +20,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.produceState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
-import com.github.michaelbull.result.coroutines.runSuspendCatching
-import com.github.michaelbull.result.fold
-import dev.msfjarvis.claw.common.NetworkState
+import com.deliveryhero.whetstone.compose.injectedViewModel
 import dev.msfjarvis.claw.common.NetworkState.Error
 import dev.msfjarvis.claw.common.NetworkState.Loading
 import dev.msfjarvis.claw.common.NetworkState.Success
@@ -44,35 +41,25 @@ import dev.msfjarvis.claw.model.User
 @Composable
 fun UserProfile(
   username: String,
-  getProfile: suspend (username: String) -> User,
-  openUserProfile: (String) -> Unit,
   contentPadding: PaddingValues,
+  openUserProfile: (String) -> Unit,
   modifier: Modifier = Modifier,
+  viewModel: UserProfileViewModel = injectedViewModel(),
 ) {
-  val user by
-    produceState<NetworkState>(Loading) {
-      runSuspendCatching { getProfile(username) }
-        .fold(
-          success = { profile -> value = Success(profile) },
-          failure = {
-            value = Error(error = it, description = "Failed to load profile for $username")
-          },
-        )
-    }
-  when (user) {
+  LaunchedEffect(username) { viewModel.loadProfile(username) }
+  when (val state = viewModel.userProfile) {
     is Success<*> -> {
       UserProfileInternal(
-        user = (user as Success<User>).data,
+        user = (state as Success<User>).data,
         openUserProfile = openUserProfile,
         modifier = modifier.padding(contentPadding),
       )
     }
     is Error -> {
-      val error = user as Error
       Box(modifier = Modifier.padding(contentPadding).fillMaxSize()) {
         NetworkError(
-          label = error.description,
-          error = error.error,
+          label = state.description,
+          error = state.error,
           modifier = Modifier.align(Alignment.Center),
         )
       }

@@ -222,7 +222,6 @@ fun LobstersPostsScreen(
           ) { dest ->
             UserProfile(
               username = dest.username,
-              getProfile = viewModel::getUserProfile,
               contentPadding = contentPadding,
               openUserProfile = { clawBackStack.add(User(it)) },
             )

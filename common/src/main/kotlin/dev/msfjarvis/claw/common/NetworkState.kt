@@ -6,7 +6,7 @@
  */
 package dev.msfjarvis.claw.common
 
-internal sealed class NetworkState {
+sealed class NetworkState {
   class Success<T>(val data: T) : NetworkState()
 
   class Error(val error: Throwable, val description: String) : NetworkState()

@@ -10,13 +10,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.github.michaelbull.result.coroutines.runSuspendCatching
-import com.github.michaelbull.result.fold
-import dev.msfjarvis.claw.common.NetworkState
+import com.deliveryhero.whetstone.compose.injectedViewModel
 import dev.msfjarvis.claw.common.NetworkState.Error
 import dev.msfjarvis.claw.common.NetworkState.Loading
 import dev.msfjarvis.claw.common.NetworkState.Success
@@ -35,23 +34,17 @@ fun CommentsPage(
   getSeenComments: suspend (String) -> PostComments?,
   markSeenComments: (String, List<Comment>) -> Unit,
   contentPadding: PaddingValues,
-  modifier: Modifier = Modifier,
   openUserProfile: (String) -> Unit,
+  modifier: Modifier = Modifier,
+  viewModel: CommentsViewModel = injectedViewModel(),
 ) {
-  val postDetails by
-    produceState<NetworkState>(Loading, key1 = postId) {
-      runSuspendCatching { postActions.getComments(postId) }
-        .fold(
-          success = { details -> value = Success(details) },
-          failure = { value = Error(error = it, description = "Failed to load comments") },
-        )
-    }
+  LaunchedEffect(postId) { viewModel.loadPostDetails(postId) }
   val commentState by
     produceState<PostComments?>(initialValue = null, key1 = postId) {
       value = getSeenComments(postId)
     }
 
-  when (postDetails) {
+  when (val postDetails = viewModel.postDetails) {
     is Success<*> -> {
       CommentsPageInternal(
         details = (postDetails as Success<UIPost>).data,
@@ -64,7 +57,7 @@ fun CommentsPage(
       )
     }
     is Error -> {
-      val error = postDetails as Error
+      val error = postDetails
       Box(modifier = Modifier.fillMaxSize()) {
         NetworkError(
           label = error.description,

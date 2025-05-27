@@ -29,8 +29,8 @@ import dev.msfjarvis.claw.android.paging.LobstersPagingSource
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource.Companion.PAGE_SIZE
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource.Companion.STARTING_PAGE_INDEX
 import dev.msfjarvis.claw.android.paging.SearchPagingSource
-import dev.msfjarvis.claw.android.ui.toError
 import dev.msfjarvis.claw.api.LobstersApi
+import dev.msfjarvis.claw.api.toError
 import dev.msfjarvis.claw.core.injection.IODispatcher
 import dev.msfjarvis.claw.core.injection.MainDispatcher
 import dev.msfjarvis.claw.model.Comment
@@ -160,17 +160,6 @@ constructor(
 
   suspend fun getLinkMetadata(url: String) =
     withContext(ioDispatcher) { linkMetadataRepository.getLinkMetadata(url) }
-
-  suspend fun getUserProfile(username: String) =
-    withContext(ioDispatcher) {
-      when (val result = api.getUser(username)) {
-        is Success -> result.value
-        is Failure.NetworkFailure -> throw result.error
-        is Failure.UnknownFailure -> throw result.error
-        is Failure.HttpFailure -> throw result.toError()
-        is Failure.ApiFailure -> throw IOException("API returned an invalid response")
-      }
-    }
 
   suspend fun importPosts(input: InputStream) = dataTransferRepository.importPosts(input)
 

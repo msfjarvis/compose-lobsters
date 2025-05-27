@@ -8,14 +8,11 @@ package dev.msfjarvis.claw.android.ui
 
 import android.content.Context
 import android.content.Intent
-import com.slack.eithernet.ApiResult
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 import dev.msfjarvis.claw.model.LinkMetadata
 import dev.msfjarvis.claw.model.UIPost
-import java.io.IOException
-import java.net.HttpURLConnection
 
 fun PostActions(
   context: Context,
@@ -67,17 +64,3 @@ fun PostActions(
     }
   }
 }
-
-/**
- * Convert an [ApiResult.Failure.HttpFailure] to a scoped down error with a more useful user-facing
- * message.
- */
-@Suppress("NOTHING_TO_INLINE") // We inline this to eliminate the stacktrace frame.
-inline fun <T : Any> ApiResult.Failure.HttpFailure<T>.toError(): Throwable =
-  when (code) {
-    HttpURLConnection.HTTP_NOT_FOUND -> IOException("Story was removed by moderator")
-    HttpURLConnection.HTTP_INTERNAL_ERROR,
-    HttpURLConnection.HTTP_BAD_GATEWAY,
-    HttpURLConnection.HTTP_UNAVAILABLE -> IOException("It appears lobste.rs is currently down")
-    else -> IOException("API returned an invalid response")
-  }

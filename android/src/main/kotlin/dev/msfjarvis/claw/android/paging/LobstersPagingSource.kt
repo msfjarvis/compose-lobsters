@@ -13,7 +13,7 @@ import com.slack.eithernet.ApiResult.Success
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
-import dev.msfjarvis.claw.android.ui.toError
+import dev.msfjarvis.claw.api.toError
 import dev.msfjarvis.claw.core.injection.IODispatcher
 import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.UIPost

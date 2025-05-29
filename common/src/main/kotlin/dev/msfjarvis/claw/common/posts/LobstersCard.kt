@@ -190,12 +190,21 @@ private fun SaveButton(isSaved: () -> Boolean, onClick: () -> Unit, modifier: Mo
 
 @Composable
 private fun CommentsButton(commentCount: Int, modifier: Modifier = Modifier) {
+  val offset = run {
+    var count = commentCount
+    var digits = 1
+    while (count > 10) {
+      count /= 10
+      digits += 1
+    }
+    if (digits < 3) 0 else digits * -2
+  }
   BadgedBox(
     modifier = modifier.minimumInteractiveComponentSize(),
     badge = {
       Badge(
         containerColor = MaterialTheme.colorScheme.tertiaryContainer,
-        modifier = Modifier.absoluteOffset(y = (-8).dp),
+        modifier = Modifier.absoluteOffset(x = offset.dp, y = (-8).dp),
       ) {
         Text(
           text = commentCount.toString(),

@@ -36,7 +36,7 @@ fun CommentsPage(
   contentPadding: PaddingValues,
   openUserProfile: (String) -> Unit,
   modifier: Modifier = Modifier,
-  viewModel: CommentsViewModel = injectedViewModel(),
+  viewModel: CommentsViewModel = injectedViewModel(key = postId),
 ) {
   LaunchedEffect(postId) { viewModel.loadPostDetails(postId) }
   val commentState by

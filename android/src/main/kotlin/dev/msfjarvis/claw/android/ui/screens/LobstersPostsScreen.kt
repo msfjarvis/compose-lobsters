@@ -14,6 +14,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -48,6 +49,7 @@ import dev.msfjarvis.claw.android.MainActivity
 import dev.msfjarvis.claw.android.ui.PostActions
 import dev.msfjarvis.claw.android.ui.decorations.ClawAppBar
 import dev.msfjarvis.claw.android.ui.decorations.ClawNavigationBar
+import dev.msfjarvis.claw.android.ui.decorations.ClawNavigationRail
 import dev.msfjarvis.claw.android.ui.decorations.NavigationItem
 import dev.msfjarvis.claw.android.ui.lists.DatabasePosts
 import dev.msfjarvis.claw.android.ui.lists.NetworkPosts
@@ -151,107 +153,118 @@ fun LobstersPostsScreen(
     snackbarHost = { SnackbarHost(snackbarHostState) },
     modifier = Modifier.semantics { testTagsAsResourceId = true },
   ) { contentPadding ->
-    NavDisplay(
-      backStack = clawBackStack.backStack,
-      modifier = modifier.hazeSource(hazeState),
-      sceneStrategy = listDetailStrategy,
-      onBack = { keysToRemove -> repeat(keysToRemove) { clawBackStack.removeLastOrNull() } },
-      predictivePopTransitionSpec = {
-        slideInHorizontally(initialOffsetX = { -it }, animationSpec = tween(200)) togetherWith
-          slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(200))
-      },
-      entryProvider =
-        entryProvider {
-          entry<Hottest>(
-            metadata = ListDetailSceneStrategy.listPane(detailPlaceholder = { Placeholder() })
-          ) {
-            setWebUri("https://lobste.rs/")
-            NetworkPosts(
-              lazyPagingItems = hottestPosts,
-              listState = hottestListState,
-              postActions = postActions,
-              contentPadding = contentPadding,
-            )
-          }
-          entry<Newest>(
-            metadata = ListDetailSceneStrategy.listPane(detailPlaceholder = { Placeholder() })
-          ) {
-            setWebUri("https://lobste.rs/")
-            NetworkPosts(
-              lazyPagingItems = newestPosts,
-              listState = newestListState,
-              postActions = postActions,
-              contentPadding = contentPadding,
-            )
-          }
-          entry<Saved>(
-            metadata = ListDetailSceneStrategy.listPane(detailPlaceholder = { Placeholder() })
-          ) {
-            setWebUri(null)
-            DatabasePosts(
-              items = savedPosts,
-              listState = savedListState,
-              postActions = postActions,
-              contentPadding = contentPadding,
-            )
-          }
-          entry<Comments>(metadata = ListDetailSceneStrategy.detailPane()) { dest ->
-            CommentsPage(
-              postId = dest.postId,
-              postActions = postActions,
-              getSeenComments = viewModel::getSeenComments,
-              markSeenComments = viewModel::markSeenComments,
-              contentPadding = contentPadding,
-              openUserProfile = { clawBackStack.add(User(it)) },
-            )
-          }
-          entry<User>(
-            metadata =
-              NavDisplay.transitionSpec {
-                slideInHorizontally(
-                  initialOffsetX = { it },
-                  animationSpec = tween(200),
-                ) togetherWith ExitTransition.KeepUntilTransitionsFinished
-              } +
-                NavDisplay.popTransitionSpec {
-                  // Slide old content down, revealing the new content in place underneath
-                  EnterTransition.None togetherWith
-                    slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(200))
-                } +
-                ListDetailSceneStrategy.extraPane()
-          ) { dest ->
-            UserProfile(
-              username = dest.username,
-              contentPadding = contentPadding,
-              openUserProfile = { clawBackStack.add(User(it)) },
-            )
-          }
-          entry<Settings>(metadata = ListDetailSceneStrategy.extraPane()) {
-            SettingsScreen(
-              openInputStream = context.contentResolver::openInputStream,
-              openOutputStream = context.contentResolver::openOutputStream,
-              openLibrariesScreen = { clawBackStack.add(AboutLibraries) },
-              importPosts = viewModel::importPosts,
-              exportPostsAsJson = viewModel::exportPostsAsJson,
-              exportPostsAsHtml = viewModel::exportPostsAsHtml,
-              snackbarHostState = snackbarHostState,
-              contentPadding = contentPadding,
-              modifier = Modifier.fillMaxSize(),
-            )
-          }
-          entry<Search>(metadata = ListDetailSceneStrategy.extraPane()) {
-            setWebUri("https://lobste.rs/search")
-            SearchScreen(
-              viewModel = viewModel,
-              postActions = postActions,
-              contentPadding = contentPadding,
-            )
-          }
-          entry<AboutLibraries>(metadata = ListDetailSceneStrategy.extraPane()) {
-            LibrariesContainer(contentPadding = contentPadding, modifier = Modifier.fillMaxSize())
-          }
+    Row {
+      AnimatedVisibility(visible = navigationType == ClawNavigationType.NAVIGATION_RAIL) {
+        val currentDestination = clawBackStack.firstOrNull()
+        ClawNavigationRail(
+          items = navItems,
+          currentNavKey = currentDestination,
+          navigateTo = { clawBackStack.add(it) },
+          isVisible = clawBackStack.isOnTopLevelDestination(),
+        )
+      }
+      NavDisplay(
+        backStack = clawBackStack.backStack,
+        modifier = modifier.hazeSource(hazeState),
+        sceneStrategy = listDetailStrategy,
+        onBack = { keysToRemove -> repeat(keysToRemove) { clawBackStack.removeLastOrNull() } },
+        predictivePopTransitionSpec = {
+          slideInHorizontally(initialOffsetX = { -it }, animationSpec = tween(200)) togetherWith
+            slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(200))
         },
-    )
+        entryProvider =
+          entryProvider {
+            entry<Hottest>(
+              metadata = ListDetailSceneStrategy.listPane(detailPlaceholder = { Placeholder() })
+            ) {
+              setWebUri("https://lobste.rs/")
+              NetworkPosts(
+                lazyPagingItems = hottestPosts,
+                listState = hottestListState,
+                postActions = postActions,
+                contentPadding = contentPadding,
+              )
+            }
+            entry<Newest>(
+              metadata = ListDetailSceneStrategy.listPane(detailPlaceholder = { Placeholder() })
+            ) {
+              setWebUri("https://lobste.rs/")
+              NetworkPosts(
+                lazyPagingItems = newestPosts,
+                listState = newestListState,
+                postActions = postActions,
+                contentPadding = contentPadding,
+              )
+            }
+            entry<Saved>(
+              metadata = ListDetailSceneStrategy.listPane(detailPlaceholder = { Placeholder() })
+            ) {
+              setWebUri(null)
+              DatabasePosts(
+                items = savedPosts,
+                listState = savedListState,
+                postActions = postActions,
+                contentPadding = contentPadding,
+              )
+            }
+            entry<Comments>(metadata = ListDetailSceneStrategy.detailPane()) { dest ->
+              CommentsPage(
+                postId = dest.postId,
+                postActions = postActions,
+                getSeenComments = viewModel::getSeenComments,
+                markSeenComments = viewModel::markSeenComments,
+                contentPadding = contentPadding,
+                openUserProfile = { clawBackStack.add(User(it)) },
+              )
+            }
+            entry<User>(
+              metadata =
+                NavDisplay.transitionSpec {
+                  slideInHorizontally(
+                    initialOffsetX = { it },
+                    animationSpec = tween(200),
+                  ) togetherWith ExitTransition.KeepUntilTransitionsFinished
+                } +
+                  NavDisplay.popTransitionSpec {
+                    // Slide old content down, revealing the new content in place underneath
+                    EnterTransition.None togetherWith
+                      slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(200))
+                  } +
+                  ListDetailSceneStrategy.extraPane()
+            ) { dest ->
+              UserProfile(
+                username = dest.username,
+                contentPadding = contentPadding,
+                openUserProfile = { clawBackStack.add(User(it)) },
+              )
+            }
+            entry<Settings>(metadata = ListDetailSceneStrategy.extraPane()) {
+              SettingsScreen(
+                openInputStream = context.contentResolver::openInputStream,
+                openOutputStream = context.contentResolver::openOutputStream,
+                openLibrariesScreen = { clawBackStack.add(AboutLibraries) },
+                importPosts = viewModel::importPosts,
+                exportPostsAsJson = viewModel::exportPostsAsJson,
+                exportPostsAsHtml = viewModel::exportPostsAsHtml,
+                snackbarHostState = snackbarHostState,
+                contentPadding = contentPadding,
+                modifier = Modifier.fillMaxSize(),
+              )
+            }
+            entry<Search>(metadata = ListDetailSceneStrategy.extraPane()) {
+              setWebUri("https://lobste.rs/search")
+              SearchScreen(
+                viewModel = viewModel,
+                postActions = postActions,
+                contentPadding = contentPadding,
+              )
+            }
+            entry<AboutLibraries>(metadata = ListDetailSceneStrategy.extraPane()) {
+              LibrariesContainer(contentPadding = contentPadding, modifier = Modifier.fillMaxSize())
+            }
+          },
+      )
+    }
   }
 }
 

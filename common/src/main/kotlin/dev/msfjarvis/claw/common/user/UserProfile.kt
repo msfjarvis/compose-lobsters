@@ -44,7 +44,7 @@ fun UserProfile(
   contentPadding: PaddingValues,
   openUserProfile: (String) -> Unit,
   modifier: Modifier = Modifier,
-  viewModel: UserProfileViewModel = injectedViewModel(),
+  viewModel: UserProfileViewModel = injectedViewModel(key = username),
 ) {
   LaunchedEffect(username) { viewModel.loadProfile(username) }
   when (val state = viewModel.userProfile) {

@@ -21,8 +21,6 @@ import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import com.deliveryhero.whetstone.app.ApplicationScope
 import com.deliveryhero.whetstone.viewmodel.ContributesViewModel
-import com.slack.eithernet.ApiResult.Failure
-import com.slack.eithernet.ApiResult.Success
 import com.squareup.anvil.annotations.optional.ForScope
 import dev.msfjarvis.claw.android.glance.SavedPostsWidget
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource
@@ -30,14 +28,10 @@ import dev.msfjarvis.claw.android.paging.LobstersPagingSource.Companion.PAGE_SIZ
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource.Companion.STARTING_PAGE_INDEX
 import dev.msfjarvis.claw.android.paging.SearchPagingSource
 import dev.msfjarvis.claw.api.LobstersApi
-import dev.msfjarvis.claw.api.toError
 import dev.msfjarvis.claw.core.injection.IODispatcher
 import dev.msfjarvis.claw.core.injection.MainDispatcher
-import dev.msfjarvis.claw.model.Comment
 import dev.msfjarvis.claw.model.UIPost
 import dev.msfjarvis.claw.model.fromSavedPost
-import dev.msfjarvis.claw.model.toUIPost
-import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
 import java.time.LocalDateTime
@@ -57,7 +51,6 @@ class ClawViewModel
 @Inject
 constructor(
   private val api: LobstersApi,
-  private val commentsRepository: CommentsRepository,
   private val readPostsRepository: ReadPostsRepository,
   private val savedPostsRepository: SavedPostsRepository,
   private val linkMetadataRepository: LinkMetadataRepository,
@@ -139,23 +132,6 @@ constructor(
 
   fun isPostSaved(post: UIPost): Boolean {
     return _savedPosts.contains(post.shortId)
-  }
-
-  suspend fun getPostComments(postId: String) =
-    withContext(ioDispatcher) {
-      when (val result = api.getPostDetails(postId)) {
-        is Success -> result.value.toUIPost()
-        is Failure.NetworkFailure -> throw result.error
-        is Failure.UnknownFailure -> throw result.error
-        is Failure.HttpFailure -> throw result.toError()
-        is Failure.ApiFailure -> throw IOException("API returned an invalid response")
-      }
-    }
-
-  suspend fun getSeenComments(postId: String) = commentsRepository.getSeenComments(postId)
-
-  fun markSeenComments(postId: String, comments: List<Comment>) {
-    viewModelScope.launch { commentsRepository.markSeenComments(postId, comments) }
   }
 
   suspend fun getLinkMetadata(url: String) =

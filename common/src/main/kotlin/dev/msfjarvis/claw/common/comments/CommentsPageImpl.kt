@@ -20,16 +20,22 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ExpandLess
+import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -40,6 +46,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -151,11 +158,9 @@ private fun Node(
     NodeBox(
       node = node,
       isExpanded = node.isExpanded,
-      openUserProfile,
-      modifier =
-        modifier.clickable(
-          onClick = { onToggleExpandedState(node.comment.shortId, !node.isExpanded) }
-        ),
+      openUserProfile = openUserProfile,
+      onToggleExpandedState = onToggleExpandedState,
+      modifier = modifier,
     )
 
     AnimatedVisibility(
@@ -175,9 +180,16 @@ private fun NodeBox(
   node: CommentNode,
   isExpanded: Boolean,
   openUserProfile: (String) -> Unit,
+  onToggleExpandedState: (String, Boolean) -> Unit,
   modifier: Modifier = Modifier,
 ) {
-  CommentEntry(isExpanded, node, openUserProfile, modifier)
+  CommentEntry(
+    isExpanded = isExpanded,
+    commentNode = node,
+    openUserProfile = openUserProfile,
+    onToggleExpandedState = onToggleExpandedState,
+    modifier = modifier,
+  )
   HorizontalDivider()
 }
 
@@ -188,6 +200,7 @@ private fun CommentEntry(
   isExpanded: Boolean,
   commentNode: CommentNode,
   openUserProfile: (String) -> Unit,
+  onToggleExpandedState: (String, Boolean) -> Unit,
   modifier: Modifier = Modifier,
 ) {
   val comment = commentNode.comment
@@ -207,20 +220,33 @@ private fun CommentEntry(
         )
   ) {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-      Submitter(
-        text =
-          buildCommenterString(
-            commenterName = comment.user,
-            score = comment.score,
-            createdAt = comment.createdAt,
-            lastEditedAt = comment.lastEditedAt,
-            nameColorOverride =
-              if (commentNode.isPostAuthor) MaterialTheme.colorScheme.tertiary else null,
-          ),
-        avatarUrl = "https://lobste.rs/avatars/${comment.user}-100.png",
-        contentDescription = "User avatar for ${comment.user}",
-        modifier = Modifier.clickable { openUserProfile(comment.user) },
-      )
+      Row {
+        Box(
+          Modifier.padding(end = 8.dp).size(24.dp).clickable(role = Role.Button) {
+            onToggleExpandedState(comment.shortId, !isExpanded)
+          }
+        ) {
+          Icon(
+            imageVector = if (isExpanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
+            contentDescription = if (isExpanded) "Collapse comment" else "Expand comment",
+            modifier = Modifier.align(Alignment.Center),
+          )
+        }
+        Submitter(
+          text =
+            buildCommenterString(
+              commenterName = comment.user,
+              score = comment.score,
+              createdAt = comment.createdAt,
+              lastEditedAt = comment.lastEditedAt,
+              nameColorOverride =
+                if (commentNode.isPostAuthor) MaterialTheme.colorScheme.tertiary else null,
+            ),
+          avatarUrl = "https://lobste.rs/avatars/${comment.user}-100.png",
+          contentDescription = "User avatar for ${comment.user}",
+          modifier = Modifier.clickable { openUserProfile(comment.user) },
+        )
+      }
       if (isExpanded) {
         ThemedRichText(text = comment.comment, modifier = Modifier.padding(top = 8.dp))
       }

@@ -55,10 +55,6 @@ fun PostActions(
 
     override fun isPostSaved(post: UIPost): Boolean = viewModel.isPostSaved(post)
 
-    override suspend fun getComments(postId: String): UIPost {
-      return viewModel.getPostComments(postId)
-    }
-
     override suspend fun getLinkMetadata(url: String): LinkMetadata {
       return viewModel.getLinkMetadata(url)
     }

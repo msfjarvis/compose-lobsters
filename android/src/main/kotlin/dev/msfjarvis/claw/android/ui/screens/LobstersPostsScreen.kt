@@ -211,8 +211,6 @@ fun LobstersPostsScreen(
               CommentsPage(
                 postId = dest.postId,
                 postActions = postActions,
-                getSeenComments = viewModel::getSeenComments,
-                markSeenComments = viewModel::markSeenComments,
                 contentPadding = contentPadding,
                 openUserProfile = { clawBackStack.add(User(it)) },
               )

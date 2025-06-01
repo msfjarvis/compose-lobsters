@@ -23,7 +23,6 @@ import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.ui.NetworkError
 import dev.msfjarvis.claw.common.ui.ProgressBar
 import dev.msfjarvis.claw.database.local.PostComments
-import dev.msfjarvis.claw.model.Comment
 import dev.msfjarvis.claw.model.UIPost
 
 @Suppress("UNCHECKED_CAST")
@@ -31,8 +30,6 @@ import dev.msfjarvis.claw.model.UIPost
 fun CommentsPage(
   postId: String,
   postActions: PostActions,
-  getSeenComments: suspend (String) -> PostComments?,
-  markSeenComments: (String, List<Comment>) -> Unit,
   contentPadding: PaddingValues,
   openUserProfile: (String) -> Unit,
   modifier: Modifier = Modifier,
@@ -41,7 +38,7 @@ fun CommentsPage(
   LaunchedEffect(postId) { viewModel.loadPostDetails(postId) }
   val commentState by
     produceState<PostComments?>(initialValue = null, key1 = postId) {
-      value = getSeenComments(postId)
+      value = viewModel.getSeenComments(postId)
     }
 
   when (val postDetails = viewModel.postDetails) {
@@ -50,7 +47,7 @@ fun CommentsPage(
         details = (postDetails as Success<UIPost>).data,
         postActions = postActions,
         commentState = commentState,
-        markSeenComments = markSeenComments,
+        markSeenComments = viewModel::markSeenComments,
         openUserProfile = openUserProfile,
         contentPadding = contentPadding,
         modifier = modifier.fillMaxSize(),

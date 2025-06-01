@@ -4,7 +4,7 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
-package dev.msfjarvis.claw.android.viewmodel
+package dev.msfjarvis.claw.common.comments
 
 import dev.msfjarvis.claw.core.injection.DatabaseReadDispatcher
 import dev.msfjarvis.claw.core.injection.DatabaseWriteDispatcher

@@ -269,21 +269,6 @@ val TEST_POST_ACTIONS =
       return true
     }
 
-    override suspend fun getComments(postId: String): UIPost {
-      return UIPost(
-        shortId = "ooga",
-        title = "Simple Anomaly Detection Using Plain SQL",
-        url = "https://hakibenita.com/sql-anomaly-detection",
-        createdAt = "2020-09-21T08:04:24.000-05:00",
-        commentCount = 1,
-        commentsUrl = "https://lobste.rs/s/q1hh1g/simple_anomaly_detection_using_plain_sql",
-        tags = listOf("databases", "apis"),
-        description = "",
-        submitter = "Haki",
-        comments = emptyList(),
-      )
-    }
-
     override suspend fun getLinkMetadata(url: String): LinkMetadata {
       return LinkMetadata("", "")
     }

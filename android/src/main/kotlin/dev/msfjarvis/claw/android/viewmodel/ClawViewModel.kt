@@ -30,7 +30,6 @@ import dev.msfjarvis.claw.android.paging.SearchPagingSource
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.core.injection.IODispatcher
 import dev.msfjarvis.claw.core.injection.MainDispatcher
-import dev.msfjarvis.claw.model.Comment
 import dev.msfjarvis.claw.model.UIPost
 import dev.msfjarvis.claw.model.fromSavedPost
 import java.io.InputStream
@@ -52,7 +51,6 @@ class ClawViewModel
 @Inject
 constructor(
   private val api: LobstersApi,
-  private val commentsRepository: CommentsRepository,
   private val readPostsRepository: ReadPostsRepository,
   private val savedPostsRepository: SavedPostsRepository,
   private val linkMetadataRepository: LinkMetadataRepository,
@@ -134,12 +132,6 @@ constructor(
 
   fun isPostSaved(post: UIPost): Boolean {
     return _savedPosts.contains(post.shortId)
-  }
-
-  suspend fun getSeenComments(postId: String) = commentsRepository.getSeenComments(postId)
-
-  fun markSeenComments(postId: String, comments: List<Comment>) {
-    viewModelScope.launch { commentsRepository.markSeenComments(postId, comments) }
   }
 
   suspend fun getLinkMetadata(url: String) =

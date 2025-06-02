@@ -60,6 +60,17 @@ composeCompiler {
   )
 }
 
+// TODO: Remove when Nav3 gets a new release
+configurations.configureEach {
+  resolutionStrategy {
+    eachDependency {
+      if (requested.group == "androidx.lifecycle") {
+        useVersion(libs.versions.lifecycle.get())
+      }
+    }
+  }
+}
+
 licensee {
   allow("Apache-2.0")
   allow("MIT")

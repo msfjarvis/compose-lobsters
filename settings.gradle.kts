@@ -102,10 +102,16 @@ dependencyResolutionManagement {
       name = "Compose Compiler Snapshots"
       content { includeGroup("androidx.compose.compiler") }
     }
-    maven("https://androidx.dev/snapshots/builds/13546692/artifacts/repository") {
+    maven("https://androidx.dev/snapshots/builds/13585391/artifacts/repository") {
       name = "AndroidX Snapshots"
-      mavenContent { snapshotsOnly() }
-      content { includeGroup("androidx.compose.material3.adaptive") }
+      content {
+        includeGroup("androidx.activity")
+        includeGroup("androidx.compose.material3.adaptive")
+        includeGroup("androidx.lifecycle")
+        includeGroup("androidx.navigationevent")
+        includeGroup("androidx.navigation3")
+        includeGroup("androidx.savedstate")
+      }
     }
     maven("https://oss.sonatype.org/content/repositories/snapshots/") {
       name = "Sonatype Snapshots"

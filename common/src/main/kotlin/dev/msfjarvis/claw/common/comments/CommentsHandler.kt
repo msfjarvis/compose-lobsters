@@ -62,14 +62,7 @@ internal class CommentsHandler {
       return node.copy(children = updatedChildren)
     }
 
-    val listNode = _listItems.value.toMutableList()
-    for (i in listNode.indices) {
-      val node = listNode[i]
-      if (node.comment.shortId == shortId || node.children.any { it.comment.shortId == shortId }) {
-        listNode[i] = updateNode(node)
-        _listItems.value = listNode.toList()
-        return
-      }
-    }
+    val listNode = _listItems.value.map { updateNode(it) }
+    _listItems.value = listNode
   }
 }

@@ -38,9 +38,9 @@ internal data class CommentNode(
   }
 
   /**
-   * [CommentNode.equals] and [CommentNode.hashCode] are hand-rolled to drop the
-   * [CommentNode.parent] field from the comparison since it's possible for there to be cycles in
-   * this comparison check. For our purposes we're fine with foregoing the field.
+   * [CommentNode.equals], [CommentNode.toString] and [CommentNode.hashCode] are hand-rolled to drop
+   * the [CommentNode.parent] field from the comparison since it's possible for there to be cycles
+   * in this comparison check. For our purposes we're fine with foregoing the field.
    */
   override fun equals(other: Any?): Boolean {
     if (this === other) return true
@@ -64,5 +64,11 @@ internal data class CommentNode(
     result = 31 * result + indentLevel
     result = 31 * result + isExpanded.hashCode()
     return result
+  }
+
+  override fun toString(): String {
+    return "CommentNode(comment=${comment.shortId}, isPostAuthor=$isPostAuthor, " +
+      "children=${children.size}, isUnread=$isUnread, indentLevel=$indentLevel, " +
+      "isExpanded=$isExpanded)"
   }
 }

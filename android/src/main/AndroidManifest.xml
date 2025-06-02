@@ -23,7 +23,7 @@
       tools:targetApi="29" />
     <activity
       android:name=".MainActivity"
-      android:configChanges="colorMode|density|fontScale|keyboard|keyboardHidden|layoutDirection|locale|mcc|mnc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"
+      android:configChanges="assetsPaths|colorMode|density|fontScale|fontWeightAdjustment|grammaticalGender|keyboard|keyboardHidden|layoutDirection|locale|mcc|mnc|navigation|orientation|resourcesUnused|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"
       android:launchMode="singleTask"
       android:taskAffinity=""
       android:exported="true">

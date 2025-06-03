@@ -42,6 +42,7 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.deliveryhero.whetstone.compose.injectedViewModel
+import com.mikepenz.aboutlibraries.ui.compose.android.rememberLibraries
 import com.mikepenz.aboutlibraries.ui.compose.m3.LibrariesContainer
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeSource
@@ -81,6 +82,7 @@ fun LobstersPostsScreen(
   modifier: Modifier = Modifier,
   viewModel: ClawViewModel = injectedViewModel(),
 ) {
+  val libraries by rememberLibraries()
   val clawBackStack = ClawBackStack(Hottest)
   val listDetailStrategy = rememberListDetailSceneStrategy<NavKey>()
 
@@ -258,7 +260,11 @@ fun LobstersPostsScreen(
               )
             }
             entry<AboutLibraries>(metadata = ListDetailSceneStrategy.extraPane()) {
-              LibrariesContainer(contentPadding = contentPadding, modifier = Modifier.fillMaxSize())
+              LibrariesContainer(
+                libraries = libraries,
+                contentPadding = contentPadding,
+                modifier = Modifier.fillMaxSize(),
+              )
             }
           },
       )

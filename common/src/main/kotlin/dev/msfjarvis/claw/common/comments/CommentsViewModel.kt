@@ -43,6 +43,7 @@ constructor(
   @ForScope(ApplicationScope::class) context: Context,
 ) : AndroidViewModel(context as Application) {
   var postDetails by mutableStateOf<NetworkState>(NetworkState.Loading)
+    private set
 
   suspend fun loadPostDetails(postId: String) {
     if (postDetails is NetworkState.Error) {

@@ -25,6 +25,7 @@ dependencies {
   api(libs.napier)
   api(libs.okhttp.core)
   api(libs.retrofit)
+  api(libs.androidx.datastore)
 
   implementation(platform(libs.okhttp.bom))
   implementation(libs.kotlinx.serialization.core)

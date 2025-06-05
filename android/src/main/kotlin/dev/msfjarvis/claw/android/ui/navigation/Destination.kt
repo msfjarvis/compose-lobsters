@@ -36,6 +36,8 @@ import kotlinx.serialization.Serializable
 
 @Parcelize @Serializable data object AboutLibraries : NavKey, Parcelable
 
+@Parcelize @Serializable data object TagFiltering : NavKey, Parcelable
+
 enum class AppDestinations(
   val icon: ImageVector,
   val label: String,

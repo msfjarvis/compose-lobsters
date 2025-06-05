@@ -17,6 +17,7 @@ plugins {
   id("dev.msfjarvis.claw.kotlin-kapt")
   id("dev.msfjarvis.claw.sentry")
   id("dev.msfjarvis.claw.versioning-plugin")
+  id("kotlin-parcelize")
   alias(libs.plugins.aboutlibraries)
   alias(libs.plugins.android.junit5)
   alias(libs.plugins.anvil)

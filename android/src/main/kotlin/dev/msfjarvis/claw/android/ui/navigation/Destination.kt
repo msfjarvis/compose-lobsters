@@ -6,6 +6,7 @@
  */
 package dev.msfjarvis.claw.android.ui.navigation
 
+import android.os.Parcelable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.NewReleases
@@ -16,23 +17,24 @@ import androidx.compose.material.icons.outlined.Whatshot
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation3.runtime.NavKey
 import dev.msfjarvis.claw.android.ui.navigation.ClawBackStack.TopLevelDestination
+import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 
-@Serializable data object Hottest : NavKey, TopLevelDestination
+@Parcelize @Serializable data object Hottest : NavKey, TopLevelDestination, Parcelable
 
-@Serializable data object Newest : NavKey, TopLevelDestination
+@Parcelize @Serializable data object Newest : NavKey, TopLevelDestination, Parcelable
 
-@Serializable data object Saved : NavKey, TopLevelDestination
+@Parcelize @Serializable data object Saved : NavKey, TopLevelDestination, Parcelable
 
-@Serializable data class Comments(val postId: String) : NavKey
+@Parcelize @Serializable data class Comments(val postId: String) : NavKey, Parcelable
 
-@Serializable data class User(val username: String) : NavKey
+@Parcelize @Serializable data class User(val username: String) : NavKey, Parcelable
 
-@Serializable data object Search : NavKey
+@Parcelize @Serializable data object Search : NavKey, Parcelable
 
-@Serializable data object Settings : NavKey
+@Parcelize @Serializable data object Settings : NavKey, Parcelable
 
-@Serializable data object AboutLibraries : NavKey
+@Parcelize @Serializable data object AboutLibraries : NavKey, Parcelable
 
 enum class AppDestinations(
   val icon: ImageVector,

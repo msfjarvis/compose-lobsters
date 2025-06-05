@@ -11,6 +11,7 @@ import com.slack.eithernet.ApiResult.Success
 import com.slack.eithernet.test.newEitherNetController
 import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.LobstersPostDetails
+import dev.msfjarvis.claw.model.Tag
 import dev.msfjarvis.claw.model.User
 import dev.msfjarvis.claw.util.TestUtils.assertIs
 import kotlinx.coroutines.test.runTest
@@ -58,5 +59,14 @@ class ApiTest {
       .isEqualTo(
         "RPe1m3JaXAq0ti7t15hNixpLvmgJ793Ti6y4fOpxtfenyXQK3WU19m7MJb8RGoIf-tC3C9Ilwb8pv0WJUWLbNA"
       )
+  }
+
+  @Test
+  fun `retrieve tags`() = runTest {
+    val tags = api.getTags()
+    assertIs<Success<List<Tag>>>(tags)
+    assertThat(tags.value).isNotEmpty()
+    assertThat(tags.value.first().tag).isEqualTo("ruby")
+    assertThat(tags.value.first().description).isEqualTo("Ruby programming")
   }
 }

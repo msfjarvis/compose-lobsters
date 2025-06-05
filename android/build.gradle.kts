@@ -44,7 +44,7 @@ extensions.configure<ApplicationExtension> {
   }
 }
 
-aboutLibraries.gitHubApiToken = providers.environmentVariable("GITHUB_TOKEN").orNull
+aboutLibraries.collect.gitHubApiToken = providers.environmentVariable("GITHUB_TOKEN").orNull
 
 baselineProfile {
   mergeIntoMain = true

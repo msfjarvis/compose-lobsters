@@ -45,6 +45,10 @@ constructor(
   var postDetails by mutableStateOf<NetworkState>(NetworkState.Loading)
 
   suspend fun loadPostDetails(postId: String) {
+    if (postDetails is NetworkState.Error) {
+      // If the post details failed to load previously, reset the state to loading
+      postDetails = NetworkState.Loading
+    }
     postDetails =
       runSuspendCatching<UIPost> {
           withContext(ioDispatcher) {

@@ -9,6 +9,7 @@ package dev.msfjarvis.claw.api
 import com.slack.eithernet.ApiResult
 import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.LobstersPostDetails
+import dev.msfjarvis.claw.model.Tag
 import dev.msfjarvis.claw.model.User
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -29,6 +30,8 @@ interface LobstersApi {
   suspend fun getUser(@Path("username") username: String): ApiResult<User, Unit>
 
   @GET("/") suspend fun getCSRFToken(): ApiResult<CSRFToken, Unit>
+
+  @GET("tags.json") suspend fun getTags(): ApiResult<List<Tag>, Unit>
 
   companion object {
     const val BASE_URL = "https://lobste.rs"

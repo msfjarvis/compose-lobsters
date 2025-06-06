@@ -12,6 +12,7 @@ import com.slack.eithernet.test.enqueue
 import dev.msfjarvis.claw.api.converters.CSRFTokenConverter
 import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.LobstersPostDetails
+import dev.msfjarvis.claw.model.Tag
 import dev.msfjarvis.claw.model.User
 import dev.msfjarvis.claw.util.TestUtils.getResource
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -31,6 +32,8 @@ class ApiWrapper(controller: EitherNetController<LobstersApi>) {
     json.decodeFromString(getResource("post_details_tdfoqh.json"))
   private val user: User = json.decodeFromString(getResource("msfjarvis.json"))
 
+  private val tags: List<Tag> = json.decodeFromString(getResource("tags.json"))
+
   val api = controller.api
 
   init {
@@ -38,6 +41,7 @@ class ApiWrapper(controller: EitherNetController<LobstersApi>) {
     controller.enqueue(LobstersApi::getHottestPosts) { success(hottest) }
     controller.enqueue(LobstersApi::getPostDetails) { success(postDetails) }
     controller.enqueue(LobstersApi::getUser) { success(user) }
+    controller.enqueue(LobstersApi::getTags) { success(tags) }
     controller.enqueue(LobstersApi::getCSRFToken) {
       success(
         CSRFTokenConverter.convert(

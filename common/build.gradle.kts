@@ -54,6 +54,7 @@ dependencies {
   implementation(libs.androidx.compose.material.icons.extended)
   implementation(libs.androidx.compose.material3)
   implementation(libs.androidx.compose.runtime)
+  implementation(libs.androidx.compose.runtime.saveable)
   implementation(libs.androidx.compose.ui.text)
   implementation(libs.androidx.core)
   implementation(libs.coil3.compose)

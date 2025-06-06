@@ -25,7 +25,7 @@ import dev.msfjarvis.claw.common.NetworkState
 import dev.msfjarvis.claw.common.NetworkState.Error
 import dev.msfjarvis.claw.common.NetworkState.Loading
 import dev.msfjarvis.claw.common.NetworkState.Success
-import dev.msfjarvis.claw.core.injection.IODispatcher
+import dev.msfjarvis.claw.core.coroutines.IODispatcher
 import dev.msfjarvis.claw.model.User
 import java.io.IOException
 import javax.inject.Inject

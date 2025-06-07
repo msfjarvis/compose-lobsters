@@ -46,7 +46,6 @@ class SentryPlugin : Plugin<Project> {
         autoUploadNativeSymbols.set(false)
         includeNativeSources.set(false)
         ignoredVariants.set(emptySet())
-        ignoredBuildTypes.set(setOf("benchmark"))
         ignoredFlavors.set(emptySet())
         tracingInstrumentation {
           enabled.set(true)

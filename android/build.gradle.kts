@@ -23,7 +23,6 @@ plugins {
   alias(libs.plugins.anvil)
   alias(libs.plugins.modulegraphassert)
   alias(libs.plugins.whetstone)
-  alias(libs.plugins.baselineprofile)
   alias(libs.plugins.licensee)
   alias(libs.plugins.tracelog)
   alias(libs.plugins.kotlin.composeCompiler)
@@ -46,13 +45,6 @@ extensions.configure<ApplicationExtension> {
 }
 
 aboutLibraries.collect.gitHubApiToken = providers.environmentVariable("GITHUB_TOKEN").orNull
-
-baselineProfile {
-  mergeIntoMain = true
-  saveInSrc = true
-  // dependencyProject is deprecated, needs new APIs in the baseline profile plugin.
-  @Suppress("deprecation") from(projects.benchmark.dependencyProject)
-}
 
 composeCompiler {
   featureFlags.addAll(
@@ -145,7 +137,6 @@ dependencies {
   kapt(libs.dagger.compiler)
 
   addTestDependencies(project)
-  androidTestImplementation(libs.androidx.test.espresso.core)
   androidTestImplementation(libs.androidx.test.uiautomator)
   androidTestImplementation(libs.leakcanary.android.test)
 }

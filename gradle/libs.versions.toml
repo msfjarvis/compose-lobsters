@@ -10,7 +10,7 @@ datastore = "1.2.0-alpha02"
 eithernet = "2.0.0"
 glance = "1.0.0"
 haze = "1.6.4"
-junit = "5.11.4"
+junit = "5.13.1"
 konvert = "4.1.0"
 kotlin = "2.1.21"
 kotlinResult = "2.0.1"
@@ -82,8 +82,11 @@ haze-materials = { module = "dev.chrisbanes.haze:haze-materials", version.ref = 
 htmlconverter = "be.digitalia.compose.htmlconverter:htmlconverter:1.0.4"
 javax-inject = "javax.inject:javax.inject:1"
 jsoup = "org.jsoup:jsoup:1.20.1"
-junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit" }
-junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit" }
+junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter" }
+junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api" }
+junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine" }
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher" }
 junit-legacy = "junit:junit:4.13.2"
 konvert-annotations = { module = "io.mcarle:konvert-annotations", version.ref = "konvert" }
 konvert-api = { module = "io.mcarle:konvert-api", version.ref = "konvert" }

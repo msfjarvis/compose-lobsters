@@ -19,7 +19,9 @@ fun DependencyHandlerScope.addTestDependencies(project: Project) {
   arrayOf("test", "androidTest", "screenshotTest")
     .filter { sourceSet -> project.configurations.findByName("${sourceSet}Implementation") != null }
     .forEach { sourceSet ->
+      addProvider("${sourceSet}Implementation", platform(libs.junit.bom))
       addProvider("${sourceSet}Implementation", libs.junit.jupiter.api)
+      addProviderConvertible("${sourceSet}Implementation", libs.junit.jupiter)
       addProvider<MinimalExternalModuleDependency, ExternalModuleDependency>(
         "${sourceSet}Implementation",
         libs.truth,
@@ -27,6 +29,7 @@ fun DependencyHandlerScope.addTestDependencies(project: Project) {
         exclude(group = "junit", module = "junit")
       }
       addProvider("${sourceSet}RuntimeOnly", libs.junit.jupiter.engine)
+      addProvider("${sourceSet}RuntimeOnly", libs.junit.platform.launcher)
       addProvider<MinimalExternalModuleDependency, ExternalModuleDependency>(
         "${sourceSet}RuntimeOnly",
         libs.junit.legacy,

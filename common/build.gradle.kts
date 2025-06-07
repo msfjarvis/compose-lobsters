@@ -40,6 +40,7 @@ composeCompiler {
 
 dependencies {
   api(libs.androidx.compose.ui)
+  api(libs.androidx.datastore)
   api(libs.dagger)
   api(libs.javax.inject)
   api(projects.api)

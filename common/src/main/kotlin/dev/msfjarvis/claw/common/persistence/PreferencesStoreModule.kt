@@ -4,7 +4,7 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
-package dev.msfjarvis.claw.core.persistence
+package dev.msfjarvis.claw.common.persistence
 
 import android.content.Context
 import androidx.datastore.core.DataMigration

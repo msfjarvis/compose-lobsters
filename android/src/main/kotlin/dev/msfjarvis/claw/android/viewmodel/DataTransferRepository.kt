@@ -6,7 +6,7 @@
  */
 package dev.msfjarvis.claw.android.viewmodel
 
-import dev.msfjarvis.claw.core.injection.IODispatcher
+import dev.msfjarvis.claw.core.coroutines.IODispatcher
 import dev.msfjarvis.claw.database.SavedPostSerializer
 import dev.msfjarvis.claw.database.local.SavedPost
 import java.io.InputStream

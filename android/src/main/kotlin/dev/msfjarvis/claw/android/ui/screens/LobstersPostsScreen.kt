@@ -64,9 +64,11 @@ import dev.msfjarvis.claw.android.ui.navigation.Newest
 import dev.msfjarvis.claw.android.ui.navigation.Saved
 import dev.msfjarvis.claw.android.ui.navigation.Search
 import dev.msfjarvis.claw.android.ui.navigation.Settings
+import dev.msfjarvis.claw.android.ui.navigation.TagFiltering
 import dev.msfjarvis.claw.android.ui.navigation.User
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.common.comments.CommentsPage
+import dev.msfjarvis.claw.common.tags.TagList
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 import dev.msfjarvis.claw.common.user.UserProfile
 import kotlinx.collections.immutable.persistentListOf
@@ -266,6 +268,7 @@ fun LobstersPostsScreen(
                 modifier = Modifier.fillMaxSize(),
               )
             }
+            entry<TagFiltering> { TagList(contentPadding = contentPadding) }
           },
       )
     }

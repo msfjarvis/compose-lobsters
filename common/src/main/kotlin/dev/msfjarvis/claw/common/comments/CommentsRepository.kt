@@ -6,8 +6,8 @@
  */
 package dev.msfjarvis.claw.common.comments
 
-import dev.msfjarvis.claw.core.injection.DatabaseReadDispatcher
-import dev.msfjarvis.claw.core.injection.DatabaseWriteDispatcher
+import dev.msfjarvis.claw.core.coroutines.DatabaseReadDispatcher
+import dev.msfjarvis.claw.core.coroutines.DatabaseWriteDispatcher
 import dev.msfjarvis.claw.database.local.PostComments
 import dev.msfjarvis.claw.database.local.PostCommentsQueries
 import dev.msfjarvis.claw.model.Comment

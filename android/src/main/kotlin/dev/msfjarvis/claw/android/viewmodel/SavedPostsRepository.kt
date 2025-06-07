@@ -8,8 +8,8 @@ package dev.msfjarvis.claw.android.viewmodel
 
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
-import dev.msfjarvis.claw.core.injection.DatabaseReadDispatcher
-import dev.msfjarvis.claw.core.injection.DatabaseWriteDispatcher
+import dev.msfjarvis.claw.core.coroutines.DatabaseReadDispatcher
+import dev.msfjarvis.claw.core.coroutines.DatabaseWriteDispatcher
 import dev.msfjarvis.claw.database.local.SavedPost
 import dev.msfjarvis.claw.database.local.SavedPostQueries
 import dev.msfjarvis.claw.model.UIPost

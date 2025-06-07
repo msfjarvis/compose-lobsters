@@ -4,7 +4,7 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
-package dev.msfjarvis.claw.core.injection
+package dev.msfjarvis.claw.core.network
 
 import com.deliveryhero.whetstone.app.ApplicationScope
 import com.squareup.anvil.annotations.ContributesTo
@@ -36,7 +36,7 @@ object JsonModule {
   fun provideJsonSerializer(): Json {
     return Json {
       ignoreUnknownKeys = true
-      namingStrategy = JsonNamingStrategy.SnakeCase
+      namingStrategy = JsonNamingStrategy.Builtins.SnakeCase
     }
   }
 }

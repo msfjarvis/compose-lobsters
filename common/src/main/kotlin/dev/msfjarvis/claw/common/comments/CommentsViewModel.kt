@@ -23,7 +23,7 @@ import com.squareup.anvil.annotations.optional.ForScope
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.api.toError
 import dev.msfjarvis.claw.common.NetworkState
-import dev.msfjarvis.claw.core.injection.IODispatcher
+import dev.msfjarvis.claw.core.coroutines.IODispatcher
 import dev.msfjarvis.claw.model.Comment
 import dev.msfjarvis.claw.model.UIPost
 import dev.msfjarvis.claw.model.toUIPost
@@ -43,6 +43,7 @@ constructor(
   @ForScope(ApplicationScope::class) context: Context,
 ) : AndroidViewModel(context as Application) {
   var postDetails by mutableStateOf<NetworkState>(NetworkState.Loading)
+    private set
 
   suspend fun loadPostDetails(postId: String) {
     if (postDetails is NetworkState.Error) {

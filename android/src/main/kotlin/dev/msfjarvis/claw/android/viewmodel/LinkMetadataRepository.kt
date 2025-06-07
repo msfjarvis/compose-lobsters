@@ -6,7 +6,7 @@
  */
 package dev.msfjarvis.claw.android.viewmodel
 
-import dev.msfjarvis.claw.core.injection.IODispatcher
+import dev.msfjarvis.claw.core.coroutines.IODispatcher
 import dev.msfjarvis.claw.model.LinkMetadata
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher

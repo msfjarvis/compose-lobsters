@@ -23,7 +23,7 @@ class KotlinCommonPlugin : Plugin<Project> {
   override fun apply(project: Project) {
     if (project.isolated.rootProject == project.isolated) {
       LintConfig.configureRootProject(project)
-    } else if (project.name != "benchmark") {
+    } else {
       LintConfig.configureSubProject(project)
     }
     project.tasks.run {

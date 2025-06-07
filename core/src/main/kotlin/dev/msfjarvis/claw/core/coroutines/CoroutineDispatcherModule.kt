@@ -4,15 +4,13 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
-package dev.msfjarvis.claw.core.injection
+package dev.msfjarvis.claw.core.coroutines
 
 import com.deliveryhero.whetstone.app.ApplicationScope
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
-import dev.msfjarvis.claw.core.coroutines.DefaultDispatcherProvider
-import dev.msfjarvis.claw.core.coroutines.DispatcherProvider
 import javax.inject.Qualifier
 import kotlinx.coroutines.CoroutineDispatcher
 

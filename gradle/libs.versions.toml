@@ -25,13 +25,13 @@ sentry-sdk = "8.14.0"
 serialization = "1.8.1"
 sqldelight = "2.1.0"
 whetstone = "0.9.0-beta02"
-workmanager = "2.10.1"
+workmanager = "2.10.2"
 
 [libraries]
 aboutLibraries-m3 = { module = "com.mikepenz:aboutlibraries-compose-m3", version.ref = "aboutLibraries" }
 android-security-lints = "com.android.security.lint:lint:1.0.3"
 androidx-activity-compose = "androidx.activity:activity-compose:1.11.0-rc01"
-androidx-browser = "androidx.browser:browser:1.9.0-alpha04"
+androidx-browser = "androidx.browser:browser:1.9.0-alpha05"
 androidx-compose-animation = { module = "androidx.compose.animation:animation" }
 androidx-compose-bom = "androidx.compose:compose-bom-alpha:2025.06.00"
 androidx-compose-foundation = { module = "androidx.compose.foundation:foundation" }
@@ -58,7 +58,7 @@ androidx-navigation3-runtime = { module = "androidx.navigation3:navigation3-runt
 androidx-navigation3-ui = { module = "androidx.navigation3:navigation3-ui", version.ref = "navigation3" }
 androidx-paging-compose = "androidx.paging:paging-compose:3.3.6"
 androidx-profileinstaller = "androidx.profileinstaller:profileinstaller:1.4.1"
-androidx-test-uiautomator = "androidx.test.uiautomator:uiautomator:2.4.0-alpha04"
+androidx-test-uiautomator = "androidx.test.uiautomator:uiautomator:2.4.0-alpha05"
 androidx-work-runtime = { module = "androidx.work:work-runtime", version.ref = "workmanager" }
 build-agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 build-cachefix = "org.gradle.android.cache-fix:org.gradle.android.cache-fix.gradle.plugin:3.0.1"

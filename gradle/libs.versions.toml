@@ -131,7 +131,7 @@ kotlin-composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.r
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = "com.google.devtools.ksp:2.1.21-2.0.2"
 licensee = "app.cash.licensee:1.13.0"
-modulegraphassert = "com.jraska.module.graph.assertion:2.8.0"
+modulegraphassert = "com.jraska.module.graph.assertion:2.9.0"
 poko = "dev.drewhamilton.poko:0.18.7"
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 tracelog = "dev.msfjarvis.tracelog:0.1.3"

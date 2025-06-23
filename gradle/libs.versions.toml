@@ -79,7 +79,7 @@ eithernet-integration-retrofit = { module = "com.slack.eithernet:eithernet-integ
 eithernet-test-fixtures = { module = "com.slack.eithernet:eithernet-test-fixtures", version.ref = "eithernet" }
 haze = { module = "dev.chrisbanes.haze:haze", version.ref = "haze" }
 haze-materials = { module = "dev.chrisbanes.haze:haze-materials", version.ref = "haze" }
-htmlconverter = "be.digitalia.compose.htmlconverter:htmlconverter:1.0.4"
+htmlconverter = "be.digitalia.compose.htmlconverter:htmlconverter:1.1.0"
 javax-inject = "javax.inject:javax.inject:1"
 jsoup = "org.jsoup:jsoup:1.20.1"
 junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }

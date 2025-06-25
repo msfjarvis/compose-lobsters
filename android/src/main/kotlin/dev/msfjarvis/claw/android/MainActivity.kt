@@ -37,8 +37,8 @@ class MainActivity : ComponentActivity() {
     installSplashScreen()
     Whetstone.inject(this)
     enableEdgeToEdge(
-      statusBarStyle = SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT),
-      navigationBarStyle = SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT),
+      statusBarStyle = SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT)
+      // Don't set navigation bar style, the default matches the platform behavior.
     )
     setContent {
       LobstersTheme(

@@ -31,6 +31,8 @@ class KotlinCommonPlugin : Plugin<Project> {
         compilerOptions {
           allWarningsAsErrors.set(project.providers.environmentVariable("CI").isPresent)
           freeCompilerArgs.addAll(ADDITIONAL_COMPILER_ARGS)
+          // This is necessary for Anvil to function, do not be the idiot reverting this
+          // 3 months later because you forgot about it.
           languageVersion.set(KotlinVersion.KOTLIN_1_9)
         }
       }

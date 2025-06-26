@@ -14,7 +14,6 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.gradle.jvm.toolchain.JavaToolchainSpec
 import org.gradle.kotlin.dsl.withType
-import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 @Suppress("Unused", "UnstableApiUsage")
@@ -31,7 +30,6 @@ class KotlinCommonPlugin : Plugin<Project> {
         compilerOptions {
           allWarningsAsErrors.set(project.providers.environmentVariable("CI").isPresent)
           freeCompilerArgs.addAll(ADDITIONAL_COMPILER_ARGS)
-          languageVersion.set(KotlinVersion.KOTLIN_2_1)
         }
       }
       withType<Test>().configureEach {

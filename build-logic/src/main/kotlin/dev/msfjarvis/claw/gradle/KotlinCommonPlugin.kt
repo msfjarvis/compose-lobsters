@@ -29,9 +29,13 @@ class KotlinCommonPlugin : Plugin<Project> {
     project.tasks.run {
       withType<KotlinCompile>().configureEach {
         compilerOptions {
-          allWarningsAsErrors.set(project.providers.environmentVariable("CI").isPresent)
+          // This can't be enabled until we get rid of Anvil because it enables
+          // the deprecated Kotlin 1.9 language version.
+          allWarningsAsErrors.set(false)
           freeCompilerArgs.addAll(ADDITIONAL_COMPILER_ARGS)
-          languageVersion.set(KotlinVersion.KOTLIN_2_1)
+          // This is necessary for Anvil to function, do not be the idiot reverting this
+          // 3 months later because you forgot about it.
+          languageVersion.set(KotlinVersion.KOTLIN_1_9)
         }
       }
       withType<Test>().configureEach {

@@ -1,6 +1,6 @@
 [versions]
 aboutLibraries = "12.2.4"
-agp = "8.12.0-alpha07"
+agp = "8.12.0-alpha08"
 android-junit5 = "1.13.1.0"
 androidx-test = "1.7.0-alpha03"
 coil3 = "3.2.0"
@@ -31,9 +31,9 @@ workmanager = "2.10.2"
 aboutLibraries-m3 = { module = "com.mikepenz:aboutlibraries-compose-m3", version.ref = "aboutLibraries" }
 android-security-lints = "com.android.security.lint:lint:1.0.3"
 androidx-activity-compose = "androidx.activity:activity-compose:1.11.0-rc01"
-androidx-browser = "androidx.browser:browser:1.9.0-alpha05"
+androidx-browser = "androidx.browser:browser:1.9.0-beta01"
 androidx-compose-animation = { module = "androidx.compose.animation:animation" }
-androidx-compose-bom = "androidx.compose:compose-bom-alpha:2025.06.01"
+androidx-compose-bom = "androidx.compose:compose-bom-alpha:2025.06.02"
 androidx-compose-foundation = { module = "androidx.compose.foundation:foundation" }
 androidx-compose-glance = { module = "androidx.glance:glance-appwidget", version.ref = "glance" }
 androidx-compose-glance-m3 = { module = "androidx.glance:glance-material3", version.ref = "glance" }
@@ -49,7 +49,7 @@ androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling
 androidx-compose-ui-unit = { module = "androidx.compose.ui:ui-unit" }
 androidx-compose-ui-util = { module = "androidx.compose.ui:ui-util" }
 androidx-core = "androidx.core:core:1.16.0"
-androidx-core-splashscreen = "androidx.core:core-splashscreen:1.2.0-beta02"
+androidx-core-splashscreen = "androidx.core:core-splashscreen:1.2.0-rc01"
 androidx-datastore = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 androidx-lifecycle-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 androidx-lint-gradle = "androidx.lint:lint-gradle:1.0.0-alpha05"

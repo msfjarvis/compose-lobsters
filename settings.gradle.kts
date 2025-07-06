@@ -102,21 +102,17 @@ dependencyResolutionManagement {
       name = "Compose Compiler Snapshots"
       content { includeGroup("androidx.compose.compiler") }
     }
-    maven("https://androidx.dev/snapshots/builds/13603812/artifacts/repository") {
+    maven("https://androidx.dev/snapshots/builds/13738694/artifacts/repository") {
       name = "AndroidX Snapshots"
-      content {
-        includeGroup("androidx.activity")
-        includeGroup("androidx.compose.material3.adaptive")
-        includeGroup("androidx.lifecycle")
-        includeGroup("androidx.navigationevent")
-        includeGroup("androidx.navigation3")
-        includeGroup("androidx.savedstate")
-      }
+      mavenContent { snapshotsOnly() }
+      content { includeGroup("androidx.compose.material3.adaptive") }
     }
     maven("https://oss.sonatype.org/content/repositories/snapshots/") {
       name = "Sonatype Snapshots"
-      content { includeGroup("dev.msfjarvis.whetstone") }
-      content { includeGroup("dev.drewhamilton.poko") }
+      content {
+        includeGroup("dev.msfjarvis.whetstone")
+        includeGroup("dev.drewhamilton.poko")
+      }
       mavenContent { snapshotsOnly() }
     }
     mavenCentral { mavenContent { releasesOnly() } }

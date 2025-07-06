@@ -41,8 +41,7 @@ object LintConfig {
     disable += "NewerVersionAvailable"
     // Can't do anything about this
     disable += "ObsoleteLintCustomCheck"
-    // I trust myself enough to not deal with the constantly
-    // changing error message.
+    // I trust myself enough to not deal with the constantly changing error message.
     disable += "InvalidPackage"
   }
 

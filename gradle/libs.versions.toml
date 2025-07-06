@@ -2,7 +2,6 @@
 aboutLibraries = "12.2.4"
 agp = "8.12.0-alpha08"
 android-junit5 = "1.13.1.0"
-androidx-test = "1.7.0-alpha03"
 coil3 = "3.2.0"
 coroutines = "1.10.2"
 dagger = "2.56.2"

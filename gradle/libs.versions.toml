@@ -63,7 +63,7 @@ build-cachefix = "org.gradle.android.cache-fix:org.gradle.android.cache-fix.grad
 build-kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 build-semver = "com.github.zafarkhaja:java-semver:0.10.2"
 build-sentry = "io.sentry.android.gradle:io.sentry.android.gradle.gradle.plugin:5.8.0"
-build-spotless = "com.diffplug.spotless:spotless-plugin-gradle:7.0.4"
+build-spotless = "com.diffplug.spotless:spotless-plugin-gradle:7.1.0"
 build-vcu = "nl.littlerobots.version-catalog-update:nl.littlerobots.version-catalog-update.gradle.plugin:1.0.0"
 coil3-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil3" }
 coil3-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil3" }
@@ -98,7 +98,7 @@ kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
 leakcanary-android-test = { module = "com.squareup.leakcanary:leakcanary-android-test", version.ref = "leakcanary" }
 napier = "io.github.aakira:napier:2.7.1"
-okhttp-bom = "com.squareup.okhttp3:okhttp-bom:5.0.0"
+okhttp-bom = "com.squareup.okhttp3:okhttp-bom:5.1.0"
 okhttp-core = { module = "com.squareup.okhttp3:okhttp" }
 okhttp-loggingInterceptor = { module = "com.squareup.okhttp3:logging-interceptor" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }

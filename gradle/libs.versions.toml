@@ -121,7 +121,7 @@ unfurl = "me.saket.unfurl:unfurl:2.2.0"
 aboutlibraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "aboutLibraries" }
 android-junit5 = { id = "de.mannodermaus.android-junit5", version.ref = "android-junit5" }
 android-lint = { id = "com.android.lint", version.ref = "agp" }
-anvil = "com.squareup.anvil:2.5.1"
+anvil = "com.squareup.anvil:2.6.0"
 dependencyAnalysis = "com.autonomousapps.dependency-analysis:2.19.0"
 invert = "com.squareup.invert:0.0.3-dev"
 kotlin-composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

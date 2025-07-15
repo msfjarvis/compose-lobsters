@@ -106,7 +106,7 @@ retrofit-kotlinxSerializationConverter = { module = "com.squareup.retrofit2:conv
 sentry-android = { module = "io.sentry:sentry-android", version.ref = "sentry-sdk" }
 sentry-bom = { module = "io.sentry:sentry-bom", version.ref = "sentry-sdk" }
 slack-compose-lints = "com.slack.lint.compose:compose-lint-checks:1.4.2"
-slack-lints = "com.slack.lint:slack-lint-checks:0.9.0"
+slack-lints = "com.slack.lint:slack-lint-checks:0.10.1"
 sqldelight-androidDriver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
 sqldelight-dialect338 = { module = "app.cash.sqldelight:sqlite-3-38-dialect", version.ref = "sqldelight" }
 sqldelight-extensions-coroutines = { module = "app.cash.sqldelight:coroutines-extensions-jvm", version.ref = "sqldelight" }

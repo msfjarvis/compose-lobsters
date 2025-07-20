@@ -9,18 +9,14 @@ import dev.msfjarvis.claw.gradle.addTestDependencies
 plugins {
   id("dev.msfjarvis.claw.android-library")
   id("dev.msfjarvis.claw.kotlin-android")
-  alias(libs.plugins.anvil)
-  alias(libs.plugins.whetstone)
   alias(libs.plugins.dependencyAnalysis)
+  alias(libs.plugins.metro)
 }
 
 android { namespace = "dev.msfjarvis.claw.database" }
 
-anvil { generateDaggerFactories.set(true) }
-
 dependencies {
   api(libs.dagger)
-  api(libs.javax.inject)
   api(projects.database.core)
   implementation(libs.napier)
   implementation(libs.dagger)

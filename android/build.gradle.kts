@@ -20,14 +20,13 @@ plugins {
   id("kotlin-parcelize")
   alias(libs.plugins.aboutlibraries)
   alias(libs.plugins.android.junit5)
-  alias(libs.plugins.anvil)
   alias(libs.plugins.modulegraphassert)
-  alias(libs.plugins.whetstone)
   alias(libs.plugins.licensee)
   alias(libs.plugins.tracelog)
   alias(libs.plugins.kotlin.composeCompiler)
   alias(libs.plugins.kotlin.serialization)
   alias(libs.plugins.dependencyAnalysis)
+  alias(libs.plugins.metro)
 }
 
 // Directly using the generated `android` accessor lights up bright red
@@ -77,13 +76,6 @@ moduleGraphAssert {
   assertOnAnyBuild = true
   maxHeight = 4
   restricted = arrayOf(":core -X> :.*")
-}
-
-whetstone {
-  addOns {
-    compose.set(true)
-    workManager.set(true)
-  }
 }
 
 dependencies {

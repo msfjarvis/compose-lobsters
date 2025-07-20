@@ -13,10 +13,9 @@ import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
 plugins {
   id("dev.msfjarvis.claw.android-library")
   id("dev.msfjarvis.claw.kotlin-android")
-  alias(libs.plugins.anvil)
-  alias(libs.plugins.whetstone)
   alias(libs.plugins.kotlin.composeCompiler)
   alias(libs.plugins.dependencyAnalysis)
+  alias(libs.plugins.metro)
 }
 
 android {
@@ -25,11 +24,7 @@ android {
   namespace = "dev.msfjarvis.claw.common"
 }
 
-whetstone.addOns.compose = true
-
 androidComponents { beforeVariants { (it as HasUnitTestBuilder).enableUnitTest = false } }
-
-anvil { generateDaggerFactories.set(true) }
 
 composeCompiler {
   featureFlags.addAll(

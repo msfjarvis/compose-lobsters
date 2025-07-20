@@ -11,7 +11,7 @@ import dev.msfjarvis.claw.core.coroutines.DatabaseWriteDispatcher
 import dev.msfjarvis.claw.database.local.PostComments
 import dev.msfjarvis.claw.database.local.PostCommentsQueries
 import dev.msfjarvis.claw.model.Comment
-import javax.inject.Inject
+import dev.zacsweers.metro.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 

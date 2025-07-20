@@ -9,9 +9,6 @@ package dev.msfjarvis.claw.android.paging
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.slack.eithernet.ApiResult
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedFactory
-import dagger.assisted.AssistedInject
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource.Companion.PAGE_SIZE
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource.Companion.STARTING_PAGE_INDEX
 import dev.msfjarvis.claw.api.LobstersSearchApi
@@ -20,6 +17,9 @@ import dev.msfjarvis.claw.core.coroutines.IODispatcher
 import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.UIPost
 import dev.msfjarvis.claw.model.toUIPost
+import dev.zacsweers.metro.Assisted
+import dev.zacsweers.metro.AssistedFactory
+import dev.zacsweers.metro.AssistedInject
 import java.io.IOException
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext

@@ -21,8 +21,8 @@ import dev.msfjarvis.claw.api.toError
 import dev.msfjarvis.claw.common.NetworkState
 import dev.msfjarvis.claw.core.coroutines.IODispatcher
 import dev.msfjarvis.claw.model.Tag
+import dev.zacsweers.metro.Inject
 import java.io.IOException
-import javax.inject.Inject
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList

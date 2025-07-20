@@ -17,8 +17,8 @@ import com.deliveryhero.whetstone.app.ApplicationComponentOwner
 import com.deliveryhero.whetstone.app.ContributesAppInjector
 import dev.msfjarvis.claw.android.work.SavedPostUpdaterWorker
 import dev.msfjarvis.claw.core.injection.AppPlugin
+import dev.zacsweers.metro.Inject
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 
 @ContributesAppInjector(generateAppComponent = true)
 class ClawApplication : Application(), ApplicationComponentOwner {

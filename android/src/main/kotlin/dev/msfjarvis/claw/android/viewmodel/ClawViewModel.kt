@@ -19,7 +19,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
-import com.deliveryhero.whetstone.app.ApplicationScope
 import com.deliveryhero.whetstone.viewmodel.ContributesViewModel
 import com.squareup.anvil.annotations.optional.ForScope
 import dev.msfjarvis.claw.android.glance.SavedPostsWidget
@@ -32,12 +31,13 @@ import dev.msfjarvis.claw.core.coroutines.IODispatcher
 import dev.msfjarvis.claw.core.coroutines.MainDispatcher
 import dev.msfjarvis.claw.model.UIPost
 import dev.msfjarvis.claw.model.fromSavedPost
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.Inject
 import java.io.InputStream
 import java.io.OutputStream
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
-import javax.inject.Inject
 import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.toImmutableMap
 import kotlinx.coroutines.CoroutineDispatcher
@@ -59,7 +59,7 @@ constructor(
   private val searchPagingSourceFactory: SearchPagingSource.Factory,
   @IODispatcher private val ioDispatcher: CoroutineDispatcher,
   @MainDispatcher private val mainDispatcher: CoroutineDispatcher,
-  @ForScope(ApplicationScope::class) context: Context,
+  @ForScope(AppScope::class) context: Context,
 ) : AndroidViewModel(context as Application) {
   val hottestPosts =
     Pager(

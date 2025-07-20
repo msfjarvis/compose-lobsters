@@ -6,7 +6,7 @@
  */
 package dev.msfjarvis.claw.core.network
 
-import javax.inject.Inject
+import dev.zacsweers.metro.Inject
 import okhttp3.Interceptor
 import okhttp3.Response
 

@@ -12,7 +12,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
-import com.deliveryhero.whetstone.app.ApplicationScope
 import com.deliveryhero.whetstone.viewmodel.ContributesViewModel
 import com.github.michaelbull.result.coroutines.runSuspendCatching
 import com.github.michaelbull.result.fold
@@ -27,8 +26,9 @@ import dev.msfjarvis.claw.common.NetworkState.Loading
 import dev.msfjarvis.claw.common.NetworkState.Success
 import dev.msfjarvis.claw.core.coroutines.IODispatcher
 import dev.msfjarvis.claw.model.User
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.Inject
 import java.io.IOException
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
@@ -38,7 +38,7 @@ class UserProfileViewModel
 constructor(
   private val api: LobstersApi,
   @IODispatcher private val ioDispatcher: CoroutineDispatcher,
-  @ForScope(ApplicationScope::class) context: Context,
+  @ForScope(AppScope::class) context: Context,
 ) : AndroidViewModel(context as Application) {
 
   var userProfile by mutableStateOf<NetworkState>(Loading)

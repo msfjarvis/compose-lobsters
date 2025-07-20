@@ -23,7 +23,7 @@ import com.deliveryhero.whetstone.activity.ContributesActivityInjector
 import dev.msfjarvis.claw.android.ui.screens.LobstersPostsScreen
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
-import javax.inject.Inject
+import dev.zacsweers.metro.Inject
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @ContributesActivityInjector

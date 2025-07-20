@@ -21,7 +21,7 @@ import dev.msfjarvis.claw.model.LobstersPostDetails
 import dev.msfjarvis.claw.model.UIPost
 import dev.msfjarvis.claw.model.fromSavedPost
 import dev.msfjarvis.claw.model.toSavedPost
-import javax.inject.Inject
+import dev.zacsweers.metro.Inject
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 

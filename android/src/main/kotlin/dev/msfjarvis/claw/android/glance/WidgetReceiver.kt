@@ -13,7 +13,7 @@ import androidx.glance.appwidget.GlanceAppWidgetReceiver
 import com.deliveryhero.whetstone.Whetstone
 import com.deliveryhero.whetstone.broadcastreceiver.ContributesBroadcastReceiverInjector
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
-import javax.inject.Inject
+import dev.zacsweers.metro.Inject
 
 @ContributesBroadcastReceiverInjector
 class WidgetReceiver : GlanceAppWidgetReceiver() {

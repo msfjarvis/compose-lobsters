@@ -6,12 +6,12 @@
  */
 package dev.msfjarvis.claw.core.coroutines
 
-import com.deliveryhero.whetstone.app.ApplicationScope
-import com.squareup.anvil.annotations.ContributesTo
-import dagger.Binds
-import dagger.Module
-import dagger.Provides
-import javax.inject.Qualifier
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.Binds
+import dev.zacsweers.metro.ContributesTo
+import dev.zacsweers.metro.Module
+import dev.zacsweers.metro.Provides
+import dev.zacsweers.metro.Qualifier
 import kotlinx.coroutines.CoroutineDispatcher
 
 @Qualifier @Retention(AnnotationRetention.RUNTIME) annotation class DatabaseReadDispatcher
@@ -25,7 +25,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 @Qualifier @Retention(AnnotationRetention.RUNTIME) annotation class DefaultDispatcher
 
 @Module
-@ContributesTo(ApplicationScope::class)
+@ContributesTo(AppScope::class)
 interface CoroutineDispatcherModule {
 
   @Binds fun bindDispatcherProvider(impl: DefaultDispatcherProvider): DispatcherProvider

@@ -14,8 +14,8 @@ import dev.msfjarvis.claw.database.local.SavedPost
 import dev.msfjarvis.claw.database.local.SavedPostQueries
 import dev.msfjarvis.claw.model.UIPost
 import dev.msfjarvis.claw.model.toSavedPost
+import dev.zacsweers.metro.Inject
 import io.github.aakira.napier.Napier
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.withContext

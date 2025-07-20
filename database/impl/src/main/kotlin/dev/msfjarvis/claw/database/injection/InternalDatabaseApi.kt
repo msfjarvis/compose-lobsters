@@ -6,7 +6,7 @@
  */
 package dev.msfjarvis.claw.database.injection
 
-import javax.inject.Qualifier
+import dev.zacsweers.metro.Qualifier
 
 /**
  * Neato workaround for not allowing the [dev.msfjarvis.claw.database.LobstersDatabase] type to be

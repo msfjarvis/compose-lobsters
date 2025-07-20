@@ -8,7 +8,7 @@
 
 package dev.msfjarvis.claw.core.coroutines
 
-import javax.inject.Inject
+import dev.zacsweers.metro.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 

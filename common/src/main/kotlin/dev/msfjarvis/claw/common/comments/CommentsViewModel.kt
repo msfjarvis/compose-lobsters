@@ -13,7 +13,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.deliveryhero.whetstone.app.ApplicationScope
 import com.deliveryhero.whetstone.viewmodel.ContributesViewModel
 import com.github.michaelbull.result.coroutines.runSuspendCatching
 import com.github.michaelbull.result.fold
@@ -27,8 +26,9 @@ import dev.msfjarvis.claw.core.coroutines.IODispatcher
 import dev.msfjarvis.claw.model.Comment
 import dev.msfjarvis.claw.model.UIPost
 import dev.msfjarvis.claw.model.toUIPost
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.Inject
 import java.io.IOException
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -40,7 +40,7 @@ constructor(
   private val api: LobstersApi,
   private val commentsRepository: CommentsRepository,
   @IODispatcher private val ioDispatcher: CoroutineDispatcher,
-  @ForScope(ApplicationScope::class) context: Context,
+  @ForScope(AppScope::class) context: Context,
 ) : AndroidViewModel(context as Application) {
   var postDetails by mutableStateOf<NetworkState>(NetworkState.Loading)
     private set

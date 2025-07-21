@@ -18,7 +18,7 @@ import com.github.michaelbull.result.coroutines.runSuspendCatching
 import com.github.michaelbull.result.fold
 import com.slack.eithernet.ApiResult.Failure
 import com.slack.eithernet.ApiResult.Success
-import com.squareup.anvil.annotations.optional.ForScope
+import dev.zacsweers.metro.ForScope
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.api.toError
 import dev.msfjarvis.claw.common.NetworkState

@@ -8,7 +8,7 @@ package dev.msfjarvis.claw.android.injection
 
 import android.content.Context
 import com.deliveryhero.whetstone.activity.ActivityScope
-import com.squareup.anvil.annotations.optional.ForScope
+import dev.zacsweers.metro.ForScope
 import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 import dev.zacsweers.metro.ContributesTo
 import dev.zacsweers.metro.Module

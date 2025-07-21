@@ -13,7 +13,7 @@ import androidx.work.WorkerParameters
 import com.deliveryhero.whetstone.worker.ContributesWorker
 import com.deliveryhero.whetstone.worker.WorkerScope
 import com.slack.eithernet.ApiResult.Success
-import com.squareup.anvil.annotations.optional.ForScope
+import dev.zacsweers.metro.ForScope
 import dev.msfjarvis.claw.android.glance.SavedPostsWidget
 import dev.msfjarvis.claw.android.viewmodel.SavedPostsRepository
 import dev.msfjarvis.claw.api.LobstersApi

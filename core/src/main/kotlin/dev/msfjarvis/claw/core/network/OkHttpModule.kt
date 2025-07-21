@@ -8,7 +8,7 @@ package dev.msfjarvis.claw.core.network
 
 import android.content.Context
 import android.net.TrafficStats
-import com.squareup.anvil.annotations.optional.ForScope
+import dev.zacsweers.metro.ForScope
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.Binds
 import dev.zacsweers.metro.ContributesTo

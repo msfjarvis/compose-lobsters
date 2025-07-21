@@ -11,8 +11,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import app.cash.sqldelight.adapter.primitive.IntColumnAdapter
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import app.cash.sqldelight.logs.LogSqliteDriver
-import com.squareup.anvil.annotations.optional.ForScope
-import com.squareup.anvil.annotations.optional.SingleIn
+import dev.zacsweers.metro.ForScope
+import dev.zacsweers.metro.SingleIn
 import dev.msfjarvis.claw.database.LobstersDatabase
 import dev.msfjarvis.claw.database.local.PostComments
 import dev.msfjarvis.claw.database.local.SavedPost

@@ -122,7 +122,9 @@ internal fun ThemedRichText(text: String, modifier: Modifier = Modifier) {
       textDecoration = TextDecoration.Underline,
     )
 
-  val segments = parseSegments(text)
+  // Manually replace the HTML encoded angle brackets as a terrible hack that avoids code blocks
+  // looking terrible.
+  val segments = parseSegments(text.replace("&lt;", "<").replace("&gt;", ">"))
 
   Column(modifier = modifier) {
     for (segment in segments) {

@@ -34,6 +34,7 @@ object SavedPostSerializer : KSerializer<SavedPost> {
       element<String>("submitterName")
       element<List<String>>("tags")
       element<String>("description")
+      element<Boolean>("userIsAuthor")
     }
 
   override fun deserialize(decoder: Decoder): SavedPost {
@@ -47,6 +48,7 @@ object SavedPostSerializer : KSerializer<SavedPost> {
       var submitterName = ""
       var tags = emptyList<String>()
       var description = ""
+      var userIsAuthor = false
       while (true) {
         when (val index = decodeElementIndex(descriptor)) {
           0 -> shortId = decodeStringElement(descriptor, 0)
@@ -58,6 +60,7 @@ object SavedPostSerializer : KSerializer<SavedPost> {
           6 -> submitterName = decodeStringElement(descriptor, 6)
           7 -> tags = decodeSerializableElement(descriptor, 7, delegateSerializer)
           8 -> description = decodeStringElement(descriptor, 8)
+          9 -> userIsAuthor = decodeBooleanElement(descriptor, 9)
           CompositeDecoder.DECODE_DONE -> break
           else -> error("Unexpected index: $index")
         }
@@ -72,6 +75,7 @@ object SavedPostSerializer : KSerializer<SavedPost> {
         submitterName = submitterName,
         tags = tags,
         description = description,
+        userIsAuthor = userIsAuthor,
       )
     }
   }
@@ -87,6 +91,7 @@ object SavedPostSerializer : KSerializer<SavedPost> {
       encodeStringElement(descriptor, 6, value.submitterName)
       encodeSerializableElement(descriptor, 7, delegateSerializer, value.tags)
       encodeStringElement(descriptor, 8, value.description)
+      encodeBooleanElement(descriptor, 9, value.userIsAuthor)
     }
   }
 }

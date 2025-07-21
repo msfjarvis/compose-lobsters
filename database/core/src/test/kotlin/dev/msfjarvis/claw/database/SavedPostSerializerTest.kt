@@ -55,6 +55,7 @@ class SavedPostSerializerTest {
         tags = listOf("ask", "programming"),
         description =
           "<p>You suddenly have in your possession a super computer. What comes next? What projects are suddenly possible for you? What performance tests can you now explore?</p>\n",
+        userIsAuthor = false,
       )
   }
 }

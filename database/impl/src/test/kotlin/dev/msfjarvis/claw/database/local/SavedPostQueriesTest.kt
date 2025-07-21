@@ -124,6 +124,7 @@ class SavedPostQueriesTest {
           submitterName = "test_user_$i",
           tags = listOf(),
           description = "",
+          userIsAuthor = i % 2 == 0,
         )
 
       posts.add(post)

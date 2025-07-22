@@ -80,7 +80,10 @@ internal fun CommentsHeader(
         Spacer(Modifier.height(4.dp))
       }
       Submitter(
-        text = AnnotatedString("Submitted by ${post.submitter}"),
+        text =
+          AnnotatedString(
+            "${if (post.userIsAuthor) "Authored" else "Submitted"} by ${post.submitter}"
+          ),
         avatarUrl = "https://lobste.rs/avatars/${post.submitter}-100.png",
         contentDescription = "User avatar for ${post.submitter}",
         modifier = Modifier.clickable { openUserProfile(post.submitter) },

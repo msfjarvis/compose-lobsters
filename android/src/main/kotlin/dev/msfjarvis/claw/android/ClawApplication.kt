@@ -8,16 +8,15 @@ package dev.msfjarvis.claw.android
 
 import android.app.Application
 import androidx.work.Constraints
-import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.ExistingWorkPolicy
 import androidx.work.NetworkType
-import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.deliveryhero.whetstone.Whetstone
 import com.deliveryhero.whetstone.app.ApplicationComponentOwner
 import com.deliveryhero.whetstone.app.ContributesAppInjector
 import dev.msfjarvis.claw.android.work.SavedPostUpdaterWorker
 import dev.msfjarvis.claw.core.injection.AppPlugin
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @ContributesAppInjector(generateAppComponent = true)
@@ -32,14 +31,14 @@ class ClawApplication : Application(), ApplicationComponentOwner {
     super.onCreate()
     plugins.forEach { plugin -> plugin.apply(this) }
     val postUpdateWorkRequest =
-      PeriodicWorkRequestBuilder<SavedPostUpdaterWorker>(POST_REFRESH_PERIOD, TimeUnit.HOURS)
+      OneTimeWorkRequestBuilder<SavedPostUpdaterWorker>()
         .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())
         .build()
     WorkManager.getInstance(this)
-      .enqueueUniquePeriodicWork(
-        "updateSavedPosts",
-        ExistingPeriodicWorkPolicy.KEEP,
-        postUpdateWorkRequest,
+      .enqueueUniqueWork(
+        uniqueWorkName = "updateSavedPosts",
+        existingWorkPolicy = ExistingWorkPolicy.KEEP,
+        request = postUpdateWorkRequest,
       )
   }
 

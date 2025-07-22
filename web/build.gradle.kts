@@ -6,8 +6,6 @@
  */
 @file:Suppress("UnstableApiUsage")
 
-import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
-
 plugins {
   id("dev.msfjarvis.claw.android-library")
   id("dev.msfjarvis.claw.kotlin-android")
@@ -21,13 +19,6 @@ android {
   kotlin.explicitApi()
   // Don't quite care
   lint.disable += "DeprecatedCall"
-}
-
-composeCompiler {
-  featureFlags.addAll(
-    ComposeFeatureFlag.OptimizeNonSkippingGroups,
-    ComposeFeatureFlag.PausableComposition,
-  )
 }
 
 dependencies {

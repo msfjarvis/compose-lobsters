@@ -8,7 +8,6 @@
 
 import com.android.build.api.dsl.ApplicationExtension
 import dev.msfjarvis.claw.gradle.addTestDependencies
-import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
 
 plugins {
   id("dev.msfjarvis.claw.android-application")
@@ -45,13 +44,6 @@ extensions.configure<ApplicationExtension> {
 }
 
 aboutLibraries.collect.gitHubApiToken = providers.environmentVariable("GITHUB_TOKEN").orNull
-
-composeCompiler {
-  featureFlags.addAll(
-    ComposeFeatureFlag.OptimizeNonSkippingGroups,
-    ComposeFeatureFlag.PausableComposition,
-  )
-}
 
 // TODO: Remove when Nav3 gets a new release
 configurations.configureEach {

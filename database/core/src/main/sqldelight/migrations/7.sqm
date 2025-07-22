@@ -3,6 +3,8 @@ import kotlin.String;
 import kotlin.collections.List;
 import kotlin.Boolean;
 
+ALTER TABLE SavedPost RENAME TO SavedPost_Old;
+
 CREATE TABLE IF NOT EXISTS SavedPost(
   shortId TEXT NOT NULL PRIMARY KEY,
   title TEXT NOT NULL,
@@ -16,24 +18,8 @@ CREATE TABLE IF NOT EXISTS SavedPost(
   userIsAuthor INTEGER AS Boolean NOT NULL DEFAULT 0
 );
 
-insertOrReplacePost:
-INSERT OR REPLACE
-INTO SavedPost
-VALUES ?;
+INSERT INTO SavedPost(shortId, title, url, createdAt, commentCount, commentsUrl, submitterName, tags, description, userIsAuthor)
+SELECT shortId, title, url, createdAt, commentCount, commentsUrl, submitterName, tags, description, 0
+FROM SavedPost_Old;
 
-selectAllPosts:
-SELECT *
-FROM SavedPost;
-
-selectCount:
-SELECT COUNT(*)
-FROM SavedPost;
-
-deleteAllPosts:
-DELETE
-FROM SavedPost;
-
-deletePost:
-DELETE
-FROM SavedPost
-WHERE shortId = ?;
+DROP TABLE SavedPost_Old;

@@ -102,7 +102,7 @@ dependencyResolutionManagement {
       name = "Compose Compiler Snapshots"
       content { includeGroup("androidx.compose.compiler") }
     }
-    maven("https://androidx.dev/snapshots/builds/13738694/artifacts/repository") {
+    maven("https://androidx.dev/snapshots/builds/13817818/artifacts/repository") {
       name = "AndroidX Snapshots"
       mavenContent { snapshotsOnly() }
       content { includeGroup("androidx.compose.material3.adaptive") }

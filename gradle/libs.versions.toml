@@ -1,6 +1,6 @@
 [versions]
 aboutLibraries = "12.2.4"
-agp = "8.12.0-rc01"
+agp = "8.12.0"
 android-junit5 = "1.13.1.0"
 coil3 = "3.3.0"
 coroutines = "1.10.2"

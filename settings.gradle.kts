@@ -116,6 +116,7 @@ dependencyResolutionManagement {
       mavenContent { snapshotsOnly() }
     }
     mavenCentral { mavenContent { releasesOnly() } }
+    mavenLocal { mavenContent { releasesOnly() } }
   }
 }
 

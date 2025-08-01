@@ -6,15 +6,19 @@
  */
 package dev.msfjarvis.claw.common.ui
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
-import io.github.malikshairali.nativehtml.RenderHtml
+import io.github.malikshairali.nativehtml.parser.HTMLParser
 
 @Composable
 internal fun ThemedRichText(text: String, modifier: Modifier = Modifier) {
-  RenderHtml(html = text.replace("&lt;", "<").replace("&gt;", ">"), modifier = modifier)
+  val elements = remember { HTMLParser().parse(text.replace("&lt;", "<").replace("&gt;", ">")) }
+  Column(modifier.fillMaxSize()) { elements.forEach { it.render() } }
 }
 
 @ThemePreviews

@@ -6,9 +6,6 @@
  */
 @file:Suppress("UnstableApiUsage")
 
-import com.android.build.api.dsl.ApplicationExtension
-import dev.msfjarvis.claw.gradle.addTestDependencies
-
 plugins {
   id("dev.msfjarvis.claw.android-application")
   id("dev.msfjarvis.claw.rename-artifacts")
@@ -18,19 +15,16 @@ plugins {
   id("dev.msfjarvis.claw.versioning-plugin")
   id("kotlin-parcelize")
   alias(libs.plugins.aboutlibraries)
-  alias(libs.plugins.android.junit5)
   alias(libs.plugins.anvil)
   alias(libs.plugins.modulegraphassert)
   alias(libs.plugins.whetstone)
   alias(libs.plugins.licensee)
-  alias(libs.plugins.tracelog)
   alias(libs.plugins.kotlin.composeCompiler)
   alias(libs.plugins.kotlin.serialization)
   alias(libs.plugins.dependencyAnalysis)
 }
 
-// Directly using the generated `android` accessor lights up bright red
-extensions.configure<ApplicationExtension> {
+android {
   namespace = "dev.msfjarvis.claw.android"
   defaultConfig.applicationId = "dev.msfjarvis.claw.android"
   defaultConfig.testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -93,7 +87,6 @@ dependencies {
   implementation(libs.androidx.compose.runtime)
   implementation(libs.androidx.compose.ui)
   implementation(libs.androidx.compose.ui.text)
-  implementation(libs.androidx.compose.ui.util)
   implementation(libs.androidx.core.splashscreen)
   implementation(libs.androidx.lifecycle.compose)
   implementation(libs.androidx.material3.navigation3)
@@ -105,7 +98,6 @@ dependencies {
   implementation(libs.dagger)
   implementation(libs.eithernet)
   implementation(libs.haze)
-  implementation(libs.haze.materials)
   implementation(libs.javax.inject)
   implementation(libs.kotlinx.collections.immutable)
   implementation(libs.kotlinx.coroutines.core)
@@ -127,8 +119,4 @@ dependencies {
   implementation(projects.web)
 
   kapt(libs.dagger.compiler)
-
-  addTestDependencies(project)
-  androidTestImplementation(libs.androidx.test.uiautomator)
-  androidTestImplementation(libs.leakcanary.android.test)
 }

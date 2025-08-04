@@ -71,10 +71,6 @@ class SentryPlugin : Plugin<Project> {
         telemetry.set(false)
         telemetryDsn.set(null)
       }
-      with(project.dependencies) {
-        addProvider("implementation", platform(libs.sentry.bom))
-        addProvider("implementation", libs.sentry.android)
-      }
     }
   }
 

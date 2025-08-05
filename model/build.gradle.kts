@@ -15,7 +15,6 @@ plugins {
 dependencies {
   compileOnly(libs.konvert.annotations)
   api(projects.database.core)
-  implementation(libs.konvert.api)
   implementation(libs.kotlinx.serialization.core)
 
   ksp(libs.konvert.processor)

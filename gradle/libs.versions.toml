@@ -108,7 +108,6 @@ aboutlibraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "abo
 android-lint = { id = "com.android.lint", version.ref = "agp" }
 anvil = "com.squareup.anvil:2.6.1"
 dependencyAnalysis = "com.autonomousapps.dependency-analysis:2.19.0"
-invert = "com.squareup.invert:0.0.3-dev"
 kotlin-composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = "com.google.devtools.ksp:2.2.0-2.0.2"

@@ -25,3 +25,4 @@
 -dontwarn androidx.window.sidecar.SidecarInterface
 -dontwarn androidx.window.sidecar.SidecarProvider
 -dontwarn androidx.window.sidecar.SidecarWindowLayoutInfo
+-dontwarn io.mcarle.konvert.api.GeneratedKonverter

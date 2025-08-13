@@ -13,7 +13,7 @@ konvert = "4.1.2"
 kotlin = "2.2.0"
 kotlinResult = "2.1.0"
 lifecycle = "2.9.2"
-navigation3 = "1.0.0-alpha06"
+navigation3 = "1.0.0-alpha07"
 navigation3-material = "1.0.0-SNAPSHOT"
 retrofit = "3.0.0"
 sentry-sdk = "8.19.1"
@@ -28,7 +28,7 @@ android-security-lints = "com.android.security.lint:lint:1.0.3"
 androidx-activity-compose = "androidx.activity:activity-compose:1.11.0-rc01"
 androidx-browser = "androidx.browser:browser:1.9.0"
 androidx-compose-animation = { module = "androidx.compose.animation:animation" }
-androidx-compose-bom = "androidx.compose:compose-bom-alpha:2025.07.01"
+androidx-compose-bom = "androidx.compose:compose-bom-alpha:2025.08.00"
 androidx-compose-foundation = { module = "androidx.compose.foundation:foundation" }
 androidx-compose-glance = { module = "androidx.glance:glance-appwidget", version.ref = "glance" }
 androidx-compose-glance-m3 = { module = "androidx.glance:glance-material3", version.ref = "glance" }
@@ -41,7 +41,7 @@ androidx-compose-ui-text = { module = "androidx.compose.ui:ui-text" }
 androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 androidx-compose-ui-unit = { module = "androidx.compose.ui:ui-unit" }
-androidx-core = "androidx.core:core:1.16.0"
+androidx-core = "androidx.core:core:1.17.0"
 androidx-core-splashscreen = "androidx.core:core-splashscreen:1.2.0-rc01"
 androidx-datastore = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 androidx-lifecycle-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }

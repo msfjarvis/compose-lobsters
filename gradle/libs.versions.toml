@@ -110,7 +110,7 @@ anvil = "com.squareup.anvil:2.6.1"
 dependencyAnalysis = "com.autonomousapps.dependency-analysis:2.19.0"
 kotlin-composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-ksp = "com.google.devtools.ksp:2.2.0-2.0.2"
+ksp = "com.google.devtools.ksp:2.2.10-2.0.2"
 licensee = "app.cash.licensee:1.13.0"
 modulegraphassert = "com.jraska.module.graph.assertion:2.9.0"
 poko = "dev.drewhamilton.poko:0.19.3"

@@ -1,6 +1,6 @@
 [versions]
 aboutLibraries = "12.2.4"
-agp = "8.12.0"
+agp = "8.12.1"
 coil3 = "3.3.0"
 coroutines = "1.10.2"
 dagger = "2.57"

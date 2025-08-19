@@ -1,0 +1,6 @@
+- Bring back dividers between posts (I regret my earlier choices)
+- Upgrade to Compose May stable releases
+- Navigating to user profiles now works when invoked from the search
+  results page
+- Fix occasional crashes due to the app incorrectly trying to open
+  multiple database connections

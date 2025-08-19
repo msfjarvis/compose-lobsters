@@ -1,0 +1,1 @@
+- Added another workaround for native library loading crash

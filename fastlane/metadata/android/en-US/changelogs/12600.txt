@@ -1,0 +1,3 @@
+- Upgrade to Compose May release
+- Disable Sentry performance reporting
+- Migrate to Compose Foundation `FlowRow` in `LobstersCard`

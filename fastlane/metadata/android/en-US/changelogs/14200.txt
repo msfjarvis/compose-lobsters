@@ -1,0 +1,1 @@
+- Adapt to changes in lobste.rs API

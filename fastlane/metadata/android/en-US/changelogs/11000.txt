@@ -1,0 +1,2 @@
+- Configure Coil image loader with better caching settings
+- Refresh packaged baseline profile

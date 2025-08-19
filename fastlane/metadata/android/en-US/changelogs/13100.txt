@@ -1,0 +1,4 @@
+- Added the ability to search for posts
+- Text in the comments page is now selectable
+- Upgrade to Compose July release
+- Upgrade to Kotlin 1.9.0

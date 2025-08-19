@@ -1,0 +1,4 @@
+- Remove dividers between posts
+- Post titles in lists are now truncated to be a single line
+- Disable logging of network errors to Sentry
+- Add potential workaround for navigation-related crashes

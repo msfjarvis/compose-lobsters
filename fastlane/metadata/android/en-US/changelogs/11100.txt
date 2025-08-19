@@ -1,0 +1,3 @@
+- Upgrade to Compose 2022.12.00 release
+- Refresh packaged baseline profile
+- Improve how saved state of posts is queried

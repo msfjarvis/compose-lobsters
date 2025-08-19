@@ -1,0 +1,1 @@
+- Introduce [Sentry](https://sentry.io) for error reporting and performance monitoring

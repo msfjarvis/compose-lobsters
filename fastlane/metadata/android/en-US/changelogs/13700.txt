@@ -1,0 +1,4 @@
+- Fixed a crash that infrequently happened in the comments page
+- Fixed a crash when trying to list saved posts
+- Fixed a crash in home screen widget when user had less than 50 saved posts
+- Upgraded to Compose 1.6.0-alpha07

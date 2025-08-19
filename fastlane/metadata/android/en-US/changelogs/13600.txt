@@ -1,0 +1,3 @@
+- Introduce an initial attempt at a home screen widget
+- Fixed a crash triggered when swiping items
+- Adjusted pull to refresh component to match Material You theme

@@ -1,0 +1,1 @@
+- A loading indicator is added to the bottom of the post list to identify when new posts are being fetched

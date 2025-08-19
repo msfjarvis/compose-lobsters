@@ -1,0 +1,2 @@
+- Special-case deleted stories in comments API
+- Fix regression where save button had the incorrect visual state

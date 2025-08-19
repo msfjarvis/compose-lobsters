@@ -1,0 +1,3 @@
+- Lazily load link metadata to improve comment page loading speed
+- Upgrade to latest Compose release
+- Refactor code to align with Twitter's public Compose guidelines

@@ -1,0 +1,2 @@
+- Upgrade to AndroidX July 26 release
+- Revert selectable text feature due to sporadic crashes

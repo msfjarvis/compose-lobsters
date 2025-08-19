@@ -1,0 +1,4 @@
+- Switch to Compose Material's swipe refresh feature
+- Change metadata extractor logic to no longer prefer canonical URLs.
+  The submitted URL will be retained as-is now.
+- Remove navigation transition animations

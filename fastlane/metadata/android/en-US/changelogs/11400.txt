@@ -1,0 +1,2 @@
+- Rework how often saved posts are updated
+- Collapsing a comment now collapses all comments under it similar to how it works on the website

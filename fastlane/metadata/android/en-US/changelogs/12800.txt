@@ -1,0 +1,2 @@
+- Navigation transitions have been slightly sped up
+- Add workaround for a native library loading crash observed on some devices

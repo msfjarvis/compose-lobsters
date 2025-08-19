@@ -1,0 +1,3 @@
+- The app will now mark new comments as unread when returning to posts
+- Upgrade to Kotlin 1.8.0
+- Revert questionable app bar scrolling behaviour change

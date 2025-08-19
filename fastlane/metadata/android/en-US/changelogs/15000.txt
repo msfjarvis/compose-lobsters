@@ -1,0 +1,3 @@
+- Search bar draws under the status bar when hiding keyboard
+- Bottom of the comments page is cut off by the navigation bar
+- Rare crash in comments page

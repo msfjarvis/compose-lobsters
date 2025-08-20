@@ -73,9 +73,8 @@ class AndroidCommonPlugin : Plugin<Project> {
     }
   }
 
-  private fun <T> disableTestsForVariant(variant: T) where
-  T : HasUnitTestBuilder,
-  T : HasAndroidTestBuilder {
+  private fun <T> disableTestsForVariant(variant: T)
+    where T : HasUnitTestBuilder, T : HasAndroidTestBuilder {
     variant.enableAndroidTest = false
     variant.enableUnitTest = false
   }

@@ -69,7 +69,7 @@ eithernet-test-fixtures = { module = "com.slack.eithernet:eithernet-test-fixture
 haze = { module = "dev.chrisbanes.haze:haze", version.ref = "haze" }
 htmlconverter = "be.digitalia.compose.htmlconverter:htmlconverter:1.1.0"
 javax-inject = "javax.inject:javax.inject:1"
-jsoup = "org.jsoup:jsoup:1.21.1"
+jsoup = "org.jsoup:jsoup:1.21.2"
 junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
 junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api" }
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine" }

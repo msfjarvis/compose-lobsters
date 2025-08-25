@@ -1,0 +1,4 @@
+- Make the app draw edge to edge
+- Simplify Top App Bar color scheme
+- Rework how baseline profiles are generated
+- Upgrade to Compose April release

@@ -1,0 +1,3 @@
+- Fixed missing vertical spacing between post tags
+- Fixed user profile links not displaying correctly in-app
+- Update to Compose October release

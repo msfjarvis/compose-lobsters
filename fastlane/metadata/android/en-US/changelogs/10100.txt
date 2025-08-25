@@ -1,0 +1,5 @@
+- Update Jetpack Compose
+- Declare data backup and transfer rules
+- Add score and relative time to comments
+- Improve legibility of links in comments and user profiles
+- Commonize and improve how network errors are displayed

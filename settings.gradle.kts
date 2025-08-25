@@ -65,7 +65,7 @@ pluginManagement {
 
 plugins {
   id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
-  id("com.gradle.develocity") version "4.1"
+  id("com.gradle.develocity") version "4.1.1"
 }
 
 develocity {
@@ -102,7 +102,7 @@ dependencyResolutionManagement {
       name = "Compose Compiler Snapshots"
       content { includeGroup("androidx.compose.compiler") }
     }
-    maven("https://androidx.dev/snapshots/builds/13817818/artifacts/repository") {
+    maven("https://androidx.dev/snapshots/builds/13970376/artifacts/repository") {
       name = "AndroidX Snapshots"
       mavenContent { snapshotsOnly() }
       content { includeGroup("androidx.compose.material3.adaptive") }

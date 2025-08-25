@@ -1,0 +1,6 @@
+- A brand new tablet-specific UI — Thanks [@ThanaReka](https://github.com/@ThanaReka)
+- Usernames of story authors are highlighted in comments
+- Add a workaround for rare crashes while loading SQLite with older devices
+- Fix comments page resetting collapsed state while scrolling
+- Images are cached for longer on disk
+- Navigation bar now renders a solid background on API levels 31 and below

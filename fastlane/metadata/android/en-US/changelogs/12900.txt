@@ -1,0 +1,4 @@
+- Backup and restore options for saved posts
+- Spamming the comments button no longer causes it to be opened multiple times
+- Saved posts screen now has a visual indication when you have nothing saved
+- Iconography has been updated across the board to be more consistent

@@ -1,0 +1,5 @@
+- Rebuild app icon assets to align better with Material guidelines
+- Adopt Slack's Compose lints and address issues found by it
+- Upgrade to OkHttp 4.x
+- Upgrade to Compose March release
+- Start work on support for logging in with lobste.rs

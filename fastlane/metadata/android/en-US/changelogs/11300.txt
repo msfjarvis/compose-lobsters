@@ -1,0 +1,1 @@
+- Fix crash when viewing [jcs](https://lobste.rs/u/jcs)' comments

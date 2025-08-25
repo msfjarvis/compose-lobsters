@@ -1,0 +1,8 @@
+- Add brand new icon by dzuk
+- Fix a bug that caused the app to fetch the same 20 posts over and over
+- Significantly improve scrolling performance when there are a lot of saved posts
+- Move search feature to its own screen
+- Make top app and bottom system bars use the same color
+- Reduce unnecessary API calls in search screen
+- Upgrade to Compose November releases
+- Enable logging of SQLite queries

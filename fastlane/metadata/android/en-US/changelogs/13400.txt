@@ -1,0 +1,6 @@
+- Add a swipe action on each story to open the comments page on `lobste.rs`
+- Automatically mark posts as "read" and visually distinguish between them
+- Tweak list items to reduce vertical size and adjust colors
+- Drop bogus workarounds for native library crashes
+- Updated Jetpack Compose and SQLite
+- Rework how comments are displayed to adapt to lobste.rs API change

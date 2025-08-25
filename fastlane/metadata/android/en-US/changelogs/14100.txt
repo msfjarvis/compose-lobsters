@@ -1,0 +1,2 @@
+- Downgrade dependency that was pulling in extraneous storage
+    permissions which the app does not require.

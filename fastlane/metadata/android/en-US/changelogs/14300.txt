@@ -1,0 +1,2 @@
+- Fix crash when trying to open a comments-only post from
+    the home screen widget

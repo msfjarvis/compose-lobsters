@@ -1,0 +1,3 @@
+- Pull to refresh indicator is no longer hiding behind the top app bar
+- User profile page correctly renders contents below the top app bar
+- Revert unread comment handling changes that caused false positives

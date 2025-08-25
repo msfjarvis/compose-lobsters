@@ -1,0 +1,2 @@
+- The release pipeline now automatically generates Play Store release notes from the changelog file
+- Downgrade AGP to 8.0.0-alpha07 to fix Baseline Profiles not being packaged

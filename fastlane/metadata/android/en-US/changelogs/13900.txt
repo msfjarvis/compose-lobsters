@@ -1,0 +1,5 @@
+- Add HTML bookmarks as an export format
+- Rework widget item layout for consistent touch targets
+- Add attribution for libraries used in the app
+- Redesign settings screen
+- Update to Compose January releases

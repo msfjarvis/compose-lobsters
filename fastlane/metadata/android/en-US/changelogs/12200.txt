@@ -1,0 +1,2 @@
+- In-app browser now respects the user's choice for dark mode
+- Upgrade dependencies

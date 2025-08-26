@@ -16,7 +16,7 @@ lifecycle = "2.9.2"
 navigation3 = "1.0.0-alpha07"
 navigation3-material = "1.0.0-SNAPSHOT"
 retrofit = "3.0.0"
-sentry-sdk = "8.19.1"
+sentry-sdk = "8.20.0"
 serialization = "1.9.0"
 sqldelight = "2.1.0"
 whetstone = "0.9.0-beta02"
@@ -69,7 +69,7 @@ eithernet-test-fixtures = { module = "com.slack.eithernet:eithernet-test-fixture
 haze = { module = "dev.chrisbanes.haze:haze", version.ref = "haze" }
 htmlconverter = "be.digitalia.compose.htmlconverter:htmlconverter:1.1.0"
 javax-inject = "javax.inject:javax.inject:1"
-jsoup = "org.jsoup:jsoup:1.21.1"
+jsoup = "org.jsoup:jsoup:1.21.2"
 junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
 junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api" }
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine" }
@@ -107,7 +107,7 @@ unfurl = "me.saket.unfurl:unfurl:2.2.0"
 aboutlibraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "aboutLibraries" }
 android-lint = { id = "com.android.lint", version.ref = "agp" }
 anvil = "com.squareup.anvil:2.6.1"
-dependencyAnalysis = "com.autonomousapps.dependency-analysis:3.0.0"
+dependencyAnalysis = "com.autonomousapps.dependency-analysis:3.0.1"
 kotlin-composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = "com.google.devtools.ksp:2.2.10-2.0.2"

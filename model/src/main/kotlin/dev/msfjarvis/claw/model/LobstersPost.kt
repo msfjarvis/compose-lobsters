@@ -18,7 +18,7 @@ import kotlinx.serialization.Serializable
 @Poko
 @KonvertTo(
   value = UIPost::class,
-  mappings = [Mapping(target = "submitterName", expression = "it.submitter.username")],
+  mappings = [Mapping(target = "submitter", expression = "it.submitter")],
 )
 class LobstersPost(
   val shortId: String,

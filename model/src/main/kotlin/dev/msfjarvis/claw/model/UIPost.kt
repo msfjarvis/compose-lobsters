@@ -14,7 +14,7 @@ import kotlinx.serialization.SerialName
 
 @KonvertTo(
   value = SavedPost::class,
-  mappings = [Mapping(target = "submitterName", expression = "it.submitter")],
+  mappings = [Mapping(source = "submitter", target = "submitterName")],
 )
 data class UIPost(
   val shortId: String,
@@ -33,7 +33,7 @@ data class UIPost(
     value = SavedPost::class,
     mappings =
       [
-        Mapping(target = "submitter", expression = "it.submitterName"),
+        Mapping(source = "submitterName", target = "submitter"),
         Mapping(target = "commentCount", expression = "it.commentCount ?: 0"),
       ],
   )

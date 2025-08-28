@@ -9,6 +9,9 @@ set -euo pipefail
   echo "ANDROID_HOME must be set to use this script"
   exit 1
 }
+[ -n "${ANDROID_AVD_HOME:-}" ] || {
+  export ANDROID_AVD_HOME="${ANDROID_HOME}"
+}
 [ -n "${ANDROID_API_LEVEL:-}" ] || { echo "ANDROID_API_LEVEL not defined; defaulting to 33"; }
 
 ARCH="x86_64"
@@ -20,7 +23,7 @@ API_LEVEL="${ANDROID_API_LEVEL:-33}"
 
 sdkmanager "system-images;android-${API_LEVEL};google_apis;${ARCH}"
 
-echo no | "${ANDROID_HOME}"/cmdline-tools/latest/bin/avdmanager create avd \
+"${ANDROID_HOME}"/cmdline-tools/latest/bin/avdmanager create avd \
   --force \
   -n "Pixel_XL_API_${API_LEVEL}" \
   --abi "google_apis/${ARCH}" \

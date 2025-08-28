@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Improve database access concurrency
-- Upgrade to Compose 2025-05 releases
+- Upgrade to Compose 2025-08 alpha releases
 - Increase swipe action trigger distance to compensate for
   gesture sensitivity changes in Android 16 QPR1 Beta 1
 - Fix regression in collapsing deeply nested comment trees

@@ -20,13 +20,12 @@ import org.gradle.kotlin.dsl.configure
 class SentryPlugin : Plugin<Project> {
 
   override fun apply(project: Project) {
+    val enableSentry = project.providers.gradleProperty(SENTRY_ENABLE_GRADLE_PROPERTY).isPresent
     project.pluginManager.withPlugin("com.android.application") {
       val libs = project.extensions.getByName("libs") as LibrariesForLibs
       project.extensions.configure<ApplicationAndroidComponentsExtension> {
         onVariants(selector().all()) { variant ->
           val sentryDsn = project.providers.environmentVariable(SENTRY_DSN_PROPERTY)
-          val enableSentry =
-            project.providers.gradleProperty(SENTRY_ENABLE_GRADLE_PROPERTY).isPresent
           variant.manifestPlaceholders.put("sentryDsn", sentryDsn.getOrElse(""))
           variant.manifestPlaceholders.put(
             "sentryEnvironment",
@@ -41,9 +40,9 @@ class SentryPlugin : Plugin<Project> {
       project.plugins.apply(io.sentry.android.gradle.SentryPlugin::class)
       project.extensions.configure<SentryPluginExtension> {
         includeProguardMapping.set(true)
-        autoUploadProguardMapping.set(true)
+        autoUploadProguardMapping.set(enableSentry)
         uploadNativeSymbols.set(false)
-        autoUploadNativeSymbols.set(false)
+        autoUploadNativeSymbols.set(enableSentry)
         includeNativeSources.set(false)
         ignoredVariants.set(emptySet())
         ignoredFlavors.set(emptySet())
@@ -61,7 +60,7 @@ class SentryPlugin : Plugin<Project> {
         }
         includeDependenciesReport.set(true)
         includeSourceContext.set(true)
-        autoUploadSourceContext.set(true)
+        autoUploadSourceContext.set(enableSentry)
         additionalSourceDirsForSourceContext.set(emptySet())
         debug.set(false)
         org.set("claw")

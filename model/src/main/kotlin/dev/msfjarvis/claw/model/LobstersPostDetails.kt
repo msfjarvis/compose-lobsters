@@ -17,13 +17,10 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 @Poko
-@KonvertTo(
-  value = UIPost::class,
-  mappings = [Mapping(target = "submitterName", expression = "it.submitter")],
-)
+@KonvertTo(value = UIPost::class)
 @KonvertTo(
   value = SavedPost::class,
-  mappings = [Mapping(target = "submitterName", expression = "it.submitter")],
+  mappings = [Mapping(source = "submitter", target = "submitterName")],
 )
 class LobstersPostDetails(
   val shortId: String,

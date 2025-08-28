@@ -25,12 +25,12 @@ sdkmanager "system-images;android-${API_LEVEL};google_apis;${ARCH}"
 
 "${ANDROID_HOME}"/cmdline-tools/latest/bin/avdmanager create avd \
   --force \
-  -n "Pixel_XL_API_${API_LEVEL}" \
+  -n "Pixel_4a_API_${API_LEVEL}" \
   --abi "google_apis/${ARCH}" \
   --package "system-images;android-${API_LEVEL};google_apis;${ARCH}" \
-  --device 'pixel_xl'
+  --device 'pixel_4a'
 
 "${ANDROID_HOME}"/emulator/emulator \
-  -avd "Pixel_XL_API_${API_LEVEL}" \
+  -avd "Pixel_4a_API_${API_LEVEL}" \
   -gpu 'swiftshader_indirect' \
   -noaudio

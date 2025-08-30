@@ -59,6 +59,12 @@
       ],
       "allowedVersions": "<=1.0.0",
     },
+    {
+      "matchDepNames": [
+        "androidx.compose:compose-bom-alpha",
+      ],
+      "enabled": false,
+    }
   ],
   "customManagers": [
     {

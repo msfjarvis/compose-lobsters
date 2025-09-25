@@ -17,10 +17,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Improve database access concurrency
-- Upgrade to Compose 2025-08 alpha releases
+- Upgrade to Compose 2025-09 alpha releases
 - Increase swipe action trigger distance to compensate for
   gesture sensitivity changes in Android 16 QPR1 Beta 1
 - Fix regression in collapsing deeply nested comment trees
+- Post authors are correctly indicated in post details
 
 ## [1.55.0] - 2025-02-13
 
@@ -46,6 +47,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - A brand new tablet-specific UI — Thanks [@ThanaReka](https://github.com/@ThanaReka)
+
+
 - Usernames of story authors are highlighted in comments
 
 ### Fixed
@@ -575,3 +578,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.2.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/msfjarvis/compose-lobsters/compare/29c374859b17c5fcef03585b8a01c00070de9097...v1.0.0
+
+
+
+
+
+

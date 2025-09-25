@@ -13,7 +13,7 @@ concurrency:
 
 jobs:
   publish-google-play-release:
-    runs-on: macos-14
+    runs-on: macos-15
     steps:
     - name: Setup build environment
       uses: msfjarvis/compose-lobsters/.github/reusable-workflows/setup-gradle@main

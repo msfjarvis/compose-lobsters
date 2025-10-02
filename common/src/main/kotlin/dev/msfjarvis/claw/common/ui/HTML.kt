@@ -29,7 +29,10 @@ internal fun ThemedRichText(text: String, modifier: Modifier = Modifier) {
   val convertedText =
     remember(text) {
       htmlToAnnotatedString(
-        html = text.replace("&lt;", "<").replace("&gt;", ">"),
+        // Lobsters seems to insert literal newlines between paragraphs for some reason which makes
+        // the resultant view come out rather ugly. We strip those out by hand and let the standard
+        // paragraph formatting handle separating individual blocks.
+        html = text.replace("</p>\\n<p>", "</p><p>"),
         style =
           HtmlStyle(
             textLinkStyles =
@@ -58,6 +61,7 @@ internal fun ThemedRichText(text: String, modifier: Modifier = Modifier) {
 internal fun ThemedRichTextPreview() {
   val text =
     """
+    <p>I think you need middleman, as it’s a good idea to keep the separation between the content and presentation, as you might want to change the presentation. But it indeed feels like a good idea to use HTML as your middleman.</p><p>In other words, I don’t think it’s a good idea to write <code>&lt;pre&gt;&lt;code&gt;func main()&lt;/code&gt;&lt;/pre&gt;</code>, as, if you later decide that you want syntax highlighting, or line numbers, or something else that requires a different html-structure, you’d have to re-do your content.</p>\n<p>But you could write <code>&lt;code-go&gt;func main()&lt;/code-go&gt;</code> and then have an “HTML preprocessor” that reads that and lowers to <code>&lt;pre&gt;&lt;code&gt;</code> with or without syntax highlighting. Honestly, I <em>wish</em> I had that trick in my toolbox in 2017, I might have used it for my blog.</p>\n<p>That being said, often you do want to keep the source from be readable as is, and its <em>nice</em> to have concrete syntax for <code>&lt;p&gt;</code>, <code>&lt;li&gt;</code>, <code>&lt;strong&gt;</code> and such. There’s no inherent contradiction between markdown benefit of being readable in the source code, and HTML benefit of giving you generic attributed trees. You can have both with some tasteful design.</p>
     <h1>Hello <strong>HTML Converter</strong> for Compose</h1>
     <p>This the first paragraph of the sample app running on <strong>Nothing</strong>!</p>
     <ul>

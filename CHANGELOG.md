@@ -13,6 +13,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   support larger screens
 - Comment expand/collapse interaction is now driven by a
   button UI to prevent misclicks
+- Comment rendering was rewritten to improve performance,
+  there are some visual changes to things like blockquotes
+  are rendered. These will be improved over time.
 
 ### Fixed
 

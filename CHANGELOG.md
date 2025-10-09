@@ -14,13 +14,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Comment expand/collapse interaction is now driven by a
   button UI to prevent misclicks
 - Comment rendering was rewritten to improve performance,
-  there are some visual changes to things like blockquotes
-  are rendered. These will be improved over time.
+  there are some visual changes to how things like
+  blockquotes are rendered. These will be improved over time.
 
 ### Fixed
 
 - Improve database access concurrency
-- Upgrade to Compose 2025-09 alpha releases
+- Upgrade to Compose 2025-10 alpha releases
 - Increase swipe action trigger distance to compensate for
   gesture sensitivity changes in Android 16 QPR1 Beta 1
 - Fix regression in collapsing deeply nested comment trees
@@ -50,8 +50,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - A brand new tablet-specific UI — Thanks [@ThanaReka](https://github.com/@ThanaReka)
-
-
 - Usernames of story authors are highlighted in comments
 
 ### Fixed

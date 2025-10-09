@@ -170,7 +170,7 @@ fun LobstersPostsScreen(
         backStack = clawBackStack.backStack,
         modifier = modifier.hazeSource(hazeState),
         sceneStrategy = listDetailStrategy,
-        onBack = { keysToRemove -> repeat(keysToRemove) { clawBackStack.removeLastOrNull() } },
+        onBack = { clawBackStack.removeLastOrNull() },
         predictivePopTransitionSpec = {
           slideInHorizontally(initialOffsetX = { -it }, animationSpec = tween(200)) togetherWith
             slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(200))

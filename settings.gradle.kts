@@ -48,17 +48,6 @@ pluginManagement {
       }
     }
     includeBuild("build-logic")
-    maven("https://oss.sonatype.org/content/repositories/snapshots/") {
-      name = "Sonatype Snapshots"
-      content { includeGroup("dev.msfjarvis.whetstone") }
-      content { includeGroup("dev.drewhamilton.poko") }
-      mavenContent { snapshotsOnly() }
-    }
-    maven("https://s01.oss.sonatype.org/content/repositories/snapshots/") {
-      name = "Sonatype S01 Snapshots"
-      content { includeGroup("com.squareup.invert") }
-      mavenContent { snapshotsOnly() }
-    }
     mavenCentral { mavenContent { releasesOnly() } }
   }
 }
@@ -101,19 +90,6 @@ dependencyResolutionManagement {
     maven("https://androidx.dev/storage/compose-compiler/repository") {
       name = "Compose Compiler Snapshots"
       content { includeGroup("androidx.compose.compiler") }
-    }
-    maven("https://androidx.dev/snapshots/builds/13990070/artifacts/repository") {
-      name = "AndroidX Snapshots"
-      mavenContent { snapshotsOnly() }
-      content { includeGroup("androidx.compose.material3.adaptive") }
-    }
-    maven("https://oss.sonatype.org/content/repositories/snapshots/") {
-      name = "Sonatype Snapshots"
-      content {
-        includeGroup("dev.msfjarvis.whetstone")
-        includeGroup("dev.drewhamilton.poko")
-      }
-      mavenContent { snapshotsOnly() }
     }
     mavenCentral { mavenContent { releasesOnly() } }
   }

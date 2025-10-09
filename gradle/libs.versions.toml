@@ -12,15 +12,15 @@ junit = "6.0.0"
 konvert = "4.3.2"
 kotlin = "2.2.20"
 kotlinResult = "2.1.0"
-lifecycle = "2.10.0-alpha04"
-navigation3 = "1.0.0-alpha10"
+lifecycle = "2.10.0-alpha05"
+navigation3 = "1.0.0-alpha11"
 navigation3-material = "1.0.0-alpha03"
 retrofit = "3.0.0"
 sentry-sdk = "8.23.0"
 serialization = "1.9.0"
 sqldelight = "2.1.0"
 whetstone = "0.9.0-beta02"
-workmanager = "2.11.0-beta01"
+workmanager = "2.11.0-rc01"
 
 [libraries]
 aboutLibraries-m3 = { module = "com.mikepenz:aboutlibraries-compose-m3", version.ref = "aboutLibraries" }
@@ -28,7 +28,7 @@ android-security-lints = "com.android.security.lint:lint:1.0.3"
 androidx-activity-compose = "androidx.activity:activity-compose:1.12.0-alpha09"
 androidx-browser = "androidx.browser:browser:1.9.0"
 androidx-compose-animation = { module = "androidx.compose.animation:animation" }
-androidx-compose-bom = "androidx.compose:compose-bom-alpha:2025.09.01"
+androidx-compose-bom = "androidx.compose:compose-bom-alpha:2025.10.00"
 androidx-compose-foundation = { module = "androidx.compose.foundation:foundation" }
 androidx-compose-glance = { module = "androidx.glance:glance-appwidget", version.ref = "glance" }
 androidx-compose-glance-m3 = { module = "androidx.glance:glance-material3", version.ref = "glance" }

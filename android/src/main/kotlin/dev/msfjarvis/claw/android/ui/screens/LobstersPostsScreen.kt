@@ -138,6 +138,7 @@ fun LobstersPostsScreen(
         activity = activity,
         isTopLevel = clawBackStack.isOnTopLevelDestination(),
         navigateTo = { clawBackStack.add(it) },
+        postActions = postActions,
         popBackStack = { clawBackStack.removeLastOrNull() },
       )
     },
@@ -250,14 +251,6 @@ fun LobstersPostsScreen(
                 snackbarHostState = snackbarHostState,
                 contentPadding = contentPadding,
                 modifier = Modifier.fillMaxSize(),
-              )
-            }
-            entry<Search>(metadata = ListDetailSceneStrategy.extraPane()) {
-              setWebUri("https://lobste.rs/search")
-              SearchScreen(
-                viewModel = viewModel,
-                postActions = postActions,
-                contentPadding = contentPadding,
               )
             }
             entry<AboutLibraries>(metadata = ListDetailSceneStrategy.extraPane()) {

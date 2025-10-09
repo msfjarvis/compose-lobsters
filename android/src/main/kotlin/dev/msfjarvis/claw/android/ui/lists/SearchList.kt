@@ -35,17 +35,6 @@ fun SearchList(
     lazyPagingItems.refresh()
   }
   Column(modifier.padding(contentPadding).fillMaxWidth()) {
-    SearchBar(
-      value = searchQuery,
-      onValueChange = setSearchQuery,
-      onSearch = { triggerSearch(it) },
-      modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp).testTag("search_bar"),
-    )
-    NetworkPosts(
-      lazyPagingItems = lazyPagingItems,
-      listState = listState,
-      postActions = postActions,
-      contentPadding = PaddingValues(0.dp),
-    )
+
   }
 }

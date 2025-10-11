@@ -1,5 +1,5 @@
 [versions]
-aboutLibraries = "12.2.4"
+aboutLibraries = "13.0.0"
 agp = "8.13.0"
 coil3 = "3.3.0"
 coroutines = "1.10.2"
@@ -92,7 +92,7 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 retrofit-kotlinxSerializationConverter = { module = "com.squareup.retrofit2:converter-kotlinx-serialization", version.ref = "retrofit" }
 sentry-bom = { module = "io.sentry:sentry-bom", version.ref = "sentry-sdk" }
 slack-compose-lints = "com.slack.lint.compose:compose-lint-checks:1.4.2"
-slack-lints = "com.slack.lint:slack-lint-checks:0.11.0"
+slack-lints = "com.slack.lint:slack-lint-checks:0.11.1"
 sqldelight-androidDriver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
 sqldelight-dialect338 = { module = "app.cash.sqldelight:sqlite-3-38-dialect", version.ref = "sqldelight" }
 sqldelight-extensions-coroutines = { module = "app.cash.sqldelight:coroutines-extensions-jvm", version.ref = "sqldelight" }
@@ -104,7 +104,7 @@ truth = "com.google.truth:truth:1.4.5"
 unfurl = "me.saket.unfurl:unfurl:2.2.0"
 
 [plugins]
-aboutlibraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "aboutLibraries" }
+aboutlibraries = { id = "com.mikepenz.aboutlibraries.plugin.android", version.ref = "aboutLibraries" }
 android-lint = { id = "com.android.lint", version.ref = "agp" }
 anvil = "com.squareup.anvil:2.7.0"
 dependencyAnalysis = "com.autonomousapps.dependency-analysis:3.1.0"

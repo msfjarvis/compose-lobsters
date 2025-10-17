@@ -67,7 +67,7 @@ jobs:
         PATCH=$(echo "${VERSION}" | cut -d. -f3)
         VERSION_CODE=$((MAJOR * 10000 + MINOR * 100 + PATCH))
         mkdir -p fastlane/metadata/android/en-US/changelogs
-        printf '%s' "${CHANGELOG}" > fastlane/metadata/android/en-US/changelogs/${VERSION_CODE}.txt
+        printf '%s\n' "${CHANGELOG}" > fastlane/metadata/android/en-US/changelogs/${VERSION_CODE}.txt
 
     - name: Commit changes
       shell: bash

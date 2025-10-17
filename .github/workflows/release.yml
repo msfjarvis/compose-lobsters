@@ -49,10 +49,31 @@ jobs:
         tag: v${{ env.VERSION }}
         version: ${{ env.VERSION }}
 
+    - name: Get changelog entry
+      id: changelog_reader
+      uses: mindsers/changelog-reader-action@32aa5b4c155d76c94e4ec883a223c947b2f02656 # v2.2.3
+      with:
+        version: ${{ env.VERSION }}
+        path: ./CHANGELOG.md
+
+    - name: Write changelog to fastlane metadata
+      shell: bash
+      env:
+        CHANGELOG: ${{ steps.changelog_reader.outputs.changes }}
+      run: |
+        # Calculate version code from VERSION (e.g., 1.55.0 -> 15500)
+        MAJOR=$(echo "${VERSION}" | cut -d. -f1)
+        MINOR=$(echo "${VERSION}" | cut -d. -f2)
+        PATCH=$(echo "${VERSION}" | cut -d. -f3)
+        VERSION_CODE=$((MAJOR * 10000 + MINOR * 100 + PATCH))
+        mkdir -p fastlane/metadata/android/en-US/changelogs
+        printf '%s' "${CHANGELOG}" > fastlane/metadata/android/en-US/changelogs/${VERSION_CODE}.txt
+
     - name: Commit changes
       shell: bash
       run: |
-        git commit -am 'feat(release): bump version'
+        git add .
+        git commit -m 'feat(release): bump version'
 
     - name: Build release assets
       shell: bash
@@ -65,13 +86,6 @@ jobs:
 
     - name: Clean secrets
       run: scripts/signing-cleanup.sh
-
-    - name: Get changelog entry
-      id: changelog_reader
-      uses: mindsers/changelog-reader-action@32aa5b4c155d76c94e4ec883a223c947b2f02656 # v2.2.3
-      with:
-        version: ${{ env.VERSION }}
-        path: ./CHANGELOG.md
 
     - name: Write release notes file
       shell: bash

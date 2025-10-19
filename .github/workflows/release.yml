@@ -40,8 +40,10 @@ jobs:
       shell: bash
       run: |
         ./gradlew -q --no-configuration-cache clearPreRelease
-        VERSION="$(tail -n1 android/version.properties | cut -d = -f 2)"
+        VERSION="$(grep 'versioning-plugin.versionName' android/version.properties | cut -d = -f 2)"
+        VERSION_CODE="$(grep 'versioning-plugin.versionCode' android/version.properties | cut -d = -f 2)"
         echo VERSION="${VERSION}" >> $GITHUB_ENV
+        echo VERSION_CODE="${VERSION_CODE}" >> $GITHUB_ENV
 
     - name: Update changelog
       uses: msfjarvis/keep-a-changelog-new-release@e60399f488b25149c0963a4e22fff928a9277ce7 # v2.2.0
@@ -49,10 +51,26 @@ jobs:
         tag: v${{ env.VERSION }}
         version: ${{ env.VERSION }}
 
+    - name: Get changelog entry
+      id: changelog_reader
+      uses: mindsers/changelog-reader-action@32aa5b4c155d76c94e4ec883a223c947b2f02656 # v2.2.3
+      with:
+        version: ${{ env.VERSION }}
+        path: ./CHANGELOG.md
+
+    - name: Write changelog to fastlane metadata
+      shell: bash
+      env:
+        CHANGELOG: ${{ steps.changelog_reader.outputs.changes }}
+      run: |
+        mkdir -p fastlane/metadata/android/en-US/changelogs
+        printf '%s\n' "${CHANGELOG}" > fastlane/metadata/android/en-US/changelogs/${VERSION_CODE}.txt
+
     - name: Commit changes
       shell: bash
       run: |
-        git commit -am 'feat(release): bump version'
+        git add .
+        git commit -m 'feat(release): bump version'
 
     - name: Build release assets
       shell: bash
@@ -65,13 +83,6 @@ jobs:
 
     - name: Clean secrets
       run: scripts/signing-cleanup.sh
-
-    - name: Get changelog entry
-      id: changelog_reader
-      uses: mindsers/changelog-reader-action@32aa5b4c155d76c94e4ec883a223c947b2f02656 # v2.2.3
-      with:
-        version: ${{ env.VERSION }}
-        path: ./CHANGELOG.md
 
     - name: Write release notes file
       shell: bash

@@ -84,8 +84,8 @@ fun LobstersPostsScreen(
   viewModel: ClawViewModel = injectedViewModel(),
 ) {
   val libraries by produceLibraries()
-  val clawBackStack = ClawBackStack(Hottest)
-  val listDetailStrategy = rememberListDetailSceneStrategy<NavKey>(key = windowSizeClass)
+  val clawBackStack = remember { ClawBackStack(Hottest) }
+  val listDetailStrategy = rememberListDetailSceneStrategy<NavKey>()
 
   // region Pain
   val context = LocalContext.current

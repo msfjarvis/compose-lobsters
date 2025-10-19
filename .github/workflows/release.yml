@@ -40,8 +40,10 @@ jobs:
       shell: bash
       run: |
         ./gradlew -q --no-configuration-cache clearPreRelease
-        VERSION="$(tail -n1 android/version.properties | cut -d = -f 2)"
+        VERSION="$(grep 'versioning-plugin.versionName' android/version.properties | cut -d = -f 2)"
+        VERSION_CODE="$(grep 'versioning-plugin.versionCode' android/version.properties | cut -d = -f 2)"
         echo VERSION="${VERSION}" >> $GITHUB_ENV
+        echo VERSION_CODE="${VERSION_CODE}" >> $GITHUB_ENV
 
     - name: Update changelog
       uses: msfjarvis/keep-a-changelog-new-release@e60399f488b25149c0963a4e22fff928a9277ce7 # v2.2.0
@@ -61,11 +63,6 @@ jobs:
       env:
         CHANGELOG: ${{ steps.changelog_reader.outputs.changes }}
       run: |
-        # Calculate version code from VERSION (e.g., 1.55.0 -> 15500)
-        MAJOR=$(echo "${VERSION}" | cut -d. -f1)
-        MINOR=$(echo "${VERSION}" | cut -d. -f2)
-        PATCH=$(echo "${VERSION}" | cut -d. -f3)
-        VERSION_CODE=$((MAJOR * 10000 + MINOR * 100 + PATCH))
         mkdir -p fastlane/metadata/android/en-US/changelogs
         printf '%s\n' "${CHANGELOG}" > fastlane/metadata/android/en-US/changelogs/${VERSION_CODE}.txt
 

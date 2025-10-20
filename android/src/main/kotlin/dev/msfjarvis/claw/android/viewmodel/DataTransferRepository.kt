@@ -54,13 +54,13 @@ constructor(
     val posts = savedPostsRepository.savedPosts.first()
     val header =
       """
-        <!DOCTYPE NETSCAPE-Bookmark-file-1>
-        <!-- This is an automatically generated file.
-             It will be read and overwritten.
-             DO NOT EDIT! -->
-        <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
-        <TITLE>Bookmarks</TITLE>
-        <H1>Bookmarks</H1>
+      <!DOCTYPE NETSCAPE-Bookmark-file-1>
+      <!-- This is an automatically generated file.
+           It will be read and overwritten.
+           DO NOT EDIT! -->
+      <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
+      <TITLE>Bookmarks</TITLE>
+      <H1>Bookmarks</H1>
       """
         .trimIndent()
     val html = buildString {
@@ -71,16 +71,14 @@ constructor(
           """
             <DT><A HREF="${post.url.ifEmpty { post.commentsUrl }}" ADD_DATE="${computeTimestamp(post)}" PRIVATE="0" TAGS="${post.tags.joinToString(",")}">${post.title}</A>
             <DD>${post.title}
-
           """
             .trimIndent()
         )
       }
       append(
         """
-          <DT><A HREF="https://example.com/" ADD_DATE="0" PRIVATE="0" TAGS="delete,me,pls">Padding post</A>
-          <DD>Linkding ignores the last entry so this pads the difference for imports
-
+        <DT><A HREF="https://example.com/" ADD_DATE="0" PRIVATE="0" TAGS="delete,me,pls">Padding post</A>
+        <DD>Linkding ignores the last entry so this pads the difference for imports
         """
           .trimIndent()
       )

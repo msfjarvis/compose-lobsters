@@ -14,8 +14,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -25,6 +24,7 @@ import androidx.compose.material.icons.filled.Code
 import androidx.compose.material.icons.filled.ImportExport
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
@@ -39,6 +39,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import dev.msfjarvis.claw.android.BuildConfig
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
 import java.io.InputStream
@@ -52,6 +53,7 @@ private const val HTML_MIME_TYPE = "application/html"
 @Composable
 fun SettingsScreen(
   openLibrariesScreen: () -> Unit,
+  openRepository: () -> Unit,
   snackbarHostState: SnackbarHostState,
   openInputStream: (Uri) -> InputStream?,
   openOutputStream: (Uri) -> OutputStream?,
@@ -60,11 +62,15 @@ fun SettingsScreen(
   exportPostsAsHtml: suspend (OutputStream) -> Unit,
   contentPadding: PaddingValues,
   modifier: Modifier = Modifier,
+  savedPostsCount: Long = 0,
 ) {
   val coroutineScope = rememberCoroutineScope()
   Column(modifier.padding(contentPadding)) {
+    // Data Management Section
+    SectionHeader(title = "Data Management")
     ListItem(
       headlineContent = { Text("Data transfer") },
+      supportingContent = { Text("Import and export your saved posts") },
       leadingContent = {
         Icon(
           imageVector = Icons.Filled.ImportExport,
@@ -72,11 +78,8 @@ fun SettingsScreen(
           modifier = Modifier.height(32.dp),
         )
       },
-      supportingContent = {
-        Row(
-          horizontalArrangement = Arrangement.spacedBy(32.dp),
-          modifier = Modifier.fillMaxWidth(),
-        ) {
+      trailingContent = {
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
           ImportPosts(openInputStream, coroutineScope, snackbarHostState, importPosts)
           ExportPosts(
             coroutineScope,
@@ -88,8 +91,41 @@ fun SettingsScreen(
         }
       },
     )
+
+    Spacer(modifier = Modifier.height(24.dp))
+
+    // App Information Section
+    SectionHeader(title = "App Information")
+    ListItem(
+      headlineContent = { Text("Version") },
+      supportingContent = { Text("${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})") },
+      leadingContent = {
+        Icon(
+          imageVector = Icons.Filled.Code,
+          contentDescription = null,
+          modifier = Modifier.height(32.dp),
+        )
+      },
+    )
+    ListItem(
+      headlineContent = { Text("Saved posts") },
+      supportingContent = { Text("$savedPostsCount posts saved locally") },
+      leadingContent = {
+        Icon(
+          imageVector = Icons.Filled.Bookmarks,
+          contentDescription = null,
+          modifier = Modifier.height(32.dp),
+        )
+      },
+    )
+
+    Spacer(modifier = Modifier.height(24.dp))
+
+    // About Section
+    SectionHeader(title = "About")
     ListItem(
       headlineContent = { Text("Libraries") },
+      supportingContent = { Text("View open source libraries used in this app") },
       leadingContent = {
         Icon(
           imageVector = Icons.AutoMirrored.Filled.LibraryBooks,
@@ -99,11 +135,39 @@ fun SettingsScreen(
       },
       modifier = Modifier.clickable(onClick = openLibrariesScreen),
     )
+    ListItem(
+      headlineContent = { Text("Source code") },
+      supportingContent = { Text("View the source code on GitHub") },
+      leadingContent = {
+        Icon(
+          imageVector = Icons.Filled.Code,
+          contentDescription = null,
+          modifier = Modifier.height(32.dp),
+        )
+      },
+      modifier = Modifier.clickable(onClick = openRepository),
+    )
   }
 }
 
 @Composable
-private fun RowScope.ImportPosts(
+private fun SectionHeader(title: String, modifier: Modifier = Modifier) {
+  Column(modifier = modifier) {
+    Text(
+      text = title,
+      style = MaterialTheme.typography.titleMedium,
+      color = MaterialTheme.colorScheme.primary,
+      modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+    )
+    HorizontalDivider(
+      modifier = Modifier.padding(horizontal = 16.dp),
+      color = MaterialTheme.colorScheme.outlineVariant,
+    )
+  }
+}
+
+@Composable
+private fun ImportPosts(
   openInputStream: (Uri) -> InputStream?,
   coroutineScope: CoroutineScope,
   snackbarHostState: SnackbarHostState,
@@ -126,14 +190,14 @@ private fun RowScope.ImportPosts(
   OutlinedButton(
     onClick = { importAction.launch(JSON_MIME_TYPE) },
     shape = MaterialTheme.shapes.extraSmall,
-    modifier = modifier.fillMaxWidth(0.30f).weight(0.5f),
+    modifier = modifier,
   ) {
     Text(text = "Import")
   }
 }
 
 @Composable
-private inline fun RowScope.ExportPosts(
+private inline fun ExportPosts(
   coroutineScope: CoroutineScope,
   snackbarHostState: SnackbarHostState,
   crossinline openOutputStream: (Uri) -> OutputStream?,
@@ -173,7 +237,7 @@ private inline fun RowScope.ExportPosts(
   OutlinedButton(
     onClick = { expanded = true },
     shape = MaterialTheme.shapes.extraSmall,
-    modifier = modifier.fillMaxWidth(0.30f).weight(0.5f),
+    modifier = modifier,
   ) {
     Text(text = "Export")
     DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
@@ -214,6 +278,17 @@ private suspend inline fun SnackbarHostState.showSnackbarDismissing(text: String
 @Composable
 private fun SettingsScreenPreview() {
   LobstersTheme {
-    SettingsScreen({}, SnackbarHostState(), { null }, { null }, {}, {}, {}, PaddingValues())
+    SettingsScreen(
+      openLibrariesScreen = {},
+      openRepository = {},
+      snackbarHostState = SnackbarHostState(),
+      openInputStream = { null },
+      openOutputStream = { null },
+      importPosts = {},
+      exportPostsAsJson = {},
+      exportPostsAsHtml = {},
+      contentPadding = PaddingValues(),
+      savedPostsCount = 42,
+    )
   }
 }

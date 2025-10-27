@@ -100,6 +100,7 @@ fun LobstersPostsScreen(
   val hottestPosts = viewModel.hottestPosts.collectAsLazyPagingItems()
   val newestPosts = viewModel.newestPosts.collectAsLazyPagingItems()
   val savedPosts by viewModel.savedPostsByMonth.collectAsStateWithLifecycle(persistentMapOf())
+  val savedPostsCount by viewModel.savedPostsCount.collectAsStateWithLifecycle(0L)
 
   val navigationType = ClawNavigationType.fromSize(windowSizeClass.widthSizeClass)
 
@@ -244,9 +245,13 @@ fun LobstersPostsScreen(
                 openInputStream = context.contentResolver::openInputStream,
                 openOutputStream = context.contentResolver::openOutputStream,
                 openLibrariesScreen = { clawBackStack.add(AboutLibraries) },
+                openRepository = {
+                  urlLauncher.openUri("https://github.com/msfjarvis/compose-lobsters")
+                },
                 importPosts = viewModel::importPosts,
                 exportPostsAsJson = viewModel::exportPostsAsJson,
                 exportPostsAsHtml = viewModel::exportPostsAsHtml,
+                savedPostsCount = savedPostsCount,
                 snackbarHostState = snackbarHostState,
                 contentPadding = contentPadding,
                 modifier = Modifier.fillMaxSize(),

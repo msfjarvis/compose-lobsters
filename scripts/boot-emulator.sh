@@ -21,7 +21,7 @@ fi
 
 API_LEVEL="${ANDROID_API_LEVEL:-33}"
 
-sdkmanager "system-images;android-${API_LEVEL};google_apis;${ARCH}"
+"${ANDROID_HOME}"/cmdline-tools/latest/bin/sdkmanager "system-images;android-${API_LEVEL};google_apis;${ARCH}"
 
 "${ANDROID_HOME}"/cmdline-tools/latest/bin/avdmanager create avd \
   --force \

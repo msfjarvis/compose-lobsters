@@ -85,6 +85,7 @@ constructor(
       )
       .flow
   val savedPosts = savedPostsRepository.savedPosts.map { it.map(UIPost.Companion::fromSavedPost) }
+  val savedPostsCount = savedPosts.map { it.size.toLong() }
   val savedPostsByMonth
     get() = savedPosts.map(::groupSavedPosts)
 

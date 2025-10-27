@@ -244,6 +244,9 @@ fun LobstersPostsScreen(
                 openInputStream = context.contentResolver::openInputStream,
                 openOutputStream = context.contentResolver::openOutputStream,
                 openLibrariesScreen = { clawBackStack.add(AboutLibraries) },
+                openRepository = {
+                  urlLauncher.openUri("https://github.com/msfjarvis/compose-lobsters")
+                },
                 importPosts = viewModel::importPosts,
                 exportPostsAsJson = viewModel::exportPostsAsJson,
                 exportPostsAsHtml = viewModel::exportPostsAsHtml,

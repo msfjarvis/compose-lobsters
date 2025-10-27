@@ -52,6 +52,7 @@ private const val HTML_MIME_TYPE = "application/html"
 @Composable
 fun SettingsScreen(
   openLibrariesScreen: () -> Unit,
+  openRepository: () -> Unit,
   snackbarHostState: SnackbarHostState,
   openInputStream: (Uri) -> InputStream?,
   openOutputStream: (Uri) -> OutputStream?,
@@ -98,6 +99,17 @@ fun SettingsScreen(
         )
       },
       modifier = Modifier.clickable(onClick = openLibrariesScreen),
+    )
+    ListItem(
+      headlineContent = { Text("Source code") },
+      leadingContent = {
+        Icon(
+          imageVector = Icons.Filled.Code,
+          contentDescription = null,
+          modifier = Modifier.height(32.dp),
+        )
+      },
+      modifier = Modifier.clickable(onClick = openRepository),
     )
   }
 }
@@ -214,6 +226,6 @@ private suspend inline fun SnackbarHostState.showSnackbarDismissing(text: String
 @Composable
 private fun SettingsScreenPreview() {
   LobstersTheme {
-    SettingsScreen({}, SnackbarHostState(), { null }, { null }, {}, {}, {}, PaddingValues())
+    SettingsScreen({}, {}, SnackbarHostState(), { null }, { null }, {}, {}, {}, PaddingValues())
   }
 }

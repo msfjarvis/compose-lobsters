@@ -61,8 +61,8 @@ fun SettingsScreen(
   exportPostsAsJson: suspend (OutputStream) -> Unit,
   exportPostsAsHtml: suspend (OutputStream) -> Unit,
   contentPadding: PaddingValues,
+  savedPostsCount: Long,
   modifier: Modifier = Modifier,
-  savedPostsCount: Long = 0,
 ) {
   val coroutineScope = rememberCoroutineScope()
   Column(modifier.padding(contentPadding)) {

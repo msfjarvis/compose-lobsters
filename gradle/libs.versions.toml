@@ -1,6 +1,6 @@
 [versions]
 aboutLibraries = "13.1.0"
-agp = "8.13.0"
+agp = "8.13.1"
 coil3 = "3.3.0"
 coroutines = "1.10.2"
 dagger = "2.57.2"
@@ -53,7 +53,7 @@ androidx-paging-compose = "androidx.paging:paging-compose:3.3.6"
 androidx-profileinstaller = "androidx.profileinstaller:profileinstaller:1.4.1"
 androidx-work-runtime = { module = "androidx.work:work-runtime", version.ref = "workmanager" }
 build-agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }
-build-cachefix = "org.gradle.android.cache-fix:org.gradle.android.cache-fix.gradle.plugin:3.0.2"
+build-cachefix = "org.gradle.android.cache-fix:org.gradle.android.cache-fix.gradle.plugin:3.0.3"
 build-kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 build-semver = "com.github.zafarkhaja:java-semver:0.10.2"
 build-sentry = "io.sentry.android.gradle:io.sentry.android.gradle.gradle.plugin:5.12.2"

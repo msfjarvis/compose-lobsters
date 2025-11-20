@@ -113,6 +113,6 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 ksp = "com.google.devtools.ksp:2.3.2"
 licensee = "app.cash.licensee:1.14.1"
 modulegraphassert = "com.jraska.module.graph.assertion:2.9.0"
-poko = "dev.drewhamilton.poko:0.20.1"
+poko = "dev.drewhamilton.poko:0.20.2"
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 whetstone = { id = "dev.msfjarvis.whetstone", version.ref = "whetstone" }

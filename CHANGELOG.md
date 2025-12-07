@@ -9,25 +9,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- The navigation stack has been completely rewritten to better
-  support larger screens
-- Comment expand/collapse interaction is now driven by a
-  button UI to prevent misclicks
-- Comment rendering was rewritten to improve performance.
-  This causes some visual changes to how things like
-  blockquotes and bullets are rendered, which will be improved
-  over time.
-- Settings page has been slightly redesigned.
+- Navigation rewritten for larger screens
+- Comment expand/collapse now uses button UI
+- Comment rendering rewritten for better performance
+- Settings page redesigned
 
 ### Fixed
 
-- Improve database access concurrency.
-- Upgrade to Compose 2025-12 alpha releases.
-- Increase swipe action trigger distance to compensate for
-  gesture sensitivity changes in Android 16 QPR1 Beta 1.
-- Fix regression in collapsing deeply nested comment trees.
-- Post authors are correctly indicated in post details.
-- Crash when toggling system dark mode.
+- Database concurrency improvements
+- Upgrade to Compose 2025-12 alpha
+- Swipe action trigger distance increased for Android 16 QPR1 Beta 1
+- Deeply nested comment tree collapsing
+- Post author indication in details
+- Dark mode toggle crash
 
 ## [1.55.0] - 2025-02-13
 

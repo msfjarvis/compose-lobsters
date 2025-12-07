@@ -13,18 +13,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   support larger screens
 - Comment expand/collapse interaction is now driven by a
   button UI to prevent misclicks
-- Comment rendering was rewritten to improve performance,
-  there are some visual changes to how things like
-  blockquotes are rendered. These will be improved over time.
+- Comment rendering was rewritten to improve performance.
+  This causes some visual changes to how things like
+  blockquotes and bullets are rendered, which will be improved
+  over time.
+- Settings page has been slightly redesigned.
 
 ### Fixed
 
-- Improve database access concurrency
-- Upgrade to Compose 2025-10 alpha releases
+- Improve database access concurrency.
+- Upgrade to Compose 2025-12 alpha releases.
 - Increase swipe action trigger distance to compensate for
-  gesture sensitivity changes in Android 16 QPR1 Beta 1
-- Fix regression in collapsing deeply nested comment trees
-- Post authors are correctly indicated in post details
+  gesture sensitivity changes in Android 16 QPR1 Beta 1.
+- Fix regression in collapsing deeply nested comment trees.
+- Post authors are correctly indicated in post details.
+- Crash when toggling system dark mode.
 
 ## [1.55.0] - 2025-02-13
 
@@ -579,9 +582,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.2.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/msfjarvis/compose-lobsters/compare/29c374859b17c5fcef03585b8a01c00070de9097...v1.0.0
-
-
-
-
-
-

@@ -1,0 +1,15 @@
+### Changed
+
+- Navigation rewritten for larger screens
+- Comment expand/collapse now uses button UI
+- Comment rendering rewritten for better performance
+- Settings page redesigned
+
+### Fixed
+
+- Database concurrency improvements
+- Upgrade to Compose 2025-12 alpha
+- Swipe action trigger distance increased for Android 16 QPR1 Beta 1
+- Deeply nested comment tree collapsing
+- Post author indication in details
+- Dark mode toggle crash

@@ -7,24 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.57.0] - 2025-12-07
+
 ### Changed
 
-- The navigation stack has been completely rewritten to better
-  support larger screens
-- Comment expand/collapse interaction is now driven by a
-  button UI to prevent misclicks
-- Comment rendering was rewritten to improve performance,
-  there are some visual changes to how things like
-  blockquotes are rendered. These will be improved over time.
+- Navigation rewritten for larger screens
+- Comment expand/collapse now uses button UI
+- Comment rendering rewritten for better performance
+- Settings page redesigned
 
 ### Fixed
 
-- Improve database access concurrency
-- Upgrade to Compose 2025-10 alpha releases
-- Increase swipe action trigger distance to compensate for
-  gesture sensitivity changes in Android 16 QPR1 Beta 1
-- Fix regression in collapsing deeply nested comment trees
-- Post authors are correctly indicated in post details
+- Database concurrency improvements
+- Upgrade to Compose 2025-12 alpha
+- Swipe action trigger distance increased for Android 16 QPR1 Beta 1
+- Deeply nested comment tree collapsing
+- Post author indication in details
+- Dark mode toggle crash
 
 ## [1.55.0] - 2025-02-13
 
@@ -522,7 +521,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.55.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.57.0...HEAD
+[1.57.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.55.0...v1.57.0
 [1.55.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.54.0...v1.55.0
 [1.54.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.53.0...v1.54.0
 [1.53.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.52.0...v1.53.0
@@ -579,9 +579,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.2.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/msfjarvis/compose-lobsters/compare/29c374859b17c5fcef03585b8a01c00070de9097...v1.0.0
-
-
-
-
-
-

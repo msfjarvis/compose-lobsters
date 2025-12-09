@@ -85,9 +85,9 @@ constructor(
       append("</DD></p>\n")
     }
     withContext(ioDispatcher) {
-      val writer = output.bufferedWriter()
-      writer.write(html)
-      writer.flush()
+      output.bufferedWriter().use { writer ->
+        writer.write(html)
+      }
     }
   }
 }

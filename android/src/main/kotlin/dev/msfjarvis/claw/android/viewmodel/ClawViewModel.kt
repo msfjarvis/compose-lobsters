@@ -138,7 +138,8 @@ constructor(
   suspend fun getLinkMetadata(url: String) =
     withContext(ioDispatcher) { linkMetadataRepository.getLinkMetadata(url) }
 
-  suspend fun importPosts(input: InputStream) = dataTransferRepository.importPosts(input)
+  suspend fun importPosts(input: InputStream): Result<Unit> =
+    dataTransferRepository.importPosts(input)
 
   suspend fun exportPostsAsJson(output: OutputStream) =
     dataTransferRepository.exportPostsAsJson(output)

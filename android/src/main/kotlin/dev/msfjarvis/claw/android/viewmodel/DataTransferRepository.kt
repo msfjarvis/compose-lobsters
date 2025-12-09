@@ -33,10 +33,15 @@ constructor(
 ) {
   private val serializer = ListSerializer(SavedPostSerializer)
 
-  suspend fun importPosts(input: InputStream) {
-    val posts: List<SavedPost> =
-      withContext(ioDispatcher) { json.decodeFromStream(serializer, input) }
-    savedPostsRepository.savePosts(posts)
+  suspend fun importPosts(input: InputStream): Result<Unit> {
+    return try {
+      val posts: List<SavedPost> =
+        withContext(ioDispatcher) { json.decodeFromStream(serializer, input) }
+      savedPostsRepository.savePosts(posts)
+      Result.success(Unit)
+    } catch (t: Throwable) {
+      Result.failure(t)
+    }
   }
 
   suspend fun exportPostsAsJson(output: OutputStream) {
@@ -84,10 +89,6 @@ constructor(
       )
       append("</DD></p>\n")
     }
-    withContext(ioDispatcher) {
-      output.bufferedWriter().use { writer ->
-        writer.write(html)
-      }
-    }
+    withContext(ioDispatcher) { output.bufferedWriter().use { writer -> writer.write(html) } }
   }
 }

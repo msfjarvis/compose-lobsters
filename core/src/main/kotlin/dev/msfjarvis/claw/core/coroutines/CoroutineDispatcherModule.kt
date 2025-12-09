@@ -14,13 +14,41 @@ import dagger.Provides
 import javax.inject.Qualifier
 import kotlinx.coroutines.CoroutineDispatcher
 
-@Qualifier @Retention(AnnotationRetention.RUNTIME) annotation class DatabaseReadDispatcher
+@Qualifier
+@Retention(AnnotationRetention.RUNTIME)
+@Target(
+  AnnotationTarget.VALUE_PARAMETER,
+  AnnotationTarget.LOCAL_VARIABLE,
+  AnnotationTarget.FUNCTION,
+)
+annotation class DatabaseReadDispatcher
 
-@Qualifier @Retention(AnnotationRetention.RUNTIME) annotation class DatabaseWriteDispatcher
+@Qualifier
+@Retention(AnnotationRetention.RUNTIME)
+@Target(
+  AnnotationTarget.VALUE_PARAMETER,
+  AnnotationTarget.LOCAL_VARIABLE,
+  AnnotationTarget.FUNCTION,
+)
+annotation class DatabaseWriteDispatcher
 
-@Qualifier @Retention(AnnotationRetention.RUNTIME) annotation class MainDispatcher
+@Qualifier
+@Retention(AnnotationRetention.RUNTIME)
+@Target(
+  AnnotationTarget.VALUE_PARAMETER,
+  AnnotationTarget.LOCAL_VARIABLE,
+  AnnotationTarget.FUNCTION,
+)
+annotation class MainDispatcher
 
-@Qualifier @Retention(AnnotationRetention.RUNTIME) annotation class IODispatcher
+@Qualifier
+@Retention(AnnotationRetention.RUNTIME)
+@Target(
+  AnnotationTarget.VALUE_PARAMETER,
+  AnnotationTarget.LOCAL_VARIABLE,
+  AnnotationTarget.FUNCTION,
+)
+annotation class IODispatcher
 
 @Qualifier @Retention(AnnotationRetention.RUNTIME) annotation class DefaultDispatcher
 

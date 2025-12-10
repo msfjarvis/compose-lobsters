@@ -57,7 +57,7 @@ fun SettingsScreen(
   snackbarHostState: SnackbarHostState,
   openInputStream: (Uri) -> InputStream?,
   openOutputStream: (Uri) -> OutputStream?,
-  importPosts: suspend (InputStream) -> Unit,
+  importPosts: suspend (InputStream) -> Result<Unit>,
   exportPostsAsJson: suspend (OutputStream) -> Unit,
   exportPostsAsHtml: suspend (OutputStream) -> Unit,
   contentPadding: PaddingValues,
@@ -171,7 +171,7 @@ private fun ImportPosts(
   openInputStream: (Uri) -> InputStream?,
   coroutineScope: CoroutineScope,
   snackbarHostState: SnackbarHostState,
-  importPosts: suspend (InputStream) -> Unit,
+  importPosts: suspend (InputStream) -> Result<Unit>,
   modifier: Modifier = Modifier,
 ) {
   val importAction =
@@ -182,9 +182,13 @@ private fun ImportPosts(
       }
       coroutineScope.launch {
         openInputStream(uri)?.use { stream ->
-          importPosts(stream)
-          snackbarHostState.showSnackbarDismissing("Successfully imported posts")
-        }
+          val result = importPosts(stream)
+          if (result.isSuccess) {
+            snackbarHostState.showSnackbarDismissing("Successfully imported posts")
+          } else {
+            snackbarHostState.showSnackbarDismissing("Failed to import posts")
+          }
+        } ?: snackbarHostState.showSnackbarDismissing("Unable to open selected file")
       }
     }
   OutlinedButton(
@@ -284,7 +288,7 @@ private fun SettingsScreenPreview() {
       snackbarHostState = SnackbarHostState(),
       openInputStream = { null },
       openOutputStream = { null },
-      importPosts = {},
+      importPosts = { Result.success(Unit) },
       exportPostsAsJson = {},
       exportPostsAsHtml = {},
       contentPadding = PaddingValues(),

@@ -24,7 +24,7 @@ workmanager = "2.11.0"
 
 [libraries]
 aboutLibraries-m3 = { module = "com.mikepenz:aboutlibraries-compose-m3", version.ref = "aboutLibraries" }
-android-security-lints = "com.android.security.lint:lint:1.0.3"
+android-security-lints = "com.android.security.lint:lint:1.0.4"
 androidx-activity-compose = "androidx.activity:activity-compose:1.12.1"
 androidx-browser = "androidx.browser:browser:1.9.0"
 androidx-compose-animation = { module = "androidx.compose.animation:animation" }

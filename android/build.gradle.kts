@@ -108,4 +108,5 @@ dependencies {
   implementation(projects.web)
 
   kapt(libs.dagger.compiler)
+  kapt(libs.build.kotlin.metadata)
 }

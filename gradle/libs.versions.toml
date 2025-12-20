@@ -1,5 +1,5 @@
 [versions]
-aboutLibraries = "13.1.0"
+aboutLibraries = "13.2.1"
 agp = "8.13.2"
 coil3 = "3.3.0"
 coroutines = "1.10.2"
@@ -10,7 +10,7 @@ glance = "1.0.0"
 haze = "1.7.1"
 junit = "6.0.1"
 konvert = "4.4.0"
-kotlin = "2.2.21"
+kotlin = "2.3.0"
 kotlinResult = "2.1.0"
 lifecycle = "2.10.0"
 navigation3 = "1.0.0"
@@ -55,6 +55,7 @@ androidx-work-runtime = { module = "androidx.work:work-runtime", version.ref = "
 build-agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 build-cachefix = "org.gradle.android.cache-fix:org.gradle.android.cache-fix.gradle.plugin:3.0.3"
 build-kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+build-kotlin-metadata = { module = "org.jetbrains.kotlin:kotlin-metadata-jvm", version.ref = "kotlin" }
 build-semver = "com.github.zafarkhaja:java-semver:0.10.2"
 build-sentry = "io.sentry.android.gradle:io.sentry.android.gradle.gradle.plugin:5.12.2"
 build-spotless = "com.diffplug.spotless:spotless-plugin-gradle:8.1.0"
@@ -110,9 +111,9 @@ anvil = "com.squareup.anvil:2.7.0"
 dependencyAnalysis = "com.autonomousapps.dependency-analysis:3.5.1"
 kotlin-composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-ksp = "com.google.devtools.ksp:2.3.3"
+ksp = "com.google.devtools.ksp:2.3.4"
 licensee = "app.cash.licensee:1.14.1"
 modulegraphassert = "com.jraska.module.graph.assertion:2.9.0"
-poko = "dev.drewhamilton.poko:0.20.2"
+poko = "dev.drewhamilton.poko:0.21.0"
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 whetstone = { id = "dev.msfjarvis.whetstone", version.ref = "whetstone" }

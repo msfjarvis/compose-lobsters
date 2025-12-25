@@ -16,6 +16,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoSet
 import java.net.Socket
+import java.util.concurrent.TimeUnit
 import javax.net.SocketFactory
 import okhttp3.Cache
 import okhttp3.CertificatePinner
@@ -34,6 +35,9 @@ interface OkHttpModule {
   companion object {
     private const val CACHE_SIZE_MB = 10L * 1024 * 1024
     private const val THREAD_STATS_TAG = 0x000090000
+    private const val CONNECT_TIMEOUT_SECONDS = 30L
+    private const val READ_TIMEOUT_SECONDS = 30L
+    private const val WRITE_TIMEOUT_SECONDS = 30L
 
     @Provides
     fun provideCertificatePinner(): CertificatePinner {
@@ -71,6 +75,9 @@ interface OkHttpModule {
           followRedirects(true)
           followSslRedirects(true)
           retryOnConnectionFailure(true)
+          connectTimeout(CONNECT_TIMEOUT_SECONDS, TimeUnit.SECONDS)
+          readTimeout(READ_TIMEOUT_SECONDS, TimeUnit.SECONDS)
+          writeTimeout(WRITE_TIMEOUT_SECONDS, TimeUnit.SECONDS)
           cache(cache)
           interceptors.forEach(::addNetworkInterceptor)
           socketFactory(socketFactory)

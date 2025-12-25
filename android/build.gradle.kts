@@ -5,6 +5,9 @@
  * https://opensource.org/licenses/MIT.
  */
 @file:Suppress("UnstableApiUsage")
+@file:OptIn(DelicateMetroGradleApi::class)
+
+import dev.zacsweers.metro.gradle.DelicateMetroGradleApi
 
 plugins {
   id("dev.msfjarvis.claw.android-application")
@@ -45,6 +48,11 @@ licensee {
   ignoreDependencies("com.michael-bull.kotlin-result") { because("kotlin-result is ISC licensed") }
   ignoreDependencies("org.commonmark") { because("Commonmark is BSD licensed") }
   allowUrl("https://jsoup.org/license") { because("Jsoup is MIT licensed") }
+}
+
+metro {
+  generateAssistedFactories = true
+  enableFullBindingGraphValidation = true
 }
 
 moduleGraphAssert {

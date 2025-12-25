@@ -18,7 +18,6 @@ import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.UIPost
 import dev.msfjarvis.claw.model.toUIPost
 import dev.zacsweers.metro.Assisted
-import dev.zacsweers.metro.AssistedFactory
 import dev.zacsweers.metro.AssistedInject
 import java.io.IOException
 import kotlinx.coroutines.CoroutineDispatcher
@@ -68,10 +67,5 @@ class SearchPagingSource(
     return state.anchorPosition?.let { anchorPosition ->
       (anchorPosition / PAGE_SIZE).coerceAtLeast(STARTING_PAGE_INDEX)
     }
-  }
-
-  @AssistedFactory
-  interface Factory {
-    fun create(queryProvider: () -> String): SearchPagingSource
   }
 }

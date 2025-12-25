@@ -25,6 +25,11 @@ selectAllPosts:
 SELECT *
 FROM SavedPost;
 
+selectPostsFromLastNDays:
+SELECT *
+FROM SavedPost
+WHERE datetime(createdAt) >= datetime('now', '-' || ? || ' days');
+
 selectCount:
 SELECT COUNT(*)
 FROM SavedPost;

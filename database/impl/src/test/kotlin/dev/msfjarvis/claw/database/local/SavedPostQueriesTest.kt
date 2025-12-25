@@ -7,6 +7,9 @@
 package dev.msfjarvis.claw.database.local
 
 import com.google.common.truth.Truth.assertThat
+import java.time.Instant
+import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -109,21 +112,40 @@ class SavedPostQueriesTest {
     assertThat(dbPosts).isEmpty()
   }
 
+  @Test
+  fun `select posts from last N days`() {
+    val now = Instant.now()
+    val formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
+    fun dateOffset(daysToSubtract: Long): String {
+      return formatter.format(
+        now.minus(daysToSubtract, ChronoUnit.DAYS).atOffset(java.time.ZoneOffset.UTC)
+      )
+    }
+
+    val recentPost = createPostWithDate(id = "recent_1", createdAt = dateOffset(5))
+    val oldPost = createPostWithDate(id = "old_1", createdAt = dateOffset(40))
+    val veryRecentPost = createPostWithDate(id = "recent_2", createdAt = dateOffset(1))
+
+    postQueries.insertOrReplacePost(recentPost)
+    postQueries.insertOrReplacePost(oldPost)
+    postQueries.insertOrReplacePost(veryRecentPost)
+
+    val postsFromLast30Days = postQueries.selectPostsFromLastNDays("30").executeAsList()
+
+    assertThat(postsFromLast30Days).hasSize(2)
+    assertThat(postsFromLast30Days.map { it.shortId }).containsExactly("recent_1", "recent_2")
+    assertThat(postsFromLast30Days.map { it.shortId }).doesNotContain("old_1")
+  }
+
   private fun createTestData(count: Int): ArrayList<SavedPost> {
     val posts = arrayListOf<SavedPost>()
 
     for (i in 1..count) {
       val post =
-        SavedPost(
-          shortId = "test_id_$i",
+        createPostWithDate(
+          id = "test_id_$i",
           createdAt = "0",
-          title = "test",
-          url = "test_url",
-          commentCount = 0,
-          commentsUrl = "test_comments_url",
           submitterName = "test_user_$i",
-          tags = listOf(),
-          description = "",
           userIsAuthor = i % 2 == 0,
         )
 
@@ -131,5 +153,25 @@ class SavedPostQueriesTest {
     }
 
     return posts
+  }
+
+  private fun createPostWithDate(
+    id: String,
+    createdAt: String,
+    submitterName: String = "test_user",
+    userIsAuthor: Boolean = false,
+  ): SavedPost {
+    return SavedPost(
+      shortId = id,
+      createdAt = createdAt,
+      title = "test_post",
+      url = "test_url",
+      commentCount = 0,
+      commentsUrl = "test_comments_url",
+      submitterName = submitterName,
+      tags = listOf(),
+      description = "",
+      userIsAuthor = userIsAuthor,
+    )
   }
 }

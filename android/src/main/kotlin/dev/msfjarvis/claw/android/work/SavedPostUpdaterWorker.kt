@@ -16,6 +16,7 @@ import dev.msfjarvis.claw.android.viewmodel.SavedPostsRepository
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.core.injection.InjectedWorkerFactory
 import dev.msfjarvis.claw.core.injection.WorkerKey
+import dev.msfjarvis.claw.database.local.SavedPost
 import dev.msfjarvis.claw.model.toSavedPost
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.Assisted
@@ -23,16 +24,16 @@ import dev.zacsweers.metro.AssistedFactory
 import dev.zacsweers.metro.AssistedInject
 import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.binding
-import java.time.Instant
-import java.time.format.DateTimeFormatter
+import kotlin.random.Random
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 
 /**
- * WorkManager-backed [CoroutineWorker] that gets all the posts from [SavedPostsRepository], fetches
- * their newest state using the [LobstersApi] and then writes them back to the database. This allows
- * saved posts that were saved before comment counts were added to be able to show a comment count
- * and for new-enough posts that are still getting comments to have an accurate one.
+ * WorkManager-backed [CoroutineWorker] that gets all the posts from [SavedPostsRepository] that
+ * were created in the last 30 days, fetches their newest state using the [LobstersApi] and then
+ * writes them back to the database. API calls are staggered with a configurable delay to avoid rate
+ * limiting. This allows saved posts to stay up-to-date with current comment counts and other
+ * metadata changes.
  */
 @AssistedInject
 class SavedPostUpdaterWorker(
@@ -42,33 +43,41 @@ class SavedPostUpdaterWorker(
   private val lobstersApi: LobstersApi,
 ) : CoroutineWorker(context, params) {
   override suspend fun doWork(): Result {
-    val postsToUpdate =
-      savedPostsRepository.savedPosts
-        .first()
-        .sortedBy { post ->
-          Instant.from(DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(post.createdAt))
-        }
-        .take(30)
+    val postsToUpdate = savedPostsRepository.getPostsFromLastNDays(DAYS_TO_UPDATE).first()
 
-    val updatedPosts = mutableListOf<dev.msfjarvis.claw.database.local.SavedPost>()
+    if (postsToUpdate.isEmpty()) {
+      return Result.success()
+    }
 
-    for (post in postsToUpdate) {
+    val updatedPosts = mutableListOf<SavedPost>()
+
+    for ((index, post) in postsToUpdate.withIndex()) {
       when (val result = lobstersApi.getPostDetails(post.shortId)) {
         is Success -> {
           updatedPosts.add(result.value.toSavedPost())
         }
-        else -> {
-          // Continue to the next post if the API call fails
-        }
+        else -> {}
       }
-      // Add a 1-second delay to avoid rate-limiting
-      delay(1000)
+
+      if (index < postsToUpdate.lastIndex) {
+        // Add a random delay between API calls to avoid rate limiting
+        val delayMs = Random.nextLong(MIN_DELAY_MS, MAX_DELAY_MS)
+        delay(delayMs)
+      }
     }
 
-    savedPostsRepository.savePosts(updatedPosts)
-    SavedPostsWidget().updateAll(applicationContext)
+    if (updatedPosts.isNotEmpty()) {
+      savedPostsRepository.savePosts(updatedPosts)
+      SavedPostsWidget().updateAll(applicationContext)
+    }
 
     return Result.success()
+  }
+
+  private companion object {
+    const val DAYS_TO_UPDATE = 30L
+    const val MIN_DELAY_MS = 500L
+    const val MAX_DELAY_MS = 2000L
   }
 
   @WorkerKey(SavedPostUpdaterWorker::class)

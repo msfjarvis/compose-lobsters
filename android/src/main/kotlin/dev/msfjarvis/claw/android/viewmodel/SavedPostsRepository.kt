@@ -28,6 +28,9 @@ class SavedPostsRepository(
 ) {
   val savedPosts = savedPostQueries.selectAllPosts().asFlow().mapToList(readDispatcher)
 
+  fun getPostsFromLastNDays(days: Long) =
+    savedPostQueries.selectPostsFromLastNDays(days.toString()).asFlow().mapToList(readDispatcher)
+
   suspend fun toggleSave(post: UIPost) {
     if (savedPosts.firstOrNull().orEmpty().any { it.shortId == post.shortId }) {
       Napier.d(tag = TAG) { "Removing post: ${post.shortId}" }

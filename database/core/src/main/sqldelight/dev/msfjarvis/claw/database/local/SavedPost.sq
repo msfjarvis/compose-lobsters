@@ -42,3 +42,21 @@ deletePost:
 DELETE
 FROM SavedPost
 WHERE shortId = ?;
+
+postExists:
+SELECT EXISTS(
+  SELECT 1
+  FROM SavedPost
+  WHERE shortId = ?
+);
+
+selectRecentPosts:
+SELECT *
+FROM SavedPost
+ORDER BY datetime(createdAt) DESC
+LIMIT :limit;
+
+selectAllPostsSortedByDate:
+SELECT *
+FROM SavedPost
+ORDER BY datetime(createdAt) DESC;

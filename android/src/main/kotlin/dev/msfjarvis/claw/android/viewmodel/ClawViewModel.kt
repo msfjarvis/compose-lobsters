@@ -40,7 +40,6 @@ import java.io.OutputStream
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
-import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.toImmutableMap
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.collectLatest
@@ -87,9 +86,18 @@ class ClawViewModel(
       )
       .flow
   val savedPosts = savedPostsRepository.savedPosts.map { it.map(UIPost.Companion::fromSavedPost) }
-  val savedPostsCount = savedPosts.map { it.size.toLong() }
+  val savedPostsCount = savedPostsRepository.savedPosts.map { it.size.toLong() }
   val savedPostsByMonth
-    get() = savedPosts.map(::groupSavedPosts)
+    get() =
+      savedPostsRepository.savedPostsSortedByDate.map { posts ->
+        posts
+          .map(UIPost.Companion::fromSavedPost)
+          .groupBy { post ->
+            val time = post.createdAt.toLocalDateTime()
+            "${time.month.name.lowercase().capitalize(Locale.current)} ${time.year}"
+          }
+          .toImmutableMap()
+      }
 
   var searchQuery by mutableStateOf("")
 
@@ -99,27 +107,6 @@ class ClawViewModel(
   init {
     viewModelScope.launch { savedPosts.collectLatest { _savedPosts = it.map(UIPost::shortId) } }
     viewModelScope.launch { readPostsRepository.readPosts.collectLatest { _readPosts = it } }
-  }
-
-  private fun groupSavedPosts(items: List<UIPost>): ImmutableMap<String, List<UIPost>> {
-    val sorted =
-      items.sortedWith { post1, post2 ->
-        val post1Date = post1.createdAt.toLocalDateTime()
-        val post2Date = post2.createdAt.toLocalDateTime()
-        if (post2Date.isBefore(post1Date)) {
-          -1
-        } else if (post2Date.isAfter(post1Date)) {
-          1
-        } else {
-          0
-        }
-      }
-    return sorted
-      .groupBy { post ->
-        val time = post.createdAt.toLocalDateTime()
-        "${time.month.name.lowercase().capitalize(Locale.current)} ${time.year}"
-      }
-      .toImmutableMap()
   }
 
   fun toggleSave(post: UIPost) {

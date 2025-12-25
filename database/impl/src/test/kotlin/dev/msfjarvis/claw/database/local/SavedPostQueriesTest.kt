@@ -137,6 +137,95 @@ class SavedPostQueriesTest {
     assertThat(postsFromLast30Days.map { it.shortId }).doesNotContain("old_1")
   }
 
+  @Test
+  fun `postExists returns true when post exists`() {
+    val post = createTestData(1).first()
+    postQueries.insertOrReplacePost(post)
+
+    val exists = postQueries.postExists("test_id_1").executeAsOne()
+
+    assertThat(exists).isTrue()
+  }
+
+  @Test
+  fun `postExists returns false when post does not exist`() {
+    val exists = postQueries.postExists("nonexistent_id").executeAsOne()
+
+    assertThat(exists).isFalse()
+  }
+
+  @Test
+  fun `selectRecentPosts returns correct number of posts`() {
+    val posts = createTestData(10)
+    posts.forEach { postQueries.insertOrReplacePost(it) }
+
+    val recentPosts = postQueries.selectRecentPosts(5).executeAsList()
+
+    assertThat(recentPosts).hasSize(5)
+  }
+
+  @Test
+  fun `selectRecentPosts returns all posts when limit exceeds count`() {
+    val posts = createTestData(3)
+    posts.forEach { postQueries.insertOrReplacePost(it) }
+
+    val recentPosts = postQueries.selectRecentPosts(10).executeAsList()
+
+    assertThat(recentPosts).hasSize(3)
+  }
+
+  @Test
+  fun `selectRecentPosts returns posts in descending date order`() {
+    val now = Instant.now()
+    val formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
+    fun dateOffset(daysToSubtract: Long): String {
+      return formatter.format(
+        now.minus(daysToSubtract, ChronoUnit.DAYS).atOffset(java.time.ZoneOffset.UTC)
+      )
+    }
+
+    val oldest = createPostWithDate(id = "oldest", createdAt = dateOffset(30))
+    val middle = createPostWithDate(id = "middle", createdAt = dateOffset(15))
+    val newest = createPostWithDate(id = "newest", createdAt = dateOffset(1))
+
+    postQueries.insertOrReplacePost(oldest)
+    postQueries.insertOrReplacePost(middle)
+    postQueries.insertOrReplacePost(newest)
+
+    val recentPosts = postQueries.selectRecentPosts(10).executeAsList()
+
+    assertThat(recentPosts.map { it.shortId })
+      .containsExactly("newest", "middle", "oldest")
+      .inOrder()
+  }
+
+  @Test
+  fun `selectAllPostsSortedByDate returns posts in descending date order`() {
+    val now = Instant.now()
+    val formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
+    fun dateOffset(daysToSubtract: Long): String {
+      return formatter.format(
+        now.minus(daysToSubtract, ChronoUnit.DAYS).atOffset(java.time.ZoneOffset.UTC)
+      )
+    }
+
+    val post1 = createPostWithDate(id = "post_1", createdAt = dateOffset(20))
+    val post2 = createPostWithDate(id = "post_2", createdAt = dateOffset(5))
+    val post3 = createPostWithDate(id = "post_3", createdAt = dateOffset(10))
+    val post4 = createPostWithDate(id = "post_4", createdAt = dateOffset(1))
+
+    postQueries.insertOrReplacePost(post1)
+    postQueries.insertOrReplacePost(post2)
+    postQueries.insertOrReplacePost(post3)
+    postQueries.insertOrReplacePost(post4)
+
+    val sortedPosts = postQueries.selectAllPostsSortedByDate().executeAsList()
+
+    assertThat(sortedPosts.map { it.shortId })
+      .containsExactly("post_4", "post_2", "post_3", "post_1")
+      .inOrder()
+  }
+
   private fun createTestData(count: Int): ArrayList<SavedPost> {
     val posts = arrayListOf<SavedPost>()
 

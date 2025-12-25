@@ -39,8 +39,11 @@ class SavedPostsWidget() : GlanceAppWidget() {
 
   override suspend fun provideGlance(context: Context, id: GlanceId) {
     val posts =
-      (context.applicationContext as ClawApplication).appGraph.savedPostsRepository.savedPosts
-    val postWindow = posts.first().take(50).map(UIPost::fromSavedPost).toImmutableList()
+      (context.applicationContext as ClawApplication)
+        .appGraph
+        .savedPostsRepository
+        .getRecentPosts(50)
+    val postWindow = posts.first().map(UIPost::fromSavedPost).toImmutableList()
     provideContent {
       GlanceTheme(
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) GlanceTheme.colors

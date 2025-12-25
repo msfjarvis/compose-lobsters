@@ -31,6 +31,8 @@ interface OkHttpModule {
 
   @Binds @IntoSet fun bindUAInterceptor(impl: UserAgentInterceptor): Interceptor
 
+  @Binds @IntoSet fun bindRetryAfterInterceptor(impl: RetryAfterInterceptor): Interceptor
+
   companion object {
     private const val CACHE_SIZE_MB = 10L * 1024 * 1024
     private const val THREAD_STATS_TAG = 0x000090000

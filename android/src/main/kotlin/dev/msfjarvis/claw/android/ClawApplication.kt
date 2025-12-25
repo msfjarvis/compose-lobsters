@@ -7,7 +7,6 @@
 package dev.msfjarvis.claw.android
 
 import android.app.Application
-import androidx.work.Configuration
 import androidx.work.Constraints
 import androidx.work.ExistingWorkPolicy
 import androidx.work.NetworkType
@@ -18,15 +17,12 @@ import dev.zacsweers.metro.createGraphFactory
 import dev.zacsweers.metrox.android.MetroAppComponentProviders
 import dev.zacsweers.metrox.android.MetroApplication
 
-class ClawApplication : Application(), MetroApplication, Configuration.Provider {
+class ClawApplication : Application(), MetroApplication {
 
   val appGraph by lazy { createGraphFactory<AppGraph.Factory>().create(this) }
 
   override val appComponentProviders: MetroAppComponentProviders
     get() = appGraph
-
-  override val workManagerConfiguration: Configuration
-    get() = Configuration.Builder().setWorkerFactory(appGraph.workerFactory).build()
 
   override fun onCreate() {
     super.onCreate()
@@ -40,9 +36,5 @@ class ClawApplication : Application(), MetroApplication, Configuration.Provider 
       existingWorkPolicy = ExistingWorkPolicy.KEEP,
       request = postUpdateWorkRequest,
     )
-  }
-
-  private companion object {
-    private const val POST_REFRESH_PERIOD = 24L // 24 hours
   }
 }

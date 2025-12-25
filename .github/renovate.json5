@@ -53,12 +53,6 @@
       ],
       "allowedVersions": "!/.*-1-8$/",
     },
-    {
-      "matchPackageNames": [
-        "/^androidx.glance/",
-      ],
-      "allowedVersions": "<=1.0.0",
-    },
   ],
   "customManagers": [
     {

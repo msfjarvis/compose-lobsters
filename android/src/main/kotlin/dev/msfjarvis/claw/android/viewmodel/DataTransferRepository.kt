@@ -9,11 +9,11 @@ package dev.msfjarvis.claw.android.viewmodel
 import dev.msfjarvis.claw.core.coroutines.IODispatcher
 import dev.msfjarvis.claw.database.SavedPostSerializer
 import dev.msfjarvis.claw.database.local.SavedPost
+import dev.zacsweers.metro.Inject
 import java.io.InputStream
 import java.io.OutputStream
 import java.time.Instant
 import java.time.format.DateTimeFormatter
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
@@ -23,10 +23,9 @@ import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.decodeFromStream
 import kotlinx.serialization.json.encodeToStream
 
-@OptIn(ExperimentalSerializationApi::class)
-class DataTransferRepository
 @Inject
-constructor(
+@OptIn(ExperimentalSerializationApi::class)
+class DataTransferRepository(
   private val json: Json,
   private val savedPostsRepository: SavedPostsRepository,
   @IODispatcher private val ioDispatcher: CoroutineDispatcher,

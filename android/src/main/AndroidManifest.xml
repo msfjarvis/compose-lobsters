@@ -42,10 +42,6 @@
         android:name="androidx.work.WorkManagerInitializer"
         android:value="androidx.startup"
         tools:node="remove" />
-      <meta-data
-        android:name="com.deliveryhero.whetstone.worker.WhetstoneWorkerInitializer"
-        android:value="androidx.startup"
-        tools:node="remove" />
     </provider>
 
     <receiver

@@ -11,30 +11,29 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import app.cash.sqldelight.adapter.primitive.IntColumnAdapter
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import app.cash.sqldelight.logs.LogSqliteDriver
-import com.deliveryhero.whetstone.app.ApplicationScope
-import com.squareup.anvil.annotations.ContributesTo
-import com.squareup.anvil.annotations.optional.ForScope
-import com.squareup.anvil.annotations.optional.SingleIn
-import dagger.Module
-import dagger.Provides
 import dev.msfjarvis.claw.database.LobstersDatabase
 import dev.msfjarvis.claw.database.local.PostComments
 import dev.msfjarvis.claw.database.local.SavedPost
 import dev.msfjarvis.claw.database.model.CSVAdapter
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.BindingContainer
+import dev.zacsweers.metro.ContributesTo
+import dev.zacsweers.metro.Provides
+import dev.zacsweers.metro.SingleIn
 import io.github.aakira.napier.Napier
 import io.requery.android.database.sqlite.RequerySQLiteOpenHelperFactory
 import io.requery.android.database.sqlite.SQLiteDatabase
 
-@Module
-@ContributesTo(ApplicationScope::class)
+@BindingContainer
+@ContributesTo(AppScope::class)
 object DatabaseModule {
 
   private const val LOBSTERS_DATABASE_NAME = "SavedPosts.db"
 
   @Provides
   @InternalDatabaseApi
-  @SingleIn(ApplicationScope::class)
-  fun provideDatabase(@ForScope(ApplicationScope::class) context: Context): LobstersDatabase {
+  @SingleIn(AppScope::class)
+  fun provideDatabase(context: Context): LobstersDatabase {
     System.loadLibrary(SQLiteDatabase.LIBRARY_NAME)
     val driver =
       LogSqliteDriver(

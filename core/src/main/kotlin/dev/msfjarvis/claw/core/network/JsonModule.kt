@@ -6,12 +6,12 @@
  */
 package dev.msfjarvis.claw.core.network
 
-import com.deliveryhero.whetstone.app.ApplicationScope
-import com.squareup.anvil.annotations.ContributesTo
-import dagger.Module
-import dagger.Provides
-import dagger.multibindings.IntKey
-import dagger.multibindings.IntoMap
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.BindingContainer
+import dev.zacsweers.metro.ContributesTo
+import dev.zacsweers.metro.IntKey
+import dev.zacsweers.metro.IntoMap
+import dev.zacsweers.metro.Provides
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonNamingStrategy
@@ -19,8 +19,8 @@ import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Converter
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
 
-@Module
-@ContributesTo(ApplicationScope::class)
+@BindingContainer
+@ContributesTo(AppScope::class)
 @OptIn(ExperimentalSerializationApi::class)
 object JsonModule {
 

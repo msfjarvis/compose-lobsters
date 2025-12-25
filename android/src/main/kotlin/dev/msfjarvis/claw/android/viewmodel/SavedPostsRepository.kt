@@ -14,23 +14,31 @@ import dev.msfjarvis.claw.database.local.SavedPost
 import dev.msfjarvis.claw.database.local.SavedPostQueries
 import dev.msfjarvis.claw.model.UIPost
 import dev.msfjarvis.claw.model.toSavedPost
+import dev.zacsweers.metro.Inject
 import io.github.aakira.napier.Napier
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.withContext
 
-class SavedPostsRepository
 @Inject
-constructor(
+class SavedPostsRepository(
   private val savedPostQueries: SavedPostQueries,
   @DatabaseReadDispatcher private val readDispatcher: CoroutineDispatcher,
   @DatabaseWriteDispatcher private val writeDispatcher: CoroutineDispatcher,
 ) {
   val savedPosts = savedPostQueries.selectAllPosts().asFlow().mapToList(readDispatcher)
+  val savedPostsSortedByDate =
+    savedPostQueries.selectAllPostsSortedByDate().asFlow().mapToList(readDispatcher)
+
+  fun getPostsFromLastNDays(days: Long) =
+    savedPostQueries.selectPostsFromLastNDays(days.toString()).asFlow().mapToList(readDispatcher)
+
+  fun getRecentPosts(limit: Long) =
+    savedPostQueries.selectRecentPosts(limit).asFlow().mapToList(readDispatcher)
 
   suspend fun toggleSave(post: UIPost) {
-    if (savedPosts.firstOrNull().orEmpty().any { it.shortId == post.shortId }) {
+    val exists =
+      withContext(readDispatcher) { savedPostQueries.postExists(post.shortId).executeAsOne() }
+    if (exists) {
       Napier.d(tag = TAG) { "Removing post: ${post.shortId}" }
       withContext(writeDispatcher) { savedPostQueries.deletePost(post.shortId) }
     } else {

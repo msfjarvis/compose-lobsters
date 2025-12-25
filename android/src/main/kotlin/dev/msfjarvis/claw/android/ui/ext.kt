@@ -8,22 +8,22 @@ package dev.msfjarvis.claw.android.ui
 
 import android.content.Context
 import android.content.Intent
+import androidx.compose.ui.platform.UriHandler
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.common.posts.PostActions
-import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 import dev.msfjarvis.claw.model.LinkMetadata
 import dev.msfjarvis.claw.model.UIPost
 
 fun PostActions(
   context: Context,
-  urlLauncher: UrlLauncher,
+  uriHandler: UriHandler,
   viewModel: ClawViewModel,
   navigateToComments: (String) -> Unit,
 ): PostActions {
   return object : PostActions {
     override fun viewPost(postId: String, postUrl: String, commentsUrl: String) {
       viewModel.markPostAsRead(postId)
-      urlLauncher.openUri(postUrl.ifEmpty { commentsUrl })
+      uriHandler.openUri(postUrl.ifEmpty { commentsUrl })
     }
 
     override fun viewComments(postId: String) {
@@ -32,7 +32,7 @@ fun PostActions(
     }
 
     override fun viewCommentsPage(post: UIPost) {
-      urlLauncher.openUri(post.commentsUrl)
+      uriHandler.openUri(post.commentsUrl)
     }
 
     override fun toggleSave(post: UIPost) {

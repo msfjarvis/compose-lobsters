@@ -11,7 +11,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.deliveryhero.whetstone.viewmodel.ContributesViewModel
 import com.github.michaelbull.result.coroutines.runSuspendCatching
 import com.github.michaelbull.result.fold
 import com.slack.eithernet.ApiResult.Failure
@@ -21,8 +20,11 @@ import dev.msfjarvis.claw.api.toError
 import dev.msfjarvis.claw.common.NetworkState
 import dev.msfjarvis.claw.core.coroutines.IODispatcher
 import dev.msfjarvis.claw.model.Tag
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesIntoMap
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metrox.viewmodel.ViewModelKey
 import java.io.IOException
-import javax.inject.Inject
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -31,10 +33,10 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-@ContributesViewModel
-class TagFilterViewModel
 @Inject
-constructor(
+@ViewModelKey(TagFilterViewModel::class)
+@ContributesIntoMap(AppScope::class)
+class TagFilterViewModel(
   private val api: LobstersApi,
   private val tagFilterRepository: TagFilterRepository,
   @IODispatcher private val ioDispatcher: CoroutineDispatcher,

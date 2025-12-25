@@ -32,7 +32,9 @@ class AndroidCommonPlugin : Plugin<Project> {
     project.extensions.configure<BaseExtension> {
       compileSdkVersion(36)
       defaultConfig {
-        minSdk = 26
+        // Required by Metro, I don't care for this to be more broadly usable at the expense of my
+        // personal development experience.
+        minSdk = 28
         targetSdk = 36
       }
 

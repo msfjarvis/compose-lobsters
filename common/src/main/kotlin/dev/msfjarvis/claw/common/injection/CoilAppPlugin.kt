@@ -13,13 +13,14 @@ import coil3.disk.DiskCache
 import coil3.disk.directory
 import coil3.memory.MemoryCache
 import coil3.request.crossfade
-import com.deliveryhero.whetstone.app.ApplicationScope
-import com.squareup.anvil.annotations.ContributesMultibinding
 import dev.msfjarvis.claw.core.injection.AppPlugin
-import javax.inject.Inject
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesIntoSet
+import dev.zacsweers.metro.Inject
 
-@ContributesMultibinding(ApplicationScope::class)
-class CoilAppPlugin @Inject constructor() : AppPlugin {
+@ContributesIntoSet(AppScope::class)
+@Inject
+class CoilAppPlugin() : AppPlugin {
   override fun apply(application: Application) {
     SingletonImageLoader.setSafe {
       ImageLoader.Builder(application)

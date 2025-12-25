@@ -12,13 +12,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
-import com.deliveryhero.whetstone.app.ApplicationScope
-import com.deliveryhero.whetstone.viewmodel.ContributesViewModel
+import androidx.lifecycle.ViewModel
 import com.github.michaelbull.result.coroutines.runSuspendCatching
 import com.github.michaelbull.result.fold
 import com.slack.eithernet.ApiResult
 import com.slack.eithernet.ApiResult.Failure
-import com.squareup.anvil.annotations.optional.ForScope
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.api.toError
 import dev.msfjarvis.claw.common.NetworkState
@@ -27,18 +25,22 @@ import dev.msfjarvis.claw.common.NetworkState.Loading
 import dev.msfjarvis.claw.common.NetworkState.Success
 import dev.msfjarvis.claw.core.coroutines.IODispatcher
 import dev.msfjarvis.claw.model.User
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesIntoMap
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.binding
+import dev.zacsweers.metrox.viewmodel.ViewModelKey
 import java.io.IOException
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
-@ContributesViewModel
-class UserProfileViewModel
 @Inject
-constructor(
+@ViewModelKey(UserProfileViewModel::class)
+@ContributesIntoMap(AppScope::class, binding = binding<ViewModel>())
+class UserProfileViewModel(
+  context: Context,
   private val api: LobstersApi,
   @IODispatcher private val ioDispatcher: CoroutineDispatcher,
-  @ForScope(ApplicationScope::class) context: Context,
 ) : AndroidViewModel(context as Application) {
 
   var userProfile by mutableStateOf<NetworkState>(Loading)

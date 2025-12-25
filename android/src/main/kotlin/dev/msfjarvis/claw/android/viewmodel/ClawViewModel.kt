@@ -15,13 +15,11 @@ import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.intl.Locale
 import androidx.glance.appwidget.updateAll
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
-import com.deliveryhero.whetstone.app.ApplicationScope
-import com.deliveryhero.whetstone.viewmodel.ContributesViewModel
-import com.squareup.anvil.annotations.optional.ForScope
 import dev.msfjarvis.claw.android.glance.SavedPostsWidget
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource.Companion.PAGE_SIZE
@@ -32,13 +30,16 @@ import dev.msfjarvis.claw.core.coroutines.IODispatcher
 import dev.msfjarvis.claw.core.coroutines.MainDispatcher
 import dev.msfjarvis.claw.model.UIPost
 import dev.msfjarvis.claw.model.fromSavedPost
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesIntoMap
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.binding
+import dev.zacsweers.metrox.viewmodel.ViewModelKey
 import java.io.InputStream
 import java.io.OutputStream
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
-import javax.inject.Inject
-import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.toImmutableMap
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.collectLatest
@@ -46,10 +47,11 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-@ContributesViewModel
-class ClawViewModel
 @Inject
-constructor(
+@ViewModelKey(ClawViewModel::class)
+@ContributesIntoMap(scope = AppScope::class, binding = binding<ViewModel>())
+class ClawViewModel(
+  context: Context,
   private val api: LobstersApi,
   private val readPostsRepository: ReadPostsRepository,
   private val savedPostsRepository: SavedPostsRepository,
@@ -59,7 +61,6 @@ constructor(
   private val searchPagingSourceFactory: SearchPagingSource.Factory,
   @IODispatcher private val ioDispatcher: CoroutineDispatcher,
   @MainDispatcher private val mainDispatcher: CoroutineDispatcher,
-  @ForScope(ApplicationScope::class) context: Context,
 ) : AndroidViewModel(context as Application) {
   val hottestPosts =
     Pager(
@@ -85,9 +86,18 @@ constructor(
       )
       .flow
   val savedPosts = savedPostsRepository.savedPosts.map { it.map(UIPost.Companion::fromSavedPost) }
-  val savedPostsCount = savedPosts.map { it.size.toLong() }
+  val savedPostsCount = savedPostsRepository.savedPosts.map { it.size.toLong() }
   val savedPostsByMonth
-    get() = savedPosts.map(::groupSavedPosts)
+    get() =
+      savedPostsRepository.savedPostsSortedByDate.map { posts ->
+        posts
+          .map(UIPost.Companion::fromSavedPost)
+          .groupBy { post ->
+            val time = post.createdAt.toLocalDateTime()
+            "${time.month.name.lowercase().capitalize(Locale.current)} ${time.year}"
+          }
+          .toImmutableMap()
+      }
 
   var searchQuery by mutableStateOf("")
 
@@ -99,31 +109,10 @@ constructor(
     viewModelScope.launch { readPostsRepository.readPosts.collectLatest { _readPosts = it } }
   }
 
-  private fun groupSavedPosts(items: List<UIPost>): ImmutableMap<String, List<UIPost>> {
-    val sorted =
-      items.sortedWith { post1, post2 ->
-        val post1Date = post1.createdAt.toLocalDateTime()
-        val post2Date = post2.createdAt.toLocalDateTime()
-        if (post2Date.isBefore(post1Date)) {
-          -1
-        } else if (post2Date.isAfter(post1Date)) {
-          1
-        } else {
-          0
-        }
-      }
-    return sorted
-      .groupBy { post ->
-        val time = post.createdAt.toLocalDateTime()
-        "${time.month.name.lowercase().capitalize(Locale.current)} ${time.year}"
-      }
-      .toImmutableMap()
-  }
-
   fun toggleSave(post: UIPost) {
     viewModelScope.launch {
       savedPostsRepository.toggleSave(post)
-      withContext(mainDispatcher) { SavedPostsWidget(savedPosts).updateAll(getApplication()) }
+      withContext(mainDispatcher) { SavedPostsWidget().updateAll(getApplication()) }
     }
   }
 

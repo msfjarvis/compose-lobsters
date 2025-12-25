@@ -12,10 +12,9 @@ import dev.msfjarvis.claw.gradle.addTestDependencies
 plugins {
   id("dev.msfjarvis.claw.android-library")
   id("dev.msfjarvis.claw.kotlin-android")
-  alias(libs.plugins.anvil)
-  alias(libs.plugins.whetstone)
   alias(libs.plugins.kotlin.composeCompiler)
   alias(libs.plugins.dependencyAnalysis)
+  alias(libs.plugins.metro)
 }
 
 android {
@@ -24,17 +23,11 @@ android {
   namespace = "dev.msfjarvis.claw.common"
 }
 
-whetstone.addOns.compose = true
-
 androidComponents { beforeVariants { (it as HasUnitTestBuilder).enableUnitTest = false } }
-
-anvil { generateDaggerFactories.set(true) }
 
 dependencies {
   api(libs.androidx.compose.ui)
   api(libs.androidx.datastore)
-  api(libs.dagger)
-  api(libs.javax.inject)
   api(projects.api)
   api(projects.core)
   api(projects.database.core)
@@ -57,6 +50,8 @@ dependencies {
   implementation(libs.kotlinResult)
   implementation(libs.kotlinResult.coroutines)
   implementation(libs.napier)
+  implementation(libs.metrox.viewmodel)
+  implementation(libs.metrox.viewmodel.compose)
 
   compileOnly(libs.androidx.compose.ui.tooling.preview)
 

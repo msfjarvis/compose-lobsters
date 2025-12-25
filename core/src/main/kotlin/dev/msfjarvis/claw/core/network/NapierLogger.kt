@@ -6,12 +6,16 @@
  */
 package dev.msfjarvis.claw.core.network
 
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
 import io.github.aakira.napier.Napier
-import javax.inject.Inject
 import okhttp3.logging.HttpLoggingInterceptor
 
 /** Implementation of [HttpLoggingInterceptor.Logger] backed by [Napier]. */
-class NapierLogger @Inject constructor() : HttpLoggingInterceptor.Logger {
+@ContributesBinding(AppScope::class)
+@Inject
+class NapierLogger : HttpLoggingInterceptor.Logger {
   override fun log(message: String) {
     Napier.d(tag = "LobstersApi") { message }
   }

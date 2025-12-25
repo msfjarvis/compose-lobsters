@@ -6,12 +6,16 @@
  */
 package dev.msfjarvis.claw.core.network
 
-import javax.inject.Inject
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesIntoSet
+import dev.zacsweers.metro.Inject
 import okhttp3.Interceptor
 import okhttp3.Response
 
 /** An OkHttp [Interceptor] that feigns a browser User-Agent for all requests. */
-class UserAgentInterceptor @Inject constructor() : Interceptor {
+@ContributesIntoSet(AppScope::class)
+@Inject
+class UserAgentInterceptor : Interceptor {
   override fun intercept(chain: Interceptor.Chain): Response {
     return chain.proceed(
       chain.request().newBuilder().header("User-Agent", CHROME_USER_AGENT).build()

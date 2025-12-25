@@ -8,14 +8,18 @@ package dev.msfjarvis.claw.common.urllauncher
 
 import android.content.ActivityNotFoundException
 import android.content.Context
+import android.content.Intent
 import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
-import androidx.compose.runtime.Stable
 import androidx.compose.ui.platform.UriHandler
 import androidx.core.net.toUri
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
 import io.github.aakira.napier.Napier
 
-@Stable
+@Inject
+@ContributesBinding(AppScope::class)
 class UrlLauncher(private val context: Context) : UriHandler {
   override fun openUri(uri: String) {
     val customTabsIntent =
@@ -24,8 +28,13 @@ class UrlLauncher(private val context: Context) : UriHandler {
         .setShowTitle(true)
         .setColorScheme(CustomTabsIntent.COLOR_SCHEME_SYSTEM)
         .build()
+    // Workaround for starting activity from non-activity context, this should be reverted once
+    // we've extended Metro to have an Activity scoped context.
+    val intent = Intent(customTabsIntent.intent)
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    intent.setData(uri.toUri())
     try {
-      customTabsIntent.launchUrl(context, uri.toUri())
+      context.startActivity(intent)
     } catch (e: ActivityNotFoundException) {
       val error = "Failed to open URL: $uri"
       Napier.d(throwable = e, tag = "UrlLauncher") { error }

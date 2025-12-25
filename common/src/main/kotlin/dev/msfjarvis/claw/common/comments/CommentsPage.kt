@@ -15,7 +15,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.deliveryhero.whetstone.compose.injectedViewModel
 import dev.msfjarvis.claw.common.NetworkState.Error
 import dev.msfjarvis.claw.common.NetworkState.Loading
 import dev.msfjarvis.claw.common.NetworkState.Success
@@ -24,6 +23,7 @@ import dev.msfjarvis.claw.common.ui.NetworkError
 import dev.msfjarvis.claw.common.ui.ProgressBar
 import dev.msfjarvis.claw.database.local.PostComments
 import dev.msfjarvis.claw.model.UIPost
+import dev.zacsweers.metrox.viewmodel.metroViewModel
 
 @Suppress("UNCHECKED_CAST")
 @Composable
@@ -33,7 +33,7 @@ fun CommentsPage(
   contentPadding: PaddingValues,
   openUserProfile: (String) -> Unit,
   modifier: Modifier = Modifier,
-  viewModel: CommentsViewModel = injectedViewModel(key = postId),
+  viewModel: CommentsViewModel = metroViewModel(key = postId),
 ) {
   LaunchedEffect(postId) { viewModel.loadPostDetails(postId) }
   val commentState by

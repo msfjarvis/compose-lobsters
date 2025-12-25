@@ -11,13 +11,12 @@ import app.cash.sqldelight.coroutines.mapToList
 import dev.msfjarvis.claw.core.coroutines.DatabaseReadDispatcher
 import dev.msfjarvis.claw.core.coroutines.DatabaseWriteDispatcher
 import dev.msfjarvis.claw.database.local.ReadPostsQueries
-import javax.inject.Inject
+import dev.zacsweers.metro.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
-class ReadPostsRepository
 @Inject
-constructor(
+class ReadPostsRepository(
   private val readPostsQueries: ReadPostsQueries,
   @DatabaseReadDispatcher private val readDispatcher: CoroutineDispatcher,
   @DatabaseWriteDispatcher private val writeDispatcher: CoroutineDispatcher,

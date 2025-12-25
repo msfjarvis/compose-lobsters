@@ -6,17 +6,17 @@
  */
 package dev.msfjarvis.claw.android.injection
 
-import com.deliveryhero.whetstone.app.ApplicationScope
-import com.squareup.anvil.annotations.ContributesTo
-import dagger.Module
-import dagger.Provides
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.BindingContainer
+import dev.zacsweers.metro.ContributesTo
+import dev.zacsweers.metro.Provides
 import io.github.aakira.napier.Napier
 import me.saket.unfurl.UnfurlLogger
 import me.saket.unfurl.Unfurler
 import okhttp3.OkHttpClient
 
-@Module
-@ContributesTo(ApplicationScope::class)
+@BindingContainer
+@ContributesTo(AppScope::class)
 object MetadataExtractorModule {
   @Provides
   fun provideUnfurlLogger(): UnfurlLogger {

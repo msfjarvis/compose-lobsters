@@ -11,17 +11,17 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.deliveryhero.whetstone.compose.injectedViewModel
 import dev.msfjarvis.claw.android.ui.lists.SearchList
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.common.posts.PostActions
+import dev.zacsweers.metrox.viewmodel.metroViewModel
 
 @Composable
 fun SearchScreen(
   postActions: PostActions,
   contentPadding: PaddingValues,
   modifier: Modifier = Modifier,
-  viewModel: ClawViewModel = injectedViewModel(),
+  viewModel: ClawViewModel = metroViewModel(),
 ) {
   val listState = rememberLazyListState()
   val searchResults = viewModel.searchResults.collectAsLazyPagingItems()

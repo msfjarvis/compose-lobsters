@@ -6,25 +6,27 @@
  */
 package dev.msfjarvis.claw.android.glance
 
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
-import com.deliveryhero.whetstone.Whetstone
-import com.deliveryhero.whetstone.broadcastreceiver.ContributesBroadcastReceiverInjector
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
-import javax.inject.Inject
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesIntoMap
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.binding
+import dev.zacsweers.metrox.android.BroadcastReceiverKey
 
-@ContributesBroadcastReceiverInjector
-class WidgetReceiver : GlanceAppWidgetReceiver() {
-
-  @Inject lateinit var viewModel: ClawViewModel
+@ContributesIntoMap(AppScope::class, binding<BroadcastReceiver>())
+@BroadcastReceiverKey(WidgetReceiver::class)
+@Inject
+class WidgetReceiver(private val viewModel: ClawViewModel) : GlanceAppWidgetReceiver() {
 
   override val glanceAppWidget: GlanceAppWidget
     get() = SavedPostsWidget(viewModel.savedPosts)
 
   override fun onReceive(context: Context, intent: Intent) {
-    Whetstone.inject(this, context)
     super.onReceive(context, intent)
   }
 }

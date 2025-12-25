@@ -15,13 +15,12 @@ plugins {
   id("dev.msfjarvis.claw.versioning-plugin")
   id("kotlin-parcelize")
   alias(libs.plugins.aboutlibraries)
-  alias(libs.plugins.anvil)
   alias(libs.plugins.modulegraphassert)
-  alias(libs.plugins.whetstone)
   alias(libs.plugins.licensee)
   alias(libs.plugins.kotlin.composeCompiler)
   alias(libs.plugins.kotlin.serialization)
   alias(libs.plugins.dependencyAnalysis)
+  alias(libs.plugins.metro)
 }
 
 android {
@@ -54,13 +53,6 @@ moduleGraphAssert {
   restricted = arrayOf(":core -X> :.*")
 }
 
-whetstone {
-  addOns {
-    compose.set(true)
-    workManager.set(true)
-  }
-}
-
 dependencies {
   implementation(platform(libs.androidx.compose.bom))
   implementation(platform(libs.okhttp.bom))
@@ -84,14 +76,15 @@ dependencies {
   implementation(libs.androidx.paging.compose)
   implementation(libs.androidx.profileinstaller)
   implementation(libs.androidx.work.runtime)
-  implementation(libs.dagger)
   implementation(libs.eithernet)
   implementation(libs.haze)
-  implementation(libs.javax.inject)
   implementation(libs.kotlinx.collections.immutable)
   implementation(libs.kotlinx.coroutines.core)
   implementation(libs.kotlinx.serialization.core)
   implementation(libs.kotlinx.serialization.json)
+  implementation(libs.metrox.android)
+  implementation(libs.metrox.viewmodel)
+  implementation(libs.metrox.viewmodel.compose)
   implementation(libs.napier)
   implementation(libs.okhttp.core)
   implementation(libs.okhttp.loggingInterceptor)
@@ -105,7 +98,4 @@ dependencies {
   implementation(projects.database.core)
   implementation(projects.database.impl)
   implementation(projects.model)
-
-  kapt(libs.dagger.compiler)
-  kapt(libs.build.kotlin.metadata)
 }

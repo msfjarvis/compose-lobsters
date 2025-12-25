@@ -23,19 +23,19 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.deliveryhero.whetstone.compose.injectedViewModel
 import dev.msfjarvis.claw.common.NetworkState.Error
 import dev.msfjarvis.claw.common.NetworkState.Loading
 import dev.msfjarvis.claw.common.NetworkState.Success
 import dev.msfjarvis.claw.common.ui.ProgressBar
 import dev.msfjarvis.claw.model.Tag
+import dev.zacsweers.metrox.viewmodel.metroViewModel
 import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun TagList(
   contentPadding: PaddingValues,
   modifier: Modifier = Modifier,
-  viewModel: TagFilterViewModel = injectedViewModel(key = "tag_filter"),
+  viewModel: TagFilterViewModel = metroViewModel(key = "tag_filter"),
 ) {
   val allTagsState = viewModel.allTags
   val filteredTags = viewModel.filteredTags

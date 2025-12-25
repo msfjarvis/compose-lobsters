@@ -10,11 +10,12 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringSetPreferencesKey
-import javax.inject.Inject
+import dev.zacsweers.metro.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class TagFilterRepository @Inject constructor(private val preferences: DataStore<Preferences>) {
+@Inject
+class TagFilterRepository(private val preferences: DataStore<Preferences>) {
   private val tagsKey = stringSetPreferencesKey("tags")
 
   fun getSavedTags(): Flow<Set<String>> {

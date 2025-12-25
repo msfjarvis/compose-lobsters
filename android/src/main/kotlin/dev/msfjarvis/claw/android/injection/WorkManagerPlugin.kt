@@ -11,13 +11,14 @@ import android.util.Log
 import androidx.work.Configuration
 import androidx.work.WorkManager
 import androidx.work.WorkerFactory
-import com.deliveryhero.whetstone.app.ApplicationScope
-import com.squareup.anvil.annotations.ContributesMultibinding
 import dev.msfjarvis.claw.core.injection.AppPlugin
-import javax.inject.Inject
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesIntoSet
+import dev.zacsweers.metro.Inject
 
-@ContributesMultibinding(ApplicationScope::class)
-class WorkManagerPlugin @Inject constructor(private val workerFactory: WorkerFactory) : AppPlugin {
+@ContributesIntoSet(AppScope::class)
+@Inject
+class WorkManagerPlugin(private val workerFactory: WorkerFactory) : AppPlugin {
   override fun apply(application: Application) {
     WorkManager.initialize(
       application,

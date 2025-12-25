@@ -27,7 +27,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
-import com.deliveryhero.whetstone.compose.injectedViewModel
 import dev.msfjarvis.claw.common.NetworkState.Error
 import dev.msfjarvis.claw.common.NetworkState.Loading
 import dev.msfjarvis.claw.common.NetworkState.Success
@@ -36,6 +35,7 @@ import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.common.ui.ProgressBar
 import dev.msfjarvis.claw.common.ui.ThemedRichText
 import dev.msfjarvis.claw.model.User
+import dev.zacsweers.metrox.viewmodel.metroViewModel
 
 @Suppress("UNCHECKED_CAST")
 @Composable
@@ -44,7 +44,7 @@ fun UserProfile(
   contentPadding: PaddingValues,
   openUserProfile: (String) -> Unit,
   modifier: Modifier = Modifier,
-  viewModel: UserProfileViewModel = injectedViewModel(key = username),
+  viewModel: UserProfileViewModel = metroViewModel(key = username),
 ) {
   LaunchedEffect(username) { viewModel.loadProfile(username) }
   when (val state = viewModel.userProfile) {

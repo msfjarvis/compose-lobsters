@@ -8,13 +8,12 @@ package dev.msfjarvis.claw.core.network
 
 import android.content.Context
 import android.net.TrafficStats
-import com.deliveryhero.whetstone.app.ApplicationScope
-import com.squareup.anvil.annotations.ContributesTo
-import com.squareup.anvil.annotations.optional.ForScope
-import dagger.Binds
-import dagger.Module
-import dagger.Provides
-import dagger.multibindings.IntoSet
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.BindingContainer
+import dev.zacsweers.metro.Binds
+import dev.zacsweers.metro.ContributesTo
+import dev.zacsweers.metro.IntoSet
+import dev.zacsweers.metro.Provides
 import java.net.Socket
 import java.util.concurrent.TimeUnit
 import javax.net.SocketFactory
@@ -24,8 +23,8 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 
-@Module
-@ContributesTo(ApplicationScope::class)
+@BindingContainer
+@ContributesTo(AppScope::class)
 interface OkHttpModule {
 
   @Binds fun bindLogger(impl: NapierLogger): HttpLoggingInterceptor.Logger
@@ -49,7 +48,7 @@ interface OkHttpModule {
     }
 
     @Provides
-    fun provideCache(@ForScope(ApplicationScope::class) context: Context): Cache {
+    fun provideCache(context: Context): Cache {
       return Cache(context.cacheDir, CACHE_SIZE_MB)
     }
 

@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<issues format="6" by="lint 8.12.0-alpha02" type="baseline" client="gradle" dependencies="true" name="AGP (8.12.0-alpha02)" variant="all" version="8.12.0-alpha02">
+<issues format="6" by="lint 8.13.2" type="baseline" client="gradle" dependencies="true" name="AGP (8.13.2)" variant="all" version="8.13.2">
+
+    <issue
+        id="DeprecatedCall"
+        message="androidx.compose.foundation.layout.FlowLayoutKt.FlowRow is deprecated; consider using an alternative."
+        errorLine1="  FlowRow("
+        errorLine2="  ^">
+        <location
+            file="src/main/kotlin/dev/msfjarvis/claw/common/posts/LobstersCard.kt"
+            line="229"
+            column="3"/>
+    </issue>
 
 </issues>

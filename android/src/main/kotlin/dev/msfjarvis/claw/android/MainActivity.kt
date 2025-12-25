@@ -6,6 +6,7 @@
  */
 package dev.msfjarvis.claw.android
 
+import android.app.Activity
 import android.app.assist.AssistContent
 import android.graphics.Color
 import android.os.Bundle
@@ -16,26 +17,37 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.platform.UriHandler
 import androidx.core.net.toUri
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.deliveryhero.whetstone.Whetstone
-import com.deliveryhero.whetstone.activity.ContributesActivityInjector
+import androidx.lifecycle.ViewModelProvider
 import dev.msfjarvis.claw.android.ui.screens.LobstersPostsScreen
 import dev.msfjarvis.claw.common.theme.LobstersTheme
-import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
-import javax.inject.Inject
+import dev.msfjarvis.claw.core.injection.InjectedViewModelFactory
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesIntoMap
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.binding
+import dev.zacsweers.metrox.android.ActivityKey
+import dev.zacsweers.metrox.viewmodel.LocalMetroViewModelFactory
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
-@ContributesActivityInjector
-class MainActivity : ComponentActivity() {
+@ContributesIntoMap(AppScope::class, binding<Activity>())
+@ActivityKey(MainActivity::class)
+@Inject
+class MainActivity(
+  private val uriHandler: UriHandler,
+  private val viewModelFactory: InjectedViewModelFactory,
+) : ComponentActivity() {
 
-  @Inject lateinit var urlLauncher: UrlLauncher
+  override val defaultViewModelProviderFactory: ViewModelProvider.Factory
+    get() = viewModelFactory
+
   var webUri: String? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     installSplashScreen()
-    Whetstone.inject(this)
     enableEdgeToEdge(
       statusBarStyle = SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT)
       // Don't set navigation bar style, the default matches the platform behavior.
@@ -43,11 +55,15 @@ class MainActivity : ComponentActivity() {
     setContent {
       LobstersTheme(
         dynamicColor = true,
-        providedValues = arrayOf(LocalUriHandler provides urlLauncher),
+        providedValues =
+          arrayOf(
+            LocalUriHandler provides uriHandler,
+            LocalMetroViewModelFactory provides viewModelFactory,
+          ),
       ) {
         val windowSizeClass = calculateWindowSizeClass(this)
         LobstersPostsScreen(
-          urlLauncher = urlLauncher,
+          uriHandler = uriHandler,
           windowSizeClass = windowSizeClass,
           setWebUri = { url -> webUri = url },
         )

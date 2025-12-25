@@ -7,39 +7,38 @@
 package dev.msfjarvis.claw.android
 
 import android.app.Application
+import androidx.work.Configuration
 import androidx.work.Constraints
 import androidx.work.ExistingWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
-import com.deliveryhero.whetstone.Whetstone
-import com.deliveryhero.whetstone.app.ApplicationComponentOwner
-import com.deliveryhero.whetstone.app.ContributesAppInjector
+import dev.msfjarvis.claw.android.injection.AppGraph
 import dev.msfjarvis.claw.android.work.SavedPostUpdaterWorker
-import dev.msfjarvis.claw.core.injection.AppPlugin
-import javax.inject.Inject
+import dev.zacsweers.metro.createGraphFactory
+import dev.zacsweers.metrox.android.MetroAppComponentProviders
+import dev.zacsweers.metrox.android.MetroApplication
 
-@ContributesAppInjector(generateAppComponent = true)
-class ClawApplication : Application(), ApplicationComponentOwner {
+class ClawApplication : Application(), MetroApplication, Configuration.Provider {
 
-  override val applicationComponent = GeneratedApplicationComponent.create(this)
+  private val appGraph by lazy { createGraphFactory<AppGraph.Factory>().create(this) }
+  override val appComponentProviders: MetroAppComponentProviders
+    get() = appGraph
 
-  @Inject lateinit var plugins: Set<@JvmSuppressWildcards AppPlugin>
+  override val workManagerConfiguration: Configuration
+    get() = Configuration.Builder().setWorkerFactory(appGraph.workerFactory).build()
 
   override fun onCreate() {
-    Whetstone.inject(this)
     super.onCreate()
-    plugins.forEach { plugin -> plugin.apply(this) }
+    appGraph.plugins.forEach { plugin -> plugin.apply(this) }
     val postUpdateWorkRequest =
       OneTimeWorkRequestBuilder<SavedPostUpdaterWorker>()
         .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())
         .build()
-    WorkManager.getInstance(this)
-      .enqueueUniqueWork(
-        uniqueWorkName = "updateSavedPosts",
-        existingWorkPolicy = ExistingWorkPolicy.KEEP,
-        request = postUpdateWorkRequest,
-      )
+    appGraph.workManager.enqueueUniqueWork(
+      uniqueWorkName = "updateSavedPosts",
+      existingWorkPolicy = ExistingWorkPolicy.KEEP,
+      request = postUpdateWorkRequest,
+    )
   }
 
   private companion object {

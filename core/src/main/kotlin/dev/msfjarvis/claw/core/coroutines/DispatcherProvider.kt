@@ -8,25 +8,70 @@
 
 package dev.msfjarvis.claw.core.coroutines
 
-import javax.inject.Inject
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.BindingContainer
+import dev.zacsweers.metro.ContributesTo
+import dev.zacsweers.metro.Provides
+import dev.zacsweers.metro.Qualifier
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
-/** Interface to allow abstracting individual [CoroutineDispatcher]s out of class dependencies. */
-interface DispatcherProvider {
+@Qualifier
+@Retention(AnnotationRetention.RUNTIME)
+@Target(
+  AnnotationTarget.VALUE_PARAMETER,
+  AnnotationTarget.LOCAL_VARIABLE,
+  AnnotationTarget.FUNCTION,
+)
+annotation class DatabaseReadDispatcher
 
+@Qualifier
+@Retention(AnnotationRetention.RUNTIME)
+@Target(
+  AnnotationTarget.VALUE_PARAMETER,
+  AnnotationTarget.LOCAL_VARIABLE,
+  AnnotationTarget.FUNCTION,
+)
+annotation class DatabaseWriteDispatcher
+
+@Qualifier
+@Retention(AnnotationRetention.RUNTIME)
+@Target(
+  AnnotationTarget.VALUE_PARAMETER,
+  AnnotationTarget.LOCAL_VARIABLE,
+  AnnotationTarget.FUNCTION,
+)
+annotation class MainDispatcher
+
+@Qualifier
+@Retention(AnnotationRetention.RUNTIME)
+@Target(
+  AnnotationTarget.VALUE_PARAMETER,
+  AnnotationTarget.LOCAL_VARIABLE,
+  AnnotationTarget.FUNCTION,
+)
+annotation class IODispatcher
+
+@Qualifier @Retention(AnnotationRetention.RUNTIME) annotation class DefaultDispatcher
+
+@BindingContainer
+@ContributesTo(AppScope::class)
+object DispatcherProvider {
+
+  @[Provides MainDispatcher]
   fun main(): CoroutineDispatcher = Dispatchers.Main
 
+  @[Provides DefaultDispatcher]
   fun default(): CoroutineDispatcher = Dispatchers.Default
 
+  @[Provides IODispatcher]
   fun io(): CoroutineDispatcher = Dispatchers.IO
 
+  @[Provides DatabaseReadDispatcher]
   fun databaseRead(): CoroutineDispatcher =
     Dispatchers.IO.limitedParallelism(4, name = "DatabaseRead")
 
+  @[Provides DatabaseWriteDispatcher]
   fun databaseWrite(): CoroutineDispatcher =
     Dispatchers.IO.limitedParallelism(1, name = "DatabaseWrite")
 }
-
-/** Concrete type for [DispatcherProvider] with all the defaults from the class. */
-class DefaultDispatcherProvider @Inject constructor() : DispatcherProvider

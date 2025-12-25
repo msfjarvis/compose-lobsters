@@ -15,20 +15,19 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.PreferencesFileSerializer
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStoreFile
-import com.deliveryhero.whetstone.app.ApplicationScope
-import com.squareup.anvil.annotations.ContributesTo
-import com.squareup.anvil.annotations.optional.ForScope
-import dagger.Module
-import dagger.Provides
-import dagger.multibindings.IntoSet
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.BindingContainer
+import dev.zacsweers.metro.ContributesTo
+import dev.zacsweers.metro.IntoSet
+import dev.zacsweers.metro.Provides
 import io.github.aakira.napier.Napier
 
-@Module
-@ContributesTo(ApplicationScope::class)
+@BindingContainer
+@ContributesTo(AppScope::class)
 object PreferencesStoreModule {
   @Provides
   fun providePreferencesDataStore(
-    @ForScope(ApplicationScope::class) context: Context,
+    context: Context,
     migrations: Set<@JvmSuppressWildcards DataMigration<@JvmSuppressWildcards Preferences>>,
   ): DataStore<@JvmSuppressWildcards Preferences> {
     return DataStoreFactory.create(

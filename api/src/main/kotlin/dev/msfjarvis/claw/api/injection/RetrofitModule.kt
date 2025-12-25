@@ -6,20 +6,20 @@
  */
 package dev.msfjarvis.claw.api.injection
 
-import com.deliveryhero.whetstone.app.ApplicationScope
 import com.slack.eithernet.integration.retrofit.ApiResultCallAdapterFactory
 import com.slack.eithernet.integration.retrofit.ApiResultConverterFactory
-import com.squareup.anvil.annotations.ContributesTo
-import dagger.Module
-import dagger.Provides
-import dagger.multibindings.IntKey
-import dagger.multibindings.IntoMap
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.api.LobstersSearchApi
 import dev.msfjarvis.claw.api.converters.CSRFTokenConverter
 import dev.msfjarvis.claw.api.converters.SearchConverter
-import javax.inject.Named
-import javax.inject.Qualifier
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.BindingContainer
+import dev.zacsweers.metro.ContributesTo
+import dev.zacsweers.metro.IntKey
+import dev.zacsweers.metro.IntoMap
+import dev.zacsweers.metro.Named
+import dev.zacsweers.metro.Provides
+import dev.zacsweers.metro.Qualifier
 import okhttp3.OkHttpClient
 import retrofit2.CallAdapter
 import retrofit2.Converter
@@ -33,8 +33,8 @@ import retrofit2.create
  * uses [IntoMap] with [IntKey]s to fake the presence of a fixed order by sorting on the key of the
  * injected [Map]s when injecting them into [Retrofit].
  */
-@Module
-@ContributesTo(ApplicationScope::class)
+@BindingContainer
+@ContributesTo(AppScope::class)
 object RetrofitModule {
   @Provides
   fun provideRetrofit(

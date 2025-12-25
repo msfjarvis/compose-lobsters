@@ -10,19 +10,23 @@ import android.content.Context
 import androidx.glance.appwidget.updateAll
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.deliveryhero.whetstone.worker.ContributesWorker
-import com.deliveryhero.whetstone.worker.WorkerScope
 import com.slack.eithernet.ApiResult.Success
-import com.squareup.anvil.annotations.optional.ForScope
 import dev.msfjarvis.claw.android.glance.SavedPostsWidget
 import dev.msfjarvis.claw.android.viewmodel.SavedPostsRepository
 import dev.msfjarvis.claw.api.LobstersApi
+import dev.msfjarvis.claw.core.injection.InjectedWorkerFactory
+import dev.msfjarvis.claw.core.injection.WorkerKey
 import dev.msfjarvis.claw.model.UIPost
 import dev.msfjarvis.claw.model.fromSavedPost
 import dev.msfjarvis.claw.model.toSavedPost
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.Assisted
+import dev.zacsweers.metro.AssistedFactory
+import dev.zacsweers.metro.AssistedInject
+import dev.zacsweers.metro.ContributesIntoMap
+import dev.zacsweers.metro.binding
 import java.time.Instant
 import java.time.format.DateTimeFormatter
-import javax.inject.Inject
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -33,15 +37,13 @@ import kotlinx.coroutines.flow.map
  * saved posts that were saved before comment counts were added to be able to show a comment count
  * and for new-enough posts that are still getting comments to have an accurate one.
  */
-@ContributesWorker
-class SavedPostUpdaterWorker
-@Inject
-constructor(
-  @ForScope(WorkerScope::class) appContext: Context,
-  workerParams: WorkerParameters,
+@AssistedInject
+class SavedPostUpdaterWorker(
+  context: Context,
+  @Assisted params: WorkerParameters,
   private val savedPostsRepository: SavedPostsRepository,
   private val lobstersApi: LobstersApi,
-) : CoroutineWorker(appContext, workerParams) {
+) : CoroutineWorker(context, params) {
   override suspend fun doWork(): Result {
     val postsToUpdate =
       savedPostsRepository.savedPosts
@@ -74,4 +76,12 @@ constructor(
       .updateAll(applicationContext)
     return Result.success()
   }
+
+  @WorkerKey(SavedPostUpdaterWorker::class)
+  @ContributesIntoMap(
+    AppScope::class,
+    binding = binding<InjectedWorkerFactory.WorkerInstanceFactory<*>>(),
+  )
+  @AssistedFactory
+  abstract class Factory : InjectedWorkerFactory.WorkerInstanceFactory<SavedPostUpdaterWorker>
 }

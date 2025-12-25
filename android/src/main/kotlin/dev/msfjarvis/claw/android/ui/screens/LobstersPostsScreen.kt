@@ -33,6 +33,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.UriHandler
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -40,7 +41,6 @@ import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.deliveryhero.whetstone.compose.injectedViewModel
 import com.mikepenz.aboutlibraries.ui.compose.android.produceLibraries
 import com.mikepenz.aboutlibraries.ui.compose.m3.LibrariesContainer
 import dev.chrisbanes.haze.HazeState
@@ -68,8 +68,8 @@ import dev.msfjarvis.claw.android.ui.navigation.User
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.common.comments.CommentsPage
 import dev.msfjarvis.claw.common.tags.TagList
-import dev.msfjarvis.claw.common.urllauncher.UrlLauncher
 import dev.msfjarvis.claw.common.user.UserProfile
+import dev.zacsweers.metrox.viewmodel.metroViewModel
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.coroutines.launch
@@ -77,11 +77,11 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun LobstersPostsScreen(
-  urlLauncher: UrlLauncher,
+  uriHandler: UriHandler,
   windowSizeClass: WindowSizeClass,
   setWebUri: (String?) -> Unit,
   modifier: Modifier = Modifier,
-  viewModel: ClawViewModel = injectedViewModel(),
+  viewModel: ClawViewModel = metroViewModel(),
 ) {
   val libraries by produceLibraries()
   val clawBackStack = remember { ClawBackStack(Hottest) }
@@ -130,7 +130,7 @@ fun LobstersPostsScreen(
   // endregion
 
   val postActions = remember {
-    PostActions(context, urlLauncher, viewModel) { clawBackStack.add(Comments(it)) }
+    PostActions(context, uriHandler, viewModel) { clawBackStack.add(Comments(it)) }
   }
 
   Scaffold(
@@ -246,7 +246,7 @@ fun LobstersPostsScreen(
                 openOutputStream = context.contentResolver::openOutputStream,
                 openLibrariesScreen = { clawBackStack.add(AboutLibraries) },
                 openRepository = {
-                  urlLauncher.openUri("https://github.com/msfjarvis/compose-lobsters")
+                  uriHandler.openUri("https://github.com/msfjarvis/compose-lobsters")
                 },
                 importPosts = viewModel::importPosts,
                 exportPostsAsJson = viewModel::exportPostsAsJson,

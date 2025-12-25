@@ -7,10 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Avoid crash from trying to import invalid backups
+
 ### Changed
 
 - Internal dependency injection improvements have made widget
   handling more robust.
+- Increased network timeouts
+- Automatically retry requests when throttled by lobste.rs
+- Background job for updating saved posts now staggers API
+  requests to avoid rate limits.
 
 ## [1.57.0] - 2025-12-07
 

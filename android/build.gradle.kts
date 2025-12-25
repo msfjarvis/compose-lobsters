@@ -105,7 +105,6 @@ dependencies {
   implementation(projects.database.core)
   implementation(projects.database.impl)
   implementation(projects.model)
-  implementation(projects.web)
 
   kapt(libs.dagger.compiler)
   kapt(libs.build.kotlin.metadata)

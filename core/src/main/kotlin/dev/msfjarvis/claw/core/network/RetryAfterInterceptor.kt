@@ -6,6 +6,8 @@
  */
 package dev.msfjarvis.claw.core.network
 
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesIntoSet
 import dev.zacsweers.metro.Inject
 import java.time.Instant
 import java.time.ZonedDateTime
@@ -21,6 +23,7 @@ import okhttp3.Response
  * is triggered. This handles both HTTP 429 (Too Many Requests) and other status codes that may
  * include the Retry-After header.
  */
+@ContributesIntoSet(AppScope::class)
 @Inject
 class RetryAfterInterceptor : Interceptor {
   override fun intercept(chain: Interceptor.Chain): Response {

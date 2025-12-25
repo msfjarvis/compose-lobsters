@@ -6,12 +6,9 @@
  */
 package dev.msfjarvis.claw.common.user
 
-import android.app.Application
-import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import com.github.michaelbull.result.coroutines.runSuspendCatching
 import com.github.michaelbull.result.fold
@@ -28,7 +25,6 @@ import dev.msfjarvis.claw.model.User
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.Inject
-import dev.zacsweers.metro.binding
 import dev.zacsweers.metrox.viewmodel.ViewModelKey
 import java.io.IOException
 import kotlinx.coroutines.CoroutineDispatcher
@@ -36,12 +32,11 @@ import kotlinx.coroutines.withContext
 
 @Inject
 @ViewModelKey(UserProfileViewModel::class)
-@ContributesIntoMap(AppScope::class, binding = binding<ViewModel>())
+@ContributesIntoMap(AppScope::class)
 class UserProfileViewModel(
-  context: Context,
   private val api: LobstersApi,
   @IODispatcher private val ioDispatcher: CoroutineDispatcher,
-) : AndroidViewModel(context as Application) {
+) : ViewModel() {
 
   var userProfile by mutableStateOf<NetworkState>(Loading)
 

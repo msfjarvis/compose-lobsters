@@ -11,7 +11,6 @@ import android.content.Context
 import android.content.Intent
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
-import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.Inject
@@ -21,10 +20,10 @@ import dev.zacsweers.metrox.android.BroadcastReceiverKey
 @ContributesIntoMap(AppScope::class, binding<BroadcastReceiver>())
 @BroadcastReceiverKey(WidgetReceiver::class)
 @Inject
-class WidgetReceiver(private val viewModel: ClawViewModel) : GlanceAppWidgetReceiver() {
+class WidgetReceiver() : GlanceAppWidgetReceiver() {
 
   override val glanceAppWidget: GlanceAppWidget
-    get() = SavedPostsWidget(viewModel.savedPosts)
+    get() = SavedPostsWidget()
 
   override fun onReceive(context: Context, intent: Intent) {
     super.onReceive(context, intent)

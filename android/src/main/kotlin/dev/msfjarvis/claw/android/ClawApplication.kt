@@ -20,7 +20,8 @@ import dev.zacsweers.metrox.android.MetroApplication
 
 class ClawApplication : Application(), MetroApplication, Configuration.Provider {
 
-  private val appGraph by lazy { createGraphFactory<AppGraph.Factory>().create(this) }
+  val appGraph by lazy { createGraphFactory<AppGraph.Factory>().create(this) }
+
   override val appComponentProviders: MetroAppComponentProviders
     get() = appGraph
 

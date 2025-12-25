@@ -26,17 +26,21 @@ import androidx.glance.layout.padding
 import androidx.glance.material3.ColorProviders
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
+import dev.msfjarvis.claw.android.ClawApplication
 import dev.msfjarvis.claw.common.theme.DarkThemeColors
 import dev.msfjarvis.claw.common.theme.LightThemeColors
 import dev.msfjarvis.claw.model.UIPost
+import dev.msfjarvis.claw.model.fromSavedPost
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 
-class SavedPostsWidget(private val posts: Flow<List<UIPost>>) : GlanceAppWidget() {
+class SavedPostsWidget() : GlanceAppWidget() {
+
   override suspend fun provideGlance(context: Context, id: GlanceId) {
-    val postWindow = posts.first().take(50).toImmutableList()
+    val posts =
+      (context.applicationContext as ClawApplication).appGraph.savedPostsRepository.savedPosts
+    val postWindow = posts.first().take(50).map(UIPost::fromSavedPost).toImmutableList()
     provideContent {
       GlanceTheme(
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) GlanceTheme.colors

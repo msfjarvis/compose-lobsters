@@ -125,7 +125,7 @@ class ClawViewModel(
   fun toggleSave(post: UIPost) {
     viewModelScope.launch {
       savedPostsRepository.toggleSave(post)
-      withContext(mainDispatcher) { SavedPostsWidget(savedPosts).updateAll(getApplication()) }
+      withContext(mainDispatcher) { SavedPostsWidget().updateAll(getApplication()) }
     }
   }
 

@@ -9,6 +9,7 @@ package dev.msfjarvis.claw.android.injection
 import android.content.Context
 import androidx.work.ListenableWorker
 import androidx.work.WorkManager
+import dev.msfjarvis.claw.android.viewmodel.SavedPostsRepository
 import dev.msfjarvis.claw.core.injection.AppPlugin
 import dev.msfjarvis.claw.core.injection.InjectedWorkerFactory
 import dev.zacsweers.metro.AppScope
@@ -36,6 +37,8 @@ interface AppGraph : MetroAppComponentProviders, ViewModelGraph {
     Map<KClass<out ListenableWorker>, Provider<InjectedWorkerFactory.WorkerInstanceFactory<*>>>
 
   val workerFactory: InjectedWorkerFactory
+
+  val savedPostsRepository: SavedPostsRepository
 
   @DependencyGraph.Factory
   fun interface Factory {

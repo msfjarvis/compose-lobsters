@@ -16,8 +16,6 @@ import dev.msfjarvis.claw.android.viewmodel.SavedPostsRepository
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.core.injection.InjectedWorkerFactory
 import dev.msfjarvis.claw.core.injection.WorkerKey
-import dev.msfjarvis.claw.model.UIPost
-import dev.msfjarvis.claw.model.fromSavedPost
 import dev.msfjarvis.claw.model.toSavedPost
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.Assisted
@@ -29,7 +27,6 @@ import java.time.Instant
 import java.time.format.DateTimeFormatter
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 
 /**
  * WorkManager-backed [CoroutineWorker] that gets all the posts from [SavedPostsRepository], fetches
@@ -69,11 +66,8 @@ class SavedPostUpdaterWorker(
     }
 
     savedPostsRepository.savePosts(updatedPosts)
+    SavedPostsWidget().updateAll(applicationContext)
 
-    SavedPostsWidget(
-        savedPostsRepository.savedPosts.map { it.map(UIPost.Companion::fromSavedPost) }
-      )
-      .updateAll(applicationContext)
     return Result.success()
   }
 

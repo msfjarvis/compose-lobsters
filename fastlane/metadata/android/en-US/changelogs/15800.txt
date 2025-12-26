@@ -1,0 +1,11 @@
+### Fixed
+
+- Avoid crash from trying to import invalid backups
+- Avoid crash when posts move between pages
+
+### Changed
+
+- Widget update is more reliable
+- Increased network timeouts
+- Better network retries and rate limit avoidance
+- Temporarily remove comment count to fix crashes

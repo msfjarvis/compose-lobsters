@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Avoid crash from trying to import invalid backups
+- Avoid crash when posts move between pages
 
 ### Changed
 

@@ -23,6 +23,7 @@ import dev.zacsweers.metro.SingleIn
 import io.github.aakira.napier.Napier
 import io.requery.android.database.sqlite.RequerySQLiteOpenHelperFactory
 import io.requery.android.database.sqlite.SQLiteDatabase
+import io.sentry.android.sqlite.SentrySupportSQLiteOpenHelper
 
 @BindingContainer
 @ContributesTo(AppScope::class)
@@ -41,7 +42,10 @@ object DatabaseModule {
           schema = LobstersDatabase.Schema,
           context = context,
           name = LOBSTERS_DATABASE_NAME,
-          factory = RequerySQLiteOpenHelperFactory(),
+          factory = { configuration ->
+            val delegate = RequerySQLiteOpenHelperFactory().create(configuration)
+            SentrySupportSQLiteOpenHelper.create(delegate)
+          },
           callback =
             object : AndroidSqliteDriver.Callback(LobstersDatabase.Schema) {
               override fun onConfigure(db: SupportSQLiteDatabase) {

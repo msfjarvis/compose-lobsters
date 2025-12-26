@@ -24,6 +24,7 @@ dependencies {
   implementation(libs.sqldelight.androidDriver)
   implementation(libs.sqldelight.primitiveAdapters)
   implementation(libs.sqlite.android)
+  implementation(libs.sentry.android.sqlite)
 
   debugImplementation(libs.napier.android.debug)
 

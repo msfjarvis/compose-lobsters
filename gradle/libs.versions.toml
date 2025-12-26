@@ -23,7 +23,7 @@ retrofit = "3.0.0"
 sentry-sdk = "8.29.0"
 serialization = "1.9.0"
 sqldelight = "2.2.1"
-sqlite = "2.5.2"
+sqlite = "2.6.2"
 workmanager = "2.11.0"
 
 [libraries]

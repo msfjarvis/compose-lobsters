@@ -31,7 +31,6 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemContentType
-import androidx.paging.compose.itemKey
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.posts.TEST_POST
 import dev.msfjarvis.claw.common.posts.TEST_POST_ACTIONS
@@ -77,7 +76,10 @@ fun NetworkPosts(
       LazyColumn(contentPadding = contentPadding, state = listState) {
         items(
           count = lazyPagingItems.itemCount,
-          key = lazyPagingItems.itemKey { it.shortId },
+          key = { index ->
+            val itemId = lazyPagingItems[index]?.shortId ?: "placeholder"
+            "${itemId}_$index"
+          },
           contentType = lazyPagingItems.itemContentType { "LobstersItem" },
         ) { index ->
           val item = lazyPagingItems[index]

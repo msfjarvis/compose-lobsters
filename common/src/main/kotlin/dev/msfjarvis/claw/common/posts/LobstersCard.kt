@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -30,8 +29,6 @@ import androidx.compose.material.icons.automirrored.filled.Comment
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material3.Badge
-import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -89,12 +86,11 @@ fun LobstersCard(post: UIPost, postActions: PostActions, modifier: Modifier = Mo
         SaveButton(isSaved = { savedState }, onClick = { postActions.toggleSave(post) })
         HorizontalDivider(modifier = Modifier.width(48.dp))
         CommentsButton(
-          commentCount = post.commentCount,
           modifier =
             Modifier.clickable(
               role = Role.Button,
               onClick = { postActions.viewComments(post.shortId) },
-            ),
+            )
         )
       }
     }
@@ -189,36 +185,13 @@ private fun SaveButton(isSaved: () -> Boolean, onClick: () -> Unit, modifier: Mo
 }
 
 @Composable
-private fun CommentsButton(commentCount: Int, modifier: Modifier = Modifier) {
-  val offset = run {
-    var count = commentCount
-    var digits = 1
-    while (count > 10) {
-      count /= 10
-      digits += 1
-    }
-    if (digits < 3) 0 else digits * -2
-  }
-  BadgedBox(
-    modifier = modifier.minimumInteractiveComponentSize(),
-    badge = {
-      Badge(
-        containerColor = MaterialTheme.colorScheme.tertiaryContainer,
-        modifier = Modifier.absoluteOffset(x = offset.dp, y = (-8).dp),
-      ) {
-        Text(
-          text = commentCount.toString(),
-          color = MaterialTheme.colorScheme.onTertiaryContainer,
-          style = MaterialTheme.typography.labelMedium,
-        )
-      }
-    },
-  ) {
+private fun CommentsButton(modifier: Modifier = Modifier) {
+  Box(modifier = modifier.minimumInteractiveComponentSize()) {
     Icon(
       imageVector = Icons.AutoMirrored.Filled.Comment,
       tint = MaterialTheme.colorScheme.secondary,
       contentDescription = "Open comments",
-      modifier = Modifier.testTag("comments_button"),
+      modifier = Modifier.align(Alignment.Center).testTag("comments_button"),
     )
   }
 }

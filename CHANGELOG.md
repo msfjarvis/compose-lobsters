@@ -7,18 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.58.0] - 2025-12-26
+
 ### Fixed
 
 - Avoid crash from trying to import invalid backups
+- Avoid crash when posts move between pages
 
 ### Changed
 
-- Internal dependency injection improvements have made widget
-  handling more robust.
+- Widget update is more reliable
 - Increased network timeouts
-- Automatically retry requests when throttled by lobste.rs
-- Background job for updating saved posts now staggers API
-  requests to avoid rate limits.
+- Better network retries and rate limit avoidance
+- Temporarily remove comment count to fix crashes
 
 ## [1.57.0] - 2025-12-07
 
@@ -534,7 +535,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.57.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.58.0...HEAD
+[1.58.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.57.0...v1.58.0
 [1.57.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.55.0...v1.57.0
 [1.55.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.54.0...v1.55.0
 [1.54.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.53.0...v1.54.0

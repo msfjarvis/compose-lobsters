@@ -9,10 +9,11 @@ SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
 SCREENSHOT_DIR="${SCRIPT_DIR}"/../screenshots
 
 function generate_grid() {
-  local MONTAGE_INPUT BACKGROUND_COLOR OUTPUT_FILE
+  local MONTAGE_INPUT BACKGROUND_COLOR OUTPUT_FILE START_NUMBER
   MONTAGE_INPUT="$(mktemp)"
   OUTPUT_FILE="${1:?}"
   BACKGROUND_COLOR="${2:?}"
+  START_NUMBER="${3:?}"
   # Run the Maestro flow to generate the screenshots
   "${SCRIPT_DIR}"/run-maestro-flows.sh feature_graphic.yml
 
@@ -37,12 +38,21 @@ function generate_grid() {
 
   # Remove the now-useless PNG and montage input text
   rm "${OUTPUT_FILE}.png" "${MONTAGE_INPUT}"
+
+  local FASTLANE_SCREENSHOTS="${SCRIPT_DIR}"/../fastlane/metadata/android/en-US/images/phoneScreenshots
+  local COUNTER="${START_NUMBER}"
+  for screenshot in HottestPosts CommentsPage SavedPosts SearchPage SettingsPage; do
+    if [[ -f "${SCREENSHOT_DIR}/${screenshot}.png" ]]; then
+      cp "${SCREENSHOT_DIR}/${screenshot}.png" "${FASTLANE_SCREENSHOTS}/$(printf '%02d' "${COUNTER}").png"
+      ((COUNTER++))
+    fi
+  done
 }
 
 adb shell "cmd uimode night no"
 
-generate_grid "${SCRIPT_DIR}"/../.github/readme_feature_light white
+generate_grid "${SCRIPT_DIR}"/../.github/readme_feature_light white 1
 
 adb shell "cmd uimode night yes"
 
-generate_grid "${SCRIPT_DIR}"/../.github/readme_feature_dark black
+generate_grid "${SCRIPT_DIR}"/../.github/readme_feature_dark black 6

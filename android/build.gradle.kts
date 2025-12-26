@@ -55,7 +55,6 @@ moduleGraphAssert {
 dependencies {
   implementation(platform(libs.androidx.compose.bom))
   implementation(platform(libs.okhttp.bom))
-  debugImplementation(libs.napier.android.debug)
   implementation(libs.aboutLibraries.compose.core)
   implementation(libs.aboutLibraries.core)
   implementation(libs.aboutLibraries.m3)
@@ -110,11 +109,14 @@ dependencies {
   implementation(libs.sqldelight.runtime)
   implementation(libs.swipe)
   implementation(libs.unfurl)
-  runtimeOnly(libs.androidx.profileinstaller)
   implementation(projects.api)
   implementation(projects.common)
   implementation(projects.core)
   implementation(projects.database.core)
   implementation(projects.database.impl)
   implementation(projects.model)
+
+  debugImplementation(libs.napier.android.debug)
+
+  runtimeOnly(libs.androidx.profileinstaller)
 }

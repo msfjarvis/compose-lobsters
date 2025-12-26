@@ -38,7 +38,6 @@ dependencies {
   api(projects.database.core)
   api(projects.model)
 
-  debugImplementation(libs.napier.android.debug)
   implementation(platform(libs.androidx.compose.bom))
   implementation(libs.androidx.annotation)
   implementation(libs.androidx.browser)
@@ -63,14 +62,16 @@ dependencies {
   implementation(libs.coil3.plain)
   implementation(libs.eithernet)
   implementation(libs.htmlconverter)
-  implementation(libs.kotlinx.collections.immutable)
-  implementation(libs.kotlinx.coroutines.core)
   implementation(libs.kotlinResult)
   implementation(libs.kotlinResult.coroutines)
-  implementation(libs.napier)
+  implementation(libs.kotlinx.collections.immutable)
+  implementation(libs.kotlinx.coroutines.core)
   implementation(libs.metrox.viewmodel)
   implementation(libs.metrox.viewmodel.compose)
+  implementation(libs.napier)
   implementation(libs.sqldelight.runtime)
+
+  debugImplementation(libs.napier.android.debug)
 
   compileOnly(libs.androidx.compose.ui.tooling.preview)
 

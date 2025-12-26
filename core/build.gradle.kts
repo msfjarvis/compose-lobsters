@@ -14,18 +14,19 @@ plugins {
 android { namespace = "dev.msfjarvis.claw.core" }
 
 dependencies {
-  api(libs.kotlinx.coroutines.core)
-  api(libs.kotlinx.serialization.json)
-  api(libs.okhttp.loggingInterceptor)
-  api(libs.napier)
-  api(libs.okhttp.core)
-  api(libs.retrofit)
-  api(libs.metrox.viewmodel)
   api(libs.androidx.lifecycle.viewmodel)
   api(libs.androidx.work.runtime)
+  api(libs.kotlinx.coroutines.core)
+  api(libs.kotlinx.serialization.json)
+  api(libs.metrox.viewmodel)
+  api(libs.napier)
+  api(libs.okhttp.core)
+  api(libs.okhttp.loggingInterceptor)
+  api(libs.retrofit)
 
-  debugImplementation(libs.napier.android.debug)
   implementation(platform(libs.okhttp.bom))
   implementation(libs.kotlinx.serialization.core)
   implementation(libs.retrofit.kotlinxSerializationConverter)
+
+  debugImplementation(libs.napier.android.debug)
 }

@@ -76,5 +76,6 @@
       android:value="true" />
     <!-- set the environment for this build -->
     <meta-data android:name="io.sentry.environment" android:value="${sentryEnvironment}" />
+    <meta-data android:name="io.sentry.auto-init" android:value="false" />
   </application>
 </manifest>

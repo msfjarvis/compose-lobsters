@@ -1,7 +1,9 @@
 [versions]
 aboutLibraries = "13.2.1"
 agp = "8.13.2"
+annotation = "1.9.1"
 coil3 = "3.3.0"
+compose-bom = "2025.12.01"
 coroutines = "1.10.2"
 datastore = "1.2.0"
 eithernet = "2.0.0"
@@ -13,44 +15,66 @@ kotlin = "2.3.0"
 kotlinResult = "2.1.0"
 lifecycle = "2.10.0"
 metro = "0.9.2"
+napier = "2.7.1"
 navigation3 = "1.0.0"
 navigation3-material = "1.3.0-alpha05"
+paging = "3.3.6"
 retrofit = "3.0.0"
 sentry-sdk = "8.29.0"
 serialization = "1.9.0"
 sqldelight = "2.2.1"
+sqlite = "2.5.2"
 workmanager = "2.11.0"
 
 [libraries]
+aboutLibraries-compose-core = { module = "com.mikepenz:aboutlibraries-compose-core", version.ref = "aboutLibraries" }
+aboutLibraries-core = { module = "com.mikepenz:aboutlibraries-core", version.ref = "aboutLibraries" }
 aboutLibraries-m3 = { module = "com.mikepenz:aboutlibraries-compose-m3", version.ref = "aboutLibraries" }
 android-security-lints = "com.android.security.lint:lint:1.0.4"
+androidx-activity = "androidx.activity:activity:1.12.2"
 androidx-activity-compose = "androidx.activity:activity-compose:1.12.2"
+androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "annotation" }
 androidx-browser = "androidx.browser:browser:1.9.0"
 androidx-compose-animation = { module = "androidx.compose.animation:animation" }
-androidx-compose-bom = "androidx.compose:compose-bom-alpha:2025.12.01"
+androidx-compose-animation-core = { module = "androidx.compose.animation:animation-core" }
+androidx-compose-bom = { module = "androidx.compose:compose-bom-alpha", version.ref = "compose-bom" }
 androidx-compose-foundation = { module = "androidx.compose.foundation:foundation" }
+androidx-compose-foundation-layout = { module = "androidx.compose.foundation:foundation-layout" }
 androidx-compose-glance = { module = "androidx.glance:glance-appwidget", version.ref = "glance" }
+androidx-compose-glance-core = { module = "androidx.glance:glance", version.ref = "glance" }
 androidx-compose-glance-m3 = { module = "androidx.glance:glance-material3", version.ref = "glance" }
+androidx-compose-material-icons-core = { module = "androidx.compose.material:material-icons-core" }
 androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
 androidx-compose-material3 = { module = "androidx.compose.material3:material3" }
+androidx-compose-material3-adaptive = { module = "androidx.compose.material3.adaptive:adaptive", version.ref = "navigation3-material" }
+androidx-compose-material3-adaptive-layout = { module = "androidx.compose.material3.adaptive:adaptive-layout", version.ref = "navigation3-material" }
 androidx-compose-material3-window-size = { module = "androidx.compose.material3:material3-window-size-class" }
 androidx-compose-runtime = { module = "androidx.compose.runtime:runtime" }
+androidx-compose-runtime-annotation = { module = "androidx.compose.runtime:runtime-annotation" }
 androidx-compose-ui = { module = "androidx.compose.ui:ui" }
+androidx-compose-ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
 androidx-compose-ui-text = { module = "androidx.compose.ui:ui-text" }
 androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 androidx-compose-ui-unit = { module = "androidx.compose.ui:ui-unit" }
 androidx-core = "androidx.core:core:1.17.0"
+androidx-core-ktx = "androidx.core:core-ktx:1.17.0"
 androidx-core-splashscreen = "androidx.core:core-splashscreen:1.2.0"
 androidx-datastore = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
+androidx-datastore-core = { module = "androidx.datastore:datastore-core", version.ref = "datastore" }
+androidx-datastore-preferences-core = { module = "androidx.datastore:datastore-preferences-core", version.ref = "datastore" }
+androidx-lifecycle-common = { module = "androidx.lifecycle:lifecycle-common", version.ref = "lifecycle" }
 androidx-lifecycle-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
+androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle" }
 androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", version.ref = "lifecycle" }
 androidx-lint-gradle = "androidx.lint:lint-gradle:1.0.0-alpha05"
 androidx-material3-navigation3 = { group = "androidx.compose.material3.adaptive", name = "adaptive-navigation3", version.ref = "navigation3-material" }
 androidx-navigation3-runtime = { module = "androidx.navigation3:navigation3-runtime", version.ref = "navigation3" }
 androidx-navigation3-ui = { module = "androidx.navigation3:navigation3-ui", version.ref = "navigation3" }
-androidx-paging-compose = "androidx.paging:paging-compose:3.3.6"
+androidx-paging-common = { module = "androidx.paging:paging-common", version.ref = "paging" }
+androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "paging" }
 androidx-profileinstaller = "androidx.profileinstaller:profileinstaller:1.4.1"
+androidx-sqlite = { module = "androidx.sqlite:sqlite", version.ref = "sqlite" }
 androidx-work-runtime = { module = "androidx.work:work-runtime", version.ref = "workmanager" }
 build-agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 build-cachefix = "org.gradle.android.cache-fix:org.gradle.android.cache-fix.gradle.plugin:3.0.3"
@@ -61,7 +85,9 @@ build-sentry = "io.sentry.android.gradle:io.sentry.android.gradle.gradle.plugin:
 build-spotless = "com.diffplug.spotless:spotless-plugin-gradle:8.1.0"
 build-vcu = "nl.littlerobots.version-catalog-update:nl.littlerobots.version-catalog-update.gradle.plugin:1.0.1"
 coil3-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil3" }
+coil3-core = { module = "io.coil-kt.coil3:coil-core", version.ref = "coil3" }
 coil3-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil3" }
+coil3-plain = { module = "io.coil-kt.coil3:coil", version.ref = "coil3" }
 eithernet = { module = "com.slack.eithernet:eithernet", version.ref = "eithernet" }
 eithernet-integration-retrofit = { module = "com.slack.eithernet:eithernet-integration-retrofit", version.ref = "eithernet" }
 eithernet-test-fixtures = { module = "com.slack.eithernet:eithernet-test-fixtures", version.ref = "eithernet" }
@@ -85,12 +111,14 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 metrox-android = { module = "dev.zacsweers.metro:metrox-android", version.ref = "metro" }
 metrox-viewmodel = { module = "dev.zacsweers.metro:metrox-viewmodel", version.ref = "metro" }
 metrox-viewmodel-compose = { module = "dev.zacsweers.metro:metrox-viewmodel-compose", version.ref = "metro" }
-napier = "io.github.aakira:napier:2.7.1"
+napier = { module = "io.github.aakira:napier", version.ref = "napier" }
+napier-android-debug = { module = "io.github.aakira:napier-android-debug", version.ref = "napier" }
 okhttp-bom = "com.squareup.okhttp3:okhttp-bom:5.3.2"
 okhttp-core = { module = "com.squareup.okhttp3:okhttp" }
 okhttp-loggingInterceptor = { module = "com.squareup.okhttp3:logging-interceptor" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-kotlinxSerializationConverter = { module = "com.squareup.retrofit2:converter-kotlinx-serialization", version.ref = "retrofit" }
+sentry-android-core = { module = "io.sentry:sentry-android-core", version.ref = "sentry-sdk" }
 sentry-bom = { module = "io.sentry:sentry-bom", version.ref = "sentry-sdk" }
 slack-compose-lints = "com.slack.lint.compose:compose-lint-checks:1.4.2"
 slack-lints = "com.slack.lint:slack-lint-checks:0.11.1"
@@ -99,10 +127,13 @@ sqldelight-dialect338 = { module = "app.cash.sqldelight:sqlite-3-38-dialect", ve
 sqldelight-extensions-coroutines = { module = "app.cash.sqldelight:coroutines-extensions-jvm", version.ref = "sqldelight" }
 sqldelight-jvmDriver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 sqldelight-primitiveAdapters = { module = "app.cash.sqldelight:primitive-adapters", version.ref = "sqldelight" }
+sqldelight-runtime = { module = "app.cash.sqldelight:runtime", version.ref = "sqldelight" }
 sqlite-android = "com.github.requery:sqlite-android:3.49.0"
 swipe = "me.saket.swipe:swipe:1.3.0"
 truth = "com.google.truth:truth:1.4.5"
 unfurl = "me.saket.unfurl:unfurl:2.3.0"
+kotlin-parcelize-runtime = { module = "org.jetbrains.kotlin:kotlin-parcelize-runtime", version.ref = "kotlin" }
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
 
 [plugins]
 aboutlibraries = { id = "com.mikepenz.aboutlibraries.plugin.android", version.ref = "aboutLibraries" }

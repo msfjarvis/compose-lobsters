@@ -20,11 +20,11 @@ dependencies {
   api(libs.napier)
   api(libs.okhttp.core)
   api(libs.retrofit)
-  api(libs.metrox.android)
   api(libs.metrox.viewmodel)
   api(libs.androidx.lifecycle.viewmodel)
   api(libs.androidx.work.runtime)
 
+  debugImplementation(libs.napier.android.debug)
   implementation(platform(libs.okhttp.bom))
   implementation(libs.kotlinx.serialization.core)
   implementation(libs.retrofit.kotlinxSerializationConverter)

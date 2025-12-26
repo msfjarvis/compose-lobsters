@@ -14,12 +14,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Internal dependency injection improvements have made widget
-  handling more robust.
+- Widget update is more reliable
 - Increased network timeouts
-- Automatically retry requests when throttled by lobste.rs
-- Background job for updating saved posts now staggers API
-  requests to avoid rate limits.
+- Better network retries and rate limit avoidance
+- Temporarily remove comment count to fix crashes
 
 ## [1.57.0] - 2025-12-07
 

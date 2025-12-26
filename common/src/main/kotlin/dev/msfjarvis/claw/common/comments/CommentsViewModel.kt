@@ -6,12 +6,9 @@
  */
 package dev.msfjarvis.claw.common.comments
 
-import android.app.Application
-import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.michaelbull.result.coroutines.runSuspendCatching
@@ -28,7 +25,6 @@ import dev.msfjarvis.claw.model.toUIPost
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.Inject
-import dev.zacsweers.metro.binding
 import dev.zacsweers.metrox.viewmodel.ViewModelKey
 import java.io.IOException
 import kotlinx.coroutines.CoroutineDispatcher
@@ -37,13 +33,12 @@ import kotlinx.coroutines.withContext
 
 @Inject
 @ViewModelKey(CommentsViewModel::class)
-@ContributesIntoMap(AppScope::class, binding<ViewModel>())
+@ContributesIntoMap(AppScope::class)
 class CommentsViewModel(
-  context: Context,
   private val api: LobstersApi,
   private val commentsRepository: CommentsRepository,
   @IODispatcher private val ioDispatcher: CoroutineDispatcher,
-) : AndroidViewModel(context as Application) {
+) : ViewModel() {
   var postDetails by mutableStateOf<NetworkState>(NetworkState.Loading)
     private set
 

@@ -16,12 +16,19 @@ plugins {
 android { namespace = "dev.msfjarvis.claw.database" }
 
 dependencies {
+  api(libs.sqldelight.runtime)
   api(projects.database.core)
+
+  implementation(libs.androidx.sqlite)
   implementation(libs.napier)
   implementation(libs.sqldelight.androidDriver)
   implementation(libs.sqldelight.primitiveAdapters)
   implementation(libs.sqlite.android)
 
+  debugImplementation(libs.napier.android.debug)
+
   testImplementation(libs.sqldelight.jvmDriver)
+  testImplementation(libs.sqldelight.runtime)
+
   addTestDependencies(project)
 }

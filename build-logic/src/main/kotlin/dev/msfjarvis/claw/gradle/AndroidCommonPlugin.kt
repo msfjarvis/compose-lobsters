@@ -9,12 +9,12 @@
 package dev.msfjarvis.claw.gradle
 
 import com.android.build.api.dsl.ApplicationExtension
+import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.dsl.LibraryExtension
 import com.android.build.api.variant.ApplicationAndroidComponentsExtension
 import com.android.build.api.variant.HasAndroidTestBuilder
 import com.android.build.api.variant.HasUnitTestBuilder
 import com.android.build.api.variant.LibraryAndroidComponentsExtension
-import com.android.build.gradle.BaseExtension
 import dev.msfjarvis.claw.gradle.LintConfig.configureLint
 import org.gradle.accessors.dm.LibrariesForLibs
 import org.gradle.android.AndroidCacheFixPlugin
@@ -29,16 +29,15 @@ class AndroidCommonPlugin : Plugin<Project> {
   override fun apply(project: Project) {
     project.configureSlimTests()
     project.pluginManager.apply(AndroidCacheFixPlugin::class)
-    project.extensions.configure<BaseExtension> {
-      compileSdkVersion(36)
-      defaultConfig {
+    project.extensions.configure<CommonExtension> {
+      compileSdk { version = release(36) }
+      defaultConfig.apply {
         // Required by Metro, I don't care for this to be more broadly usable at the expense of my
         // personal development experience.
         minSdk = 28
-        targetSdk = 36
       }
 
-      packagingOptions {
+      packaging.apply {
         resources.excludes.add("**/*.version")
         resources.excludes.add("**/*.txt")
         resources.excludes.add("**/*.kotlin_module")
@@ -47,7 +46,7 @@ class AndroidCommonPlugin : Plugin<Project> {
         resources.excludes.add("**/META-INF/LGPL2.1")
       }
 
-      testOptions {
+      testOptions.apply {
         animationsDisabled = true
         unitTests.isReturnDefaultValues = true
       }

@@ -1,0 +1,13 @@
+appId: dev.msfjarvis.claw.android
+tags:
+  - feature
+  - posts
+---
+- runFlow: ../helpers/launch-app.yaml
+- tapOn: "Hottest"
+- assertVisible: "Hottest"
+- waitForAnimationToEnd
+- scroll
+- scroll
+- scroll
+- assertVisible: "Hottest"

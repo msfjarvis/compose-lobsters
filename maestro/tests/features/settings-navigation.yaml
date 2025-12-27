@@ -1,0 +1,16 @@
+appId: dev.msfjarvis.claw.android
+tags:
+  - feature
+  - settings
+---
+- runFlow: ../helpers/launch-app.yaml
+- tapOn: "Settings"
+- waitForAnimationToEnd
+- assertVisible: "Data Management"
+- assertVisible: "Import"
+- assertVisible: "Export"
+- assertVisible: "App Information"
+- assertVisible: "About"
+- scroll
+- back
+- assertVisible: "Hottest"

@@ -1,0 +1,15 @@
+appId: dev.msfjarvis.claw.android
+tags:
+  - smoke
+  - critical
+---
+- clearState
+- launchApp
+- waitForAnimationToEnd
+- assertVisible: "Hottest"
+- tapOn: "Newest"
+- assertVisible: "Newest"
+- tapOn: "Saved"
+- assertVisible: "Saved"
+- tapOn: "Hottest"
+- assertVisible: "Hottest"

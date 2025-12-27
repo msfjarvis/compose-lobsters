@@ -1,0 +1,15 @@
+appId: dev.msfjarvis.claw.android
+---
+- launchApp
+- waitForAnimationToEnd
+- assertVisible: "Hottest"
+- setOrientation: PORTRAIT
+- waitForAnimationToEnd
+- setOrientation: LANDSCAPE_LEFT
+- waitForAnimationToEnd
+- assertVisible: "Hottest"
+- setOrientation: PORTRAIT
+- waitForAnimationToEnd
+- assertVisible: "Hottest"
+- assertVisible: "Newest"
+- assertVisible: "Saved"

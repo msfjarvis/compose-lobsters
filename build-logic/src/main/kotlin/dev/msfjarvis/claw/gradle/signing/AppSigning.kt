@@ -6,8 +6,7 @@
  */
 package dev.msfjarvis.claw.gradle.signing
 
-import com.android.build.api.dsl.ApplicationBuildType
-import com.android.build.api.dsl.CommonExtension
+import com.android.build.api.dsl.ApplicationExtension
 import java.util.Properties
 import org.gradle.api.Project
 
@@ -18,7 +17,7 @@ private const val KEYSTORE_CONFIG_PATH = "keystore.properties"
 internal fun Project.configureBuildSigning() {
   val keystoreConfigFile = isolated.rootProject.projectDirectory.file(KEYSTORE_CONFIG_PATH)
   if (keystoreConfigFile.asFile.exists()) {
-    extensions.configure<CommonExtension<*, ApplicationBuildType, *, *, *, *>>("android") {
+    extensions.configure<ApplicationExtension>("android") {
       val contents = providers.fileContents(keystoreConfigFile).asText
       val keystoreProperties = Properties()
       keystoreProperties.load(contents.get().byteInputStream())

@@ -8,13 +8,11 @@ package dev.msfjarvis.claw.gradle
 
 import com.diffplug.gradle.spotless.SpotlessExtension
 import com.diffplug.gradle.spotless.SpotlessPlugin
-import com.diffplug.gradle.spotless.SpotlessTask
 import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.withType
 
 @Suppress("Unused", "UnstableApiUsage")
 class SpotlessPlugin : Plugin<Project> {
@@ -48,9 +46,6 @@ class SpotlessPlugin : Plugin<Project> {
           "<(adaptive-icon|appwidget-provider|data-extraction-rules|full-backup-content|manifest|vector|resources)",
         )
       }
-    }
-    project.tasks.withType<SpotlessTask>().configureEach {
-      notCompatibleWithConfigurationCache("https://github.com/diffplug/spotless/issues/987")
     }
   }
 

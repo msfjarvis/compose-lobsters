@@ -38,10 +38,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -62,8 +62,8 @@ import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 fun LobstersCard(post: UIPost, postActions: PostActions, modifier: Modifier = Modifier) {
-  val readState by remember(post.shortId) { derivedStateOf { postActions.isPostRead(post) } }
-  val savedState by remember(post.shortId) { derivedStateOf { postActions.isPostSaved(post) } }
+  val readState by remember(post.shortId) { mutableStateOf(postActions.isPostRead(post)) }
+  var savedState by remember(post.shortId) { mutableStateOf(postActions.isPostSaved(post)) }
   Box(
     modifier =
       modifier
@@ -86,7 +86,17 @@ fun LobstersCard(post: UIPost, postActions: PostActions, modifier: Modifier = Mo
         modifier = Modifier.wrapContentHeight(),
         horizontalAlignment = Alignment.CenterHorizontally,
       ) {
-        SaveButton(isSaved = { savedState }, onClick = { postActions.toggleSave(post) })
+        SaveButton(
+          isSaved = savedState,
+          modifier =
+            Modifier.clickable(
+              role = Role.Button,
+              onClick = {
+                postActions.toggleSave(post)
+                savedState = !savedState
+              },
+            ),
+        )
         HorizontalDivider(modifier = Modifier.width(48.dp))
         CommentsButton(
           commentCount = post.commentCount,
@@ -170,19 +180,9 @@ internal fun Submitter(
 }
 
 @Composable
-private fun SaveButton(isSaved: () -> Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
-  // Not using delegation because the compiler is incorrectly convinced the write later is useless
-  val localSavedState = remember { mutableStateOf(isSaved()) }
-  Crossfade(targetState = localSavedState.value, label = "save-button") { saved ->
-    Box(
-      modifier =
-        modifier
-          .clickable(role = Role.Button) {
-            onClick()
-            localSavedState.value = !localSavedState.value
-          }
-          .minimumInteractiveComponentSize()
-    ) {
+private fun SaveButton(isSaved: Boolean, modifier: Modifier = Modifier) {
+  Crossfade(targetState = isSaved, label = "save-button") { saved ->
+    Box(modifier = modifier.minimumInteractiveComponentSize()) {
       Icon(
         imageVector = if (saved) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
         tint = MaterialTheme.colorScheme.secondary,

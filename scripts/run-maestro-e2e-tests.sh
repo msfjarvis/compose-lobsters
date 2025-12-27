@@ -24,37 +24,37 @@ TOTAL_TESTS=0
 run_test_suite() {
     local suite_name=$1
     local suite_dir=$2
-    
+
     echo "📂 Running ${suite_name} tests..."
-    
-    if [[ ! -d "${suite_dir}" ]]; then
+
+    if [[ ! -d ${suite_dir}   ]]; then
         echo "⚠️  Directory not found: ${suite_dir}"
         return
-    fi
-    
+  fi
+
     for test_file in "${suite_dir}"/*.yaml; do
-        if [[ ! -f "${test_file}" ]]; then
+        if [[ ! -f ${test_file}   ]]; then
             continue
-        fi
-        
+    fi
+
         local test_name
         test_name=$(basename "${test_file}")
         TOTAL_TESTS=$((TOTAL_TESTS + 1))
-        
+
         echo -n "  ▶ ${test_name}... "
-        
+
         if maestro test "${test_file}" > /dev/null 2>&1; then
             echo "✅ PASSED"
             PASSED_TESTS+=("${suite_name}/${test_name}")
-        else
+    else
             echo "❌ FAILED"
             FAILED_TESTS+=("${suite_name}/${test_name}")
-        fi
-        
+    fi
+
         # Add delay between tests to prevent timing issues
         sleep 3
-    done
-    
+  done
+
     echo ""
 }
 
@@ -74,7 +74,7 @@ if [[ ${#FAILED_TESTS[@]} -gt 0 ]]; then
     echo "❌ Failed Tests:"
     for test in "${FAILED_TESTS[@]}"; do
         echo "   - ${test}"
-    done
+  done
     echo ""
     exit 1
 else

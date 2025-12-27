@@ -10,7 +10,7 @@ SCREENSHOT_DIR="${SCRIPT_DIR}"/../screenshots
 
 function run_maestro_flow() {
   local MAESTRO_FLOW="${1:?}"
-  
+
   # Create a directory for generated screenshots since Maestro puts them in $PWD
   mkdir -p "${SCREENSHOT_DIR}"
   pushd "${SCREENSHOT_DIR}" || exit 1
@@ -58,7 +58,7 @@ function generate_grid() {
     "${SCREENSHOT_DIR}"/SearchPage.png \
     "xc:${BACKGROUND_COLOR}" \
     "${SCREENSHOT_DIR}"/SettingsPage.png \
-  >> "${MONTAGE_INPUT}"
+    >> "${MONTAGE_INPUT}"
 
   # Use imagemagick to stitch the screenshots in a grid
   # Dimensions are of my Pixel 4a which I use for this purpose

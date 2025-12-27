@@ -1,0 +1,24 @@
+appId: dev.msfjarvis.claw.android
+tags:
+  - regression
+  - database
+  - critical
+---
+- launchApp
+- tapOn: "Hottest"
+- waitForAnimationToEnd
+- tapOn:
+    id: "save_button"
+    index: 0
+- waitForAnimationToEnd
+- stopApp
+- launchApp
+- tapOn: "Saved"
+- assertVisible: "Saved"
+- waitForAnimationToEnd
+- waitForAnimationToEnd
+- tapOn:
+    id: "save_button"
+    index: 0
+- waitForAnimationToEnd
+- assertVisible: "No saved posts"

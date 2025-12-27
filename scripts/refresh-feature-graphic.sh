@@ -8,6 +8,39 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
 SCREENSHOT_DIR="${SCRIPT_DIR}"/../screenshots
 
+function run_maestro_flow() {
+  local MAESTRO_FLOW="${1:?}"
+
+  # Create a directory for generated screenshots since Maestro puts them in $PWD
+  mkdir -p "${SCREENSHOT_DIR}"
+  pushd "${SCREENSHOT_DIR}" || exit 1
+  # Delete any existing screenshots
+  rm -rf ./*.png
+
+  # Allow demo mode to be enabled
+  adb shell settings put global sysui_demo_allowed 1
+
+  # Enable Demo Mode on the device with the following settings
+  # - Hide notification icons
+  # - Set clock to 1200 hrs
+  adb shell am broadcast -a com.android.systemui.demo \
+    -e command enter \
+    -e command notifications -e visible false \
+    -e command clock -e hhmm 1200
+
+  # Clear data for the app to make re-runs consistent
+  adb shell pm clear dev.msfjarvis.claw.android
+
+  # Run the Maestro Flows from $PROJECT_DIR/maestro
+  maestro test "${SCRIPT_DIR}"/../maestro/"${MAESTRO_FLOW}"
+
+  # Turn off Demo Mode on the device
+  adb shell am broadcast -a com.android.systemui.demo -e command exit
+
+  # Return to the original $PWD
+  popd || exit 1
+}
+
 function generate_grid() {
   local MONTAGE_INPUT BACKGROUND_COLOR OUTPUT_FILE START_NUMBER
   MONTAGE_INPUT="$(mktemp)"
@@ -15,7 +48,7 @@ function generate_grid() {
   BACKGROUND_COLOR="${2:?}"
   START_NUMBER="${3:?}"
   # Run the Maestro flow to generate the screenshots
-  "${SCRIPT_DIR}"/run-maestro-flows.sh feature_graphic.yml
+  run_maestro_flow feature_graphic.yml
 
   # Fill out the input files with padding
   printf "%s\n%s\n%s\n%s\n%s\n%s\n" \
@@ -25,7 +58,7 @@ function generate_grid() {
     "${SCREENSHOT_DIR}"/SearchPage.png \
     "xc:${BACKGROUND_COLOR}" \
     "${SCREENSHOT_DIR}"/SettingsPage.png \
-  >> "${MONTAGE_INPUT}"
+    >> "${MONTAGE_INPUT}"
 
   # Use imagemagick to stitch the screenshots in a grid
   # Dimensions are of my Pixel 4a which I use for this purpose

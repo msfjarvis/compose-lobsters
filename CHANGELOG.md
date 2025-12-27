@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Comment count badge has been restored
+
 ## [1.58.0] - 2025-12-26
 
 ### Fixed

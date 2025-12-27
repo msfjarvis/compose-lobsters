@@ -27,7 +27,7 @@ class SentryConfigurationPlugin : AppPlugin {
           val request = hint.getAs(OKHTTP_REQUEST, Request::class.java)
 
           // Drop all OkHttp errors that are not about Lobsters specifically.
-          if (request != null && LobstersApi.BASE_URL.contains(request.url.host)) {
+          if (request != null && !LobstersApi.BASE_URL.contains(request.url.host)) {
             null
           } else {
             event

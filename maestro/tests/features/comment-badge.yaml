@@ -1,0 +1,13 @@
+appId: dev.msfjarvis.claw.android
+---
+- launchApp
+- waitForAnimationToEnd
+- assertVisible: "Hottest"
+- waitForAnimationToEnd:
+    timeout: 5000
+- assertVisible:
+    id: "comments_button"
+- assertVisible:
+    id: "comment_badge"
+- assertVisible:
+    id: "comment_count"

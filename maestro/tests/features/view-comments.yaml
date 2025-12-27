@@ -1,0 +1,16 @@
+appId: dev.msfjarvis.claw.android
+tags:
+  - feature
+  - comments
+---
+- runFlow: ../helpers/launch-app.yaml
+- tapOn: "Hottest"
+- waitForAnimationToEnd
+- tapOn:
+    id: "comments_button"
+    index: 0
+- waitForAnimationToEnd
+- waitForAnimationToEnd
+- scroll
+- back
+- assertVisible: "Hottest"

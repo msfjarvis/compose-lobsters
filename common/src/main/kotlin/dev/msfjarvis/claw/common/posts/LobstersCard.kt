@@ -19,11 +19,14 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.layout.requiredSizeIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Comment
 import androidx.compose.material.icons.filled.AccountCircle
@@ -39,7 +42,6 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -49,6 +51,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
@@ -86,11 +89,12 @@ fun LobstersCard(post: UIPost, postActions: PostActions, modifier: Modifier = Mo
         SaveButton(isSaved = { savedState }, onClick = { postActions.toggleSave(post) })
         HorizontalDivider(modifier = Modifier.width(48.dp))
         CommentsButton(
+          commentCount = post.commentCount,
           modifier =
             Modifier.clickable(
               role = Role.Button,
               onClick = { postActions.viewComments(post.shortId) },
-            )
+            ),
         )
       }
     }
@@ -167,25 +171,30 @@ internal fun Submitter(
 
 @Composable
 private fun SaveButton(isSaved: () -> Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
-  var localSavedState by remember { mutableStateOf(isSaved()) }
-  Crossfade(targetState = localSavedState, label = "save-button") { saved ->
-    Box(modifier = modifier.minimumInteractiveComponentSize()) {
+  // Not using delegation because the compiler is incorrectly convinced the write later is useless
+  val localSavedState = remember { mutableStateOf(isSaved()) }
+  Crossfade(targetState = localSavedState.value, label = "save-button") { saved ->
+    Box(
+      modifier =
+        modifier
+          .clickable(role = Role.Button) {
+            onClick()
+            localSavedState.value = !localSavedState.value
+          }
+          .minimumInteractiveComponentSize()
+    ) {
       Icon(
         imageVector = if (saved) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
         tint = MaterialTheme.colorScheme.secondary,
         contentDescription = if (saved) "Remove from saved posts" else "Add to saved posts",
-        modifier =
-          Modifier.align(Alignment.Center).testTag("save_button").clickable(role = Role.Button) {
-            onClick()
-            localSavedState = !localSavedState
-          },
+        modifier = Modifier.align(Alignment.Center).testTag("save_button"),
       )
     }
   }
 }
 
 @Composable
-private fun CommentsButton(modifier: Modifier = Modifier) {
+private fun CommentsButton(commentCount: Int, modifier: Modifier = Modifier) {
   Box(modifier = modifier.minimumInteractiveComponentSize()) {
     Icon(
       imageVector = Icons.AutoMirrored.Filled.Comment,
@@ -193,6 +202,25 @@ private fun CommentsButton(modifier: Modifier = Modifier) {
       contentDescription = "Open comments",
       modifier = Modifier.align(Alignment.Center).testTag("comments_button"),
     )
+    if (commentCount > 0) {
+      Box(
+        modifier =
+          Modifier.align(Alignment.TopEnd)
+            .offset(x = 4.dp, y = (-4).dp)
+            .requiredSizeIn(16.dp, 16.dp)
+            .background(MaterialTheme.colorScheme.tertiaryContainer, RoundedCornerShape(16.dp))
+            .testTag("comment_badge"),
+        contentAlignment = Alignment.Center,
+      ) {
+        Text(
+          text = commentCount.toString(),
+          style = MaterialTheme.typography.labelSmall,
+          color = MaterialTheme.colorScheme.onTertiaryContainer,
+          fontSize = 9.sp,
+          modifier = Modifier.testTag("comment_count").padding(2.dp),
+        )
+      }
+    }
   }
 }
 
@@ -254,7 +282,7 @@ val TEST_POST =
     title = "Simple Anomaly Detection Using Plain SQL",
     url = "https://hakibenita.com/sql-anomaly-detection",
     createdAt = "2020-09-21T08:04:24.000-05:00",
-    commentCount = 1,
+    commentCount = 100,
     commentsUrl = "https://lobste.rs/s/q1hh1g/simple_anomaly_detection_using_plain_sql",
     submitter = "Haki",
     tags = listOf("databases", "apis"),

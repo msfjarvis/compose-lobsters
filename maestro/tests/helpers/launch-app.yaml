@@ -1,0 +1,8 @@
+# Reusable helper flow to launch the Claw app
+# Usage: Include this in other flows with:
+# - runFlow: helpers/launch-app.yaml
+appId: dev.msfjarvis.claw.android
+---
+- launchApp
+- waitForAnimationToEnd
+- assertVisible: "Hottest"

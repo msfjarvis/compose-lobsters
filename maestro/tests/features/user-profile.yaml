@@ -1,0 +1,18 @@
+appId: dev.msfjarvis.claw.android
+tags:
+  - feature
+  - user
+---
+- runFlow: ../helpers/launch-app.yaml
+- tapOn: "Hottest"
+- waitForAnimationToEnd
+- tapOn:
+    text: ".*"
+    index: 0
+- waitForAnimationToEnd
+- tapOn:
+    text: ".*"
+    index: 1
+- waitForAnimationToEnd
+- assertVisible:
+    text: ".*"

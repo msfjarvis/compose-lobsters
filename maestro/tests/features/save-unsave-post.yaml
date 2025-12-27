@@ -1,0 +1,24 @@
+appId: dev.msfjarvis.claw.android
+tags:
+  - feature
+  - critical
+  - database
+---
+- runFlow: ../helpers/launch-app.yaml
+- tapOn: "Hottest"
+- waitForAnimationToEnd
+- tapOn:
+    id: "save_button"
+    index: 0
+- waitForAnimationToEnd
+- tapOn: "Saved"
+- assertVisible: "Saved"
+- waitForAnimationToEnd
+- assertVisible:
+    id: ".*"
+    index: 0
+- tapOn:
+    id: "save_button"
+    index: 0
+- waitForAnimationToEnd
+- assertVisible: "No saved posts"

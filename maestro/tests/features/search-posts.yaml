@@ -1,0 +1,13 @@
+appId: dev.msfjarvis.claw.android
+tags:
+  - feature
+  - search
+---
+- runFlow: ../helpers/launch-app.yaml
+- tapOn: "Search posts"
+- waitForAnimationToEnd
+- assertVisible: "Search"
+- inputText: "rust"
+- waitForAnimationToEnd
+- assertVisible: "rust"
+- scroll

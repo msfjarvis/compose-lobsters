@@ -26,7 +26,6 @@ import androidx.compose.foundation.layout.requiredSizeIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Comment
 import androidx.compose.material.icons.filled.AccountCircle
@@ -51,7 +50,6 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
@@ -206,17 +204,16 @@ private fun CommentsButton(commentCount: Int, modifier: Modifier = Modifier) {
       Box(
         modifier =
           Modifier.align(Alignment.TopEnd)
-            .offset(x = 4.dp, y = (-4).dp)
+            .offset(x = 8.dp, y = (-8).dp)
             .requiredSizeIn(16.dp, 16.dp)
-            .background(MaterialTheme.colorScheme.tertiaryContainer, RoundedCornerShape(16.dp))
+            .background(MaterialTheme.colorScheme.tertiaryContainer, CircleShape)
             .testTag("comment_badge"),
         contentAlignment = Alignment.Center,
       ) {
         Text(
           text = commentCount.toString(),
-          style = MaterialTheme.typography.labelSmall,
+          style = MaterialTheme.typography.labelMedium,
           color = MaterialTheme.colorScheme.onTertiaryContainer,
-          fontSize = 9.sp,
           modifier = Modifier.testTag("comment_count").padding(2.dp),
         )
       }

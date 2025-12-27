@@ -167,18 +167,23 @@ internal fun Submitter(
 
 @Composable
 private fun SaveButton(isSaved: () -> Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
-  var localSavedState by remember { mutableStateOf(isSaved()) }
-  Crossfade(targetState = localSavedState, label = "save-button") { saved ->
-    Box(modifier = modifier.minimumInteractiveComponentSize()) {
+  // Not using delegation because the compiler is incorrectly convinced the write later is useless
+  val localSavedState = remember { mutableStateOf(isSaved()) }
+  Crossfade(targetState = localSavedState.value, label = "save-button") { saved ->
+    Box(
+      modifier =
+        modifier
+          .clickable(role = Role.Button) {
+            onClick()
+            localSavedState.value = !localSavedState.value
+          }
+          .minimumInteractiveComponentSize()
+    ) {
       Icon(
         imageVector = if (saved) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
         tint = MaterialTheme.colorScheme.secondary,
         contentDescription = if (saved) "Remove from saved posts" else "Add to saved posts",
-        modifier =
-          Modifier.align(Alignment.Center).testTag("save_button").clickable(role = Role.Button) {
-            onClick()
-            localSavedState = !localSavedState
-          },
+        modifier = Modifier.align(Alignment.Center).testTag("save_button"),
       )
     }
   }

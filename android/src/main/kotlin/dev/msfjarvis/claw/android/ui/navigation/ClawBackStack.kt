@@ -21,7 +21,7 @@ import androidx.navigation3.runtime.NavKey
  * to the front while lists add behind. To counter these expectations with the actual backing data
  * structure, many APIs in this class are the inverse of identically named functions on [List].
  */
-class ClawBackStack(private val initialDestination: NavKey, private val shouldStack: Boolean) {
+class ClawBackStack(private val initialDestination: NavKey) {
   /**
    * Marker interface for destinations that occupy the "top" level of the back stack.
    *
@@ -48,8 +48,7 @@ class ClawBackStack(private val initialDestination: NavKey, private val shouldSt
    * from getting stuck in a frustratingly long stack of top level destinations that are so easily
    * accessible that they have no reason to be on the stack.
    *
-   * Destinations implementing [NonStackable] have existing instances removed from the backstack if
-   * [shouldStack] is false.
+   * Destinations implementing [NonStackable] have existing instances removed from the backstack.
    */
   fun add(destination: NavKey) {
     if (destination is TopLevelDestination) {
@@ -62,7 +61,7 @@ class ClawBackStack(private val initialDestination: NavKey, private val shouldSt
       backStack.firstOrNull {
         it is NonStackable && it::class.java.isAssignableFrom(destination::class.java)
       }
-    if (destination is NonStackable && existingEntry != null && !shouldStack) {
+    if (destination is NonStackable && existingEntry != null) {
       backStack.remove(existingEntry)
     }
     backStack.add(destination)

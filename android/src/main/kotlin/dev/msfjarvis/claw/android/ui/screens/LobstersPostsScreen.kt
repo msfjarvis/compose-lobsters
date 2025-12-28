@@ -87,12 +87,7 @@ fun LobstersPostsScreen(
   val navigationType = ClawNavigationType.fromSize(windowSizeClass.widthSizeClass)
 
   val libraries by produceLibraries()
-  val clawBackStack = remember {
-    ClawBackStack(
-      initialDestination = Hottest,
-      shouldStack = navigationType == ClawNavigationType.BOTTOM_NAVIGATION,
-    )
-  }
+  val clawBackStack = remember { ClawBackStack(initialDestination = Hottest) }
   val listDetailStrategy = rememberListDetailSceneStrategy<NavKey>()
 
   // region Pain
@@ -139,9 +134,7 @@ fun LobstersPostsScreen(
     PostActions(context, uriHandler, viewModel) { clawBackStack.add(Comments(it)) }
   }
 
-  BackHandler(enabled = clawBackStack.backStack.size > 1) {
-    clawBackStack.removeLastOrNull()
-  }
+  BackHandler(enabled = clawBackStack.backStack.size > 1) { clawBackStack.removeLastOrNull() }
 
   Scaffold(
     topBar = {

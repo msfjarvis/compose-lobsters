@@ -42,11 +42,13 @@ function run_maestro_flow() {
 }
 
 function generate_grid() {
-  local MONTAGE_INPUT BACKGROUND_COLOR OUTPUT_FILE START_NUMBER
+  local MONTAGE_INPUT BACKGROUND_COLOR OUTPUT_FILE START_NUMBER DEVICE_DIMENSIONS
   MONTAGE_INPUT="$(mktemp)"
   OUTPUT_FILE="${1:?}"
   BACKGROUND_COLOR="${2:?}"
   START_NUMBER="${3:?}"
+  # Get device screen dimensions dynamically
+  DEVICE_DIMENSIONS="$(adb shell wm size | grep -oE '[0-9]+x[0-9]+')"
   # Run the Maestro flow to generate the screenshots
   run_maestro_flow feature_graphic.yml
 
@@ -61,8 +63,8 @@ function generate_grid() {
     >> "${MONTAGE_INPUT}"
 
   # Use imagemagick to stitch the screenshots in a grid
-  # Dimensions are of my Pixel 4a which I use for this purpose
-  montage @"${MONTAGE_INPUT}" -tile 3x0 -geometry 1080x2340+0.0! \
+  # Dimensions are dynamically retrieved from connected device
+  montage @"${MONTAGE_INPUT}" -tile 3x0 -geometry "${DEVICE_DIMENSIONS}+0.0!" \
     -border 0 -density 300 \
     "${OUTPUT_FILE}.png" || true
 

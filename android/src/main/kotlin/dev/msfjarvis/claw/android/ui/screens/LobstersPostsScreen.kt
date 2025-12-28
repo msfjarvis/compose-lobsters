@@ -6,6 +6,7 @@
  */
 package dev.msfjarvis.claw.android.ui.screens
 
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
@@ -136,6 +137,10 @@ fun LobstersPostsScreen(
 
   val postActions = remember {
     PostActions(context, uriHandler, viewModel) { clawBackStack.add(Comments(it)) }
+  }
+
+  BackHandler(enabled = clawBackStack.backStack.size > 1) {
+    clawBackStack.removeLastOrNull()
   }
 
   Scaffold(

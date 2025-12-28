@@ -1,5 +1,5 @@
 #! /usr/bin/env nix-shell
-#! nix-shell -i bash -p imagemagick libwebp
+#! nix-shell -i bash -p imagemagick libwebp oxipng
 # shellcheck shell=bash
 
 set -euo pipefail
@@ -80,6 +80,9 @@ function generate_grid() {
       ((COUNTER++))
     fi
   done
+
+  # Optimize all PNGs to keep in-repo size low without sacrificing quality
+  oxipng -o 4 --strip safe --alpha -p -t 3 -r "${FASTLANE_SCREENSHOTS}/"
 }
 
 adb shell "cmd uimode night no"

@@ -83,8 +83,15 @@ fun LobstersPostsScreen(
   modifier: Modifier = Modifier,
   viewModel: ClawViewModel = metroViewModel(),
 ) {
+  val navigationType = ClawNavigationType.fromSize(windowSizeClass.widthSizeClass)
+
   val libraries by produceLibraries()
-  val clawBackStack = remember { ClawBackStack(Hottest) }
+  val clawBackStack = remember {
+    ClawBackStack(
+      initialDestination = Hottest,
+      shouldStack = navigationType == ClawNavigationType.BOTTOM_NAVIGATION,
+    )
+  }
   val listDetailStrategy = rememberListDetailSceneStrategy<NavKey>()
 
   // region Pain
@@ -101,8 +108,6 @@ fun LobstersPostsScreen(
   val newestPosts = viewModel.newestPosts.collectAsLazyPagingItems()
   val savedPosts by viewModel.savedPostsByMonth.collectAsStateWithLifecycle(persistentMapOf())
   val savedPostsCount by viewModel.savedPostsCount.collectAsStateWithLifecycle(0L)
-
-  val navigationType = ClawNavigationType.fromSize(windowSizeClass.widthSizeClass)
 
   val postIdOverride = activity?.intent?.extras?.getString(MainActivity.NAVIGATION_KEY)
   LaunchedEffect(Unit) {

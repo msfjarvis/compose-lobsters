@@ -21,7 +21,7 @@ import androidx.navigation3.runtime.NavKey
  * to the front while lists add behind. To counter these expectations with the actual backing data
  * structure, many APIs in this class are the inverse of identically named functions on [List].
  */
-class ClawBackStack(private val initialDestination: NavKey) {
+class ClawBackStack(private val initialDestination: NavKey, private val shouldStack: Boolean) {
   /**
    * Marker interface for destinations that occupy the "top" level of the back stack.
    *
@@ -29,6 +29,14 @@ class ClawBackStack(private val initialDestination: NavKey) {
    * duplicate instances of these destinations do not end up in the back stack.
    */
   interface TopLevelDestination
+
+  /**
+   * Marker interface for routes that should replace any existing entry in the backstack that
+   * implements the same interface.
+   *
+   * This is used to improve the navigation experience for the list-detail view.
+   */
+  interface NonStackable
 
   val backStack = mutableStateListOf(initialDestination)
 
@@ -39,6 +47,9 @@ class ClawBackStack(private val initialDestination: NavKey) {
    * [destination] and the [initialDestination] cannot have anything in between. This prevents users
    * from getting stuck in a frustratingly long stack of top level destinations that are so easily
    * accessible that they have no reason to be on the stack.
+   *
+   * Destinations implementing [NonStackable] have existing instances removed from the backstack if
+   * [shouldStack] is false.
    */
   fun add(destination: NavKey) {
     if (destination is TopLevelDestination) {
@@ -46,6 +57,13 @@ class ClawBackStack(private val initialDestination: NavKey) {
       if (destination != initialDestination) {
         backStack.add(initialDestination)
       }
+    }
+    val existingEntry =
+      backStack.firstOrNull {
+        it is NonStackable && it::class.java.isAssignableFrom(destination::class.java)
+      }
+    if (destination is NonStackable && existingEntry != null && !shouldStack) {
+      backStack.remove(existingEntry)
     }
     backStack.add(destination)
   }

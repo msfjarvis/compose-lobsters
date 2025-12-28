@@ -16,6 +16,7 @@ import androidx.compose.material.icons.outlined.NewReleases
 import androidx.compose.material.icons.outlined.Whatshot
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation3.runtime.NavKey
+import dev.msfjarvis.claw.android.ui.navigation.ClawBackStack.NonStackable
 import dev.msfjarvis.claw.android.ui.navigation.ClawBackStack.TopLevelDestination
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
@@ -26,9 +27,9 @@ import kotlinx.serialization.Serializable
 
 @Parcelize @Serializable data object Saved : NavKey, TopLevelDestination, Parcelable
 
-@Parcelize @Serializable data class Comments(val postId: String) : NavKey, Parcelable
+@Parcelize @Serializable data class Comments(val postId: String) : NavKey, Parcelable, NonStackable
 
-@Parcelize @Serializable data class User(val username: String) : NavKey, Parcelable
+@Parcelize @Serializable data class User(val username: String) : NavKey, Parcelable, NonStackable
 
 @Parcelize @Serializable data object Search : NavKey, Parcelable
 

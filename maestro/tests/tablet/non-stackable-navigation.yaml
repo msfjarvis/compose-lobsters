@@ -1,0 +1,40 @@
+appId: dev.msfjarvis.claw.android
+tags:
+  - tablet
+  - navigation
+  - regression
+---
+- runFlow: ../helpers/launch-app.yaml
+
+- tapOn: "Hottest"
+- waitForAnimationToEnd
+
+- tapOn:
+    id: "comments_button"
+    index: 0
+- waitForAnimationToEnd
+- assertVisible:
+    id: "comments_header"
+
+- tapOn: "Go back to previous screen"
+- assertVisible: "Hottest"
+
+- tapOn:
+    id: "comments_button"
+    index: 1
+- waitForAnimationToEnd
+- assertVisible:
+    id: "comments_header"
+
+- tapOn: "Go back to previous screen"
+- assertVisible: "Hottest"
+
+- tapOn:
+    id: "comments_button"
+    index: 2
+- waitForAnimationToEnd
+- assertVisible:
+    id: "comments_header"
+
+- tapOn: "Go back to previous screen"
+- assertVisible: "Hottest"

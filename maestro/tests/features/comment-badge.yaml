@@ -1,4 +1,4 @@
-appId: dev.msfjarvis.claw.android
+appId: dev.msfjarvis.claw.android.debug
 ---
 - launchApp
 - waitForAnimationToEnd
@@ -7,7 +7,38 @@ appId: dev.msfjarvis.claw.android
     timeout: 5000
 - assertVisible:
     id: "comments_button"
+    index: 0
 - assertVisible:
     id: "comment_badge"
+    index: 0
 - assertVisible:
-    id: "comment_count"
+    id: "comments_button"
+    index: 1
+- assertVisible:
+    id: "comment_badge"
+    index: 1
+- assertVisible:
+    id: "comments_button"
+    index: 2
+- assertVisible:
+    id: "comment_badge"
+    index: 2
+- assertVisible:
+    id: "comments_button"
+    index: 3
+- assertVisible:
+    id: "comment_badge"
+    index: 3
+- assertVisible:
+    id: "comments_button"
+    index: 4
+- assertVisible:
+    id: "comment_badge"
+    index: 4
+- assertVisible:
+    id: "comments_button"
+    index: 5
+- assertVisible:
+    id: "comment_badge"
+    index: 5
+- waitForAnimationToEnd

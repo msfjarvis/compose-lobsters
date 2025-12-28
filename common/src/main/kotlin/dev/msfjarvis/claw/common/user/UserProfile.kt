@@ -13,7 +13,9 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material3.MaterialTheme
@@ -78,11 +80,15 @@ private fun UserProfileInternal(
   openUserProfile: (String) -> Unit,
   modifier: Modifier = Modifier,
 ) {
+  val scrollState = rememberScrollState()
   Surface(modifier = modifier) {
     Column(
       horizontalAlignment = Alignment.CenterHorizontally,
       verticalArrangement = Arrangement.spacedBy(8.dp),
-      modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp, vertical = 8.dp),
+      modifier =
+        Modifier.fillMaxSize()
+          .padding(horizontal = 16.dp, vertical = 8.dp)
+          .verticalScroll(scrollState),
     ) {
       NetworkImage(
         url = "https://lobste.rs/${user.avatarUrl}",

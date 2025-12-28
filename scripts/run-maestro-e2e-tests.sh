@@ -4,7 +4,17 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 MAESTRO_TESTS_DIR="${SCRIPT_DIR}/../maestro/tests"
 
+# Parse device type parameter (default: phone)
+DEVICE_TYPE="${1:-phone}"
+
+if [[ "${DEVICE_TYPE}" != "phone" && "${DEVICE_TYPE}" != "tablet" ]]; then
+    echo "❌ Error: Invalid device type '${DEVICE_TYPE}'"
+    echo "   Usage: $0 [phone|tablet]"
+    exit 1
+fi
+
 echo "Running Maestro E2E Test Suite for Claw"
+echo "Device Type: ${DEVICE_TYPE}"
 echo "===================================================="
 echo ""
 
@@ -61,6 +71,10 @@ run_test_suite() {
 run_test_suite "Smoke" "${MAESTRO_TESTS_DIR}/smoke"
 run_test_suite "Features" "${MAESTRO_TESTS_DIR}/features"
 run_test_suite "Regression" "${MAESTRO_TESTS_DIR}/regression"
+
+if [[ "${DEVICE_TYPE}" == "tablet" ]]; then
+    run_test_suite "Tablet" "${MAESTRO_TESTS_DIR}/tablet"
+fi
 
 echo "===================================================="
 echo "Test Results Summary"

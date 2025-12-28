@@ -30,8 +30,7 @@ android {
   buildTypes.create("internal") {
     matchingFallbacks += "release"
     signingConfig = signingConfigs["debug"]
-    applicationIdSuffix = ".internal"
-    isDebuggable = true
+    isMinifyEnabled = true
   }
 }
 

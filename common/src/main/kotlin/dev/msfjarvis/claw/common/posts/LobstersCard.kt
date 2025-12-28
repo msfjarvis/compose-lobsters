@@ -200,23 +200,21 @@ private fun CommentsButton(commentCount: Int, modifier: Modifier = Modifier) {
       contentDescription = "Open comments",
       modifier = Modifier.align(Alignment.Center).testTag("comments_button"),
     )
-    if (commentCount > 0) {
-      Box(
-        modifier =
-          Modifier.align(Alignment.TopEnd)
-            .offset(x = 8.dp, y = (-8).dp)
-            .requiredSizeIn(16.dp, 16.dp)
-            .background(MaterialTheme.colorScheme.tertiaryContainer, CircleShape)
-            .testTag("comment_badge"),
-        contentAlignment = Alignment.Center,
-      ) {
-        Text(
-          text = commentCount.toString(),
-          style = MaterialTheme.typography.labelMedium,
-          color = MaterialTheme.colorScheme.onTertiaryContainer,
-          modifier = Modifier.testTag("comment_count").padding(2.dp),
-        )
-      }
+    Box(
+      modifier =
+        Modifier.align(Alignment.TopEnd)
+          .offset(x = 8.dp, y = (-8).dp)
+          .requiredSizeIn(16.dp, 16.dp)
+          .background(MaterialTheme.colorScheme.tertiaryContainer, CircleShape)
+          .testTag("comment_badge"),
+      contentAlignment = Alignment.Center,
+    ) {
+      Text(
+        text = commentCount.toString(),
+        style = MaterialTheme.typography.labelMedium,
+        color = MaterialTheme.colorScheme.onTertiaryContainer,
+        modifier = Modifier.testTag("comment_count").padding(2.dp),
+      )
     }
   }
 }

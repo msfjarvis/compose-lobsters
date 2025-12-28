@@ -1,0 +1,52 @@
+appId: dev.msfjarvis.claw.android
+tags:
+  - tablet
+  - navigation
+  - regression
+  - back-button
+---
+- runFlow: ../helpers/launch-app.yaml
+
+# Navigate to Comments screen
+- tapOn: "Hottest"
+- waitForAnimationToEnd
+
+- tapOn:
+    id: "comments_button"
+    index: 0
+- waitForAnimationToEnd
+- assertVisible:
+    id: "comments_header"
+
+# Test system back button - should navigate back to Hottest, not exit app
+- back
+- waitForAnimationToEnd
+- assertVisible: "Hottest"
+
+# Navigate to Newest tab
+- tapOn: "Newest"
+- waitForAnimationToEnd
+- assertVisible: "Newest"
+
+# Navigate to another Comments screen
+- tapOn:
+    id: "comments_button"
+    index: 0
+- waitForAnimationToEnd
+- assertVisible:
+    id: "comments_header"
+
+# Test system back button again - should navigate back to Newest
+- back
+- waitForAnimationToEnd
+- assertVisible: "Newest"
+
+# Navigate to Settings
+- tapOn: "Settings"
+- waitForAnimationToEnd
+- assertVisible: "App Information"
+
+# System back from Settings should return to previous screen (Newest)
+- back
+- waitForAnimationToEnd
+- assertVisible: "Newest"

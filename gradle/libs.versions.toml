@@ -1,6 +1,6 @@
 [versions]
 aboutLibraries = "14.0.0-a02"
-agp = "9.1.0-alpha01"
+agp = "9.1.0-alpha02"
 annotation = "1.9.1"
 coil3 = "3.3.0"
 compose-bom = "2025.12.01"

@@ -4,5 +4,6 @@
 appId: dev.msfjarvis.claw.android
 ---
 - launchApp
-- waitForAnimationToEnd
-- assertVisible: "Hottest"
+- extendedWaitUntil:
+    visible: "Hottest"
+    timeout: 5000

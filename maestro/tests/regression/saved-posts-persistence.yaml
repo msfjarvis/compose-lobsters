@@ -6,19 +6,31 @@ tags:
 ---
 - launchApp
 - tapOn: "Hottest"
-- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible:
+      id: "save_button"
+    timeout: 5000
 - tapOn:
     id: "save_button"
     index: 0
-- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible: "Saved"
+    timeout: 5000
 - stopApp
 - launchApp
 - tapOn: "Saved"
 - assertVisible: "Saved"
-- waitForAnimationToEnd
-- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible:
+      id: "save_button"
+    timeout: 5000
+- extendedWaitUntil:
+    visible:
+      id: "save_button"
+    timeout: 5000
 - tapOn:
     id: "save_button"
     index: 0
-- waitForAnimationToEnd
-- assertVisible: "No saved posts"
+- extendedWaitUntil:
+    visible: "No saved posts"
+    timeout: 5000

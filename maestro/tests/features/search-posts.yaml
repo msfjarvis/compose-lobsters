@@ -5,9 +5,11 @@ tags:
 ---
 - runFlow: ../helpers/launch-app.yaml
 - tapOn: "Search posts"
-- waitForAnimationToEnd
-- assertVisible: "Search"
+- extendedWaitUntil:
+    visible: "Search"
+    timeout: 5000
 - inputText: "rust"
-- waitForAnimationToEnd
-- assertVisible: "rust"
+- extendedWaitUntil:
+    visible: "rust"
+    timeout: 5000
 - scroll

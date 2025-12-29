@@ -8,45 +8,55 @@ tags:
 - runFlow: ../helpers/launch-app.yaml
 
 # Navigate to Comments screen
-- tapOn: "Hottest"
-- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible:
+      id: "comments_button"
+    timeout: 5000
 
 - tapOn:
     id: "comments_button"
     index: 0
-- waitForAnimationToEnd
-- assertVisible:
-    id: "comments_header"
+- extendedWaitUntil:
+    visible:
+      id: "comments_header"
+    timeout: 5000
 
 # Test system back button - should navigate back to Hottest, not exit app
 - back
-- waitForAnimationToEnd
-- assertVisible: "Hottest"
+- extendedWaitUntil:
+    visible: "Hottest"
+    timeout: 5000
 
 # Navigate to Newest tab
 - tapOn: "Newest"
-- waitForAnimationToEnd
-- assertVisible: "Newest"
+- extendedWaitUntil:
+    visible:
+      id: "comments_button"
+    timeout: 5000
 
 # Navigate to another Comments screen
 - tapOn:
     id: "comments_button"
     index: 0
-- waitForAnimationToEnd
-- assertVisible:
-    id: "comments_header"
+- extendedWaitUntil:
+    visible:
+      id: "comments_header"
+    timeout: 5000
 
 # Test system back button again - should navigate back to Newest
 - back
-- waitForAnimationToEnd
-- assertVisible: "Newest"
+- extendedWaitUntil:
+    visible: "Newest"
+    timeout: 5000
 
 # Navigate to Settings
 - tapOn: "Settings"
-- waitForAnimationToEnd
-- assertVisible: "App Information"
+- extendedWaitUntil:
+    visible: "App Information"
+    timeout: 5000
 
 # System back from Settings should return to previous screen (Newest)
 - back
-- waitForAnimationToEnd
-- assertVisible: "Newest"
+- extendedWaitUntil:
+    visible: "Newest"
+    timeout: 5000

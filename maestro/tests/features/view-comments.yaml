@@ -5,12 +5,17 @@ tags:
 ---
 - runFlow: ../helpers/launch-app.yaml
 - tapOn: "Hottest"
-- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible:
+      id: "comments_button"
+    timeout: 5000
 - tapOn:
     id: "comments_button"
     index: 0
-- waitForAnimationToEnd
-- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible:
+      id: "comments_header"
+    timeout: 5000
 - scroll
 - back
 - assertVisible: "Hottest"

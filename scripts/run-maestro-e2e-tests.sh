@@ -61,8 +61,8 @@ run_test_suite() {
       FAILED_TESTS+=("${suite_name}/${test_name}")
     fi
 
-    # Add delay between tests to prevent timing issues
-    sleep 3
+    # Add delay between tests to avoid Lobsters rate limiting
+    sleep 5
   done
 
   echo ""

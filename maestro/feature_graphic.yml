@@ -10,15 +10,20 @@ appId: dev.msfjarvis.claw.android
 - takeScreenshot: "HottestPosts"
 - tapOn: "Saved"
 - waitForAnimationToEnd
+- waitForAnimationToEnd:
+    timeout: 1000
 - takeScreenshot: "SavedPosts"
 - tapOn: "Search posts"
 - inputText: "Rust"
 - pressKey: Enter
 - hideKeyboard
-- waitForAnimationToEnd
+- extendedWaitUntil:
+    visible:
+      id: "comments_button"
+    timeout: 5000
+- waitForAnimationToEnd:
+    timeout: 2000
 - takeScreenshot: "SearchPage"
-- back
-# TODO: figure out why do I need to press back twice
 - back
 - tapOn: "Settings"
 - tapOn: "Export"

@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Comment count badge has been restored
+- Navigation behavior has been improved to avoid too-deep hierarchies
 
 ## [1.58.0] - 2025-12-26
 

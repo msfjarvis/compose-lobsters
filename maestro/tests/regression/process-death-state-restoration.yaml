@@ -1,0 +1,32 @@
+appId: dev.msfjarvis.claw.android
+tags:
+  - regression
+  - process-death
+  - state-restoration
+---
+- launchApp
+- extendedWaitUntil:
+    visible: "comments_button"
+    timeout: 10000
+
+- tapOn:
+    id: "comments_button"
+    index: 0
+
+- extendedWaitUntil:
+    visible:
+      id: "comments_header"
+    timeout: 10000
+
+- pressKey: Home
+- killApp
+- launchApp:
+    stopApp: false
+
+- extendedWaitUntil:
+    visible:
+      id: "comments_header"
+    timeout: 10000
+
+- assertVisible:
+    id: "comments_header"

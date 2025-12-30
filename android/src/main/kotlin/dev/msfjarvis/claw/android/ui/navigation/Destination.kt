@@ -16,10 +16,12 @@ import androidx.compose.material.icons.outlined.NewReleases
 import androidx.compose.material.icons.outlined.Whatshot
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation3.runtime.NavKey
-import dev.msfjarvis.claw.android.ui.navigation.ClawBackStack.NonStackable
-import dev.msfjarvis.claw.android.ui.navigation.ClawBackStack.TopLevelDestination
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
+
+interface TopLevelDestination
+
+interface NonStackable
 
 @Parcelize @Serializable data object Hottest : NavKey, TopLevelDestination, Parcelable
 

@@ -40,6 +40,8 @@ import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
+import androidx.navigation3.runtime.rememberNavBackStack
+import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.mikepenz.aboutlibraries.ui.compose.android.produceLibraries
@@ -56,15 +58,16 @@ import dev.msfjarvis.claw.android.ui.lists.DatabasePosts
 import dev.msfjarvis.claw.android.ui.lists.NetworkPosts
 import dev.msfjarvis.claw.android.ui.navigation.AboutLibraries
 import dev.msfjarvis.claw.android.ui.navigation.AppDestinations
-import dev.msfjarvis.claw.android.ui.navigation.ClawBackStack
 import dev.msfjarvis.claw.android.ui.navigation.ClawNavigationType
 import dev.msfjarvis.claw.android.ui.navigation.Comments
 import dev.msfjarvis.claw.android.ui.navigation.Hottest
 import dev.msfjarvis.claw.android.ui.navigation.Newest
+import dev.msfjarvis.claw.android.ui.navigation.NonStackable
 import dev.msfjarvis.claw.android.ui.navigation.Saved
 import dev.msfjarvis.claw.android.ui.navigation.Search
 import dev.msfjarvis.claw.android.ui.navigation.Settings
 import dev.msfjarvis.claw.android.ui.navigation.TagFiltering
+import dev.msfjarvis.claw.android.ui.navigation.TopLevelDestination
 import dev.msfjarvis.claw.android.ui.navigation.User
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.common.comments.CommentsPage
@@ -87,7 +90,7 @@ fun LobstersPostsScreen(
   val navigationType = ClawNavigationType.fromSize(windowSizeClass.widthSizeClass)
 
   val libraries by produceLibraries()
-  val clawBackStack = remember { ClawBackStack(initialDestination = Hottest) }
+  val backStack = rememberNavBackStack(Hottest)
   val listDetailStrategy = rememberListDetailSceneStrategy<NavKey>()
 
   // region Pain
@@ -108,7 +111,7 @@ fun LobstersPostsScreen(
   val postIdOverride = activity?.intent?.extras?.getString(MainActivity.NAVIGATION_KEY)
   LaunchedEffect(Unit) {
     if (postIdOverride != null) {
-      clawBackStack.add(Comments(postIdOverride))
+      backStack.add(Comments(postIdOverride))
     }
   }
 
@@ -131,28 +134,28 @@ fun LobstersPostsScreen(
   // endregion
 
   val postActions = remember {
-    PostActions(context, uriHandler, viewModel) { clawBackStack.add(Comments(it)) }
+    PostActions(context, uriHandler, viewModel) { backStack.add(Comments(it)) }
   }
 
-  BackHandler(enabled = clawBackStack.backStack.size > 1) { clawBackStack.removeLastOrNull() }
+  BackHandler(enabled = backStack.size > 1) { backStack.removeAt(backStack.lastIndex) }
 
   Scaffold(
     topBar = {
       ClawAppBar(
         activity = activity,
-        isTopLevel = clawBackStack.isOnTopLevelDestination(),
-        navigateTo = { clawBackStack.add(it) },
-        popBackStack = { clawBackStack.removeLastOrNull() },
+        isTopLevel = backStack.lastOrNull() is TopLevelDestination,
+        navigateTo = { destination -> navigateTo(backStack, destination) },
+        popBackStack = { backStack.removeAt(backStack.lastIndex) },
       )
     },
     bottomBar = {
-      val currentDestination = clawBackStack.firstOrNull()
+      val currentDestination = backStack.lastOrNull()
       AnimatedVisibility(visible = navigationType == ClawNavigationType.BOTTOM_NAVIGATION) {
         ClawNavigationBar(
           items = navItems,
           currentNavKey = currentDestination,
-          navigateTo = { clawBackStack.add(it) },
-          isVisible = clawBackStack.isOnTopLevelDestination(),
+          navigateTo = { destination -> navigateTo(backStack, destination) },
+          isVisible = backStack.lastOrNull() is TopLevelDestination,
           hazeState = hazeState,
         )
       }
@@ -162,19 +165,20 @@ fun LobstersPostsScreen(
   ) { contentPadding ->
     Row {
       AnimatedVisibility(visible = navigationType == ClawNavigationType.NAVIGATION_RAIL) {
-        val currentDestination = clawBackStack.firstOrNull()
+        val currentDestination = backStack.lastOrNull()
         ClawNavigationRail(
           items = navItems,
           currentNavKey = currentDestination,
-          navigateTo = { clawBackStack.add(it) },
-          isVisible = clawBackStack.isOnTopLevelDestination(),
+          navigateTo = { destination -> navigateTo(backStack, destination) },
+          isVisible = backStack.lastOrNull() is TopLevelDestination,
         )
       }
       NavDisplay(
-        backStack = clawBackStack.backStack,
+        backStack = backStack,
         modifier = modifier.hazeSource(hazeState),
         sceneStrategy = listDetailStrategy,
-        onBack = { clawBackStack.removeLastOrNull() },
+        entryDecorators = listOf(rememberSaveableStateHolderNavEntryDecorator()),
+        onBack = { backStack.removeAt(backStack.lastIndex) },
         predictivePopTransitionSpec = {
           slideInHorizontally(initialOffsetX = { -it }, animationSpec = tween(200)) togetherWith
             slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(200))
@@ -219,7 +223,7 @@ fun LobstersPostsScreen(
                 postId = dest.postId,
                 postActions = postActions,
                 contentPadding = contentPadding,
-                openUserProfile = { clawBackStack.add(User(it)) },
+                openUserProfile = { backStack.add(User(it)) },
               )
             }
             entry<User>(
@@ -240,14 +244,14 @@ fun LobstersPostsScreen(
               UserProfile(
                 username = dest.username,
                 contentPadding = contentPadding,
-                openUserProfile = { clawBackStack.add(User(it)) },
+                openUserProfile = { backStack.add(User(it)) },
               )
             }
             entry<Settings>(metadata = ListDetailSceneStrategy.extraPane()) {
               SettingsScreen(
                 openInputStream = context.contentResolver::openInputStream,
                 openOutputStream = context.contentResolver::openOutputStream,
-                openLibrariesScreen = { clawBackStack.add(AboutLibraries) },
+                openLibrariesScreen = { backStack.add(AboutLibraries) },
                 openRepository = {
                   uriHandler.openUri("https://github.com/msfjarvis/compose-lobsters")
                 },
@@ -280,6 +284,23 @@ fun LobstersPostsScreen(
       )
     }
   }
+}
+
+private fun navigateTo(backStack: MutableList<NavKey>, destination: NavKey) {
+  if (destination is TopLevelDestination) {
+    backStack.clear()
+    if (destination != Hottest) {
+      backStack.add(Hottest)
+    }
+  }
+  val existingEntry =
+    backStack.firstOrNull {
+      it is NonStackable && it::class.java.isAssignableFrom(destination::class.java)
+    }
+  if (destination is NonStackable && existingEntry != null) {
+    backStack.remove(existingEntry)
+  }
+  backStack.add(destination)
 }
 
 @Composable

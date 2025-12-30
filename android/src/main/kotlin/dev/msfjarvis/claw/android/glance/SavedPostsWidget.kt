@@ -19,7 +19,6 @@ import androidx.glance.appwidget.components.Scaffold
 import androidx.glance.appwidget.lazy.LazyColumn
 import androidx.glance.appwidget.lazy.items
 import androidx.glance.appwidget.provideContent
-import androidx.glance.background
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.padding

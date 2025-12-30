@@ -17,10 +17,8 @@ import androidx.glance.ImageProvider
 import androidx.glance.action.actionParametersOf
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.action.actionRunCallback
-import androidx.glance.appwidget.cornerRadius
 import androidx.glance.background
 import androidx.glance.layout.Alignment
-import androidx.glance.layout.Box
 import androidx.glance.layout.Row
 import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.padding
@@ -40,31 +38,29 @@ fun WidgetListEntry(post: UIPost, modifier: GlanceModifier = GlanceModifier) {
   val postAction =
     if (post.url.startsWith('/')) commentsAction
     else actionRunCallback<OpenUrlCallback>(actionParametersOf(OpenUrlCallback.urlKey to post.url))
-  Box(modifier.padding(8.dp)) {
-    Row(
-      verticalAlignment = Alignment.CenterVertically,
-      modifier =
-        GlanceModifier.fillMaxWidth()
-          .background(GlanceTheme.colors.surfaceVariant)
-          .cornerRadius(4.dp)
-          .padding(8.dp),
-    ) {
-      Text(
-        text = post.title,
-        modifier = GlanceModifier.defaultWeight().padding(start = 4.dp).clickable(postAction),
-        style =
-          TextStyle(
-            color = GlanceTheme.colors.onSurfaceVariant,
-            fontSize = titleStyle.fontSize,
-            fontWeight = titleStyle.fontWeight.toGlance(),
-            fontStyle = titleStyle.fontStyle.toGlance(),
-          ),
-      )
-      Image(
-        provider = ImageProvider(R.drawable.ic_comment),
-        contentDescription = "${post.commentCount} comments",
-        modifier = GlanceModifier.padding(end = 4.dp).clickable(commentsAction),
-      )
-    }
+  Row(
+    verticalAlignment = Alignment.CenterVertically,
+    modifier =
+      modifier
+        .fillMaxWidth()
+        .background(GlanceTheme.colors.surfaceVariant)
+        .padding(horizontal = 8.dp, vertical = 4.dp),
+  ) {
+    Text(
+      text = post.title,
+      modifier = GlanceModifier.defaultWeight().padding(start = 4.dp).clickable(postAction),
+      style =
+        TextStyle(
+          color = GlanceTheme.colors.onSurfaceVariant,
+          fontSize = titleStyle.fontSize,
+          fontWeight = titleStyle.fontWeight.toGlance(),
+          fontStyle = titleStyle.fontStyle.toGlance(),
+        ),
+    )
+    Image(
+      provider = ImageProvider(R.drawable.ic_comment),
+      contentDescription = "${post.commentCount} comments",
+      modifier = GlanceModifier.padding(end = 4.dp).clickable(commentsAction),
+    )
   }
 }

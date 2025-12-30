@@ -304,5 +304,5 @@ private fun navigateTo(backStack: MutableList<NavKey>, destination: NavKey) {
 
 @Composable
 private fun Placeholder(modifier: Modifier = Modifier) {
-  Text(text = "Placeholder", modifier = modifier)
+  Text(text = "No post selected", modifier = modifier)
 }

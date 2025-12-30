@@ -15,7 +15,7 @@ import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
 import androidx.glance.appwidget.GlanceAppWidget
-import androidx.glance.appwidget.appWidgetBackground
+import androidx.glance.appwidget.components.Scaffold
 import androidx.glance.appwidget.lazy.LazyColumn
 import androidx.glance.appwidget.lazy.items
 import androidx.glance.appwidget.provideContent
@@ -35,47 +35,52 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.first
 
-class SavedPostsWidget() : GlanceAppWidget() {
+class SavedPostsWidget : GlanceAppWidget() {
 
   override suspend fun provideGlance(context: Context, id: GlanceId) {
-    val posts =
-      (context.applicationContext as ClawApplication)
-        .appGraph
-        .savedPostsRepository
-        .getRecentPosts(50)
+    val appGraph = (context.applicationContext as ClawApplication).appGraph
+    val posts = appGraph.savedPostsRepository.getRecentPosts(50)
     val postWindow = posts.first().map(UIPost::fromSavedPost).toImmutableList()
-    provideContent {
-      GlanceTheme(
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) GlanceTheme.colors
-        else ColorProviders(light = LightThemeColors, dark = DarkThemeColors)
-      ) {
-        WidgetHost(postWindow)
-      }
-    }
+    provideContent { WidgetHost(postWindow) }
+  }
+
+  override suspend fun providePreview(context: Context, widgetCategory: Int) {
+    val appGraph = (context.applicationContext as ClawApplication).appGraph
+    val posts = appGraph.savedPostsRepository.getRecentPosts(50)
+    val postWindow = posts.first().map(UIPost::fromSavedPost).toImmutableList()
+    provideContent { WidgetHost(postWindow) }
   }
 }
 
 @Composable
 fun WidgetHost(posts: ImmutableList<UIPost>, modifier: GlanceModifier = GlanceModifier) {
-  LazyColumn(
-    modifier =
-      modifier.fillMaxSize().background(GlanceTheme.colors.background).appWidgetBackground(),
-    horizontalAlignment = Alignment.CenterHorizontally,
+  GlanceTheme(
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) GlanceTheme.colors
+    else ColorProviders(light = LightThemeColors, dark = DarkThemeColors)
   ) {
-    item {
-      val style = MaterialTheme.typography.titleLarge
-      Text(
-        text = "Saved posts",
-        style =
-          TextStyle(
-            color = GlanceTheme.colors.onBackground,
-            fontSize = style.fontSize,
-            fontWeight = style.fontWeight.toGlance(),
-            fontStyle = style.fontStyle.toGlance(),
-          ),
-        modifier = GlanceModifier.padding(vertical = 8.dp),
-      )
+    Scaffold(
+      titleBar = {
+        val style = MaterialTheme.typography.titleLarge
+        Text(
+          text = "Saved posts",
+          style =
+            TextStyle(
+              color = GlanceTheme.colors.onBackground,
+              fontSize = style.fontSize,
+              fontWeight = style.fontWeight.toGlance(),
+              fontStyle = style.fontStyle.toGlance(),
+            ),
+          modifier = GlanceModifier.padding(8.dp),
+        )
+      },
+      backgroundColor = GlanceTheme.colors.background,
+    ) {
+      LazyColumn(
+        modifier = modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+      ) {
+        items(posts) { post -> WidgetListEntry(post = post) }
+      }
     }
-    items(posts) { post -> WidgetListEntry(post = post) }
   }
 }

@@ -14,9 +14,7 @@ import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
 import androidx.glance.Image
 import androidx.glance.ImageProvider
-import androidx.glance.action.ActionParameters.Key
 import androidx.glance.action.actionParametersOf
-import androidx.glance.action.actionStartActivity
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.action.actionRunCallback
 import androidx.glance.appwidget.cornerRadius
@@ -28,19 +26,17 @@ import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.padding
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
-import dev.msfjarvis.claw.android.MainActivity
-import dev.msfjarvis.claw.android.MainActivity.Companion.NAVIGATION_KEY
 import dev.msfjarvis.claw.android.R
 import dev.msfjarvis.claw.model.UIPost
-
-private val destinationKey = Key<String>(NAVIGATION_KEY)
 
 @Composable
 @GlanceComposable
 fun WidgetListEntry(post: UIPost, modifier: GlanceModifier = GlanceModifier) {
   val titleStyle = MaterialTheme.typography.titleMedium
   val commentsAction =
-    actionStartActivity<MainActivity>(actionParametersOf(destinationKey to post.shortId))
+    actionRunCallback<OpenCommentsCallback>(
+      actionParametersOf(OpenCommentsCallback.postIdKey to post.shortId)
+    )
   val postAction =
     if (post.url.startsWith('/')) commentsAction
     else actionRunCallback<OpenUrlCallback>(actionParametersOf(OpenUrlCallback.urlKey to post.url))

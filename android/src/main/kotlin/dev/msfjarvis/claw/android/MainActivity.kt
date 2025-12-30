@@ -8,6 +8,7 @@ package dev.msfjarvis.claw.android
 
 import android.app.Activity
 import android.app.assist.AssistContent
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -16,6 +17,9 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.UriHandler
 import androidx.core.net.toUri
@@ -44,6 +48,8 @@ class MainActivity(
     get() = viewModelFactory
 
   var webUri: String? = null
+  var postIdFromDeepLink by mutableStateOf<String?>(null)
+    private set
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -52,6 +58,7 @@ class MainActivity(
       statusBarStyle = SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT)
       // Don't set navigation bar style, the default matches the platform behavior.
     )
+    handleIntent(intent)
     setContent {
       LobstersTheme(
         dynamicColor = true,
@@ -66,7 +73,23 @@ class MainActivity(
           uriHandler = uriHandler,
           windowSizeClass = windowSizeClass,
           setWebUri = { url -> webUri = url },
+          postIdFromDeepLink = postIdFromDeepLink,
         )
+      }
+    }
+  }
+
+  override fun onNewIntent(intent: Intent) {
+    super.onNewIntent(intent)
+    handleIntent(intent)
+  }
+
+  private fun handleIntent(intent: Intent) {
+    val data = intent.data
+    if (data != null && data.scheme == "claw" && data.host == "comments") {
+      val postId = data.pathSegments.firstOrNull()
+      if (postId != null) {
+        postIdFromDeepLink = postId
       }
     }
   }

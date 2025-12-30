@@ -48,7 +48,6 @@ import com.mikepenz.aboutlibraries.ui.compose.android.produceLibraries
 import com.mikepenz.aboutlibraries.ui.compose.m3.LibrariesContainer
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeSource
-import dev.msfjarvis.claw.android.MainActivity
 import dev.msfjarvis.claw.android.ui.PostActions
 import dev.msfjarvis.claw.android.ui.decorations.ClawAppBar
 import dev.msfjarvis.claw.android.ui.decorations.ClawNavigationBar
@@ -85,6 +84,7 @@ fun LobstersPostsScreen(
   windowSizeClass: WindowSizeClass,
   setWebUri: (String?) -> Unit,
   modifier: Modifier = Modifier,
+  postIdFromDeepLink: String? = null,
   viewModel: ClawViewModel = metroViewModel(),
 ) {
   val navigationType = ClawNavigationType.fromSize(windowSizeClass.widthSizeClass)
@@ -108,10 +108,9 @@ fun LobstersPostsScreen(
   val savedPosts by viewModel.savedPostsByMonth.collectAsStateWithLifecycle(persistentMapOf())
   val savedPostsCount by viewModel.savedPostsCount.collectAsStateWithLifecycle(0L)
 
-  val postIdOverride = activity?.intent?.extras?.getString(MainActivity.NAVIGATION_KEY)
-  LaunchedEffect(Unit) {
-    if (postIdOverride != null) {
-      backStack.add(Comments(postIdOverride))
+  LaunchedEffect(postIdFromDeepLink) {
+    if (postIdFromDeepLink != null) {
+      navigateTo(backStack, Comments(postIdFromDeepLink))
     }
   }
 

@@ -133,7 +133,7 @@ fun LobstersPostsScreen(
   // endregion
 
   val postActions = remember {
-    PostActions(context, uriHandler, viewModel) { backStack.add(Comments(it)) }
+    PostActions(context, uriHandler, viewModel) { navigateTo(backStack, Comments(it)) }
   }
 
   BackHandler(enabled = backStack.size > 1) { backStack.removeAt(backStack.lastIndex) }
@@ -222,7 +222,7 @@ fun LobstersPostsScreen(
                 postId = dest.postId,
                 postActions = postActions,
                 contentPadding = contentPadding,
-                openUserProfile = { backStack.add(User(it)) },
+                openUserProfile = { navigateTo(backStack, User(it)) },
               )
             }
             entry<User>(
@@ -243,14 +243,14 @@ fun LobstersPostsScreen(
               UserProfile(
                 username = dest.username,
                 contentPadding = contentPadding,
-                openUserProfile = { backStack.add(User(it)) },
+                openUserProfile = { navigateTo(backStack, User(it)) },
               )
             }
             entry<Settings>(metadata = ListDetailSceneStrategy.extraPane()) {
               SettingsScreen(
                 openInputStream = context.contentResolver::openInputStream,
                 openOutputStream = context.contentResolver::openOutputStream,
-                openLibrariesScreen = { backStack.add(AboutLibraries) },
+                openLibrariesScreen = { navigateTo(backStack, AboutLibraries) },
                 openRepository = {
                   uriHandler.openUri("https://github.com/msfjarvis/compose-lobsters")
                 },

@@ -6,11 +6,9 @@
  */
 package dev.msfjarvis.claw.android.glance
 
-import android.content.Intent
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
-import androidx.core.net.toUri
 import androidx.glance.GlanceComposable
 import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
@@ -20,7 +18,7 @@ import androidx.glance.action.ActionParameters.Key
 import androidx.glance.action.actionParametersOf
 import androidx.glance.action.actionStartActivity
 import androidx.glance.action.clickable
-import androidx.glance.appwidget.action.actionStartActivity
+import androidx.glance.appwidget.action.actionRunCallback
 import androidx.glance.appwidget.cornerRadius
 import androidx.glance.background
 import androidx.glance.layout.Alignment
@@ -43,10 +41,9 @@ fun WidgetListEntry(post: UIPost, modifier: GlanceModifier = GlanceModifier) {
   val titleStyle = MaterialTheme.typography.titleMedium
   val commentsAction =
     actionStartActivity<MainActivity>(actionParametersOf(destinationKey to post.shortId))
-  // If the URL starts with a /, it's a relative URL and we should open the comments page directly.
   val postAction =
     if (post.url.startsWith('/')) commentsAction
-    else actionStartActivity(Intent(Intent.ACTION_VIEW, post.url.toUri()))
+    else actionRunCallback<OpenUrlCallback>(actionParametersOf(OpenUrlCallback.urlKey to post.url))
   Box(modifier.padding(8.dp)) {
     Row(
       verticalAlignment = Alignment.CenterVertically,

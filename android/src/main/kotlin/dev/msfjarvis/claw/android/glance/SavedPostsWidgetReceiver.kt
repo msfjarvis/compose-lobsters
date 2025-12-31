@@ -18,9 +18,9 @@ import dev.zacsweers.metro.binding
 import dev.zacsweers.metrox.android.BroadcastReceiverKey
 
 @ContributesIntoMap(AppScope::class, binding<BroadcastReceiver>())
-@BroadcastReceiverKey(WidgetReceiver::class)
+@BroadcastReceiverKey(SavedPostsWidgetReceiver::class)
 @Inject
-class WidgetReceiver() : GlanceAppWidgetReceiver() {
+class SavedPostsWidgetReceiver() : GlanceAppWidgetReceiver() {
 
   override val glanceAppWidget: GlanceAppWidget
     get() = SavedPostsWidget()

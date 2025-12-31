@@ -51,7 +51,7 @@
     </provider>
 
     <receiver
-      android:name=".glance.WidgetReceiver"
+      android:name=".glance.SavedPostsWidgetReceiver"
       android:exported="true">
       <intent-filter>
         <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

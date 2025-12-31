@@ -116,8 +116,9 @@ dependencies {
   implementation(projects.model)
 
   debugImplementation(libs.androidx.compose.glance.appwidget.preview)
-  debugImplementation(libs.androidx.compose.glance.preview)
   debugImplementation(libs.napier.android.debug)
+
+  compileOnly(libs.androidx.compose.glance.preview)
 
   runtimeOnly(libs.androidx.profileinstaller)
 }

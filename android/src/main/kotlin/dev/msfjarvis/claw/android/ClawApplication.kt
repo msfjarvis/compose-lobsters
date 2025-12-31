@@ -7,16 +7,22 @@
 package dev.msfjarvis.claw.android
 
 import android.app.Application
+import android.os.Build
+import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
+import dev.msfjarvis.claw.android.glance.WidgetReceiver
 import dev.msfjarvis.claw.android.injection.AppGraph
 import dev.msfjarvis.claw.android.work.SavedPostUpdaterWorker
 import dev.zacsweers.metro.createGraphFactory
 import dev.zacsweers.metrox.android.MetroAppComponentProviders
 import dev.zacsweers.metrox.android.MetroApplication
 import java.util.concurrent.TimeUnit
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class ClawApplication : Application(), MetroApplication {
 
@@ -25,6 +31,7 @@ class ClawApplication : Application(), MetroApplication {
   override val appComponentProviders: MetroAppComponentProviders
     get() = appGraph
 
+  @OptIn(DelicateCoroutinesApi::class)
   override fun onCreate() {
     super.onCreate()
     appGraph.plugins.forEach { plugin -> plugin.apply(this) }
@@ -37,5 +44,10 @@ class ClawApplication : Application(), MetroApplication {
       existingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.KEEP,
       request = postUpdateWorkRequest,
     )
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+      GlobalScope.launch(appGraph.mainDispatcher) {
+        GlanceAppWidgetManager(applicationContext).setWidgetPreviews(WidgetReceiver::class)
+      }
+    }
   }
 }

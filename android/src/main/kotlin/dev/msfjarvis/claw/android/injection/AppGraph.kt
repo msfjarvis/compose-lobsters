@@ -10,6 +10,7 @@ import android.content.Context
 import androidx.work.ListenableWorker
 import androidx.work.WorkManager
 import dev.msfjarvis.claw.android.viewmodel.SavedPostsRepository
+import dev.msfjarvis.claw.core.coroutines.MainDispatcher
 import dev.msfjarvis.claw.core.injection.AppPlugin
 import dev.msfjarvis.claw.core.injection.InjectedWorkerFactory
 import dev.zacsweers.metro.AppScope
@@ -20,6 +21,7 @@ import dev.zacsweers.metro.Provides
 import dev.zacsweers.metrox.android.MetroAppComponentProviders
 import dev.zacsweers.metrox.viewmodel.ViewModelGraph
 import kotlin.reflect.KClass
+import kotlinx.coroutines.CoroutineDispatcher
 
 @DependencyGraph(AppScope::class)
 interface AppGraph : MetroAppComponentProviders, ViewModelGraph {
@@ -39,6 +41,8 @@ interface AppGraph : MetroAppComponentProviders, ViewModelGraph {
   val workerFactory: InjectedWorkerFactory
 
   val savedPostsRepository: SavedPostsRepository
+
+  @MainDispatcher val mainDispatcher: CoroutineDispatcher
 
   @DependencyGraph.Factory
   fun interface Factory {

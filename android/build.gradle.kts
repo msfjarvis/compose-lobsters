@@ -115,6 +115,8 @@ dependencies {
   implementation(projects.database.impl)
   implementation(projects.model)
 
+  debugImplementation(libs.androidx.compose.glance.appwidget.preview)
+  debugImplementation(libs.androidx.compose.glance.preview)
   debugImplementation(libs.napier.android.debug)
 
   runtimeOnly(libs.androidx.profileinstaller)

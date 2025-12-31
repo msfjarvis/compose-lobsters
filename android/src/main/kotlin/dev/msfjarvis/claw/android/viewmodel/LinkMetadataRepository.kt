@@ -16,7 +16,7 @@ import me.saket.unfurl.Unfurler
 @Inject
 class LinkMetadataRepository(
   private val unfurler: Unfurler,
-  @IODispatcher private val dispatcher: CoroutineDispatcher,
+  @param:IODispatcher private val dispatcher: CoroutineDispatcher,
 ) {
   suspend fun getLinkMetadata(url: String): LinkMetadata {
     val result = withContext(dispatcher) { unfurler.unfurl(url) }

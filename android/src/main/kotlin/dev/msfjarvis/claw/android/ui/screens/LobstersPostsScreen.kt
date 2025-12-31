@@ -103,8 +103,6 @@ fun LobstersPostsScreen(
   val snackbarHostState = remember { SnackbarHostState() }
   val hazeState = remember { HazeState() }
 
-  val hottestPosts = viewModel.hottestPosts.collectAsLazyPagingItems()
-  val newestPosts = viewModel.newestPosts.collectAsLazyPagingItems()
   val savedPosts by viewModel.savedPostsByMonth.collectAsStateWithLifecycle(persistentMapOf())
   val savedPostsCount by viewModel.savedPostsCount.collectAsStateWithLifecycle(0L)
 
@@ -117,14 +115,10 @@ fun LobstersPostsScreen(
   val navItems =
     persistentListOf(
       NavigationItem(AppDestinations.HOTTEST) {
-        coroutineScope.launch {
-          if (hottestPosts.itemCount > 0) hottestListState.animateScrollToItem(index = 0)
-        }
+        coroutineScope.launch { hottestListState.animateScrollToItem(index = 0) }
       },
       NavigationItem(AppDestinations.NEWEST) {
-        coroutineScope.launch {
-          if (newestPosts.itemCount > 0) newestListState.animateScrollToItem(index = 0)
-        }
+        coroutineScope.launch { newestListState.animateScrollToItem(index = 0) }
       },
       NavigationItem(AppDestinations.SAVED) {
         coroutineScope.launch { if (savedPosts.isNotEmpty()) savedListState.scrollToItem(0) }
@@ -188,6 +182,7 @@ fun LobstersPostsScreen(
               metadata = ListDetailSceneStrategy.listPane(detailPlaceholder = { Placeholder() })
             ) {
               setWebUri("https://lobste.rs/")
+              val hottestPosts = viewModel.hottestPosts.collectAsLazyPagingItems()
               NetworkPosts(
                 lazyPagingItems = hottestPosts,
                 listState = hottestListState,
@@ -199,6 +194,7 @@ fun LobstersPostsScreen(
               metadata = ListDetailSceneStrategy.listPane(detailPlaceholder = { Placeholder() })
             ) {
               setWebUri("https://lobste.rs/")
+              val newestPosts = viewModel.newestPosts.collectAsLazyPagingItems()
               NetworkPosts(
                 lazyPagingItems = newestPosts,
                 listState = newestListState,
@@ -304,5 +300,5 @@ private fun navigateTo(backStack: MutableList<NavKey>, destination: NavKey) {
 
 @Composable
 private fun Placeholder(modifier: Modifier = Modifier) {
-  Text(text = "Placeholder", modifier = modifier)
+  Text(text = "No post selected", modifier = modifier)
 }

@@ -34,7 +34,7 @@ import kotlinx.coroutines.withContext
 class SearchPagingSource(
   private val searchApi: LobstersSearchApi,
   @Assisted private val queryProvider: () -> String,
-  @IODispatcher private val ioDispatcher: CoroutineDispatcher,
+  @param:IODispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : PagingSource<Int, UIPost>() {
   override suspend fun load(params: LoadParams<Int>): LoadResult<Int, UIPost> {
     val searchQuery = queryProvider()

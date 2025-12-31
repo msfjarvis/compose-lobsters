@@ -25,7 +25,7 @@ import kotlinx.coroutines.withContext
 @AssistedInject
 class LobstersPagingSource(
   @Assisted private val remoteFetcher: RemoteFetcher<LobstersPost>,
-  @IODispatcher private val ioDispatcher: CoroutineDispatcher,
+  @param:IODispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : PagingSource<Int, UIPost>() {
   override suspend fun load(params: LoadParams<Int>): LoadResult<Int, UIPost> {
     val page = params.key ?: STARTING_PAGE_INDEX

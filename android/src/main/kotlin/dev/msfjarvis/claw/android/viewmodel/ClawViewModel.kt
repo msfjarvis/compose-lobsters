@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import dev.msfjarvis.claw.android.glance.SavedPostsWidget
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource
@@ -42,6 +43,7 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import kotlinx.collections.immutable.toImmutableMap
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -59,25 +61,41 @@ class ClawViewModel(
   private val dataTransferRepository: DataTransferRepository,
   private val pagingSourceFactory: LobstersPagingSource.Factory,
   private val searchPagingSourceFactory: SearchPagingSource.Factory,
-  @IODispatcher private val ioDispatcher: CoroutineDispatcher,
-  @MainDispatcher private val mainDispatcher: CoroutineDispatcher,
+  @param:IODispatcher private val ioDispatcher: CoroutineDispatcher,
+  @param:MainDispatcher private val mainDispatcher: CoroutineDispatcher,
 ) : AndroidViewModel(context as Application) {
-  val hottestPosts =
-    Pager(
-        config = PagingConfig(pageSize = PAGE_SIZE),
-        initialKey = STARTING_PAGE_INDEX,
-        pagingSourceFactory = { pagingSourceFactory.create(api::getHottestPosts) },
-      )
-      .flow
-      .cachedIn(viewModelScope)
-  val newestPosts =
-    Pager(
-        config = PagingConfig(pageSize = PAGE_SIZE),
-        initialKey = STARTING_PAGE_INDEX,
-        pagingSourceFactory = { pagingSourceFactory.create(api::getNewestPosts) },
-      )
-      .flow
-      .cachedIn(viewModelScope)
+  private var _hottestPosts: Flow<PagingData<UIPost>>? = null
+  val hottestPosts: Flow<PagingData<UIPost>>
+    get() {
+      if (_hottestPosts == null) {
+        _hottestPosts =
+          Pager(
+              config = PagingConfig(pageSize = PAGE_SIZE),
+              initialKey = STARTING_PAGE_INDEX,
+              pagingSourceFactory = { pagingSourceFactory.create(api::getHottestPosts) },
+            )
+            .flow
+            .cachedIn(viewModelScope)
+      }
+      return requireNotNull(_hottestPosts) { "_hottestPosts should be initialized here" }
+    }
+
+  private var _newestPosts: Flow<PagingData<UIPost>>? = null
+  val newestPosts: Flow<PagingData<UIPost>>
+    get() {
+      if (_newestPosts == null) {
+        _newestPosts =
+          Pager(
+              config = PagingConfig(pageSize = PAGE_SIZE),
+              initialKey = STARTING_PAGE_INDEX,
+              pagingSourceFactory = { pagingSourceFactory.create(api::getNewestPosts) },
+            )
+            .flow
+            .cachedIn(viewModelScope)
+      }
+      return requireNotNull(_newestPosts) { "_newestPosts should be initialized here" }
+    }
+
   val searchResults =
     Pager(
         PagingConfig(pageSize = PAGE_SIZE),

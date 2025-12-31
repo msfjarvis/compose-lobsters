@@ -35,7 +35,7 @@ import kotlinx.coroutines.withContext
 @ContributesIntoMap(AppScope::class)
 class UserProfileViewModel(
   private val api: LobstersApi,
-  @IODispatcher private val ioDispatcher: CoroutineDispatcher,
+  @param:IODispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
 
   var userProfile by mutableStateOf<NetworkState>(Loading)

@@ -18,8 +18,8 @@ import kotlinx.coroutines.withContext
 @Inject
 class ReadPostsRepository(
   private val readPostsQueries: ReadPostsQueries,
-  @DatabaseReadDispatcher private val readDispatcher: CoroutineDispatcher,
-  @DatabaseWriteDispatcher private val writeDispatcher: CoroutineDispatcher,
+  @param:DatabaseReadDispatcher private val readDispatcher: CoroutineDispatcher,
+  @param:DatabaseWriteDispatcher private val writeDispatcher: CoroutineDispatcher,
 ) {
   val readPosts = readPostsQueries.selectAllPosts().asFlow().mapToList(readDispatcher)
 

@@ -18,8 +18,8 @@ import kotlinx.coroutines.withContext
 @Inject
 class CommentsRepository(
   private val postCommentsQueries: PostCommentsQueries,
-  @DatabaseReadDispatcher private val readDispatcher: CoroutineDispatcher,
-  @DatabaseWriteDispatcher private val writeDispatcher: CoroutineDispatcher,
+  @param:DatabaseReadDispatcher private val readDispatcher: CoroutineDispatcher,
+  @param:DatabaseWriteDispatcher private val writeDispatcher: CoroutineDispatcher,
 ) {
 
   suspend fun getSeenComments(postId: String) =

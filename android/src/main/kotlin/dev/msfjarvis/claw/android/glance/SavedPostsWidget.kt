@@ -91,7 +91,7 @@ fun WidgetHost(posts: ImmutableList<UIPost>, modifier: GlanceModifier = GlanceMo
         provider = ImageProvider(R.drawable.ic_launcher_foreground),
         contentDescription = null,
         colorFilter = ColorFilter.tint(GlanceTheme.colors.secondary),
-        modifier = GlanceModifier.size(24.dp),
+        modifier = GlanceModifier.size(36.dp),
       )
       Spacer(GlanceModifier.width(16.dp))
       Text("Saved posts", style = TextStyle(fontSize = 18.sp, color = GlanceTheme.colors.onSurface))

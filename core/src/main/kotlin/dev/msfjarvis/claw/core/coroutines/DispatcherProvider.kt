@@ -22,6 +22,8 @@ import kotlinx.coroutines.Dispatchers
   AnnotationTarget.VALUE_PARAMETER,
   AnnotationTarget.LOCAL_VARIABLE,
   AnnotationTarget.FUNCTION,
+  AnnotationTarget.FIELD,
+  AnnotationTarget.PROPERTY,
 )
 annotation class DatabaseReadDispatcher
 
@@ -31,6 +33,8 @@ annotation class DatabaseReadDispatcher
   AnnotationTarget.VALUE_PARAMETER,
   AnnotationTarget.LOCAL_VARIABLE,
   AnnotationTarget.FUNCTION,
+  AnnotationTarget.FIELD,
+  AnnotationTarget.PROPERTY,
 )
 annotation class DatabaseWriteDispatcher
 
@@ -40,6 +44,8 @@ annotation class DatabaseWriteDispatcher
   AnnotationTarget.VALUE_PARAMETER,
   AnnotationTarget.LOCAL_VARIABLE,
   AnnotationTarget.FUNCTION,
+  AnnotationTarget.FIELD,
+  AnnotationTarget.PROPERTY,
 )
 annotation class MainDispatcher
 
@@ -49,6 +55,8 @@ annotation class MainDispatcher
   AnnotationTarget.VALUE_PARAMETER,
   AnnotationTarget.LOCAL_VARIABLE,
   AnnotationTarget.FUNCTION,
+  AnnotationTarget.FIELD,
+  AnnotationTarget.PROPERTY,
 )
 annotation class IODispatcher
 

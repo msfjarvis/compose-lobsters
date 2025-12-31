@@ -59,8 +59,8 @@ class ClawViewModel(
   private val dataTransferRepository: DataTransferRepository,
   private val pagingSourceFactory: LobstersPagingSource.Factory,
   private val searchPagingSourceFactory: SearchPagingSource.Factory,
-  @IODispatcher private val ioDispatcher: CoroutineDispatcher,
-  @MainDispatcher private val mainDispatcher: CoroutineDispatcher,
+  @param:IODispatcher private val ioDispatcher: CoroutineDispatcher,
+  @param:MainDispatcher private val mainDispatcher: CoroutineDispatcher,
 ) : AndroidViewModel(context as Application) {
   val hottestPosts =
     Pager(

@@ -37,7 +37,7 @@ import kotlinx.coroutines.withContext
 class CommentsViewModel(
   private val api: LobstersApi,
   private val commentsRepository: CommentsRepository,
-  @IODispatcher private val ioDispatcher: CoroutineDispatcher,
+  @param:IODispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
   var postDetails by mutableStateOf<NetworkState>(NetworkState.Loading)
     private set

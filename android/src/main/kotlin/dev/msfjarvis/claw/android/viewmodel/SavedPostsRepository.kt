@@ -22,8 +22,8 @@ import kotlinx.coroutines.withContext
 @Inject
 class SavedPostsRepository(
   private val savedPostQueries: SavedPostQueries,
-  @DatabaseReadDispatcher private val readDispatcher: CoroutineDispatcher,
-  @DatabaseWriteDispatcher private val writeDispatcher: CoroutineDispatcher,
+  @param:DatabaseReadDispatcher private val readDispatcher: CoroutineDispatcher,
+  @param:DatabaseWriteDispatcher private val writeDispatcher: CoroutineDispatcher,
 ) {
   val savedPosts = savedPostQueries.selectAllPosts().asFlow().mapToList(readDispatcher)
   val savedPostsSortedByDate =

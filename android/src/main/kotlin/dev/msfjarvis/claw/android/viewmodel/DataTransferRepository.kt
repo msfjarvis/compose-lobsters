@@ -28,7 +28,7 @@ import kotlinx.serialization.json.encodeToStream
 class DataTransferRepository(
   private val json: Json,
   private val savedPostsRepository: SavedPostsRepository,
-  @IODispatcher private val ioDispatcher: CoroutineDispatcher,
+  @param:IODispatcher private val ioDispatcher: CoroutineDispatcher,
 ) {
   private val serializer = ListSerializer(SavedPostSerializer)
 

@@ -39,7 +39,7 @@ import kotlinx.coroutines.withContext
 class TagFilterViewModel(
   private val api: LobstersApi,
   private val tagFilterRepository: TagFilterRepository,
-  @IODispatcher private val ioDispatcher: CoroutineDispatcher,
+  @param:IODispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
 
   var filteredTags by mutableStateOf<ImmutableList<String>>(persistentListOf())

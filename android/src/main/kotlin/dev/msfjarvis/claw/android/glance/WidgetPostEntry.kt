@@ -36,7 +36,7 @@ fun WidgetPostEntry(post: UIPost, modifier: GlanceModifier = GlanceModifier) {
       actionParametersOf(OpenCommentsCallback.postIdKey to post.shortId)
     )
   val postAction =
-    if (post.url.startsWith('/')) commentsAction
+    if (post.url.startsWith('/') || post.url.isEmpty()) commentsAction
     else actionRunCallback<OpenUrlCallback>(actionParametersOf(OpenUrlCallback.urlKey to post.url))
   Row(
     verticalAlignment = Alignment.CenterVertically,

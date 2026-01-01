@@ -52,7 +52,6 @@ moduleGraphAssert {
 }
 
 dependencies {
-  implementation(platform(libs.androidx.compose.bom))
   implementation(platform(libs.okhttp.bom))
   implementation(libs.aboutLibraries.compose.core)
   implementation(libs.aboutLibraries.core)

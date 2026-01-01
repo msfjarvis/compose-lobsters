@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<issues format="6" by="lint 8.13.2" type="baseline" client="gradle" dependencies="true" name="AGP (8.13.2)" variant="all" version="8.13.2">
+<issues format="6" by="lint 9.1.0-alpha02" type="baseline" client="gradle" dependencies="true" name="AGP (9.1.0-alpha02)" variant="all" version="9.1.0-alpha02">
 
     <issue
         id="Instantiatable"
@@ -8,18 +8,7 @@
         errorLine2="                    ~~~~~~~~~~~~~">
         <location
             file="src/main/AndroidManifest.xml"
-            line="25"
-            column="21"/>
-    </issue>
-
-    <issue
-        id="Instantiatable"
-        message="This class should provide a default constructor (a public constructor with no arguments) (`dev.msfjarvis.claw.android.glance.WidgetReceiver`)"
-        errorLine1="      android:name=&quot;.glance.WidgetReceiver&quot;"
-        errorLine2="                    ~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/AndroidManifest.xml"
-            line="48"
+            line="26"
             column="21"/>
     </issue>
 
@@ -30,7 +19,7 @@
         errorLine2="  ^">
         <location
             file="src/main/kotlin/dev/msfjarvis/claw/common/posts/LobstersCard.kt"
-            line="229"
+            line="225"
             column="3"/>
     </issue>
 
@@ -41,7 +30,7 @@
         errorLine2="                                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/dev/msfjarvis/claw/android/ui/screens/LobstersPostsScreen.kt"
-            line="228"
+            line="230"
             column="49"/>
     </issue>
 

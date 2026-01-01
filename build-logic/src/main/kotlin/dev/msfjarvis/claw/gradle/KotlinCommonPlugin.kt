@@ -14,15 +14,10 @@ import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-@Suppress("Unused", "UnstableApiUsage")
+@Suppress("Unused")
 class KotlinCommonPlugin : Plugin<Project> {
 
   override fun apply(project: Project) {
-    if (project.isolated.rootProject == project.isolated) {
-      LintConfig.configureRootProject(project)
-    } else {
-      LintConfig.configureSubProject(project)
-    }
     project.tasks.run {
       withType<KotlinCompile>().configureEach {
         compilerOptions {

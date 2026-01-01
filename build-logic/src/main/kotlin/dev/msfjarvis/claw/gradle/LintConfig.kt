@@ -8,9 +8,6 @@ package dev.msfjarvis.claw.gradle
 
 import com.android.build.api.dsl.Lint
 import org.gradle.api.Project
-import org.gradle.api.tasks.Copy
-import org.gradle.kotlin.dsl.named
-import org.gradle.kotlin.dsl.register
 
 object LintConfig {
   fun Lint.configureLint(project: Project, isJVM: Boolean = false) {
@@ -27,7 +24,7 @@ object LintConfig {
     textReport = false
     xmlReport = false
     htmlReport = true
-    sarifReport = true
+    sarifReport = false
     if (!isJVM) {
       enable += "ComposeM2Api"
       error += "ComposeM2Api"
@@ -43,25 +40,5 @@ object LintConfig {
     disable += "ObsoleteLintCustomCheck"
     // I trust myself enough to not deal with the constantly changing error message.
     disable += "InvalidPackage"
-  }
-
-  fun configureRootProject(project: Project) {
-    project.tasks.register<Copy>("collectLintReports") {
-      into(project.layout.buildDirectory.dir("lint-reports"))
-    }
-  }
-
-  fun configureSubProject(project: Project) {
-    val collectorTask = project.rootProject.tasks.named<Copy>("collectLintReports")
-    val lintTask = project.tasks.named("lint")
-    val name = project.name
-
-    collectorTask.configure {
-      from(project.layout.buildDirectory.file("reports")) {
-        include("*.sarif")
-        rename { it.replace("-results", "-results-$name") }
-      }
-      dependsOn(lintTask)
-    }
   }
 }

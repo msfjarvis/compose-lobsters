@@ -8,7 +8,6 @@ package dev.msfjarvis.claw.android.glance
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.os.Build
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -35,21 +34,16 @@ import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.padding
 import androidx.glance.layout.size
 import androidx.glance.layout.width
-import androidx.glance.material3.ColorProviders
 import androidx.glance.preview.ExperimentalGlancePreviewApi
 import androidx.glance.preview.Preview
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 import dev.msfjarvis.claw.android.ClawApplication
 import dev.msfjarvis.claw.android.R
-import dev.msfjarvis.claw.common.posts.TEST_POST
-import dev.msfjarvis.claw.common.theme.DarkThemeColors
-import dev.msfjarvis.claw.common.theme.LightThemeColors
 import dev.msfjarvis.claw.model.UIPost
 import dev.msfjarvis.claw.model.fromSavedPost
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.first
 
 class SavedPostsWidget : GlanceAppWidget() {
@@ -58,57 +52,49 @@ class SavedPostsWidget : GlanceAppWidget() {
     val appGraph = (context.applicationContext as ClawApplication).appGraph
     val posts = appGraph.savedPostsRepository.getRecentPosts(50)
     val postWindow = posts.first().map(UIPost::fromSavedPost).toImmutableList()
-    provideContent { ThemedView { WidgetHost(postWindow) } }
+    provideContent { LobstersGlanceTheme { Content(postWindow) } }
   }
 
-  @SuppressLint("VisibleForTests")
   override suspend fun providePreview(context: Context, widgetCategory: Int) {
-    provideContent {
-      ThemedView { WidgetHost(buildList(5) { repeat(5) { add(TEST_POST) } }.toPersistentList()) }
-    }
+    provideContent { Content(samplePosts()) }
   }
-}
 
-@Composable
-internal fun ThemedView(content: @GlanceComposable @Composable () -> Unit) {
-  GlanceTheme(
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) GlanceTheme.colors
-    else ColorProviders(light = LightThemeColors, dark = DarkThemeColors),
-    content,
-  )
-}
-
-@Composable
-fun WidgetHost(posts: ImmutableList<UIPost>, modifier: GlanceModifier = GlanceModifier) {
-  Column(
-    modifier.fillMaxSize().background(GlanceTheme.colors.widgetBackground).cornerRadius(16.dp)
-  ) {
-    Row(
-      verticalAlignment = Alignment.CenterVertically,
-      modifier = GlanceModifier.padding(16.dp).fillMaxWidth(),
+  @SuppressLint("ComposeUnstableReceiver")
+  @Composable
+  private fun Content(posts: ImmutableList<UIPost>, modifier: GlanceModifier = GlanceModifier) {
+    Column(
+      modifier.fillMaxSize().background(GlanceTheme.colors.widgetBackground).cornerRadius(16.dp)
     ) {
-      Image(
-        provider = ImageProvider(R.drawable.ic_launcher_foreground),
-        contentDescription = null,
-        colorFilter = ColorFilter.tint(GlanceTheme.colors.secondary),
-        modifier = GlanceModifier.size(24.dp),
-      )
-      Spacer(GlanceModifier.width(16.dp))
-      Text("Saved posts", style = TextStyle(fontSize = 18.sp, color = GlanceTheme.colors.onSurface))
-    }
-    LazyColumn {
-      items(posts) { post ->
-        Box(GlanceModifier.padding(horizontal = 16.dp, vertical = 4.dp)) { WidgetListEntry(post) }
+      Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = GlanceModifier.padding(16.dp).fillMaxWidth(),
+      ) {
+        Image(
+          provider = ImageProvider(R.drawable.ic_launcher_foreground),
+          contentDescription = null,
+          colorFilter = ColorFilter.tint(GlanceTheme.colors.secondary),
+          modifier = GlanceModifier.size(36.dp),
+        )
+        Spacer(GlanceModifier.width(16.dp))
+        Text(
+          "Saved posts",
+          style = TextStyle(fontSize = 18.sp, color = GlanceTheme.colors.onSurface),
+        )
+      }
+      LazyColumn {
+        items(posts) { post ->
+          Box(GlanceModifier.padding(horizontal = 16.dp, vertical = 4.dp)) { WidgetPostEntry(post) }
+        }
       }
     }
   }
-}
 
-@SuppressLint("VisibleForTests")
-@OptIn(ExperimentalGlancePreviewApi::class)
-@Preview
-@GlanceComposable
-@Composable
-private fun Preview() {
-  ThemedView { WidgetHost(buildList(5) { repeat(5) { add(TEST_POST) } }.toPersistentList()) }
+  @SuppressLint("VisibleForTests", "ComposeUnstableReceiver")
+  @OptIn(ExperimentalGlancePreviewApi::class)
+  @Preview
+  @GlanceComposable
+  @Composable
+  private fun Preview() {
+    Content(samplePosts())
+  }
 }

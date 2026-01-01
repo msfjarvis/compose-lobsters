@@ -76,10 +76,8 @@ fun NetworkPosts(
       LazyColumn(contentPadding = contentPadding, state = listState) {
         items(
           count = lazyPagingItems.itemCount,
-          key = { index ->
-            val itemId = lazyPagingItems[index]?.shortId ?: "placeholder"
-            "${itemId}_$index"
-          },
+          // Intentionally keyed on just the index to avoid crashes
+          key = { index -> index },
           contentType = lazyPagingItems.itemContentType { "LobstersItem" },
         ) { index ->
           val item = lazyPagingItems[index]

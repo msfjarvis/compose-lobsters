@@ -16,6 +16,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Comment count badge has been restored
 - Navigation behavior has been improved to avoid too-deep hierarchies
+- Widget clicks are handled reliably
+- Widget UI has been touched up and a preview added for Android 16+ 
+- User profile page is now scrollable
 
 ## [1.58.0] - 2025-12-26
 
@@ -122,7 +125,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Try to workaround an infrequent crash when scrolling hottest/newest posts
+- Try to work around an infrequent crash when scrolling hottest/newest posts
 
 ### Changed
 
@@ -167,7 +170,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed a crash when clicking an item on the bottom navigation bar
   too quickly
-- Removed buggy deeplinks
+- Removed buggy deep links
 - Clicking a username now correctly navigates to the right page in-app
 
 ## [1.44.0] - 2024-03-19
@@ -424,7 +427,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Fix bug where newest posts tab actually showed hottest posts instead
+- Fix bug where the newest posts tab actually showed the hottest posts instead
 
 ## [1.15.0] - 2022-12-20
 
@@ -446,7 +449,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Fix crash when viewing [jcs](https://lobste.rs/u/jcs)' comments
+- Fix crash when viewing comments by ~jcs
 
 ## [1.12.0] - 2022-12-09
 

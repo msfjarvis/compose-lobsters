@@ -29,7 +29,7 @@ import dev.msfjarvis.claw.model.UIPost
 
 @Composable
 @GlanceComposable
-fun WidgetListEntry(post: UIPost, modifier: GlanceModifier = GlanceModifier) {
+fun WidgetPostEntry(post: UIPost, modifier: GlanceModifier = GlanceModifier) {
   val titleStyle = MaterialTheme.typography.titleMedium
   val commentsAction =
     actionRunCallback<OpenCommentsCallback>(

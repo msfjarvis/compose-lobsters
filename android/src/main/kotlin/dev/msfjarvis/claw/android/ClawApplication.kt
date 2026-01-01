@@ -13,7 +13,7 @@ import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
-import dev.msfjarvis.claw.android.glance.WidgetReceiver
+import dev.msfjarvis.claw.android.glance.SavedPostsWidgetReceiver
 import dev.msfjarvis.claw.android.injection.AppGraph
 import dev.msfjarvis.claw.android.work.SavedPostUpdaterWorker
 import dev.zacsweers.metro.createGraphFactory
@@ -46,7 +46,8 @@ class ClawApplication : Application(), MetroApplication {
     )
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
       GlobalScope.launch(appGraph.mainDispatcher) {
-        GlanceAppWidgetManager(applicationContext).setWidgetPreviews(WidgetReceiver::class)
+        GlanceAppWidgetManager(applicationContext)
+          .setWidgetPreviews(SavedPostsWidgetReceiver::class)
       }
     }
   }

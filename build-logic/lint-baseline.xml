@@ -1,26 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<issues format="6" by="lint 8.12.0-alpha01" type="baseline" client="gradle" dependencies="false" name="AGP (8.12.0-alpha01)" variant="all" version="8.12.0-alpha01">
-
-    <issue
-        id="GradleProjectIsolation"
-        message="Use isolated.rootProject instead of getRootProject"
-        errorLine1="    val collectorTask = project.rootProject.tasks.named&lt;Copy>(&quot;collectLintReports&quot;)"
-        errorLine2="                                ~~~~~~~~~~~">
-        <location
-            file="src/main/kotlin/dev/msfjarvis/claw/gradle/LintConfig.kt"
-            line="53"
-            column="33"/>
-    </issue>
-
-    <issue
-        id="InternalKgpApiUsage"
-        message="Avoid using internal Kotlin Gradle Plugin APIs"
-        errorLine1="import org.jetbrains.kotlin.gradle.internal.Kapt3GradleSubplugin"
-        errorLine2="~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/kotlin/dev/msfjarvis/claw/gradle/KotlinKaptPlugin.kt"
-            line="13"
-            column="1"/>
-    </issue>
+<issues format="6" by="lint 9.1.0-alpha02" type="baseline" client="gradle" dependencies="false" name="AGP (9.1.0-alpha02)" variant="all" version="9.1.0-alpha02">
 
 </issues>

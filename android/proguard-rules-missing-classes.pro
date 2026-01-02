@@ -1,14 +1,3 @@
--dontwarn android.window.OnBackInvokedCallback
--dontwarn android.window.OnBackInvokedDispatcher
--dontwarn org.bouncycastle.jsse.BCSSLParameters
--dontwarn org.bouncycastle.jsse.BCSSLSocket
--dontwarn org.bouncycastle.jsse.provider.BouncyCastleJsseProvider
--dontwarn org.conscrypt.Conscrypt$Version
--dontwarn org.conscrypt.Conscrypt
--dontwarn org.conscrypt.ConscryptHostnameVerifier
--dontwarn org.openjsse.javax.net.ssl.SSLParameters
--dontwarn org.openjsse.javax.net.ssl.SSLSocket
--dontwarn org.openjsse.net.ssl.OpenJSSE
 -dontwarn androidx.window.extensions.WindowExtensions
 -dontwarn androidx.window.extensions.WindowExtensionsProvider
 -dontwarn androidx.window.extensions.area.ExtensionWindowAreaPresentation
@@ -26,3 +15,5 @@
 -dontwarn androidx.window.sidecar.SidecarProvider
 -dontwarn androidx.window.sidecar.SidecarWindowLayoutInfo
 -dontwarn io.mcarle.konvert.api.GeneratedKonverter
+-dontwarn com.google.re2j.Matcher
+-dontwarn com.google.re2j.Pattern

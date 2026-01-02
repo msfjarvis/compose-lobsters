@@ -38,7 +38,6 @@ dependencies {
   api(projects.database.core)
   api(projects.model)
 
-  implementation(platform(libs.androidx.compose.bom))
   implementation(platform(libs.okhttp.bom))
   implementation(libs.androidx.annotation)
   implementation(libs.androidx.browser)

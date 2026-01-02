@@ -61,6 +61,17 @@
         android:resource="@xml/saved_posts_widget_info" />
     </receiver>
 
+    <receiver
+      android:name=".glance.HottestPostsWidgetReceiver"
+      android:exported="true">
+      <intent-filter>
+        <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+      </intent-filter>
+      <meta-data
+        android:name="android.appwidget.provider"
+        android:resource="@xml/hottest_posts_widget_info" />
+    </receiver>
+
     <!-- Required: set your sentry.io project identifier (DSN) -->
     <meta-data
       android:name="io.sentry.dsn"

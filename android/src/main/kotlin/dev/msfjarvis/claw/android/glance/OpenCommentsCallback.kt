@@ -12,6 +12,7 @@ import androidx.core.net.toUri
 import androidx.glance.GlanceId
 import androidx.glance.action.ActionParameters
 import androidx.glance.appwidget.action.ActionCallback
+import dev.msfjarvis.claw.android.BuildConfig
 
 class OpenCommentsCallback : ActionCallback {
   override suspend fun onAction(
@@ -23,6 +24,7 @@ class OpenCommentsCallback : ActionCallback {
     val intent =
       Intent(Intent.ACTION_VIEW, "claw://comments/$postId".toUri()).apply {
         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        setPackage(BuildConfig.APPLICATION_ID)
       }
     context.startActivity(intent)
   }

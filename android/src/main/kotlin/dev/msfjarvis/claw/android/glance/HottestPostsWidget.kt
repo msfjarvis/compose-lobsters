@@ -20,20 +20,25 @@ import androidx.glance.layout.Box
 import androidx.glance.layout.padding
 import androidx.glance.preview.ExperimentalGlancePreviewApi
 import androidx.glance.preview.Preview
+import com.slack.eithernet.ApiResult
 import dev.msfjarvis.claw.android.ClawApplication
+import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.UIPost
-import dev.msfjarvis.claw.model.fromSavedPost
+import dev.msfjarvis.claw.model.toUIPost
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.coroutines.flow.first
 
-class SavedPostsWidget : GlanceAppWidget() {
+class HottestPostsWidget : GlanceAppWidget() {
 
   override suspend fun provideGlance(context: Context, id: GlanceId) {
     val appGraph = (context.applicationContext as ClawApplication).appGraph
-    val posts = appGraph.savedPostsRepository.getRecentPosts(50)
-    val postWindow = posts.first().map(UIPost::fromSavedPost).toImmutableList()
-    provideContent { LobstersGlanceTheme { Content(postWindow) } }
+    val posts =
+      when (val postsResult = appGraph.lobstersApi.getHottestPosts(1)) {
+        is ApiResult.Success -> postsResult.value.map(LobstersPost::toUIPost).toImmutableList()
+        else -> persistentListOf()
+      }
+    provideContent { LobstersGlanceTheme { Content(posts) } }
   }
 
   override suspend fun providePreview(context: Context, widgetCategory: Int) {
@@ -44,7 +49,7 @@ class SavedPostsWidget : GlanceAppWidget() {
   @Composable
   private fun Content(posts: ImmutableList<UIPost>, modifier: GlanceModifier = GlanceModifier) {
     WidgetContainer(
-      title = "Saved posts",
+      "Hottest posts",
       listContent = {
         items(posts) { post ->
           Box(GlanceModifier.padding(horizontal = 16.dp, vertical = 4.dp)) { WidgetPostEntry(post) }

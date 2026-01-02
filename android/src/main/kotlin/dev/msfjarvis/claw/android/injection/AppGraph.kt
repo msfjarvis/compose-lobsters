@@ -10,6 +10,7 @@ import android.content.Context
 import androidx.work.ListenableWorker
 import androidx.work.WorkManager
 import dev.msfjarvis.claw.android.viewmodel.SavedPostsRepository
+import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.core.coroutines.MainDispatcher
 import dev.msfjarvis.claw.core.injection.AppPlugin
 import dev.msfjarvis.claw.core.injection.InjectedWorkerFactory
@@ -41,6 +42,8 @@ interface AppGraph : MetroAppComponentProviders, ViewModelGraph {
   val workerFactory: InjectedWorkerFactory
 
   val savedPostsRepository: SavedPostsRepository
+
+  val lobstersApi: LobstersApi
 
   @MainDispatcher val mainDispatcher: CoroutineDispatcher
 

@@ -21,55 +21,50 @@ class SentryPlugin : Plugin<Project> {
 
   override fun apply(project: Project) {
     val enableSentry = project.providers.gradleProperty(SENTRY_ENABLE_GRADLE_PROPERTY).isPresent
-    project.pluginManager.withPlugin("com.android.application") {
-      val libs = project.extensions.getByName("libs") as LibrariesForLibs
-      project.extensions.configure<ApplicationAndroidComponentsExtension> {
-        onVariants(selector().all()) { variant ->
-          val sentryDsn = project.providers.environmentVariable(SENTRY_DSN_PROPERTY)
-          variant.manifestPlaceholders.put("sentryDsn", sentryDsn.getOrElse(""))
-          variant.manifestPlaceholders.put(
-            "sentryEnvironment",
-            when {
-              variant.name.contains("release", true) && enableSentry -> "production"
-              variant.name.contains("release", true) && !enableSentry -> "nightly"
-              else -> "dev"
-            },
-          )
-        }
+    val libs = project.extensions.getByName("libs") as LibrariesForLibs
+    project.extensions.configure<ApplicationAndroidComponentsExtension> {
+      onVariants(selector().all()) { variant ->
+        val sentryDsn = project.providers.environmentVariable(SENTRY_DSN_PROPERTY).getOrElse("")
+        variant.manifestPlaceholders.put("sentryDsn", sentryDsn)
+        variant.manifestPlaceholders.put(
+          "sentryEnvironment",
+          if (variant.name.contains("release", true)) "production" else "dev",
+        )
       }
-      project.plugins.apply(io.sentry.android.gradle.SentryPlugin::class)
-      project.extensions.configure<SentryPluginExtension> {
-        includeProguardMapping.set(true)
-        autoUploadProguardMapping.set(enableSentry)
-        uploadNativeSymbols.set(false)
-        autoUploadNativeSymbols.set(enableSentry)
-        includeNativeSources.set(false)
-        ignoredVariants.set(emptySet())
-        ignoredFlavors.set(emptySet())
-        tracingInstrumentation {
-          enabled.set(true)
-          debug.set(false)
-          logcat.enabled.set(true)
-          forceInstrumentDependencies.set(false)
-          features.set(EnumSet.allOf(InstrumentationFeature::class.java))
-        }
-        dexguardEnabled.set(false)
-        autoInstallation {
-          enabled.set(true)
-          sentryVersion.set(libs.versions.sentry.sdk)
-        }
-        includeDependenciesReport.set(true)
-        includeSourceContext.set(true)
-        autoUploadSourceContext.set(enableSentry)
-        additionalSourceDirsForSourceContext.set(emptySet())
+    }
+    if (!enableSentry) return
+    project.plugins.apply(io.sentry.android.gradle.SentryPlugin::class)
+    project.extensions.configure<SentryPluginExtension> {
+      includeProguardMapping.set(true)
+      autoUploadProguardMapping.set(true)
+      uploadNativeSymbols.set(false)
+      autoUploadNativeSymbols.set(true)
+      includeNativeSources.set(false)
+      ignoredVariants.set(emptySet())
+      ignoredFlavors.set(emptySet())
+      tracingInstrumentation {
+        enabled.set(true)
         debug.set(false)
-        org.set("claw")
-        projectName.set("compose-lobsters")
-        authToken.set(project.providers.environmentVariable("SENTRY_AUTH_TOKEN"))
-        url.set(null)
-        telemetry.set(false)
-        telemetryDsn.set(null)
+        logcat.enabled.set(true)
+        forceInstrumentDependencies.set(false)
+        features.set(EnumSet.allOf(InstrumentationFeature::class.java))
       }
+      dexguardEnabled.set(false)
+      autoInstallation {
+        enabled.set(true)
+        sentryVersion.set(libs.versions.sentry.sdk)
+      }
+      includeDependenciesReport.set(true)
+      includeSourceContext.set(true)
+      autoUploadSourceContext.set(true)
+      additionalSourceDirsForSourceContext.set(emptySet())
+      debug.set(false)
+      org.set("claw")
+      projectName.set("compose-lobsters")
+      authToken.set(project.providers.environmentVariable("SENTRY_AUTH_TOKEN"))
+      url.set(null)
+      telemetry.set(false)
+      telemetryDsn.set(null)
     }
   }
 

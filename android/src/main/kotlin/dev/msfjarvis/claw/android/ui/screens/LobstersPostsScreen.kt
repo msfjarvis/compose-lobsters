@@ -84,7 +84,7 @@ fun LobstersPostsScreen(
   windowSizeClass: WindowSizeClass,
   setWebUri: (String?) -> Unit,
   modifier: Modifier = Modifier,
-  postIdFromDeepLink: String? = null,
+  deepLinkDestination: NavKey? = null,
   viewModel: ClawViewModel = metroViewModel(),
 ) {
   val navigationType = ClawNavigationType.fromSize(windowSizeClass.widthSizeClass)
@@ -106,9 +106,9 @@ fun LobstersPostsScreen(
   val savedPosts by viewModel.savedPostsByMonth.collectAsStateWithLifecycle(persistentMapOf())
   val savedPostsCount by viewModel.savedPostsCount.collectAsStateWithLifecycle(0L)
 
-  LaunchedEffect(postIdFromDeepLink) {
-    if (postIdFromDeepLink != null) {
-      navigateTo(backStack, Comments(postIdFromDeepLink))
+  LaunchedEffect(deepLinkDestination) {
+    if (deepLinkDestination != null) {
+      navigateTo(backStack, deepLinkDestination)
     }
   }
 

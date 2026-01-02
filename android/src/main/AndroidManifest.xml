@@ -37,6 +37,21 @@
         <category android:name="android.intent.category.DEFAULT" />
         <data android:scheme="claw" android:host="comments" android:pathPrefix="/" />
       </intent-filter>
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <data android:scheme="claw" android:host="hottest" />
+      </intent-filter>
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <data android:scheme="claw" android:host="newest" />
+      </intent-filter>
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <data android:scheme="claw" android:host="saved" />
+      </intent-filter>
     </activity>
 
     <provider

@@ -60,3 +60,23 @@ jobs:
         with:
           base-ref: refs/heads/main
           head-ref: ${{ github.ref }}
+
+  release-app:
+    runs-on: macos-15
+    if: "github.event_name == 'push' && github.event.ref == 'refs/heads/main'"
+    needs:
+      - check
+    steps:
+      - name: Setup build environment
+        uses: msfjarvis/compose-lobsters/.github/reusable-workflows/setup-gradle@main
+        with:
+          cache-read-only: true
+
+      - name: Build release app
+        run: |
+          ./scripts/setup-age.sh
+          ./scripts/signing-setup.sh "$AGE_SECRET_KEY"
+          ./gradlew --no-configuration-cache --stacktrace assembleRelease collectReleaseBundle
+          ./scripts/signing-cleanup.sh
+        env:
+          AGE_SECRET_KEY: ${{ secrets.AGE_SECRET_KEY }}

@@ -6,4 +6,6 @@
  -->
 <resources>
   <string name="app_name">Claw</string>
+  <string name="saved_posts_widget_description">View your saved Lobsters posts</string>
+  <string name="hottest_posts_widget_description">View the hottest posts on Lobsters</string>
 </resources>

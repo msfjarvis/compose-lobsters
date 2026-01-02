@@ -5,6 +5,8 @@
  ~ https://opensource.org/licenses/MIT.
  -->
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:description="@string/saved_posts_widget_description"
+    android:previewImage="@drawable/saved_posts_widget_preview"
     android:initialLayout="@layout/glance_default_loading_layout"
     android:minWidth="349dp"
     android:minHeight="110dp"

@@ -13,13 +13,23 @@ import androidx.compose.ui.unit.dp
 import androidx.glance.GlanceComposable
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
+import androidx.glance.GlanceTheme
+import androidx.glance.action.clickable
 import androidx.glance.appwidget.GlanceAppWidget
+import androidx.glance.appwidget.action.actionRunCallback
+import androidx.glance.appwidget.cornerRadius
 import androidx.glance.appwidget.lazy.items
 import androidx.glance.appwidget.provideContent
+import androidx.glance.background
+import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
+import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.padding
 import androidx.glance.preview.ExperimentalGlancePreviewApi
 import androidx.glance.preview.Preview
+import androidx.glance.text.Text
+import androidx.glance.text.TextAlign
+import androidx.glance.text.TextStyle
 import dev.msfjarvis.claw.android.ClawApplication
 import dev.msfjarvis.claw.model.UIPost
 import dev.msfjarvis.claw.model.fromSavedPost
@@ -48,6 +58,27 @@ class SavedPostsWidget : GlanceAppWidget() {
       listContent = {
         items(posts) { post ->
           Box(GlanceModifier.padding(horizontal = 16.dp, vertical = 4.dp)) { WidgetPostEntry(post) }
+        }
+        item {
+          Box(
+            contentAlignment = Alignment.Center,
+            modifier = GlanceModifier.fillMaxWidth().padding(16.dp),
+          ) {
+            Box(
+              contentAlignment = Alignment.Center,
+              modifier =
+                GlanceModifier.background(GlanceTheme.colors.primary)
+                  .cornerRadius(20.dp)
+                  .padding(horizontal = 24.dp, vertical = 10.dp)
+                  .clickable(actionRunCallback<OpenSavedPostsCallback>()),
+            ) {
+              Text(
+                text = "See more posts",
+                style =
+                  TextStyle(color = GlanceTheme.colors.onPrimary, textAlign = TextAlign.Center),
+              )
+            }
+          }
         }
       },
       modifier = modifier,

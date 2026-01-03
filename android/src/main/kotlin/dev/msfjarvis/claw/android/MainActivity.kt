@@ -25,6 +25,11 @@ import androidx.compose.ui.platform.UriHandler
 import androidx.core.net.toUri
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation3.runtime.NavKey
+import dev.msfjarvis.claw.android.ui.navigation.Comments
+import dev.msfjarvis.claw.android.ui.navigation.Hottest
+import dev.msfjarvis.claw.android.ui.navigation.Newest
+import dev.msfjarvis.claw.android.ui.navigation.Saved
 import dev.msfjarvis.claw.android.ui.screens.LobstersPostsScreen
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.core.injection.InjectedViewModelFactory
@@ -48,7 +53,7 @@ class MainActivity(
     get() = viewModelFactory
 
   var webUri: String? = null
-  var postIdFromDeepLink by mutableStateOf<String?>(null)
+  var deepLinkDestination by mutableStateOf<NavKey?>(null)
     private set
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,7 +78,7 @@ class MainActivity(
           uriHandler = uriHandler,
           windowSizeClass = windowSizeClass,
           setWebUri = { url -> webUri = url },
-          postIdFromDeepLink = postIdFromDeepLink,
+          deepLinkDestination = deepLinkDestination,
         )
       }
     }
@@ -86,10 +91,17 @@ class MainActivity(
 
   private fun handleIntent(intent: Intent) {
     val data = intent.data
-    if (data != null && data.scheme == "claw" && data.host == "comments") {
-      val postId = data.pathSegments.firstOrNull()
-      if (postId != null) {
-        postIdFromDeepLink = postId
+    if (data != null && data.scheme == "claw") {
+      when (data.host) {
+        "comments" -> {
+          val postId = data.pathSegments.firstOrNull()
+          if (postId != null) {
+            deepLinkDestination = Comments(postId)
+          }
+        }
+        "newest" -> deepLinkDestination = Newest
+        "hottest" -> deepLinkDestination = Hottest
+        "saved" -> deepLinkDestination = Saved
       }
     }
   }
@@ -104,9 +116,5 @@ class MainActivity(
         outContent.webUri = null
       }
     }
-  }
-
-  companion object {
-    const val NAVIGATION_KEY = "postId"
   }
 }

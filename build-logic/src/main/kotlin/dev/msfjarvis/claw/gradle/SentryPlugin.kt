@@ -68,6 +68,37 @@ class SentryPlugin : Plugin<Project> {
       sizeAnalysis {
         enabled.set(project.providers.environmentVariable("GITHUB_ACTIONS").isPresent)
       }
+      vcsInfo {
+        headSha.set(gitRevParse(project, "HEAD"))
+        baseSha.set(
+          exec(project, "git", "cat-file", "-p", "HEAD")
+            .map { output -> output.lines().count { it.startsWith("parent") } }
+            .flatMap { parentCount ->
+              if (parentCount >= 2) {
+                // Merge commit: use first parent
+                gitRevParse(project, "HEAD^1")
+              } else {
+                // Normal commit: use last release
+                exec(
+                    project,
+                    "gh",
+                    "release",
+                    "list",
+                    "--limit",
+                    "1",
+                    "--json",
+                    "tagName",
+                    "-q",
+                    ".[0].tagName",
+                  )
+                  .flatMap { tagName -> gitRevParse(project, tagName) }
+              }
+            }
+        )
+        vcsProvider.set("github")
+        headRepoName.set("msfjarvis/compose-lobsters")
+        baseRepoName.set("msfjarvis/compose-lobsters")
+      }
     }
   }
 
@@ -75,5 +106,17 @@ class SentryPlugin : Plugin<Project> {
 
     private const val SENTRY_DSN_PROPERTY = "SENTRY_DSN"
     private const val SENTRY_ENABLE_GRADLE_PROPERTY = "enableSentry"
+
+    private fun gitRevParse(project: Project, ref: String) = exec(project, "git", "rev-parse", ref)
+
+    private fun exec(project: Project, vararg args: String) =
+      project.providers
+        .exec {
+          commandLine(args)
+          isIgnoreExitValue = true
+        }
+        .standardOutput
+        .asText
+        .map { it.trim() }
   }
 }

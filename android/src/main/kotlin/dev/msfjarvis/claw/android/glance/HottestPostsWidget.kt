@@ -8,15 +8,18 @@ package dev.msfjarvis.claw.android.glance
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import androidx.glance.GlanceComposable
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
+import androidx.glance.LocalContext
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.GlanceAppWidget
-import androidx.glance.appwidget.action.actionRunCallback
+import androidx.glance.appwidget.action.actionStartActivity
 import androidx.glance.appwidget.cornerRadius
 import androidx.glance.appwidget.lazy.items
 import androidx.glance.appwidget.provideContent
@@ -32,6 +35,7 @@ import androidx.glance.text.TextAlign
 import androidx.glance.text.TextStyle
 import com.slack.eithernet.ApiResult
 import dev.msfjarvis.claw.android.ClawApplication
+import dev.msfjarvis.claw.android.MainActivity
 import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.UIPost
 import dev.msfjarvis.claw.model.toUIPost
@@ -75,7 +79,14 @@ class HottestPostsWidget : GlanceAppWidget() {
                 GlanceModifier.background(GlanceTheme.colors.primary)
                   .cornerRadius(20.dp)
                   .padding(horizontal = 24.dp, vertical = 10.dp)
-                  .clickable(actionRunCallback<OpenHottestPostsCallback>()),
+                  .clickable(
+                    actionStartActivity(
+                      Intent(Intent.ACTION_VIEW, "claw://hottest".toUri()).apply {
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        setClass(LocalContext.current, MainActivity::class.java)
+                      }
+                    )
+                  ),
             ) {
               Text(
                 text = "See more posts",

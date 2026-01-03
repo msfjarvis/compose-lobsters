@@ -16,7 +16,7 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
 
-@Suppress("Unused")
+@Suppress("Unused", "UnstableApiUsage")
 class SentryPlugin : Plugin<Project> {
 
   override fun apply(project: Project) {
@@ -62,9 +62,12 @@ class SentryPlugin : Plugin<Project> {
       org.set("claw")
       projectName.set("compose-lobsters")
       authToken.set(project.providers.environmentVariable("SENTRY_AUTH_TOKEN"))
-      url.set(null)
+      url.set(null as String?)
       telemetry.set(false)
-      telemetryDsn.set(null)
+      telemetryDsn.set(null as String?)
+      sizeAnalysis {
+        enabled.set(project.providers.environmentVariable("GITHUB_ACTIONS").isPresent)
+      }
     }
   }
 

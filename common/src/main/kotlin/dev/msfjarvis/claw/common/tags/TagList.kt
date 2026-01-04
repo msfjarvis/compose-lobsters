@@ -6,23 +6,29 @@
  */
 package dev.msfjarvis.claw.common.tags
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Remove
-import androidx.compose.material3.Button
+import androidx.compose.material.icons.filled.Done
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.ListItem
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import dev.msfjarvis.claw.common.NetworkState.Error
 import dev.msfjarvis.claw.common.NetworkState.Loading
 import dev.msfjarvis.claw.common.NetworkState.Success
@@ -31,6 +37,7 @@ import dev.msfjarvis.claw.model.Tag
 import dev.zacsweers.metrox.viewmodel.metroViewModel
 import kotlinx.collections.immutable.ImmutableList
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun TagList(
   contentPadding: PaddingValues,
@@ -40,31 +47,50 @@ fun TagList(
   val allTagsState = viewModel.allTags
   val filteredTags = viewModel.filteredTags
 
-  LazyColumn(modifier = modifier.fillMaxWidth().padding(contentPadding)) {
-    when (allTagsState) {
-      is Loading -> {
-        item {
-          Box(modifier = Modifier.fillMaxSize()) {
-            ProgressBar(modifier = Modifier.align(Alignment.Center))
-          }
-        }
+  when (allTagsState) {
+    is Loading -> {
+      Box(modifier = modifier.fillMaxSize().padding(contentPadding)) {
+        ProgressBar(modifier = Modifier.align(Alignment.Center))
       }
-      is Error -> {
-        item {
-          Box(modifier = Modifier.fillMaxSize()) {
-            Text("Failed to load tags", modifier = Modifier.align(Alignment.Center))
-          }
-        }
+    }
+    is Error -> {
+      Box(modifier = modifier.fillMaxSize().padding(contentPadding)) {
+        Text("Failed to load tags", modifier = Modifier.align(Alignment.Center))
       }
-      is Success<*> -> {
-        @Suppress("UNCHECKED_CAST") val allTags = (allTagsState as Success<ImmutableList<Tag>>).data
-        items(allTags) { tag ->
-          val isSelected = filteredTags.contains(tag.tag)
-          ListItem(
-            headlineContent = { Text(tag.tag) },
-            supportingContent = { Text(tag.description) },
-            trailingContent = {
-              Button(
+    }
+    is Success<*> -> {
+      @Suppress("UNCHECKED_CAST") val allTags = (allTagsState as Success<ImmutableList<Tag>>).data
+      Column(
+        modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp).padding(contentPadding)
+      ) {
+        Text(
+          text = "Posts with selected tags will be filtered out of hottest/newest/search feeds",
+          style = MaterialTheme.typography.bodyMedium,
+          color = MaterialTheme.colorScheme.onBackground,
+        )
+        FlowRow(
+          modifier = modifier.fillMaxWidth().verticalScroll(rememberScrollState()),
+          horizontalArrangement = Arrangement.spacedBy(8.dp),
+          verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+          allTags
+            .sortedBy { it.tag }
+            .forEach { tag ->
+              val isSelected = filteredTags.contains(tag.tag)
+              FilterChip(
+                selected = isSelected,
+                leadingIcon =
+                  if (isSelected) {
+                    {
+                      Icon(
+                        imageVector = Icons.Filled.Done,
+                        contentDescription = "Done icon",
+                        modifier = Modifier.size(FilterChipDefaults.IconSize),
+                      )
+                    }
+                  } else {
+                    null
+                  },
                 onClick = {
                   val updatedTags =
                     if (isSelected) {
@@ -73,15 +99,10 @@ fun TagList(
                       filteredTags + tag.tag
                     }
                   viewModel.saveTags(updatedTags.toSet())
-                }
-              ) {
-                Icon(
-                  imageVector = if (isSelected) Icons.Default.Remove else Icons.Default.Add,
-                  contentDescription = if (isSelected) "Remove" else "Add",
-                )
-              }
-            },
-          )
+                },
+                label = { Text(tag.tag) },
+              )
+            }
         }
       }
     }

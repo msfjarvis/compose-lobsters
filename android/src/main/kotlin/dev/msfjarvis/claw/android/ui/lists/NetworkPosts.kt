@@ -48,6 +48,7 @@ fun NetworkPosts(
   listState: LazyListState,
   postActions: PostActions,
   contentPadding: PaddingValues,
+  filteredTags: Set<String>,
   modifier: Modifier = Modifier,
 ) {
   ReportDrawnWhen { lazyPagingItems.itemCount > 0 }
@@ -82,8 +83,11 @@ fun NetworkPosts(
         ) { index ->
           val item = lazyPagingItems[index]
           if (item != null) {
-            LobstersListItem(item = item, postActions = postActions)
-            HorizontalDivider()
+            val shouldShowPost = item.tags.none { tag -> filteredTags.contains(tag) }
+            if (shouldShowPost) {
+              LobstersListItem(item = item, postActions = postActions)
+              HorizontalDivider()
+            }
           }
         }
         if (lazyPagingItems.loadState.append == LoadState.Loading) {
@@ -112,6 +116,7 @@ private fun ListPreview() {
       listState = rememberLazyListState(),
       postActions = TEST_POST_ACTIONS,
       contentPadding = PaddingValues(),
+      filteredTags = emptySet(),
     )
   }
 }

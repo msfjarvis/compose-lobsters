@@ -26,9 +26,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.msfjarvis.claw.common.NetworkState.Error
 import dev.msfjarvis.claw.common.NetworkState.Loading
 import dev.msfjarvis.claw.common.NetworkState.Success
@@ -45,7 +47,7 @@ fun TagList(
   viewModel: TagFilterViewModel = metroViewModel(key = "tag_filter"),
 ) {
   val allTagsState = viewModel.allTags
-  val filteredTags = viewModel.filteredTags
+  val filteredTags by viewModel.filteredTags.collectAsStateWithLifecycle(emptySet())
 
   when (allTagsState) {
     is Loading -> {

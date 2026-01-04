@@ -15,6 +15,7 @@ jobs:
         uses: msfjarvis/compose-lobsters/.github/reusable-workflows/setup-gradle@main
         with:
           cache-read-only: true
+          fetch-depth: 0
 
       - name: Configure Tramline
         id: tramline

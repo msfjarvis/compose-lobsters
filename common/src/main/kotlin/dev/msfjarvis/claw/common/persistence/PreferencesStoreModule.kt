@@ -28,8 +28,8 @@ object PreferencesStoreModule {
   @Provides
   fun providePreferencesDataStore(
     context: Context,
-    migrations: Set<@JvmSuppressWildcards DataMigration<@JvmSuppressWildcards Preferences>>,
-  ): DataStore<@JvmSuppressWildcards Preferences> {
+    migrations: Set<DataMigration<Preferences>>,
+  ): DataStore<Preferences> {
     return DataStoreFactory.create(
       corruptionHandler =
         ReplaceFileCorruptionHandler {

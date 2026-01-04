@@ -59,7 +59,7 @@ object OkHttpModule {
   fun provideClient(
     cache: Cache,
     socketFactory: SocketFactory,
-    interceptors: Set<@JvmSuppressWildcards Interceptor>,
+    interceptors: Set<Interceptor>,
     certificatePinner: CertificatePinner,
   ): OkHttpClient {
     return OkHttpClient.Builder()

@@ -39,8 +39,8 @@ object RetrofitModule {
   @Provides
   fun provideRetrofit(
     client: OkHttpClient,
-    converterFactories: Map<Int, @JvmSuppressWildcards Converter.Factory>,
-    callAdapterFactories: Map<Int, @JvmSuppressWildcards CallAdapter.Factory>,
+    converterFactories: Map<Int, Converter.Factory>,
+    callAdapterFactories: Map<Int, CallAdapter.Factory>,
     @Named("LobstersURL") baseUrl: String,
   ): Retrofit {
     return Retrofit.Builder()
@@ -55,8 +55,8 @@ object RetrofitModule {
   @SearchApi
   fun provideSearchApiRetrofit(
     client: OkHttpClient,
-    @SearchApi converterFactories: List<@JvmSuppressWildcards Converter.Factory>,
-    callAdapterFactories: Map<Int, @JvmSuppressWildcards CallAdapter.Factory>,
+    @SearchApi converterFactories: List<Converter.Factory>,
+    callAdapterFactories: Map<Int, CallAdapter.Factory>,
     @Named("LobstersURL") baseUrl: String,
   ): Retrofit {
     return Retrofit.Builder()
@@ -90,7 +90,7 @@ object RetrofitModule {
 
   @Provides
   @SearchApi
-  fun provideConverters(): List<@JvmSuppressWildcards Converter.Factory> =
+  fun provideConverters(): List<Converter.Factory> =
     listOf(ApiResultConverterFactory, SearchConverter.Factory)
 
   @Provides @Named("LobstersURL") fun provideLobstersUrl(): String = LobstersApi.BASE_URL

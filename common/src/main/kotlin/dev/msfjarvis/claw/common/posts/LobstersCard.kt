@@ -273,14 +273,16 @@ val TEST_POST_ACTIONS =
 @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
 val TEST_POST =
   UIPost(
-    shortId = "ooga",
-    title = "Simple Anomaly Detection Using Plain SQL",
-    url = "https://hakibenita.com/sql-anomaly-detection",
-    createdAt = "2020-09-21T08:04:24.000-05:00",
+    shortId = "bdzmde",
+    title =
+      "I'm brave enough to say it: Linux is good now, and if you want to feel like you actually own your PC, make 2026 the year of Linux on (your) desktop",
+    url =
+      "https://www.pcgamer.com/software/linux/im-brave-enough-to-say-it-linux-is-good-now-and-if-you-want-to-feel-like-you-actually-own-your-pc-make-2026-the-year-of-linux-on-your-desktop",
+    createdAt = "2026-01-02T09:49:33.000-06:00",
     commentCount = 100,
     commentsUrl = "https://lobste.rs/s/q1hh1g/simple_anomaly_detection_using_plain_sql",
-    submitter = "Haki",
-    tags = listOf("databases", "apis"),
+    submitter = "rau",
+    tags = listOf("linux", "games"),
     description = "",
   )
 

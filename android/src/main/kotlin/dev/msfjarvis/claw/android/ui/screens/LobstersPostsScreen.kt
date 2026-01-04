@@ -250,6 +250,7 @@ fun LobstersPostsScreen(
                 openRepository = {
                   uriHandler.openUri("https://github.com/msfjarvis/compose-lobsters")
                 },
+                openTagFiltering = { navigateTo(backStack, TagFiltering) },
                 importPosts = viewModel::importPosts,
                 exportPostsAsJson = viewModel::exportPostsAsJson,
                 exportPostsAsHtml = viewModel::exportPostsAsHtml,

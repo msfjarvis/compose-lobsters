@@ -24,13 +24,24 @@
     </issue>
 
     <issue
+        id="DeprecatedCall"
+        message="androidx.compose.foundation.layout.FlowLayoutKt.FlowRow is deprecated; consider using an alternative."
+        errorLine1="        FlowRow("
+        errorLine2="        ^">
+        <location
+            file="src/main/kotlin/dev/msfjarvis/claw/common/tags/TagList.kt"
+            line="73"
+            column="9"/>
+    </issue>
+
+    <issue
         id="MemberExtensionConflict"
         message="`KeepUntilTransitionsFinished` is defined both as a member in class `androidx.compose.animation.ExitTransition.Companion` and an extension in package `androidx.compose.animation`. The defined behavior for this is to use the member, but since the extension is explicitly imported into this file, there&apos;s a chance that this was not expected. (One common way this happens is for members to be added to a class after code was already written to use an extension)."
         errorLine1="                  ) togetherWith ExitTransition.KeepUntilTransitionsFinished"
         errorLine2="                                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/dev/msfjarvis/claw/android/ui/screens/LobstersPostsScreen.kt"
-            line="230"
+            line="237"
             column="49"/>
     </issue>
 

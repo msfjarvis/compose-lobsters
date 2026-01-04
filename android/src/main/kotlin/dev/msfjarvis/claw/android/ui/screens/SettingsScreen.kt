@@ -21,6 +21,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.LibraryBooks
 import androidx.compose.material.icons.filled.Bookmarks
 import androidx.compose.material.icons.filled.Code
+import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.ImportExport
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -54,6 +55,7 @@ private const val HTML_MIME_TYPE = "application/html"
 fun SettingsScreen(
   openLibrariesScreen: () -> Unit,
   openRepository: () -> Unit,
+  openTagFiltering: () -> Unit,
   snackbarHostState: SnackbarHostState,
   openInputStream: (Uri) -> InputStream?,
   openOutputStream: (Uri) -> OutputStream?,
@@ -117,6 +119,18 @@ fun SettingsScreen(
           modifier = Modifier.height(32.dp),
         )
       },
+    )
+    ListItem(
+      headlineContent = { Text("Tag filtering") },
+      supportingContent = { Text("Filter posts by tags") },
+      leadingContent = {
+        Icon(
+          imageVector = Icons.Filled.FilterList,
+          contentDescription = null,
+          modifier = Modifier.height(32.dp),
+        )
+      },
+      modifier = Modifier.clickable(onClick = openTagFiltering),
     )
 
     Spacer(modifier = Modifier.height(24.dp))
@@ -285,6 +299,7 @@ private fun SettingsScreenPreview() {
     SettingsScreen(
       openLibrariesScreen = {},
       openRepository = {},
+      openTagFiltering = {},
       snackbarHostState = SnackbarHostState(),
       openInputStream = { null },
       openOutputStream = { null },

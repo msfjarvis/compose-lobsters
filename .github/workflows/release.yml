@@ -83,7 +83,7 @@ jobs:
         PARENT_COUNT=$(git cat-file -p HEAD | grep -c '^parent' || echo "1")
         if [ "$PARENT_COUNT" -ge 2 ]; then
           # Merge commit: use first parent
-          BASE_SHA=$(git rev-parse HEAD^1)
+          BASE_SHA=$(git rev-parse HEAD^)
         else
           # Normal commit: use last release
           LAST_TAG=$(gh release list --limit 1 --json tagName -q '.[0].tagName' || echo "")

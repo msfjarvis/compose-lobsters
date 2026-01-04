@@ -6,11 +6,11 @@
  */
 package dev.msfjarvis.claw.android.injection
 
+import android.util.Log
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.BindingContainer
 import dev.zacsweers.metro.ContributesTo
 import dev.zacsweers.metro.Provides
-import io.github.aakira.napier.Napier
 import me.saket.unfurl.UnfurlLogger
 import me.saket.unfurl.Unfurler
 import okhttp3.OkHttpClient
@@ -22,11 +22,11 @@ object MetadataExtractorModule {
   fun provideUnfurlLogger(): UnfurlLogger {
     return object : UnfurlLogger {
       override fun log(message: String) {
-        Napier.d(tag = "Unfurler") { message }
+        Log.d("Unfurler", message)
       }
 
       override fun log(e: Throwable, message: String) {
-        Napier.e(tag = "Unfurler", throwable = e) { message }
+        Log.e("Unfurler", message, e)
       }
     }
   }

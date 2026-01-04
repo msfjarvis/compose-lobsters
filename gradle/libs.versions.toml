@@ -20,7 +20,6 @@ kotlin = "2.3.0"
 kotlinResult = "2.1.0"
 lifecycle = "2.10.0"
 metro = "0.9.3"
-napier = "2.7.1"
 navigation3 = "1.0.0"
 navigation3-material = "1.3.0-alpha05"
 paging = "3.3.6"
@@ -124,8 +123,6 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 metrox-android = { module = "dev.zacsweers.metro:metrox-android", version.ref = "metro" }
 metrox-viewmodel = { module = "dev.zacsweers.metro:metrox-viewmodel", version.ref = "metro" }
 metrox-viewmodel-compose = { module = "dev.zacsweers.metro:metrox-viewmodel-compose", version.ref = "metro" }
-napier = { module = "io.github.aakira:napier", version.ref = "napier" }
-napier-android-debug = { module = "io.github.aakira:napier-android-debug", version.ref = "napier" }
 okhttp-bom = "com.squareup.okhttp3:okhttp-bom:5.3.2"
 okhttp-core = { module = "com.squareup.okhttp3:okhttp" }
 okhttp-loggingInterceptor = { module = "com.squareup.okhttp3:logging-interceptor" }

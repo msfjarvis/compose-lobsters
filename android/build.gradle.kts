@@ -98,7 +98,6 @@ dependencies {
   implementation(libs.metrox.android)
   implementation(libs.metrox.viewmodel)
   implementation(libs.metrox.viewmodel.compose)
-  implementation(libs.napier)
   implementation(libs.okhttp.core)
   implementation(libs.okhttp.loggingInterceptor)
   implementation(libs.retrofit)
@@ -115,7 +114,6 @@ dependencies {
   implementation(projects.model)
 
   debugImplementation(libs.androidx.compose.glance.appwidget.preview)
-  debugImplementation(libs.napier.android.debug)
 
   compileOnly(libs.androidx.compose.glance.preview)
 

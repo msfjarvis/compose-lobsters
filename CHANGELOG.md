@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Added a tag filtering option to settings
 - Comment count badge has been restored
 - Navigation behavior has been improved to avoid too-deep hierarchies
 - Widget clicks are handled reliably

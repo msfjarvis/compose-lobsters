@@ -19,6 +19,7 @@ import androidx.paging.compose.LazyPagingItems
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.ui.SearchBar
 import dev.msfjarvis.claw.model.UIPost
+import kotlinx.collections.immutable.ImmutableSet
 
 @Composable
 fun SearchList(
@@ -28,6 +29,7 @@ fun SearchList(
   searchQuery: String,
   setSearchQuery: (String) -> Unit,
   contentPadding: PaddingValues,
+  filteredTags: ImmutableSet<String>,
   modifier: Modifier = Modifier,
 ) {
   val triggerSearch = { query: String ->
@@ -46,6 +48,7 @@ fun SearchList(
       listState = listState,
       postActions = postActions,
       contentPadding = PaddingValues(0.dp),
+      filteredTags = filteredTags,
     )
   }
 }

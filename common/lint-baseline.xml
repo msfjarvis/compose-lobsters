@@ -12,4 +12,15 @@
             column="3"/>
     </issue>
 
+    <issue
+        id="DeprecatedCall"
+        message="androidx.compose.foundation.layout.FlowLayoutKt.FlowRow is deprecated; consider using an alternative."
+        errorLine1="        FlowRow("
+        errorLine2="        ^">
+        <location
+            file="src/main/kotlin/dev/msfjarvis/claw/common/tags/TagList.kt"
+            line="73"
+            column="9"/>
+    </issue>
+
 </issues>

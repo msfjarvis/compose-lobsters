@@ -26,10 +26,10 @@ import dev.zacsweers.metro.Inject
 import dev.zacsweers.metrox.viewmodel.ViewModelKey
 import java.io.IOException
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -42,16 +42,12 @@ class TagFilterViewModel(
   @param:IODispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
 
-  var filteredTags by mutableStateOf<ImmutableList<String>>(persistentListOf())
-    private set
+  val filteredTags = tagFilterRepository.getSavedTags().map(Set<String>::toPersistentSet)
 
   var allTags by mutableStateOf<NetworkState>(NetworkState.Loading)
     private set
 
   init {
-    viewModelScope.launch {
-      tagFilterRepository.getSavedTags().collectLatest { filteredTags = it.toImmutableList() }
-    }
     viewModelScope.launch {
       allTags =
         runSuspendCatching<ImmutableList<Tag>> {

@@ -6,7 +6,6 @@
  */
 package dev.msfjarvis.claw.android.glance
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -33,7 +32,6 @@ import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 import dev.msfjarvis.claw.android.MainActivity
 import dev.msfjarvis.claw.android.R
-import dev.msfjarvis.claw.common.posts.TEST_POST
 import dev.msfjarvis.claw.model.UIPost
 
 @Composable
@@ -78,11 +76,10 @@ fun WidgetPostEntry(post: UIPost, modifier: GlanceModifier = GlanceModifier) {
   }
 }
 
-@SuppressLint("VisibleForTests")
 @OptIn(ExperimentalGlancePreviewApi::class)
 @Preview
 @GlanceComposable
 @Composable
 private fun WidgetPostEntryPreview() {
-  WidgetPostEntry(TEST_POST)
+  WidgetPostEntry(samplePosts(1).first())
 }

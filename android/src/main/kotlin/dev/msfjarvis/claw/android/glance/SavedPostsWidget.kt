@@ -96,7 +96,7 @@ class SavedPostsWidget : GlanceAppWidget() {
     )
   }
 
-  @SuppressLint("VisibleForTests", "ComposeUnstableReceiver")
+  @SuppressLint("ComposeUnstableReceiver")
   @OptIn(ExperimentalGlancePreviewApi::class)
   @Preview
   @GlanceComposable

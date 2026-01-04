@@ -30,6 +30,8 @@ import androidx.glance.text.TextStyle
 import dev.msfjarvis.claw.common.posts.TEST_POST
 import dev.msfjarvis.claw.common.theme.DarkThemeColors
 import dev.msfjarvis.claw.common.theme.LightThemeColors
+import dev.msfjarvis.claw.model.UIPost
+import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toPersistentList
 
 @Composable
@@ -62,4 +64,9 @@ fun WidgetContainer(
 }
 
 @SuppressLint("VisibleForTests")
-fun samplePosts() = buildList(5) { repeat(5) { add(TEST_POST) } }.toPersistentList()
+fun samplePosts(
+  count: Int = 5,
+  mutator: UIPost.(idx: Int) -> UIPost = { this },
+): PersistentList<UIPost> {
+  return buildList(count) { repeat(count) { add(TEST_POST.mutator(it)) } }.toPersistentList()
+}

@@ -9,16 +9,11 @@ package dev.msfjarvis.claw.android.glance
 import android.annotation.SuppressLint
 import android.os.Build
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.glance.ColorFilter
 import androidx.glance.GlanceComposable
 import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
-import androidx.glance.Image
-import androidx.glance.ImageProvider
 import androidx.glance.appwidget.cornerRadius
 import androidx.glance.appwidget.lazy.LazyColumn
 import androidx.glance.appwidget.lazy.LazyListScope
@@ -26,19 +21,17 @@ import androidx.glance.background
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Column
 import androidx.glance.layout.Row
-import androidx.glance.layout.Spacer
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.padding
-import androidx.glance.layout.size
-import androidx.glance.layout.width
 import androidx.glance.material3.ColorProviders
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
-import dev.msfjarvis.claw.android.R
 import dev.msfjarvis.claw.common.posts.TEST_POST
 import dev.msfjarvis.claw.common.theme.DarkThemeColors
 import dev.msfjarvis.claw.common.theme.LightThemeColors
+import dev.msfjarvis.claw.model.UIPost
+import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toPersistentList
 
 @Composable
@@ -61,15 +54,9 @@ fun WidgetContainer(
   ) {
     Row(
       verticalAlignment = Alignment.CenterVertically,
+      horizontalAlignment = Alignment.CenterHorizontally,
       modifier = GlanceModifier.padding(16.dp).fillMaxWidth(),
     ) {
-      Image(
-        provider = ImageProvider(R.drawable.ic_launcher_foreground),
-        contentDescription = null,
-        colorFilter = ColorFilter.tint(GlanceTheme.colors.secondary),
-        modifier = GlanceModifier.size(36.dp),
-      )
-      Spacer(GlanceModifier.width(16.dp))
       Text(text = title, style = TextStyle(fontSize = 18.sp, color = GlanceTheme.colors.onSurface))
     }
     LazyColumn(content = listContent)
@@ -77,21 +64,9 @@ fun WidgetContainer(
 }
 
 @SuppressLint("VisibleForTests")
-fun samplePosts() = buildList(5) { repeat(5) { add(TEST_POST) } }.toPersistentList()
-
-fun FontWeight?.toGlance(): androidx.glance.text.FontWeight? {
-  return when (this) {
-    FontWeight.Normal -> androidx.glance.text.FontWeight.Normal
-    FontWeight.Medium -> androidx.glance.text.FontWeight.Medium
-    FontWeight.Bold -> androidx.glance.text.FontWeight.Bold
-    else -> null
-  }
-}
-
-fun FontStyle?.toGlance(): androidx.glance.text.FontStyle? {
-  return when (this) {
-    FontStyle.Normal -> androidx.glance.text.FontStyle.Normal
-    FontStyle.Italic -> androidx.glance.text.FontStyle.Italic
-    else -> null
-  }
+fun samplePosts(
+  count: Int = 5,
+  mutator: UIPost.(idx: Int) -> UIPost = { this },
+): PersistentList<UIPost> {
+  return buildList(count) { repeat(count) { add(TEST_POST.mutator(it)) } }.toPersistentList()
 }

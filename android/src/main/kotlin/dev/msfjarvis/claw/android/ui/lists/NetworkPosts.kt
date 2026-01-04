@@ -31,8 +31,8 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemContentType
+import dev.msfjarvis.claw.android.glance.samplePosts
 import dev.msfjarvis.claw.common.posts.PostActions
-import dev.msfjarvis.claw.common.posts.TEST_POST
 import dev.msfjarvis.claw.common.posts.TEST_POST_ACTIONS
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.NetworkError
@@ -110,7 +110,7 @@ fun NetworkPosts(
 @DevicePreviews
 @Composable
 private fun ListPreview() {
-  val items = List(20) { TEST_POST.copy(shortId = "${TEST_POST.shortId}${it}") }
+  val items = samplePosts(20) { this.copy(shortId = "${this.shortId}${it}") }
   val flow = MutableStateFlow(PagingData.from(items))
   LobstersTheme {
     NetworkPosts(

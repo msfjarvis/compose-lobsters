@@ -22,6 +22,31 @@ jobs:
         with:
           input: ${{ github.event.inputs.tramline-input }}
 
+      - name: Calculate VCS info for Sentry
+        shell: bash
+        run: |
+          # Get HEAD commit SHA
+          HEAD_SHA=$(git rev-parse HEAD)
+          echo "SENTRY_VCS_HEAD_SHA=${HEAD_SHA}" >> $GITHUB_ENV
+          
+          # Determine base SHA based on commit type
+          PARENT_COUNT=$(git cat-file -p HEAD | grep -c '^parent' || echo "1")
+          if [ "$PARENT_COUNT" -ge 2 ]; then
+            # Merge commit: use first parent
+            BASE_SHA=$(git rev-parse HEAD^1)
+          else
+            # Normal commit: use last release
+            LAST_TAG=$(gh release list --limit 1 --json tagName -q '.[0].tagName' || echo "")
+            if [ -n "$LAST_TAG" ]; then
+              BASE_SHA=$(git rev-parse "$LAST_TAG")
+            else
+              BASE_SHA="${HEAD_SHA}"
+            fi
+          fi
+          echo "SENTRY_VCS_BASE_SHA=${BASE_SHA}" >> $GITHUB_ENV
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Build release app
         run: |
           ./scripts/setup-age.sh
@@ -32,6 +57,8 @@ jobs:
           AGE_SECRET_KEY: ${{ secrets.AGE_SECRET_KEY }}
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_VCS_HEAD_SHA: ${{ env.SENTRY_VCS_HEAD_SHA }}
+          SENTRY_VCS_BASE_SHA: ${{ env.SENTRY_VCS_BASE_SHA }}
           ORG_GRADLE_PROJECT_VERSION_NAME: ${{ steps.tramline.outputs.version_name }}
           ORG_GRADLE_PROJECT_VERSION_CODE: ${{ steps.tramline.outputs.version_code }}
 

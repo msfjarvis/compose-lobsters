@@ -72,11 +72,38 @@ jobs:
         git add .
         git commit -m 'feat(release): bump version'
 
+    - name: Calculate VCS info for Sentry
+      shell: bash
+      run: |
+        # Get HEAD commit SHA
+        HEAD_SHA=$(git rev-parse HEAD)
+        echo "SENTRY_VCS_HEAD_SHA=${HEAD_SHA}" >> $GITHUB_ENV
+        
+        # Determine base SHA based on commit type
+        PARENT_COUNT=$(git cat-file -p HEAD | grep -c '^parent' || echo "1")
+        if [ "$PARENT_COUNT" -ge 2 ]; then
+          # Merge commit: use first parent
+          BASE_SHA=$(git rev-parse HEAD^1)
+        else
+          # Normal commit: use last release
+          LAST_TAG=$(gh release list --limit 1 --json tagName -q '.[0].tagName' || echo "")
+          if [ -n "$LAST_TAG" ]; then
+            BASE_SHA=$(git rev-parse "$LAST_TAG")
+          else
+            BASE_SHA="${HEAD_SHA}"
+          fi
+        fi
+        echo "SENTRY_VCS_BASE_SHA=${BASE_SHA}" >> $GITHUB_ENV
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Build release assets
       shell: bash
       env:
         SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
         SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+        SENTRY_VCS_HEAD_SHA: ${{ env.SENTRY_VCS_HEAD_SHA }}
+        SENTRY_VCS_BASE_SHA: ${{ env.SENTRY_VCS_BASE_SHA }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         ./gradlew --no-configuration-cache assembleRelease collectReleaseApks collectReleaseBundle -PenableSentry

@@ -70,11 +70,13 @@ import dev.msfjarvis.claw.android.ui.navigation.TopLevelDestination
 import dev.msfjarvis.claw.android.ui.navigation.User
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.common.comments.CommentsPage
+import dev.msfjarvis.claw.common.tags.TagFilterViewModel
 import dev.msfjarvis.claw.common.tags.TagList
 import dev.msfjarvis.claw.common.user.UserProfile
 import dev.zacsweers.metrox.viewmodel.metroViewModel
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
+import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3AdaptiveApi::class)
@@ -86,6 +88,7 @@ fun LobstersPostsScreen(
   modifier: Modifier = Modifier,
   deepLinkDestination: NavKey? = null,
   viewModel: ClawViewModel = metroViewModel(),
+  tagFilterViewModel: TagFilterViewModel = metroViewModel(key = "tag_filter"),
 ) {
   val navigationType = ClawNavigationType.fromSize(windowSizeClass.widthSizeClass)
 
@@ -105,6 +108,8 @@ fun LobstersPostsScreen(
 
   val savedPosts by viewModel.savedPostsByMonth.collectAsStateWithLifecycle(persistentMapOf())
   val savedPostsCount by viewModel.savedPostsCount.collectAsStateWithLifecycle(0L)
+
+  val filteredTags by tagFilterViewModel.filteredTags.collectAsStateWithLifecycle(persistentSetOf())
 
   LaunchedEffect(deepLinkDestination) {
     if (deepLinkDestination != null) {
@@ -188,6 +193,7 @@ fun LobstersPostsScreen(
                 listState = hottestListState,
                 postActions = postActions,
                 contentPadding = contentPadding,
+                filteredTags = filteredTags,
               )
             }
             entry<Newest>(
@@ -200,6 +206,7 @@ fun LobstersPostsScreen(
                 listState = newestListState,
                 postActions = postActions,
                 contentPadding = contentPadding,
+                filteredTags = filteredTags,
               )
             }
             entry<Saved>(

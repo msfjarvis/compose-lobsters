@@ -7,6 +7,7 @@
 package dev.msfjarvis.claw.common.persistence
 
 import android.content.Context
+import android.util.Log
 import androidx.datastore.core.DataMigration
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.DataStoreFactory
@@ -20,7 +21,6 @@ import dev.zacsweers.metro.BindingContainer
 import dev.zacsweers.metro.ContributesTo
 import dev.zacsweers.metro.IntoSet
 import dev.zacsweers.metro.Provides
-import io.github.aakira.napier.Napier
 
 @BindingContainer
 @ContributesTo(AppScope::class)
@@ -33,9 +33,11 @@ object PreferencesStoreModule {
     return DataStoreFactory.create(
       corruptionHandler =
         ReplaceFileCorruptionHandler {
-          Napier.d(throwable = it) {
-            "Preferences data store corruption detected, returning empty preferences."
-          }
+          Log.d(
+            "PreferencesStore",
+            "Preferences data store corruption detected, returning empty preferences.",
+            it,
+          )
           emptyPreferences()
         },
       migrations = migrations.toList(),

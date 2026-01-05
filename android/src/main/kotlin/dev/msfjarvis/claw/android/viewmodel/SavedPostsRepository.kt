@@ -6,8 +6,10 @@
  */
 package dev.msfjarvis.claw.android.viewmodel
 
+import android.util.Log
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
+import dev.msfjarvis.claw.android.BuildConfig
 import dev.msfjarvis.claw.core.coroutines.DatabaseReadDispatcher
 import dev.msfjarvis.claw.core.coroutines.DatabaseWriteDispatcher
 import dev.msfjarvis.claw.database.local.SavedPost
@@ -15,7 +17,6 @@ import dev.msfjarvis.claw.database.local.SavedPostQueries
 import dev.msfjarvis.claw.model.UIPost
 import dev.msfjarvis.claw.model.toSavedPost
 import dev.zacsweers.metro.Inject
-import io.github.aakira.napier.Napier
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
@@ -39,16 +40,22 @@ class SavedPostsRepository(
     val exists =
       withContext(readDispatcher) { savedPostQueries.postExists(post.shortId).executeAsOne() }
     if (exists) {
-      Napier.d(tag = TAG) { "Removing post: ${post.shortId}" }
+      if (BuildConfig.DEBUG) {
+        Log.d(TAG, "Removing post: ${post.shortId}")
+      }
       withContext(writeDispatcher) { savedPostQueries.deletePost(post.shortId) }
     } else {
-      Napier.d(tag = TAG) { "Saving post: ${post.shortId}" }
+      if (BuildConfig.DEBUG) {
+        Log.d(TAG, "Saving post: ${post.shortId}")
+      }
       withContext(writeDispatcher) { savedPostQueries.insertOrReplacePost(post.toSavedPost()) }
     }
   }
 
   suspend fun savePosts(posts: List<SavedPost>) {
-    Napier.d(tag = TAG) { "Saving posts: ${posts.joinToString(",") { it.shortId }}" }
+    if (BuildConfig.DEBUG) {
+      Log.d(TAG, "Saving posts: ${posts.joinToString(",") { it.shortId }}")
+    }
     withContext(writeDispatcher) {
       savedPostQueries.transaction {
         posts.forEach { post -> savedPostQueries.insertOrReplacePost(post) }

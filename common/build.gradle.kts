@@ -68,10 +68,7 @@ dependencies {
   implementation(libs.kotlinx.coroutines.core)
   implementation(libs.metrox.viewmodel)
   implementation(libs.metrox.viewmodel.compose)
-  implementation(libs.napier)
   implementation(libs.sqldelight.runtime)
-
-  debugImplementation(libs.napier.android.debug)
 
   compileOnly(libs.androidx.compose.ui.tooling.preview)
 

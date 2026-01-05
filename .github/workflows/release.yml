@@ -90,7 +90,7 @@ jobs:
           # Normal commit: use last release
           LAST_TAG=$(gh release list --limit 1 --json tagName -q '.[0].tagName' || echo "")
           if [ -n "$LAST_TAG" ]; then
-            BASE_SHA=$(git rev-parse "$LAST_TAG")
+            BASE_SHA=$(git rev-parse "${LAST_TAG}^{commit}")
           else
             BASE_SHA="${HEAD_SHA}"
           fi

@@ -9,6 +9,7 @@ package dev.msfjarvis.claw.common.urllauncher
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.ui.platform.UriHandler
@@ -16,7 +17,6 @@ import androidx.core.net.toUri
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
-import io.github.aakira.napier.Napier
 
 @Inject
 @ContributesBinding(AppScope::class)
@@ -37,7 +37,7 @@ class UrlLauncher(private val context: Context) : UriHandler {
       context.startActivity(intent)
     } catch (e: ActivityNotFoundException) {
       val error = "Failed to open URL: $uri"
-      Napier.d(throwable = e, tag = "UrlLauncher") { error }
+      Log.d("UrlLauncher", error, e)
       Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
     }
   }

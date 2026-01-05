@@ -7,6 +7,7 @@
 package dev.msfjarvis.claw.database.injection
 
 import android.content.Context
+import android.util.Log
 import androidx.sqlite.db.SupportSQLiteDatabase
 import app.cash.sqldelight.adapter.primitive.IntColumnAdapter
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
@@ -20,7 +21,6 @@ import dev.zacsweers.metro.BindingContainer
 import dev.zacsweers.metro.ContributesTo
 import dev.zacsweers.metro.Provides
 import dev.zacsweers.metro.SingleIn
-import io.github.aakira.napier.Napier
 import io.requery.android.database.sqlite.RequerySQLiteOpenHelperFactory
 import io.requery.android.database.sqlite.SQLiteDatabase
 import io.sentry.android.sqlite.SentrySupportSQLiteOpenHelper
@@ -55,7 +55,7 @@ object DatabaseModule {
             },
         )
       ) { message ->
-        Napier.d(tag = "SQLDelightQuery", message = message)
+        Log.d("SQLDelightQuery", message)
       }
     return LobstersDatabase(
       driver = driver,

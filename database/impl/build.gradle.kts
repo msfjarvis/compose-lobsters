@@ -20,13 +20,10 @@ dependencies {
   api(projects.database.core)
 
   implementation(libs.androidx.sqlite)
-  implementation(libs.napier)
   implementation(libs.sqldelight.androidDriver)
   implementation(libs.sqldelight.primitiveAdapters)
   implementation(libs.sqlite.android)
   implementation(libs.sentry.android.sqlite)
-
-  debugImplementation(libs.napier.android.debug)
 
   testImplementation(libs.sqldelight.jvmDriver)
   testImplementation(libs.sqldelight.runtime)

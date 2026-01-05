@@ -5,9 +5,6 @@ tags:
   - state-restoration
 ---
 - launchApp
-- extendedWaitUntil:
-    visible: "comments_button"
-    timeout: 10000
 
 - tapOn:
     id: "comments_button"

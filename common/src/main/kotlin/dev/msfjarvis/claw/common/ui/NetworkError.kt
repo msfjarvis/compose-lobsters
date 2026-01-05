@@ -7,6 +7,7 @@
 package dev.msfjarvis.claw.common.ui
 
 import android.content.ClipData
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,12 +29,11 @@ import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.unit.dp
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
-import io.github.aakira.napier.Napier
 import kotlinx.coroutines.launch
 
 @Composable
 fun NetworkError(label: String, error: Throwable, modifier: Modifier = Modifier) {
-  LaunchedEffect(Unit) { Napier.e(error, "NetworkError") { "Failed to load posts" } }
+  LaunchedEffect(Unit) { Log.e("NetworkError", "Failed to load posts", error) }
   var showDialog by remember { mutableStateOf(false) }
   Column(verticalArrangement = Arrangement.spacedBy(4.dp), modifier = modifier) {
     Text(

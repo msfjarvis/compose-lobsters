@@ -108,7 +108,7 @@ jobs:
         SENTRY_VCS_BASE_SHA: ${{ env.SENTRY_VCS_BASE_SHA }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        ./gradlew --no-configuration-cache assembleRelease collectReleaseApks collectReleaseBundle -PenableSentry
+        ./gradlew --no-configuration-cache assembleRelease uploadSentryProguardMappingsRelease collectReleaseApks collectReleaseBundle -PenableSentry
 
     - name: Clean secrets
       run: scripts/signing-cleanup.sh

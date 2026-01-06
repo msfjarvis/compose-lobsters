@@ -7,5 +7,5 @@
 <full-backup-content>
   <include
     domain="database"
-    path="databases" />
+    path="." />
 </full-backup-content>

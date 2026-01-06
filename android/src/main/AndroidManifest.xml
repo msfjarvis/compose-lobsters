@@ -10,6 +10,7 @@
   <uses-permission android:name="android.permission.INTERNET" />
   <application
     android:name=".ClawApplication"
+    android:appComponentFactory=".BackupSafeAppComponentFactory"
     android:dataExtractionRules="@xml/data_extraction_rules"
     android:enableOnBackInvokedCallback="true"
     android:fullBackupContent="@xml/full_backup_content"
@@ -18,6 +19,7 @@
     android:roundIcon="@mipmap/ic_launcher"
     android:supportsRtl="true"
     android:theme="@style/Theme.Claw.SplashScreen"
+    tools:replace="android:appComponentFactory"
     tools:targetApi="tiramisu">
     <profileable
       android:shell="true"

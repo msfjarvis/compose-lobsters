@@ -10,7 +10,7 @@
   <uses-permission android:name="android.permission.INTERNET" />
   <application
     android:name=".ClawApplication"
-    android:appComponentFactory=".BackupSafeAppComponentFactory"
+    android:appComponentFactory="dev.msfjarvis.claw.android.BackupSafeAppComponentFactory"
     android:dataExtractionRules="@xml/data_extraction_rules"
     android:enableOnBackInvokedCallback="true"
     android:fullBackupContent="@xml/full_backup_content"

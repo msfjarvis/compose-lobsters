@@ -195,14 +195,18 @@ private fun ImportPosts(
         return@rememberLauncherForActivityResult
       }
       coroutineScope.launch {
-        openInputStream(uri)?.use { stream ->
-          val result = importPosts(stream)
-          if (result.isSuccess) {
-            snackbarHostState.showSnackbarDismissing("Successfully imported posts")
-          } else {
-            snackbarHostState.showSnackbarDismissing("Failed to import posts")
-          }
-        } ?: snackbarHostState.showSnackbarDismissing("Unable to open selected file")
+        try {
+          openInputStream(uri)?.use { stream ->
+            val result = importPosts(stream)
+            if (result.isSuccess) {
+              snackbarHostState.showSnackbarDismissing("Successfully imported posts")
+            } else {
+              snackbarHostState.showSnackbarDismissing("Failed to import posts")
+            }
+          } ?: snackbarHostState.showSnackbarDismissing("Unable to open selected file")
+        } catch (e: Exception) {
+          snackbarHostState.showSnackbarDismissing("Failed to open file: ${e.message}")
+        }
       }
     }
   OutlinedButton(
@@ -231,9 +235,13 @@ private inline fun ExportPosts(
         return@rememberLauncherForActivityResult
       }
       coroutineScope.launch {
-        openOutputStream(uri)?.use { stream ->
-          exportPostsAsJson(stream)
-          snackbarHostState.showSnackbarDismissing("Successfully exported posts")
+        try {
+          openOutputStream(uri)?.use { stream ->
+            exportPostsAsJson(stream)
+            snackbarHostState.showSnackbarDismissing("Successfully exported posts")
+          } ?: snackbarHostState.showSnackbarDismissing("Unable to open output file")
+        } catch (e: Exception) {
+          snackbarHostState.showSnackbarDismissing("Failed to export posts: ${e.message}")
         }
       }
     }
@@ -245,9 +253,13 @@ private inline fun ExportPosts(
         return@rememberLauncherForActivityResult
       }
       coroutineScope.launch {
-        openOutputStream(uri)?.use { stream ->
-          exportPostsAsHtml(stream)
-          snackbarHostState.showSnackbarDismissing("Successfully exported posts")
+        try {
+          openOutputStream(uri)?.use { stream ->
+            exportPostsAsHtml(stream)
+            snackbarHostState.showSnackbarDismissing("Successfully exported posts")
+          } ?: snackbarHostState.showSnackbarDismissing("Unable to open output file")
+        } catch (e: Exception) {
+          snackbarHostState.showSnackbarDismissing("Failed to export posts: ${e.message}")
         }
       }
     }

@@ -13,10 +13,12 @@ import androidx.work.WorkerParameters
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.SingleIn
 import kotlin.collections.get
 import kotlin.reflect.KClass
 
 @ContributesBinding(AppScope::class)
+@SingleIn(AppScope::class)
 @Inject
 class InjectedWorkerFactory(
   val workerProviders: Map<KClass<out ListenableWorker>, WorkerInstanceFactory<*>>

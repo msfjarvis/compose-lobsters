@@ -20,6 +20,7 @@ import dev.zacsweers.metro.IntoMap
 import dev.zacsweers.metro.Named
 import dev.zacsweers.metro.Provides
 import dev.zacsweers.metro.Qualifier
+import dev.zacsweers.metro.SingleIn
 import okhttp3.OkHttpClient
 import retrofit2.CallAdapter
 import retrofit2.Converter
@@ -37,6 +38,7 @@ import retrofit2.create
 @ContributesTo(AppScope::class)
 object RetrofitModule {
   @Provides
+  @SingleIn(AppScope::class)
   fun provideRetrofit(
     client: OkHttpClient,
     converterFactories: Map<Int, Converter.Factory>,
@@ -53,6 +55,7 @@ object RetrofitModule {
 
   @Provides
   @SearchApi
+  @SingleIn(AppScope::class)
   fun provideSearchApiRetrofit(
     client: OkHttpClient,
     @SearchApi converterFactories: List<Converter.Factory>,
@@ -68,9 +71,12 @@ object RetrofitModule {
       .build()
   }
 
-  @Provides fun provideApi(retrofit: Retrofit): LobstersApi = retrofit.create()
+  @Provides
+  @SingleIn(AppScope::class)
+  fun provideApi(retrofit: Retrofit): LobstersApi = retrofit.create()
 
   @Provides
+  @SingleIn(AppScope::class)
   fun provideSearchApi(@SearchApi retrofit: Retrofit): LobstersSearchApi = retrofit.create()
 
   @Provides

@@ -13,6 +13,7 @@ import dev.zacsweers.metro.BindingContainer
 import dev.zacsweers.metro.ContributesTo
 import dev.zacsweers.metro.IntoSet
 import dev.zacsweers.metro.Provides
+import dev.zacsweers.metro.SingleIn
 import java.net.Socket
 import java.util.concurrent.TimeUnit
 import javax.net.SocketFactory
@@ -41,6 +42,7 @@ object OkHttpModule {
   }
 
   @Provides
+  @SingleIn(AppScope::class)
   fun provideCache(context: Context): Cache {
     return Cache(context.cacheDir, CACHE_SIZE_MB)
   }
@@ -56,6 +58,7 @@ object OkHttpModule {
   }
 
   @Provides
+  @SingleIn(AppScope::class)
   fun provideClient(
     cache: Cache,
     socketFactory: SocketFactory,

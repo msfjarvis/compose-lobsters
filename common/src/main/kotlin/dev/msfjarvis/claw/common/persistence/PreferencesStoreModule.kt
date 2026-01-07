@@ -21,11 +21,13 @@ import dev.zacsweers.metro.BindingContainer
 import dev.zacsweers.metro.ContributesTo
 import dev.zacsweers.metro.IntoSet
 import dev.zacsweers.metro.Provides
+import dev.zacsweers.metro.SingleIn
 
 @BindingContainer
 @ContributesTo(AppScope::class)
 object PreferencesStoreModule {
   @Provides
+  @SingleIn(AppScope::class)
   fun providePreferencesDataStore(
     context: Context,
     migrations: Set<DataMigration<Preferences>>,

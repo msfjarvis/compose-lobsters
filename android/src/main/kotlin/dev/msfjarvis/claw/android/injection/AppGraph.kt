@@ -19,6 +19,7 @@ import dev.zacsweers.metro.DependencyGraph
 import dev.zacsweers.metro.Multibinds
 import dev.zacsweers.metro.Provider
 import dev.zacsweers.metro.Provides
+import dev.zacsweers.metro.SingleIn
 import dev.zacsweers.metrox.android.MetroAppComponentProviders
 import dev.zacsweers.metrox.viewmodel.ViewModelGraph
 import kotlin.reflect.KClass
@@ -31,6 +32,7 @@ interface AppGraph : MetroAppComponentProviders, ViewModelGraph {
   val workManager: WorkManager
 
   @Provides
+  @SingleIn(AppScope::class)
   fun providesWorkManager(application: Context): WorkManager {
     return WorkManager.getInstance(application)
   }

@@ -42,11 +42,10 @@ function run_maestro_flow() {
 }
 
 function generate_grid() {
-  local MONTAGE_INPUT BACKGROUND_COLOR OUTPUT_FILE START_NUMBER DEVICE_DIMENSIONS
+  local MONTAGE_INPUT OUTPUT_FILE START_NUMBER DEVICE_DIMENSIONS
   MONTAGE_INPUT="$(mktemp)"
   OUTPUT_FILE="${1:?}"
-  BACKGROUND_COLOR="${2:?}"
-  START_NUMBER="${3:?}"
+  START_NUMBER="${2:?}"
   # Get device screen dimensions dynamically
   DEVICE_DIMENSIONS="$(adb shell wm size | grep -oE '[0-9]+x[0-9]+')"
   # Run the Maestro flow to generate the screenshots
@@ -58,8 +57,8 @@ function generate_grid() {
     "${SCREENSHOT_DIR}"/CommentsPage.png \
     "${SCREENSHOT_DIR}"/SavedPosts.png \
     "${SCREENSHOT_DIR}"/SearchPage.png \
-    "xc:${BACKGROUND_COLOR}" \
     "${SCREENSHOT_DIR}"/SettingsPage.png \
+    "${SCREENSHOT_DIR}"/TagFiltering.png \
     >> "${MONTAGE_INPUT}"
 
   # Use imagemagick to stitch the screenshots in a grid
@@ -76,7 +75,7 @@ function generate_grid() {
 
   local FASTLANE_SCREENSHOTS="${SCRIPT_DIR}"/../fastlane/metadata/android/en-US/images/phoneScreenshots
   local COUNTER="${START_NUMBER}"
-  for screenshot in HottestPosts CommentsPage SavedPosts SearchPage SettingsPage; do
+  for screenshot in HottestPosts CommentsPage SavedPosts SearchPage SettingsPage TagFiltering; do
     if [[ -f "${SCREENSHOT_DIR}/${screenshot}.png" ]]; then
       cp "${SCREENSHOT_DIR}/${screenshot}.png" "${FASTLANE_SCREENSHOTS}/$(printf '%02d' "${COUNTER}").png"
       ((COUNTER++))
@@ -89,8 +88,8 @@ function generate_grid() {
 
 adb shell "cmd uimode night no"
 
-generate_grid "${SCRIPT_DIR}"/../.github/readme_feature_light white 1
+generate_grid "${SCRIPT_DIR}"/../.github/readme_feature_light 1
 
 adb shell "cmd uimode night yes"
 
-generate_grid "${SCRIPT_DIR}"/../.github/readme_feature_dark black 6
+generate_grid "${SCRIPT_DIR}"/../.github/readme_feature_dark 7

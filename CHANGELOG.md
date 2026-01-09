@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.59.0] - 2026-01-09
+
 ### Fixed
 
 - Crashes from process death
@@ -19,7 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Comment count badge has been restored
 - Navigation behavior has been improved to avoid too-deep hierarchies
 - Widget clicks are handled reliably
-- Widget UI has been touched up and a preview added for Android 16+ 
+- Widget UI has been touched up and a preview added for Android 16+
 - User profile page is now scrollable
 
 ## [1.58.0] - 2025-12-26
@@ -550,7 +552,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.58.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.59.0...HEAD
+[1.59.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.58.0...v1.59.0
 [1.58.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.57.0...v1.58.0
 [1.57.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.55.0...v1.57.0
 [1.55.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.54.0...v1.55.0

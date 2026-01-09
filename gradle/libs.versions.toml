@@ -1,6 +1,6 @@
 [versions]
 aboutLibraries = "14.0.0-a02"
-agp = "9.1.0-alpha03"
+agp = "9.1.0-alpha04"
 annotation = "1.9.1"
 coil3 = "3.3.0"
 compose-animation = "1.11.0-alpha02"
@@ -162,5 +162,5 @@ ksp = "com.google.devtools.ksp:2.3.4"
 licensee = "app.cash.licensee:1.14.1"
 metro = { id = "dev.zacsweers.metro", version.ref = "metro" }
 modulegraphassert = "com.jraska.module.graph.assertion:2.9.0"
-poko = "dev.drewhamilton.poko:0.21.0"
+poko = "dev.drewhamilton.poko:0.21.1"
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }

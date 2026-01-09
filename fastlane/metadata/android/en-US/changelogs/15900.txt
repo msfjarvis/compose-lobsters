@@ -1,0 +1,14 @@
+### Fixed
+
+- Crashes from process death
+- Crashes in widget handling
+- Android Auto Backup works again
+
+### Changed
+
+- Added a tag filtering option to settings
+- Comment count badge has been restored
+- Navigation behavior has been improved to avoid too-deep hierarchies
+- Widget clicks are handled reliably
+- Widget UI has been touched up and a preview added for Android 16+
+- User profile page is now scrollable

@@ -33,6 +33,12 @@ appId: dev.msfjarvis.claw.android
 - takeScreenshot: "SettingsPage"
 - tapOn:
     point: "50%,50%"
+- tapOn: "Tag filtering"
+- tapOn: "ai"
+- tapOn: "c"
+- tapOn: "css"
+- takeScreenshot: "TagFiltering"
+- back
 - back
 - tapOn: "Hottest"
 - tapOn: "Open comments"

@@ -46,8 +46,14 @@ class ClawApplication : Application(), MetroApplication {
     )
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
       GlobalScope.launch(appGraph.mainDispatcher) {
-        GlanceAppWidgetManager(applicationContext)
-          .setWidgetPreviews(SavedPostsWidgetReceiver::class)
+        try {
+          GlanceAppWidgetManager(applicationContext)
+            .setWidgetPreviews(SavedPostsWidgetReceiver::class)
+        } catch (_: IllegalArgumentException) {
+          // Workaround for Motorola Android 15 bug where AppWidgetServiceImpl incorrectly
+          // reports registered widgets as invalid when setting previews.
+          // See: https://claw.sentry.io/share/issue/f8ee09821d8840b9b86293d3ffb627d3/
+        }
       }
     }
   }

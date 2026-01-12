@@ -79,6 +79,7 @@ class MainActivity(
           windowSizeClass = windowSizeClass,
           setWebUri = { url -> webUri = url },
           deepLinkDestination = deepLinkDestination,
+          clearDeepLink = { deepLinkDestination = null },
         )
       }
     }
@@ -91,7 +92,7 @@ class MainActivity(
 
   private fun handleIntent(intent: Intent) {
     val data = intent.data
-    if (data != null && data.scheme == "claw") {
+    if (data != null && data.scheme == BuildConfig.DEEPLINK_SCHEME) {
       when (data.host) {
         "comments" -> {
           val postId = data.pathSegments.firstOrNull()

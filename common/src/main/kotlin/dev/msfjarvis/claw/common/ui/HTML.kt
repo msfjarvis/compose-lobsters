@@ -12,13 +12,19 @@ import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.ExperimentalTextApi
+import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.LineBreak
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.core.net.toUri
 import be.digitalia.compose.htmlconverter.HtmlStyle
 import be.digitalia.compose.htmlconverter.htmlToAnnotatedString
+import dev.msfjarvis.claw.api.LobstersApi
+import dev.msfjarvis.claw.common.BuildConfig
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
 
@@ -28,25 +34,29 @@ internal fun ThemedRichText(text: String, modifier: Modifier = Modifier) {
   val linkColor = MaterialTheme.colorScheme.onSurface
   val convertedText =
     remember(text) {
-      htmlToAnnotatedString(
-        // Lobsters seems to insert literal newlines between paragraphs for some reason which makes
-        // the resultant view come out rather ugly. We strip those out by hand and let the standard
-        // paragraph formatting handle separating individual blocks.
-        html = text.replace("</p>\\n<p>", "</p><p>"),
-        style =
-          HtmlStyle(
-            textLinkStyles =
-              TextLinkStyles(
-                style =
-                  SpanStyle(
-                    background = linkBackground,
-                    color = linkColor,
-                    fontWeight = FontWeight.Bold,
-                    textDecoration = TextDecoration.Underline,
-                  )
-              )
-          ),
-      )
+      val annotatedString =
+        htmlToAnnotatedString(
+          // Lobsters seems to insert literal newlines between paragraphs for some reason which
+          // makes
+          // the resultant view come out rather ugly. We strip those out by hand and let the
+          // standard
+          // paragraph formatting handle separating individual blocks.
+          html = text.replace("</p>\\n<p>", "</p><p>"),
+          style =
+            HtmlStyle(
+              textLinkStyles =
+                TextLinkStyles(
+                  style =
+                    SpanStyle(
+                      background = linkBackground,
+                      color = linkColor,
+                      fontWeight = FontWeight.Bold,
+                      textDecoration = TextDecoration.Underline,
+                    )
+                )
+            ),
+        )
+      rewriteLobstersLinksToDeepLinks(annotatedString)
     }
   Text(
     text = convertedText,
@@ -54,6 +64,61 @@ internal fun ThemedRichText(text: String, modifier: Modifier = Modifier) {
     style = MaterialTheme.typography.bodyLarge.copy(lineBreak = LineBreak.Paragraph),
     modifier = modifier,
   )
+}
+
+@OptIn(ExperimentalTextApi::class)
+private fun rewriteLobstersLinksToDeepLinks(annotatedString: AnnotatedString): AnnotatedString {
+  val linkAnnotations = annotatedString.getLinkAnnotations(0, annotatedString.length)
+
+  if (linkAnnotations.isEmpty()) {
+    return annotatedString
+  }
+
+  return AnnotatedString.Builder(annotatedString)
+    .apply {
+      linkAnnotations.forEach { annotation ->
+        val link = annotation.item
+        if (link is LinkAnnotation.Url) {
+          val url = link.url
+          val rewrittenUrl = rewriteUrlIfLobstersPost(url)
+
+          addLink(
+            LinkAnnotation.Url(
+              rewrittenUrl,
+              styles = link.styles,
+              linkInteractionListener = link.linkInteractionListener,
+            ),
+            start = annotation.start,
+            end = annotation.end,
+          )
+        }
+      }
+    }
+    .toAnnotatedString()
+}
+
+private val lobstersUri = LobstersApi.BASE_URL.toUri()
+
+private fun rewriteUrlIfLobstersPost(url: String): String {
+  return try {
+    val uri = url.toUri()
+    if (
+      uri.scheme in setOf("http", "https") &&
+        uri.host == lobstersUri.host &&
+        uri.path?.startsWith("/s/") == true
+    ) {
+      val pathSegments = uri.path?.split("/").orEmpty()
+      if (pathSegments.size >= 3) {
+        val shortId = pathSegments[2]
+        if (shortId.isNotEmpty()) {
+          return "${BuildConfig.DEEPLINK_SCHEME}://comments/$shortId"
+        }
+      }
+    }
+    url
+  } catch (_: Exception) {
+    url
+  }
 }
 
 @ThemePreviews

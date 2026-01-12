@@ -8,6 +8,7 @@ package dev.msfjarvis.claw.android.ui.screens
 
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.LocalActivity
+import androidx.annotation.VisibleForTesting
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
@@ -87,6 +88,7 @@ fun LobstersPostsScreen(
   setWebUri: (String?) -> Unit,
   modifier: Modifier = Modifier,
   deepLinkDestination: NavKey? = null,
+  clearDeepLink: () -> Unit = {},
   viewModel: ClawViewModel = metroViewModel(),
   tagFilterViewModel: TagFilterViewModel = metroViewModel(key = "tag_filter"),
 ) {
@@ -113,7 +115,8 @@ fun LobstersPostsScreen(
 
   LaunchedEffect(deepLinkDestination) {
     if (deepLinkDestination != null) {
-      navigateTo(backStack, deepLinkDestination)
+      navigateTo(backStack, deepLinkDestination, allowStacking = true)
+      clearDeepLink()
     }
   }
 
@@ -132,7 +135,9 @@ fun LobstersPostsScreen(
   // endregion
 
   val postActions = remember {
-    PostActions(context, uriHandler, viewModel) { navigateTo(backStack, Comments(it)) }
+    PostActions(context, uriHandler, viewModel) {
+      navigateTo(backStack, Comments(it), allowStacking = false)
+    }
   }
 
   BackHandler(enabled = backStack.size > 1) { backStack.removeAt(backStack.lastIndex) }
@@ -221,9 +226,14 @@ fun LobstersPostsScreen(
               )
             }
             entry<Comments>(metadata = ListDetailSceneStrategy.detailPane()) { dest ->
+              val commentsPostActions = remember {
+                PostActions(context, uriHandler, viewModel) {
+                  navigateTo(backStack, Comments(it), allowStacking = true)
+                }
+              }
               CommentsPage(
                 postId = dest.postId,
-                postActions = postActions,
+                postActions = commentsPostActions,
                 contentPadding = contentPadding,
                 openUserProfile = { navigateTo(backStack, User(it)) },
               )
@@ -289,20 +299,41 @@ fun LobstersPostsScreen(
   }
 }
 
-private fun navigateTo(backStack: MutableList<NavKey>, destination: NavKey) {
+@VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+fun navigateTo(
+  backStack: MutableList<NavKey>,
+  destination: NavKey,
+  allowStacking: Boolean = false,
+) {
   if (destination is TopLevelDestination) {
     backStack.clear()
     if (destination != Hottest) {
       backStack.add(Hottest)
     }
+    backStack.add(destination)
+    return
   }
-  val existingEntry =
-    backStack.firstOrNull {
-      it is NonStackable && it::class.java.isAssignableFrom(destination::class.java)
+
+  if (destination is NonStackable) {
+    if (allowStacking && destination is Comments) {
+      val lastItem = backStack.lastOrNull()
+      if (lastItem is Comments && lastItem.postId == destination.postId) {
+        return
+      }
+      backStack.add(destination)
+      return
     }
-  if (destination is NonStackable && existingEntry != null) {
-    backStack.remove(existingEntry)
+
+    val existingEntry =
+      backStack.firstOrNull {
+        it is NonStackable && it::class.java.isAssignableFrom(destination::class.java)
+      }
+
+    if (existingEntry != null) {
+      backStack.remove(existingEntry)
+    }
   }
+
   backStack.add(destination)
 }
 

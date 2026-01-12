@@ -30,6 +30,7 @@ import androidx.glance.preview.ExperimentalGlancePreviewApi
 import androidx.glance.preview.Preview
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
+import dev.msfjarvis.claw.android.BuildConfig
 import dev.msfjarvis.claw.android.MainActivity
 import dev.msfjarvis.claw.android.R
 import dev.msfjarvis.claw.model.UIPost
@@ -40,10 +41,14 @@ fun WidgetPostEntry(post: UIPost, modifier: GlanceModifier = GlanceModifier) {
   val titleStyle = MaterialTheme.typography.bodyMedium
   val commentsAction =
     actionStartActivity(
-      Intent(Intent.ACTION_VIEW, "claw://comments/${post.shortId}".toUri()).apply {
-        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        setClass(LocalContext.current, MainActivity::class.java)
-      }
+      Intent(
+          Intent.ACTION_VIEW,
+          "${BuildConfig.DEEPLINK_SCHEME}://comments/${post.shortId}".toUri(),
+        )
+        .apply {
+          addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+          setClass(LocalContext.current, MainActivity::class.java)
+        }
     )
   val postAction =
     if (post.url.startsWith('/') || post.url.isEmpty()) commentsAction

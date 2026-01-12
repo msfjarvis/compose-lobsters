@@ -24,6 +24,7 @@ import androidx.core.net.toUri
 import be.digitalia.compose.htmlconverter.HtmlStyle
 import be.digitalia.compose.htmlconverter.htmlToAnnotatedString
 import dev.msfjarvis.claw.api.LobstersApi
+import dev.msfjarvis.claw.common.BuildConfig
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
 
@@ -110,7 +111,7 @@ private fun rewriteUrlIfLobstersPost(url: String): String {
       if (pathSegments.size >= 3) {
         val shortId = pathSegments[2]
         if (shortId.isNotEmpty()) {
-          return "claw://comments/$shortId"
+          return "${BuildConfig.DEEPLINK_SCHEME}://comments/$shortId"
         }
       }
     }

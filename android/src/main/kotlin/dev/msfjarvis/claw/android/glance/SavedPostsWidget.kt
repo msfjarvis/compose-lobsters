@@ -33,6 +33,7 @@ import androidx.glance.preview.Preview
 import androidx.glance.text.Text
 import androidx.glance.text.TextAlign
 import androidx.glance.text.TextStyle
+import dev.msfjarvis.claw.android.BuildConfig
 import dev.msfjarvis.claw.android.ClawApplication
 import dev.msfjarvis.claw.android.MainActivity
 import dev.msfjarvis.claw.model.UIPost
@@ -76,10 +77,11 @@ class SavedPostsWidget : GlanceAppWidget() {
                   .padding(horizontal = 24.dp, vertical = 10.dp)
                   .clickable(
                     actionStartActivity(
-                      Intent(Intent.ACTION_VIEW, "claw://saved".toUri()).apply {
-                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                        setClass(LocalContext.current, MainActivity::class.java)
-                      }
+                      Intent(Intent.ACTION_VIEW, "${BuildConfig.DEEPLINK_SCHEME}://saved".toUri())
+                        .apply {
+                          addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                          setClass(LocalContext.current, MainActivity::class.java)
+                        }
                     )
                   ),
             ) {

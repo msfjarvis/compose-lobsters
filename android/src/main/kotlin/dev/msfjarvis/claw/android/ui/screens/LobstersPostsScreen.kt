@@ -132,7 +132,9 @@ fun LobstersPostsScreen(
   // endregion
 
   val postActions = remember {
-    PostActions(context, uriHandler, viewModel) { navigateTo(backStack, Comments(it)) }
+    PostActions(context, uriHandler, viewModel) {
+      navigateTo(backStack, Comments(it), allowStacking = false)
+    }
   }
 
   BackHandler(enabled = backStack.size > 1) { backStack.removeAt(backStack.lastIndex) }
@@ -221,9 +223,14 @@ fun LobstersPostsScreen(
               )
             }
             entry<Comments>(metadata = ListDetailSceneStrategy.detailPane()) { dest ->
+              val commentsPostActions = remember {
+                PostActions(context, uriHandler, viewModel) {
+                  navigateTo(backStack, Comments(it), allowStacking = true)
+                }
+              }
               CommentsPage(
                 postId = dest.postId,
-                postActions = postActions,
+                postActions = commentsPostActions,
                 contentPadding = contentPadding,
                 openUserProfile = { navigateTo(backStack, User(it)) },
               )
@@ -289,20 +296,37 @@ fun LobstersPostsScreen(
   }
 }
 
-private fun navigateTo(backStack: MutableList<NavKey>, destination: NavKey) {
+private fun navigateTo(
+  backStack: MutableList<NavKey>,
+  destination: NavKey,
+  allowStacking: Boolean = false,
+) {
   if (destination is TopLevelDestination) {
     backStack.clear()
     if (destination != Hottest) {
       backStack.add(Hottest)
     }
   }
-  val existingEntry =
-    backStack.firstOrNull {
-      it is NonStackable && it::class.java.isAssignableFrom(destination::class.java)
+
+  if (destination is NonStackable) {
+    val existingEntry =
+      backStack.firstOrNull {
+        it is NonStackable && it::class.java.isAssignableFrom(destination::class.java)
+      }
+
+    if (existingEntry != null) {
+      val existingIndex = backStack.indexOf(existingEntry)
+      backStack.remove(existingEntry)
+
+      if (allowStacking && destination is Comments && existingEntry is Comments) {
+        if (destination.postId != existingEntry.postId) {
+          backStack.add(existingIndex, destination)
+          return
+        }
+      }
     }
-  if (destination is NonStackable && existingEntry != null) {
-    backStack.remove(existingEntry)
   }
+
   backStack.add(destination)
 }
 

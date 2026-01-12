@@ -99,4 +99,4 @@ rootProject.name = "Claw"
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
-include("android", "api", "common", "core", "database:core", "database:impl", "model")
+include("android", "api", "benchmark", "common", "core", "database:core", "database:impl", "model")

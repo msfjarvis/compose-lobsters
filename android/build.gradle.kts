@@ -17,6 +17,7 @@ plugins {
   id("kotlin-parcelize")
   alias(libs.plugins.aboutlibraries)
   alias(libs.plugins.modulegraphassert)
+  alias(libs.plugins.baselineprofile)
   alias(libs.plugins.licensee)
   alias(libs.plugins.kotlin.composeCompiler)
   alias(libs.plugins.kotlin.serialization)
@@ -34,9 +35,15 @@ android {
     signingConfig = signingConfigs["debug"]
     isMinifyEnabled = true
   }
+  buildTypes.getByName("release") { baselineProfile.automaticGenerationDuringBuild = true }
 }
 
 aboutLibraries.collect.gitHubApiToken = providers.environmentVariable("GITHUB_TOKEN").orNull
+
+baselineProfile {
+  mergeIntoMain = true
+  saveInSrc = true
+}
 
 licensee {
   allow("Apache-2.0")
@@ -54,6 +61,8 @@ moduleGraphAssert {
 }
 
 dependencies {
+  baselineProfile(projects.benchmark)
+
   implementation(platform(libs.okhttp.bom))
   implementation(libs.aboutLibraries.compose.core)
   implementation(libs.aboutLibraries.core)

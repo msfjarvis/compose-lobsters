@@ -79,6 +79,7 @@ class MainActivity(
           windowSizeClass = windowSizeClass,
           setWebUri = { url -> webUri = url },
           deepLinkDestination = deepLinkDestination,
+          clearDeepLink = { deepLinkDestination = null },
         )
       }
     }

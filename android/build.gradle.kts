@@ -6,6 +6,8 @@
  */
 @file:Suppress("UnstableApiUsage")
 
+import dev.msfjarvis.claw.gradle.addTestDependencies
+
 plugins {
   id("dev.msfjarvis.claw.android-application")
   id("dev.msfjarvis.claw.rename-artifacts")
@@ -118,4 +120,6 @@ dependencies {
   compileOnly(libs.androidx.compose.glance.preview)
 
   runtimeOnly(libs.androidx.profileinstaller)
+
+  addTestDependencies(project)
 }

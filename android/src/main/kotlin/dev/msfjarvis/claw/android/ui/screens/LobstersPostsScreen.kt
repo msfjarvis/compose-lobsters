@@ -8,6 +8,7 @@ package dev.msfjarvis.claw.android.ui.screens
 
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.LocalActivity
+import androidx.annotation.VisibleForTesting
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
@@ -87,6 +88,7 @@ fun LobstersPostsScreen(
   setWebUri: (String?) -> Unit,
   modifier: Modifier = Modifier,
   deepLinkDestination: NavKey? = null,
+  clearDeepLink: () -> Unit = {},
   viewModel: ClawViewModel = metroViewModel(),
   tagFilterViewModel: TagFilterViewModel = metroViewModel(key = "tag_filter"),
 ) {
@@ -113,7 +115,8 @@ fun LobstersPostsScreen(
 
   LaunchedEffect(deepLinkDestination) {
     if (deepLinkDestination != null) {
-      navigateTo(backStack, deepLinkDestination)
+      navigateTo(backStack, deepLinkDestination, allowStacking = true)
+      clearDeepLink()
     }
   }
 
@@ -296,7 +299,8 @@ fun LobstersPostsScreen(
   }
 }
 
-private fun navigateTo(
+@VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+fun navigateTo(
   backStack: MutableList<NavKey>,
   destination: NavKey,
   allowStacking: Boolean = false,
@@ -306,24 +310,27 @@ private fun navigateTo(
     if (destination != Hottest) {
       backStack.add(Hottest)
     }
+    backStack.add(destination)
+    return
   }
 
   if (destination is NonStackable) {
+    if (allowStacking && destination is Comments) {
+      val lastItem = backStack.lastOrNull()
+      if (lastItem is Comments && lastItem.postId == destination.postId) {
+        return
+      }
+      backStack.add(destination)
+      return
+    }
+
     val existingEntry =
       backStack.firstOrNull {
         it is NonStackable && it::class.java.isAssignableFrom(destination::class.java)
       }
 
     if (existingEntry != null) {
-      val existingIndex = backStack.indexOf(existingEntry)
       backStack.remove(existingEntry)
-
-      if (allowStacking && destination is Comments && existingEntry is Comments) {
-        if (destination.postId != existingEntry.postId) {
-          backStack.add(existingIndex, destination)
-          return
-        }
-      }
     }
   }
 

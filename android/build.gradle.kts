@@ -34,8 +34,9 @@ android {
     matchingFallbacks += "release"
     signingConfig = signingConfigs["debug"]
     isMinifyEnabled = true
+    baselineProfile.automaticGenerationDuringBuild =
+      project.providers.gradleProperty("genProf").isPresent
   }
-  buildTypes.getByName("release") { baselineProfile.automaticGenerationDuringBuild = true }
 }
 
 aboutLibraries.collect.gitHubApiToken = providers.environmentVariable("GITHUB_TOKEN").orNull

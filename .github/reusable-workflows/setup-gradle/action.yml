@@ -36,7 +36,18 @@ runs:
       uses: actions/setup-java@f2beeb24e141e01a676f977032f5a29d81c9e27e # v5.1.0
       with:
         distribution: temurin
-        java-version: 23
+        java-version: 25
+
+    - name: Accept Android SDK licenses
+      shell: bash
+      run: |
+        yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses || true
+
+    - name: Set global Gradle properties
+      shell: bash
+      run: |
+        mkdir -p ~/.gradle/
+        echo "android.testoptions.manageddevices.emulator.gpu=swiftshader_indirect" >> ~/.gradle/gradle.properties
 
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@4d9f0ba0025fe599b4ebab900eb7f3a1d93ef4c2 # v5

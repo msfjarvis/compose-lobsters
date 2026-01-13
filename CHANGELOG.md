@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Line-breaking behavior in comments now packs text densely
+
 ### Changed
 
 - Links to other posts now open in the app itself

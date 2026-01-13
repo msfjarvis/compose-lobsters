@@ -17,6 +17,7 @@ plugins {
   id("kotlin-parcelize")
   alias(libs.plugins.aboutlibraries)
   alias(libs.plugins.modulegraphassert)
+  alias(libs.plugins.baselineprofile)
   alias(libs.plugins.licensee)
   alias(libs.plugins.kotlin.composeCompiler)
   alias(libs.plugins.kotlin.serialization)
@@ -33,10 +34,17 @@ android {
     matchingFallbacks += "release"
     signingConfig = signingConfigs["debug"]
     isMinifyEnabled = true
+    baselineProfile.automaticGenerationDuringBuild =
+      project.providers.gradleProperty("genProf").isPresent
   }
 }
 
 aboutLibraries.collect.gitHubApiToken = providers.environmentVariable("GITHUB_TOKEN").orNull
+
+baselineProfile {
+  mergeIntoMain = true
+  saveInSrc = true
+}
 
 licensee {
   allow("Apache-2.0")
@@ -54,6 +62,8 @@ moduleGraphAssert {
 }
 
 dependencies {
+  baselineProfile(projects.benchmark)
+
   implementation(platform(libs.okhttp.bom))
   implementation(libs.aboutLibraries.compose.core)
   implementation(libs.aboutLibraries.core)
@@ -74,12 +84,16 @@ dependencies {
   implementation(libs.androidx.compose.material3.adaptive.layout)
   implementation(libs.androidx.compose.material3.window.size)
   implementation(libs.androidx.compose.runtime)
+  implementation(libs.androidx.compose.runtime.saveable)
   implementation(libs.androidx.compose.ui)
   implementation(libs.androidx.compose.ui.graphics)
   implementation(libs.androidx.compose.ui.text)
   implementation(libs.androidx.compose.ui.unit)
+  implementation(libs.androidx.annotation)
+  implementation(libs.androidx.collection)
   implementation(libs.androidx.core.ktx)
   implementation(libs.androidx.core.splashscreen)
+  implementation(libs.androidx.datastore.preferences.core)
   implementation(libs.androidx.lifecycle.common)
   implementation(libs.androidx.lifecycle.compose)
   implementation(libs.androidx.lifecycle.runtime.compose)
@@ -97,12 +111,13 @@ dependencies {
   implementation(libs.kotlinx.coroutines.core)
   implementation(libs.kotlinx.serialization.core)
   implementation(libs.kotlinx.serialization.json)
+  implementation(libs.kotlin.stdlib)
   implementation(libs.metrox.android)
   implementation(libs.metrox.viewmodel)
   implementation(libs.metrox.viewmodel.compose)
   implementation(libs.okhttp.core)
-  implementation(libs.okhttp.loggingInterceptor)
   implementation(libs.retrofit)
+  implementation(libs.sentry)
   implementation(libs.sentry.android.core)
   implementation(libs.sqldelight.extensions.coroutines)
   implementation(libs.sqldelight.runtime)
@@ -115,9 +130,9 @@ dependencies {
   implementation(projects.database.impl)
   implementation(projects.model)
 
-  debugImplementation(libs.androidx.compose.glance.appwidget.preview)
-
   compileOnly(libs.androidx.compose.glance.preview)
+
+  debugRuntimeOnly(libs.androidx.compose.glance)
 
   runtimeOnly(libs.androidx.profileinstaller)
 

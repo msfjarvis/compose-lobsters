@@ -41,6 +41,7 @@ class SentryPlugin : Plugin<Project> {
       autoUploadNativeSymbols.set(true)
       includeNativeSources.set(false)
       ignoredVariants.set(emptySet())
+      ignoredBuildTypes.set(setOf("benchmark"))
       ignoredFlavors.set(emptySet())
       tracingInstrumentation {
         enabled.set(true)
@@ -52,7 +53,7 @@ class SentryPlugin : Plugin<Project> {
       dexguardEnabled.set(false)
       autoInstallation {
         enabled.set(true)
-        sentryVersion.set(libs.versions.sentry.sdk)
+        sentryVersion.set(libs.versions.sentry)
       }
       includeDependenciesReport.set(true)
       includeSourceContext.set(true)

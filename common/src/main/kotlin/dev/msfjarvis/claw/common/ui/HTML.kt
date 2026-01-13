@@ -27,6 +27,7 @@ import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.common.BuildConfig
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
+import org.jsoup.Jsoup
 
 @Composable
 internal fun ThemedRichText(text: String, modifier: Modifier = Modifier) {
@@ -34,14 +35,10 @@ internal fun ThemedRichText(text: String, modifier: Modifier = Modifier) {
   val linkColor = MaterialTheme.colorScheme.onSurface
   val convertedText =
     remember(text) {
+      val preprocessedHtml = preprocessHtml(text)
       val annotatedString =
         htmlToAnnotatedString(
-          // Lobsters seems to insert literal newlines between paragraphs for some reason which
-          // makes
-          // the resultant view come out rather ugly. We strip those out by hand and let the
-          // standard
-          // paragraph formatting handle separating individual blocks.
-          html = text.replace("</p>\\n<p>", "</p><p>"),
+          html = preprocessedHtml,
           style =
             HtmlStyle(
               textLinkStyles =
@@ -64,6 +61,21 @@ internal fun ThemedRichText(text: String, modifier: Modifier = Modifier) {
     style = MaterialTheme.typography.bodyLarge.copy(lineBreak = LineBreak.Paragraph),
     modifier = modifier,
   )
+}
+
+internal fun preprocessHtml(html: String): String {
+  val document = Jsoup.parse(html)
+  document.select("li").forEach { li ->
+    li.select("p").forEach { p ->
+      p.childNodes().forEach { child -> p.before(child) }
+      p.remove()
+    }
+
+    if (li.nextElementSibling() != null && li.nextElementSibling()?.tagName() == "li") {
+      li.after("<br>")
+    }
+  }
+  return document.body().html()
 }
 
 @OptIn(ExperimentalTextApi::class)

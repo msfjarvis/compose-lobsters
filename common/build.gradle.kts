@@ -6,7 +6,6 @@
  */
 @file:Suppress("UnstableApiUsage")
 
-import com.android.build.api.variant.HasUnitTestBuilder
 import dev.msfjarvis.claw.gradle.addTestDependencies
 
 plugins {
@@ -22,8 +21,6 @@ android {
   buildFeatures { compose = true }
   namespace = "dev.msfjarvis.claw.common"
 }
-
-androidComponents { beforeVariants { (it as HasUnitTestBuilder).enableUnitTest = false } }
 
 dependencies {
   api(libs.androidx.compose.foundation.layout)
@@ -62,6 +59,7 @@ dependencies {
   implementation(libs.coil3.plain)
   implementation(libs.eithernet)
   implementation(libs.htmlconverter)
+  implementation(libs.jsoup)
   implementation(libs.kotlinResult)
   implementation(libs.kotlinResult.coroutines)
   implementation(libs.kotlinx.collections.immutable)

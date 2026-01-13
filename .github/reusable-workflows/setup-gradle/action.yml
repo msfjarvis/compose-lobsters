@@ -36,7 +36,7 @@ runs:
       uses: actions/setup-java@f2beeb24e141e01a676f977032f5a29d81c9e27e # v5.1.0
       with:
         distribution: temurin
-        java-version: 23
+        java-version: 25
 
     - name: Accept Android SDK licenses
       shell: bash

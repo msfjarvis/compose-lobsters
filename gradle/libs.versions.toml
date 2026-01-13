@@ -33,7 +33,7 @@ sentry = "8.29.0"
 serialization = "1.10.0-RC"
 sqldelight = "2.2.1"
 sqlite = "2.6.2"
-tracing-perfetto = "1.0.0"
+tracing-perfetto = "1.0.1"
 workmanager = "2.11.0"
 
 [libraries]
@@ -95,7 +95,7 @@ androidx-sqlite = { module = "androidx.sqlite:sqlite", version.ref = "sqlite" }
 androidx-test-core = { module = "androidx.test:core", version.ref = "androidx-test" }
 androidx-test-rules = { module = "androidx.test:rules", version.ref = "androidx-test" }
 androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidx-test" }
-androidx-test-uiautomator = "androidx.test.uiautomator:uiautomator:2.4.0-alpha04"
+androidx-test-uiautomator = "androidx.test.uiautomator:uiautomator:2.4.0-alpha07"
 androidx-tracing-perfetto = { module = "androidx.tracing:tracing-perfetto", version.ref = "tracing-perfetto" }
 androidx-tracing-perfetto-binary = { module = "androidx.tracing:tracing-perfetto-binary", version.ref = "tracing-perfetto" }
 androidx-work-runtime = { module = "androidx.work:work-runtime", version.ref = "workmanager" }

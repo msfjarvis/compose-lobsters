@@ -48,15 +48,17 @@ baselineProfile {
 }
 
 dependencies {
+  implementation(libs.androidx.benchmark.macro)
   implementation(libs.androidx.benchmark.macro.junit4)
-  implementation(libs.androidx.profileinstaller)
-  implementation(libs.androidx.test.core)
-  implementation(libs.androidx.test.espresso.core)
-  implementation(libs.androidx.test.ext.junit)
-  implementation(libs.androidx.test.rules)
-  implementation(libs.androidx.test.runner)
+  implementation(libs.androidx.monitor)
   implementation(libs.androidx.test.uiautomator)
+  implementation(libs.kotlin.stdlib)
+  implementation(libs.junit.legacy)
 
-  implementation(libs.androidx.tracing.perfetto)
-  implementation(libs.androidx.tracing.perfetto.binary)
+  runtimeOnly(libs.androidx.profileinstaller)
+  runtimeOnly(libs.androidx.test.core)
+  runtimeOnly(libs.androidx.test.rules)
+  runtimeOnly(libs.androidx.test.runner)
+  runtimeOnly(libs.androidx.tracing.perfetto)
+  runtimeOnly(libs.androidx.tracing.perfetto.binary)
 }

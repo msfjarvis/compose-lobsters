@@ -53,7 +53,7 @@ class SentryPlugin : Plugin<Project> {
       dexguardEnabled.set(false)
       autoInstallation {
         enabled.set(true)
-        sentryVersion.set(libs.versions.sentry.sdk)
+        sentryVersion.set(libs.versions.sentry)
       }
       includeDependenciesReport.set(true)
       includeSourceContext.set(true)

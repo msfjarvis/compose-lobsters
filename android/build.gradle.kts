@@ -83,12 +83,16 @@ dependencies {
   implementation(libs.androidx.compose.material3.adaptive.layout)
   implementation(libs.androidx.compose.material3.window.size)
   implementation(libs.androidx.compose.runtime)
+  implementation(libs.androidx.compose.runtime.saveable)
   implementation(libs.androidx.compose.ui)
   implementation(libs.androidx.compose.ui.graphics)
   implementation(libs.androidx.compose.ui.text)
   implementation(libs.androidx.compose.ui.unit)
+  implementation(libs.androidx.annotation)
+  implementation(libs.androidx.collection)
   implementation(libs.androidx.core.ktx)
   implementation(libs.androidx.core.splashscreen)
+  implementation(libs.androidx.datastore.preferences.core)
   implementation(libs.androidx.lifecycle.common)
   implementation(libs.androidx.lifecycle.compose)
   implementation(libs.androidx.lifecycle.runtime.compose)
@@ -106,12 +110,13 @@ dependencies {
   implementation(libs.kotlinx.coroutines.core)
   implementation(libs.kotlinx.serialization.core)
   implementation(libs.kotlinx.serialization.json)
+  implementation(libs.kotlin.stdlib)
   implementation(libs.metrox.android)
   implementation(libs.metrox.viewmodel)
   implementation(libs.metrox.viewmodel.compose)
   implementation(libs.okhttp.core)
-  implementation(libs.okhttp.loggingInterceptor)
   implementation(libs.retrofit)
+  implementation(libs.sentry)
   implementation(libs.sentry.android.core)
   implementation(libs.sqldelight.extensions.coroutines)
   implementation(libs.sqldelight.runtime)
@@ -124,9 +129,9 @@ dependencies {
   implementation(projects.database.impl)
   implementation(projects.model)
 
-  debugImplementation(libs.androidx.compose.glance.appwidget.preview)
-
   compileOnly(libs.androidx.compose.glance.preview)
+
+  debugRuntimeOnly(libs.androidx.compose.glance)
 
   runtimeOnly(libs.androidx.profileinstaller)
 

@@ -7,13 +7,10 @@
 import dev.msfjarvis.claw.gradle.addTestDependencies
 
 plugins {
-  id("dev.msfjarvis.claw.android-library")
-  id("dev.msfjarvis.claw.kotlin-android")
+  id("dev.msfjarvis.claw.kotlin-jvm")
   alias(libs.plugins.dependencyAnalysis)
   alias(libs.plugins.metro)
 }
-
-android { namespace = "dev.msfjarvis.claw.api" }
 
 dependencies {
   api(libs.eithernet)

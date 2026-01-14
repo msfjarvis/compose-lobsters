@@ -30,9 +30,7 @@ class CachedHottestPostsRepository(
     cachedHottestPostQueries.selectRecentPosts(limit).asFlow().mapToList(readDispatcher)
 
   suspend fun getCachedPosts(): List<CachedHottestPost> {
-    return withContext(readDispatcher) {
-      cachedHottestPostQueries.selectAllPosts().executeAsList()
-    }
+    return withContext(readDispatcher) { cachedHottestPostQueries.selectAllPosts().executeAsList() }
   }
 
   suspend fun savePosts(posts: List<CachedHottestPost>) {

@@ -39,19 +39,32 @@ import dev.msfjarvis.claw.android.ClawApplication
 import dev.msfjarvis.claw.android.MainActivity
 import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.UIPost
+import dev.msfjarvis.claw.model.fromCachedHottestPost
+import dev.msfjarvis.claw.model.toCachedHottestPost
 import dev.msfjarvis.claw.model.toUIPost
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 
 class HottestPostsWidget : GlanceAppWidget() {
 
   override suspend fun provideGlance(context: Context, id: GlanceId) {
     val appGraph = (context.applicationContext as ClawApplication).appGraph
+    val cachedHottestPostsRepository = appGraph.cachedHottestPostsRepository
     val posts =
       when (val postsResult = appGraph.lobstersApi.getHottestPosts(1)) {
-        is ApiResult.Success -> postsResult.value.map(LobstersPost::toUIPost).toImmutableList()
-        else -> persistentListOf()
+        is ApiResult.Success -> {
+          val uiPosts = postsResult.value.map(LobstersPost::toUIPost)
+          // Cache the posts for future use when network is unavailable
+          cachedHottestPostsRepository.savePosts(uiPosts.map(UIPost::toCachedHottestPost))
+          uiPosts.toImmutableList()
+        }
+        else -> {
+          // Fall back to cached posts when network fails
+          cachedHottestPostsRepository
+            .getCachedPosts()
+            .map(UIPost::fromCachedHottestPost)
+            .toImmutableList()
+        }
       }
     provideContent { LobstersGlanceTheme { Content(posts) } }
   }

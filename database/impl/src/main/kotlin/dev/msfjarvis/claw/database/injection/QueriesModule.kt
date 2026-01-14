@@ -7,6 +7,7 @@
 package dev.msfjarvis.claw.database.injection
 
 import dev.msfjarvis.claw.database.LobstersDatabase
+import dev.msfjarvis.claw.database.local.CachedHottestPostQueries
 import dev.msfjarvis.claw.database.local.PostCommentsQueries
 import dev.msfjarvis.claw.database.local.ReadPostsQueries
 import dev.msfjarvis.claw.database.local.SavedPostQueries
@@ -38,5 +39,13 @@ object QueriesModule {
   @SingleIn(AppScope::class)
   fun provideReadPostsQueries(@InternalDatabaseApi database: LobstersDatabase): ReadPostsQueries {
     return database.readPostsQueries
+  }
+
+  @Provides
+  @SingleIn(AppScope::class)
+  fun provideCachedHottestPostQueries(
+    @InternalDatabaseApi database: LobstersDatabase
+  ): CachedHottestPostQueries {
+    return database.cachedHottestPostQueries
   }
 }

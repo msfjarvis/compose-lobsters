@@ -6,6 +6,7 @@
  */
 package dev.msfjarvis.claw.model
 
+import dev.msfjarvis.claw.database.local.CachedHottestPost
 import dev.msfjarvis.claw.database.local.SavedPost
 import io.mcarle.konvert.api.KonvertFrom
 import io.mcarle.konvert.api.KonvertTo
@@ -14,6 +15,10 @@ import kotlinx.serialization.SerialName
 
 @KonvertTo(
   value = SavedPost::class,
+  mappings = [Mapping(source = "submitter", target = "submitterName")],
+)
+@KonvertTo(
+  value = CachedHottestPost::class,
   mappings = [Mapping(source = "submitter", target = "submitterName")],
 )
 data class UIPost(
@@ -31,6 +36,14 @@ data class UIPost(
 ) {
   @KonvertFrom(
     value = SavedPost::class,
+    mappings =
+      [
+        Mapping(source = "submitterName", target = "submitter"),
+        Mapping(target = "commentCount", expression = "it.commentCount ?: 0"),
+      ],
+  )
+  @KonvertFrom(
+    value = CachedHottestPost::class,
     mappings =
       [
         Mapping(source = "submitterName", target = "submitter"),

@@ -13,6 +13,7 @@ import app.cash.sqldelight.adapter.primitive.IntColumnAdapter
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import app.cash.sqldelight.logs.LogSqliteDriver
 import dev.msfjarvis.claw.database.LobstersDatabase
+import dev.msfjarvis.claw.database.local.CachedHottestPost
 import dev.msfjarvis.claw.database.local.PostComments
 import dev.msfjarvis.claw.database.local.SavedPost
 import dev.msfjarvis.claw.database.model.CSVAdapter
@@ -59,6 +60,7 @@ object DatabaseModule {
       }
     return LobstersDatabase(
       driver = driver,
+      CachedHottestPostAdapter = CachedHottestPost.Adapter(IntColumnAdapter, CSVAdapter()),
       PostCommentsAdapter = PostComments.Adapter(CSVAdapter()),
       SavedPostAdapter = SavedPost.Adapter(IntColumnAdapter, CSVAdapter()),
     )

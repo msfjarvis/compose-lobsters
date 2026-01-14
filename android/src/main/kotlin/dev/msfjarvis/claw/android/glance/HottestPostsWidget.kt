@@ -55,7 +55,12 @@ class HottestPostsWidget : GlanceAppWidget() {
         is ApiResult.Success -> {
           val uiPosts = postsResult.value.map(LobstersPost::toUIPost)
           // Cache the posts for future use when network is unavailable
-          cachedHottestPostsRepository.savePosts(uiPosts.map(UIPost::toCachedHottestPost))
+          // Using try-catch to prevent widget rendering failures if caching fails
+          try {
+            cachedHottestPostsRepository.savePosts(uiPosts.map(UIPost::toCachedHottestPost))
+          } catch (_: Exception) {
+            // Silently ignore caching failures - widget should still render
+          }
           uiPosts.toImmutableList()
         }
         else -> {

@@ -1,5 +1,5 @@
 [versions]
-aboutLibraries = "14.0.0-a02"
+aboutLibraries = "14.0.0-b01"
 agp = "9.1.0-alpha04"
 androidx-test = "1.7.0"
 annotation = "1.9.1"

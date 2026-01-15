@@ -9,7 +9,7 @@ package dev.msfjarvis.claw.android.injection
 import android.content.Context
 import androidx.work.ListenableWorker
 import androidx.work.WorkManager
-import dev.msfjarvis.claw.android.viewmodel.CachedHottestPostsRepository
+import dev.msfjarvis.claw.android.viewmodel.CachedRemotePostsRepository
 import dev.msfjarvis.claw.android.viewmodel.SavedPostsRepository
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.core.coroutines.MainDispatcher
@@ -46,7 +46,7 @@ interface AppGraph : MetroAppComponentProviders, ViewModelGraph {
 
   val savedPostsRepository: SavedPostsRepository
 
-  val cachedHottestPostsRepository: CachedHottestPostsRepository
+  val cachedRemotePostsRepository: CachedRemotePostsRepository
 
   val lobstersApi: LobstersApi
 

@@ -10,12 +10,12 @@ import com.google.common.truth.Truth.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-class CachedHottestPostQueriesTest {
-  private lateinit var postQueries: CachedHottestPostQueries
+class CachedRemotePostQueriesTest {
+  private lateinit var postQueries: CachedRemotePostQueries
 
   @BeforeEach
   fun setup() {
-    postQueries = setupDatabase().cachedHottestPostQueries
+    postQueries = setupDatabase().cachedRemotePostQueries
   }
 
   @Test
@@ -76,9 +76,19 @@ class CachedHottestPostQueriesTest {
     assertThat(postsFromDb).isEmpty()
   }
 
-  private fun createTestData(count: Int): List<CachedHottestPost> {
+  @Test
+  fun `posts are returned in insertion order`() {
+    val posts = createTestData(5)
+    posts.forEach { postQueries.insertOrReplacePost(it) }
+
+    val postsFromDb = postQueries.selectAllPosts().executeAsList()
+
+    assertThat(postsFromDb.map { it.insertionOrder }).containsExactly(0, 1, 2, 3, 4).inOrder()
+  }
+
+  private fun createTestData(count: Int): List<CachedRemotePost> {
     return (1..count).map { i ->
-      CachedHottestPost(
+      CachedRemotePost(
         shortId = "test_id_$i",
         createdAt = "2024-01-${i.toString().padStart(2, '0')}T00:00:00+00:00",
         title = "test_post_$i",
@@ -89,6 +99,7 @@ class CachedHottestPostQueriesTest {
         tags = listOf("tag1", "tag2"),
         description = "description_$i",
         userIsAuthor = i % 2 == 0,
+        insertionOrder = i - 1,
       )
     }
   }

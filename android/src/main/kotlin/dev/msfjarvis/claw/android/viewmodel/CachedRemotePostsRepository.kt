@@ -12,40 +12,40 @@ import app.cash.sqldelight.coroutines.mapToList
 import dev.msfjarvis.claw.android.BuildConfig
 import dev.msfjarvis.claw.core.coroutines.DatabaseReadDispatcher
 import dev.msfjarvis.claw.core.coroutines.DatabaseWriteDispatcher
-import dev.msfjarvis.claw.database.local.CachedHottestPost
-import dev.msfjarvis.claw.database.local.CachedHottestPostQueries
+import dev.msfjarvis.claw.database.local.CachedRemotePost
+import dev.msfjarvis.claw.database.local.CachedRemotePostQueries
 import dev.zacsweers.metro.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
 @Inject
-class CachedHottestPostsRepository(
-  private val cachedHottestPostQueries: CachedHottestPostQueries,
+class CachedRemotePostsRepository(
+  private val cachedRemotePostQueries: CachedRemotePostQueries,
   @param:DatabaseReadDispatcher private val readDispatcher: CoroutineDispatcher,
   @param:DatabaseWriteDispatcher private val writeDispatcher: CoroutineDispatcher,
 ) {
-  val cachedPosts = cachedHottestPostQueries.selectAllPosts().asFlow().mapToList(readDispatcher)
+  val cachedPosts = cachedRemotePostQueries.selectAllPosts().asFlow().mapToList(readDispatcher)
 
   fun getRecentPosts(limit: Long) =
-    cachedHottestPostQueries.selectRecentPosts(limit).asFlow().mapToList(readDispatcher)
+    cachedRemotePostQueries.selectRecentPosts(limit).asFlow().mapToList(readDispatcher)
 
-  suspend fun getCachedPosts(): List<CachedHottestPost> {
-    return withContext(readDispatcher) { cachedHottestPostQueries.selectAllPosts().executeAsList() }
+  suspend fun getCachedPosts(): List<CachedRemotePost> {
+    return withContext(readDispatcher) { cachedRemotePostQueries.selectAllPosts().executeAsList() }
   }
 
-  suspend fun savePosts(posts: List<CachedHottestPost>) {
+  suspend fun savePosts(posts: List<CachedRemotePost>) {
     if (BuildConfig.DEBUG) {
-      Log.d(TAG, "Caching hottest posts: ${posts.joinToString(",") { it.shortId }}")
+      Log.d(TAG, "Caching remote posts: ${posts.joinToString(",") { it.shortId }}")
     }
     withContext(writeDispatcher) {
-      cachedHottestPostQueries.transaction {
-        cachedHottestPostQueries.deleteAllPosts()
-        posts.forEach { post -> cachedHottestPostQueries.insertOrReplacePost(post) }
+      cachedRemotePostQueries.transaction {
+        cachedRemotePostQueries.deleteAllPosts()
+        posts.forEach { post -> cachedRemotePostQueries.insertOrReplacePost(post) }
       }
     }
   }
 
   private companion object {
-    private const val TAG = "CachedHottestPostsRepository"
+    private const val TAG = "CachedRemotePostsRepository"
   }
 }

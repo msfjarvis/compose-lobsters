@@ -3,7 +3,7 @@ import kotlin.String;
 import kotlin.collections.List;
 import kotlin.Boolean;
 
-CREATE TABLE IF NOT EXISTS CachedHottestPost(
+CREATE TABLE IF NOT EXISTS CachedRemotePost(
   shortId TEXT NOT NULL PRIMARY KEY,
   title TEXT NOT NULL,
   url TEXT NOT NULL,
@@ -13,24 +13,26 @@ CREATE TABLE IF NOT EXISTS CachedHottestPost(
   submitterName TEXT NOT NULL,
   tags TEXT AS List<String> NOT NULL,
   description TEXT NOT NULL DEFAULT "",
-  userIsAuthor INTEGER AS Boolean NOT NULL DEFAULT 0
+  userIsAuthor INTEGER AS Boolean NOT NULL DEFAULT 0,
+  insertionOrder INTEGER AS Int NOT NULL DEFAULT 0
 );
 
 insertOrReplacePost:
 INSERT OR REPLACE
-INTO CachedHottestPost
+INTO CachedRemotePost
 VALUES ?;
 
 selectAllPosts:
 SELECT *
-FROM CachedHottestPost;
+FROM CachedRemotePost
+ORDER BY insertionOrder ASC;
 
 selectRecentPosts:
 SELECT *
-FROM CachedHottestPost
-ORDER BY datetime(createdAt) DESC
+FROM CachedRemotePost
+ORDER BY insertionOrder ASC
 LIMIT :limit;
 
 deleteAllPosts:
 DELETE
-FROM CachedHottestPost;
+FROM CachedRemotePost;

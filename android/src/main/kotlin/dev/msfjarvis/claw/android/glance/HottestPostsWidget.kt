@@ -37,10 +37,10 @@ import com.slack.eithernet.ApiResult
 import dev.msfjarvis.claw.android.BuildConfig
 import dev.msfjarvis.claw.android.ClawApplication
 import dev.msfjarvis.claw.android.MainActivity
+import dev.msfjarvis.claw.database.local.CachedRemotePost
 import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.UIPost
-import dev.msfjarvis.claw.model.fromCachedHottestPost
-import dev.msfjarvis.claw.model.toCachedHottestPost
+import dev.msfjarvis.claw.model.fromCachedRemotePost
 import dev.msfjarvis.claw.model.toUIPost
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
@@ -49,7 +49,7 @@ class HottestPostsWidget : GlanceAppWidget() {
 
   override suspend fun provideGlance(context: Context, id: GlanceId) {
     val appGraph = (context.applicationContext as ClawApplication).appGraph
-    val cachedHottestPostsRepository = appGraph.cachedHottestPostsRepository
+    val cachedRemotePostsRepository = appGraph.cachedRemotePostsRepository
     val posts =
       when (val postsResult = appGraph.lobstersApi.getHottestPosts(1)) {
         is ApiResult.Success -> {
@@ -57,7 +57,23 @@ class HottestPostsWidget : GlanceAppWidget() {
           // Cache the posts for future use when network is unavailable
           // Using try-catch to prevent widget rendering failures if caching fails
           try {
-            cachedHottestPostsRepository.savePosts(uiPosts.map(UIPost::toCachedHottestPost))
+            val cachedPosts =
+              uiPosts.mapIndexed { index, post ->
+                CachedRemotePost(
+                  shortId = post.shortId,
+                  title = post.title,
+                  url = post.url,
+                  createdAt = post.createdAt,
+                  commentCount = post.commentCount,
+                  commentsUrl = post.commentsUrl,
+                  submitterName = post.submitter,
+                  tags = post.tags,
+                  description = post.description,
+                  userIsAuthor = post.userIsAuthor,
+                  insertionOrder = index,
+                )
+              }
+            cachedRemotePostsRepository.savePosts(cachedPosts)
           } catch (_: Exception) {
             // Silently ignore caching failures - widget should still render
           }
@@ -65,9 +81,9 @@ class HottestPostsWidget : GlanceAppWidget() {
         }
         else -> {
           // Fall back to cached posts when network fails
-          cachedHottestPostsRepository
+          cachedRemotePostsRepository
             .getCachedPosts()
-            .map(UIPost::fromCachedHottestPost)
+            .map(UIPost::fromCachedRemotePost)
             .toImmutableList()
         }
       }

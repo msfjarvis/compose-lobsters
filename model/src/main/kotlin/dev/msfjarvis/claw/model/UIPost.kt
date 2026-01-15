@@ -19,7 +19,11 @@ import kotlinx.serialization.SerialName
 )
 @KonvertTo(
   value = CachedRemotePost::class,
-  mappings = [Mapping(source = "submitter", target = "submitterName")],
+  mappings =
+    [
+      Mapping(source = "submitter", target = "submitterName"),
+      Mapping(target = "insertionOrder", constant = "0"),
+    ],
 )
 data class UIPost(
   val shortId: String,

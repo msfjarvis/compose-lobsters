@@ -6,6 +6,7 @@
  */
 package dev.msfjarvis.claw.model
 
+import dev.msfjarvis.claw.database.local.CachedRemotePost
 import dev.msfjarvis.claw.database.local.SavedPost
 import io.mcarle.konvert.api.KonvertFrom
 import io.mcarle.konvert.api.KonvertTo
@@ -15,6 +16,14 @@ import kotlinx.serialization.SerialName
 @KonvertTo(
   value = SavedPost::class,
   mappings = [Mapping(source = "submitter", target = "submitterName")],
+)
+@KonvertTo(
+  value = CachedRemotePost::class,
+  mappings =
+    [
+      Mapping(source = "submitter", target = "submitterName"),
+      Mapping(target = "insertionOrder", constant = "0"),
+    ],
 )
 data class UIPost(
   val shortId: String,
@@ -31,6 +40,14 @@ data class UIPost(
 ) {
   @KonvertFrom(
     value = SavedPost::class,
+    mappings =
+      [
+        Mapping(source = "submitterName", target = "submitter"),
+        Mapping(target = "commentCount", expression = "it.commentCount ?: 0"),
+      ],
+  )
+  @KonvertFrom(
+    value = CachedRemotePost::class,
     mappings =
       [
         Mapping(source = "submitterName", target = "submitter"),

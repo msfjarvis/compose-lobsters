@@ -16,7 +16,6 @@ concurrency:
 
 jobs:
   check:
-    if: "github.event.pull_request.draft == false"
     runs-on: macos-26
     steps:
     - name: Setup build environment
@@ -63,7 +62,6 @@ jobs:
 
   release-app:
     runs-on: macos-26
-    if: "github.event_name == 'push' && github.event.ref == 'refs/heads/main'"
     needs:
       - check
     steps:

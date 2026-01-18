@@ -52,11 +52,12 @@ class HottestPostsWidget : GlanceAppWidget() {
     val appGraph = (context.applicationContext as ClawApplication).appGraph
     val cachedRemotePostsRepository = appGraph.cachedRemotePostsRepository
     val tagFilterRepository = appGraph.tagFilterRepository
-    val filteredTags = try {
-      tagFilterRepository.getSavedTags().first()
-    } catch (_: Exception) {
-      emptySet()
-    }
+    val filteredTags =
+      try {
+        tagFilterRepository.getSavedTags().first()
+      } catch (_: Exception) {
+        emptySet()
+      }
     val posts =
       when (val postsResult = appGraph.lobstersApi.getHottestPosts(1)) {
         is ApiResult.Success -> {
@@ -95,11 +96,14 @@ class HottestPostsWidget : GlanceAppWidget() {
         }
       }
     // Filter out posts with tags that are in the filtered tags set
-    val filteredPosts = if (filteredTags.isEmpty()) {
-      posts
-    } else {
-      posts.filter { post -> post.tags.none { tag -> filteredTags.contains(tag) } }.toImmutableList()
-    }
+    val filteredPosts =
+      if (filteredTags.isEmpty()) {
+        posts
+      } else {
+        posts
+          .filter { post -> post.tags.none { tag -> filteredTags.contains(tag) } }
+          .toImmutableList()
+      }
     provideContent { LobstersGlanceTheme { Content(filteredPosts) } }
   }
 

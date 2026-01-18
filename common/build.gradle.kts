@@ -46,6 +46,7 @@ dependencies {
   implementation(libs.androidx.compose.material3)
   implementation(libs.androidx.compose.runtime)
   implementation(libs.androidx.compose.runtime.annotation)
+  implementation(libs.androidx.compose.runtime.retain)
   implementation(libs.androidx.compose.ui.text)
   implementation(libs.androidx.compose.ui.unit)
   implementation(libs.androidx.core)

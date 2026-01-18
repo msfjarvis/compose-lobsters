@@ -66,6 +66,7 @@ androidx-compose-material3-adaptive-layout = { module = "androidx.compose.materi
 androidx-compose-material3-window-size = { module = "androidx.compose.material3:material3-window-size-class", version.ref = "compose-material3" }
 androidx-compose-runtime = { module = "androidx.compose.runtime:runtime", version.ref = "compose-runtime" }
 androidx-compose-runtime-annotation = { module = "androidx.compose.runtime:runtime-annotation", version.ref = "compose-runtime" }
+androidx-compose-runtime-retain = { module = "androidx.compose.runtime:runtime-retain", version.ref = "compose-runtime" }
 androidx-compose-runtime-saveable = { module = "androidx.compose.runtime:runtime-saveable", version.ref = "runtimeSaveable" }
 androidx-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose-ui" }
 androidx-compose-ui-graphics = { module = "androidx.compose.ui:ui-graphics", version.ref = "compose-ui" }

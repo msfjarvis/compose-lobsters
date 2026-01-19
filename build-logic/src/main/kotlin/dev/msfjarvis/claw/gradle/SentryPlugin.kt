@@ -20,16 +20,21 @@ import org.gradle.kotlin.dsl.configure
 class SentryPlugin : Plugin<Project> {
 
   override fun apply(project: Project) {
+    var enableSizeAnalysis = false
     val enableSentry = project.providers.gradleProperty(SENTRY_ENABLE_GRADLE_PROPERTY).isPresent
     val libs = project.extensions.getByName("libs") as LibrariesForLibs
     project.extensions.configure<ApplicationAndroidComponentsExtension> {
       onVariants(selector().all()) { variant ->
         val sentryDsn = project.providers.environmentVariable(SENTRY_DSN_PROPERTY).getOrElse("")
+        val isRelease = variant.name.contains("release", true)
         variant.manifestPlaceholders.put("sentryDsn", sentryDsn)
         variant.manifestPlaceholders.put(
           "sentryEnvironment",
-          if (variant.name.contains("release", true)) "production" else "dev",
+          if (isRelease) "production" else "dev",
         )
+        if (!enableSizeAnalysis) {
+          enableSizeAnalysis = isRelease
+        }
       }
     }
     if (!enableSentry) return
@@ -67,7 +72,9 @@ class SentryPlugin : Plugin<Project> {
       telemetry.set(false)
       telemetryDsn.set(null as String?)
       sizeAnalysis {
-        enabled.set(project.providers.environmentVariable("GITHUB_ACTIONS").isPresent)
+        enabled.set(
+          enableSizeAnalysis && project.providers.environmentVariable("GITHUB_ACTIONS").isPresent
+        )
       }
       vcsInfo {
         headSha.set(project.providers.environmentVariable("SENTRY_VCS_HEAD_SHA"))

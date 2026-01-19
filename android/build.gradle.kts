@@ -33,7 +33,10 @@ android {
   buildTypes.create("internal") {
     matchingFallbacks += "release"
     signingConfig = signingConfigs["debug"]
-    isMinifyEnabled = true
+    applicationIdSuffix = ".internal"
+    isDebuggable = true
+  }
+  buildTypes.getByName("release") {
     baselineProfile.automaticGenerationDuringBuild =
       project.providers.gradleProperty("genProf").isPresent
   }

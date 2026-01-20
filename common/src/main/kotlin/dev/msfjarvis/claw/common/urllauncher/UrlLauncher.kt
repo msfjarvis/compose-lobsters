@@ -16,9 +16,7 @@ import androidx.compose.ui.platform.UriHandler
 import androidx.core.net.toUri
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
-import dev.zacsweers.metro.Inject
 
-@Inject
 @ContributesBinding(AppScope::class)
 class UrlLauncher(private val context: Context) : UriHandler {
   override fun openUri(uri: String) {

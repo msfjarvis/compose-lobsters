@@ -7,6 +7,7 @@
 @file:Suppress("UnstableApiUsage")
 
 import dev.msfjarvis.claw.gradle.addTestDependencies
+import dev.zacsweers.metro.gradle.DiagnosticSeverity
 
 plugins {
   id("dev.msfjarvis.claw.android-application")
@@ -33,7 +34,10 @@ android {
   buildTypes.create("internal") {
     matchingFallbacks += "release"
     signingConfig = signingConfigs["debug"]
-    isMinifyEnabled = true
+    applicationIdSuffix = ".internal"
+    isDebuggable = true
+  }
+  buildTypes.getByName("release") {
     baselineProfile.automaticGenerationDuringBuild =
       project.providers.gradleProperty("genProf").isPresent
   }
@@ -54,6 +58,8 @@ licensee {
   ignoreDependencies("org.commonmark") { because("Commonmark is BSD licensed") }
   allowUrl("https://jsoup.org/license") { because("Jsoup is MIT licensed") }
 }
+
+metro { unusedGraphInputsSeverity = DiagnosticSeverity.ERROR }
 
 moduleGraphAssert {
   assertOnAnyBuild = true

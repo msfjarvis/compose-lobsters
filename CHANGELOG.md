@@ -9,11 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Rare crash in widget handling
 - Line-breaking behavior in comments now packs text densely
+- Tag filtering now applies to widgets as well
 
 ### Changed
 
 - Links to other posts now open in the app itself
+- Widget handles bad network scenarios better
 
 ## [1.59.0] - 2026-01-09
 

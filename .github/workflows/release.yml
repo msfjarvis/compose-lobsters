@@ -144,8 +144,31 @@ jobs:
         # Push the tag to GitHub
         git push origin "v${VERSION}"
 
+        # Create GitHub release notes with footer
+        RELEASE_NOTES=$(mktemp)
+        {
+          cat distribution/whatsnew/whatsnew-en-GB
+          echo ""
+          echo "---"
+          echo ""
+          echo '<a href="https://play.google.com/store/apps/details?id=dev.msfjarvis.claw.android">'
+          echo '  <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"'
+          echo '       alt="Get it on Google Play"'
+          echo '       height="80" />'
+          echo '</a>'
+          echo ""
+          echo '<a href="https://android.izzysoft.de/repo/apk/dev.msfjarvis.claw.android">'
+          echo '  <img src="./.github/izzy-badge.webp"'
+          echo '       alt="Get it on IzzyOnDroid"'
+          echo '       height="65" />'
+          echo '</a>'
+        } > "$RELEASE_NOTES"
+
         # Create a GitHub release
-        gh release create "v${VERSION}" --notes-file distribution/whatsnew/whatsnew-en-GB --title "v${VERSION}" ./android/apk/*.apk ./android/bundle/*.aab
+        gh release create "v${VERSION}" --notes-file "$RELEASE_NOTES" --title "v${VERSION}" ./android/apk/*.apk ./android/bundle/*.aab
+
+        # Clean up temp file
+        rm "$RELEASE_NOTES"
 
         # Start the next development iteration
         ./gradlew -q --no-configuration-cache bumpSnapshot

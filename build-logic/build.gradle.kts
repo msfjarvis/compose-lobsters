@@ -4,6 +4,12 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
+import org.gradle.api.tasks.compile.JavaCompile
+import org.gradle.kotlin.dsl.getByType
+import org.gradle.kotlin.dsl.withType
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.dsl.KotlinJvmExtension
+
 plugins {
   `kotlin-dsl`
   alias(libs.plugins.android.lint)
@@ -60,6 +66,13 @@ gradlePlugin {
 }
 
 lint.baseline = project.file("lint-baseline.xml")
+
+extensions.getByType<KotlinJvmExtension>().compilerOptions { jvmTarget.set(JvmTarget.JVM_21) }
+
+tasks.withType<JavaCompile>().configureEach {
+  sourceCompatibility = JavaVersion.VERSION_21.toString()
+  targetCompatibility = JavaVersion.VERSION_21.toString()
+}
 
 dependencies {
   implementation(libs.build.agp)

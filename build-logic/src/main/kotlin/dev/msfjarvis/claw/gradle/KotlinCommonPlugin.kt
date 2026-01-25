@@ -23,7 +23,7 @@ class KotlinCommonPlugin : Plugin<Project> {
         compilerOptions {
           allWarningsAsErrors.set(true)
           freeCompilerArgs.addAll(ADDITIONAL_COMPILER_ARGS)
-          languageVersion.set(KotlinVersion.KOTLIN_2_2)
+          languageVersion.set(KotlinVersion.KOTLIN_2_3)
         }
       }
       withType<Test>().configureEach {
@@ -40,6 +40,13 @@ class KotlinCommonPlugin : Plugin<Project> {
         "-opt-in=kotlin.RequiresOptIn",
         "-Xjspecify-annotations=strict",
         "-Xtype-enhancement-improvements-strict-mode",
+        "-Xcontext-parameters",
+        // TODO trips in SQLDelight code: https://github.com/sqldelight/sqldelight/issues/6029
+        // "-Xreturn-value-checker=full",
+        "-Xcontext-sensitive-resolution",
+        "-Xdata-flow-based-exhaustiveness",
+        "-Xwhen-expressions=indy",
+        "-Xexplicit-backing-fields",
       )
   }
 }

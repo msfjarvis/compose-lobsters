@@ -95,7 +95,7 @@ internal fun CommentsPageInternal(
 
   LaunchedEffect(key1 = details, key2 = commentState) {
     if (details.comments.isNotEmpty() && !commentState?.commentIds.isNullOrEmpty()) {
-      val unreadCount = details.comments.size - (commentState?.commentIds?.size ?: 0)
+      val unreadCount = details.comments.size - commentState.commentIds.size
       if (unreadCount > 0) {
         val text =
           when (unreadCount) {

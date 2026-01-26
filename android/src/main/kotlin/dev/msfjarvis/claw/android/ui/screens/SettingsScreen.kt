@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import dev.msfjarvis.claw.android.BuildConfig
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
+import io.sentry.Sentry
 import java.io.InputStream
 import java.io.OutputStream
 import kotlinx.coroutines.CoroutineScope
@@ -210,7 +211,10 @@ private fun ImportPosts(
       }
     }
   OutlinedButton(
-    onClick = { importAction.launch(JSON_MIME_TYPE) },
+    onClick = {
+      importAction.launch(JSON_MIME_TYPE)
+      Sentry.metrics().count("import", 1.0)
+    },
     shape = MaterialTheme.shapes.extraSmall,
     modifier = modifier,
   ) {
@@ -239,9 +243,15 @@ private inline fun ExportPosts(
           openOutputStream(uri)?.use { stream ->
             exportPostsAsJson(stream)
             snackbarHostState.showSnackbarDismissing("Successfully exported posts")
-          } ?: snackbarHostState.showSnackbarDismissing("Unable to open output file")
+            Sentry.metrics().count("json_export_success", 1.0)
+          }
+            ?: run {
+              snackbarHostState.showSnackbarDismissing("Unable to open output file")
+              Sentry.metrics().count("json_export_failure", 1.0)
+            }
         } catch (e: Exception) {
           snackbarHostState.showSnackbarDismissing("Failed to export posts: ${e.message}")
+          Sentry.metrics().count("json_export_failure", 1.0)
         }
       }
     }
@@ -257,9 +267,15 @@ private inline fun ExportPosts(
           openOutputStream(uri)?.use { stream ->
             exportPostsAsHtml(stream)
             snackbarHostState.showSnackbarDismissing("Successfully exported posts")
-          } ?: snackbarHostState.showSnackbarDismissing("Unable to open output file")
+            Sentry.metrics().count("html_export_success", 1.0)
+          }
+            ?: run {
+              snackbarHostState.showSnackbarDismissing("Unable to open output file")
+              Sentry.metrics().count("html_export_failure", 1.0)
+            }
         } catch (e: Exception) {
           snackbarHostState.showSnackbarDismissing("Failed to export posts: ${e.message}")
+          Sentry.metrics().count("html_export_failure", 1.0)
         }
       }
     }

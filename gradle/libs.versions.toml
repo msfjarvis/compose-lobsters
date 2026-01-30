@@ -43,7 +43,7 @@ aboutLibraries-m3 = { module = "com.mikepenz:aboutlibraries-compose-m3", version
 # Referenced in build-logic
 #noinspection UnusedVersionCatalogEntry
 android-security-lints = "com.android.security.lint:lint:1.0.4"
-androidx-activity = "androidx.activity:activity:1.12.2"
+androidx-activity = "androidx.activity:activity:1.12.3"
 androidx-activity-compose = "androidx.activity:activity-compose:1.12.3"
 androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "annotation" }
 androidx-benchmark-macro = { module = "androidx.benchmark:benchmark-macro", version.ref = "benchmark" }

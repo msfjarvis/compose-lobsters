@@ -74,7 +74,7 @@ object OkHttpModule {
         readTimeout(READ_TIMEOUT_SECONDS, TimeUnit.SECONDS)
         writeTimeout(WRITE_TIMEOUT_SECONDS, TimeUnit.SECONDS)
         cache(cache)
-        interceptors.forEach(::addNetworkInterceptor)
+        interceptors.forEach(::addInterceptor)
         socketFactory(socketFactory)
         certificatePinner(certificatePinner)
       }

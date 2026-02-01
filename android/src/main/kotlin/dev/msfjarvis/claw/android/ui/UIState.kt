@@ -24,7 +24,7 @@ class UIState(private val remoteSettings: RemoteSettings) {
   /**
    * Flow of the current search sort order. This property safely handles null values from
    * RemoteSettings by providing a default fallback value (DEFAULT_SEARCH_SORT).
-   * 
+   *
    * The flow is already null-safe because RemoteSettings.getSearchSort() returns a Flow<String>
    * with a default value applied using the Elvis operator.
    */

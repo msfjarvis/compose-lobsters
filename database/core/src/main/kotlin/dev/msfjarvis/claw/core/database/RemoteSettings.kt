@@ -31,9 +31,10 @@ class RemoteSettings(private val preferences: DataStore<Preferences>) {
   }
 
   /**
-   * Get a value synchronously from preferences. This method should be used carefully as it can
-   * return null if the preference is not set. Use this method only when you need a synchronous
-   * value and have a proper default fallback.
+   * Get a value from preferences. This is a suspend function that retrieves the current snapshot
+   * of preferences asynchronously. Note that this method can return null if the preference is not
+   * set. Callers should handle null values appropriately, typically by providing a default
+   * fallback using the Elvis operator.
    *
    * @param key The preferences key to retrieve
    * @return The value associated with the key, or null if not present

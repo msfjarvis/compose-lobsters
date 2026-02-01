@@ -74,7 +74,10 @@ object OkHttpModule {
         readTimeout(READ_TIMEOUT_SECONDS, TimeUnit.SECONDS)
         writeTimeout(WRITE_TIMEOUT_SECONDS, TimeUnit.SECONDS)
         cache(cache)
-        interceptors.forEach(::addNetworkInterceptor)
+        // Use application interceptors instead of network interceptors to allow retrying
+        // requests. Network interceptors must call proceed() exactly once, but
+        // RetryAfterInterceptor needs to call proceed() twice when retrying after a delay.
+        interceptors.forEach(::addInterceptor)
         socketFactory(socketFactory)
         certificatePinner(certificatePinner)
       }

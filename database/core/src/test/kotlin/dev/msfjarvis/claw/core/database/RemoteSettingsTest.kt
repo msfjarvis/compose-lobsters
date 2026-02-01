@@ -14,6 +14,7 @@ import java.io.File
 import kotlin.test.assertEquals
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
@@ -21,16 +22,20 @@ import org.junit.rules.TemporaryFolder
 class RemoteSettingsTest {
   @get:Rule val tmpFolder = TemporaryFolder()
 
-  private fun createDataStore(): DataStore<Preferences> {
-    return PreferenceDataStoreFactory.create {
-      File(tmpFolder.newFolder(), "test_preferences.preferences_pb")
-    }
+  private lateinit var dataStore: DataStore<Preferences>
+  private lateinit var remoteSettings: RemoteSettings
+
+  @Before
+  fun setup() {
+    dataStore =
+      PreferenceDataStoreFactory.create {
+        File(tmpFolder.newFolder(), "test_preferences.preferences_pb")
+      }
+    remoteSettings = RemoteSettings(dataStore)
   }
 
   @Test
   fun `getValue returns null when preference not set`() = runTest {
-    val dataStore = createDataStore()
-    val remoteSettings = RemoteSettings(dataStore)
     val key = stringPreferencesKey("nonexistent_key")
 
     val result = remoteSettings.getValue(key)
@@ -40,9 +45,6 @@ class RemoteSettingsTest {
 
   @Test
   fun `getSearchSort returns default when not set`() = runTest {
-    val dataStore = createDataStore()
-    val remoteSettings = RemoteSettings(dataStore)
-
     val result = remoteSettings.getSearchSort().first()
 
     assertEquals(RemoteSettings.DEFAULT_SEARCH_SORT, result)
@@ -50,25 +52,11 @@ class RemoteSettingsTest {
 
   @Test
   fun `getSearchSort returns saved value when set`() = runTest {
-    val dataStore = createDataStore()
-    val remoteSettings = RemoteSettings(dataStore)
     val expectedSort = "oldest"
 
     remoteSettings.setSearchSort(expectedSort)
     val result = remoteSettings.getSearchSort().first()
 
     assertEquals(expectedSort, result)
-  }
-
-  @Test
-  fun `getValue handles null gracefully`() = runTest {
-    val dataStore = createDataStore()
-    val remoteSettings = RemoteSettings(dataStore)
-    val key = stringPreferencesKey("test_key")
-
-    // Should not throw NPE when value is null
-    val result = remoteSettings.getValue(key)
-
-    assertEquals(null, result)
   }
 }

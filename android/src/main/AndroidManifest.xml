@@ -56,6 +56,13 @@
       </intent-filter>
     </activity>
 
+    <activity
+      android:name=".glance.WidgetClickActivity"
+      android:exported="false"
+      android:theme="@android:style/Theme.NoDisplay"
+      android:excludeFromRecents="true"
+      android:taskAffinity="" />
+
     <provider
       android:name="androidx.startup.InitializationProvider"
       android:authorities="${applicationId}.androidx-startup"

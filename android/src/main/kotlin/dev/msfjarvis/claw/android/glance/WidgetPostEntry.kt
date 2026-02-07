@@ -10,7 +10,6 @@ import android.content.Intent
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
-import androidx.core.net.toUri
 import androidx.glance.ColorFilter
 import androidx.glance.GlanceComposable
 import androidx.glance.GlanceModifier
@@ -30,8 +29,6 @@ import androidx.glance.preview.ExperimentalGlancePreviewApi
 import androidx.glance.preview.Preview
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
-import dev.msfjarvis.claw.android.BuildConfig
-import dev.msfjarvis.claw.android.MainActivity
 import dev.msfjarvis.claw.android.R
 import dev.msfjarvis.claw.model.UIPost
 
@@ -39,20 +36,23 @@ import dev.msfjarvis.claw.model.UIPost
 @GlanceComposable
 fun WidgetPostEntry(post: UIPost, modifier: GlanceModifier = GlanceModifier) {
   val titleStyle = MaterialTheme.typography.bodyMedium
+  val context = LocalContext.current
   val commentsAction =
     actionStartActivity(
-      Intent(
-          Intent.ACTION_VIEW,
-          "${BuildConfig.DEEPLINK_SCHEME}://comments/${post.shortId}".toUri(),
-        )
-        .apply {
-          addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-          setClass(LocalContext.current, MainActivity::class.java)
-        }
+      Intent(context, WidgetClickActivity::class.java).apply {
+        action = WidgetClickActivity.ACTION_OPEN_COMMENTS
+        putExtra(WidgetClickActivity.EXTRA_SHORT_ID, post.shortId)
+      }
     )
   val postAction =
     if (post.url.startsWith('/') || post.url.isEmpty()) commentsAction
-    else actionStartActivity(Intent(Intent.ACTION_VIEW, post.url.toUri()))
+    else
+      actionStartActivity(
+        Intent(context, WidgetClickActivity::class.java).apply {
+          putExtra(WidgetClickActivity.EXTRA_URL, post.url)
+          putExtra(WidgetClickActivity.EXTRA_SHORT_ID, post.shortId)
+        }
+      )
   Row(
     verticalAlignment = Alignment.CenterVertically,
     modifier =

@@ -13,8 +13,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.ExperimentalFlexBoxApi
+import androidx.compose.foundation.layout.FlexBox
+import androidx.compose.foundation.layout.FlexDirection
+import androidx.compose.foundation.layout.FlexWrap
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -220,12 +222,16 @@ private fun CommentsButton(commentCount: Int, modifier: Modifier = Modifier) {
 }
 
 @Composable
-@OptIn(ExperimentalLayoutApi::class)
+@OptIn(ExperimentalFlexBoxApi::class)
 internal fun TagRow(tags: ImmutableList<String>, modifier: Modifier = Modifier) {
-  FlowRow(
+  FlexBox(
     modifier = modifier,
-    horizontalArrangement = Arrangement.spacedBy(8.dp),
-    verticalArrangement = Arrangement.spacedBy(8.dp),
+    config = {
+      rowGap = 8.dp
+      columnGap = 8.dp
+      direction = FlexDirection.Row
+      wrap = FlexWrap.Wrap
+    },
   ) {
     tags.forEach { tag -> TagText(tag = tag) }
   }

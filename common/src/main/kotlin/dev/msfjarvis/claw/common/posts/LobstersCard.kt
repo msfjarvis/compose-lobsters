@@ -282,7 +282,7 @@ val TEST_POST =
     commentCount = 100,
     commentsUrl = "https://lobste.rs/s/q1hh1g/simple_anomaly_detection_using_plain_sql",
     submitter = "rau",
-    tags = listOf("linux", "games"),
+    tags = listOf("linux", "games", "vibecoding", "concatenative"),
     description = "",
   )
 

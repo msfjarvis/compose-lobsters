@@ -8,6 +8,7 @@ package dev.msfjarvis.claw.gradle
 
 import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.LibraryExtension
+import com.android.build.api.dsl.TestExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -26,6 +27,10 @@ class KotlinAndroidPlugin : Plugin<Project> {
       targetCompatibility = JavaVersion.VERSION_21
     }
     project.extensions.findByType<ApplicationExtension>()?.compileOptions {
+      sourceCompatibility = JavaVersion.VERSION_21
+      targetCompatibility = JavaVersion.VERSION_21
+    }
+    project.extensions.findByType<TestExtension>()?.compileOptions {
       sourceCompatibility = JavaVersion.VERSION_21
       targetCompatibility = JavaVersion.VERSION_21
     }

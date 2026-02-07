@@ -12,6 +12,9 @@ import android.os.Bundle
 import androidx.core.net.toUri
 import dev.msfjarvis.claw.android.BuildConfig
 import dev.msfjarvis.claw.android.MainActivity
+import io.sentry.Breadcrumb
+import io.sentry.Sentry
+import io.sentry.SentryLevel
 
 /**
  * Trampoline activity for handling widget clicks with explicit components.
@@ -35,6 +38,13 @@ class WidgetClickActivity : Activity() {
     when {
       // Handle comments deep link
       action == ACTION_OPEN_COMMENTS && shortId != null -> {
+        Sentry.addBreadcrumb(
+          Breadcrumb().apply {
+            category = "widget_click_debug"
+            message = "Comment deeplink"
+            level = SentryLevel.INFO
+          }
+        )
         val commentsIntent =
           Intent(Intent.ACTION_VIEW, "${BuildConfig.DEEPLINK_SCHEME}://comments/$shortId".toUri())
             .apply {
@@ -45,11 +55,25 @@ class WidgetClickActivity : Activity() {
       }
       // Handle external URL
       url != null && (url.startsWith("http://") || url.startsWith("https://")) -> {
+        Sentry.addBreadcrumb(
+          Breadcrumb().apply {
+            category = "widget_click_debug"
+            message = "External URL"
+            level = SentryLevel.INFO
+          }
+        )
         val urlIntent = Intent(Intent.ACTION_VIEW, url.toUri())
         startActivity(urlIntent)
       }
       // Handle internal/relative URL as comments link
       url != null && (url.startsWith('/') || url.isEmpty()) -> {
+        Sentry.addBreadcrumb(
+          Breadcrumb().apply {
+            category = "widget_click_debug"
+            message = "Relative URL, parsed as a comment link"
+            level = SentryLevel.INFO
+          }
+        )
         // For internal URLs without shortId, extract it from the URL or use comments action
         val commentsIntent =
           Intent(Intent.ACTION_VIEW, "${BuildConfig.DEEPLINK_SCHEME}://comments/$shortId".toUri())

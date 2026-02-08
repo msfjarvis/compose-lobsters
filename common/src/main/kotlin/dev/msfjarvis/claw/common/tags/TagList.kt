@@ -6,11 +6,12 @@
  */
 package dev.msfjarvis.claw.common.tags
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.ExperimentalFlexBoxApi
+import androidx.compose.foundation.layout.FlexBox
+import androidx.compose.foundation.layout.FlexDirection
+import androidx.compose.foundation.layout.FlexWrap
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -39,7 +40,7 @@ import dev.msfjarvis.claw.model.Tag
 import dev.zacsweers.metrox.viewmodel.metroViewModel
 import kotlinx.collections.immutable.ImmutableList
 
-@OptIn(ExperimentalLayoutApi::class)
+@OptIn(ExperimentalFlexBoxApi::class)
 @Composable
 fun TagList(
   contentPadding: PaddingValues,
@@ -70,10 +71,14 @@ fun TagList(
           style = MaterialTheme.typography.bodyMedium,
           color = MaterialTheme.colorScheme.onBackground,
         )
-        FlowRow(
+        FlexBox(
           modifier = modifier.fillMaxWidth().verticalScroll(rememberScrollState()),
-          horizontalArrangement = Arrangement.spacedBy(8.dp),
-          verticalArrangement = Arrangement.spacedBy(8.dp),
+          config = {
+            columnGap = 8.dp
+            rowGap = 8.dp
+            direction = FlexDirection.Row
+            wrap = FlexWrap.Wrap
+          },
         ) {
           allTags
             .sortedBy { it.tag }

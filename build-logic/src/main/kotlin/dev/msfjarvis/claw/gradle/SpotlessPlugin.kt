@@ -26,7 +26,7 @@ class SpotlessPlugin : Plugin<Project> {
       kotlin {
         ktfmt(KTFMT_VERSION).googleStyle()
         target("**/*.kt")
-        targetExclude("**/build/", "/spotless/")
+        targetExclude("**/build/", "/spotless/", "**/SentryNavigation3Integration.kt")
         licenseHeaderFile(project.file("spotless/license.kt"))
       }
       kotlinGradle {

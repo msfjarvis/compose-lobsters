@@ -65,6 +65,7 @@ import dev.msfjarvis.claw.android.ui.navigation.Newest
 import dev.msfjarvis.claw.android.ui.navigation.NonStackable
 import dev.msfjarvis.claw.android.ui.navigation.Saved
 import dev.msfjarvis.claw.android.ui.navigation.Search
+import dev.msfjarvis.claw.android.ui.navigation.SentryNavigation3Traced
 import dev.msfjarvis.claw.android.ui.navigation.Settings
 import dev.msfjarvis.claw.android.ui.navigation.TagFiltering
 import dev.msfjarvis.claw.android.ui.navigation.TopLevelDestination
@@ -166,6 +167,7 @@ fun LobstersPostsScreen(
     snackbarHost = { SnackbarHost(snackbarHostState) },
     modifier = Modifier.semantics { testTagsAsResourceId = true },
   ) { contentPadding ->
+    SentryNavigation3Traced(backStack = backStack)
     Row {
       AnimatedVisibility(visible = navigationType == ClawNavigationType.NAVIGATION_RAIL) {
         val currentDestination = backStack.lastOrNull()

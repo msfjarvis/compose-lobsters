@@ -235,6 +235,7 @@ fun LobstersPostsScreen(
               }
               CommentsPage(
                 postId = dest.postId,
+                commentId = dest.commentId,
                 postActions = commentsPostActions,
                 contentPadding = contentPadding,
                 openUserProfile = { navigateTo(backStack, User(it)) },
@@ -319,7 +320,11 @@ fun navigateTo(
   if (destination is NonStackable) {
     if (allowStacking && destination is Comments) {
       val lastItem = backStack.lastOrNull()
-      if (lastItem is Comments && lastItem.postId == destination.postId) {
+      if (
+        lastItem is Comments &&
+          lastItem.postId == destination.postId &&
+          lastItem.commentId == destination.commentId
+      ) {
         return
       }
       backStack.add(destination)

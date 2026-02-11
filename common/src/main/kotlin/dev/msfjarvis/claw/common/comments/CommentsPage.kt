@@ -29,6 +29,7 @@ import dev.zacsweers.metrox.viewmodel.metroViewModel
 @Composable
 fun CommentsPage(
   postId: String,
+  commentId: String? = null,
   postActions: PostActions,
   contentPadding: PaddingValues,
   openUserProfile: (String) -> Unit,
@@ -48,6 +49,7 @@ fun CommentsPage(
         postActions = postActions,
         commentState = commentState,
         markSeenComments = viewModel::markSeenComments,
+        commentId = commentId,
         openUserProfile = openUserProfile,
         contentPadding = contentPadding,
         modifier = modifier.fillMaxSize(),

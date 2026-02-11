@@ -91,18 +91,30 @@ class MainActivity(
   }
 
   private fun handleIntent(intent: Intent) {
-    val data = intent.data
-    if (data != null && data.scheme == BuildConfig.DEEPLINK_SCHEME) {
+    val data = intent.data ?: return
+    val commentId =
+      data.fragment
+        ?.takeIf { fragment -> fragment.startsWith("c_") }
+        ?.removePrefix("c_")
+    if (data.scheme == BuildConfig.DEEPLINK_SCHEME) {
       when (data.host) {
         "comments" -> {
           val postId = data.pathSegments.firstOrNull()
           if (postId != null) {
-            deepLinkDestination = Comments(postId)
+            deepLinkDestination = Comments(postId, commentId)
           }
         }
         "newest" -> deepLinkDestination = Newest
         "hottest" -> deepLinkDestination = Hottest
         "saved" -> deepLinkDestination = Saved
+      }
+    } else if ((data.scheme == "https" || data.scheme == "http") && data.host == "lobste.rs") {
+      val postId =
+        data.pathSegments
+          .takeIf { it.firstOrNull() == "s" }
+          ?.getOrNull(1)
+      if (postId != null) {
+        deepLinkDestination = Comments(postId, commentId)
       }
     }
   }

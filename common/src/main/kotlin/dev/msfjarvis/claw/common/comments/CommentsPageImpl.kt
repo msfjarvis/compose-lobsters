@@ -31,6 +31,8 @@ import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.relocation.BringIntoViewRequester
+import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
@@ -42,7 +44,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -67,6 +71,7 @@ import java.time.Instant
 import java.time.temporal.TemporalAccessor
 
 private const val AnimationDuration = 100
+private const val CommentListItemOffset = 2
 
 @Composable
 internal fun CommentsPageInternal(
@@ -74,6 +79,7 @@ internal fun CommentsPageInternal(
   postActions: PostActions,
   commentState: PostComments?,
   markSeenComments: (String, List<Comment>) -> Unit,
+  commentId: String?,
   openUserProfile: (String) -> Unit,
   contentPadding: PaddingValues,
   modifier: Modifier = Modifier,
@@ -92,6 +98,7 @@ internal fun CommentsPageInternal(
   val context = LocalContext.current
   val commentNodes by commentsHandler.listItems.collectAsStateWithLifecycle()
   val commentListState = rememberLazyListState()
+  var hasScrolledToComment by remember(commentId) { mutableStateOf(false) }
 
   LaunchedEffect(key1 = details, key2 = commentState) {
     if (details.comments.isNotEmpty() && !commentState?.commentIds.isNullOrEmpty()) {
@@ -106,6 +113,16 @@ internal fun CommentsPageInternal(
       }
     }
     markSeenComments(details.shortId, details.comments)
+  }
+
+  LaunchedEffect(commentId, commentNodes) {
+    if (!hasScrolledToComment && commentId != null && commentNodes.isNotEmpty()) {
+      val targetIndex = commentNodes.indexOfFirst { node -> node.containsComment(commentId) }
+      if (targetIndex >= 0) {
+        commentListState.animateScrollToItem(index = targetIndex + CommentListItemOffset)
+        hasScrolledToComment = true
+      }
+    }
   }
 
   Surface(color = MaterialTheme.colorScheme.surfaceVariant) {
@@ -129,7 +146,7 @@ internal fun CommentsPageInternal(
         }
 
         items(items = commentNodes, key = { node -> node.comment.shortId }) { node ->
-          Node(node, openUserProfile, onToggleExpandedState)
+          Node(node, openUserProfile, onToggleExpandedState, commentId)
         }
 
         item(key = "bottom_spacer") {
@@ -159,6 +176,7 @@ private fun Node(
   node: CommentNode,
   openUserProfile: (String) -> Unit,
   onToggleExpandedState: (String, Boolean) -> Unit,
+  targetCommentId: String?,
   modifier: Modifier = Modifier,
 ) {
   Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -167,6 +185,7 @@ private fun Node(
       isExpanded = node.isExpanded,
       openUserProfile = openUserProfile,
       onToggleExpandedState = onToggleExpandedState,
+      targetCommentId = targetCommentId,
       modifier = modifier,
     )
 
@@ -176,7 +195,9 @@ private fun Node(
       exit = fadeOut(tween(AnimationDuration)) + shrinkVertically(tween(AnimationDuration)),
     ) {
       Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
-        node.children.forEach { model -> Node(model, openUserProfile, onToggleExpandedState) }
+        node.children.forEach { model ->
+          Node(model, openUserProfile, onToggleExpandedState, targetCommentId)
+        }
       }
     }
   }
@@ -188,6 +209,7 @@ private fun NodeBox(
   isExpanded: Boolean,
   openUserProfile: (String) -> Unit,
   onToggleExpandedState: (String, Boolean) -> Unit,
+  targetCommentId: String?,
   modifier: Modifier = Modifier,
 ) {
   CommentEntry(
@@ -195,6 +217,7 @@ private fun NodeBox(
     commentNode = node,
     openUserProfile = openUserProfile,
     onToggleExpandedState = onToggleExpandedState,
+    targetCommentId = targetCommentId,
     modifier = modifier,
   )
   HorizontalDivider()
@@ -208,13 +231,19 @@ private fun CommentEntry(
   commentNode: CommentNode,
   openUserProfile: (String) -> Unit,
   onToggleExpandedState: (String, Boolean) -> Unit,
+  targetCommentId: String?,
   modifier: Modifier = Modifier,
 ) {
   val comment = commentNode.comment
+  val bringIntoViewRequester = remember { BringIntoViewRequester() }
+  if (targetCommentId == comment.shortId) {
+    LaunchedEffect(targetCommentId) { bringIntoViewRequester.bringIntoView() }
+  }
   Box(
     modifier =
       modifier
         .fillMaxWidth()
+        .bringIntoViewRequester(bringIntoViewRequester)
         .background(
           if (commentNode.isUnread) MaterialTheme.colorScheme.surfaceContainerHigh
           else MaterialTheme.colorScheme.background
@@ -259,6 +288,11 @@ private fun CommentEntry(
       }
     }
   }
+}
+
+private fun CommentNode.containsComment(commentId: String): Boolean {
+  if (comment.shortId == commentId) return true
+  return children.any { child -> child.containsComment(commentId) }
 }
 
 private fun buildCommenterString(

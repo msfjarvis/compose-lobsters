@@ -59,13 +59,13 @@ class BackStackBehaviorTest {
   }
 
   @Test
-  fun `Same post stacks when target comment differs`() {
+  fun `Same post replaces when target comment differs`() {
     val backStack = makeBackStack(Hottest, Comments("abc123"))
 
     navigateTo(backStack, Comments("abc123", "def456"), allowStacking = true)
 
     assertThat(backStack)
-      .containsExactly(Hottest, Comments("abc123"), Comments("abc123", "def456"))
+      .containsExactly(Hottest, Comments("abc123", "def456"))
       .inOrder()
   }
 

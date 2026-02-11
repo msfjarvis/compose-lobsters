@@ -322,9 +322,12 @@ fun navigateTo(
       val lastItem = backStack.lastOrNull()
       if (
         lastItem is Comments &&
-          lastItem.postId == destination.postId &&
-          lastItem.commentId == destination.commentId
+          lastItem.postId == destination.postId
       ) {
+        if (lastItem.commentId == destination.commentId) {
+          return
+        }
+        backStack[backStack.lastIndex] = destination
         return
       }
       backStack.add(destination)

@@ -71,6 +71,7 @@ import java.time.Instant
 import java.time.temporal.TemporalAccessor
 
 private const val AnimationDuration = 100
+// Offset accounts for the post header and the "Comments" label items before the list.
 private const val CommentListItemOffset = 2
 
 @Composable

@@ -108,14 +108,6 @@ class MainActivity(
         "hottest" -> deepLinkDestination = Hottest
         "saved" -> deepLinkDestination = Saved
       }
-    } else if ((data.scheme == "https" || data.scheme == "http") && data.host == "lobste.rs") {
-      val postId =
-        data.pathSegments
-          .takeIf { it.firstOrNull() == "s" }
-          ?.getOrNull(1)
-      if (postId != null) {
-        deepLinkDestination = Comments(postId, commentId)
-      }
     }
   }
 

@@ -141,7 +141,7 @@ fun LobstersPostsScreen(
     }
   }
 
-  BackHandler(enabled = backStack.size > 1) { backStack.removeAt(backStack.lastIndex) }
+  BackHandler(enabled = backStack.size > 1) { popBackStack(backStack) }
 
   Scaffold(
     topBar = {
@@ -149,7 +149,7 @@ fun LobstersPostsScreen(
         activity = activity,
         isTopLevel = backStack.lastOrNull() is TopLevelDestination,
         navigateTo = { destination -> navigateTo(backStack, destination) },
-        popBackStack = { backStack.removeAt(backStack.lastIndex) },
+        popBackStack = { popBackStack(backStack) },
       )
     },
     bottomBar = {
@@ -183,7 +183,11 @@ fun LobstersPostsScreen(
         modifier = modifier.hazeSource(hazeState),
         sceneStrategy = listDetailStrategy,
         entryDecorators = listOf(rememberSaveableStateHolderNavEntryDecorator()),
-        onBack = { backStack.removeAt(backStack.lastIndex) },
+        onBack = {
+          if (popBackStack(backStack) == null) {
+            activity?.finish()
+          }
+        },
         predictivePopTransitionSpec = {
           slideInHorizontally(initialOffsetX = { -it }, animationSpec = tween(200)) togetherWith
             slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(200))
@@ -337,6 +341,14 @@ fun navigateTo(
   }
 
   backStack.add(destination)
+}
+
+private fun popBackStack(backStack: MutableList<NavKey>): NavKey? {
+  if (backStack.size <= 1) {
+    return null
+  }
+
+  return backStack.removeAt(backStack.lastIndex)
 }
 
 @Composable

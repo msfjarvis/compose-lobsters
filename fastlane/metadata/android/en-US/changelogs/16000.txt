@@ -1,0 +1,10 @@
+### Fixed
+
+- Rare crash in widget handling
+- Line-breaking behavior in comments now packs text densely
+- Tag filtering now applies to widgets as well
+
+### Changed
+
+- Links to other posts now open in the app itself
+- Widget handles bad network scenarios better

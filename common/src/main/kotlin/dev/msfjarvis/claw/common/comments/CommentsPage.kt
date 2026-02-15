@@ -9,6 +9,7 @@ package dev.msfjarvis.claw.common.comments
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -40,6 +41,7 @@ fun CommentsPage(
     produceState<PostComments?>(initialValue = null, key1 = postId) {
       value = viewModel.getSeenComments(postId)
     }
+  val commentListState = rememberLazyListState()
 
   when (val postDetails = viewModel.postDetails) {
     is Success<*> -> {
@@ -50,15 +52,19 @@ fun CommentsPage(
         markSeenComments = viewModel::markSeenComments,
         openUserProfile = openUserProfile,
         contentPadding = contentPadding,
+        commentListState = commentListState,
+        commentNodes = viewModel.commentNodes,
+        createCommentNodes = viewModel::createCommentNodes,
+        updateCommentNodeExpanded = viewModel::updateCommentNodeExpanded,
+        updateUnreadStatus = viewModel::updateUnreadStatus,
         modifier = modifier.fillMaxSize(),
       )
     }
     is Error -> {
-      val error = postDetails
       Box(modifier = Modifier.fillMaxSize()) {
         NetworkError(
-          label = error.description,
-          error = error.error,
+          label = postDetails.description,
+          error = postDetails.error,
           modifier = Modifier.align(Alignment.Center),
         )
       }

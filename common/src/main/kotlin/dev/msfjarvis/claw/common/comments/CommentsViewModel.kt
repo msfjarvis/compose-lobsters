@@ -19,6 +19,7 @@ import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.api.toError
 import dev.msfjarvis.claw.common.NetworkState
 import dev.msfjarvis.claw.core.coroutines.IODispatcher
+import dev.msfjarvis.claw.database.local.PostComments
 import dev.msfjarvis.claw.model.Comment
 import dev.msfjarvis.claw.model.UIPost
 import dev.msfjarvis.claw.model.toUIPost
@@ -28,6 +29,7 @@ import dev.zacsweers.metro.Inject
 import dev.zacsweers.metrox.viewmodel.ViewModelKey
 import java.io.IOException
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -39,8 +41,12 @@ class CommentsViewModel(
   private val commentsRepository: CommentsRepository,
   @param:IODispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
+  private val commentsHandler = CommentsHandler()
+
   var postDetails by mutableStateOf<NetworkState>(NetworkState.Loading)
     private set
+
+  internal val commentNodes: StateFlow<List<CommentNode>> = commentsHandler.listItems
 
   suspend fun loadPostDetails(postId: String) {
     if (postDetails is NetworkState.Error) {
@@ -69,5 +75,19 @@ class CommentsViewModel(
 
   fun markSeenComments(postId: String, comments: List<Comment>) {
     viewModelScope.launch { commentsRepository.markSeenComments(postId, comments) }
+  }
+
+  internal fun createCommentNodes(details: UIPost, commentState: PostComments?) {
+    commentsHandler.createListNode(details.comments, commentState) { comment ->
+      details.userIsAuthor && comment.user == details.submitter
+    }
+  }
+
+  internal fun updateCommentNodeExpanded(shortId: String, isExpanded: Boolean) {
+    commentsHandler.updateListNode(shortId, isExpanded)
+  }
+
+  internal fun updateUnreadStatus(commentState: PostComments?) {
+    commentsHandler.updateUnreadStatus(commentState)
   }
 }

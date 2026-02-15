@@ -243,9 +243,9 @@ private fun TagText(tag: String, modifier: Modifier = Modifier) {
     text = tag,
     modifier =
       modifier
-        .background(MaterialTheme.colorScheme.tertiaryContainer, CircleShape)
+        .background(MaterialTheme.colorScheme.surfaceContainer, CircleShape)
         .padding(vertical = 4.dp, horizontal = 12.dp),
-    color = MaterialTheme.colorScheme.onTertiaryContainer,
+    color = MaterialTheme.colorScheme.onSurface,
     style = MaterialTheme.typography.labelLarge,
   )
 }

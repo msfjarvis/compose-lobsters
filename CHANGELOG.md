@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
+### Fixed
+
+- Collapsed comments state are now persisted across navigation events
+
+### Changed
+
+- Tags use a more muted background color to avoid being distracting.
+
 ## [1.60.0] - 2026-02-14
 
 ### Fixed

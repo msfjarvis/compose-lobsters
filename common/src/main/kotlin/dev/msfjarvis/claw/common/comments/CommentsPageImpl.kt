@@ -29,8 +29,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
@@ -42,7 +42,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -65,6 +64,7 @@ import dev.msfjarvis.claw.model.Comment
 import dev.msfjarvis.claw.model.UIPost
 import java.time.Instant
 import java.time.temporal.TemporalAccessor
+import kotlinx.coroutines.flow.StateFlow
 
 private const val AnimationDuration = 100
 
@@ -76,22 +76,23 @@ internal fun CommentsPageInternal(
   markSeenComments: (String, List<Comment>) -> Unit,
   openUserProfile: (String) -> Unit,
   contentPadding: PaddingValues,
+  commentListState: LazyListState,
+  commentNodes: StateFlow<List<CommentNode>>,
+  createCommentNodes: (UIPost, PostComments?) -> Unit,
+  updateCommentNodeExpanded: (String, Boolean) -> Unit,
+  updateUnreadStatus: (PostComments?) -> Unit,
   modifier: Modifier = Modifier,
 ) {
-  val commentsHandler = remember { CommentsHandler() }
-  LaunchedEffect(key1 = details, key2 = commentState) {
-    commentsHandler.createListNode(details.comments, commentState) { comment ->
-      details.userIsAuthor && comment.user == details.submitter
-    }
-  }
+  LaunchedEffect(key1 = details) { createCommentNodes(details, commentState) }
+
+  LaunchedEffect(key1 = commentState) { updateUnreadStatus(commentState) }
 
   val onToggleExpandedState = { shortId: String, isExpanded: Boolean ->
-    commentsHandler.updateListNode(shortId, isExpanded)
+    updateCommentNodeExpanded(shortId, isExpanded)
   }
 
   val context = LocalContext.current
-  val commentNodes by commentsHandler.listItems.collectAsStateWithLifecycle()
-  val commentListState = rememberLazyListState()
+  val commentNodes by commentNodes.collectAsStateWithLifecycle()
 
   LaunchedEffect(key1 = details, key2 = commentState) {
     if (details.comments.isNotEmpty() && !commentState?.commentIds.isNullOrEmpty()) {

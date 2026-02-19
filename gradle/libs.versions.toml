@@ -1,6 +1,6 @@
 [versions]
 aboutLibraries = "14.0.0-b02"
-agp = "9.1.0-alpha09"
+agp = "9.1.0-rc01"
 androidx-test = "1.7.0"
 annotation = "1.9.1"
 coil3 = "3.3.0"

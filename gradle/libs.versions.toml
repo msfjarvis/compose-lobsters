@@ -103,7 +103,7 @@ build-agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 build-cachefix = "org.gradle.android.cache-fix:org.gradle.android.cache-fix.gradle.plugin:3.0.3"
 build-kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 build-semver = "com.github.zafarkhaja:java-semver:0.10.2"
-build-sentry = "io.sentry.android.gradle:io.sentry.android.gradle.gradle.plugin:6.0.0"
+build-sentry = "io.sentry.android.gradle:io.sentry.android.gradle.gradle.plugin:6.1.0"
 build-spotless = "com.diffplug.spotless:spotless-plugin-gradle:8.2.1"
 build-vcu = "nl.littlerobots.version-catalog-update:nl.littlerobots.version-catalog-update.gradle.plugin:1.0.1"
 coil3-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil3" }

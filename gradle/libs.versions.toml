@@ -105,7 +105,7 @@ build-kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", ve
 build-semver = "com.github.zafarkhaja:java-semver:0.10.2"
 build-sentry = "io.sentry.android.gradle:io.sentry.android.gradle.gradle.plugin:6.1.0"
 build-spotless = "com.diffplug.spotless:spotless-plugin-gradle:8.2.1"
-build-vcu = "nl.littlerobots.version-catalog-update:nl.littlerobots.version-catalog-update.gradle.plugin:1.0.1"
+build-vcu = "nl.littlerobots.version-catalog-update:nl.littlerobots.version-catalog-update.gradle.plugin:1.1.0"
 coil3-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil3" }
 coil3-core = { module = "io.coil-kt.coil3:coil-core", version.ref = "coil3" }
 coil3-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil3" }

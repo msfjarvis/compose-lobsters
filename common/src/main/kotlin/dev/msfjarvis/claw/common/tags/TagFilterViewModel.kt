@@ -43,6 +43,7 @@ class TagFilterViewModel(
 ) : ViewModel() {
 
   val filteredTags = tagFilterRepository.getSavedTags().map(Set<String>::toPersistentSet)
+  val tagBlocks = tagFilterRepository.getTagBlocks()
 
   var allTags by mutableStateOf<NetworkState>(NetworkState.Loading)
     private set
@@ -68,7 +69,15 @@ class TagFilterViewModel(
     }
   }
 
-  fun saveTags(tags: Set<String>) {
-    viewModelScope.launch { tagFilterRepository.saveTags(tags) }
+  fun saveTagBlock(tag: String, expirationMillis: Long?) {
+    viewModelScope.launch { tagFilterRepository.saveTagBlock(tag, expirationMillis) }
+  }
+
+  fun removeTagBlock(tag: String) {
+    viewModelScope.launch { tagFilterRepository.removeTagBlock(tag) }
+  }
+
+  fun triggerCleanupNow() {
+    viewModelScope.launch { tagFilterRepository.removeExpiredTags() }
   }
 }

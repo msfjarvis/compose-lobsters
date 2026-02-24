@@ -16,6 +16,7 @@ import androidx.work.PeriodicWorkRequestBuilder
 import dev.msfjarvis.claw.android.glance.SavedPostsWidgetReceiver
 import dev.msfjarvis.claw.android.injection.AppGraph
 import dev.msfjarvis.claw.android.work.SavedPostUpdaterWorker
+import dev.msfjarvis.claw.android.work.TagExpirationCleanupWorker
 import dev.zacsweers.metro.createGraphFactory
 import dev.zacsweers.metrox.android.MetroAppComponentProviders
 import dev.zacsweers.metrox.android.MetroApplication
@@ -43,6 +44,13 @@ class ClawApplication : Application(), MetroApplication {
       uniqueWorkName = "updateSavedPosts",
       existingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.KEEP,
       request = postUpdateWorkRequest,
+    )
+    val tagCleanupWorkRequest =
+      PeriodicWorkRequestBuilder<TagExpirationCleanupWorker>(24, TimeUnit.HOURS).build()
+    appGraph.workManager.enqueueUniquePeriodicWork(
+      uniqueWorkName = "cleanupExpiredTags",
+      existingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.KEEP,
+      request = tagCleanupWorkRequest,
     )
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
       GlobalScope.launch(appGraph.mainDispatcher) {

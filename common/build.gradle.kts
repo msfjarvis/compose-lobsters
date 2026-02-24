@@ -72,5 +72,7 @@ dependencies {
 
   runtimeOnly(libs.androidx.compose.ui.tooling)
 
+  testImplementation(libs.kotlinx.coroutines.test)
+
   addTestDependencies(project)
 }

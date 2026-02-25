@@ -12,7 +12,7 @@ import androidx.work.WorkManager
 import dev.msfjarvis.claw.android.viewmodel.CachedRemotePostsRepository
 import dev.msfjarvis.claw.android.viewmodel.SavedPostsRepository
 import dev.msfjarvis.claw.api.LobstersApi
-import dev.msfjarvis.claw.common.tags.TagFilterRepository
+import dev.msfjarvis.claw.common.tags.TagBlockRepository
 import dev.msfjarvis.claw.core.coroutines.MainDispatcher
 import dev.msfjarvis.claw.core.injection.AppPlugin
 import dev.msfjarvis.claw.core.injection.InjectedWorkerFactory
@@ -51,7 +51,7 @@ interface AppGraph : MetroAppComponentProviders, ViewModelGraph {
 
   val lobstersApi: LobstersApi
 
-  val tagFilterRepository: TagFilterRepository
+  val tagBlockRepository: TagBlockRepository
 
   @MainDispatcher val mainDispatcher: CoroutineDispatcher
 

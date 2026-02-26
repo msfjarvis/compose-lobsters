@@ -38,12 +38,12 @@ import kotlinx.coroutines.withContext
 @ContributesIntoMap(AppScope::class)
 class TagFilterViewModel(
   private val api: LobstersApi,
-  private val tagFilterRepository: TagFilterRepository,
+  private val tagBlockRepository: TagBlockRepository,
   @param:IODispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
 
-  val filteredTags = tagFilterRepository.getSavedTags().map(Set<String>::toPersistentSet)
-  val tagBlocks = tagFilterRepository.getTagBlocks()
+  val filteredTags = tagBlockRepository.getSavedTags().map(Set<String>::toPersistentSet)
+  val tagBlocks = tagBlockRepository.getTagBlocks()
 
   var allTags by mutableStateOf<NetworkState>(NetworkState.Loading)
     private set
@@ -70,14 +70,14 @@ class TagFilterViewModel(
   }
 
   fun saveTagBlock(tag: String, expirationMillis: Long?) {
-    viewModelScope.launch { tagFilterRepository.saveTagBlock(tag, expirationMillis) }
+    viewModelScope.launch { tagBlockRepository.saveTagBlock(tag, expirationMillis) }
   }
 
   fun removeTagBlock(tag: String) {
-    viewModelScope.launch { tagFilterRepository.removeTagBlock(tag) }
+    viewModelScope.launch { tagBlockRepository.removeTagBlock(tag) }
   }
 
   fun triggerCleanupNow() {
-    viewModelScope.launch { tagFilterRepository.removeExpiredTags() }
+    viewModelScope.launch { tagBlockRepository.removeExpiredTags() }
   }
 }

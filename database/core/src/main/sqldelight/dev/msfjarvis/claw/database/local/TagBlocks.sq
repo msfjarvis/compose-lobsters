@@ -1,0 +1,27 @@
+import kotlin.Long;
+
+CREATE TABLE TagBlocks (
+  tag TEXT PRIMARY KEY NOT NULL,
+  expiration_millis INTEGER AS Long
+);
+
+selectAll:
+SELECT * FROM TagBlocks;
+
+selectActiveTags:
+SELECT tag FROM TagBlocks
+WHERE expiration_millis IS NULL OR expiration_millis > :currentTimeMillis;
+
+insertOrReplace:
+INSERT OR REPLACE INTO TagBlocks(tag, expiration_millis)
+VALUES (?, ?);
+
+deleteByTag:
+DELETE FROM TagBlocks WHERE tag = ?;
+
+deleteExpired:
+DELETE FROM TagBlocks
+WHERE expiration_millis IS NOT NULL AND expiration_millis <= :currentTimeMillis;
+
+deleteAll:
+DELETE FROM TagBlocks;

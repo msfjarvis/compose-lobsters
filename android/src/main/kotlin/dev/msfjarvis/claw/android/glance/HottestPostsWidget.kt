@@ -51,10 +51,10 @@ class HottestPostsWidget : GlanceAppWidget() {
   override suspend fun provideGlance(context: Context, id: GlanceId) {
     val appGraph = (context.applicationContext as ClawApplication).appGraph
     val cachedRemotePostsRepository = appGraph.cachedRemotePostsRepository
-    val tagFilterRepository = appGraph.tagFilterRepository
+    val tagBlockRepository = appGraph.tagBlockRepository
     val filteredTags =
       try {
-        tagFilterRepository.getSavedTags().first()
+        tagBlockRepository.getSavedTags().first()
       } catch (_: Exception) {
         emptySet()
       }

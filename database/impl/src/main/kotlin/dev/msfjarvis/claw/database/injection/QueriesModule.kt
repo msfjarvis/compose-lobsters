@@ -11,6 +11,7 @@ import dev.msfjarvis.claw.database.local.CachedRemotePostQueries
 import dev.msfjarvis.claw.database.local.PostCommentsQueries
 import dev.msfjarvis.claw.database.local.ReadPostsQueries
 import dev.msfjarvis.claw.database.local.SavedPostQueries
+import dev.msfjarvis.claw.database.local.TagBlocksQueries
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.BindingContainer
 import dev.zacsweers.metro.ContributesTo
@@ -47,5 +48,11 @@ object QueriesModule {
     @InternalDatabaseApi database: LobstersDatabase
   ): CachedRemotePostQueries {
     return database.cachedRemotePostQueries
+  }
+
+  @Provides
+  @SingleIn(AppScope::class)
+  fun provideTagBlocksQueries(@InternalDatabaseApi database: LobstersDatabase): TagBlocksQueries {
+    return database.tagBlocksQueries
   }
 }

@@ -9,7 +9,7 @@ package dev.msfjarvis.claw.android.work
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import dev.msfjarvis.claw.common.tags.TagFilterRepository
+import dev.msfjarvis.claw.common.tags.TagBlockRepository
 import dev.msfjarvis.claw.core.injection.InjectedWorkerFactory
 import dev.msfjarvis.claw.core.injection.WorkerKey
 import dev.zacsweers.metro.AppScope
@@ -23,10 +23,10 @@ import dev.zacsweers.metro.binding
 class TagExpirationCleanupWorker(
   context: Context,
   @Assisted params: WorkerParameters,
-  private val tagFilterRepository: TagFilterRepository,
+  private val tagBlockRepository: TagBlockRepository,
 ) : CoroutineWorker(context, params) {
   override suspend fun doWork(): Result {
-    tagFilterRepository.removeExpiredTags()
+    tagBlockRepository.removeExpiredTags()
     return Result.success()
   }
 

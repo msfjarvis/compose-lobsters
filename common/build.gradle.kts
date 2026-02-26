@@ -66,13 +66,16 @@ dependencies {
   implementation(libs.kotlinx.coroutines.core)
   implementation(libs.metrox.viewmodel)
   implementation(libs.metrox.viewmodel.compose)
+  implementation(libs.sentry.android.core)
   implementation(libs.sqldelight.runtime)
+  implementation(libs.sqldelight.extensions.coroutines)
 
   compileOnly(libs.androidx.compose.ui.tooling.preview)
 
   runtimeOnly(libs.androidx.compose.ui.tooling)
 
   testImplementation(libs.kotlinx.coroutines.test)
+  testImplementation(libs.sqldelight.jvmDriver)
 
   addTestDependencies(project)
 }

@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.61.0] - 2026-02-28
+
 ### Fixed
 
 - Collapsed comments state are now persisted across navigation events
@@ -574,7 +576,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.60.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.61.0...HEAD
+[1.61.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.60.0...v1.61.0
 [1.60.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.59.0...v1.60.0
 [1.59.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.58.0...v1.59.0
 [1.58.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.57.0...v1.58.0

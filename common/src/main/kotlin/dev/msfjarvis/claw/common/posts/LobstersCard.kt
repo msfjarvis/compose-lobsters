@@ -40,8 +40,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -61,9 +59,13 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 
 @Composable
-fun LobstersCard(post: UIPost, postActions: PostActions, modifier: Modifier = Modifier) {
-  val readState by remember(post.shortId) { mutableStateOf(postActions.isPostRead(post)) }
-  var savedState by remember(post.shortId) { mutableStateOf(postActions.isPostSaved(post)) }
+fun LobstersCard(
+  post: UIPost,
+  isSaved: Boolean,
+  isRead: Boolean,
+  postActions: PostActions,
+  modifier: Modifier = Modifier,
+) {
   Box(
     modifier =
       modifier
@@ -78,7 +80,7 @@ fun LobstersCard(post: UIPost, postActions: PostActions, modifier: Modifier = Mo
     ) {
       PostDetails(
         post = post,
-        isRead = { readState },
+        isRead = { isRead },
         singleLineTitle = true,
         modifier = Modifier.weight(1f),
       )
@@ -87,15 +89,9 @@ fun LobstersCard(post: UIPost, postActions: PostActions, modifier: Modifier = Mo
         horizontalAlignment = Alignment.CenterHorizontally,
       ) {
         SaveButton(
-          isSaved = savedState,
+          isSaved = isSaved,
           modifier =
-            Modifier.clickable(
-              role = Role.Button,
-              onClick = {
-                postActions.toggleSave(post)
-                savedState = !savedState
-              },
-            ),
+            Modifier.clickable(role = Role.Button, onClick = { postActions.toggleSave(post) }),
         )
         HorizontalDivider(modifier = Modifier.width(48.dp))
         CommentsButton(
@@ -295,5 +291,7 @@ val TEST_POST =
 @ThemePreviews
 @Composable
 private fun LobstersCardPreview() {
-  LobstersTheme { LobstersCard(post = TEST_POST, postActions = TEST_POST_ACTIONS) }
+  LobstersTheme {
+    LobstersCard(post = TEST_POST, isSaved = true, isRead = true, postActions = TEST_POST_ACTIONS)
+  }
 }

@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Improve comment scrolling performance
+- Ensure saved/read state for posts updates properly in UI
+
 ## [1.61.0] - 2026-02-28
 
 ### Fixed

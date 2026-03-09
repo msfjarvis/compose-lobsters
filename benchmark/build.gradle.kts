@@ -29,21 +29,11 @@ android {
       matchingFallbacks += "release"
     }
   }
-  testOptions {
-    managedDevices {
-      localDevices.create("pixel6Api31") {
-        device = "Pixel 6"
-        apiLevel = 31
-        systemImageSource = "aosp-atd"
-      }
-    }
-  }
   targetProjectPath = ":android"
 }
 
 baselineProfile {
-  managedDevices += "pixel6Api31"
-  useConnectedDevices = false
+  useConnectedDevices = true
   enableEmulatorDisplay = false
 }
 

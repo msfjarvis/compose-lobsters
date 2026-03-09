@@ -87,7 +87,14 @@ fun NetworkPosts(
           if (item != null) {
             val shouldShowPost = item.tags.none { tag -> filteredTags.contains(tag) }
             if (shouldShowPost) {
-              LobstersListItem(item = item, postActions = postActions)
+              val isSaved = postActions.isPostSaved(item)
+              val isRead = postActions.isPostRead(item)
+              LobstersListItem(
+                item = item,
+                isSaved = isSaved,
+                isRead = isRead,
+                postActions = postActions,
+              )
               HorizontalDivider()
             }
           }

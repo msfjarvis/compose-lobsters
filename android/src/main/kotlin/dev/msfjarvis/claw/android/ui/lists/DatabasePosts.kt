@@ -56,7 +56,14 @@ fun DatabasePosts(
         items.forEach { (month, posts) ->
           stickyHeader(contentType = "month-header") { MonthHeader(label = month) }
           items(items = posts, key = { it.shortId }, contentType = { "LobstersItem" }) { item ->
-            LobstersListItem(item = item, postActions = postActions)
+            val isSaved = postActions.isPostSaved(item)
+            val isRead = postActions.isPostRead(item)
+            LobstersListItem(
+              item = item,
+              isSaved = isSaved,
+              isRead = isRead,
+              postActions = postActions,
+            )
             HorizontalDivider()
           }
         }

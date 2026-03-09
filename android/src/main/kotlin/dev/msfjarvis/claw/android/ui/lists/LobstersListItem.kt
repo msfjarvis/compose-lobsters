@@ -25,7 +25,13 @@ import me.saket.swipe.SwipeAction
 import me.saket.swipe.SwipeableActionsBox
 
 @Composable
-fun LobstersListItem(item: UIPost, postActions: PostActions, modifier: Modifier = Modifier) {
+fun LobstersListItem(
+  item: UIPost,
+  isSaved: Boolean,
+  isRead: Boolean,
+  postActions: PostActions,
+  modifier: Modifier = Modifier,
+) {
   val commentsAction =
     SwipeAction(
       icon = rememberVectorPainter(Icons.AutoMirrored.Filled.Reply),
@@ -44,12 +50,25 @@ fun LobstersListItem(item: UIPost, postActions: PostActions, modifier: Modifier 
     swipeThreshold = 80.dp,
     backgroundUntilSwipeThreshold = MaterialTheme.colorScheme.surfaceVariant,
   ) {
-    LobstersCard(post = item, postActions = postActions, modifier = modifier)
+    LobstersCard(
+      post = item,
+      isSaved = isSaved,
+      isRead = isRead,
+      postActions = postActions,
+      modifier = modifier,
+    )
   }
 }
 
 @ThemePreviews
 @Composable
 private fun ItemPreview() {
-  LobstersTheme { LobstersListItem(item = samplePosts(1).first(), postActions = TEST_POST_ACTIONS) }
+  LobstersTheme {
+    LobstersListItem(
+      item = samplePosts(1).first(),
+      isSaved = true,
+      isRead = true,
+      postActions = TEST_POST_ACTIONS,
+    )
+  }
 }

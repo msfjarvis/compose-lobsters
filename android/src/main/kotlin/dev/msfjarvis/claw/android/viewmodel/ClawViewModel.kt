@@ -119,12 +119,16 @@ class ClawViewModel(
 
   var searchQuery by mutableStateOf("")
 
-  private var _readPosts = emptyList<String>()
-  private var _savedPosts = emptyList<String>()
+  private var _readPosts by mutableStateOf(emptySet<String>())
+  private var _savedPosts by mutableStateOf(emptySet<String>())
 
   init {
-    viewModelScope.launch { savedPosts.collectLatest { _savedPosts = it.map(UIPost::shortId) } }
-    viewModelScope.launch { readPostsRepository.readPosts.collectLatest { _readPosts = it } }
+    viewModelScope.launch {
+      savedPosts.collectLatest { _savedPosts = it.map(UIPost::shortId).toSet() }
+    }
+    viewModelScope.launch {
+      readPostsRepository.readPosts.collectLatest { _readPosts = it.toSet() }
+    }
   }
 
   fun toggleSave(post: UIPost) {

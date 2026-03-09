@@ -14,9 +14,22 @@ import kotlinx.coroutines.flow.asStateFlow
 
 internal class CommentsHandler {
 
-  private val _listItems: MutableStateFlow<List<CommentNode>> = MutableStateFlow(emptyList())
-  val listItems: StateFlow<List<CommentNode>> = _listItems.asStateFlow()
+  private var rootNodes = emptyList<CommentNode>()
+  private val _visibleNodes: MutableStateFlow<List<CommentNode>> = MutableStateFlow(emptyList())
+  val listItems: StateFlow<List<CommentNode>> = _visibleNodes.asStateFlow()
   private var collapsedCommentIds = setOf<String>()
+
+  private fun updateVisibleNodes() {
+    val flatList = mutableListOf<CommentNode>()
+    fun traverse(node: CommentNode) {
+      flatList.add(node)
+      if (node.isExpanded) {
+        node.children.forEach { traverse(it) }
+      }
+    }
+    rootNodes.forEach { traverse(it) }
+    _visibleNodes.value = flatList
+  }
 
   fun createListNode(
     comments: List<Comment>,
@@ -24,7 +37,7 @@ internal class CommentsHandler {
     isPostAuthor: (Comment) -> Boolean,
   ) {
     val commentNodes = mutableListOf<CommentNode>()
-    val isUnread = { id: String -> commentState?.commentIds?.contains(id) == false }
+    val isUnread = { id: String -> commentState?.commentIds?.contains(id) != true }
 
     for (i in comments.indices) {
       val comment = comments[i]
@@ -53,7 +66,8 @@ internal class CommentsHandler {
       }
     }
 
-    _listItems.value = commentNodes
+    rootNodes = commentNodes
+    updateVisibleNodes()
   }
 
   fun updateListNode(shortId: String, isExpanded: Boolean) {
@@ -65,9 +79,9 @@ internal class CommentsHandler {
       return node.copy(children = updatedChildren)
     }
 
-    val listNode = _listItems.value.map { updateNode(it) }
-    _listItems.value = listNode
+    rootNodes = rootNodes.map { updateNode(it) }
     syncCollapsedState()
+    updateVisibleNodes()
   }
 
   private fun syncCollapsedState() {
@@ -79,7 +93,7 @@ internal class CommentsHandler {
         }
       }
     }
-    collapsedCommentIds = collectCollapsedIds(_listItems.value)
+    collapsedCommentIds = collectCollapsedIds(rootNodes)
   }
 
   fun updateUnreadStatus(commentState: PostComments?) {
@@ -91,7 +105,7 @@ internal class CommentsHandler {
       return node.copy(isUnread = isUnread, children = updatedChildren)
     }
 
-    val listNode = _listItems.value.map { updateNode(it) }
-    _listItems.value = listNode
+    rootNodes = rootNodes.map { updateNode(it) }
+    updateVisibleNodes()
   }
 }

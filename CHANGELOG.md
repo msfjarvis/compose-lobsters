@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Improve comment scrolling performance
 - Ensure saved/read state for posts updates properly in UI
+- All strings in the app are now translatable, open to volunteer contributions.
 
 ## [1.61.0] - 2026-02-28
 

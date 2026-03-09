@@ -8,12 +8,6 @@ package dev.msfjarvis.claw.common.comments
 
 import android.text.format.DateUtils
 import android.widget.Toast
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -65,8 +59,6 @@ import dev.msfjarvis.claw.model.UIPost
 import java.time.Instant
 import java.time.temporal.TemporalAccessor
 import kotlinx.coroutines.flow.StateFlow
-
-private const val AnimationDuration = 100
 
 @Composable
 internal fun CommentsPageInternal(
@@ -130,7 +122,7 @@ internal fun CommentsPageInternal(
         }
 
         items(items = commentNodes, key = { node -> node.comment.shortId }) { node ->
-          Node(node, openUserProfile, onToggleExpandedState)
+          NodeBox(node, node.isExpanded, openUserProfile, onToggleExpandedState)
         }
 
         item(key = "bottom_spacer") {
@@ -146,38 +138,6 @@ internal fun CommentsPageInternal(
             textAlign = TextAlign.Center,
           )
         }
-      }
-    }
-  }
-}
-
-/**
- * Simple tree view implementation by Anton Shilov who was smarter in 2020 than I am today
- * https://gist.github.com/antonshilov/ef8cd0a360a5cc0f823b2a4e85084720
- */
-@Composable
-private fun Node(
-  node: CommentNode,
-  openUserProfile: (String) -> Unit,
-  onToggleExpandedState: (String, Boolean) -> Unit,
-  modifier: Modifier = Modifier,
-) {
-  Column(horizontalAlignment = Alignment.CenterHorizontally) {
-    NodeBox(
-      node = node,
-      isExpanded = node.isExpanded,
-      openUserProfile = openUserProfile,
-      onToggleExpandedState = onToggleExpandedState,
-      modifier = modifier,
-    )
-
-    AnimatedVisibility(
-      visible = node.isExpanded,
-      enter = fadeIn(tween(AnimationDuration)) + expandVertically(tween(AnimationDuration)),
-      exit = fadeOut(tween(AnimationDuration)) + shrinkVertically(tween(AnimationDuration)),
-    ) {
-      Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
-        node.children.forEach { model -> Node(model, openUserProfile, onToggleExpandedState) }
       }
     }
   }

@@ -18,9 +18,11 @@ import retrofit2.Retrofit
 
 object SearchConverter : Converter<ResponseBody, List<LobstersPost>> {
   override fun convert(value: ResponseBody): List<LobstersPost> {
-    val elements =
-      Jsoup.parse(value.string(), LobstersApi.BASE_URL).select("div.story_liner.h-entry")
-    return elements.map(::parsePost)
+    return value.byteStream().use { stream ->
+      Jsoup.parse(stream, "UTF-8", LobstersApi.BASE_URL)
+        .select("div.story_liner.h-entry")
+        .map(::parsePost)
+    }
   }
 
   private fun parsePost(elem: Element): LobstersPost {

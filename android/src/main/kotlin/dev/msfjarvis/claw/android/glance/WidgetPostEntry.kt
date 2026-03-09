@@ -6,6 +6,7 @@
  */
 package dev.msfjarvis.claw.android.glance
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -32,6 +33,7 @@ import androidx.glance.text.TextStyle
 import dev.msfjarvis.claw.android.R
 import dev.msfjarvis.claw.model.UIPost
 
+@SuppressLint("ArgInFormattedQuantityStringRes")
 @Composable
 @GlanceComposable
 fun WidgetPostEntry(post: UIPost, modifier: GlanceModifier = GlanceModifier) {
@@ -71,7 +73,12 @@ fun WidgetPostEntry(post: UIPost, modifier: GlanceModifier = GlanceModifier) {
     )
     Image(
       provider = ImageProvider(R.drawable.ic_comment),
-      contentDescription = "${post.commentCount} comments",
+      contentDescription =
+        context.resources.getQuantityString(
+          R.plurals.comments,
+          post.commentCount,
+          post.commentCount,
+        ),
       colorFilter = ColorFilter.tint(GlanceTheme.colors.onSecondaryContainer),
       modifier =
         GlanceModifier.clickable(commentsAction)

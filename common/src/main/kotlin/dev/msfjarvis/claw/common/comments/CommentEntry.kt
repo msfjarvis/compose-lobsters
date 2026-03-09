@@ -27,11 +27,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.github.michaelbull.result.coroutines.runSuspendCatching
 import com.github.michaelbull.result.onSuccess
+import dev.msfjarvis.claw.common.R
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.posts.PostTitle
 import dev.msfjarvis.claw.common.posts.Submitter
@@ -85,7 +87,7 @@ internal fun CommentsHeader(
             "${if (post.userIsAuthor) "Authored" else "Submitted"} by ${post.submitter}"
           ),
         avatarUrl = "https://lobste.rs/avatars/${post.submitter}-100.png",
-        contentDescription = "User avatar for ${post.submitter}",
+        contentDescription = stringResource(R.string.user_avatar_for, post.submitter),
         modifier = Modifier.clickable { openUserProfile(post.submitter) },
       )
     }

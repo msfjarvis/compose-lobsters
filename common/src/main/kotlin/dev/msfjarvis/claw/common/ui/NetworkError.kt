@@ -26,7 +26,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ClipEntry
 import androidx.compose.ui.platform.LocalClipboard
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import dev.msfjarvis.claw.common.R
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
 import kotlinx.coroutines.launch
@@ -45,29 +47,30 @@ fun NetworkError(label: String, error: Throwable, modifier: Modifier = Modifier)
       onClick = { showDialog = true },
       modifier = Modifier.align(Alignment.CenterHorizontally),
     ) {
-      Text(text = "Show error")
+      Text(text = stringResource(R.string.show_error))
     }
   }
   if (showDialog) {
     val coroutineScope = rememberCoroutineScope()
     val clipboard = LocalClipboard.current
+    val stacktraceStr = stringResource(R.string.stacktrace)
     AlertDialog(
       onDismissRequest = { showDialog = false },
       confirmButton = {
         Text(
-          text = "Copy stacktrace",
+          text = stringResource(R.string.copy_stacktrace),
           modifier =
             Modifier.clickable {
               coroutineScope.launch {
                 clipboard.setClipEntry(
-                  ClipEntry(ClipData.newPlainText("Stacktrace", error.stackTraceToString()))
+                  ClipEntry(ClipData.newPlainText(stacktraceStr, error.stackTraceToString()))
                 )
               }
               showDialog = false
             },
         )
       },
-      text = { Text(text = "${error.message}", style = MaterialTheme.typography.bodyLarge) },
+      text = { Text(text = error.message.orEmpty(), style = MaterialTheme.typography.bodyLarge) },
     )
   }
 }

@@ -26,12 +26,14 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
 import dev.msfjarvis.claw.common.NetworkState.Error
 import dev.msfjarvis.claw.common.NetworkState.Loading
 import dev.msfjarvis.claw.common.NetworkState.Success
+import dev.msfjarvis.claw.common.R
 import dev.msfjarvis.claw.common.ui.NetworkError
 import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.common.ui.ProgressBar
@@ -93,7 +95,7 @@ private fun UserProfileInternal(
       NetworkImage(
         url = "https://lobste.rs/${user.avatarUrl}",
         placeholder = Icons.Filled.AccountCircle,
-        contentDescription = "Avatar of ${user.username}",
+        contentDescription = stringResource(R.string.avatar_of, user.username),
         modifier = Modifier.requiredSize(120.dp).clip(CircleShape),
       )
       Text(text = user.username, style = MaterialTheme.typography.displaySmall)

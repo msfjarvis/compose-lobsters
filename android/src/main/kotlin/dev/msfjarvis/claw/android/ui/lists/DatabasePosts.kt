@@ -25,7 +25,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import dev.msfjarvis.claw.android.R
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.ui.decorations.MonthHeader
 import dev.msfjarvis.claw.model.UIPost
@@ -46,10 +48,13 @@ fun DatabasePosts(
       Column(modifier = Modifier.align(Alignment.Center)) {
         Icon(
           imageVector = Icons.Filled.Inbox,
-          contentDescription = "Empty inbox icon",
+          contentDescription = stringResource(R.string.empty_inbox_icon),
           modifier = Modifier.align(Alignment.CenterHorizontally).size(36.dp),
         )
-        Text(text = "No saved posts", style = MaterialTheme.typography.headlineSmall)
+        Text(
+          text = stringResource(R.string.no_saved_posts),
+          style = MaterialTheme.typography.headlineSmall,
+        )
       }
     } else {
       LazyColumn(state = listState, contentPadding = contentPadding) {

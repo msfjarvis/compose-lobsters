@@ -31,9 +31,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import dev.msfjarvis.claw.common.R
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.preview.DevicePreviews
 import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
@@ -51,10 +53,13 @@ fun SearchBar(
     onValueChange = onValueChange,
     shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
     textStyle = MaterialTheme.typography.bodyLarge,
-    placeholder = { Text(text = "Search") },
+    placeholder = { Text(text = stringResource(R.string.search)) },
     trailingIcon = {
       IconButton(onClick = { onSearch(value) }) {
-        Icon(imageVector = Icons.Outlined.Search, contentDescription = "Search")
+        Icon(
+          imageVector = Icons.Outlined.Search,
+          contentDescription = stringResource(R.string.search),
+        )
       }
     },
     keyboardActions = KeyboardActions(onSearch = { onSearch(value) }),

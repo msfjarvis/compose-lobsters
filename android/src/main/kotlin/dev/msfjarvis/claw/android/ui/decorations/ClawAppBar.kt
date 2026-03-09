@@ -45,13 +45,13 @@ fun ClawAppBar(
         IconButton(onClick = { if (popBackStack() == null) activity?.finish() }) {
           Icon(
             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-            contentDescription = "Go back to previous screen",
+            contentDescription = stringResource(R.string.go_back_to_previous_screen),
           )
         }
       } else {
         Icon(
           painter = painterResource(id = R.drawable.ic_launcher_foreground),
-          contentDescription = "The app icon for Claw",
+          contentDescription = stringResource(R.string.the_app_icon_for_claw),
           modifier = Modifier.size(48.dp),
         )
       }
@@ -64,10 +64,16 @@ fun ClawAppBar(
     actions = {
       if (isTopLevel) {
         IconButton(onClick = { navigateTo(Search) }) {
-          Icon(imageVector = Icons.Filled.Search, contentDescription = "Search posts")
+          Icon(
+            imageVector = Icons.Filled.Search,
+            contentDescription = stringResource(R.string.search_posts),
+          )
         }
         IconButton(onClick = { navigateTo(Settings) }) {
-          Icon(imageVector = Icons.Filled.Tune, contentDescription = "Settings")
+          Icon(
+            imageVector = Icons.Filled.Tune,
+            contentDescription = stringResource(R.string.settings),
+          )
         }
       }
     },

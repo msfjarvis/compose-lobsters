@@ -41,12 +41,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.msfjarvis.claw.common.BuildConfig
 import dev.msfjarvis.claw.common.NetworkState.Error
 import dev.msfjarvis.claw.common.NetworkState.Loading
 import dev.msfjarvis.claw.common.NetworkState.Success
+import dev.msfjarvis.claw.common.R
 import dev.msfjarvis.claw.common.ui.ProgressBar
 import dev.msfjarvis.claw.model.Tag
 import dev.zacsweers.metrox.viewmodel.metroViewModel
@@ -90,7 +92,7 @@ fun TagList(
               selectedTagForDatePicker = null
             }
           ) {
-            Text("Block Until")
+            Text(stringResource(R.string.block_until))
           }
         },
         dismissButton = {
@@ -101,7 +103,7 @@ fun TagList(
               selectedTagForDatePicker = null
             }
           ) {
-            Text("Block Forever")
+            Text(stringResource(R.string.block_forever))
           }
         },
       ) {
@@ -118,7 +120,10 @@ fun TagList(
     }
     is Error -> {
       Box(modifier = modifier.fillMaxSize().padding(contentPadding)) {
-        Text("Failed to load tags", modifier = Modifier.align(Alignment.Center))
+        Text(
+          stringResource(R.string.failed_to_load_tags),
+          modifier = Modifier.align(Alignment.Center),
+        )
       }
     }
     is Success<*> -> {
@@ -130,7 +135,7 @@ fun TagList(
           TagExpirationTestControls(onTriggerCleanup = { viewModel.triggerCleanupNow() })
         }
         Text(
-          text = "Posts with selected tags will be filtered out of hottest/newest/search feeds",
+          text = stringResource(R.string.posts_with_selected_tags_will_be_filtere),
           style = MaterialTheme.typography.bodyMedium,
           color = MaterialTheme.colorScheme.onBackground,
         )
@@ -184,7 +189,8 @@ fun TagList(
                     if (isSelected && tagBlock != null) {
                       tagBlock.expirationMillis?.let { expirationMillis ->
                         Text(
-                          text = " • ${formatDate(expirationMillis)}",
+                          text =
+                            stringResource(R.string.expirationmillis, formatDate(expirationMillis)),
                           style = MaterialTheme.typography.bodySmall,
                           color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )

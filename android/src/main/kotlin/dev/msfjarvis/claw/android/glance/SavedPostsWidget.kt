@@ -36,6 +36,7 @@ import androidx.glance.text.TextStyle
 import dev.msfjarvis.claw.android.BuildConfig
 import dev.msfjarvis.claw.android.ClawApplication
 import dev.msfjarvis.claw.android.MainActivity
+import dev.msfjarvis.claw.android.R
 import dev.msfjarvis.claw.model.UIPost
 import dev.msfjarvis.claw.model.fromSavedPost
 import kotlinx.collections.immutable.ImmutableList
@@ -58,8 +59,9 @@ class SavedPostsWidget : GlanceAppWidget() {
   @SuppressLint("ComposeUnstableReceiver")
   @Composable
   private fun Content(posts: ImmutableList<UIPost>, modifier: GlanceModifier = GlanceModifier) {
+    val context = LocalContext.current
     WidgetContainer(
-      title = "Saved posts",
+      title = context.getString(R.string.saved_posts),
       listContent = {
         items(posts) { post ->
           Box(GlanceModifier.padding(horizontal = 16.dp, vertical = 4.dp)) { WidgetPostEntry(post) }
@@ -86,7 +88,7 @@ class SavedPostsWidget : GlanceAppWidget() {
                   ),
             ) {
               Text(
-                text = "See more posts",
+                text = context.getString(R.string.see_more_posts),
                 style =
                   TextStyle(color = GlanceTheme.colors.onPrimary, textAlign = TextAlign.Center),
               )

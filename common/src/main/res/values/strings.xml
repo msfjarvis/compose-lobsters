@@ -1,0 +1,26 @@
+<!--
+ ~ Copyright © Harsh Shandilya.
+ ~ Use of this source code is governed by an MIT-style
+ ~ license that can be found in the LICENSE file or at
+ ~ https://opensource.org/licenses/MIT.
+ -->
+<resources>
+  <string name="block_until">Block Until</string>
+  <string name="block_forever">Block Forever</string>
+  <string name="failed_to_load_tags">Failed to load tags</string>
+  <string name="posts_with_selected_tags_will_be_filtere">Posts with selected tags will be filtered out of hottest/newest/search feeds</string>
+  <string name="expirationmillis"> • %1$s</string>
+  <string name="debug_controls">Debug Controls</string>
+  <string name="force_cleanup_expired_tags_now">Force Cleanup Expired Tags Now</string>
+  <string name="this_will_immediately_run_the_cleanup_wo">This will immediately run the cleanup worker to remove expired tag blocks</string>
+  <string name="user_avatar_for">User avatar for %1$s</string>
+  <string name="comments_label">Comments</string>
+  <string name="no_comments">No Comments</string>
+  <string name="open_comments">Open comments</string>
+  <string name="avatar_of">Avatar of %1$s</string>
+  <string name="home">Home</string>
+  <string name="show_error">Show error</string>
+  <string name="copy_stacktrace">Copy stacktrace</string>
+  <string name="stacktrace">Stacktrace</string>
+  <string name="search">Search</string>
+</resources>

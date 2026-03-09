@@ -39,8 +39,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.msfjarvis.claw.android.BuildConfig
+import dev.msfjarvis.claw.android.R
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
 import io.sentry.Sentry
@@ -70,10 +72,10 @@ fun SettingsScreen(
   val coroutineScope = rememberCoroutineScope()
   Column(modifier.padding(contentPadding)) {
     // Data Management Section
-    SectionHeader(title = "Data Management")
+    SectionHeader(title = stringResource(R.string.data_management))
     ListItem(
-      headlineContent = { Text("Data transfer") },
-      supportingContent = { Text("Import and export your saved posts") },
+      headlineContent = { Text(stringResource(R.string.data_transfer)) },
+      supportingContent = { Text(stringResource(R.string.import_and_export_your_saved_posts)) },
       leadingContent = {
         Icon(
           imageVector = Icons.Filled.ImportExport,
@@ -98,10 +100,18 @@ fun SettingsScreen(
     Spacer(modifier = Modifier.height(24.dp))
 
     // App Information Section
-    SectionHeader(title = "App Information")
+    SectionHeader(title = stringResource(R.string.app_information))
     ListItem(
-      headlineContent = { Text("Version") },
-      supportingContent = { Text("${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})") },
+      headlineContent = { Text(stringResource(R.string.version)) },
+      supportingContent = {
+        Text(
+          stringResource(
+            R.string.version_placeholder,
+            BuildConfig.VERSION_NAME,
+            BuildConfig.VERSION_CODE,
+          )
+        )
+      },
       leadingContent = {
         Icon(
           imageVector = Icons.Filled.Code,
@@ -111,8 +121,8 @@ fun SettingsScreen(
       },
     )
     ListItem(
-      headlineContent = { Text("Saved posts") },
-      supportingContent = { Text("$savedPostsCount posts saved locally") },
+      headlineContent = { Text(stringResource(R.string.saved_posts)) },
+      supportingContent = { Text(stringResource(R.string.posts_saved_locally, savedPostsCount)) },
       leadingContent = {
         Icon(
           imageVector = Icons.Filled.Bookmarks,
@@ -122,8 +132,8 @@ fun SettingsScreen(
       },
     )
     ListItem(
-      headlineContent = { Text("Tag filtering") },
-      supportingContent = { Text("Filter posts by tags") },
+      headlineContent = { Text(stringResource(R.string.tag_filtering)) },
+      supportingContent = { Text(stringResource(R.string.filter_posts_by_tags)) },
       leadingContent = {
         Icon(
           imageVector = Icons.Filled.FilterList,
@@ -137,10 +147,12 @@ fun SettingsScreen(
     Spacer(modifier = Modifier.height(24.dp))
 
     // About Section
-    SectionHeader(title = "About")
+    SectionHeader(title = stringResource(R.string.about))
     ListItem(
-      headlineContent = { Text("Libraries") },
-      supportingContent = { Text("View open source libraries used in this app") },
+      headlineContent = { Text(stringResource(R.string.libraries)) },
+      supportingContent = {
+        Text(stringResource(R.string.view_open_source_libraries_used_in_this_))
+      },
       leadingContent = {
         Icon(
           imageVector = Icons.AutoMirrored.Filled.LibraryBooks,
@@ -151,8 +163,8 @@ fun SettingsScreen(
       modifier = Modifier.clickable(onClick = openLibrariesScreen),
     )
     ListItem(
-      headlineContent = { Text("Source code") },
-      supportingContent = { Text("View the source code on GitHub") },
+      headlineContent = { Text(stringResource(R.string.source_code)) },
+      supportingContent = { Text(stringResource(R.string.view_the_source_code_on_github)) },
       leadingContent = {
         Icon(
           imageVector = Icons.Filled.Code,
@@ -218,7 +230,7 @@ private fun ImportPosts(
     shape = MaterialTheme.shapes.extraSmall,
     modifier = modifier,
   ) {
-    Text(text = "Import")
+    Text(text = stringResource(R.string.import_action))
   }
 }
 
@@ -285,20 +297,23 @@ private inline fun ExportPosts(
     shape = MaterialTheme.shapes.extraSmall,
     modifier = modifier,
   ) {
-    Text(text = "Export")
+    Text(text = stringResource(R.string.export))
     DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
       DropdownMenuItem(
-        text = { Text("JSON") },
+        text = { Text(stringResource(R.string.json)) },
         onClick = {
           expanded = false
           jsonExportAction.launch("claw-export.json")
         },
         leadingIcon = {
-          Icon(imageVector = Icons.Filled.Code, contentDescription = "Export as JSON")
+          Icon(
+            imageVector = Icons.Filled.Code,
+            contentDescription = stringResource(R.string.export_as_json),
+          )
         },
       )
       DropdownMenuItem(
-        text = { Text("Bookmarks") },
+        text = { Text(stringResource(R.string.bookmarks)) },
         onClick = {
           expanded = false
           htmlExportAction.launch("claw-export.html")
@@ -306,7 +321,7 @@ private inline fun ExportPosts(
         leadingIcon = {
           Icon(
             imageVector = Icons.Filled.Bookmarks,
-            contentDescription = "Export as browser bookmarks",
+            contentDescription = stringResource(R.string.export_as_browser_bookmarks),
           )
         },
       )

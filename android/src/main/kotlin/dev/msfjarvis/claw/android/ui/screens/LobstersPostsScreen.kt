@@ -36,6 +36,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.UriHandler
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -49,6 +50,7 @@ import com.mikepenz.aboutlibraries.ui.compose.android.produceLibraries
 import com.mikepenz.aboutlibraries.ui.compose.m3.LibrariesContainer
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeSource
+import dev.msfjarvis.claw.android.R
 import dev.msfjarvis.claw.android.ui.PostActions
 import dev.msfjarvis.claw.android.ui.decorations.ClawAppBar
 import dev.msfjarvis.claw.android.ui.decorations.ClawNavigationBar
@@ -353,5 +355,5 @@ private fun popBackStack(backStack: MutableList<NavKey>): NavKey? {
 
 @Composable
 private fun Placeholder(modifier: Modifier = Modifier) {
-  Text(text = "No post selected", modifier = modifier)
+  Text(text = stringResource(R.string.no_post_selected), modifier = modifier)
 }

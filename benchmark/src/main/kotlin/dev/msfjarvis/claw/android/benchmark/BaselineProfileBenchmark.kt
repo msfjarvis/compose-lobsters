@@ -50,9 +50,8 @@ class BaselineProfileBenchmark {
       compilationMode = compilationMode,
       startupMode = StartupMode.COLD,
       iterations = 10,
+      setupBlock = { device.executeShellCommand("pm clear $PACKAGE_NAME") },
     ) {
-      device.executeShellCommand("pm clear $PACKAGE_NAME")
-
       startActivityAndWait()
 
       device.waitForIdle()

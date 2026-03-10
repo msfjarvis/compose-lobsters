@@ -1,0 +1,5 @@
+### Fixed
+
+- Improve comment scrolling performance
+- Ensure saved/read state for posts updates properly in UI
+- All strings in the app are now translatable, open to volunteer contributions.

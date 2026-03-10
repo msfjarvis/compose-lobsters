@@ -45,11 +45,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import dev.msfjarvis.claw.common.R
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
@@ -124,7 +126,7 @@ fun PostDetails(
           "${if (post.userIsAuthor) "Authored" else "Submitted"} by ${post.submitter}"
         ),
       avatarUrl = "https://lobste.rs/avatars/${post.submitter}-100.png",
-      contentDescription = "User avatar for ${post.submitter}",
+      contentDescription = stringResource(R.string.user_avatar_for, post.submitter),
     )
   }
 }
@@ -195,7 +197,7 @@ private fun CommentsButton(commentCount: Int, modifier: Modifier = Modifier) {
     Icon(
       imageVector = Icons.AutoMirrored.Filled.Comment,
       tint = MaterialTheme.colorScheme.secondary,
-      contentDescription = "Open comments",
+      contentDescription = stringResource(R.string.open_comments),
       modifier = Modifier.align(Alignment.Center).testTag("comments_button"),
     )
     Box(

@@ -12,7 +12,6 @@ import android.content.Intent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
-import androidx.glance.GlanceComposable
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
@@ -28,8 +27,6 @@ import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
 import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.padding
-import androidx.glance.preview.ExperimentalGlancePreviewApi
-import androidx.glance.preview.Preview
 import androidx.glance.text.Text
 import androidx.glance.text.TextAlign
 import androidx.glance.text.TextStyle
@@ -37,6 +34,7 @@ import com.slack.eithernet.ApiResult
 import dev.msfjarvis.claw.android.BuildConfig
 import dev.msfjarvis.claw.android.ClawApplication
 import dev.msfjarvis.claw.android.MainActivity
+import dev.msfjarvis.claw.android.R
 import dev.msfjarvis.claw.database.local.CachedRemotePost
 import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.UIPost
@@ -104,16 +102,20 @@ class HottestPostsWidget : GlanceAppWidget() {
           .filter { post -> post.tags.none { tag -> filteredTags.contains(tag) } }
           .toImmutableList()
       }
-    provideContent { LobstersGlanceTheme { Content(filteredPosts) } }
+    provideContent { LobstersGlanceTheme { Content(context, filteredPosts) } }
   }
 
   override suspend fun providePreview(context: Context, widgetCategory: Int) {
-    provideContent { Content(samplePosts()) }
+    provideContent { Content(context, samplePosts()) }
   }
 
   @SuppressLint("ComposeUnstableReceiver")
   @Composable
-  private fun Content(posts: ImmutableList<UIPost>, modifier: GlanceModifier = GlanceModifier) {
+  private fun Content(
+    context: Context,
+    posts: ImmutableList<UIPost>,
+    modifier: GlanceModifier = GlanceModifier,
+  ) {
     WidgetContainer(
       "Hottest posts",
       listContent = {
@@ -142,7 +144,7 @@ class HottestPostsWidget : GlanceAppWidget() {
                   ),
             ) {
               Text(
-                text = "See more posts",
+                text = context.getString(R.string.see_more_posts),
                 style =
                   TextStyle(color = GlanceTheme.colors.onPrimary, textAlign = TextAlign.Center),
               )
@@ -152,14 +154,5 @@ class HottestPostsWidget : GlanceAppWidget() {
       },
       modifier = modifier,
     )
-  }
-
-  @SuppressLint("VisibleForTests", "ComposeUnstableReceiver")
-  @OptIn(ExperimentalGlancePreviewApi::class)
-  @Preview
-  @GlanceComposable
-  @Composable
-  private fun Preview() {
-    Content(samplePosts())
   }
 }

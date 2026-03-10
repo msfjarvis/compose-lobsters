@@ -14,21 +14,23 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import dev.msfjarvis.claw.common.R
 
 @Composable
 fun TagExpirationTestControls(onTriggerCleanup: () -> Unit, modifier: Modifier = Modifier) {
   Column(modifier = modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp)) {
     Text(
-      text = "Debug Controls",
+      text = stringResource(R.string.debug_controls),
       style = MaterialTheme.typography.titleSmall,
       color = MaterialTheme.colorScheme.error,
     )
     Button(onClick = onTriggerCleanup, modifier = Modifier.fillMaxWidth().padding(top = 8.dp)) {
-      Text("Force Cleanup Expired Tags Now")
+      Text(stringResource(R.string.force_cleanup_expired_tags_now))
     }
     Text(
-      text = "This will immediately run the cleanup worker to remove expired tag blocks",
+      text = stringResource(R.string.this_will_immediately_run_the_cleanup_wo),
       style = MaterialTheme.typography.bodySmall,
       color = MaterialTheme.colorScheme.onSurfaceVariant,
       modifier = Modifier.padding(top = 4.dp),

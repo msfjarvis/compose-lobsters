@@ -7,10 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.62.0] - 2026-03-10
+
 ### Fixed
 
 - Improve comment scrolling performance
 - Ensure saved/read state for posts updates properly in UI
+- All strings in the app are now translatable, open to volunteer contributions.
 
 ## [1.61.0] - 2026-02-28
 
@@ -581,7 +584,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.61.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.62.0...HEAD
+[1.62.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.61.0...v1.62.0
 [1.61.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.60.0...v1.61.0
 [1.60.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.59.0...v1.60.0
 [1.59.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.58.0...v1.59.0

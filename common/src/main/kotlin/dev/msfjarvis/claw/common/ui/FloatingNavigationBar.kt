@@ -29,9 +29,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import dev.msfjarvis.claw.common.R
 
 // Taken from Chris Banes' amazing app Tivi
 // https://github.com/chrisbanes/tivi/blob/836d596d74959f4235ca2395b5bbfdd6fd9c9a9e/ui/root/src/commonMain/kotlin/app/tivi/home/Home.kt#L173
@@ -78,17 +80,32 @@ private fun FloatingNavigationBarPreview() {
     NavigationBarItem(
       selected = true,
       onClick = {},
-      icon = { Icon(imageVector = Icons.Filled.HeartBroken, contentDescription = "Home") },
+      icon = {
+        Icon(
+          imageVector = Icons.Filled.HeartBroken,
+          contentDescription = stringResource(R.string.home),
+        )
+      },
     )
     NavigationBarItem(
       selected = true,
       onClick = {},
-      icon = { Icon(imageVector = Icons.Filled.BarChart, contentDescription = "Home") },
+      icon = {
+        Icon(
+          imageVector = Icons.Filled.BarChart,
+          contentDescription = stringResource(R.string.home),
+        )
+      },
     )
     NavigationBarItem(
       selected = true,
       onClick = {},
-      icon = { Icon(imageVector = Icons.Filled.BrokenImage, contentDescription = "Home") },
+      icon = {
+        Icon(
+          imageVector = Icons.Filled.BrokenImage,
+          contentDescription = stringResource(R.string.home),
+        )
+      },
     )
   }
 }

@@ -41,6 +41,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
@@ -50,6 +51,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.msfjarvis.claw.common.R
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.posts.Submitter
 import dev.msfjarvis.claw.common.ui.ThemedRichText
@@ -115,7 +117,7 @@ internal fun CommentsPageInternal(
       if (commentNodes.isNotEmpty()) {
         item(key = "comments_header") {
           Text(
-            text = "Comments",
+            text = stringResource(R.string.comments_label),
             style = MaterialTheme.typography.labelLarge,
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
           )
@@ -131,7 +133,7 @@ internal fun CommentsPageInternal(
       } else {
         item {
           Text(
-            text = "No Comments",
+            text = stringResource(R.string.no_comments),
             style = MaterialTheme.typography.bodyLarge,
             modifier = Modifier.fillMaxWidth().padding(16.dp),
             fontWeight = FontWeight.Bold,
@@ -211,7 +213,7 @@ private fun CommentEntry(
                 if (commentNode.isPostAuthor) MaterialTheme.colorScheme.tertiary else null,
             ),
           avatarUrl = "https://lobste.rs/avatars/${comment.user}-100.png",
-          contentDescription = "User avatar for ${comment.user}",
+          contentDescription = stringResource(R.string.user_avatar_for, comment.user),
           modifier = Modifier.clickable { openUserProfile(comment.user) },
         )
       }

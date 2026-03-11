@@ -142,10 +142,10 @@ fun TagList(
         FlexBox(
           modifier = modifier.fillMaxWidth().verticalScroll(rememberScrollState()),
           config = {
-            columnGap = 8.dp
-            rowGap = 8.dp
-            direction = FlexDirection.Row
-            wrap = FlexWrap.Wrap
+            columnGap(8.dp)
+            rowGap(8.dp)
+            direction(FlexDirection.Row)
+            wrap(FlexWrap.Wrap)
           },
         ) {
           allTags

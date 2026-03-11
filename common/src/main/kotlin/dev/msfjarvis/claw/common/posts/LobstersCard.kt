@@ -225,10 +225,10 @@ internal fun TagRow(tags: ImmutableList<String>, modifier: Modifier = Modifier) 
   FlexBox(
     modifier = modifier,
     config = {
-      rowGap = 8.dp
-      columnGap = 8.dp
-      direction = FlexDirection.Row
-      wrap = FlexWrap.Wrap
+      rowGap(8.dp)
+      columnGap(8.dp)
+      direction(FlexDirection.Row)
+      wrap(FlexWrap.Wrap)
     },
   ) {
     tags.forEach { tag -> TagText(tag = tag) }

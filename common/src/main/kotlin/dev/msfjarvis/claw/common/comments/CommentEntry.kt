@@ -32,7 +32,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.github.michaelbull.result.coroutines.runSuspendCatching
-import com.github.michaelbull.result.onSuccess
+import com.github.michaelbull.result.onOk
 import dev.msfjarvis.claw.common.R
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.posts.PostTitle
@@ -54,7 +54,7 @@ internal fun CommentsHeader(
   val linkMetadata by
     produceState(initialValue = LinkMetadata(post.url, null), key1 = post) {
       runSuspendCatching { postActions.getLinkMetadata(post.url) }
-        .onSuccess { metadata -> value = metadata }
+        .onOk { metadata -> value = metadata }
     }
 
   Surface(color = MaterialTheme.colorScheme.background, modifier = modifier) {

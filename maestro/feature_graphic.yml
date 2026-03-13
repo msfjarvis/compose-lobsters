@@ -35,13 +35,30 @@ appId: dev.msfjarvis.claw.android
     point: "50%,50%"
 - tapOn: "Tag filtering"
 - tapOn: "ai"
+- tapOn: "Block Forever"
 - tapOn: "c"
+- tapOn: "Block Until"
 - tapOn: "css"
+- tapOn: "Block Forever"
 - takeScreenshot: "TagFiltering"
 - back
 - back
 - tapOn: "Hottest"
-- tapOn: "Open comments"
+- waitForAnimationToEnd:
+    timeout: 2000
+- tapOn:
+    id: "comments_button"
+    index: 0
+- extendedWaitUntil:
+    visible:
+      id: "comments_header"
+    timeout: 5000
+- back
+- waitForAnimationToEnd:
+    timeout: 2000
+- tapOn:
+    id: "comments_button"
+    index: 0
 - extendedWaitUntil:
     visible:
       id: "comments_header"

@@ -39,12 +39,10 @@ class KotlinCommonPlugin : Plugin<Project> {
       listOf(
         "-opt-in=kotlin.RequiresOptIn",
         "-Xjspecify-annotations=strict",
-        "-Xtype-enhancement-improvements-strict-mode",
         "-Xcontext-parameters",
         // TODO trips in SQLDelight code: https://github.com/sqldelight/sqldelight/issues/6029
         // "-Xreturn-value-checker=full",
         "-Xcontext-sensitive-resolution",
-        "-Xdata-flow-based-exhaustiveness",
         "-Xwhen-expressions=indy",
         "-Xexplicit-backing-fields",
       )

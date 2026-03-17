@@ -332,10 +332,9 @@ fun navigateTo(
       return
     }
 
-    val existingEntry =
-      backStack.firstOrNull {
-        it is NonStackable && it::class.java.isAssignableFrom(destination::class.java)
-      }
+    val existingEntry = backStack.firstOrNull {
+      it is NonStackable && it::class.java.isAssignableFrom(destination::class.java)
+    }
 
     if (existingEntry != null) {
       backStack.remove(existingEntry)

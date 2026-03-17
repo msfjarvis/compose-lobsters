@@ -22,17 +22,16 @@ import okhttp3.Request
 class SentryConfigurationPlugin : AppPlugin {
   override fun apply(application: Application) {
     SentryAndroid.init(application) { options ->
-      options.beforeSend =
-        SentryOptions.BeforeSendCallback { event, hint ->
-          val request = hint.getAs(OKHTTP_REQUEST, Request::class.java)
+      options.beforeSend = SentryOptions.BeforeSendCallback { event, hint ->
+        val request = hint.getAs(OKHTTP_REQUEST, Request::class.java)
 
-          // Drop all OkHttp errors that are not about Lobsters specifically.
-          if (request != null && !LobstersApi.BASE_URL.contains(request.url.host)) {
-            null
-          } else {
-            event
-          }
+        // Drop all OkHttp errors that are not about Lobsters specifically.
+        if (request != null && !LobstersApi.BASE_URL.contains(request.url.host)) {
+          null
+        } else {
+          event
         }
+      }
     }
   }
 }

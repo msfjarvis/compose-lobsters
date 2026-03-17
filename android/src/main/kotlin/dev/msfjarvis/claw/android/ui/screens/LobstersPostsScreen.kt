@@ -183,7 +183,7 @@ fun LobstersPostsScreen(
       NavDisplay(
         backStack = backStack,
         modifier = modifier.hazeSource(hazeState),
-        sceneStrategy = listDetailStrategy,
+        sceneStrategies = listOf(listDetailStrategy),
         entryDecorators = listOf(rememberSaveableStateHolderNavEntryDecorator()),
         onBack = {
           if (popBackStack(backStack) == null) {

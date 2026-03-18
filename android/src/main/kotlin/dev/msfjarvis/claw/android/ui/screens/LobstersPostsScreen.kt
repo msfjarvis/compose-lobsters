@@ -183,7 +183,7 @@ fun LobstersPostsScreen(
       NavDisplay(
         backStack = backStack,
         modifier = modifier.hazeSource(hazeState),
-        sceneStrategy = listDetailStrategy,
+        sceneStrategies = listOf(listDetailStrategy),
         entryDecorators = listOf(rememberSaveableStateHolderNavEntryDecorator()),
         onBack = {
           if (popBackStack(backStack) == null) {
@@ -332,10 +332,9 @@ fun navigateTo(
       return
     }
 
-    val existingEntry =
-      backStack.firstOrNull {
-        it is NonStackable && it::class.java.isAssignableFrom(destination::class.java)
-      }
+    val existingEntry = backStack.firstOrNull {
+      it is NonStackable && it::class.java.isAssignableFrom(destination::class.java)
+    }
 
     if (existingEntry != null) {
       backStack.remove(existingEntry)

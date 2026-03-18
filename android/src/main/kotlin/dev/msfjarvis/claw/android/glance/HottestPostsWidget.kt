@@ -63,22 +63,21 @@ class HottestPostsWidget : GlanceAppWidget() {
           // Cache the posts for future use when network is unavailable
           // Using try-catch to prevent widget rendering failures if caching fails
           try {
-            val cachedPosts =
-              uiPosts.mapIndexed { index, post ->
-                CachedRemotePost(
-                  shortId = post.shortId,
-                  title = post.title,
-                  url = post.url,
-                  createdAt = post.createdAt,
-                  commentCount = post.commentCount,
-                  commentsUrl = post.commentsUrl,
-                  submitterName = post.submitter,
-                  tags = post.tags,
-                  description = post.description,
-                  userIsAuthor = post.userIsAuthor,
-                  insertionOrder = index,
-                )
-              }
+            val cachedPosts = uiPosts.mapIndexed { index, post ->
+              CachedRemotePost(
+                shortId = post.shortId,
+                title = post.title,
+                url = post.url,
+                createdAt = post.createdAt,
+                commentCount = post.commentCount,
+                commentsUrl = post.commentsUrl,
+                submitterName = post.submitter,
+                tags = post.tags,
+                description = post.description,
+                userIsAuthor = post.userIsAuthor,
+                insertionOrder = index,
+              )
+            }
             cachedRemotePostsRepository.savePosts(cachedPosts)
           } catch (_: Exception) {
             // Silently ignore caching failures - widget should still render

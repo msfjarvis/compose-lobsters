@@ -17,36 +17,32 @@ import androidx.compose.foundation.layout.ExperimentalFlexBoxApi
 import androidx.compose.foundation.layout.FlexBox
 import androidx.compose.foundation.layout.FlexDirection
 import androidx.compose.foundation.layout.FlexWrap
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.requiredSizeIn
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Comment
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.minimumInteractiveComponentSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -68,43 +64,30 @@ fun LobstersCard(
   postActions: PostActions,
   modifier: Modifier = Modifier,
 ) {
-  Box(
+  Row(
     modifier =
       modifier
-        .fillMaxWidth()
         .clickable { postActions.viewPost(post.shortId, post.url, post.commentsUrl) }
         .background(MaterialTheme.colorScheme.background)
-        .padding(start = 8.dp, top = 4.dp, bottom = 4.dp)
+        .padding(horizontal = 12.dp, vertical = 8.dp),
+    horizontalArrangement = Arrangement.spacedBy(12.dp),
+    verticalAlignment = Alignment.CenterVertically,
   ) {
-    Row(
-      horizontalArrangement = Arrangement.spacedBy(8.dp),
-      verticalAlignment = Alignment.CenterVertically,
+    PostDetails(
+      post = post,
+      isRead = { isRead },
+      singleLineTitle = true,
+      modifier = Modifier.weight(1f),
+    )
+    Column(
+      verticalArrangement = Arrangement.spacedBy(8.dp),
+      horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-      PostDetails(
-        post = post,
-        isRead = { isRead },
-        singleLineTitle = true,
-        modifier = Modifier.weight(1f),
+      SaveButton(isSaved = isSaved, onClick = { postActions.toggleSave(post) })
+      CommentsButton(
+        commentCount = post.commentCount,
+        onClick = { postActions.viewComments(post.shortId) },
       )
-      Column(
-        modifier = Modifier.wrapContentHeight(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-      ) {
-        SaveButton(
-          isSaved = isSaved,
-          modifier =
-            Modifier.clickable(role = Role.Button, onClick = { postActions.toggleSave(post) }),
-        )
-        HorizontalDivider(modifier = Modifier.width(48.dp))
-        CommentsButton(
-          commentCount = post.commentCount,
-          modifier =
-            Modifier.clickable(
-              role = Role.Button,
-              onClick = { postActions.viewComments(post.shortId) },
-            ),
-        )
-      }
     }
   }
 }
@@ -178,43 +161,61 @@ internal fun Submitter(
 }
 
 @Composable
-private fun SaveButton(isSaved: Boolean, modifier: Modifier = Modifier) {
+private fun SaveButton(isSaved: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
   Crossfade(targetState = isSaved, label = "save-button") { saved ->
-    Box(modifier = modifier.minimumInteractiveComponentSize()) {
+    Button(
+      modifier = modifier,
+      onClick = onClick,
+      contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
+      colors =
+        ButtonDefaults.buttonColors(
+          containerColor = MaterialTheme.colorScheme.secondaryContainer,
+          contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+        ),
+    ) {
       Icon(
         imageVector = if (saved) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
-        tint = MaterialTheme.colorScheme.secondary,
         contentDescription = if (saved) "Remove from saved posts" else "Add to saved posts",
-        modifier = Modifier.align(Alignment.Center).testTag("save_button"),
+        modifier = Modifier.testTag("save_button"),
       )
     }
   }
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-private fun CommentsButton(commentCount: Int, modifier: Modifier = Modifier) {
-  Box(modifier = modifier.minimumInteractiveComponentSize()) {
-    Icon(
-      imageVector = Icons.AutoMirrored.Filled.Comment,
-      tint = MaterialTheme.colorScheme.secondary,
-      contentDescription = stringResource(R.string.open_comments),
-      modifier = Modifier.align(Alignment.Center).testTag("comments_button"),
-    )
-    Box(
-      modifier =
-        Modifier.align(Alignment.TopEnd)
-          .offset(x = 8.dp, y = (-8).dp)
-          .requiredSizeIn(16.dp, 16.dp)
-          .background(MaterialTheme.colorScheme.tertiaryContainer, CircleShape)
-          .testTag("comment_badge"),
-      contentAlignment = Alignment.Center,
-    ) {
-      Text(
-        text = commentCount.toString(),
-        style = MaterialTheme.typography.labelMedium,
-        color = MaterialTheme.colorScheme.onTertiaryContainer,
-        modifier = Modifier.testTag("comment_count").padding(2.dp),
+private fun CommentsButton(commentCount: Int, onClick: () -> Unit, modifier: Modifier = Modifier) {
+  Button(
+    modifier = modifier,
+    onClick = onClick,
+    contentPadding = PaddingValues(start = 8.dp, end = 8.dp, top = 6.dp, bottom = 4.dp),
+    colors =
+      ButtonDefaults.buttonColors(
+        containerColor = MaterialTheme.colorScheme.secondaryContainer,
+        contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+      ),
+  ) {
+    Box(modifier = Modifier.size(width = 42.dp, height = 40.dp)) {
+      Icon(
+        imageVector = Icons.AutoMirrored.Filled.Comment,
+        contentDescription = stringResource(R.string.open_comments),
+        modifier = Modifier.align(Alignment.Center).testTag("comments_button"),
       )
+      Box(
+        modifier =
+          Modifier.align(Alignment.TopEnd)
+            .requiredSizeIn(16.dp, 16.dp)
+            .background(MaterialTheme.colorScheme.tertiaryContainer, CircleShape)
+            .testTag("comment_badge"),
+        contentAlignment = Alignment.Center,
+      ) {
+        Text(
+          text = commentCount.toString(),
+          style = MaterialTheme.typography.labelMedium,
+          color = MaterialTheme.colorScheme.onTertiaryContainer,
+          modifier = Modifier.testTag("comment_count").padding(2.dp),
+        )
+      }
     }
   }
 }

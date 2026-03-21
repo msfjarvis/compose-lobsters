@@ -62,7 +62,7 @@ internal fun CommentsHeader(
       modifier = Modifier.padding(16.dp).fillMaxWidth(),
       verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-      PostTitle(title = post.title, isRead = false, singleLineTitle = false)
+      PostTitle(title = post.title, isRead = false)
       TagRow(tags = post.tags.toImmutableList())
       Spacer(Modifier.height(4.dp))
 

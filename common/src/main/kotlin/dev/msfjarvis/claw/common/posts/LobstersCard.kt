@@ -73,12 +73,7 @@ fun LobstersCard(
     horizontalArrangement = Arrangement.spacedBy(12.dp),
     verticalAlignment = Alignment.CenterVertically,
   ) {
-    PostDetails(
-      post = post,
-      isRead = { isRead },
-      singleLineTitle = true,
-      modifier = Modifier.weight(1f),
-    )
+    PostDetails(post = post, isRead = { isRead }, modifier = Modifier.weight(1f))
     Column(
       verticalArrangement = Arrangement.spacedBy(8.dp),
       horizontalAlignment = Alignment.CenterHorizontally,
@@ -93,14 +88,9 @@ fun LobstersCard(
 }
 
 @Composable
-fun PostDetails(
-  post: UIPost,
-  isRead: () -> Boolean,
-  singleLineTitle: Boolean,
-  modifier: Modifier = Modifier,
-) {
+fun PostDetails(post: UIPost, isRead: () -> Boolean, modifier: Modifier = Modifier) {
   Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
-    PostTitle(title = post.title, isRead = isRead(), singleLineTitle = singleLineTitle)
+    PostTitle(title = post.title, isRead = isRead(), maxLines = 2)
     TagRow(tags = post.tags.toImmutableList())
     Spacer(Modifier.height(4.dp))
     Submitter(
@@ -118,8 +108,8 @@ fun PostDetails(
 internal fun PostTitle(
   title: String,
   isRead: Boolean,
-  singleLineTitle: Boolean,
   modifier: Modifier = Modifier,
+  maxLines: Int = Int.MAX_VALUE,
 ) {
   Text(
     text = title,
@@ -127,7 +117,7 @@ internal fun PostTitle(
     style = MaterialTheme.typography.titleMedium,
     fontWeight = if (isRead) FontWeight.Normal else FontWeight.Bold,
     color = MaterialTheme.colorScheme.onBackground,
-    maxLines = if (singleLineTitle) 1 else Int.MAX_VALUE,
+    maxLines = maxLines,
     overflow = TextOverflow.Ellipsis,
   )
 }

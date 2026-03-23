@@ -22,7 +22,6 @@ import dev.msfjarvis.claw.common.NetworkState.Success
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.ui.NetworkError
 import dev.msfjarvis.claw.common.ui.ProgressBar
-import dev.msfjarvis.claw.database.local.PostComments
 import dev.msfjarvis.claw.model.UIPost
 import dev.zacsweers.metrox.viewmodel.metroViewModel
 
@@ -37,28 +36,35 @@ fun CommentsPage(
   viewModel: CommentsViewModel = metroViewModel(key = postId),
 ) {
   LaunchedEffect(postId) { viewModel.loadPostDetails(postId) }
-  val commentState by
-    produceState<PostComments?>(initialValue = null, key1 = postId) {
-      value = viewModel.getSeenComments(postId)
+  val seenCommentsState by
+    produceState<SeenCommentsState>(initialValue = SeenCommentsState.Loading, key1 = postId) {
+      value =
+        SeenCommentsState.from(postComments = viewModel.getSeenComments(postId), hasLoaded = true)
     }
   val commentListState = rememberLazyListState()
 
   when (val postDetails = viewModel.postDetails) {
     is Success<*> -> {
-      CommentsPageInternal(
-        details = (postDetails as Success<UIPost>).data,
-        postActions = postActions,
-        commentState = commentState,
-        markSeenComments = viewModel::markSeenComments,
-        openUserProfile = openUserProfile,
-        contentPadding = contentPadding,
-        commentListState = commentListState,
-        commentNodes = viewModel.commentNodes,
-        createCommentNodes = viewModel::createCommentNodes,
-        updateCommentNodeExpanded = viewModel::updateCommentNodeExpanded,
-        updateUnreadStatus = viewModel::updateUnreadStatus,
-        modifier = modifier.fillMaxSize(),
-      )
+      if (seenCommentsState != SeenCommentsState.Loading) {
+        CommentsPageInternal(
+          details = (postDetails as Success<UIPost>).data,
+          postActions = postActions,
+          seenCommentsState = seenCommentsState,
+          markSeenComments = viewModel::markSeenComments,
+          openUserProfile = openUserProfile,
+          contentPadding = contentPadding,
+          commentListState = commentListState,
+          commentNodes = viewModel.commentNodes,
+          createCommentNodes = viewModel::createCommentNodes,
+          updateCommentNodeExpanded = viewModel::updateCommentNodeExpanded,
+          updateUnreadStatus = viewModel::updateUnreadStatus,
+          modifier = modifier.fillMaxSize(),
+        )
+      } else {
+        Box(modifier = Modifier.fillMaxSize()) {
+          ProgressBar(modifier = Modifier.align(Alignment.Center))
+        }
+      }
     }
     is Error -> {
       Box(modifier = Modifier.fillMaxSize()) {

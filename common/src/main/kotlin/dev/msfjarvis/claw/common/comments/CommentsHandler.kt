@@ -6,7 +6,6 @@
  */
 package dev.msfjarvis.claw.common.comments
 
-import dev.msfjarvis.claw.database.local.PostComments
 import dev.msfjarvis.claw.model.Comment
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -31,13 +30,21 @@ internal class CommentsHandler {
     _visibleNodes.value = flatList
   }
 
+  private fun isUnread(commentId: String, seenCommentsState: SeenCommentsState) =
+    when (seenCommentsState) {
+      SeenCommentsState.Loading -> false
+      SeenCommentsState.NoBaseline -> false
+      is SeenCommentsState.BaselineLoaded -> {
+        !seenCommentsState.postComments.commentIds.contains(commentId)
+      }
+    }
+
   fun createListNode(
     comments: List<Comment>,
-    commentState: PostComments?,
+    seenCommentsState: SeenCommentsState,
     isPostAuthor: (Comment) -> Boolean,
   ) {
     val commentNodes = mutableListOf<CommentNode>()
-    val isUnread = { id: String -> commentState?.commentIds?.contains(id) != true }
 
     for (i in comments.indices) {
       val comment = comments[i]
@@ -46,7 +53,7 @@ internal class CommentsHandler {
           CommentNode(
             comment = comment,
             isPostAuthor = isPostAuthor(comment),
-            isUnread = isUnread(comment.shortId),
+            isUnread = isUnread(comment.shortId, seenCommentsState),
             indentLevel = 1,
             isExpanded = !collapsedCommentIds.contains(comment.shortId),
           )
@@ -57,7 +64,7 @@ internal class CommentsHandler {
             CommentNode(
               comment = comment,
               isPostAuthor = isPostAuthor(comment),
-              isUnread = isUnread(comment.shortId),
+              isUnread = isUnread(comment.shortId, seenCommentsState),
               indentLevel = commentNode.indentLevel + 1,
               isExpanded = !collapsedCommentIds.contains(comment.shortId),
             )
@@ -96,11 +103,11 @@ internal class CommentsHandler {
     collapsedCommentIds = collectCollapsedIds(rootNodes)
   }
 
-  fun updateUnreadStatus(commentState: PostComments?) {
-    val seenCommentIds = commentState?.commentIds ?: emptySet()
+  fun updateUnreadStatus(seenCommentsState: SeenCommentsState) {
+    if (seenCommentsState == SeenCommentsState.Loading) return
 
     fun updateNode(node: CommentNode): CommentNode {
-      val isUnread = !seenCommentIds.contains(node.comment.shortId)
+      val isUnread = isUnread(node.comment.shortId, seenCommentsState)
       val updatedChildren = node.children.map { updateNode(it) }.toMutableList()
       return node.copy(isUnread = isUnread, children = updatedChildren)
     }

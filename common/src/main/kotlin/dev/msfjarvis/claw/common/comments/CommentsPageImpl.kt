@@ -55,31 +55,51 @@ import dev.msfjarvis.claw.common.R
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.posts.Submitter
 import dev.msfjarvis.claw.common.ui.ThemedRichText
-import dev.msfjarvis.claw.database.local.PostComments
 import dev.msfjarvis.claw.model.Comment
 import dev.msfjarvis.claw.model.UIPost
 import java.time.Instant
 import java.time.temporal.TemporalAccessor
 import kotlinx.coroutines.flow.StateFlow
 
+internal class CommentsVisitDecision(val unreadCount: Int, val shouldPersist: Boolean)
+
+internal fun buildCommentsVisitDecision(
+  currentCommentIds: List<String>,
+  seenCommentsState: SeenCommentsState,
+): CommentsVisitDecision {
+  return when (seenCommentsState) {
+    SeenCommentsState.Loading -> CommentsVisitDecision(unreadCount = 0, shouldPersist = false)
+    SeenCommentsState.NoBaseline -> CommentsVisitDecision(unreadCount = 0, shouldPersist = true)
+    is SeenCommentsState.BaselineLoaded -> {
+      val seenCommentIds = seenCommentsState.postComments.commentIds.toSet()
+      CommentsVisitDecision(
+        unreadCount = currentCommentIds.count { it !in seenCommentIds },
+        shouldPersist = true,
+      )
+    }
+  }
+}
+
 @Composable
 internal fun CommentsPageInternal(
   details: UIPost,
   postActions: PostActions,
-  commentState: PostComments?,
+  seenCommentsState: SeenCommentsState,
   markSeenComments: (String, List<Comment>) -> Unit,
   openUserProfile: (String) -> Unit,
   contentPadding: PaddingValues,
   commentListState: LazyListState,
   commentNodes: StateFlow<List<CommentNode>>,
-  createCommentNodes: (UIPost, PostComments?) -> Unit,
+  createCommentNodes: (UIPost, SeenCommentsState) -> Unit,
   updateCommentNodeExpanded: (String, Boolean) -> Unit,
-  updateUnreadStatus: (PostComments?) -> Unit,
+  updateUnreadStatus: (SeenCommentsState) -> Unit,
   modifier: Modifier = Modifier,
 ) {
-  LaunchedEffect(key1 = details) { createCommentNodes(details, commentState) }
+  LaunchedEffect(key1 = details, key2 = seenCommentsState) {
+    createCommentNodes(details, seenCommentsState)
+  }
 
-  LaunchedEffect(key1 = commentState) { updateUnreadStatus(commentState) }
+  LaunchedEffect(key1 = seenCommentsState) { updateUnreadStatus(seenCommentsState) }
 
   val onToggleExpandedState = { shortId: String, isExpanded: Boolean ->
     updateCommentNodeExpanded(shortId, isExpanded)
@@ -88,19 +108,23 @@ internal fun CommentsPageInternal(
   val context = LocalContext.current
   val commentNodes by commentNodes.collectAsStateWithLifecycle()
 
-  LaunchedEffect(key1 = details, key2 = commentState) {
-    if (details.comments.isNotEmpty() && !commentState?.commentIds.isNullOrEmpty()) {
-      val unreadCount = details.comments.size - commentState.commentIds.size
-      if (unreadCount > 0) {
-        val text =
-          when (unreadCount) {
-            1 -> "$unreadCount unread comment"
-            else -> "$unreadCount unread comments"
-          }
-        Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
-      }
+  LaunchedEffect(key1 = details, key2 = seenCommentsState) {
+    val decision =
+      buildCommentsVisitDecision(
+        currentCommentIds = details.comments.map(Comment::shortId),
+        seenCommentsState = seenCommentsState,
+      )
+    if (decision.unreadCount > 0) {
+      val text =
+        when (decision.unreadCount) {
+          1 -> "${decision.unreadCount} unread comment"
+          else -> "${decision.unreadCount} unread comments"
+        }
+      Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
     }
-    markSeenComments(details.shortId, details.comments)
+    if (decision.shouldPersist) {
+      markSeenComments(details.shortId, details.comments)
+    }
   }
 
   Surface(color = MaterialTheme.colorScheme.surfaceVariant) {

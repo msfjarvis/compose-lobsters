@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Comments are no longer indicated as unread on the first visit of a post
+
+### Changed
+
+- Post titles in the list view can now take up 2 lines to make ellipsizing less likely
+- Action buttons now have a prominent background to make their touch target more obvious
+- Action buttons now have additional padding to avoid accidental presses when interacting
+  with system gestures
+
+Thanks to Charles Lombardo for contributing the action button UI changes.
+
 ## [1.62.0] - 2026-03-10
 
 ### Fixed

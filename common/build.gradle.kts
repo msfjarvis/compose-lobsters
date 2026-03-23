@@ -14,6 +14,7 @@ plugins {
   alias(libs.plugins.kotlin.composeCompiler)
   alias(libs.plugins.dependencyAnalysis)
   alias(libs.plugins.metro)
+  alias(libs.plugins.poko)
 }
 
 android {

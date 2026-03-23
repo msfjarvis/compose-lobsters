@@ -19,7 +19,6 @@ import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.api.toError
 import dev.msfjarvis.claw.common.NetworkState
 import dev.msfjarvis.claw.core.coroutines.IODispatcher
-import dev.msfjarvis.claw.database.local.PostComments
 import dev.msfjarvis.claw.model.Comment
 import dev.msfjarvis.claw.model.UIPost
 import dev.msfjarvis.claw.model.toUIPost
@@ -77,8 +76,8 @@ class CommentsViewModel(
     viewModelScope.launch { commentsRepository.markSeenComments(postId, comments) }
   }
 
-  internal fun createCommentNodes(details: UIPost, commentState: PostComments?) {
-    commentsHandler.createListNode(details.comments, commentState) { comment ->
+  internal fun createCommentNodes(details: UIPost, seenCommentsState: SeenCommentsState) {
+    commentsHandler.createListNode(details.comments, seenCommentsState) { comment ->
       details.userIsAuthor && comment.user == details.submitter
     }
   }
@@ -87,7 +86,7 @@ class CommentsViewModel(
     commentsHandler.updateListNode(shortId, isExpanded)
   }
 
-  internal fun updateUnreadStatus(commentState: PostComments?) {
-    commentsHandler.updateUnreadStatus(commentState)
+  internal fun updateUnreadStatus(seenCommentsState: SeenCommentsState) {
+    commentsHandler.updateUnreadStatus(seenCommentsState)
   }
 }

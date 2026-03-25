@@ -42,7 +42,7 @@ import dev.zacsweers.metrox.viewmodel.LocalMetroViewModelFactory
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @ContributesIntoMap(AppScope::class, binding<Activity>())
-@ActivityKey(MainActivity::class)
+@ActivityKey
 @Inject
 class MainActivity(
   private val uriHandler: UriHandler,

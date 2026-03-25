@@ -50,7 +50,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 @Inject
-@ViewModelKey(ClawViewModel::class)
+@ViewModelKey
 @ContributesIntoMap(scope = AppScope::class, binding = binding<ViewModel>())
 class ClawViewModel(
   context: Context,

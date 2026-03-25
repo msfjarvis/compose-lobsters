@@ -34,7 +34,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 @Inject
-@ViewModelKey(TagFilterViewModel::class)
+@ViewModelKey
 @ContributesIntoMap(AppScope::class)
 class TagFilterViewModel(
   private val api: LobstersApi,

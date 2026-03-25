@@ -33,7 +33,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 @Inject
-@ViewModelKey(CommentsViewModel::class)
+@ViewModelKey
 @ContributesIntoMap(AppScope::class)
 class CommentsViewModel(
   private val api: LobstersApi,

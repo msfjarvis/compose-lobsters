@@ -31,7 +31,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
 @Inject
-@ViewModelKey(UserProfileViewModel::class)
+@ViewModelKey
 @ContributesIntoMap(AppScope::class)
 class UserProfileViewModel(
   private val api: LobstersApi,

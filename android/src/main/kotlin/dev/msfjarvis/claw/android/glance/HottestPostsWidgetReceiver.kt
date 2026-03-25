@@ -18,7 +18,7 @@ import dev.zacsweers.metro.binding
 import dev.zacsweers.metrox.android.BroadcastReceiverKey
 
 @ContributesIntoMap(AppScope::class, binding<BroadcastReceiver>())
-@BroadcastReceiverKey(HottestPostsWidgetReceiver::class)
+@BroadcastReceiverKey
 @Inject
 class HottestPostsWidgetReceiver() : GlanceAppWidgetReceiver() {
 

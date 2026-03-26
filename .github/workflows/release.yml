@@ -16,7 +16,7 @@ jobs:
     runs-on: macos-26
     steps:
     - name: Setup build environment
-      uses: msfjarvis/compose-lobsters/.github/reusable-workflows/setup-gradle@main
+      uses: msfjarvis/compose-lobsters/.github/reusable-workflows/setup-gradle@f3fb95dc5f4cb7c686d0b69b3cea815c36e52748 # main
       with:
         token: ${{ secrets.POST_RELEASE_GH_TOKEN }}
         fetch-depth: 0

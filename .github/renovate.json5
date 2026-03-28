@@ -53,6 +53,15 @@
       ],
       "allowedVersions": "!/.*-1-8$/",
     },
+    {
+      "matchManagers": [
+        "github-actions"
+      ],
+      "matchDepNames": [
+        "msfjarvis/compose-lobsters"
+      ],
+      "enabled": false,
+    },
   ],
   "customManagers": [
     {

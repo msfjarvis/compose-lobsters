@@ -248,3 +248,4 @@ distribution/
 screenshots/
 claw-export.json
 .kotlin/
+.worktrees/

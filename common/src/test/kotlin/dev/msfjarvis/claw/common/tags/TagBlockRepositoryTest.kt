@@ -8,39 +8,41 @@ package dev.msfjarvis.claw.common.tags
 
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import com.google.common.truth.Truth.assertThat
+import dev.msfjarvis.claw.database.LobstersDatabase
 import dev.msfjarvis.claw.database.local.TagBlocksQueries
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class TagBlockRepositoryTest {
+  private lateinit var driver: JdbcSqliteDriver
   private lateinit var tagBlocksQueries: TagBlocksQueries
   private val testDispatcher = UnconfinedTestDispatcher()
 
   @BeforeEach
   fun setup() {
     Dispatchers.setMain(testDispatcher)
-    val driver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
-
-    driver.execute(
-      null,
-      """
-      CREATE TABLE IF NOT EXISTS TagBlocks (
-        tag TEXT PRIMARY KEY NOT NULL,
-        expiration_millis INTEGER
-      )
-      """
-        .trimIndent(),
-      0,
-    )
-
+    driver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
+    LobstersDatabase.Schema.create(driver)
     tagBlocksQueries = TagBlocksQueries(driver)
+  }
+
+  @AfterEach
+  fun teardown() {
+    Dispatchers.resetMain()
+    driver.close()
   }
 
   @Test
@@ -115,6 +117,27 @@ class TagBlockRepositoryTest {
   }
 
   @Test
+  fun `getSavedTags emits updates after mutations`() = runTest {
+    val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
+    val emissions = mutableListOf<Set<String>>()
+
+    val collector =
+      backgroundScope.launch(testDispatcher) { repository.getSavedTags().take(3).toList(emissions) }
+
+    advanceUntilIdle()
+    repository.saveTagBlock("android", null)
+    advanceUntilIdle()
+    repository.removeTagBlock("android")
+    advanceUntilIdle()
+
+    collector.join()
+
+    assertThat(emissions)
+      .containsExactly(emptySet<String>(), setOf("android"), emptySet<String>())
+      .inOrder()
+  }
+
+  @Test
   fun `getTagBlocks returns all blocks including expired`() = runTest {
     val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
 
@@ -129,6 +152,28 @@ class TagBlockRepositoryTest {
 
     assertThat(tagBlocks).hasSize(3)
     assertThat(tagBlocks.map { it.tag }).containsExactly("expired", "active", "permanent")
+  }
+
+  @Test
+  fun `getTagBlocks emits updates after mutations`() = runTest {
+    val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
+    val emissions = mutableListOf<List<String>>()
+
+    val collector = backgroundScope.launch(testDispatcher) {
+      emissions += repository.getTagBlocks().take(3).toList().map { blocks -> blocks.map { it.tag } }
+    }
+
+    advanceUntilIdle()
+    repository.saveTagBlock("kotlin", null)
+    advanceUntilIdle()
+    repository.removeTagBlock("kotlin")
+    advanceUntilIdle()
+
+    collector.join()
+
+    assertThat(emissions)
+      .containsExactly(emptyList<String>(), listOf("kotlin"), emptyList<String>())
+      .inOrder()
   }
 
   @Test

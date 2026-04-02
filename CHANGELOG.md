@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.63.0] - 2026-04-02
+
 ### Fixed
 
 - Comments are no longer indicated as unread on the first visit of a post
@@ -597,7 +599,8 @@ Thanks to Charles Lombardo for contributing the action button UI changes.
 
 - Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.62.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.63.0...HEAD
+[1.63.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.62.0...v1.63.0
 [1.62.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.61.0...v1.62.0
 [1.61.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.60.0...v1.61.0
 [1.60.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.59.0...v1.60.0

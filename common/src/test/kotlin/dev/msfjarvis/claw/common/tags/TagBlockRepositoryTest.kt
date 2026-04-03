@@ -17,7 +17,6 @@ import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
@@ -51,7 +50,6 @@ class TagBlockRepositoryTest {
 
     val expirationTime = System.currentTimeMillis() + 86400000
     repository.saveTagBlock("android", expirationTime)
-
     val tags = repository.getSavedTags().first()
     assertThat(tags).containsExactly("android")
   }
@@ -134,11 +132,8 @@ class TagBlockRepositoryTest {
     val collector =
       backgroundScope.launch(testDispatcher) { repository.getSavedTags().take(3).toList(emissions) }
 
-    advanceUntilIdle()
     repository.saveTagBlock("android", null)
-    advanceUntilIdle()
     repository.removeTagBlock("android")
-    advanceUntilIdle()
 
     collector.join()
 
@@ -179,11 +174,8 @@ class TagBlockRepositoryTest {
         repository.getTagBlocks().take(3).toList(collectedBlocks)
       }
 
-    advanceUntilIdle()
     repository.saveTagBlock("kotlin", null)
-    advanceUntilIdle()
     repository.removeTagBlock("kotlin")
-    advanceUntilIdle()
 
     collector.join()
 

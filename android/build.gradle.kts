@@ -99,7 +99,6 @@ dependencies {
   implementation(libs.androidx.collection)
   implementation(libs.androidx.core.ktx)
   implementation(libs.androidx.core.splashscreen)
-  implementation(libs.androidx.datastore.preferences.core)
   implementation(libs.androidx.lifecycle.common)
   implementation(libs.androidx.lifecycle.compose)
   implementation(libs.androidx.lifecycle.runtime.compose)

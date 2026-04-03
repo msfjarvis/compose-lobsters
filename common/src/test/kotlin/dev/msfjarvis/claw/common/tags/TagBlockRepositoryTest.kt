@@ -6,74 +6,59 @@
  */
 package dev.msfjarvis.claw.common.tags
 
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.PreferenceDataStoreFactory
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.datastore.preferences.core.stringSetPreferencesKey
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import com.google.common.truth.Truth.assertThat
+import dev.msfjarvis.claw.database.LobstersDatabase
 import dev.msfjarvis.claw.database.local.TagBlocksQueries
-import java.io.File
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import kotlinx.serialization.json.Json
+import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.io.TempDir
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class TagBlockRepositoryTest {
-  @TempDir lateinit var tempDir: File
-
+  private lateinit var driver: JdbcSqliteDriver
   private lateinit var tagBlocksQueries: TagBlocksQueries
-  private val testDispatcher = UnconfinedTestDispatcher()
 
   @BeforeEach
   fun setup() {
-    Dispatchers.setMain(testDispatcher)
-    val driver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
-
-    driver.execute(
-      null,
-      """
-      CREATE TABLE IF NOT EXISTS TagBlocks (
-        tag TEXT PRIMARY KEY NOT NULL,
-        expiration_millis INTEGER
-      )
-      """
-        .trimIndent(),
-      0,
-    )
-
+    driver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
+    LobstersDatabase.Schema.create(driver)
     tagBlocksQueries = TagBlocksQueries(driver)
   }
 
-  private fun createTestDataStore(): DataStore<Preferences> {
-    return PreferenceDataStoreFactory.create { File(tempDir, "test_preferences.preferences_pb") }
+  @AfterEach
+  fun teardown() {
+    Dispatchers.resetMain()
+    driver.close()
   }
 
   @Test
   fun `saveTagBlock inserts new tag block successfully`() = runTest {
-    val dataStore = createTestDataStore()
-    val repository = TagBlockRepository(tagBlocksQueries, dataStore, testDispatcher, testDispatcher)
+    val testDispatcher = StandardTestDispatcher(testScheduler)
+    Dispatchers.setMain(testDispatcher)
+    val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
 
     val expirationTime = System.currentTimeMillis() + 86400000
     repository.saveTagBlock("android", expirationTime)
-
     val tags = repository.getSavedTags().first()
     assertThat(tags).containsExactly("android")
   }
 
   @Test
   fun `saveTagBlock with null expiration creates permanent block`() = runTest {
-    val dataStore = createTestDataStore()
-    val repository = TagBlockRepository(tagBlocksQueries, dataStore, testDispatcher, testDispatcher)
+    val testDispatcher = StandardTestDispatcher(testScheduler)
+    Dispatchers.setMain(testDispatcher)
+    val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
 
     repository.saveTagBlock("kotlin", null)
 
@@ -85,8 +70,9 @@ class TagBlockRepositoryTest {
 
   @Test
   fun `saveTagBlock replaces existing tag block`() = runTest {
-    val dataStore = createTestDataStore()
-    val repository = TagBlockRepository(tagBlocksQueries, dataStore, testDispatcher, testDispatcher)
+    val testDispatcher = StandardTestDispatcher(testScheduler)
+    Dispatchers.setMain(testDispatcher)
+    val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
 
     val firstExpiration = System.currentTimeMillis() + 86400000
     repository.saveTagBlock("rust", firstExpiration)
@@ -101,8 +87,9 @@ class TagBlockRepositoryTest {
 
   @Test
   fun `removeTagBlock deletes tag successfully`() = runTest {
-    val dataStore = createTestDataStore()
-    val repository = TagBlockRepository(tagBlocksQueries, dataStore, testDispatcher, testDispatcher)
+    val testDispatcher = StandardTestDispatcher(testScheduler)
+    Dispatchers.setMain(testDispatcher)
+    val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
 
     repository.saveTagBlock("python", null)
     repository.saveTagBlock("javascript", null)
@@ -118,8 +105,9 @@ class TagBlockRepositoryTest {
 
   @Test
   fun `getSavedTags filters out expired tags`() = runTest {
-    val dataStore = createTestDataStore()
-    val repository = TagBlockRepository(tagBlocksQueries, dataStore, testDispatcher, testDispatcher)
+    val testDispatcher = StandardTestDispatcher(testScheduler)
+    Dispatchers.setMain(testDispatcher)
+    val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
 
     val pastTime = System.currentTimeMillis() - 1000
     val futureTime = System.currentTimeMillis() + 86400000
@@ -135,9 +123,30 @@ class TagBlockRepositoryTest {
   }
 
   @Test
+  fun `getSavedTags emits updates after mutations`() = runTest {
+    val testDispatcher = StandardTestDispatcher(testScheduler)
+    Dispatchers.setMain(testDispatcher)
+    val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
+    val emissions = mutableListOf<Set<String>>()
+
+    val collector =
+      backgroundScope.launch(testDispatcher) { repository.getSavedTags().take(3).toList(emissions) }
+
+    repository.saveTagBlock("android", null)
+    repository.removeTagBlock("android")
+
+    collector.join()
+
+    assertThat(emissions)
+      .containsExactly(emptySet<String>(), setOf("android"), emptySet<String>())
+      .inOrder()
+  }
+
+  @Test
   fun `getTagBlocks returns all blocks including expired`() = runTest {
-    val dataStore = createTestDataStore()
-    val repository = TagBlockRepository(tagBlocksQueries, dataStore, testDispatcher, testDispatcher)
+    val testDispatcher = StandardTestDispatcher(testScheduler)
+    Dispatchers.setMain(testDispatcher)
+    val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
 
     val pastTime = System.currentTimeMillis() - 1000
     val futureTime = System.currentTimeMillis() + 86400000
@@ -153,9 +162,35 @@ class TagBlockRepositoryTest {
   }
 
   @Test
+  fun `getTagBlocks emits updates after mutations`() = runTest {
+    val testDispatcher = StandardTestDispatcher(testScheduler)
+    Dispatchers.setMain(testDispatcher)
+    val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
+    val emissions = mutableListOf<List<String>>()
+    val collectedBlocks = mutableListOf<List<dev.msfjarvis.claw.model.TagBlock>>()
+
+    val collector =
+      backgroundScope.launch(testDispatcher) {
+        repository.getTagBlocks().take(3).toList(collectedBlocks)
+      }
+
+    repository.saveTagBlock("kotlin", null)
+    repository.removeTagBlock("kotlin")
+
+    collector.join()
+
+    emissions += collectedBlocks.map { blocks -> blocks.map { it.tag } }
+
+    assertThat(emissions)
+      .containsExactly(emptyList<String>(), listOf("kotlin"), emptyList<String>())
+      .inOrder()
+  }
+
+  @Test
   fun `removeExpiredTags only removes expired blocks`() = runTest {
-    val dataStore = createTestDataStore()
-    val repository = TagBlockRepository(tagBlocksQueries, dataStore, testDispatcher, testDispatcher)
+    val testDispatcher = StandardTestDispatcher(testScheduler)
+    Dispatchers.setMain(testDispatcher)
+    val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
 
     val pastTime = System.currentTimeMillis() - 1000
     val futureTime = System.currentTimeMillis() + 86400000
@@ -170,129 +205,5 @@ class TagBlockRepositoryTest {
     val remaining = repository.getTagBlocks().first()
     assertThat(remaining).hasSize(2)
     assertThat(remaining.map { it.tag }).containsExactly("future", "permanent")
-  }
-
-  @Test
-  fun `migrates legacy DataStore tags to SQLite`() = runTest {
-    val dataStore = createTestDataStore()
-    val legacyTagsKey = stringSetPreferencesKey("tags")
-
-    dataStore.edit { prefs -> prefs[legacyTagsKey] = setOf("android", "kotlin", "java") }
-
-    val repository = TagBlockRepository(tagBlocksQueries, dataStore, testDispatcher, testDispatcher)
-
-    val tags = repository.getSavedTags().first()
-
-    assertThat(tags).containsExactly("android", "kotlin", "java")
-
-    val tagBlocks = repository.getTagBlocks().first()
-    assertThat(tagBlocks.all { it.isPermanent }).isTrue()
-  }
-
-  @Test
-  fun `migrates JSON DataStore format to SQLite`() = runTest {
-    val dataStore = createTestDataStore()
-    val datastoreTagsKey = stringPreferencesKey("tags_with_expiration")
-
-    val expirationTime = System.currentTimeMillis() + 86400000
-    val tagMap = mapOf("rust" to expirationTime, "go" to null)
-
-    dataStore.edit { prefs -> prefs[datastoreTagsKey] = Json.encodeToString(tagMap) }
-
-    val repository = TagBlockRepository(tagBlocksQueries, dataStore, testDispatcher, testDispatcher)
-
-    val tags = repository.getSavedTags().first()
-    assertThat(tags).containsExactly("rust", "go")
-
-    val tagBlocks = repository.getTagBlocks().first()
-    val rustBlock = tagBlocks.find { it.tag == "rust" }
-    val goBlock = tagBlocks.find { it.tag == "go" }
-
-    assertThat(rustBlock?.expirationMillis).isEqualTo(expirationTime)
-    assertThat(goBlock?.isPermanent).isTrue()
-  }
-
-  @Test
-  fun `migration only runs once`() = runTest {
-    val dataStore = createTestDataStore()
-    val legacyTagsKey = stringSetPreferencesKey("tags")
-
-    dataStore.edit { prefs -> prefs[legacyTagsKey] = setOf("security") }
-
-    val repository = TagBlockRepository(tagBlocksQueries, dataStore, testDispatcher, testDispatcher)
-
-    repository.getSavedTags().first()
-
-    dataStore.edit { prefs -> prefs[legacyTagsKey] = setOf("privacy") }
-
-    val tags = repository.getSavedTags().first()
-    assertThat(tags).containsExactly("security")
-    assertThat(tags).doesNotContain("privacy")
-  }
-
-  @Test
-  fun `prefers JSON format over legacy format during migration`() = runTest {
-    val dataStore = createTestDataStore()
-    val legacyTagsKey = stringSetPreferencesKey("tags")
-    val datastoreTagsKey = stringPreferencesKey("tags_with_expiration")
-
-    dataStore.edit { prefs ->
-      prefs[legacyTagsKey] = setOf("old-tag")
-      prefs[datastoreTagsKey] = Json.encodeToString(mapOf("new-tag" to null))
-    }
-
-    val repository = TagBlockRepository(tagBlocksQueries, dataStore, testDispatcher, testDispatcher)
-
-    val tags = repository.getSavedTags().first()
-
-    assertThat(tags).containsExactly("new-tag")
-    assertThat(tags).doesNotContain("old-tag")
-  }
-
-  @Test
-  fun `migration cleans up legacy DataStore after migrating`() = runTest {
-    val dataStore = createTestDataStore()
-    val legacyTagsKey = stringSetPreferencesKey("tags")
-
-    dataStore.edit { prefs -> prefs[legacyTagsKey] = setOf("android", "kotlin") }
-
-    val repository = TagBlockRepository(tagBlocksQueries, dataStore, testDispatcher, testDispatcher)
-    repository.getSavedTags().first()
-
-    val prefs = dataStore.data.first()
-    assertThat(prefs[legacyTagsKey]).isNull()
-  }
-
-  @Test
-  fun `migration cleans up JSON DataStore after migrating`() = runTest {
-    val dataStore = createTestDataStore()
-    val datastoreTagsKey = stringPreferencesKey("tags_with_expiration")
-
-    dataStore.edit { prefs -> prefs[datastoreTagsKey] = Json.encodeToString(mapOf("rust" to null)) }
-
-    val repository = TagBlockRepository(tagBlocksQueries, dataStore, testDispatcher, testDispatcher)
-    repository.getSavedTags().first()
-
-    val prefs = dataStore.data.first()
-    assertThat(prefs[datastoreTagsKey]).isNull()
-  }
-
-  @Test
-  fun `migration cleans up both DataStore formats when both present`() = runTest {
-    val dataStore = createTestDataStore()
-    val legacyTagsKey = stringSetPreferencesKey("tags")
-    val datastoreTagsKey = stringPreferencesKey("tags_with_expiration")
-
-    dataStore.edit { prefs ->
-      prefs[legacyTagsKey] = setOf("old-tag")
-      prefs[datastoreTagsKey] = Json.encodeToString(mapOf("new-tag" to null))
-    }
-
-    val repository = TagBlockRepository(tagBlocksQueries, dataStore, testDispatcher, testDispatcher)
-    repository.getSavedTags().first()
-
-    val prefs = dataStore.data.first()
-    assertThat(prefs[legacyTagsKey]).isNull()
-    assertThat(prefs[datastoreTagsKey]).isNull()
   }
 }

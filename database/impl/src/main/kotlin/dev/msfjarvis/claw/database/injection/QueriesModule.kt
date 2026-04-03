@@ -11,6 +11,7 @@ import dev.msfjarvis.claw.database.local.CachedRemotePostQueries
 import dev.msfjarvis.claw.database.local.PostCommentsQueries
 import dev.msfjarvis.claw.database.local.ReadPostsQueries
 import dev.msfjarvis.claw.database.local.SavedPostQueries
+import dev.msfjarvis.claw.database.local.SessionCookieQueries
 import dev.msfjarvis.claw.database.local.TagBlocksQueries
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.BindingContainer
@@ -54,5 +55,13 @@ object QueriesModule {
   @SingleIn(AppScope::class)
   fun provideTagBlocksQueries(@InternalDatabaseApi database: LobstersDatabase): TagBlocksQueries {
     return database.tagBlocksQueries
+  }
+
+  @Provides
+  @SingleIn(AppScope::class)
+  fun provideSessionCookieQueries(
+    @InternalDatabaseApi database: LobstersDatabase
+  ): SessionCookieQueries {
+    return database.sessionCookieQueries
   }
 }

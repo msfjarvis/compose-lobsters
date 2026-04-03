@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.LibraryBooks
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Bookmarks
 import androidx.compose.material.icons.filled.Code
 import androidx.compose.material.icons.filled.FilterList
@@ -59,6 +60,9 @@ fun SettingsScreen(
   openLibrariesScreen: () -> Unit,
   openRepository: () -> Unit,
   openTagFiltering: () -> Unit,
+  openLoginScreen: () -> Unit,
+  onLogout: () -> Unit,
+  isLoggedIn: Boolean,
   snackbarHostState: SnackbarHostState,
   openInputStream: (Uri) -> InputStream?,
   openOutputStream: (Uri) -> OutputStream?,
@@ -71,6 +75,37 @@ fun SettingsScreen(
 ) {
   val coroutineScope = rememberCoroutineScope()
   Column(modifier.padding(contentPadding)) {
+    // Account Section
+    SectionHeader(title = "Account")
+    if (isLoggedIn) {
+      ListItem(
+        headlineContent = { Text("Log out") },
+        supportingContent = { Text("Sign out of your lobste.rs account") },
+        leadingContent = {
+          Icon(
+            imageVector = Icons.Filled.AccountCircle,
+            contentDescription = null,
+            modifier = Modifier.height(32.dp),
+          )
+        },
+        modifier = Modifier.clickable(onClick = onLogout),
+      )
+    } else {
+      ListItem(
+        headlineContent = { Text("Log in with lobste.rs") },
+        supportingContent = { Text("Sign in to your lobste.rs account") },
+        leadingContent = {
+          Icon(
+            imageVector = Icons.Filled.AccountCircle,
+            contentDescription = null,
+            modifier = Modifier.height(32.dp),
+          )
+        },
+        modifier = Modifier.clickable(onClick = openLoginScreen),
+      )
+    }
+    Spacer(modifier = Modifier.height(24.dp))
+
     // Data Management Section
     SectionHeader(title = stringResource(R.string.data_management))
     ListItem(
@@ -343,6 +378,9 @@ private fun SettingsScreenPreview() {
       openLibrariesScreen = {},
       openRepository = {},
       openTagFiltering = {},
+      openLoginScreen = {},
+      onLogout = {},
+      isLoggedIn = false,
       snackbarHostState = SnackbarHostState(),
       openInputStream = { null },
       openOutputStream = { null },

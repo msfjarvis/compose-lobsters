@@ -19,6 +19,7 @@ import java.util.concurrent.TimeUnit
 import javax.net.SocketFactory
 import okhttp3.Cache
 import okhttp3.CertificatePinner
+import okhttp3.CookieJar
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -64,6 +65,7 @@ object OkHttpModule {
     socketFactory: SocketFactory,
     interceptors: Set<Interceptor>,
     certificatePinner: CertificatePinner,
+    cookieJar: CookieJar,
   ): OkHttpClient {
     return OkHttpClient.Builder()
       .apply {
@@ -74,6 +76,7 @@ object OkHttpModule {
         readTimeout(READ_TIMEOUT_SECONDS, TimeUnit.SECONDS)
         writeTimeout(WRITE_TIMEOUT_SECONDS, TimeUnit.SECONDS)
         cache(cache)
+        cookieJar(cookieJar)
         // Use application interceptors instead of network interceptors to allow retrying
         // requests. Network interceptors must call proceed() exactly once, but
         // RetryAfterInterceptor needs to call proceed() twice when retrying after a delay.

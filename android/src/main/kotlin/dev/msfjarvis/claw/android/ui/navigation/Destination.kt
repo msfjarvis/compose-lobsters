@@ -41,6 +41,8 @@ interface NonStackable
 
 @Parcelize @Serializable data object TagFiltering : NavKey, Parcelable
 
+@Parcelize @Serializable data object Login : NavKey, Parcelable
+
 enum class AppDestinations(
   val icon: ImageVector,
   val label: String,

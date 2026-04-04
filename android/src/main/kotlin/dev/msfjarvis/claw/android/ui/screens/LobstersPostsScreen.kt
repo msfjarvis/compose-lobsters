@@ -63,6 +63,7 @@ import dev.msfjarvis.claw.android.ui.navigation.AppDestinations
 import dev.msfjarvis.claw.android.ui.navigation.ClawNavigationType
 import dev.msfjarvis.claw.android.ui.navigation.Comments
 import dev.msfjarvis.claw.android.ui.navigation.Hottest
+import dev.msfjarvis.claw.android.ui.navigation.Login
 import dev.msfjarvis.claw.android.ui.navigation.Newest
 import dev.msfjarvis.claw.android.ui.navigation.NonStackable
 import dev.msfjarvis.claw.android.ui.navigation.Saved
@@ -73,6 +74,7 @@ import dev.msfjarvis.claw.android.ui.navigation.TagFiltering
 import dev.msfjarvis.claw.android.ui.navigation.TopLevelDestination
 import dev.msfjarvis.claw.android.ui.navigation.User
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
+import dev.msfjarvis.claw.android.viewmodel.SettingsViewModel
 import dev.msfjarvis.claw.common.comments.CommentsPage
 import dev.msfjarvis.claw.common.tags.TagFilterViewModel
 import dev.msfjarvis.claw.common.tags.TagList
@@ -93,6 +95,7 @@ fun LobstersPostsScreen(
   deepLinkDestination: NavKey? = null,
   clearDeepLink: () -> Unit = {},
   viewModel: ClawViewModel = metroViewModel(),
+  settingsViewModel: SettingsViewModel = metroViewModel(),
   tagFilterViewModel: TagFilterViewModel = metroViewModel(key = "tag_filter"),
 ) {
   val navigationType = ClawNavigationType.fromSize(windowSizeClass.widthSizeClass)
@@ -115,6 +118,7 @@ fun LobstersPostsScreen(
   val savedPostsCount by viewModel.savedPostsCount.collectAsStateWithLifecycle(0L)
 
   val filteredTags by tagFilterViewModel.filteredTags.collectAsStateWithLifecycle(persistentSetOf())
+  val isLoggedIn by settingsViewModel.isLoggedIn.collectAsStateWithLifecycle(false)
 
   LaunchedEffect(deepLinkDestination) {
     if (deepLinkDestination != null) {
@@ -276,12 +280,22 @@ fun LobstersPostsScreen(
                   uriHandler.openUri("https://github.com/msfjarvis/compose-lobsters")
                 },
                 openTagFiltering = { navigateTo(backStack, TagFiltering) },
+                openLoginScreen = { navigateTo(backStack, Login) },
+                onLogout = { settingsViewModel.logout() },
+                isLoggedIn = isLoggedIn,
                 importPosts = viewModel::importPosts,
                 exportPostsAsJson = viewModel::exportPostsAsJson,
                 exportPostsAsHtml = viewModel::exportPostsAsHtml,
                 savedPostsCount = savedPostsCount,
                 snackbarHostState = snackbarHostState,
                 contentPadding = contentPadding,
+                modifier = Modifier.fillMaxSize(),
+              )
+            }
+            entry<Login>(metadata = ListDetailSceneStrategy.extraPane()) {
+              LoginScreen(
+                onLoginSuccess = settingsViewModel::saveCookie,
+                popBackStack = { popBackStack(backStack) },
                 modifier = Modifier.fillMaxSize(),
               )
             }

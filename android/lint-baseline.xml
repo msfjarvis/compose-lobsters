@@ -13,14 +13,124 @@
     </issue>
 
     <issue
+        id="DeprecatedCall"
+        message="android.webkit.WebView.loadUrl is deprecated; consider using an alternative."
+        errorLine1="              webViewRef?.loadUrl(LOGIN_URL)"
+        errorLine2="              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/kotlin/dev/msfjarvis/claw/android/ui/screens/LoginScreen.kt"
+            line="64"
+            column="15"/>
+    </issue>
+
+    <issue
+        id="DeprecatedCall"
+        message="android.webkit.WebView.loadUrl is deprecated; consider using an alternative."
+        errorLine1="              webViewRef?.loadUrl(LOGIN_URL)"
+        errorLine2="                                  ~~~~~~~~~">
+        <location
+            file="src/main/kotlin/dev/msfjarvis/claw/android/ui/screens/LoginScreen.kt"
+            line="64"
+            column="35"/>
+    </issue>
+
+    <issue
+        id="DeprecatedCall"
+        message="android.webkit.WebView.WebView is deprecated; consider using an alternative."
+        errorLine1="            WebView(context)"
+        errorLine2="            ~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/kotlin/dev/msfjarvis/claw/android/ui/screens/LoginScreen.kt"
+            line="73"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="DeprecatedCall"
+        message="android.webkit.WebView.WebView is deprecated; consider using an alternative."
+        errorLine1="            WebView(context)"
+        errorLine2="                    ~~~~~~~">
+        <location
+            file="src/main/kotlin/dev/msfjarvis/claw/android/ui/screens/LoginScreen.kt"
+            line="73"
+            column="21"/>
+    </issue>
+
+    <issue
+        id="DeprecatedCall"
+        message="android.webkit.WebView.getSettings is deprecated; consider using an alternative."
+        errorLine1="                settings.javaScriptEnabled = true"
+        errorLine2="                ~~~~~~~~">
+        <location
+            file="src/main/kotlin/dev/msfjarvis/claw/android/ui/screens/LoginScreen.kt"
+            line="75"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="DeprecatedCall"
+        message="android.webkit.WebView.setWebViewClient is deprecated; consider using an alternative."
+        errorLine1="                webViewClient ="
+        errorLine2="                ^">
+        <location
+            file="src/main/kotlin/dev/msfjarvis/claw/android/ui/screens/LoginScreen.kt"
+            line="76"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="DeprecatedCall"
+        message="android.webkit.WebView.setWebViewClient is deprecated; consider using an alternative."
+        errorLine1="                  object : WebViewClient() {"
+        errorLine2="                  ^">
+        <location
+            file="src/main/kotlin/dev/msfjarvis/claw/android/ui/screens/LoginScreen.kt"
+            line="77"
+            column="19"/>
+    </issue>
+
+    <issue
+        id="DeprecatedCall"
+        message="android.webkit.WebView.loadUrl is deprecated; consider using an alternative."
+        errorLine1="                loadUrl(LOGIN_URL)"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/kotlin/dev/msfjarvis/claw/android/ui/screens/LoginScreen.kt"
+            line="107"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="DeprecatedCall"
+        message="android.webkit.WebView.loadUrl is deprecated; consider using an alternative."
+        errorLine1="                loadUrl(LOGIN_URL)"
+        errorLine2="                        ~~~~~~~~~">
+        <location
+            file="src/main/kotlin/dev/msfjarvis/claw/android/ui/screens/LoginScreen.kt"
+            line="107"
+            column="25"/>
+    </issue>
+
+    <issue
         id="MemberExtensionConflict"
         message="`KeepUntilTransitionsFinished` is defined both as a member in class `androidx.compose.animation.ExitTransition.Companion` and an extension in package `androidx.compose.animation`. The defined behavior for this is to use the member, but since the extension is explicitly imported into this file, there&apos;s a chance that this was not expected. (One common way this happens is for members to be added to a class after code was already written to use an extension)."
         errorLine1="                  ) togetherWith ExitTransition.KeepUntilTransitionsFinished"
         errorLine2="                                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/dev/msfjarvis/claw/android/ui/screens/LobstersPostsScreen.kt"
-            line="253"
+            line="259"
             column="49"/>
+    </issue>
+
+    <issue
+        id="SetJavaScriptEnabled"
+        message="Using `setJavaScriptEnabled` can introduce XSS vulnerabilities into your application, review carefully"
+        errorLine1="                settings.javaScriptEnabled = true"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/kotlin/dev/msfjarvis/claw/android/ui/screens/LoginScreen.kt"
+            line="75"
+            column="17"/>
     </issue>
 
 </issues>

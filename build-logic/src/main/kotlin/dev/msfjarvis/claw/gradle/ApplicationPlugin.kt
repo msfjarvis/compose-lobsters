@@ -23,7 +23,7 @@ class ApplicationPlugin : Plugin<Project> {
     project.pluginManager.apply(AppPlugin::class)
     project.pluginManager.apply(AndroidCommonPlugin::class)
     project.extensions.configure<ApplicationExtension> {
-      defaultConfig { targetSdk = 36 }
+      defaultConfig { targetSdk = TARGET_SDK }
       dependenciesInfo {
         includeInBundle = false
         includeInApk = false

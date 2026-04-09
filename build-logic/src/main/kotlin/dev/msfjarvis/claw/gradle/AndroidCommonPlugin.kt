@@ -30,7 +30,7 @@ class AndroidCommonPlugin : Plugin<Project> {
     project.configureSlimTests()
     project.pluginManager.apply(AndroidCacheFixPlugin::class)
     project.extensions.configure<CommonExtension> {
-      compileSdk { version = release(36) }
+      compileSdk { version = release(COMPILE_SDK) }
       defaultConfig.apply {
         // Required by Metro, I don't care for this to be more broadly usable at the expense of my
         // personal development experience.

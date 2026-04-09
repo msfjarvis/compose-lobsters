@@ -8,6 +8,7 @@
 
 plugins {
   alias(libs.plugins.android.test)
+  id("dev.msfjarvis.claw.android-common")
   id("dev.msfjarvis.claw.kotlin-android")
   alias(libs.plugins.baselineprofile)
   alias(libs.plugins.dependencyAnalysis)
@@ -16,7 +17,6 @@ plugins {
 android {
   namespace = "dev.msfjarvis.claw.benchmark"
 
-  compileSdk = 37
   defaultConfig {
     minSdk = 28
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

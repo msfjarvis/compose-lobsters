@@ -97,7 +97,7 @@ dependencies {
   implementation(libs.androidx.compose.ui.unit)
   implementation(libs.androidx.annotation)
   implementation(libs.androidx.collection)
-  implementation(libs.androidx.core.ktx)
+  implementation(libs.androidx.core)
   implementation(libs.androidx.core.splashscreen)
   implementation(libs.androidx.lifecycle.common)
   implementation(libs.androidx.lifecycle.compose)

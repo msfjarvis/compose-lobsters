@@ -109,9 +109,8 @@ private fun rewriteLobstersLinksToDeepLinks(annotatedString: AnnotatedString): A
     .toAnnotatedString()
 }
 
-private val lobstersUri = LobstersApi.BASE_URL.toUri()
-
 private fun rewriteUrlIfLobstersPost(url: String): String {
+  val lobstersUri = LobstersApi.BASE_URL.toUri()
   return try {
     val uri = url.toUri()
     if (

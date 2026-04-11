@@ -30,11 +30,23 @@ android {
     }
   }
   targetProjectPath = ":android"
+  testOptions {
+    managedDevices {
+      localDevices {
+        create("pixel9api36") {
+          device = "Pixel 9"
+          apiLevel = 36
+          systemImageSource = "aosp"
+        }
+      }
+    }
+  }
 }
 
 baselineProfile {
-  useConnectedDevices = true
+  useConnectedDevices = false
   enableEmulatorDisplay = false
+  managedDevices += "pixel9api36"
 }
 
 dependencies {

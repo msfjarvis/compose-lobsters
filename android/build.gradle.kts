@@ -37,10 +37,6 @@ android {
     applicationIdSuffix = ".internal"
     isDebuggable = true
   }
-  buildTypes.getByName("release") {
-    baselineProfile.automaticGenerationDuringBuild =
-      project.providers.gradleProperty("genProf").isPresent
-  }
 }
 
 aboutLibraries.collect.gitHubApiToken = providers.environmentVariable("GITHUB_TOKEN").orNull

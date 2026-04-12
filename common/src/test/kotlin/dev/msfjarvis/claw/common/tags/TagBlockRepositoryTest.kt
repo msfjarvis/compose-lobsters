@@ -10,16 +10,13 @@ import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import com.google.common.truth.Truth.assertThat
 import dev.msfjarvis.claw.database.LobstersDatabase
 import dev.msfjarvis.claw.database.local.TagBlocksQueries
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.test.setMain
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -38,14 +35,12 @@ class TagBlockRepositoryTest {
 
   @AfterEach
   fun teardown() {
-    Dispatchers.resetMain()
     driver.close()
   }
 
   @Test
   fun `saveTagBlock inserts new tag block successfully`() = runTest {
     val testDispatcher = StandardTestDispatcher(testScheduler)
-    Dispatchers.setMain(testDispatcher)
     val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
 
     val expirationTime = System.currentTimeMillis() + 86400000
@@ -57,7 +52,7 @@ class TagBlockRepositoryTest {
   @Test
   fun `saveTagBlock with null expiration creates permanent block`() = runTest {
     val testDispatcher = StandardTestDispatcher(testScheduler)
-    Dispatchers.setMain(testDispatcher)
+
     val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
 
     repository.saveTagBlock("kotlin", null)
@@ -71,7 +66,7 @@ class TagBlockRepositoryTest {
   @Test
   fun `saveTagBlock replaces existing tag block`() = runTest {
     val testDispatcher = StandardTestDispatcher(testScheduler)
-    Dispatchers.setMain(testDispatcher)
+
     val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
 
     val firstExpiration = System.currentTimeMillis() + 86400000
@@ -88,7 +83,7 @@ class TagBlockRepositoryTest {
   @Test
   fun `removeTagBlock deletes tag successfully`() = runTest {
     val testDispatcher = StandardTestDispatcher(testScheduler)
-    Dispatchers.setMain(testDispatcher)
+
     val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
 
     repository.saveTagBlock("python", null)
@@ -106,7 +101,7 @@ class TagBlockRepositoryTest {
   @Test
   fun `getSavedTags filters out expired tags`() = runTest {
     val testDispatcher = StandardTestDispatcher(testScheduler)
-    Dispatchers.setMain(testDispatcher)
+
     val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
 
     val pastTime = System.currentTimeMillis() - 1000
@@ -125,7 +120,7 @@ class TagBlockRepositoryTest {
   @Test
   fun `getSavedTags emits updates after mutations`() = runTest {
     val testDispatcher = StandardTestDispatcher(testScheduler)
-    Dispatchers.setMain(testDispatcher)
+
     val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
     val emissions = mutableListOf<Set<String>>()
 
@@ -145,7 +140,7 @@ class TagBlockRepositoryTest {
   @Test
   fun `getTagBlocks returns all blocks including expired`() = runTest {
     val testDispatcher = StandardTestDispatcher(testScheduler)
-    Dispatchers.setMain(testDispatcher)
+
     val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
 
     val pastTime = System.currentTimeMillis() - 1000
@@ -164,7 +159,7 @@ class TagBlockRepositoryTest {
   @Test
   fun `getTagBlocks emits updates after mutations`() = runTest {
     val testDispatcher = StandardTestDispatcher(testScheduler)
-    Dispatchers.setMain(testDispatcher)
+
     val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
     val emissions = mutableListOf<List<String>>()
     val collectedBlocks = mutableListOf<List<dev.msfjarvis.claw.model.TagBlock>>()
@@ -189,7 +184,7 @@ class TagBlockRepositoryTest {
   @Test
   fun `removeExpiredTags only removes expired blocks`() = runTest {
     val testDispatcher = StandardTestDispatcher(testScheduler)
-    Dispatchers.setMain(testDispatcher)
+
     val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
 
     val pastTime = System.currentTimeMillis() - 1000

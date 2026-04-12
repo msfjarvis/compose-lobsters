@@ -36,18 +36,17 @@ class ApplicationPlugin : Plugin<Project> {
 
       buildTypes.configureEach {
         setProguardFiles(
-          listOf(
-            "proguard-android-optimize.pro",
-            "proguard-rules.pro",
-            "proguard-rules-missing-classes.pro",
-          )
+          listOf("r8-android-optimize.pro", "r8-rules.pro", "r8-rules-missing-classes.pro")
         )
-        if (name == "release") {
-          isMinifyEnabled = !project.providers.environmentVariable("DISABLE_MINIFY").isPresent
-        } else if (name == "debug") {
-          applicationIdSuffix = ".debug"
-          versionNameSuffix = "-debug"
-          isMinifyEnabled = false
+        when (name) {
+          "release" -> {
+            isMinifyEnabled = !project.providers.environmentVariable("DISABLE_MINIFY").isPresent
+          }
+          "debug" -> {
+            applicationIdSuffix = ".debug"
+            versionNameSuffix = "-debug"
+            isMinifyEnabled = false
+          }
         }
       }
       project.configureBuildSigning()

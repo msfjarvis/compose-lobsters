@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Allow logging in to avoid rate limiting problems.
+
 ### Changed
 
 - The migration path for tag data format changes in 1.61.0 has been removed.

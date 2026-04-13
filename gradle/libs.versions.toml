@@ -176,6 +176,6 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 ksp = "com.google.devtools.ksp:2.3.6"
 licensee = "app.cash.licensee:1.14.1"
 metro = { id = "dev.zacsweers.metro", version.ref = "metro" }
-modulegraphassert = "com.jraska.module.graph.assertion:2.9.0"
+modulegraphassert = "com.jraska.module.graph.assertion:2.9.1"
 poko = "dev.drewhamilton.poko:0.22.0"
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }

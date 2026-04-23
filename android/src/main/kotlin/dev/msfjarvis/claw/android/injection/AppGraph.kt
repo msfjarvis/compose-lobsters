@@ -19,7 +19,6 @@ import dev.msfjarvis.claw.core.injection.InjectedWorkerFactory
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.DependencyGraph
 import dev.zacsweers.metro.Multibinds
-import dev.zacsweers.metro.Provider
 import dev.zacsweers.metro.Provides
 import dev.zacsweers.metro.SingleIn
 import dev.zacsweers.metrox.android.MetroAppComponentProviders
@@ -41,7 +40,7 @@ interface AppGraph : MetroAppComponentProviders, ViewModelGraph {
 
   @Multibinds
   val workerProviders:
-    Map<KClass<out ListenableWorker>, Provider<InjectedWorkerFactory.WorkerInstanceFactory<*>>>
+    Map<KClass<out ListenableWorker>, () -> InjectedWorkerFactory.WorkerInstanceFactory<*>>
 
   val workerFactory: InjectedWorkerFactory
 

@@ -107,6 +107,7 @@ dependencies {
   implementation(libs.androidx.work.runtime)
   implementation(libs.eithernet)
   implementation(libs.haze)
+  implementation(libs.haze.blur)
   implementation(libs.kotlin.parcelize.runtime)
   implementation(libs.kotlinx.collections.immutable)
   implementation(libs.kotlinx.coroutines.core)

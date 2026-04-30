@@ -27,9 +27,9 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.NavKey
-import dev.chrisbanes.haze.HazeDefaults
 import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.HazeStyle
+import dev.chrisbanes.haze.blur.HazeBlurDefaults
+import dev.chrisbanes.haze.blur.blurEffect
 import dev.chrisbanes.haze.hazeEffect
 import dev.msfjarvis.claw.android.ui.navigation.AppDestinations
 import dev.msfjarvis.claw.common.ui.FloatingNavigationBar
@@ -62,6 +62,7 @@ fun ClawNavigationBar(
       ),
     label = "",
     content = {
+      val surfaceColor = MaterialTheme.colorScheme.surface
       FloatingNavigationBar(
         tonalElevation = 16.dp,
         shape = MaterialTheme.shapes.extraLarge,
@@ -70,18 +71,15 @@ fun ClawNavigationBar(
             .padding(horizontal = 16.dp)
             .navigationBarsPadding()
             .clip(MaterialTheme.shapes.extraLarge)
-            .hazeEffect(
-              hazeState,
-              style =
-                HazeStyle(
-                  backgroundColor = MaterialTheme.colorScheme.surface,
-                  tints = emptyList(),
-                  blurRadius = 24.dp,
-                  noiseFactor = 0f,
-                ),
-            ),
-        containerColor =
-          if (HazeDefaults.blurEnabled()) Color.Transparent else MaterialTheme.colorScheme.surface,
+            .hazeEffect(hazeState) {
+              blurEffect {
+                backgroundColor = surfaceColor
+                colorEffects = emptyList()
+                blurRadius = 24.dp
+                noiseFactor = 0f
+              }
+            },
+        containerColor = if (HazeBlurDefaults.blurEnabled()) Color.Transparent else surfaceColor,
       ) {
         items.forEach { navItem ->
           val isSelected = currentNavKey == navItem.navKey

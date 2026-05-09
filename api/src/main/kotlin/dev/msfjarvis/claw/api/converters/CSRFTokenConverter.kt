@@ -6,18 +6,18 @@
  */
 package dev.msfjarvis.claw.api.converters
 
+import com.fleeksoft.ksoup.Ksoup
 import dev.msfjarvis.claw.api.CSRFToken
 import dev.msfjarvis.claw.api.LobstersApi
 import java.lang.reflect.Type
 import okhttp3.ResponseBody
-import org.jsoup.Jsoup
 import retrofit2.Converter
 import retrofit2.Retrofit
 
 object CSRFTokenConverter : Converter<ResponseBody, CSRFToken> {
   override fun convert(value: ResponseBody): CSRFToken {
     val token =
-      Jsoup.parse(value.string(), LobstersApi.BASE_URL)
+      Ksoup.parse(value.string(), baseUri = LobstersApi.BASE_URL)
         .select("meta[name=\"csrf-token\"]")
         .firstOrNull()
         ?.attr("content")

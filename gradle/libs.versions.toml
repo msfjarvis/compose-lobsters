@@ -112,6 +112,7 @@ haze = { module = "dev.chrisbanes.haze:haze", version.ref = "haze" }
 haze-blur = { module = "dev.chrisbanes.haze:haze-blur", version.ref = "haze" }
 htmlconverter = "be.digitalia.compose.htmlconverter:htmlconverter:1.1.0"
 jsoup = "org.jsoup:jsoup:1.22.2"
+ksoup = "com.fleeksoft.ksoup:ksoup:0.2.4"
 # Referenced in build-logic
 #noinspection UnusedVersionCatalogEntry
 junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }

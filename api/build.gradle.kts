@@ -20,6 +20,7 @@ dependencies {
 
   implementation(libs.eithernet.integration.retrofit)
   implementation(libs.jsoup)
+  implementation(libs.ksoup)
 
   testImplementation(libs.eithernet.test.fixtures)
   testImplementation(libs.kotlin.reflect)

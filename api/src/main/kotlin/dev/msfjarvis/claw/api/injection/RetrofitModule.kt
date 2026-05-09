@@ -8,6 +8,7 @@ package dev.msfjarvis.claw.api.injection
 
 import com.slack.eithernet.integration.retrofit.ApiResultCallAdapterFactory
 import com.slack.eithernet.integration.retrofit.ApiResultConverterFactory
+import dev.msfjarvis.claw.api.AuthenticatedLobstersApi
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.api.LobstersSearchApi
 import dev.msfjarvis.claw.api.converters.CSRFTokenConverter
@@ -74,6 +75,11 @@ object RetrofitModule {
   @Provides
   @SingleIn(AppScope::class)
   fun provideApi(retrofit: Retrofit): LobstersApi = retrofit.create()
+
+  @Provides
+  @SingleIn(AppScope::class)
+  fun provideAuthenticatedApi(api: LobstersApi): AuthenticatedLobstersApi =
+    AuthenticatedLobstersApi(api)
 
   @Provides
   @SingleIn(AppScope::class)

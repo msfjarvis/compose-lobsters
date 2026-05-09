@@ -19,7 +19,10 @@ dependencies {
   api(projects.model)
 
   implementation(libs.eithernet.integration.retrofit)
+  implementation(libs.kotlinx.serialization.core)
   implementation(libs.ksoup)
+  implementation(libs.kspoon)
+  implementation(libs.retrofit.kotlinxSerializationConverter)
 
   testImplementation(libs.eithernet.test.fixtures)
   testImplementation(libs.kotlin.reflect)

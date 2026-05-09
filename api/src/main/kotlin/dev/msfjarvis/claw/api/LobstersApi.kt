@@ -11,7 +11,13 @@ import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.LobstersPostDetails
 import dev.msfjarvis.claw.model.Tag
 import dev.msfjarvis.claw.model.User
+import okhttp3.MultipartBody
+import okhttp3.ResponseBody
 import retrofit2.http.GET
+import retrofit2.http.Header
+import retrofit2.http.Multipart
+import retrofit2.http.POST
+import retrofit2.http.Part
 import retrofit2.http.Path
 
 /** Simple interface defining an API for lobste.rs */
@@ -32,6 +38,44 @@ interface LobstersApi {
   @GET("/") suspend fun getCSRFToken(): ApiResult<CSRFToken, Unit>
 
   @GET("tags.json") suspend fun getTags(): ApiResult<List<Tag>, Unit>
+
+  @Multipart
+  @POST("comments/{commentId}/upvote")
+  suspend fun upvoteComment(
+    @Path("commentId") commentId: String,
+    @Header("x-csrf-token") csrfToken: String,
+    @Header("x-requested-with") requestedWith: String,
+    @Part reason: MultipartBody.Part,
+  ): ApiResult<ResponseBody, Unit>
+
+  @Multipart
+  @POST("comments/{commentId}/unvote")
+  suspend fun unvoteComment(
+    @Path("commentId") commentId: String,
+    @Header("x-csrf-token") csrfToken: String,
+    @Header("x-requested-with") requestedWith: String,
+    @Part reason: MultipartBody.Part,
+  ): ApiResult<ResponseBody, Unit>
+
+  @GET("comments/{commentId}/reply")
+  suspend fun getReplyForm(
+    @Path("commentId") commentId: String,
+    @Header("x-csrf-token") csrfToken: String,
+    @Header("x-requested-with") requestedWith: String,
+  ): ApiResult<ResponseBody, Unit>
+
+  @Multipart
+  @POST("comments")
+  suspend fun postReply(
+    @Header("x-csrf-token") csrfToken: String,
+    @Header("x-requested-with") requestedWith: String,
+    @Part authenticityToken: MultipartBody.Part,
+    @Part storyId: MultipartBody.Part,
+    @Part method: MultipartBody.Part,
+    @Part parentCommentShortId: MultipartBody.Part,
+    @Part comment: MultipartBody.Part,
+    @Part commit: MultipartBody.Part,
+  ): ApiResult<ResponseBody, Unit>
 
   companion object {
     const val BASE_URL = "https://lobste.rs"

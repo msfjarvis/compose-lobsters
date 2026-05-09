@@ -56,7 +56,7 @@ dependencies {
   implementation(libs.coil3.plain)
   implementation(libs.eithernet)
   implementation(libs.htmlconverter)
-  implementation(libs.jsoup)
+  implementation(libs.ksoup)
   implementation(libs.kotlinResult)
   implementation(libs.kotlinResult.coroutines)
   implementation(libs.kotlinx.collections.immutable)

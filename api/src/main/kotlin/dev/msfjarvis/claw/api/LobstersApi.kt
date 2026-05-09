@@ -7,10 +7,14 @@
 package dev.msfjarvis.claw.api
 
 import com.slack.eithernet.ApiResult
+import com.slack.eithernet.ApiResult.Failure
+import com.slack.eithernet.ApiResult.Success
+import dev.burnoo.kspoon.annotation.Selector
 import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.LobstersPostDetails
 import dev.msfjarvis.claw.model.Tag
 import dev.msfjarvis.claw.model.User
+import kotlinx.serialization.Serializable
 import okhttp3.MultipartBody
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -19,14 +23,25 @@ import retrofit2.http.POST
 import retrofit2.http.Part
 import retrofit2.http.Path
 
+@Serializable class PostsPage(@Selector("li.story") val posts: List<LobstersPost> = emptyList())
+
+fun ApiResult<PostsPage, Unit>.toPostsResult(): ApiResult<List<LobstersPost>, Unit> =
+  when (this) {
+    is Success -> ApiResult.success(value.posts)
+    is Failure.ApiFailure -> ApiResult.apiFailure(error)
+    is Failure.HttpFailure -> ApiResult.httpFailure(code, error)
+    is Failure.NetworkFailure -> ApiResult.networkFailure(error)
+    is Failure.UnknownFailure -> ApiResult.unknownFailure(error)
+  }
+
 /** Simple interface defining an API for lobste.rs */
 interface LobstersApi {
 
-  @GET("page/{page}.json")
-  suspend fun getHottestPosts(@Path("page") page: Int): ApiResult<List<LobstersPost>, Unit>
+  @GET("page/{page}")
+  suspend fun getHottestPosts(@Path("page") page: Int): ApiResult<PostsPage, Unit>
 
-  @GET("newest/page/{page}.json")
-  suspend fun getNewestPosts(@Path("page") page: Int): ApiResult<List<LobstersPost>, Unit>
+  @GET("newest/page/{page}")
+  suspend fun getNewestPosts(@Path("page") page: Int): ApiResult<PostsPage, Unit>
 
   @GET("s/{postId}.json")
   suspend fun getPostDetails(@Path("postId") postId: String): ApiResult<LobstersPostDetails, Unit>

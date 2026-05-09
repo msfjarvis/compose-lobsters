@@ -8,6 +8,7 @@ import dev.msfjarvis.claw.gradle.addTestDependencies
 
 plugins {
   id("dev.msfjarvis.claw.kotlin-jvm")
+  alias(libs.plugins.kotlin.serialization)
   alias(libs.plugins.dependencyAnalysis)
   alias(libs.plugins.metro)
 }

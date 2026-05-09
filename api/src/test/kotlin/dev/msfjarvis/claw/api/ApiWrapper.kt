@@ -35,6 +35,7 @@ class ApiWrapper(controller: EitherNetController<LobstersApi>) {
   private val tags: List<Tag> = json.decodeFromString(getResource("tags.json"))
 
   val api = controller.api
+  val authenticatedApi = AuthenticatedLobstersApi(api)
 
   init {
     controller.enqueue(LobstersApi::getHottestPosts) { success(hottest) }
@@ -49,5 +50,32 @@ class ApiWrapper(controller: EitherNetController<LobstersApi>) {
         )
       )
     }
+    controller.enqueue(LobstersApi::getCSRFToken) {
+      success(
+        CSRFTokenConverter.convert(
+          getResource("csrf_page.html").toResponseBody("text/html".toMediaType())
+        )
+      )
+    }
+    controller.enqueue(LobstersApi::getCSRFToken) {
+      success(
+        CSRFTokenConverter.convert(
+          getResource("csrf_page.html").toResponseBody("text/html".toMediaType())
+        )
+      )
+    }
+    controller.enqueue(LobstersApi::getCSRFToken) {
+      success(
+        CSRFTokenConverter.convert(
+          getResource("csrf_page.html").toResponseBody("text/html".toMediaType())
+        )
+      )
+    }
+    controller.enqueue(LobstersApi::upvoteComment) { success("ok".toResponseBody()) }
+    controller.enqueue(LobstersApi::unvoteComment) { success("ok".toResponseBody()) }
+    controller.enqueue(LobstersApi::getReplyForm) {
+      success(getResource("reply_form.html").toResponseBody("text/html".toMediaType()))
+    }
+    controller.enqueue(LobstersApi::postReply) { success("ok".toResponseBody()) }
   }
 }

@@ -8,11 +8,14 @@ package dev.msfjarvis.claw.api.converters
 
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.api.ReplyForm
+import java.lang.reflect.Type
 import okhttp3.ResponseBody
 import org.jsoup.Jsoup
+import retrofit2.Converter
+import retrofit2.Retrofit
 
-object ReplyFormConverter {
-  fun convert(value: ResponseBody): ReplyForm {
+object ReplyFormConverter : Converter<ResponseBody, ReplyForm> {
+  override fun convert(value: ResponseBody): ReplyForm {
     val document = Jsoup.parse(value.string(), LobstersApi.BASE_URL)
     fun inputValue(name: String): String =
       document.select("input[name=\"$name\"]").firstOrNull()?.attr("value").orEmpty()
@@ -23,5 +26,15 @@ object ReplyFormConverter {
       method = inputValue("_method"),
       parentCommentShortId = inputValue("parent_comment_short_id"),
     )
+  }
+
+  object Factory : Converter.Factory() {
+    override fun responseBodyConverter(
+      type: Type,
+      annotations: Array<out Annotation>,
+      retrofit: Retrofit,
+    ): Converter<ResponseBody, *>? {
+      return if (type == ReplyForm::class.java) ReplyFormConverter else null
+    }
   }
 }

@@ -12,7 +12,9 @@ import dev.msfjarvis.claw.api.AuthenticatedLobstersApi
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.api.LobstersSearchApi
 import dev.msfjarvis.claw.api.converters.CSRFTokenConverter
+import dev.msfjarvis.claw.api.converters.ReplyFormConverter
 import dev.msfjarvis.claw.api.converters.SearchConverter
+import dev.msfjarvis.claw.api.converters.UnitConverter
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.BindingContainer
 import dev.zacsweers.metro.ContributesTo
@@ -91,14 +93,24 @@ object RetrofitModule {
   fun provideApiResultConverter(): Converter.Factory = ApiResultConverterFactory
 
   @Provides
+  @IntKey(1)
+  @IntoMap
+  fun provideCSRFTokenConverter(): Converter.Factory = CSRFTokenConverter.Factory
+
+  @Provides
+  @IntKey(2)
+  @IntoMap
+  fun provideReplyFormConverter(): Converter.Factory = ReplyFormConverter.Factory
+
+  @Provides
+  @IntKey(3)
+  @IntoMap
+  fun provideUnitConverter(): Converter.Factory = UnitConverter.Factory
+
+  @Provides
   @IntKey(0)
   @IntoMap
   fun provideApiResultCallAdapter(): CallAdapter.Factory = ApiResultCallAdapterFactory
-
-  @Provides
-  @IntKey(Int.MAX_VALUE)
-  @IntoMap
-  fun provideCSRFTokenConverter(): Converter.Factory = CSRFTokenConverter.Factory
 
   @Provides
   @SearchApi

@@ -28,4 +28,14 @@ class ReplyFormConverterTest {
     assertThat(form.method).isEqualTo("post")
     assertThat(form.parentCommentShortId).isEqualTo("edtrox")
   }
+
+  @Test
+  fun `converter returns empty strings when reply form fields are absent`() {
+    val form = ReplyFormConverter.convert("<form></form>".toResponseBody("text/html".toMediaType()))
+
+    assertThat(form.authenticityToken).isEmpty()
+    assertThat(form.storyId).isEmpty()
+    assertThat(form.method).isEmpty()
+    assertThat(form.parentCommentShortId).isEmpty()
+  }
 }

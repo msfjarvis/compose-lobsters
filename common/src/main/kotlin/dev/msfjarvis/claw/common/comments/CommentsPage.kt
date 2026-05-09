@@ -16,6 +16,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.msfjarvis.claw.common.NetworkState.Error
 import dev.msfjarvis.claw.common.NetworkState.Loading
 import dev.msfjarvis.claw.common.NetworkState.Success
@@ -42,6 +43,7 @@ fun CommentsPage(
         SeenCommentsState.from(postComments = viewModel.getSeenComments(postId), hasLoaded = true)
     }
   val commentListState = rememberLazyListState()
+  val isLoggedIn by viewModel.isLoggedIn.collectAsStateWithLifecycle()
 
   when (val postDetails = viewModel.postDetails) {
     is Success<*> -> {
@@ -58,6 +60,9 @@ fun CommentsPage(
           createCommentNodes = viewModel::createCommentNodes,
           updateCommentNodeExpanded = viewModel::updateCommentNodeExpanded,
           updateUnreadStatus = viewModel::updateUnreadStatus,
+          isLoggedIn = isLoggedIn,
+          upvoteComment = viewModel::upvoteComment,
+          unvoteComment = viewModel::unvoteComment,
           modifier = modifier.fillMaxSize(),
         )
       } else {

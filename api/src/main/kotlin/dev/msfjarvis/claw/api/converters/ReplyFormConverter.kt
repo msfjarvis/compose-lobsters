@@ -6,17 +6,17 @@
  */
 package dev.msfjarvis.claw.api.converters
 
+import com.fleeksoft.ksoup.Ksoup
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.api.ReplyForm
 import java.lang.reflect.Type
 import okhttp3.ResponseBody
-import org.jsoup.Jsoup
 import retrofit2.Converter
 import retrofit2.Retrofit
 
 object ReplyFormConverter : Converter<ResponseBody, ReplyForm> {
   override fun convert(value: ResponseBody): ReplyForm {
-    val document = Jsoup.parse(value.string(), LobstersApi.BASE_URL)
+    val document = Ksoup.parse(value.string(), baseUri = LobstersApi.BASE_URL)
     fun inputValue(name: String): String =
       document.select("input[name=\"$name\"]").firstOrNull()?.attr("value").orEmpty()
 

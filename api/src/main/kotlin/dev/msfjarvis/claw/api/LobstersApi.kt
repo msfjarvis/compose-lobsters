@@ -12,7 +12,6 @@ import dev.msfjarvis.claw.model.LobstersPostDetails
 import dev.msfjarvis.claw.model.Tag
 import dev.msfjarvis.claw.model.User
 import okhttp3.MultipartBody
-import okhttp3.ResponseBody
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Multipart
@@ -46,7 +45,7 @@ interface LobstersApi {
     @Header("x-csrf-token") csrfToken: String,
     @Header("x-requested-with") requestedWith: String,
     @Part reason: MultipartBody.Part,
-  ): ApiResult<ResponseBody, Unit>
+  ): ApiResult<Unit, Unit>
 
   @Multipart
   @POST("comments/{commentId}/unvote")
@@ -55,14 +54,14 @@ interface LobstersApi {
     @Header("x-csrf-token") csrfToken: String,
     @Header("x-requested-with") requestedWith: String,
     @Part reason: MultipartBody.Part,
-  ): ApiResult<ResponseBody, Unit>
+  ): ApiResult<Unit, Unit>
 
   @GET("comments/{commentId}/reply")
   suspend fun getReplyForm(
     @Path("commentId") commentId: String,
     @Header("x-csrf-token") csrfToken: String,
     @Header("x-requested-with") requestedWith: String,
-  ): ApiResult<ResponseBody, Unit>
+  ): ApiResult<ReplyForm, Unit>
 
   @Multipart
   @POST("comments")
@@ -75,7 +74,7 @@ interface LobstersApi {
     @Part parentCommentShortId: MultipartBody.Part,
     @Part comment: MultipartBody.Part,
     @Part commit: MultipartBody.Part,
-  ): ApiResult<ResponseBody, Unit>
+  ): ApiResult<Unit, Unit>
 
   companion object {
     const val BASE_URL = "https://lobste.rs"

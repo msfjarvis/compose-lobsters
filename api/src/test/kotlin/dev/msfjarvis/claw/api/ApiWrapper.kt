@@ -71,11 +71,15 @@ class ApiWrapper(controller: EitherNetController<LobstersApi>) {
         )
       )
     }
-    controller.enqueue(LobstersApi::upvoteComment) { success("ok".toResponseBody()) }
-    controller.enqueue(LobstersApi::unvoteComment) { success("ok".toResponseBody()) }
+    controller.enqueue(LobstersApi::upvoteComment) { success(Unit) }
+    controller.enqueue(LobstersApi::unvoteComment) { success(Unit) }
     controller.enqueue(LobstersApi::getReplyForm) {
-      success(getResource("reply_form.html").toResponseBody("text/html".toMediaType()))
+      success(
+        dev.msfjarvis.claw.api.converters.ReplyFormConverter.convert(
+          getResource("reply_form.html").toResponseBody("text/html".toMediaType())
+        )
+      )
     }
-    controller.enqueue(LobstersApi::postReply) { success("ok".toResponseBody()) }
+    controller.enqueue(LobstersApi::postReply) { success(Unit) }
   }
 }

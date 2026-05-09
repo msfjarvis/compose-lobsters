@@ -6,23 +6,15 @@
  */
 package dev.msfjarvis.claw.api.converters
 
-import dev.msfjarvis.claw.api.CSRFToken
-import dev.msfjarvis.claw.api.LobstersApi
 import java.lang.reflect.Type
+import kotlin.Unit
 import okhttp3.ResponseBody
-import org.jsoup.Jsoup
 import retrofit2.Converter
 import retrofit2.Retrofit
 
-object CSRFTokenConverter : Converter<ResponseBody, CSRFToken> {
-  override fun convert(value: ResponseBody): CSRFToken {
-    val token =
-      Jsoup.parse(value.string(), LobstersApi.BASE_URL)
-        .select("meta[name=\"csrf-token\"]")
-        .firstOrNull()
-        ?.attr("content")
-        .orEmpty()
-    return CSRFToken(token)
+object UnitConverter : Converter<ResponseBody, Unit> {
+  override fun convert(value: ResponseBody) {
+    value.close()
   }
 
   object Factory : Converter.Factory() {
@@ -31,7 +23,7 @@ object CSRFTokenConverter : Converter<ResponseBody, CSRFToken> {
       annotations: Array<out Annotation>,
       retrofit: Retrofit,
     ): Converter<ResponseBody, *>? {
-      return if (type == CSRFToken::class.java) CSRFTokenConverter else null
+      return if (type == Unit::class.java) UnitConverter else null
     }
   }
 }

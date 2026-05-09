@@ -9,11 +9,9 @@ package dev.msfjarvis.claw.api
 import com.slack.eithernet.ApiResult
 import com.slack.eithernet.ApiResult.Failure
 import com.slack.eithernet.ApiResult.Success
-import dev.msfjarvis.claw.api.converters.ReplyFormConverter
 import dev.zacsweers.metro.Inject
 import java.io.IOException
 import okhttp3.MultipartBody
-import okhttp3.ResponseBody
 
 private const val XML_HTTP_REQUEST = "XMLHttpRequest"
 
@@ -22,13 +20,13 @@ class AuthenticatedLobstersApi(private val api: LobstersApi) {
 
   suspend fun upvoteComment(commentId: String): ApiResult<Unit, Unit> {
     return withCSRFToken { csrfToken ->
-      api.upvoteComment(commentId, csrfToken, XML_HTTP_REQUEST, part("reason", "")).toUnit()
+      api.upvoteComment(commentId, csrfToken, XML_HTTP_REQUEST, part("reason", ""))
     }
   }
 
   suspend fun unvoteComment(commentId: String): ApiResult<Unit, Unit> {
     return withCSRFToken { csrfToken ->
-      api.unvoteComment(commentId, csrfToken, XML_HTTP_REQUEST, part("reason", "")).toUnit()
+      api.unvoteComment(commentId, csrfToken, XML_HTTP_REQUEST, part("reason", ""))
     }
   }
 
@@ -36,11 +34,11 @@ class AuthenticatedLobstersApi(private val api: LobstersApi) {
     return withCSRFToken { csrfToken ->
       when (val formResponse = api.getReplyForm(commentId, csrfToken, XML_HTTP_REQUEST)) {
         is Success -> {
-          val form = ReplyFormConverter.convert(formResponse.value)
+          val form = formResponse.value
           if (!form.isValid()) {
             ApiResult.unknownFailure(IOException("Lobsters reply form was missing required fields"))
           } else {
-            
+
             api.postReply(
               csrfToken = csrfToken,
               requestedWith = XML_HTTP_REQUEST,
@@ -51,7 +49,6 @@ class AuthenticatedLobstersApi(private val api: LobstersApi) {
               comment = part("comment", comment),
               commit = part("commit", "Post"),
             )
-              .toUnit()
           }
         }
         is Failure -> formResponse.toUnitFailure()
@@ -83,12 +80,6 @@ class AuthenticatedLobstersApi(private val api: LobstersApi) {
 
   private fun part(name: String, value: String): MultipartBody.Part =
     MultipartBody.Part.createFormData(name, value)
-
-  private fun ApiResult<ResponseBody, Unit>.toUnit(): ApiResult<Unit, Unit> =
-    when (this) {
-      is Success -> ApiResult.success(Unit)
-      is Failure -> toUnitFailure()
-    }
 
   private fun Failure<*>.toUnitFailure(): Failure<Unit> =
     when (this) {

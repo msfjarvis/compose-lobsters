@@ -10,7 +10,6 @@ import com.google.common.truth.Truth.assertThat
 import com.slack.eithernet.ApiResult.Success
 import com.slack.eithernet.test.newEitherNetController
 import dev.msfjarvis.claw.model.LobstersPostDetails
-import dev.msfjarvis.claw.model.Tag
 import dev.msfjarvis.claw.model.User
 import dev.msfjarvis.claw.util.TestUtils.assertIs
 import java.time.format.DateTimeFormatter
@@ -121,9 +120,20 @@ class ApiTest {
   @Test
   fun `retrieve tags`() = runTest {
     val tags = api.getTags()
-    assertIs<Success<List<Tag>>>(tags)
-    assertThat(tags.value).isNotEmpty()
-    assertThat(tags.value.first().tag).isEqualTo("ruby")
-    assertThat(tags.value.first().description).isEqualTo("Ruby programming")
+    assertIs<Success<TagsPage>>(tags)
+    assertThat(tags.value.tags).isNotEmpty()
+    val rubyTag = tags.value.tags.first { it.tag == "ruby" }
+    assertThat(rubyTag.description).isEqualTo("Ruby programming")
+    assertThat(rubyTag.privileged).isFalse()
+    assertThat(rubyTag.active).isTrue()
+    assertThat(rubyTag.category).isEmpty()
+    assertThat(rubyTag.isMedia).isFalse()
+    assertThat(rubyTag.hotnessMod).isEqualTo(0.0)
+
+    val newsTag = tags.value.tags.first { it.tag == "news" }
+    assertThat(newsTag.active).isFalse()
+
+    val videoTag = tags.value.tags.first { it.tag == "video" }
+    assertThat(videoTag.isMedia).isTrue()
   }
 }

@@ -13,21 +13,12 @@ import com.slack.eithernet.test.enqueue
 import dev.burnoo.kspoon.Kspoon
 import dev.msfjarvis.claw.api.converters.CSRFTokenConverter
 import dev.msfjarvis.claw.model.LobstersPostDetails
-import dev.msfjarvis.claw.model.Tag
 import dev.msfjarvis.claw.model.User
 import dev.msfjarvis.claw.util.TestUtils.getResource
-import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonNamingStrategy
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.ResponseBody.Companion.toResponseBody
 
-@OptIn(ExperimentalSerializationApi::class)
 class ApiWrapper(controller: EitherNetController<LobstersApi>) {
-  private val json = Json {
-    ignoreUnknownKeys = true
-    namingStrategy = JsonNamingStrategy.SnakeCase
-  }
   private val kspoon = Kspoon {
     parse = { html -> Ksoup.parse(html, baseUri = LobstersApi.BASE_URL) }
     coerceInputValues = true
@@ -38,7 +29,7 @@ class ApiWrapper(controller: EitherNetController<LobstersApi>) {
   val upvotedPostDetails: LobstersPostDetails =
     kspoon.parse(getResource("post_details_upvoted.html"))
   private val user: User = kspoon.parse(getResource("msfjarvis.html"))
-  private val tags: List<Tag> = json.decodeFromString(getResource("tags.json"))
+  private val tags: TagsPage = kspoon.parse(getResource("tags.html"))
 
   val api = controller.api
   val authenticatedApi = AuthenticatedLobstersApi(api)

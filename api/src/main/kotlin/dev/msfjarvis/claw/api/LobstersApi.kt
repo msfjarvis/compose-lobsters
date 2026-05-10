@@ -25,6 +25,8 @@ import retrofit2.http.Path
 
 @Serializable class PostsPage(@Selector("li.story") val posts: List<LobstersPost> = emptyList())
 
+@Serializable class TagsPage(@Selector("ol.category_tags > li") val tags: List<Tag> = emptyList())
+
 fun ApiResult<PostsPage, Unit>.toPostsResult(): ApiResult<List<LobstersPost>, Unit> =
   when (this) {
     is Success -> ApiResult.success(value.posts)
@@ -50,7 +52,7 @@ interface LobstersApi {
 
   @GET("/") suspend fun getCSRFToken(): ApiResult<CSRFToken, Unit>
 
-  @GET("tags.json") suspend fun getTags(): ApiResult<List<Tag>, Unit>
+  @GET("tags") suspend fun getTags(): ApiResult<TagsPage, Unit>
 
   @Multipart
   @POST("comments/{commentId}/upvote")

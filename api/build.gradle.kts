@@ -28,7 +28,5 @@ dependencies {
   testImplementation(libs.eithernet.test.fixtures)
   testImplementation(libs.kotlin.reflect)
   testImplementation(libs.kotlinx.coroutines.test)
-  testImplementation(libs.kotlinx.serialization.core)
-  testImplementation(libs.kotlinx.serialization.json)
   addTestDependencies(project)
 }

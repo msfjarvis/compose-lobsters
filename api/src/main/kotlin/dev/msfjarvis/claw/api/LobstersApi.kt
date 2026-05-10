@@ -43,7 +43,7 @@ interface LobstersApi {
   @GET("newest/page/{page}")
   suspend fun getNewestPosts(@Path("page") page: Int): ApiResult<PostsPage, Unit>
 
-  @GET("s/{postId}.json")
+  @GET("s/{postId}")
   suspend fun getPostDetails(@Path("postId") postId: String): ApiResult<LobstersPostDetails, Unit>
 
   @GET("~{username}.json")

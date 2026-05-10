@@ -85,7 +85,20 @@ class ApiTest {
   fun `post details with comments`() = runTest {
     val postDetails = api.getPostDetails("tdfoqh")
     assertIs<Success<LobstersPostDetails>>(postDetails)
-    assertThat(postDetails.value.comments).hasSize(10)
+    val comments = postDetails.value.comments
+    assertThat(comments).hasSize(10)
+    assertThat(comments.first().user).isEqualTo("dpercy")
+    assertThat(comments.first { it.shortId == "pcvbcd" }.score).isEqualTo(2)
+    assertThat(comments.first().comment).contains("Maybe take the max, instead of the sum?")
+    assertThat(comments.first { it.shortId == "pcvbcd" }.parentComment).isEqualTo("m3wyu5")
+    assertThat(comments.first { it.shortId == "lqqn3a" }.parentComment).isEqualTo("owddle")
+  }
+
+  @Test
+  fun `post details preserves upvoted comments`() = runTest {
+    val postDetails = wrapper.upvotedPostDetails
+    assertThat(postDetails.comments.filter { it.isUpvoted }.map { it.shortId })
+      .containsExactly("ncdsfc")
   }
 
   @Test

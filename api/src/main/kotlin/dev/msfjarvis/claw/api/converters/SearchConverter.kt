@@ -6,23 +6,21 @@
  */
 package dev.msfjarvis.claw.api.converters
 
+import com.fleeksoft.ksoup.Ksoup
+import com.fleeksoft.ksoup.nodes.Element
+import com.fleeksoft.ksoup.select.Elements
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.model.LobstersPost
 import java.lang.reflect.Type
 import okhttp3.ResponseBody
-import org.jsoup.Jsoup
-import org.jsoup.nodes.Element
-import org.jsoup.select.Elements
 import retrofit2.Converter
 import retrofit2.Retrofit
 
 object SearchConverter : Converter<ResponseBody, List<LobstersPost>> {
   override fun convert(value: ResponseBody): List<LobstersPost> {
-    return value.byteStream().use { stream ->
-      Jsoup.parse(stream, "UTF-8", LobstersApi.BASE_URL)
-        .select("div.story_liner.h-entry")
-        .map(::parsePost)
-    }
+    return Ksoup.parse(value.string(), baseUri = LobstersApi.BASE_URL)
+      .select("div.story_liner.h-entry")
+      .map(::parsePost)
   }
 
   private fun parsePost(elem: Element): LobstersPost {

@@ -23,11 +23,11 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.core.net.toUri
 import be.digitalia.compose.htmlconverter.HtmlStyle
 import be.digitalia.compose.htmlconverter.htmlToAnnotatedString
+import com.fleeksoft.ksoup.Ksoup
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.common.BuildConfig
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
-import org.jsoup.Jsoup
 
 @Composable
 internal fun ThemedRichText(text: String, modifier: Modifier = Modifier) {
@@ -64,7 +64,7 @@ internal fun ThemedRichText(text: String, modifier: Modifier = Modifier) {
 }
 
 internal fun preprocessHtml(html: String): String {
-  val document = Jsoup.parse(html)
+  val document = Ksoup.parse(html)
   document.select("li").forEach { li ->
     li.select("p").forEach { p ->
       p.childNodes().forEach { child -> p.before(child) }

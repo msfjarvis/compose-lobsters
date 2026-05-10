@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - The migration path for tag data format changes in 1.61.0 has been removed.
+- The app no longer uses the unsupported JSON endpoints on lobste.rs, instead relying
+  on parsing the HTML pages instead.
 
 ## [1.63.0] - 2026-04-02
 

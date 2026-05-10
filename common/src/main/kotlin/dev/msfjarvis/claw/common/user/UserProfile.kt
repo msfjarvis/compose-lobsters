@@ -93,7 +93,7 @@ private fun UserProfileInternal(
           .verticalScroll(scrollState),
     ) {
       NetworkImage(
-        url = "https://lobste.rs/${user.avatarUrl}",
+        url = user.avatarUrl,
         placeholder = Icons.Filled.AccountCircle,
         contentDescription = stringResource(R.string.avatar_of, user.username),
         modifier = Modifier.requiredSize(120.dp).clip(CircleShape),

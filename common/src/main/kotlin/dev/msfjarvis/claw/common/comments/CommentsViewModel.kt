@@ -15,10 +15,12 @@ import com.github.michaelbull.result.coroutines.runSuspendCatching
 import com.github.michaelbull.result.fold
 import com.slack.eithernet.ApiResult.Failure
 import com.slack.eithernet.ApiResult.Success
+import dev.msfjarvis.claw.api.AuthenticatedLobstersApi
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.api.toError
 import dev.msfjarvis.claw.common.NetworkState
 import dev.msfjarvis.claw.core.coroutines.IODispatcher
+import dev.msfjarvis.claw.core.network.SessionCookieStore
 import dev.msfjarvis.claw.model.Comment
 import dev.msfjarvis.claw.model.UIPost
 import dev.msfjarvis.claw.model.toUIPost
@@ -28,7 +30,9 @@ import dev.zacsweers.metro.Inject
 import dev.zacsweers.metrox.viewmodel.ViewModelKey
 import java.io.IOException
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -37,7 +41,9 @@ import kotlinx.coroutines.withContext
 @ContributesIntoMap(AppScope::class)
 class CommentsViewModel(
   private val api: LobstersApi,
+  private val authenticatedApi: AuthenticatedLobstersApi,
   private val commentsRepository: CommentsRepository,
+  private val sessionCookieStore: SessionCookieStore,
   @param:IODispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
   private val commentsHandler = CommentsHandler()
@@ -46,6 +52,15 @@ class CommentsViewModel(
     private set
 
   internal val commentNodes: StateFlow<List<CommentNode>> = commentsHandler.listItems
+
+  val isLoggedIn: StateFlow<Boolean> =
+    sessionCookieStore
+      .isLoggedIn()
+      .stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = false,
+      )
 
   suspend fun loadPostDetails(postId: String) {
     if (postDetails is NetworkState.Error) {
@@ -74,6 +89,20 @@ class CommentsViewModel(
 
   fun markSeenComments(postId: String, comments: List<Comment>) {
     viewModelScope.launch { commentsRepository.markSeenComments(postId, comments) }
+  }
+
+  fun upvoteComment(commentId: String) {
+    if (!isLoggedIn.value) return
+    viewModelScope.launch {
+      withContext(ioDispatcher) { authenticatedApi.upvoteComment(commentId) }
+    }
+  }
+
+  fun unvoteComment(commentId: String) {
+    if (!isLoggedIn.value) return
+    viewModelScope.launch {
+      withContext(ioDispatcher) { authenticatedApi.unvoteComment(commentId) }
+    }
   }
 
   internal fun createCommentNodes(details: UIPost, seenCommentsState: SeenCommentsState) {

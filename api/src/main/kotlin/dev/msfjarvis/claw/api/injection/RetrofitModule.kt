@@ -6,12 +6,17 @@
  */
 package dev.msfjarvis.claw.api.injection
 
+import com.fleeksoft.ksoup.Ksoup
 import com.slack.eithernet.integration.retrofit.ApiResultCallAdapterFactory
 import com.slack.eithernet.integration.retrofit.ApiResultConverterFactory
+import dev.burnoo.kspoon.Kspoon
+import dev.msfjarvis.claw.api.AuthenticatedLobstersApi
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.api.LobstersSearchApi
 import dev.msfjarvis.claw.api.converters.CSRFTokenConverter
+import dev.msfjarvis.claw.api.converters.ReplyFormConverter
 import dev.msfjarvis.claw.api.converters.SearchConverter
+import dev.msfjarvis.claw.api.converters.UnitConverter
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.BindingContainer
 import dev.zacsweers.metro.ContributesTo
@@ -21,10 +26,12 @@ import dev.zacsweers.metro.Named
 import dev.zacsweers.metro.Provides
 import dev.zacsweers.metro.Qualifier
 import dev.zacsweers.metro.SingleIn
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import retrofit2.CallAdapter
 import retrofit2.Converter
 import retrofit2.Retrofit
+import retrofit2.converter.kotlinx.serialization.asConverterFactory
 import retrofit2.create
 
 /**
@@ -77,6 +84,11 @@ object RetrofitModule {
 
   @Provides
   @SingleIn(AppScope::class)
+  fun provideAuthenticatedApi(api: LobstersApi): AuthenticatedLobstersApi =
+    AuthenticatedLobstersApi(api)
+
+  @Provides
+  @SingleIn(AppScope::class)
   fun provideSearchApi(@SearchApi retrofit: Retrofit): LobstersSearchApi = retrofit.create()
 
   @Provides
@@ -85,14 +97,35 @@ object RetrofitModule {
   fun provideApiResultConverter(): Converter.Factory = ApiResultConverterFactory
 
   @Provides
+  @IntKey(1)
+  @IntoMap
+  fun provideCSRFTokenConverter(): Converter.Factory = CSRFTokenConverter.Factory
+
+  @Provides
+  @IntKey(2)
+  @IntoMap
+  fun provideReplyFormConverter(): Converter.Factory = ReplyFormConverter.Factory
+
+  @Provides
+  @IntKey(3)
+  @IntoMap
+  fun provideUnitConverter(): Converter.Factory = UnitConverter.Factory
+
+  @Provides
+  @IntKey(4)
+  @IntoMap
+  fun provideKspoonConverter(): Converter.Factory =
+    Kspoon {
+        parse = { html -> Ksoup.parse(html, baseUri = LobstersApi.BASE_URL) }
+        coerceInputValues = true
+      }
+      .toFormat()
+      .asConverterFactory("text/html".toMediaType())
+
+  @Provides
   @IntKey(0)
   @IntoMap
   fun provideApiResultCallAdapter(): CallAdapter.Factory = ApiResultCallAdapterFactory
-
-  @Provides
-  @IntKey(Int.MAX_VALUE)
-  @IntoMap
-  fun provideCSRFTokenConverter(): Converter.Factory = CSRFTokenConverter.Factory
 
   @Provides
   @SearchApi

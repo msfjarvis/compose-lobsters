@@ -36,6 +36,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -52,6 +55,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.drewhamilton.poko.Poko
+import dev.msfjarvis.claw.common.BuildConfig
 import dev.msfjarvis.claw.common.R
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.posts.Submitter
@@ -94,6 +98,9 @@ internal fun CommentsPageInternal(
   createCommentNodes: (UIPost, SeenCommentsState) -> Unit,
   updateCommentNodeExpanded: (String, Boolean) -> Unit,
   updateUnreadStatus: (SeenCommentsState) -> Unit,
+  isLoggedIn: Boolean,
+  upvoteComment: (String) -> Unit,
+  unvoteComment: (String) -> Unit,
   modifier: Modifier = Modifier,
 ) {
   LaunchedEffect(key1 = details, key2 = seenCommentsState) {
@@ -149,7 +156,15 @@ internal fun CommentsPageInternal(
         }
 
         items(items = commentNodes, key = { node -> node.comment.shortId }) { node ->
-          NodeBox(node, node.isExpanded, openUserProfile, onToggleExpandedState)
+          NodeBox(
+            node = node,
+            isExpanded = node.isExpanded,
+            openUserProfile = openUserProfile,
+            onToggleExpandedState = onToggleExpandedState,
+            isLoggedIn = isLoggedIn,
+            upvoteComment = upvoteComment,
+            unvoteComment = unvoteComment,
+          )
         }
 
         item(key = "bottom_spacer") {
@@ -176,6 +191,9 @@ private fun NodeBox(
   isExpanded: Boolean,
   openUserProfile: (String) -> Unit,
   onToggleExpandedState: (String, Boolean) -> Unit,
+  isLoggedIn: Boolean,
+  upvoteComment: (String) -> Unit,
+  unvoteComment: (String) -> Unit,
   modifier: Modifier = Modifier,
 ) {
   CommentEntry(
@@ -183,6 +201,9 @@ private fun NodeBox(
     commentNode = node,
     openUserProfile = openUserProfile,
     onToggleExpandedState = onToggleExpandedState,
+    isLoggedIn = isLoggedIn,
+    upvoteComment = upvoteComment,
+    unvoteComment = unvoteComment,
     modifier = modifier,
   )
   HorizontalDivider()
@@ -196,9 +217,13 @@ private fun CommentEntry(
   commentNode: CommentNode,
   openUserProfile: (String) -> Unit,
   onToggleExpandedState: (String, Boolean) -> Unit,
+  isLoggedIn: Boolean,
+  upvoteComment: (String) -> Unit,
+  unvoteComment: (String) -> Unit,
   modifier: Modifier = Modifier,
 ) {
   val comment = commentNode.comment
+  var hasLocallyUpvoted by remember(comment.shortId) { mutableStateOf(comment.isUpvoted) }
   Box(
     modifier =
       modifier
@@ -225,6 +250,22 @@ private fun CommentEntry(
             imageVector = if (isExpanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
             contentDescription = if (isExpanded) "Collapse comment" else "Expand comment",
             modifier = Modifier.align(Alignment.Center),
+          )
+        }
+        if (isLoggedIn && BuildConfig.DEBUG) {
+          Text(
+            text = if (hasLocallyUpvoted) "Unvote" else "Upvote",
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.primary,
+            modifier =
+              Modifier.padding(end = 8.dp).clickable(role = Role.Button) {
+                if (hasLocallyUpvoted) {
+                  unvoteComment(comment.shortId)
+                } else {
+                  upvoteComment(comment.shortId)
+                }
+                hasLocallyUpvoted = !hasLocallyUpvoted
+              },
           )
         }
         Submitter(

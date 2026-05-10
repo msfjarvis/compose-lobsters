@@ -9,11 +9,10 @@ package dev.msfjarvis.claw.api
 import com.google.common.truth.Truth.assertThat
 import com.slack.eithernet.ApiResult.Success
 import com.slack.eithernet.test.newEitherNetController
-import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.LobstersPostDetails
-import dev.msfjarvis.claw.model.Tag
 import dev.msfjarvis.claw.model.User
 import dev.msfjarvis.claw.util.TestUtils.assertIs
+import java.time.format.DateTimeFormatter
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -25,23 +24,80 @@ class ApiTest {
   @Test
   fun `api gets correct number of items`() = runTest {
     val posts = api.getHottestPosts(1)
-    assertIs<Success<List<LobstersPost>>>(posts)
-    assertThat(posts.value).hasSize(25)
+    assertIs<Success<PostsPage>>(posts)
+    assertThat(posts.value.posts).hasSize(25)
   }
 
   @Test
   fun `posts with no urls`() = runTest {
     val posts = api.getHottestPosts(1)
-    assertIs<Success<List<LobstersPost>>>(posts)
-    val commentsOnlyPosts = posts.value.asSequence().filter { it.url.isEmpty() }.toSet()
+    assertIs<Success<PostsPage>>(posts)
+    val commentsOnlyPosts = posts.value.posts.asSequence().filter { it.url.isEmpty() }.toSet()
     assertThat(commentsOnlyPosts).hasSize(0)
+  }
+
+  @Test
+  fun `api parses hottest HTML fixture fields`() = runTest {
+    val posts = api.getHottestPosts(1)
+    assertIs<Success<PostsPage>>(posts)
+
+    val firstPost = posts.value.posts[0]
+    assertThat(firstPost.shortId).isEqualTo("ho7nqt")
+    assertThat(firstPost.title).isEqualTo("On forking the Web")
+    assertThat(firstPost.submitter).isEqualTo("spc476")
+    assertThat(firstPost.commentCount).isEqualTo(33)
+    assertThat(firstPost.commentsUrl).isEqualTo("https://lobste.rs/s/ho7nqt/on_forking_web")
+    assertThat(firstPost.tags).containsExactly("web")
+    assertThat(firstPost.userIsAuthor).isFalse()
+    assertThat(firstPost.createdAt).isEqualTo("2026-05-09T10:03:17Z")
+    DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(firstPost.createdAt)
+
+    val secondPost = posts.value.posts[1]
+    assertThat(secondPost.shortId).isEqualTo("vbit2a")
+    assertThat(secondPost.title).isEqualTo("I Will Not Add Query Strings to Your URLs")
+    assertThat(secondPost.submitter).isEqualTo("susam")
+    assertThat(secondPost.commentCount).isEqualTo(2)
+    assertThat(secondPost.commentsUrl)
+      .isEqualTo("https://lobste.rs/s/vbit2a/i_will_not_add_query_strings_your_urls")
+    assertThat(secondPost.tags).containsExactly("web")
+    assertThat(secondPost.userIsAuthor).isTrue()
+
+    val noCommentsPost = posts.value.posts.first { it.shortId == "sjbrlg" }
+    assertThat(noCommentsPost.title).isEqualTo("Yggdrasil Network as an Embedded Go Library")
+    assertThat(noCommentsPost.submitter).isEqualTo("asciimoth")
+    assertThat(noCommentsPost.commentCount).isEqualTo(0)
+    assertThat(noCommentsPost.commentsUrl)
+      .isEqualTo("https://lobste.rs/s/sjbrlg/yggdrasil_network_as_embedded_go_library")
+    assertThat(noCommentsPost.tags)
+      .containsExactly("distributed", "go", "networking", "programming")
+    assertThat(noCommentsPost.userIsAuthor).isTrue()
+  }
+
+  @Test
+  fun `api gets newest posts`() = runTest {
+    val posts = api.getNewestPosts(1)
+    assertIs<Success<PostsPage>>(posts)
+    assertThat(posts.value.posts).hasSize(25)
   }
 
   @Test
   fun `post details with comments`() = runTest {
     val postDetails = api.getPostDetails("tdfoqh")
     assertIs<Success<LobstersPostDetails>>(postDetails)
-    assertThat(postDetails.value.comments).hasSize(10)
+    val comments = postDetails.value.comments
+    assertThat(comments).hasSize(10)
+    assertThat(comments.first().user).isEqualTo("dpercy")
+    assertThat(comments.first { it.shortId == "pcvbcd" }.score).isEqualTo(2)
+    assertThat(comments.first().comment).contains("Maybe take the max, instead of the sum?")
+    assertThat(comments.first { it.shortId == "pcvbcd" }.parentComment).isEqualTo("m3wyu5")
+    assertThat(comments.first { it.shortId == "lqqn3a" }.parentComment).isEqualTo("owddle")
+  }
+
+  @Test
+  fun `post details preserves upvoted comments`() = runTest {
+    val postDetails = wrapper.upvotedPostDetails
+    assertThat(postDetails.comments.filter { it.isUpvoted }.map { it.shortId })
+      .containsExactly("ncdsfc")
   }
 
   @Test
@@ -64,9 +120,20 @@ class ApiTest {
   @Test
   fun `retrieve tags`() = runTest {
     val tags = api.getTags()
-    assertIs<Success<List<Tag>>>(tags)
-    assertThat(tags.value).isNotEmpty()
-    assertThat(tags.value.first().tag).isEqualTo("ruby")
-    assertThat(tags.value.first().description).isEqualTo("Ruby programming")
+    assertIs<Success<TagsPage>>(tags)
+    assertThat(tags.value.tags).isNotEmpty()
+    val rubyTag = tags.value.tags.first { it.tag == "ruby" }
+    assertThat(rubyTag.description).isEqualTo("Ruby programming")
+    assertThat(rubyTag.privileged).isFalse()
+    assertThat(rubyTag.active).isTrue()
+    assertThat(rubyTag.category).isEmpty()
+    assertThat(rubyTag.isMedia).isFalse()
+    assertThat(rubyTag.hotnessMod).isEqualTo(0.0)
+
+    val newsTag = tags.value.tags.first { it.tag == "news" }
+    assertThat(newsTag.active).isFalse()
+
+    val videoTag = tags.value.tags.first { it.tag == "video" }
+    assertThat(videoTag.isMedia).isTrue()
   }
 }

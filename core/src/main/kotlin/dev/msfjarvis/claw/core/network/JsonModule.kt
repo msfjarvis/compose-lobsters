@@ -24,8 +24,10 @@ import retrofit2.converter.kotlinx.serialization.asConverterFactory
 @OptIn(ExperimentalSerializationApi::class)
 object JsonModule {
 
+  // Inject this at the very end so that JSON is the fallback, and more specific converters can be
+  // added before it.
   @Provides
-  @IntKey(1)
+  @IntKey(Int.MAX_VALUE)
   @IntoMap
   fun provideJsonConverterFactory(json: Json): Converter.Factory {
     val contentType = "application/json".toMediaType()
@@ -36,7 +38,7 @@ object JsonModule {
   fun provideJsonSerializer(): Json {
     return Json {
       ignoreUnknownKeys = true
-      namingStrategy = JsonNamingStrategy.Builtins.SnakeCase
+      namingStrategy = JsonNamingStrategy.SnakeCase
     }
   }
 }

@@ -53,6 +53,7 @@ licensee {
   ignoreDependencies("com.michael-bull.kotlin-result") { because("kotlin-result is ISC licensed") }
   ignoreDependencies("org.commonmark") { because("Commonmark is BSD licensed") }
   allowUrl("https://jsoup.org/license") { because("Jsoup is MIT licensed") }
+  allowUrl("https://opensource.org/license/MIT") { because("Ksoup is MIT licensed") }
 }
 
 metro { unusedGraphInputsSeverity = DiagnosticSeverity.ERROR }

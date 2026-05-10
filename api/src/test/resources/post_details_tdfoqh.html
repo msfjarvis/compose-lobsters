@@ -1,0 +1,803 @@
+<!doctype html>
+<html lang="en" >
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <link rel="icon" sizes="144x144" type="image/png" href="/touch-icon-144.png">
+  <link rel="apple-touch-icon" sizes="57x57" href="/touch-icon.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/touch-icon.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/touch-icon-144.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/touch-icon-144.png">
+  <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="Lobsters">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="always">
+  <meta name="theme-color" content="#AC130D">
+  <meta name="story-flags" content="{&quot;O&quot;:&quot;Off-topic&quot;,&quot;A&quot;:&quot;Already Posted&quot;,&quot;B&quot;:&quot;Broken Link&quot;,&quot;S&quot;:&quot;Spam&quot;,&quot;&quot;:&quot;Cancel&quot;}">
+  <meta name="comment-flags" content="{&quot;O&quot;:&quot;Off-topic&quot;,&quot;M&quot;:&quot;Me-too&quot;,&quot;T&quot;:&quot;Troll&quot;,&quot;U&quot;:&quot;Unkind&quot;,&quot;S&quot;:&quot;Spam&quot;,&quot;&quot;:&quot;Cancel&quot;}">
+
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Lobsters">
+    <meta property="og:title" content="Ranking comments by sum of replies&#39; scores">
+    <meta property="og:description" content="10 comments">
+    <meta property="og:image" content="https://lobste.rs/story_image/tdfoqh.png">
+    <meta property="article:author" content="https://lobste.rs/~gioele">
+  <link rel="shortcut icon" href="/favicon.ico">
+    <link href="https://lobste.rs/s/tdfoqh/ranking_comments_by_sum_replies_scores" rev="canonical" rel="self alternate shorter shorturl shortlink">
+  <title>Ranking comments by sum of replies&#39; scores | Lobsters</title>
+
+  <link rel="stylesheet" href="/assets/application-50d965fb.css">
+  <link rel="stylesheet" href="/assets/system-system-fd030c9d.css">
+  <link rel="stylesheet" href="/assets/tom-select-00e8031d.css" data-turbo-track="reload">
+  <link rel="stylesheet" href="/assets/TomSelect_remove_button-4d5c34b9.css" data-turbo-track="reload">
+
+
+  <meta name="csrf-param" content="authenticity_token">
+<meta name="csrf-token" content="I9QGMwqhWWuCkGBSdDF7vV0v16wATa6x6zmxpaCQKS4iehHByjKy34YLK6cPpB626ZL-FaO10jcm3edeXIFrBw">
+  <meta name="robots" content="noai, noimageai">
+    <script type="speculationrules" nonce="owvfCFqNS/eLJHNrSN2nYg==">
+      {
+        "prefetch": [
+          {
+            "where": {
+              "href_matches": "/*"
+            },
+            "eagerness": "moderate"
+          }
+        ]
+      }
+    </script>
+</head>
+<body data-username='' data-now-unix='1778381500'>
+  <header id="nav">
+    <a id="logo" style="background-color: #550000;" href="/" title="Lobsters (Current traffic: 3%)"></a>
+    
+
+    <div class="navholder">
+      <nav class="links">
+        <a class="" href="/active">Active</a>
+        <a class="" href="/recent">Recent</a>
+        <a class="" href="/comments">Comments</a>
+
+
+        <a class="" href="/search">Search</a>
+
+
+          <a class="corner" href="/login">Login</a>
+      </nav>
+    </div>
+
+    <nav class="corner">
+        <a class="corner" href="/login">Login</a>
+    </nav>
+  </header>
+
+
+  <div id="inside">
+
+
+    
+<ol class="stories">
+  
+
+
+<li id="story_tdfoqh" data-shortid="tdfoqh" class="story">
+<div class="story_liner h-entry">
+  <div class="voters">
+    <a class="upvoter" href="/login">18</a>
+  </div>
+
+    <div class="details" id="header_story_01g8ke0w20enk85qfby8bp0cgy">
+      <span role="heading" aria-level="1" class="link h-cite u-repost-of">
+        <a href="/s/tdfoqh/ranking_comments_by_sum_replies_scores" rel="ugc noreferrer" class="u-url">Ranking comments by sum of replies&#39; scores</a>
+      </span>
+
+        <a class="description_present" title="There are often cases where comments with a poor score (say, 1 point), invite high-quality replies that receive many upvotes.
+
+These threads are not shown at the top of the story&#39;s comments page because their &quot;root comment&quot; has a low score.
+
+An example, as of 2022-07-22 17:00 UTC, is &lt;https://lobste.rs/s/ekvqcf/random_wallpaper_with_just_bash_systemd#c_vop9bt&gt;:
+* the root comment has 1 point,
+* the first reply has 12 points,
+* and, in total, 18 points have been accumulated by all the r..." href="/s/tdfoqh/ranking_comments_by_sum_replies_scores">&#x2636;</a>
+
+      <span class="tags">
+          <a class="tag tag_meta" title="Lobsters-related bikeshedding - report bugs at https://github.com/lobsters/lobsters" href="/t/meta">meta</a>
+      </span>
+
+      <div class="byline">
+        <span>authored by</span>
+        <a tabindex="-1" aria-hidden="true" href="/~gioele"><img srcset="/avatars/gioele-16.png 1x, /avatars/gioele-32.png 2x" class="avatar" alt="gioele avatar" loading="lazy" decoding="async" src="/avatars/gioele-16.png" width="16" height="16"></a>
+        <a class="u-author h-card user_is_author" href="/~gioele">gioele</a>
+
+          <time title="2022-07-22 12:06:59" datetime="2022-07-22 12:06:59" data-at-unix="1658509619">3 years ago</time>
+
+
+
+
+
+
+          <span class="comments_label">
+            <span aria-hidden="true"> | </span>
+            <a role="heading" aria-level="2" href="/s/tdfoqh/ranking_comments_by_sum_replies_scores#comments_story_01g8ke0w20enk85qfby8bp0cgy">
+              10
+              comments
+            </a>
+          </span>
+
+      </div>
+    </div>
+
+
+</div>
+</li>
+
+</ol>
+
+<div class="story_content">
+    <div class="story_text">
+      <p>There are often cases where comments with a poor score (say, 1 point), invite high-quality replies that receive many upvotes.</p>
+<p>These threads are not shown at the top of the story's comments page because their "root comment" has a low score.</p>
+<p>An example, as of 2022-07-22 17:00 UTC, is <a href="https://lobste.rs/s/ekvqcf/random_wallpaper_with_just_bash_systemd#c_vop9bt" rel="ugc">https://lobste.rs/s/ekvqcf/random_wallpaper_with_just_bash_systemd#c_vop9bt</a>:</p>
+<ul>
+<li>the root comment has 1 point,</li>
+<li>the first reply has 12 points,</li>
+<li>and, in total, 18 points have been accumulated by all the replies with score &gt; 1 point.</li>
+</ul>
+<p>Because the root comment has only 1 point, it remains at the bottom of the page, bringing down with itself also the good comment with 12 points and all the other upvoted comments.</p>
+<p>Could an alternative ranking system be put in place, where the threads and subthreads are not sorted by the score of their root comment, but by the <em>sum of all the scores of their children</em>?</p>
+<p>(Maybe taking into account only children with  <code>&gt;1</code> point, to avoid giving importance to superficial back-and-forth discussions.)</p>
+
+    </div>
+
+
+
+</div>
+
+
+
+    <ol class="comments comments1">
+
+      <li class="comments_subtree" id="story_comments">
+
+        <ol class="comments">
+
+
+    <li class="comments_subtree">
+
+
+<input id="comment_folder_ncdsfc"
+  class="comment_folder_button" type="checkbox"
+  >
+
+<div id="c_ncdsfc"
+  data-shortid="ncdsfc"
+  class="comment
+    
+    
+    
+    
+  ">
+
+  <div class="voters">
+      <label for="comment_folder_ncdsfc" class="comment_folder"></label>
+      <a class="upvoter" title="18" href="/login">18</a>
+  </div>
+
+  <div class="details">
+    <div class="byline">
+      <a name="c_ncdsfc"></a>
+
+
+      <span class="">
+        <a tabindex="-1" aria-hidden="true" href="/~dpercy"><img srcset="/avatars/dpercy-16.png 1x, /avatars/dpercy-32.png 2x" class="avatar" alt="dpercy avatar" loading="lazy" decoding="async" src="/avatars/dpercy-16.png" width="16" height="16"></a>
+        <a href="/~dpercy">dpercy</a>
+
+
+            <a href="/c/ncdsfc"><time title="2022-07-22 14:04:36" datetime="2022-07-22 14:04:36" data-at-unix="1658516676">3 years ago</time></a>
+          
+      </span>
+
+
+
+          <span class="flagger flagger_stub"></span>
+
+
+
+        <span class="reason">
+        </span>
+    </div>
+    <div role="heading" aria-level="3" class="comment_text">
+        <blockquote>
+<p>to avoid giving importance to superficial back-and-forth discussions</p>
+</blockquote>
+<p>Maybe take the max, instead of the sum?  That way it's still comparing the score of individual comments.  A highly-upvoted child would rank higher than a less-upvoted toplevel comment, but long threads wouldn't get any bonus.</p>
+
+    </div>
+  </div>
+</div>
+
+
+
+        <ol class="comments"></ol>
+
+
+        </li>
+
+    <li class="comments_subtree">
+
+
+<input id="comment_folder_m3wyu5"
+  class="comment_folder_button" type="checkbox"
+  >
+
+<div id="c_m3wyu5"
+  data-shortid="m3wyu5"
+  class="comment
+    
+    
+    
+    
+  ">
+
+  <div class="voters">
+      <label for="comment_folder_m3wyu5" class="comment_folder"></label>
+      <a class="upvoter" title="8" href="/login">8</a>
+  </div>
+
+  <div class="details">
+    <div class="byline">
+      <a name="c_m3wyu5"></a>
+
+
+      <span class="">
+        <a tabindex="-1" aria-hidden="true" href="/~friendlysock"><img srcset="/avatars/friendlysock-16.png 1x, /avatars/friendlysock-32.png 2x" class="avatar" alt="friendlysock avatar" loading="lazy" decoding="async" src="/avatars/friendlysock-16.png" width="16" height="16"></a>
+        <a class="inactive_user" aria-label="friendlysock - Inactive user" href="/~friendlysock">friendlysock</a>
+
+
+            <a href="/c/m3wyu5"><time title="2022-07-23 01:04:43" datetime="2022-07-23 01:04:43" data-at-unix="1658556283">3 years ago</time></a>
+          
+      </span>
+
+
+
+          <span class="flagger flagger_stub"></span>
+
+
+
+        <span class="reason">
+        </span>
+    </div>
+    <div role="heading" aria-level="3" class="comment_text">
+        <p>For better or worse, the deeper you go into threads the less likely it is that the discussion is still about the original submission. Your proposal, or the max variant presented elsewhere, I fear would unduly reward flamebait and off-topic discussion.</p>
+
+    </div>
+  </div>
+</div>
+
+
+
+        <ol class="comments">
+
+    <li class="comments_subtree">
+
+
+<input id="comment_folder_pcvbcd"
+  class="comment_folder_button" type="checkbox"
+  >
+
+<div id="c_pcvbcd"
+  data-shortid="pcvbcd"
+  class="comment
+    
+    
+    
+    
+  ">
+
+  <div class="voters">
+      <label for="comment_folder_pcvbcd" class="comment_folder"></label>
+      <a class="upvoter" title="2" href="/login">2</a>
+  </div>
+
+  <div class="details">
+    <div class="byline">
+      <a name="c_pcvbcd"></a>
+
+
+      <span class="">
+        <a tabindex="-1" aria-hidden="true" href="/~gioele"><img srcset="/avatars/gioele-16.png 1x, /avatars/gioele-32.png 2x" class="avatar" alt="gioele avatar" loading="lazy" decoding="async" src="/avatars/gioele-16.png" width="16" height="16"></a>
+        <a class="user_is_author" aria-label="gioele - Author" href="/~gioele">gioele</a>
+
+
+            edited
+            <a href="/c/pcvbcd"><time title="2022-07-23 10:09:15" datetime="2022-07-23 10:09:15" data-at-unix="1658588955">3 years ago</time></a>
+          
+      </span>
+
+
+
+          <span class="flagger flagger_stub"></span>
+
+
+
+        <span class="reason">
+        </span>
+    </div>
+    <div role="heading" aria-level="3" class="comment_text">
+        <blockquote>
+<p>Your proposal, or the max variant presented elsewhere, I fear would unduly reward flamebait and off-topic discussion.</p>
+</blockquote>
+<p>Such off-topic discussions that stray away from the main topic do exist, are a nuisance, and, surely, they should not be rewarded with more attention. However, such sub-threads exists as a long string of short comments with no or very few upvotes. (I wonder if the data confirms this or it is just my impression.)</p>
+<p>For this reason I believe that a) not counting in comments with score==1 or b) <a href="https://lobste.rs/~dpercy" rel="ugc">@dpercy</a>'s max variant would avoid rewarding such discussions.</p>
+
+    </div>
+  </div>
+</div>
+
+
+
+        <ol class="comments"></ol>
+
+            </li>
+          </ol>
+
+        </li>
+
+    <li class="comments_subtree">
+
+
+<input id="comment_folder_9vyyu5"
+  class="comment_folder_button" type="checkbox"
+  >
+
+<div id="c_9vyyu5"
+  data-shortid="9vyyu5"
+  class="comment
+    
+    
+    
+    
+  ">
+
+  <div class="voters">
+      <label for="comment_folder_9vyyu5" class="comment_folder"></label>
+      <a class="upvoter" title="5" href="/login">5</a>
+  </div>
+
+  <div class="details">
+    <div class="byline">
+      <a name="c_9vyyu5"></a>
+
+
+      <span class="">
+        <a tabindex="-1" aria-hidden="true" href="/~kghose"><img srcset="/avatars/kghose-16.png 1x, /avatars/kghose-32.png 2x" class="avatar" alt="kghose avatar" loading="lazy" decoding="async" src="/avatars/kghose-16.png" width="16" height="16"></a>
+        <a href="/~kghose">kghose</a>
+
+
+            <a href="/c/9vyyu5"><time title="2022-07-22 13:39:20" datetime="2022-07-22 13:39:20" data-at-unix="1658515160">3 years ago</time></a>
+          
+      </span>
+
+
+
+          <span class="flagger flagger_stub"></span>
+
+
+
+        <span class="reason">
+        </span>
+    </div>
+    <div role="heading" aria-level="3" class="comment_text">
+        <p>Just like to point out that the assumption here is that upvotes is a metric of quality. On lobste.rs as in any other social context, upvotes/support is a measure of popularity.</p>
+<p>There are many instances where the two are correlated, and some important instances where they are not.</p>
+
+    </div>
+  </div>
+</div>
+
+
+
+        <ol class="comments">
+
+    <li class="comments_subtree">
+
+
+<input id="comment_folder_owddle"
+  class="comment_folder_button" type="checkbox"
+  >
+
+<div id="c_owddle"
+  data-shortid="owddle"
+  class="comment
+    
+    
+    
+    
+  ">
+
+  <div class="voters">
+      <label for="comment_folder_owddle" class="comment_folder"></label>
+      <a class="upvoter" title="7" href="/login">7</a>
+  </div>
+
+  <div class="details">
+    <div class="byline">
+      <a name="c_owddle"></a>
+
+
+      <span class="">
+        <a tabindex="-1" aria-hidden="true" href="/~gioele"><img srcset="/avatars/gioele-16.png 1x, /avatars/gioele-32.png 2x" class="avatar" alt="gioele avatar" loading="lazy" decoding="async" src="/avatars/gioele-16.png" width="16" height="16"></a>
+        <a class="user_is_author" aria-label="gioele - Author" href="/~gioele">gioele</a>
+
+
+            <a href="/c/owddle"><time title="2022-07-22 13:57:19" datetime="2022-07-22 13:57:19" data-at-unix="1658516239">3 years ago</time></a>
+          
+      </span>
+
+
+
+          <span class="flagger flagger_stub"></span>
+
+
+
+        <span class="reason">
+        </span>
+    </div>
+    <div role="heading" aria-level="3" class="comment_text">
+        <blockquote>
+<p>Just like to point out that the assumption here is that upvotes is a metric of quality. On lobste.rs as in any other social context, upvotes/support is a measure of popularity.</p>
+</blockquote>
+<p>I fully agree: upvotes are a metric of popularity and not of quality. But this proposal does not assume that.</p>
+<p>Regardless of what upvotes represent, currently threads are sorted in descending order of (upvotes, time). All that this proposal suggests, is to change that to (sum(upvotes of root-and-children), time).</p>
+<p>The only assumption here is: if ranking a thread by upvotes of its root comment is considered good (and at the moment it is), then ranking by the sum of the upvotes of the whole thread is better.</p>
+
+    </div>
+  </div>
+</div>
+
+
+
+        <ol class="comments">
+
+    <li class="comments_subtree">
+
+
+<input id="comment_folder_lqqn3a"
+  class="comment_folder_button" type="checkbox"
+  >
+
+<div id="c_lqqn3a"
+  data-shortid="lqqn3a"
+  class="comment
+    
+    
+    
+    
+  ">
+
+  <div class="voters">
+      <label for="comment_folder_lqqn3a" class="comment_folder"></label>
+      <a class="upvoter" title="2" href="/login">2</a>
+  </div>
+
+  <div class="details">
+    <div class="byline">
+      <a name="c_lqqn3a"></a>
+
+
+      <span class="">
+        <a tabindex="-1" aria-hidden="true" href="/~kghose"><img srcset="/avatars/kghose-16.png 1x, /avatars/kghose-32.png 2x" class="avatar" alt="kghose avatar" loading="lazy" decoding="async" src="/avatars/kghose-16.png" width="16" height="16"></a>
+        <a href="/~kghose">kghose</a>
+
+
+            <a href="/c/lqqn3a"><time title="2022-07-22 14:28:27" datetime="2022-07-22 14:28:27" data-at-unix="1658518107">3 years ago</time></a>
+          
+      </span>
+
+
+
+          <span class="flagger flagger_stub"></span>
+
+
+
+        <span class="reason">
+        </span>
+    </div>
+    <div role="heading" aria-level="3" class="comment_text">
+        <p>Tangential to your effort here, on a personal note, if I find a discussion interesting I read all the posts regardless of ranking. On the discussions I find worthwhile I find that post quality is unrelated to upvotes.</p>
+<p>On some discussions I find the top voted comment has devolved into a long tail of niche discussion, often acrimonious, which is not as useful as later posts.</p>
+<p>Worst to pick out of the noise are replies to replies which are great but buried in not so great comments.</p>
+
+    </div>
+  </div>
+</div>
+
+
+
+        <ol class="comments"></ol>
+
+            </li>
+          </ol>
+            </li>
+          </ol>
+
+        </li>
+
+    <li class="comments_subtree">
+
+
+<input id="comment_folder_7b0jgw"
+  class="comment_folder_button" type="checkbox"
+  >
+
+<div id="c_7b0jgw"
+  data-shortid="7b0jgw"
+  class="comment
+    
+    
+    
+    
+  ">
+
+  <div class="voters">
+      <label for="comment_folder_7b0jgw" class="comment_folder"></label>
+      <a class="upvoter" title="4" href="/login">4</a>
+  </div>
+
+  <div class="details">
+    <div class="byline">
+      <a name="c_7b0jgw"></a>
+
+
+      <span class="">
+        <a tabindex="-1" aria-hidden="true" href="/~FeepingCreature"><img srcset="/avatars/FeepingCreature-16.png 1x, /avatars/FeepingCreature-32.png 2x" class="avatar" alt="FeepingCreature avatar" loading="lazy" decoding="async" src="/avatars/FeepingCreature-16.png" width="16" height="16"></a>
+        <a href="/~FeepingCreature">FeepingCreature</a>
+
+
+            <a href="/c/7b0jgw"><time title="2022-07-23 11:26:03" datetime="2022-07-23 11:26:03" data-at-unix="1658593563">3 years ago</time></a>
+          
+      </span>
+
+
+
+          <span class="flagger flagger_stub"></span>
+
+
+
+        <span class="reason">
+        </span>
+    </div>
+    <div role="heading" aria-level="3" class="comment_text">
+        <p>Ranking by max or sum upvotes optimizes for photogenic smackdowns of bad opinions.</p>
+<p>Maybe disaggregate "agreement upvotes" and "contribution upvotes"?</p>
+
+    </div>
+  </div>
+</div>
+
+
+
+        <ol class="comments"></ol>
+
+
+        </li>
+
+    <li class="comments_subtree">
+
+
+<input id="comment_folder_ei3nck"
+  class="comment_folder_button" type="checkbox"
+  >
+
+<div id="c_ei3nck"
+  data-shortid="ei3nck"
+  class="comment
+    
+    
+    
+    
+  ">
+
+  <div class="voters">
+      <label for="comment_folder_ei3nck" class="comment_folder"></label>
+      <a class="upvoter" title="2" href="/login">2</a>
+  </div>
+
+  <div class="details">
+    <div class="byline">
+      <a name="c_ei3nck"></a>
+
+
+      <span class="">
+        <a tabindex="-1" aria-hidden="true" href="/~FRIGN"><img srcset="/avatars/FRIGN-16.png 1x, /avatars/FRIGN-32.png 2x" class="avatar" alt="FRIGN avatar" loading="lazy" decoding="async" src="/avatars/FRIGN-16.png" width="16" height="16"></a>
+        <a href="/~FRIGN">FRIGN</a>
+
+
+            edited
+            <a href="/c/ei3nck"><time title="2022-07-23 10:48:49" datetime="2022-07-23 10:48:49" data-at-unix="1658591329">3 years ago</time></a>
+          
+      </span>
+
+
+
+          <span class="flagger flagger_stub"></span>
+
+
+
+        <span class="reason">
+        </span>
+    </div>
+    <div role="heading" aria-level="3" class="comment_text">
+        <p>I feel kind of honored to be taken as an example, so please let me share my personal thoughts (TL;DR below):</p>
+<p>It is impossible to find <em>the</em> definite ranking system, but let me elaborate by using 3 extremes to see where the current and proposed systems fail:</p>
+<ol>
+<li>
+<em>highly controversial root comment</em> with score 0 (100 upvotes, 100 downvotes), logically controversial responses with median 0,</li>
+<li>
+<em>root comment preaching to the choir</em> with logically high score and usually high-score responses,</li>
+<li>
+<em>low-score root comment with high-score responses</em> (like the presented case)</li>
+<li>
+<em>OC high-value root comment</em> with high score and high-value responses</li>
+</ol>
+<p>It all depends on personal preference though, but I personally would like more controversial topics to be on top and less controversial ones to be secondary. The reason for that is that you otherwise might end up with echo-chambers, given users are encouraged to preach to the choir for a high karma score. As a tangent, I would prefer two karmas for each user: A "paragon-karma" and "renegade-karma" whose sum would be an "influence" score (in the end up- or downvotes both reflect a certain influence) and whose difference would be a "non-controversiality-score" (a low difference reflects controversiality, a high score the opposite). All in all, maybe we should move away complete from the miriad of downvote-options on lobsters and simply have an "agree" and "disagree". If something is spam, you can report it, if something is incorrect, you can write a response rectifying it (which would then be subject to a vote of agreement and disagreement, depending on how well you state your case).</p>
+<p>The proposal to add replies into the weight would not change the ranking of controversial topics (1), but even moreso weigh comments preaching to the choir (2) because everyone replying would aim to also get some karma. It would solve the presented case (3) though. Case (4) would also be favoured.</p>
+<p>The proposal by <a href="https://lobste.rs/~dpercy" rel="ugc">@dpercy</a> to the take the max would not change (1)'s ranking, probably not affect (2) but help (3) as well. (4) is also positively affected.</p>
+<p>TL;DR, here's my proposal so more highly-controversial topics (those that are interesting) are more favoured: Consider root comment and replies as equals and only take <em>influence</em> (sum of up- and downvotes) as a score.</p>
+<p>This benefits (1), which in the current form end up at the bottom, which makes zero sense. It also benefits (2) and (4), which is a forced compromise, given the score does not really show how "original" a comment is (this is why Reddit probably introduced awards to allow users to weigh very good posts). By taking all replies into account, it also, of course, benefits (3), which makes sense to push up.</p>
+<p>Replies with no votes increase the influence of the thread by 1, indeed, but isn't the purpose of the score to show what the hivemind thinks? By scoring them as zero (which was proposed here), you effectively value an elaborated response lower than a simple upvote of the original comment. Instead, why not simply "fold" long subthreads so they don't take up too much space?</p>
+<p>As another tangent: By weighing root and children, this might encourage people to respond to "deep" threads instead of writing a new post.</p>
+<p>Let's see what <a href="https://lobste.rs/~pushcx" rel="ugc">@pushcx</a> decides in the end. :)</p>
+
+    </div>
+  </div>
+</div>
+
+
+
+        <ol class="comments"></ol>
+
+
+        </li>
+
+    <li class="comments_subtree">
+
+
+<input id="comment_folder_4l8mzk"
+  class="comment_folder_button" type="checkbox"
+  >
+
+<div id="c_4l8mzk"
+  data-shortid="4l8mzk"
+  class="comment
+    
+    
+    
+    
+  ">
+
+  <div class="voters">
+      <label for="comment_folder_4l8mzk" class="comment_folder"></label>
+      <a class="upvoter" title="2" href="/login">2</a>
+  </div>
+
+  <div class="details">
+    <div class="byline">
+      <a name="c_4l8mzk"></a>
+
+
+      <span class="">
+        <a tabindex="-1" aria-hidden="true" href="/~feoh"><img srcset="/avatars/feoh-16.png 1x, /avatars/feoh-32.png 2x" class="avatar" alt="feoh avatar" loading="lazy" decoding="async" src="/avatars/feoh-16.png" width="16" height="16"></a>
+        <a href="/~feoh">feoh</a>
+
+
+            <a href="/c/4l8mzk"><time title="2022-07-22 12:30:20" datetime="2022-07-22 12:30:20" data-at-unix="1658511020">3 years ago</time></a>
+          
+      </span>
+
+
+
+          <span class="flagger flagger_stub"></span>
+
+
+
+        <span class="reason">
+        </span>
+    </div>
+    <div role="heading" aria-level="3" class="comment_text">
+        <p>I really like this idea but have no idea what its implementation would represent in terms of additional load to the server.</p>
+
+    </div>
+  </div>
+</div>
+
+
+
+        <ol class="comments">
+
+    <li class="comments_subtree">
+
+
+<input id="comment_folder_qy0l9k"
+  class="comment_folder_button" type="checkbox"
+  >
+
+<div id="c_qy0l9k"
+  data-shortid="qy0l9k"
+  class="comment
+    
+    
+    
+    
+  ">
+
+  <div class="voters">
+      <label for="comment_folder_qy0l9k" class="comment_folder"></label>
+      <a class="upvoter" title="5" href="/login">5</a>
+  </div>
+
+  <div class="details">
+    <div class="byline">
+      <a name="c_qy0l9k"></a>
+
+
+      <span class="">
+        <a tabindex="-1" aria-hidden="true" href="/~pushcx"><img srcset="/avatars/pushcx-16.png 1x, /avatars/pushcx-32.png 2x" class="avatar" alt="pushcx avatar" loading="lazy" decoding="async" src="/avatars/pushcx-16.png" width="16" height="16"></a>
+        <a href="/~pushcx">pushcx</a>
+
+          <span class="hat hat_sysop" title="Granted 2017-10-15"><span class="crown">Sysop</span></span>
+
+            <a href="/c/qy0l9k"><time title="2022-07-22 16:12:09" datetime="2022-07-22 16:12:09" data-at-unix="1658524329">3 years ago</time></a>
+          
+      </span>
+
+
+
+          <span class="flagger flagger_stub"></span>
+
+
+
+        <span class="reason">
+        </span>
+    </div>
+    <div role="heading" aria-level="3" class="comment_text">
+        <p>I've moved most of the <a href="https://github.com/lobsters/lobsters/blob/cf52ab9f3f0b3ac805effc2e718f15922cb67332/app/models/comment.rb#L340" rel="ugc">vote</a> into the db, but <a href="https://github.com/lobsters/lobsters/blob/cf52ab9f3f0b3ac805effc2e718f15922cb67332/app/models/comment.rb#L219" rel="ugc">not all</a>. If <code>calculated_confidence</code> finished its move into the db almost any algorithm would be faster than the current implementation.</p>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+  <ol class="comments"></ol>
+
+      </li>
+    </ol>
+
+  </li>
+
+</ol>
+
+      </li>
+
+    </ol>
+    <br>
+
+
+  </div>
+
+  <footer>
+    <span id="office-hours-live">
+    </span>
+
+    <nav>
+      <a href="/about">About</a>
+      <a href="/tags">Tags</a>
+      <a href="/filters">Filter</a>
+      <a href="/moderations">Moderation Log</a>
+    </nav>
+  </footer>
+
+  <span id="iab-pcm-sdk"></span><span id="iab-autofill-sdk"></span>
+</body>
+</html>

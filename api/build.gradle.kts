@@ -8,6 +8,7 @@ import dev.msfjarvis.claw.gradle.addTestDependencies
 
 plugins {
   id("dev.msfjarvis.claw.kotlin-jvm")
+  alias(libs.plugins.kotlin.serialization)
   alias(libs.plugins.dependencyAnalysis)
   alias(libs.plugins.metro)
 }
@@ -19,12 +20,13 @@ dependencies {
   api(projects.model)
 
   implementation(libs.eithernet.integration.retrofit)
+  implementation(libs.kotlinx.serialization.core)
   implementation(libs.ksoup)
+  implementation(libs.kspoon)
+  implementation(libs.retrofit.kotlinxSerializationConverter)
 
   testImplementation(libs.eithernet.test.fixtures)
   testImplementation(libs.kotlin.reflect)
   testImplementation(libs.kotlinx.coroutines.test)
-  testImplementation(libs.kotlinx.serialization.core)
-  testImplementation(libs.kotlinx.serialization.json)
   addTestDependencies(project)
 }

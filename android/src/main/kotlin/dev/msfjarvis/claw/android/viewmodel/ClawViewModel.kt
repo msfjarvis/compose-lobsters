@@ -27,6 +27,7 @@ import dev.msfjarvis.claw.android.paging.LobstersPagingSource.Companion.PAGE_SIZ
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource.Companion.STARTING_PAGE_INDEX
 import dev.msfjarvis.claw.android.paging.SearchPagingSource
 import dev.msfjarvis.claw.api.LobstersApi
+import dev.msfjarvis.claw.api.toPostsResult
 import dev.msfjarvis.claw.core.coroutines.IODispatcher
 import dev.msfjarvis.claw.core.coroutines.MainDispatcher
 import dev.msfjarvis.claw.model.UIPost
@@ -72,7 +73,9 @@ class ClawViewModel(
           Pager(
               config = PagingConfig(pageSize = PAGE_SIZE),
               initialKey = STARTING_PAGE_INDEX,
-              pagingSourceFactory = { pagingSourceFactory.create(api::getHottestPosts) },
+              pagingSourceFactory = {
+                pagingSourceFactory.create { page -> api.getHottestPosts(page).toPostsResult() }
+              },
             )
             .flow
             .cachedIn(viewModelScope)
@@ -88,7 +91,9 @@ class ClawViewModel(
           Pager(
               config = PagingConfig(pageSize = PAGE_SIZE),
               initialKey = STARTING_PAGE_INDEX,
-              pagingSourceFactory = { pagingSourceFactory.create(api::getNewestPosts) },
+              pagingSourceFactory = {
+                pagingSourceFactory.create { page -> api.getNewestPosts(page).toPostsResult() }
+              },
             )
             .flow
             .cachedIn(viewModelScope)

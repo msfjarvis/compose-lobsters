@@ -54,7 +54,7 @@ class TagFilterViewModel(
         runSuspendCatching<ImmutableList<Tag>> {
             withContext(ioDispatcher) {
               when (val result = api.getTags()) {
-                is Success -> result.value.toImmutableList()
+                is Success -> result.value.tags.toImmutableList()
                 is Failure.NetworkFailure -> throw result.error
                 is Failure.UnknownFailure -> throw result.error
                 is Failure.HttpFailure -> throw result.toError()

@@ -59,7 +59,7 @@ class HottestPostsWidget : GlanceAppWidget() {
     val posts =
       when (val postsResult = appGraph.lobstersApi.getHottestPosts(1)) {
         is ApiResult.Success -> {
-          val uiPosts = postsResult.value.map(LobstersPost::toUIPost)
+          val uiPosts = postsResult.value.posts.map(LobstersPost::toUIPost)
           // Cache the posts for future use when network is unavailable
           // Using try-catch to prevent widget rendering failures if caching fails
           try {

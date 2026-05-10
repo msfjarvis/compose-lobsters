@@ -223,7 +223,7 @@ private fun CommentEntry(
   modifier: Modifier = Modifier,
 ) {
   val comment = commentNode.comment
-  var hasLocallyUpvoted by remember(comment.shortId) { mutableStateOf(false) }
+  var hasLocallyUpvoted by remember(comment.shortId) { mutableStateOf(comment.isUpvoted) }
   Box(
     modifier =
       modifier

@@ -16,6 +16,7 @@ dependencies {
   api(projects.database.core)
 
   implementation(libs.kotlinx.serialization.core)
+  api(libs.kspoon)
 
   compileOnly(libs.konvert.annotations)
 

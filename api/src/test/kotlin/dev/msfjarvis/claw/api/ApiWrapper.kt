@@ -37,7 +37,7 @@ class ApiWrapper(controller: EitherNetController<LobstersApi>) {
     kspoon.parse(getResource("post_details_tdfoqh.html"))
   val upvotedPostDetails: LobstersPostDetails =
     kspoon.parse(getResource("post_details_upvoted.html"))
-  private val user: User = json.decodeFromString(getResource("msfjarvis.json"))
+  private val user: User = kspoon.parse(getResource("msfjarvis.html"))
   private val tags: List<Tag> = json.decodeFromString(getResource("tags.json"))
 
   val api = controller.api

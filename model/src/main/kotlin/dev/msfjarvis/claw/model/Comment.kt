@@ -32,8 +32,8 @@ class Comment(
   @Selector("div.comment_text", textMode = SelectorHtmlTextMode.InnerHtml) val comment: String,
   @Selector("div.byline a[href^=/c/]", attr = "abs:href", defValue = "") val url: String = "",
   @Serializable(with = CommentScoreSerializer::class)
-  @Selector("div.voters a.upvoter", defValue = "0")
-  val score: Int = 0,
+  @Selector("div.voters a.upvoter", defValue = "1")
+  val score: Int = 1,
   @Serializable(with = CommentInstantSerializer::class)
   @Selector("div.byline a[href^=/c/] time", attr = "data-at-unix", defValue = "")
   val createdAt: TemporalAccessor,
@@ -79,7 +79,7 @@ internal object CommentScoreSerializer : KSerializer<Int> {
     PrimitiveSerialDescriptor("CommentScore", PrimitiveKind.INT)
 
   override fun deserialize(decoder: Decoder): Int =
-    decoder.decodeString().trim().takeUnless { it == "~" }?.toIntOrNull() ?: 0
+    decoder.decodeString().trim().takeUnless { it == "~" }?.toIntOrNull() ?: 1
 
   override fun serialize(encoder: Encoder, value: Int) = encoder.encodeInt(value)
 }

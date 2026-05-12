@@ -67,7 +67,7 @@ internal object CommentsSerializer : KSerializer<List<Comment>> {
           ?.text()
           ?.trim()
           ?.takeUnless { it == "~" }
-          ?.toIntOrNull() ?: 0,
+          ?.toIntOrNull() ?: 1,
       createdAt = parsedTimestamp,
       lastEditedAt = parsedTimestamp,
       parentComment = parentComment,

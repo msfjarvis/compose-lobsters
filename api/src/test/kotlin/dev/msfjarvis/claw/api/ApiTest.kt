@@ -6,9 +6,11 @@
  */
 package dev.msfjarvis.claw.api
 
+import com.fleeksoft.ksoup.Ksoup
 import com.google.common.truth.Truth.assertThat
 import com.slack.eithernet.ApiResult.Success
 import com.slack.eithernet.test.newEitherNetController
+import dev.burnoo.kspoon.Kspoon
 import dev.msfjarvis.claw.model.LobstersPostDetails
 import dev.msfjarvis.claw.model.User
 import dev.msfjarvis.claw.util.TestUtils.assertIs
@@ -91,6 +93,46 @@ class ApiTest {
     assertThat(comments.first().comment).contains("Maybe take the max, instead of the sum?")
     assertThat(comments.first { it.shortId == "pcvbcd" }.parentComment).isEqualTo("m3wyu5")
     assertThat(comments.first { it.shortId == "lqqn3a" }.parentComment).isEqualTo("owddle")
+  }
+
+  @Test
+  fun `comments without visible upvoter count have one point from the author`() {
+    val kspoon = Kspoon {
+      parse = { html -> Ksoup.parse(html, baseUri = LobstersApi.BASE_URL) }
+      coerceInputValues = true
+    }
+
+    val postDetails =
+      kspoon.parse<LobstersPostDetails>(
+        """
+        <ol class="stories">
+          <li class="story" data-shortid="story1">
+            <span class="link h-cite"><a href="/s/story1/test">Test story</a></span>
+            <div class="byline">
+              <a class="u-author" href="/~/submitter">submitter</a>
+              <time data-at-unix="1710000000"></time>
+            </div>
+          </li>
+        </ol>
+        <ol class="comments">
+          <li class="comments_subtree">
+            <div class="comment" data-shortid="abc123">
+              <div class="voters"></div>
+              <div class="details">
+                <div class="byline">
+                  <a href="/~/author">author</a>
+                  <a href="/c/abc123"><time data-at-unix="1710000000"></time></a>
+                </div>
+                <div class="comment_text"><p>Hello</p></div>
+              </div>
+            </div>
+          </li>
+        </ol>
+        """
+          .trimIndent()
+      )
+
+    assertThat(postDetails.comments.single().score).isEqualTo(1)
   }
 
   @Test

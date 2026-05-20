@@ -26,7 +26,7 @@ jobs:
         dependency-graph: generate-and-submit
 
     - name: Check changelog format
-      uses: mindsers/changelog-reader-action@32aa5b4c155d76c94e4ec883a223c947b2f02656 # v2.2.3
+      uses: mindsers/changelog-reader-action@1faaf50aa09d5793d9a100819973df801febfb31 # v2.4.0
       with:
         path: ./CHANGELOG.md
         validation_level: error

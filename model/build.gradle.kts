@@ -13,10 +13,11 @@ plugins {
 }
 
 dependencies {
+  api(libs.kotlinx.serialization.core)
+  api(libs.kspoon)
   api(projects.database.core)
 
-  implementation(libs.kotlinx.serialization.core)
-  api(libs.kspoon)
+  implementation(libs.ksoup)
 
   compileOnly(libs.konvert.annotations)
 

@@ -25,7 +25,7 @@ sqldelight {
 }
 
 dependencies {
-  implementation(libs.kotlinx.serialization.core)
+  api(libs.kotlinx.serialization.core)
   testImplementation(libs.kotlinx.serialization.json)
   addTestDependencies(project)
 }

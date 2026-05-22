@@ -15,12 +15,12 @@ plugins {
 
 dependencies {
   api(libs.eithernet)
+  api(libs.kotlinx.serialization.core)
   api(libs.okhttp.core)
   api(libs.retrofit)
   api(projects.model)
 
   implementation(libs.eithernet.integration.retrofit)
-  implementation(libs.kotlinx.serialization.core)
   implementation(libs.ksoup)
   implementation(libs.kspoon)
   implementation(libs.retrofit.kotlinxSerializationConverter)

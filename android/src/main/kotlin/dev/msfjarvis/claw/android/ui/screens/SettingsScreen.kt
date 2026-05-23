@@ -55,6 +55,14 @@ import kotlinx.coroutines.launch
 private const val JSON_MIME_TYPE = "application/json"
 private const val HTML_MIME_TYPE = "application/html"
 
+internal fun loggedInAccountText(username: String?): String {
+  return if (username.isNullOrBlank()) {
+    "Sign out of your lobste.rs account"
+  } else {
+    "Logged in as $username"
+  }
+}
+
 @Composable
 fun SettingsScreen(
   openLibrariesScreen: () -> Unit,
@@ -63,6 +71,7 @@ fun SettingsScreen(
   openLoginScreen: () -> Unit,
   onLogout: () -> Unit,
   isLoggedIn: Boolean,
+  username: String?,
   snackbarHostState: SnackbarHostState,
   openInputStream: (Uri) -> InputStream?,
   openOutputStream: (Uri) -> OutputStream?,
@@ -80,7 +89,7 @@ fun SettingsScreen(
     if (isLoggedIn) {
       ListItem(
         headlineContent = { Text("Log out") },
-        supportingContent = { Text("Sign out of your lobste.rs account") },
+        supportingContent = { Text(loggedInAccountText(username)) },
         leadingContent = {
           Icon(
             imageVector = Icons.Filled.AccountCircle,
@@ -381,6 +390,7 @@ private fun SettingsScreenPreview() {
       openLoginScreen = {},
       onLogout = {},
       isLoggedIn = false,
+      username = null,
       snackbarHostState = SnackbarHostState(),
       openInputStream = { null },
       openOutputStream = { null },

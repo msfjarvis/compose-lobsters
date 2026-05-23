@@ -119,6 +119,7 @@ fun LobstersPostsScreen(
 
   val filteredTags by tagFilterViewModel.filteredTags.collectAsStateWithLifecycle(persistentSetOf())
   val isLoggedIn by settingsViewModel.isLoggedIn.collectAsStateWithLifecycle(false)
+  val username by settingsViewModel.username.collectAsStateWithLifecycle(null)
 
   LaunchedEffect(deepLinkDestination) {
     if (deepLinkDestination != null) {
@@ -283,6 +284,7 @@ fun LobstersPostsScreen(
                 openLoginScreen = { navigateTo(backStack, Login) },
                 onLogout = { settingsViewModel.logout() },
                 isLoggedIn = isLoggedIn,
+                username = username,
                 importPosts = viewModel::importPosts,
                 exportPostsAsJson = viewModel::exportPostsAsJson,
                 exportPostsAsHtml = viewModel::exportPostsAsHtml,

@@ -6,6 +6,7 @@
  */
 package dev.msfjarvis.claw.android.ui.screens
 
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.webkit.CookieManager
 import android.webkit.WebResourceError
@@ -37,9 +38,13 @@ import androidx.compose.ui.viewinterop.AndroidView
 private const val LOGIN_URL = "https://lobste.rs/login"
 private const val LOBSTERS_URL = "https://lobste.rs"
 
+internal fun parseAuthenticatedUsername(usernameResult: String): String? {
+  return usernameResult.removeSurrounding("\"").takeUnless { it.isBlank() || it == "null" }
+}
+
 @Composable
 fun LoginScreen(
-  onLoginSuccess: (String) -> Unit,
+  onLoginSuccess: (String, String) -> Unit,
   popBackStack: () -> Unit,
   modifier: Modifier = Modifier,
 ) {
@@ -72,6 +77,7 @@ fun LoginScreen(
           factory = { context ->
             WebView(context)
               .apply {
+                @SuppressLint("SetJavaScriptEnabled")
                 settings.javaScriptEnabled = true
                 webViewClient =
                   object : WebViewClient() {
@@ -81,15 +87,20 @@ fun LoginScreen(
 
                     override fun onPageFinished(view: WebView, url: String) {
                       isLoading = false
-                      // Both /login and /login/2fa contain "/login" — only act when
-                      // navigating away from both (i.e., successful authentication).
-                      // CookieManager requires the full URL scheme+host to return cookies.
                       if (!url.contains("/login")) {
-                        val cookie = CookieManager.getInstance().getCookie(LOBSTERS_URL)
-                        if (cookie != null) {
-                          onLoginSuccess(cookie)
+                        @SuppressLint("DeprecatedCall")
+                        view.evaluateJavascript(
+                          "document.body && document.body.getAttribute('data-username')"
+                        ) { usernameResult ->
+                          val username = parseAuthenticatedUsername(usernameResult)
+                          if (username != null) {
+                            val cookie = CookieManager.getInstance().getCookie(LOBSTERS_URL)
+                            if (cookie != null) {
+                              onLoginSuccess(cookie, username)
+                              popBackStack()
+                            }
+                          }
                         }
-                        popBackStack()
                       }
                     }
 

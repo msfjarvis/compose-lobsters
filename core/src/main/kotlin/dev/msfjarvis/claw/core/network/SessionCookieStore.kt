@@ -11,9 +11,13 @@ import kotlinx.coroutines.flow.Flow
 interface SessionCookieStore {
   fun get(): String?
 
-  fun set(cookie: String)
+  fun getUsername(): String?
+
+  fun set(cookie: String, username: String)
 
   fun clear()
 
   fun isLoggedIn(): Flow<Boolean>
+
+  fun username(): Flow<String?>
 }

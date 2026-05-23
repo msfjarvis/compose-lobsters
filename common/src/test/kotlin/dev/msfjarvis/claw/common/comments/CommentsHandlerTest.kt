@@ -157,8 +157,8 @@ class CommentsHandlerTest {
       comment = "Comment $shortId",
       url = "https://lobste.rs/s/$shortId",
       score = 1,
-      createdAt = Instant.EPOCH,
-      lastEditedAt = Instant.EPOCH,
+      timestamp = Instant.EPOCH,
+      edited = false,
       parentComment = parentComment,
       user = "user-$shortId",
     )

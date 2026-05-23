@@ -14,6 +14,7 @@ import dev.burnoo.kspoon.Kspoon
 import dev.msfjarvis.claw.model.LobstersPostDetails
 import dev.msfjarvis.claw.model.User
 import dev.msfjarvis.claw.util.TestUtils.assertIs
+import java.time.Instant
 import java.time.format.DateTimeFormatter
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
@@ -133,6 +134,16 @@ class ApiTest {
       )
 
     assertThat(postDetails.comments.single().score).isEqualTo(1)
+  }
+
+  @Test
+  fun `edited comments expose a single timestamp and edited state`() = runTest {
+    val postDetails = api.getPostDetails("tdfoqh")
+    assertIs<Success<LobstersPostDetails>>(postDetails)
+
+    val editedComment = postDetails.value.comments.first { it.shortId == "pcvbcd" }
+    assertThat(editedComment.edited).isTrue()
+    assertThat(Instant.from(editedComment.timestamp).epochSecond).isEqualTo(1658588955)
   }
 
   @Test

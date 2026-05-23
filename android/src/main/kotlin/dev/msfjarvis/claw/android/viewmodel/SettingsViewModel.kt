@@ -20,7 +20,10 @@ import kotlinx.coroutines.flow.stateIn
 @Inject
 @ViewModelKey
 @ContributesIntoMap(scope = AppScope::class, binding = binding<ViewModel>())
-class SettingsViewModel(private val sessionCookieStore: SessionCookieStore) : ViewModel() {
+class SettingsViewModel(
+  private val sessionCookieStore: SessionCookieStore,
+  private val webViewCookieStore: WebViewCookieStore,
+) : ViewModel() {
 
   val isLoggedIn =
     sessionCookieStore
@@ -31,11 +34,21 @@ class SettingsViewModel(private val sessionCookieStore: SessionCookieStore) : Vi
         initialValue = false,
       )
 
+  val username =
+    sessionCookieStore
+      .username()
+      .stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = null,
+      )
+
   fun logout() {
     sessionCookieStore.clear()
+    webViewCookieStore.clearLobstersCookies()
   }
 
-  fun saveCookie(cookie: String) {
-    sessionCookieStore.set(cookie)
+  fun saveCookie(cookie: String, username: String) {
+    sessionCookieStore.set(cookie, username)
   }
 }

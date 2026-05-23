@@ -36,10 +36,10 @@ class Comment(
   val score: Int = 1,
   @Serializable(with = CommentInstantSerializer::class)
   @Selector("div.byline a[href^=/c/] time", attr = "data-at-unix", defValue = "")
-  val createdAt: TemporalAccessor,
-  @Serializable(with = CommentInstantSerializer::class)
-  @Selector("div.byline a[href^=/c/] time", attr = "data-at-unix", defValue = "")
-  val lastEditedAt: TemporalAccessor,
+  val timestamp: TemporalAccessor,
+  @Serializable(with = CommentEditedSerializer::class)
+  @Selector("div.byline span", defValue = "")
+  val edited: Boolean = false,
   @Serializable(with = EmptyStringAsNullSerializer::class)
   @Selector(":root", attr = "data-parent-shortid", defValue = "")
   val parentComment: String? = null,

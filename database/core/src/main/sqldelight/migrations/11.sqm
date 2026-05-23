@@ -1,0 +1,1 @@
+ALTER TABLE SessionCookie ADD COLUMN username TEXT;

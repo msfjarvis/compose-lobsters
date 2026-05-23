@@ -35,6 +35,6 @@ class LobstersCookieJar(private val store: SessionCookieStore) : CookieJar {
     // Serialize back to a single Set-Cookie header value using the first matching cookie.
     // lobste.rs sets one session cookie (lobsters_trap); joining handles edge cases.
     val raw = cookies.joinToString("; ") { "${it.name}=${it.value}" }
-    store.set(raw)
+    store.set(raw, store.getUsername().orEmpty())
   }
 }

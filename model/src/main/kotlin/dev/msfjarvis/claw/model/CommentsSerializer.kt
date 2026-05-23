@@ -53,8 +53,10 @@ internal object CommentsSerializer : KSerializer<List<Comment>> {
   }
 
   private fun Element.toComment(parentComment: String?): Comment {
-    val timestamp = selectFirst("div.byline a[href^=/c/] time")?.attr("data-at-unix").orEmpty()
+    val byline = selectFirst("div.byline")
+    val timestamp = byline?.selectFirst("a[href^=/c/] time")?.attr("data-at-unix").orEmpty()
     val parsedTimestamp = timestamp.toTemporalAccessor()
+    val isEdited = byline?.text()?.contains("edited") == true
     return Comment(
       shortId = attr("data-shortid"),
       comment = selectFirst("div.comment_text")?.html().orEmpty(),
@@ -68,8 +70,8 @@ internal object CommentsSerializer : KSerializer<List<Comment>> {
           ?.trim()
           ?.takeUnless { it == "~" }
           ?.toIntOrNull() ?: 1,
-      createdAt = parsedTimestamp,
-      lastEditedAt = parsedTimestamp,
+      timestamp = parsedTimestamp,
+      edited = isEdited,
       parentComment = parentComment,
       user =
         getElementsByClass("byline")

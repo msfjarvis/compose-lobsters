@@ -20,10 +20,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ExpandLess
-import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.Public
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -165,18 +162,12 @@ internal fun CommentEntry(
         )
   ) {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-      Row {
-        Box(
-          Modifier.padding(end = 8.dp).size(24.dp).clickable(role = Role.Button) {
-            onToggleExpandedState(comment.shortId, !isExpanded)
-          }
-        ) {
-          Icon(
-            imageVector = if (isExpanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
-            contentDescription = if (isExpanded) "Collapse comment" else "Expand comment",
-            modifier = Modifier.align(Alignment.Center),
-          )
-        }
+      Row(verticalAlignment = Alignment.CenterVertically) {
+        CommentExpandToggle(
+          isExpanded = isExpanded,
+          onClick = { onToggleExpandedState(comment.shortId, !isExpanded) },
+          modifier = Modifier.padding(end = 8.dp),
+        )
         if (isLoggedIn && BuildConfig.DEBUG) {
           Text(
             text = if (hasLocallyUpvoted) "Unvote" else "Upvote",
@@ -213,6 +204,20 @@ internal fun CommentEntry(
       }
     }
   }
+}
+
+@Composable
+private fun CommentExpandToggle(
+  isExpanded: Boolean,
+  onClick: () -> Unit,
+  modifier: Modifier = Modifier,
+) {
+  Text(
+    text = if (isExpanded) "[-]" else "[+]",
+    style = MaterialTheme.typography.labelMedium,
+    color = MaterialTheme.colorScheme.primary,
+    modifier = modifier.clickable(role = Role.Button, onClick = onClick),
+  )
 }
 
 private val CommentEntryPadding = 16f.dp

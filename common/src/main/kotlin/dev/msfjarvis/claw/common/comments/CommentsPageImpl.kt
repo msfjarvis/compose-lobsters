@@ -6,64 +6,38 @@
  */
 package dev.msfjarvis.claw.common.comments
 
-import android.text.format.DateUtils
 import android.widget.Toast
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ExpandLess
-import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.drewhamilton.poko.Poko
-import dev.msfjarvis.claw.common.BuildConfig
 import dev.msfjarvis.claw.common.R
 import dev.msfjarvis.claw.common.posts.PostActions
-import dev.msfjarvis.claw.common.posts.Submitter
-import dev.msfjarvis.claw.common.ui.ThemedRichText
 import dev.msfjarvis.claw.model.Comment
 import dev.msfjarvis.claw.model.UIPost
-import java.time.Instant
-import java.time.temporal.TemporalAccessor
 import kotlinx.coroutines.flow.StateFlow
 
 @Poko internal class CommentsVisitDecision(val unreadCount: Int, val shouldPersist: Boolean)
@@ -207,122 +181,4 @@ private fun NodeBox(
     modifier = modifier,
   )
   HorizontalDivider()
-}
-
-private val CommentEntryPadding = 16f.dp
-
-@Composable
-private fun CommentEntry(
-  isExpanded: Boolean,
-  commentNode: CommentNode,
-  openUserProfile: (String) -> Unit,
-  onToggleExpandedState: (String, Boolean) -> Unit,
-  isLoggedIn: Boolean,
-  upvoteComment: (String) -> Unit,
-  unvoteComment: (String) -> Unit,
-  modifier: Modifier = Modifier,
-) {
-  val comment = commentNode.comment
-  var hasLocallyUpvoted by remember(comment.shortId) { mutableStateOf(comment.isUpvoted) }
-  Box(
-    modifier =
-      modifier
-        .fillMaxWidth()
-        .background(
-          if (commentNode.isUnread) MaterialTheme.colorScheme.surfaceContainerHigh
-          else MaterialTheme.colorScheme.background
-        )
-        .padding(
-          start = CommentEntryPadding * commentNode.indentLevel,
-          end = CommentEntryPadding,
-          top = CommentEntryPadding,
-          bottom = CommentEntryPadding,
-        )
-  ) {
-    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-      Row {
-        Box(
-          Modifier.padding(end = 8.dp).size(24.dp).clickable(role = Role.Button) {
-            onToggleExpandedState(comment.shortId, !isExpanded)
-          }
-        ) {
-          Icon(
-            imageVector = if (isExpanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore,
-            contentDescription = if (isExpanded) "Collapse comment" else "Expand comment",
-            modifier = Modifier.align(Alignment.Center),
-          )
-        }
-        if (isLoggedIn && BuildConfig.DEBUG) {
-          Text(
-            text = if (hasLocallyUpvoted) "Unvote" else "Upvote",
-            style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.primary,
-            modifier =
-              Modifier.padding(end = 8.dp).clickable(role = Role.Button) {
-                if (hasLocallyUpvoted) {
-                  unvoteComment(comment.shortId)
-                } else {
-                  upvoteComment(comment.shortId)
-                }
-                hasLocallyUpvoted = !hasLocallyUpvoted
-              },
-          )
-        }
-        Submitter(
-          text =
-            buildCommenterString(
-              commenterName = comment.user,
-              score = comment.score,
-              timestamp = comment.timestamp,
-              edited = comment.edited,
-              nameColorOverride =
-                if (commentNode.isPostAuthor) MaterialTheme.colorScheme.tertiary else null,
-            ),
-          avatarUrl = "https://lobste.rs/avatars/${comment.user}-100.png",
-          contentDescription = stringResource(R.string.user_avatar_for, comment.user),
-          modifier = Modifier.clickable { openUserProfile(comment.user) },
-        )
-      }
-      if (isExpanded) {
-        ThemedRichText(text = comment.comment, modifier = Modifier.padding(top = 8.dp))
-      }
-    }
-  }
-}
-
-private fun buildCommenterString(
-  commenterName: String,
-  score: Int,
-  timestamp: TemporalAccessor,
-  edited: Boolean,
-  nameColorOverride: Color? = null,
-): AnnotatedString {
-  val now = System.currentTimeMillis()
-  val relativeTime =
-    DateUtils.getRelativeTimeSpanString(
-      Instant.from(timestamp).toEpochMilli(),
-      now,
-      DateUtils.MINUTE_IN_MILLIS,
-    )
-  return buildAnnotatedString {
-    if (nameColorOverride != null) {
-      withStyle(SpanStyle(color = nameColorOverride)) { append(commenterName) }
-    } else {
-      append(commenterName)
-    }
-    append(' ')
-    append('•')
-    append(' ')
-    append("$score points")
-    append(' ')
-    append('•')
-    append(' ')
-    append(relativeTime.toString())
-    if (edited) {
-      append(' ')
-      append('(')
-      append("Edited")
-      append(')')
-    }
-  }
 }

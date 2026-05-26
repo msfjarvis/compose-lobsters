@@ -40,6 +40,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.github.michaelbull.result.coroutines.runSuspendCatching
 import com.github.michaelbull.result.onOk
@@ -49,8 +50,11 @@ import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.posts.PostTitle
 import dev.msfjarvis.claw.common.posts.Submitter
 import dev.msfjarvis.claw.common.posts.TagRow
+import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.common.ui.ThemedRichText
+import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
+import dev.msfjarvis.claw.model.Comment
 import dev.msfjarvis.claw.model.LinkMetadata
 import dev.msfjarvis.claw.model.UIPost
 import java.time.Instant
@@ -169,19 +173,23 @@ internal fun CommentEntry(
           modifier = Modifier.padding(end = 8.dp),
         )
         if (isLoggedIn && BuildConfig.DEBUG) {
-          Text(
-            text = if (hasLocallyUpvoted) "Unvote" else "Upvote",
-            style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.primary,
-            modifier =
-              Modifier.padding(end = 8.dp).clickable(role = Role.Button) {
-                if (hasLocallyUpvoted) {
-                  unvoteComment(comment.shortId)
-                } else {
-                  upvoteComment(comment.shortId)
-                }
-                hasLocallyUpvoted = !hasLocallyUpvoted
-              },
+          CommentVoteChip(
+            score =
+              displayScore(
+                score = comment.score,
+                initiallyUpvoted = comment.isUpvoted,
+                isUpvoted = hasLocallyUpvoted,
+              ),
+            isUpvoted = hasLocallyUpvoted,
+            modifier = Modifier.padding(end = 8.dp),
+            onClick = {
+              if (hasLocallyUpvoted) {
+                unvoteComment(comment.shortId)
+              } else {
+                upvoteComment(comment.shortId)
+              }
+              hasLocallyUpvoted = !hasLocallyUpvoted
+            },
           )
         }
         Submitter(
@@ -219,6 +227,101 @@ private fun CommentExpandToggle(
     modifier = modifier.clickable(role = Role.Button, onClick = onClick),
   )
 }
+
+@Composable
+private fun CommentVoteChip(
+  score: Int,
+  isUpvoted: Boolean,
+  onClick: () -> Unit,
+  modifier: Modifier = Modifier,
+) {
+  Row(
+    modifier =
+      modifier
+        .background(
+          color =
+            if (isUpvoted) MaterialTheme.colorScheme.primaryContainer
+            else MaterialTheme.colorScheme.surfaceVariant,
+          shape = RoundedCornerShape(999.dp),
+        )
+        .clickable(role = Role.Button, onClick = onClick)
+        .padding(horizontal = 10.dp, vertical = 4.dp),
+    horizontalArrangement = Arrangement.spacedBy(4.dp),
+    verticalAlignment = Alignment.CenterVertically,
+  ) {
+    Text(
+      text = "↑",
+      style = MaterialTheme.typography.labelMedium,
+      color =
+        if (isUpvoted) MaterialTheme.colorScheme.onPrimaryContainer
+        else MaterialTheme.colorScheme.onSurfaceVariant,
+    )
+    Text(
+      text = score.toString(),
+      style = MaterialTheme.typography.labelMedium,
+      color =
+        if (isUpvoted) MaterialTheme.colorScheme.onPrimaryContainer
+        else MaterialTheme.colorScheme.onSurfaceVariant,
+    )
+  }
+}
+
+@ThemePreviews
+@Composable
+private fun CommentEntryPreview() {
+  PreviewCommentEntry(previewCommentNode())
+}
+
+@ThemePreviews
+@Preview(name = "Upvoted")
+@Composable
+private fun CommentEntryUpvotedPreview() {
+  PreviewCommentEntry(previewCommentNode(isUpvoted = true))
+}
+
+@Composable
+private fun PreviewCommentEntry(commentNode: CommentNode) {
+  LobstersTheme {
+    Box(Modifier.background(MaterialTheme.colorScheme.background).padding(16.dp)) {
+      CommentEntry(
+        isExpanded = true,
+        commentNode = commentNode,
+        openUserProfile = {},
+        onToggleExpandedState = { _, _ -> },
+        isLoggedIn = true,
+        upvoteComment = {},
+        unvoteComment = {},
+      )
+    }
+  }
+}
+
+private fun displayScore(score: Int, initiallyUpvoted: Boolean, isUpvoted: Boolean): Int {
+  return when {
+    initiallyUpvoted == isUpvoted -> score
+    isUpvoted -> score + 1
+    else -> score - 1
+  }
+}
+
+private fun previewCommentNode(isUpvoted: Boolean = false) =
+  CommentNode(
+    comment =
+      Comment(
+        shortId = "preview-comment",
+        comment =
+          "<p>This is a preview comment with enough content to evaluate spacing, metadata, and future vote affordances.</p>",
+        score = 42,
+        timestamp = Instant.now(),
+        edited = false,
+        parentComment = null,
+        user = "alice",
+        isUpvoted = isUpvoted,
+      ),
+    isPostAuthor = false,
+    isUnread = true,
+    indentLevel = 0,
+  )
 
 private val CommentEntryPadding = 16f.dp
 

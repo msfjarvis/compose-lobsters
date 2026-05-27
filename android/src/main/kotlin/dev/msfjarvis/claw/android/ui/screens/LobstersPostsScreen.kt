@@ -303,11 +303,7 @@ fun LobstersPostsScreen(
             }
             entry<Search>(metadata = ListDetailSceneStrategy.extraPane()) {
               setWebUri("https://lobste.rs/search")
-              SearchScreen(
-                viewModel = viewModel,
-                postActions = postActions,
-                contentPadding = contentPadding,
-              )
+              SearchScreen(postActions = postActions, contentPadding = contentPadding)
             }
             entry<AboutLibraries>(metadata = ListDetailSceneStrategy.extraPane()) {
               LibrariesContainer(

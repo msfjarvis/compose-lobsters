@@ -40,11 +40,11 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import com.github.michaelbull.result.coroutines.runSuspendCatching
 import com.github.michaelbull.result.onOk
-import dev.msfjarvis.claw.common.BuildConfig
 import dev.msfjarvis.claw.common.R
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.posts.PostTitle
@@ -53,6 +53,7 @@ import dev.msfjarvis.claw.common.posts.TagRow
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.common.ui.ThemedRichText
+import dev.msfjarvis.claw.common.ui.preview.DevicePreviews
 import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
 import dev.msfjarvis.claw.model.Comment
 import dev.msfjarvis.claw.model.LinkMetadata
@@ -165,14 +166,17 @@ internal fun CommentEntry(
           bottom = CommentEntryPadding,
         )
   ) {
-    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-      Row(verticalAlignment = Alignment.CenterVertically) {
+    Row {
+      Column(
+        verticalArrangement = Arrangement.spacedBy(4.dp),
+        modifier = Modifier.padding(start = 4.dp),
+      ) {
         CommentExpandToggle(
           isExpanded = isExpanded,
           onClick = { onToggleExpandedState(comment.shortId, !isExpanded) },
           modifier = Modifier.padding(end = 8.dp),
         )
-        if (isLoggedIn && BuildConfig.DEBUG) {
+        if (isLoggedIn && isExpanded) {
           CommentVoteChip(
             score =
               displayScore(
@@ -192,6 +196,8 @@ internal fun CommentEntry(
             },
           )
         }
+      }
+      Column {
         Submitter(
           text =
             buildCommenterString(
@@ -206,9 +212,9 @@ internal fun CommentEntry(
           contentDescription = stringResource(R.string.user_avatar_for, comment.user),
           modifier = Modifier.clickable { openUserProfile(comment.user) },
         )
-      }
-      if (isExpanded) {
-        ThemedRichText(text = comment.comment, modifier = Modifier.padding(top = 8.dp))
+        if (isExpanded) {
+          ThemedRichText(text = comment.comment, modifier = Modifier.padding(top = 8.dp))
+        }
       }
     }
   }
@@ -224,7 +230,10 @@ private fun CommentExpandToggle(
     text = if (isExpanded) "[-]" else "[+]",
     style = MaterialTheme.typography.labelMedium,
     color = MaterialTheme.colorScheme.primary,
-    modifier = modifier.clickable(role = Role.Button, onClick = onClick),
+    modifier =
+      modifier
+        .padding(horizontal = 10.dp, vertical = 4.dp)
+        .clickable(role = Role.Button, onClick = onClick),
   )
 }
 
@@ -235,7 +244,7 @@ private fun CommentVoteChip(
   onClick: () -> Unit,
   modifier: Modifier = Modifier,
 ) {
-  Row(
+  Column(
     modifier =
       modifier
         .background(
@@ -246,8 +255,8 @@ private fun CommentVoteChip(
         )
         .clickable(role = Role.Button, onClick = onClick)
         .padding(horizontal = 10.dp, vertical = 4.dp),
-    horizontalArrangement = Arrangement.spacedBy(4.dp),
-    verticalAlignment = Alignment.CenterVertically,
+    verticalArrangement = Arrangement.spacedBy(4.dp),
+    horizontalAlignment = Alignment.CenterHorizontally,
   ) {
     Text(
       text = "↑",
@@ -266,18 +275,18 @@ private fun CommentVoteChip(
   }
 }
 
+@DevicePreviews
 @ThemePreviews
 @Composable
-private fun CommentEntryPreview() {
-  PreviewCommentEntry(previewCommentNode())
+private fun CommentEntryPreview(
+  @PreviewParameter(BooleanPreviewParameterProvider::class) isUpvoted: Boolean
+) {
+  PreviewCommentEntry(previewCommentNode(isUpvoted))
 }
 
-@ThemePreviews
-@Preview(name = "Upvoted")
-@Composable
-private fun CommentEntryUpvotedPreview() {
-  PreviewCommentEntry(previewCommentNode(isUpvoted = true))
-}
+private class BooleanPreviewParameterProvider(
+  override val values: Sequence<Boolean> = sequenceOf(true, false)
+) : PreviewParameterProvider<Boolean>
 
 @Composable
 private fun PreviewCommentEntry(commentNode: CommentNode) {
@@ -315,7 +324,7 @@ private fun previewCommentNode(isUpvoted: Boolean = false) =
         timestamp = Instant.now(),
         edited = false,
         parentComment = null,
-        user = "alice",
+        user = "Alice",
         isUpvoted = isUpvoted,
       ),
     isPostAuthor = false,

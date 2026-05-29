@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Address fallout from Lobste.rs changing its HTML markup. This will keep happening :(
+
 ### Changed
 
 - The comment expand/collapse indicators now match the Lobsters UI

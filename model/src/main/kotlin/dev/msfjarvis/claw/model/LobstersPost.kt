@@ -50,11 +50,15 @@ class LobstersPost(
   val commentCount: Int = 0,
   @Selector("> div.story_liner span.comments_label a", attr = "abs:href", defValue = "")
   val commentsUrl: String = "",
-  @Selector("> div.story_liner div.byline > a.u-author")
+  @Selector("> div.story_liner div.byline > a[href^=/~]:not([tabindex]):not([aria-hidden=true])")
   @SerialName("submitter_user")
   val submitter: String,
   @Serializable(with = UserIsAuthorSerializer::class)
-  @Selector("> div.story_liner div.byline > a.u-author", attr = "class", defValue = "")
+  @Selector(
+    "> div.story_liner div.byline > a[href^=/~]:not([tabindex]):not([aria-hidden=true])",
+    attr = "class",
+    defValue = "",
+  )
   @SerialName("user_is_author")
   val userIsAuthor: Boolean = false,
   @Selector("> div.story_liner span.tags > a") val tags: List<String> = emptyList(),

@@ -45,34 +45,34 @@ class ApiTest {
     assertIs<Success<PostsPage>>(posts)
 
     val firstPost = posts.value.posts[0]
-    assertThat(firstPost.shortId).isEqualTo("ho7nqt")
-    assertThat(firstPost.title).isEqualTo("On forking the Web")
-    assertThat(firstPost.submitter).isEqualTo("spc476")
-    assertThat(firstPost.commentCount).isEqualTo(33)
-    assertThat(firstPost.commentsUrl).isEqualTo("https://lobste.rs/s/ho7nqt/on_forking_web")
-    assertThat(firstPost.tags).containsExactly("web")
-    assertThat(firstPost.userIsAuthor).isFalse()
-    assertThat(firstPost.createdAt).isEqualTo("2026-05-09T10:03:17Z")
+    assertThat(firstPost.shortId).isEqualTo("jp3nva")
+    assertThat(firstPost.title).isEqualTo("You probably don't need Yocto, and that's fine")
+    assertThat(firstPost.submitter).isEqualTo("rw-rw-rw-")
+    assertThat(firstPost.commentCount).isEqualTo(9)
+    assertThat(firstPost.commentsUrl)
+      .isEqualTo("https://lobste.rs/s/jp3nva/you_probably_don_t_need_yocto_s_fine")
+    assertThat(firstPost.tags).containsExactly("linux")
+    assertThat(firstPost.userIsAuthor).isTrue()
+    assertThat(firstPost.createdAt).isEqualTo("2026-05-29T09:08:12Z")
     DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(firstPost.createdAt)
 
     val secondPost = posts.value.posts[1]
-    assertThat(secondPost.shortId).isEqualTo("vbit2a")
-    assertThat(secondPost.title).isEqualTo("I Will Not Add Query Strings to Your URLs")
-    assertThat(secondPost.submitter).isEqualTo("susam")
-    assertThat(secondPost.commentCount).isEqualTo(2)
+    assertThat(secondPost.shortId).isEqualTo("lc26ar")
+    assertThat(secondPost.title).isEqualTo("SQLite Does Not Accept Agentic Code")
+    assertThat(secondPost.submitter).isEqualTo("hoistbypetard")
+    assertThat(secondPost.commentCount).isEqualTo(15)
     assertThat(secondPost.commentsUrl)
-      .isEqualTo("https://lobste.rs/s/vbit2a/i_will_not_add_query_strings_your_urls")
-    assertThat(secondPost.tags).containsExactly("web")
-    assertThat(secondPost.userIsAuthor).isTrue()
+      .isEqualTo("https://lobste.rs/s/lc26ar/sqlite_does_not_accept_agentic_code")
+    assertThat(secondPost.tags).containsExactly("vibecoding")
+    assertThat(secondPost.userIsAuthor).isFalse()
 
-    val noCommentsPost = posts.value.posts.first { it.shortId == "sjbrlg" }
-    assertThat(noCommentsPost.title).isEqualTo("Yggdrasil Network as an Embedded Go Library")
-    assertThat(noCommentsPost.submitter).isEqualTo("asciimoth")
+    val noCommentsPost = posts.value.posts.first { it.shortId == "1fkt8w" }
+    assertThat(noCommentsPost.title).isEqualTo("Patching my guitar amp's firmware")
+    assertThat(noCommentsPost.submitter).isEqualTo("mcf")
     assertThat(noCommentsPost.commentCount).isEqualTo(0)
     assertThat(noCommentsPost.commentsUrl)
-      .isEqualTo("https://lobste.rs/s/sjbrlg/yggdrasil_network_as_embedded_go_library")
-    assertThat(noCommentsPost.tags)
-      .containsExactly("distributed", "go", "networking", "programming")
+      .isEqualTo("https://lobste.rs/s/1fkt8w/patching_my_guitar_amp_s_firmware")
+    assertThat(noCommentsPost.tags).containsExactly("hardware", "reversing")
     assertThat(noCommentsPost.userIsAuthor).isTrue()
   }
 
@@ -166,7 +166,7 @@ class ApiTest {
     assertIs<Success<CSRFToken>>(token)
     assertThat(token.value.value)
       .isEqualTo(
-        "RPe1m3JaXAq0ti7t15hNixpLvmgJ793Ti6y4fOpxtfenyXQK3WU19m7MJb8RGoIf-tC3C9Ilwb8pv0WJUWLbNA"
+        "dvJ8r_CkOImcHQ5ZLUWlJeQVoPEPQ3rK85DNgiZJcehafqwYP8jESW8AhMf0uQGLqqLbsarYiISCghnDaUd6wA"
       )
   }
 

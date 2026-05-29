@@ -31,7 +31,8 @@ object SearchConverter : Converter<ResponseBody, List<LobstersPost>> {
     val url = titleElement.attr("href")
     val tags = elem.select("span.tags > a").map(Element::text)
     val (commentCount, commentsUrl) = getCommentsData(elem.select("span.comments_label"))
-    val submitter = elem.select("div.byline > a.u-author").text()
+    val submitter =
+      elem.select("div.byline > a[href^=/~]:not([tabindex]):not([aria-hidden=true])").text()
     val userIsAuthor =
       (elem.select("div.byline > span").first()?.text() ?: "").contains(
         "authored",

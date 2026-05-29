@@ -16,7 +16,6 @@ coroutines = "1.11.0"
 eithernet = "2.0.0"
 glance = "1.2.0-rc01"
 haze = "2.0.0-alpha02"
-screenshot = "0.0.1-alpha14"
 junit = "6.1.0"
 konvert = "4.5.0"
 kotlin = "2.3.21"
@@ -143,7 +142,6 @@ okhttp-core = { module = "com.squareup.okhttp3:okhttp" }
 okhttp-loggingInterceptor = { module = "com.squareup.okhttp3:logging-interceptor" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-kotlinxSerializationConverter = { module = "com.squareup.retrofit2:converter-kotlinx-serialization", version.ref = "retrofit" }
-screenshot-validation-api = { module = "com.android.tools.screenshot:screenshot-validation-api", version.ref = "screenshot" }
 sentry = { module = "io.sentry:sentry", version.ref = "sentry" }
 sentry-android-core = { module = "io.sentry:sentry-android-core", version.ref = "sentry" }
 sentry-android-sqlite = { module = "io.sentry:sentry-android-sqlite", version.ref = "sentry" }
@@ -180,7 +178,6 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 ksp = "com.google.devtools.ksp:2.3.9"
 licensee = "app.cash.licensee:1.14.1"
 metro = { id = "dev.zacsweers.metro", version.ref = "metro" }
-screenshot = { id = "com.android.compose.screenshot", version.ref = "screenshot" }
 modulegraphassert = "com.jraska.module.graph.assertion:2.9.1"
 poko = "dev.drewhamilton.poko:0.22.1"
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }

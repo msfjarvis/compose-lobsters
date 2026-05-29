@@ -11,7 +11,6 @@ import dev.msfjarvis.claw.gradle.addTestDependencies
 plugins {
   id("dev.msfjarvis.claw.android-library")
   id("dev.msfjarvis.claw.kotlin-android")
-  alias(libs.plugins.screenshot)
   alias(libs.plugins.kotlin.composeCompiler)
   alias(libs.plugins.dependencyAnalysis)
   alias(libs.plugins.metro)
@@ -21,7 +20,6 @@ plugins {
 android {
   androidResources.enable = true
   buildFeatures { compose = true }
-  experimentalProperties["android.experimental.enableScreenshotTest"] = true
   namespace = "dev.msfjarvis.claw.common"
 }
 
@@ -74,9 +72,6 @@ dependencies {
 
   testImplementation(libs.kotlinx.coroutines.test)
   testImplementation(libs.sqldelight.jvmDriver)
-
-  screenshotTestImplementation(libs.screenshot.validation.api)
-  screenshotTestImplementation(libs.androidx.compose.ui.tooling)
 
   addTestDependencies(project)
 }

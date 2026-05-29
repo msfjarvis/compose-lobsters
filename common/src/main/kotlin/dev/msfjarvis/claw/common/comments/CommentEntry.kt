@@ -13,6 +13,7 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -139,8 +140,8 @@ private fun PostLink(linkMetadata: LinkMetadata, modifier: Modifier = Modifier) 
   }
 }
 
-private val ThreadIndentWidth = 20.dp
-private val ThreadGuideOffset = 10.dp
+private val ThreadIndentWidth = 10.dp
+private val ThreadGuideOffset = 5.dp
 private val ThreadGuideWidth = 1.5.dp
 
 @Composable
@@ -158,7 +159,6 @@ internal fun CommentEntry(
   var hasLocallyUpvoted by remember(comment.shortId) { mutableStateOf(comment.isUpvoted) }
   var isActionBarExpanded by
     remember(comment.shortId) { mutableStateOf(commentNode.indentLevel == 0) }
-  val threadGuideColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.45f)
   val score =
     displayScore(
       score = comment.score,
@@ -166,6 +166,11 @@ internal fun CommentEntry(
       isUpvoted = hasLocallyUpvoted,
     )
   val indentGuideLevel = commentNode.indentLevel.minus(1).coerceAtLeast(0)
+  val threadGuideColor =
+    CommentTreeColors.colorForDepth(
+      depth = indentGuideLevel,
+      theme = if (isSystemInDarkTheme()) ThemeMode.DARK else ThemeMode.LIGHT,
+    )
   Box(
     modifier =
       modifier
@@ -202,7 +207,7 @@ internal fun CommentEntry(
             onClick = { isActionBarExpanded = !isActionBarExpanded },
             onLongClick = {
               isActionBarExpanded = false
-              onToggleExpandedState(comment.shortId, false)
+              onToggleExpandedState(comment.shortId, !isExpanded)
             },
           ),
       verticalArrangement = Arrangement.spacedBy(8.dp),

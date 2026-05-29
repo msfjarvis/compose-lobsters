@@ -7,8 +7,12 @@
 package dev.msfjarvis.claw.common.comments
 
 import android.text.format.DateUtils
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,6 +25,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Public
+import androidx.compose.material.icons.outlined.KeyboardArrowUp
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -32,16 +38,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import com.github.michaelbull.result.coroutines.runSuspendCatching
 import com.github.michaelbull.result.onOk
@@ -53,8 +56,6 @@ import dev.msfjarvis.claw.common.posts.TagRow
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.common.ui.ThemedRichText
-import dev.msfjarvis.claw.common.ui.preview.DevicePreviews
-import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
 import dev.msfjarvis.claw.model.Comment
 import dev.msfjarvis.claw.model.LinkMetadata
 import dev.msfjarvis.claw.model.UIPost
@@ -138,6 +139,10 @@ private fun PostLink(linkMetadata: LinkMetadata, modifier: Modifier = Modifier) 
   }
 }
 
+private val ThreadIndentWidth = 20.dp
+private val ThreadGuideOffset = 10.dp
+private val ThreadGuideWidth = 1.5.dp
+
 @Composable
 internal fun CommentEntry(
   isExpanded: Boolean,
@@ -151,42 +156,96 @@ internal fun CommentEntry(
 ) {
   val comment = commentNode.comment
   var hasLocallyUpvoted by remember(comment.shortId) { mutableStateOf(comment.isUpvoted) }
+  var isActionBarExpanded by
+    remember(comment.shortId) { mutableStateOf(commentNode.indentLevel == 0) }
+  val threadGuideColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.45f)
+  val score =
+    displayScore(
+      score = comment.score,
+      initiallyUpvoted = comment.isUpvoted,
+      isUpvoted = hasLocallyUpvoted,
+    )
+  val indentGuideLevel = commentNode.indentLevel.minus(1).coerceAtLeast(0)
   Box(
     modifier =
       modifier
         .fillMaxWidth()
-        .background(
-          if (commentNode.isUnread) MaterialTheme.colorScheme.surfaceContainerHigh
-          else MaterialTheme.colorScheme.background
-        )
-        .padding(
-          start = CommentEntryPadding * commentNode.indentLevel,
-          end = CommentEntryPadding,
-          top = CommentEntryPadding,
-          bottom = CommentEntryPadding,
-        )
+        .background(MaterialTheme.colorScheme.background)
+        .drawBehind {
+          if (indentGuideLevel > 0) {
+            repeat(indentGuideLevel) { level ->
+              val x = ThreadIndentWidth.toPx() * level + ThreadGuideOffset.toPx()
+              drawLine(
+                color = threadGuideColor,
+                start = Offset(x, 0f),
+                end = Offset(x, size.height),
+                strokeWidth = ThreadGuideWidth.toPx(),
+                cap = StrokeCap.Round,
+              )
+            }
+          }
+        }
+        .padding(start = ThreadIndentWidth * indentGuideLevel)
   ) {
-    Row {
-      Column(
-        verticalArrangement = Arrangement.spacedBy(4.dp),
-        modifier = Modifier.padding(start = 4.dp),
+    Column(
+      modifier =
+        Modifier.fillMaxWidth()
+          .background(
+            if (commentNode.isUnread) {
+              MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.72f)
+            } else {
+              MaterialTheme.colorScheme.background
+            }
+          )
+          .combinedClickable(
+            enabled = isLoggedIn,
+            onClick = { isActionBarExpanded = !isActionBarExpanded },
+            onLongClick = {
+              isActionBarExpanded = false
+              onToggleExpandedState(comment.shortId, false)
+            },
+          ),
+      verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+      Row(
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 12.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalAlignment = Alignment.CenterVertically,
       ) {
-        CommentExpandToggle(
-          isExpanded = isExpanded,
-          onClick = { onToggleExpandedState(comment.shortId, !isExpanded) },
-          modifier = Modifier.padding(end = 8.dp),
+        Text(
+          text = comment.user,
+          style = MaterialTheme.typography.labelLarge,
+          color =
+            if (commentNode.isPostAuthor) MaterialTheme.colorScheme.tertiary
+            else MaterialTheme.colorScheme.onSurfaceVariant,
+          modifier = Modifier.clickable { openUserProfile(comment.user) },
         )
-        if (isLoggedIn && isExpanded) {
-          CommentVoteChip(
-            score =
-              displayScore(
-                score = comment.score,
-                initiallyUpvoted = comment.isUpvoted,
-                isUpvoted = hasLocallyUpvoted,
-              ),
+        Spacer(Modifier.weight(1f))
+        Text(
+          text = score.toString(),
+          style = MaterialTheme.typography.labelLarge,
+          color = MaterialTheme.colorScheme.onBackground,
+        )
+        Text(
+          text = buildCommentAgeString(comment.timestamp, comment.edited),
+          style = MaterialTheme.typography.labelLarge,
+          color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+      }
+
+      if (isExpanded) {
+        ThemedRichText(
+          text = comment.comment,
+          modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+        )
+        AnimatedVisibility(
+          visible = isActionBarExpanded,
+          enter = expandVertically(expandFrom = Alignment.Top),
+          exit = shrinkVertically(shrinkTowards = Alignment.Top),
+        ) {
+          CommentActionTray(
             isUpvoted = hasLocallyUpvoted,
-            modifier = Modifier.padding(end = 8.dp),
-            onClick = {
+            onVoteClick = {
               if (hasLocallyUpvoted) {
                 unvoteComment(comment.shortId)
               } else {
@@ -197,101 +256,48 @@ internal fun CommentEntry(
           )
         }
       }
-      Column {
-        Submitter(
-          text =
-            buildCommenterString(
-              commenterName = comment.user,
-              score = comment.score,
-              timestamp = comment.timestamp,
-              edited = comment.edited,
-              nameColorOverride =
-                if (commentNode.isPostAuthor) MaterialTheme.colorScheme.tertiary else null,
-            ),
-          avatarUrl = "https://lobste.rs/avatars/${comment.user}-100.png",
-          contentDescription = stringResource(R.string.user_avatar_for, comment.user),
-          modifier = Modifier.clickable { openUserProfile(comment.user) },
-        )
-        if (isExpanded) {
-          ThemedRichText(text = comment.comment, modifier = Modifier.padding(top = 8.dp))
-        }
-      }
     }
   }
 }
 
 @Composable
-private fun CommentExpandToggle(
-  isExpanded: Boolean,
-  onClick: () -> Unit,
-  modifier: Modifier = Modifier,
-) {
-  Text(
-    text = if (isExpanded) "[-]" else "[+]",
-    style = MaterialTheme.typography.labelMedium,
-    color = MaterialTheme.colorScheme.primary,
-    modifier =
-      modifier
-        .padding(horizontal = 10.dp, vertical = 4.dp)
-        .clickable(role = Role.Button, onClick = onClick),
-  )
-}
-
-@Composable
-private fun CommentVoteChip(
-  score: Int,
+private fun CommentActionTray(
   isUpvoted: Boolean,
-  onClick: () -> Unit,
+  onVoteClick: () -> Unit,
   modifier: Modifier = Modifier,
 ) {
-  Column(
+  Row(
     modifier =
       modifier
-        .background(
-          color =
-            if (isUpvoted) MaterialTheme.colorScheme.primaryContainer
-            else MaterialTheme.colorScheme.surfaceVariant,
-          shape = RoundedCornerShape(999.dp),
-        )
-        .clickable(role = Role.Button, onClick = onClick)
-        .padding(horizontal = 10.dp, vertical = 4.dp),
-    verticalArrangement = Arrangement.spacedBy(4.dp),
-    horizontalAlignment = Alignment.CenterHorizontally,
+        .fillMaxWidth()
+        .background(MaterialTheme.colorScheme.surfaceContainerHighest)
+        .padding(horizontal = 12.dp, vertical = 8.dp),
+    horizontalArrangement = Arrangement.End,
+    verticalAlignment = Alignment.CenterVertically,
   ) {
-    Text(
-      text = "↑",
-      style = MaterialTheme.typography.labelMedium,
-      color =
-        if (isUpvoted) MaterialTheme.colorScheme.onPrimaryContainer
+    Icon(
+      imageVector = Icons.Outlined.KeyboardArrowUp,
+      contentDescription = if (isUpvoted) "Remove upvote" else "Upvote",
+      tint =
+        if (isUpvoted) MaterialTheme.colorScheme.error
         else MaterialTheme.colorScheme.onSurfaceVariant,
+      modifier = Modifier.clickable(role = Role.Button, onClick = onVoteClick),
     )
-    Text(
-      text = score.toString(),
-      style = MaterialTheme.typography.labelMedium,
-      color =
-        if (isUpvoted) MaterialTheme.colorScheme.onPrimaryContainer
-        else MaterialTheme.colorScheme.onSurfaceVariant,
+    /*
+    Spacer(Modifier.size(12.dp))
+    Icon(
+      imageVector = Icons.AutoMirrored.Outlined.Reply,
+      contentDescription = "Reply",
+      tint = MaterialTheme.colorScheme.onSurfaceVariant,
     )
+    */
   }
 }
 
-@DevicePreviews
-@ThemePreviews
 @Composable
-private fun CommentEntryPreview(
-  @PreviewParameter(BooleanPreviewParameterProvider::class) isUpvoted: Boolean
-) {
-  PreviewCommentEntry(previewCommentNode(isUpvoted))
-}
-
-private class BooleanPreviewParameterProvider(
-  override val values: Sequence<Boolean> = sequenceOf(true, false)
-) : PreviewParameterProvider<Boolean>
-
-@Composable
-private fun PreviewCommentEntry(commentNode: CommentNode) {
-  LobstersTheme {
-    Box(Modifier.background(MaterialTheme.colorScheme.background).padding(16.dp)) {
+internal fun PreviewCommentEntry(commentNode: CommentNode) {
+  LobstersTheme(darkTheme = true) {
+    Box(Modifier.background(MaterialTheme.colorScheme.background).padding(vertical = 8.dp)) {
       CommentEntry(
         isExpanded = true,
         commentNode = commentNode,
@@ -313,7 +319,7 @@ private fun displayScore(score: Int, initiallyUpvoted: Boolean, isUpvoted: Boole
   }
 }
 
-private fun previewCommentNode(isUpvoted: Boolean = false) =
+internal fun previewCommentNode(isUpvoted: Boolean = false) =
   CommentNode(
     comment =
       Comment(
@@ -332,41 +338,14 @@ private fun previewCommentNode(isUpvoted: Boolean = false) =
     indentLevel = 0,
   )
 
-private val CommentEntryPadding = 16f.dp
-
-private fun buildCommenterString(
-  commenterName: String,
-  score: Int,
-  timestamp: TemporalAccessor,
-  edited: Boolean,
-  nameColorOverride: Color? = null,
-): AnnotatedString {
+private fun buildCommentAgeString(timestamp: TemporalAccessor, edited: Boolean): String {
   val now = System.currentTimeMillis()
   val relativeTime =
     DateUtils.getRelativeTimeSpanString(
       Instant.from(timestamp).toEpochMilli(),
       now,
       DateUtils.MINUTE_IN_MILLIS,
+      DateUtils.FORMAT_ABBREV_RELATIVE,
     )
-  return buildAnnotatedString {
-    if (nameColorOverride != null) {
-      withStyle(SpanStyle(color = nameColorOverride)) { append(commenterName) }
-    } else {
-      append(commenterName)
-    }
-    append(' ')
-    append('•')
-    append(' ')
-    append("$score points")
-    append(' ')
-    append('•')
-    append(' ')
-    append(relativeTime.toString())
-    if (edited) {
-      append(' ')
-      append('(')
-      append("Edited")
-      append(')')
-    }
-  }
+  return if (edited) "$relativeTime · edited" else relativeTime.toString()
 }

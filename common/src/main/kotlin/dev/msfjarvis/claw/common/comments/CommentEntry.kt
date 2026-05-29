@@ -40,8 +40,6 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import com.github.michaelbull.result.coroutines.runSuspendCatching
 import com.github.michaelbull.result.onOk
@@ -53,14 +51,12 @@ import dev.msfjarvis.claw.common.posts.TagRow
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.common.ui.ThemedRichText
-import dev.msfjarvis.claw.common.ui.preview.DevicePreviews
-import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
 import dev.msfjarvis.claw.model.Comment
 import dev.msfjarvis.claw.model.LinkMetadata
 import dev.msfjarvis.claw.model.UIPost
+import kotlinx.collections.immutable.toImmutableList
 import java.time.Instant
 import java.time.temporal.TemporalAccessor
-import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 internal fun CommentsHeader(
@@ -275,21 +271,8 @@ private fun CommentVoteChip(
   }
 }
 
-@DevicePreviews
-@ThemePreviews
 @Composable
-private fun CommentEntryPreview(
-  @PreviewParameter(BooleanPreviewParameterProvider::class) isUpvoted: Boolean
-) {
-  PreviewCommentEntry(previewCommentNode(isUpvoted))
-}
-
-private class BooleanPreviewParameterProvider(
-  override val values: Sequence<Boolean> = sequenceOf(true, false)
-) : PreviewParameterProvider<Boolean>
-
-@Composable
-private fun PreviewCommentEntry(commentNode: CommentNode) {
+internal fun PreviewCommentEntry(commentNode: CommentNode) {
   LobstersTheme {
     Box(Modifier.background(MaterialTheme.colorScheme.background).padding(16.dp)) {
       CommentEntry(
@@ -313,7 +296,7 @@ private fun displayScore(score: Int, initiallyUpvoted: Boolean, isUpvoted: Boole
   }
 }
 
-private fun previewCommentNode(isUpvoted: Boolean = false) =
+internal fun previewCommentNode(isUpvoted: Boolean = false) =
   CommentNode(
     comment =
       Comment(

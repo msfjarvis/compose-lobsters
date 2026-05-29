@@ -30,6 +30,8 @@ object LintConfig {
       error += "ComposeM2Api"
       // The Lint baseline message changes too frequently for this
       disable += "Aligned16KB"
+      // This is already giving me false positives
+      disable += "ComposeRedundantComposable"
     }
     baseline = project.file("lint-baseline.xml")
     // This is extremely annoying

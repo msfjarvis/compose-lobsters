@@ -30,7 +30,6 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import dev.msfjarvis.claw.common.R
@@ -73,9 +72,8 @@ fun FloatingNavigationBar(
   }
 }
 
-@Preview
 @Composable
-private fun FloatingNavigationBarPreview() {
+internal fun FloatingNavigationBarPreviewContent() {
   FloatingNavigationBar {
     NavigationBarItem(
       selected = true,

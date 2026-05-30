@@ -7,8 +7,13 @@
 package dev.msfjarvis.claw.common.comments
 
 import android.text.format.DateUtils
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,6 +26,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Public
+import androidx.compose.material.icons.outlined.KeyboardArrowUp
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -32,25 +39,25 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.github.michaelbull.result.coroutines.runSuspendCatching
 import com.github.michaelbull.result.onOk
-import dev.msfjarvis.claw.common.BuildConfig
 import dev.msfjarvis.claw.common.R
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.posts.PostTitle
 import dev.msfjarvis.claw.common.posts.Submitter
 import dev.msfjarvis.claw.common.posts.TagRow
+import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.common.ui.ThemedRichText
+import dev.msfjarvis.claw.model.Comment
 import dev.msfjarvis.claw.model.LinkMetadata
 import dev.msfjarvis.claw.model.UIPost
 import java.time.Instant
@@ -133,6 +140,10 @@ private fun PostLink(linkMetadata: LinkMetadata, modifier: Modifier = Modifier) 
   }
 }
 
+private val ThreadIndentWidth = 10.dp
+private val ThreadGuideOffset = 5.dp
+private val ThreadGuideWidth = 1.5.dp
+
 @Composable
 internal fun CommentEntry(
   isExpanded: Boolean,
@@ -146,115 +157,200 @@ internal fun CommentEntry(
 ) {
   val comment = commentNode.comment
   var hasLocallyUpvoted by remember(comment.shortId) { mutableStateOf(comment.isUpvoted) }
+  var isActionBarExpanded by
+    remember(comment.shortId) { mutableStateOf(commentNode.indentLevel == 0) }
+  val score =
+    displayScore(
+      score = comment.score,
+      initiallyUpvoted = comment.isUpvoted,
+      isUpvoted = hasLocallyUpvoted,
+    )
+  val indentGuideLevel = commentNode.indentLevel.minus(1).coerceAtLeast(0)
+  val threadGuideColor =
+    CommentTreeColors.colorForDepth(
+      depth = indentGuideLevel,
+      theme = if (isSystemInDarkTheme()) ThemeMode.DARK else ThemeMode.LIGHT,
+    )
   Box(
     modifier =
       modifier
         .fillMaxWidth()
-        .background(
-          if (commentNode.isUnread) MaterialTheme.colorScheme.surfaceContainerHigh
-          else MaterialTheme.colorScheme.background
-        )
-        .padding(
-          start = CommentEntryPadding * commentNode.indentLevel,
-          end = CommentEntryPadding,
-          top = CommentEntryPadding,
-          bottom = CommentEntryPadding,
-        )
-  ) {
-    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-      Row(verticalAlignment = Alignment.CenterVertically) {
-        CommentExpandToggle(
-          isExpanded = isExpanded,
-          onClick = { onToggleExpandedState(comment.shortId, !isExpanded) },
-          modifier = Modifier.padding(end = 8.dp),
-        )
-        if (isLoggedIn && BuildConfig.DEBUG) {
-          Text(
-            text = if (hasLocallyUpvoted) "Unvote" else "Upvote",
-            style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.primary,
-            modifier =
-              Modifier.padding(end = 8.dp).clickable(role = Role.Button) {
-                if (hasLocallyUpvoted) {
-                  unvoteComment(comment.shortId)
-                } else {
-                  upvoteComment(comment.shortId)
-                }
-                hasLocallyUpvoted = !hasLocallyUpvoted
-              },
-          )
+        .background(MaterialTheme.colorScheme.background)
+        .drawBehind {
+          if (indentGuideLevel > 0) {
+            repeat(indentGuideLevel) { level ->
+              val x = ThreadIndentWidth.toPx() * level + ThreadGuideOffset.toPx()
+              drawLine(
+                color = threadGuideColor,
+                start = Offset(x, 0f),
+                end = Offset(x, size.height),
+                strokeWidth = ThreadGuideWidth.toPx(),
+                cap = StrokeCap.Round,
+              )
+            }
+          }
         }
-        Submitter(
-          text =
-            buildCommenterString(
-              commenterName = comment.user,
-              score = comment.score,
-              timestamp = comment.timestamp,
-              edited = comment.edited,
-              nameColorOverride =
-                if (commentNode.isPostAuthor) MaterialTheme.colorScheme.tertiary else null,
-            ),
-          avatarUrl = "https://lobste.rs/avatars/${comment.user}-100.png",
-          contentDescription = stringResource(R.string.user_avatar_for, comment.user),
+        .padding(start = ThreadIndentWidth * indentGuideLevel)
+  ) {
+    Column(
+      modifier =
+        Modifier.fillMaxWidth()
+          .background(
+            if (commentNode.isUnread) {
+              MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.72f)
+            } else {
+              MaterialTheme.colorScheme.background
+            }
+          )
+          .combinedClickable(
+            enabled = isLoggedIn,
+            onClick = { isActionBarExpanded = !isActionBarExpanded },
+            onLongClick = {
+              isActionBarExpanded = false
+              onToggleExpandedState(comment.shortId, !isExpanded)
+            },
+          ),
+      verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+      Row(
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 12.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+      ) {
+        Text(
+          text = comment.user,
+          style = MaterialTheme.typography.labelLarge,
+          color =
+            if (commentNode.isPostAuthor) MaterialTheme.colorScheme.tertiary
+            else MaterialTheme.colorScheme.onSurfaceVariant,
           modifier = Modifier.clickable { openUserProfile(comment.user) },
         )
+        Spacer(Modifier.weight(1f))
+        Text(
+          text = score.toString(),
+          style = MaterialTheme.typography.labelLarge,
+          color = MaterialTheme.colorScheme.onBackground,
+        )
+        Text(
+          text = buildCommentAgeString(comment.timestamp, comment.edited),
+          style = MaterialTheme.typography.labelLarge,
+          color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
       }
+
       if (isExpanded) {
-        ThemedRichText(text = comment.comment, modifier = Modifier.padding(top = 8.dp))
+        ThemedRichText(
+          text = comment.comment,
+          modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+        )
+        AnimatedVisibility(
+          visible = isActionBarExpanded,
+          enter = expandVertically(expandFrom = Alignment.Top),
+          exit = shrinkVertically(shrinkTowards = Alignment.Top),
+        ) {
+          CommentActionTray(
+            isUpvoted = hasLocallyUpvoted,
+            onVoteClick = {
+              if (hasLocallyUpvoted) {
+                unvoteComment(comment.shortId)
+              } else {
+                upvoteComment(comment.shortId)
+              }
+              hasLocallyUpvoted = !hasLocallyUpvoted
+            },
+          )
+        }
       }
     }
   }
 }
 
 @Composable
-private fun CommentExpandToggle(
-  isExpanded: Boolean,
-  onClick: () -> Unit,
+private fun CommentActionTray(
+  isUpvoted: Boolean,
+  onVoteClick: () -> Unit,
   modifier: Modifier = Modifier,
 ) {
-  Text(
-    text = if (isExpanded) "[-]" else "[+]",
-    style = MaterialTheme.typography.labelMedium,
-    color = MaterialTheme.colorScheme.primary,
-    modifier = modifier.clickable(role = Role.Button, onClick = onClick),
-  )
+  Row(
+    modifier =
+      modifier
+        .fillMaxWidth()
+        .background(MaterialTheme.colorScheme.surfaceContainerHighest)
+        .padding(horizontal = 12.dp, vertical = 8.dp),
+    horizontalArrangement = Arrangement.End,
+    verticalAlignment = Alignment.CenterVertically,
+  ) {
+    Icon(
+      imageVector = Icons.Outlined.KeyboardArrowUp,
+      contentDescription = if (isUpvoted) "Remove upvote" else "Upvote",
+      tint =
+        if (isUpvoted) MaterialTheme.colorScheme.error
+        else MaterialTheme.colorScheme.onSurfaceVariant,
+      modifier = Modifier.clickable(role = Role.Button, onClick = onVoteClick),
+    )
+    /*
+    Spacer(Modifier.size(12.dp))
+    Icon(
+      imageVector = Icons.AutoMirrored.Outlined.Reply,
+      contentDescription = "Reply",
+      tint = MaterialTheme.colorScheme.onSurfaceVariant,
+    )
+    */
+  }
 }
 
-private val CommentEntryPadding = 16f.dp
+@Composable
+internal fun PreviewCommentEntry(commentNode: CommentNode) {
+  LobstersTheme(darkTheme = true) {
+    Box(Modifier.background(MaterialTheme.colorScheme.background).padding(vertical = 8.dp)) {
+      CommentEntry(
+        isExpanded = true,
+        commentNode = commentNode,
+        openUserProfile = {},
+        onToggleExpandedState = { _, _ -> },
+        isLoggedIn = true,
+        upvoteComment = {},
+        unvoteComment = {},
+      )
+    }
+  }
+}
 
-private fun buildCommenterString(
-  commenterName: String,
-  score: Int,
-  timestamp: TemporalAccessor,
-  edited: Boolean,
-  nameColorOverride: Color? = null,
-): AnnotatedString {
+private fun displayScore(score: Int, initiallyUpvoted: Boolean, isUpvoted: Boolean): Int {
+  return when {
+    initiallyUpvoted == isUpvoted -> score
+    isUpvoted -> score + 1
+    else -> score - 1
+  }
+}
+
+internal fun previewCommentNode(isUpvoted: Boolean = false) =
+  CommentNode(
+    comment =
+      Comment(
+        shortId = "preview-comment",
+        comment =
+          "<p>This is a preview comment with enough content to evaluate spacing, metadata, and future vote affordances.</p>",
+        score = 42,
+        timestamp = Instant.now(),
+        edited = false,
+        parentComment = null,
+        user = "Alice",
+        isUpvoted = isUpvoted,
+      ),
+    isPostAuthor = false,
+    isUnread = true,
+    indentLevel = 0,
+  )
+
+private fun buildCommentAgeString(timestamp: TemporalAccessor, edited: Boolean): String {
   val now = System.currentTimeMillis()
   val relativeTime =
     DateUtils.getRelativeTimeSpanString(
       Instant.from(timestamp).toEpochMilli(),
       now,
       DateUtils.MINUTE_IN_MILLIS,
+      DateUtils.FORMAT_ABBREV_RELATIVE,
     )
-  return buildAnnotatedString {
-    if (nameColorOverride != null) {
-      withStyle(SpanStyle(color = nameColorOverride)) { append(commenterName) }
-    } else {
-      append(commenterName)
-    }
-    append(' ')
-    append('•')
-    append(' ')
-    append("$score points")
-    append(' ')
-    append('•')
-    append(' ')
-    append(relativeTime.toString())
-    if (edited) {
-      append(' ')
-      append('(')
-      append("Edited")
-      append(')')
-    }
-  }
+  return if (edited) "$relativeTime · edited" else relativeTime.toString()
 }

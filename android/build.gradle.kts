@@ -20,6 +20,7 @@ plugins {
   alias(libs.plugins.modulegraphassert)
   alias(libs.plugins.baselineprofile)
   alias(libs.plugins.licensee)
+  alias(libs.plugins.screenshot)
   alias(libs.plugins.kotlin.composeCompiler)
   alias(libs.plugins.kotlin.serialization)
   alias(libs.plugins.dependencyAnalysis)
@@ -31,6 +32,7 @@ android {
   defaultConfig.applicationId = "dev.msfjarvis.claw.android"
   defaultConfig.testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   buildFeatures.compose = true
+  experimentalProperties["android.experimental.enableScreenshotTest"] = true
   buildTypes.create("internal") {
     matchingFallbacks += "release"
     signingConfig = signingConfigs["debug"]
@@ -138,6 +140,9 @@ dependencies {
   debugRuntimeOnly(libs.androidx.compose.glance)
 
   runtimeOnly(libs.androidx.profileinstaller)
+
+  screenshotTestImplementation(libs.screenshot.validation.api)
+  screenshotTestImplementation(libs.androidx.compose.ui.tooling)
 
   addTestDependencies(project)
 }

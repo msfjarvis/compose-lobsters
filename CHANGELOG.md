@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- The comments UI now tries to mimic Boost for Reddit
+
+## [1.65.0] - 2026-05-29
+
+### Fixed
+
+- Address fallout from Lobste.rs changing its HTML markup. This will keep happening :(
+
+### Changed
+
 - The comment expand/collapse indicators now match the Lobsters UI
 
 ## [1.64.0] - 2026-05-26
@@ -615,7 +625,8 @@ Thanks to Charles Lombardo for contributing the action button UI changes.
 
 - Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.64.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.65.0...HEAD
+[1.65.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.64.0...v1.65.0
 [1.64.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.63.0...v1.64.0
 [1.63.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.62.0...v1.63.0
 [1.62.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.61.0...v1.62.0

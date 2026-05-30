@@ -31,11 +31,13 @@ private fun MutableList<Comment>.addSubtree(
   val comment = commentElement.toComment(parentComment)
   add(comment)
   val childContainer = if (subtree.`is`("div.comment")) subtree.parent() ?: subtree else subtree
-  childContainer
-    .children()
-    .filter { it.`is`("ol.comments") }
-    .flatMap { comments -> comments.children().filter { it.`is`("li.comments_subtree") } }
-    .forEach { child -> addSubtree(child, parentComment = comment.shortId, seen) }
+  for (childList in childContainer.children()) {
+    if (!childList.`is`("ol.comments")) continue
+    for (child in childList.children()) {
+      if (!child.`is`("li.comments_subtree")) continue
+      addSubtree(child, parentComment = comment.shortId, seen)
+    }
+  }
 }
 
 private fun Element.toComment(parentComment: String?): Comment {

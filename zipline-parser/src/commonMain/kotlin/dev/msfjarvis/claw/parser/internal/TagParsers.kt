@@ -17,18 +17,15 @@ internal fun parseTagsPage(html: String): List<Tag> {
 }
 
 private fun parseTag(element: Element): Tag {
+  val tagElement = element.select("> a.tag")
+  val descriptionElement = element.select("> span:not(.byline)")
   return Tag(
-    tag = element.select("> a.tag").text(),
-    description = element.select("> span:not(.byline)").text(),
+    tag = tagElement.text(),
+    description = descriptionElement.text(),
     privileged = element.attr("data-privileged").toBoolean(),
-    active =
-      !element
-        .select("> span:not(.byline)")
-        .attr("class")
-        .split(Regex("\\s+"))
-        .contains("inactive_tag"),
+    active = !descriptionElement.hasClass("inactive_tag"),
     category = element.attr("data-category"),
-    isMedia = element.select("> a.tag").attr("class").split(Regex("\\s+")).contains("tag_is_media"),
+    isMedia = tagElement.hasClass("tag_is_media"),
     hotnessMod = element.attr("data-hotness-mod").toDoubleOrNull() ?: 0.0,
   )
 }

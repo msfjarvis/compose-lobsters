@@ -4,10 +4,9 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
-@file:Suppress("LongParameterList")
-
 package dev.msfjarvis.claw.model
 
-import dev.drewhamilton.poko.Poko
+import kotlin.jvm.JvmInline
+import kotlinx.serialization.Serializable
 
-@Poko class LinkMetadata(val url: String, val faviconUrl: String?)
+@Serializable @JvmInline value class CSRFToken(val value: String)

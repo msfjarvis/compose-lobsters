@@ -6,20 +6,12 @@
  */
 package dev.msfjarvis.claw.model
 
-import dev.drewhamilton.poko.Poko
+import kotlin.time.Clock
 
-/**
- * Represents a blocked tag with an optional expiration date.
- *
- * @property tag The tag name to block
- * @property expirationMillis The expiration timestamp in milliseconds since epoch, or null for
- *   permanent blocks
- */
-@Poko
 class TagBlock(val tag: String, val expirationMillis: Long?) {
   val isPermanent: Boolean
     get() = expirationMillis == null
 
   val isExpired: Boolean
-    get() = expirationMillis?.let { it < System.currentTimeMillis() } ?: false
+    get() = expirationMillis?.let { it < Clock.System.now().toEpochMilliseconds() } ?: false
 }

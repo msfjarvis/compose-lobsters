@@ -18,7 +18,6 @@ glance = "1.2.0-rc01"
 haze = "2.0.0-alpha02"
 screenshot = "0.0.1-alpha15"
 junit = "6.1.0"
-konvert = "4.5.0"
 kotlin = "2.3.21"
 kotlinResult = "2.3.1"
 lifecycle = "2.11.0-rc01"
@@ -125,8 +124,6 @@ junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine" }
 junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher" }
 #noinspection UnusedVersionCatalogEntry
 junit-legacy = "junit:junit:4.13.2"
-konvert-annotations = { module = "io.mcarle:konvert-annotations", version.ref = "konvert" }
-konvert-processor = { module = "io.mcarle:konvert", version.ref = "konvert" }
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
 kotlinResult = { module = "com.michael-bull.kotlin-result:kotlin-result", version.ref = "kotlinResult" }
 kotlinResult-coroutines = { module = "com.michael-bull.kotlin-result:kotlin-result-coroutines", version.ref = "kotlinResult" }
@@ -178,7 +175,6 @@ dependencyAnalysis = "com.autonomousapps.dependency-analysis:3.14.1"
 baselineprofile = { id = "androidx.baselineprofile", version.ref = "benchmark" }
 kotlin-composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-ksp = "com.google.devtools.ksp:2.3.9"
 licensee = "app.cash.licensee:1.14.1"
 metro = { id = "dev.zacsweers.metro", version.ref = "metro" }
 screenshot = { id = "com.android.compose.screenshot", version.ref = "screenshot" }

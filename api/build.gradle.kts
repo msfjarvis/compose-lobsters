@@ -11,6 +11,7 @@ plugins {
   alias(libs.plugins.kotlin.serialization)
   alias(libs.plugins.dependencyAnalysis)
   alias(libs.plugins.metro)
+  alias(libs.plugins.zipline)
 }
 
 dependencies {

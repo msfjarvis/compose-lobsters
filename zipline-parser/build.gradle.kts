@@ -44,10 +44,13 @@ kotlin {
 
 zipline {
   mainFunction.set("dev.msfjarvis.claw.parser.launchZipline")
-  signingKeys {
-    create("key0") {
-      algorithmId = SignatureAlgorithmId.Ed25519
-      privateKeyHex = providers.environmentVariable("ZIPLINE_SIGNING_KEY").orNull
+  val signingKey = providers.environmentVariable("ZIPLINE_SIGNING_KEY").orNull
+  if (signingKey != null) {
+    signingKeys {
+      create("key0") {
+        algorithmId = SignatureAlgorithmId.Ed25519
+        privateKeyHex = signingKey
+      }
     }
   }
 }

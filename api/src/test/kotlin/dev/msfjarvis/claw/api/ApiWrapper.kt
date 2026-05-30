@@ -6,79 +6,68 @@
  */
 package dev.msfjarvis.claw.api
 
-import com.fleeksoft.ksoup.Ksoup
-import com.slack.eithernet.ApiResult.Companion.success
-import com.slack.eithernet.test.EitherNetController
-import com.slack.eithernet.test.enqueue
-import dev.burnoo.kspoon.Kspoon
-import dev.msfjarvis.claw.api.converters.CSRFTokenConverter
-import dev.msfjarvis.claw.model.LobstersPostDetails
-import dev.msfjarvis.claw.model.User
+import com.slack.eithernet.integration.retrofit.ApiResultCallAdapterFactory
+import com.slack.eithernet.integration.retrofit.ApiResultConverterFactory
+import dev.msfjarvis.claw.api.converters.UnitConverter
+import dev.msfjarvis.claw.api.converters.ZiplineHtmlConverterFactory
+import dev.msfjarvis.claw.parser.LobstersParserService
+import dev.msfjarvis.claw.parser.LobstersParserServiceImpl
 import dev.msfjarvis.claw.util.TestUtils.getResource
+import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.Protocol
+import okhttp3.Response
 import okhttp3.ResponseBody.Companion.toResponseBody
+import retrofit2.Retrofit
+import retrofit2.create
 
-class ApiWrapper(controller: EitherNetController<LobstersApi>) {
-  private val kspoon = Kspoon {
-    parse = { html -> Ksoup.parse(html, baseUri = LobstersApi.BASE_URL) }
-    coerceInputValues = true
-  }
-  private val postsPage: PostsPage = kspoon.parse<PostsPage>(getResource("hottest_page.html"))
-  private val postDetails: LobstersPostDetails =
-    kspoon.parse(getResource("post_details_tdfoqh.html"))
-  val upvotedPostDetails: LobstersPostDetails =
-    kspoon.parse(getResource("post_details_upvoted.html"))
-  private val user: User = kspoon.parse(getResource("msfjarvis.html"))
-  private val tags: TagsPage = kspoon.parse(getResource("tags.html"))
+class ApiWrapper {
+  private val parser = LobstersParserServiceImpl()
+  val upvotedPostDetails = parser.parsePostDetails(getResource("post_details_upvoted.html"))
 
-  val api = controller.api
-  val authenticatedApi = AuthenticatedLobstersApi(api)
+  val api: LobstersApi
+  val authenticatedApi: AuthenticatedLobstersApi
 
   init {
-    controller.enqueue(LobstersApi::getHottestPosts) { success(postsPage) }
-    controller.enqueue(LobstersApi::getHottestPosts) { success(postsPage) }
-    controller.enqueue(LobstersApi::getHottestPosts) { success(postsPage) }
-    controller.enqueue(LobstersApi::getNewestPosts) { success(postsPage) }
-    controller.enqueue(LobstersApi::getPostDetails) { success(postDetails) }
-    controller.enqueue(LobstersApi::getUser) { success(user) }
-    controller.enqueue(LobstersApi::getTags) { success(tags) }
-    controller.enqueue(LobstersApi::getCSRFToken) {
-      success(
-        CSRFTokenConverter.convert(
-          getResource("csrf_page.html").toResponseBody("text/html".toMediaType())
-        )
-      )
+    val parserClient =
+      object : LobstersParserClient {
+        override suspend fun service(): LobstersParserService = LobstersParserServiceImpl()
+      }
+    val retrofit =
+      Retrofit.Builder()
+        .baseUrl("https://lobste.rs/")
+        .client(OkHttpClient.Builder().addInterceptor(FixtureInterceptor()).build())
+        .addConverterFactory(ApiResultConverterFactory)
+        .addConverterFactory(ZiplineHtmlConverterFactory(parserClient))
+        .addConverterFactory(UnitConverter.Factory)
+        .addCallAdapterFactory(ApiResultCallAdapterFactory)
+        .build()
+    api = retrofit.create()
+    authenticatedApi = AuthenticatedLobstersApi(api)
+  }
+
+  private class FixtureInterceptor : Interceptor {
+    override fun intercept(chain: Interceptor.Chain): Response {
+      val request = chain.request()
+      val body =
+        when (request.url.encodedPath) {
+          "/page/1" -> getResource("hottest_page.html")
+          "/newest/page/1" -> getResource("hottest_page.html")
+          "/s/tdfoqh" -> getResource("post_details_tdfoqh.html")
+          "/~msfjarvis" -> getResource("msfjarvis.html")
+          "/" -> getResource("csrf_page.html")
+          "/tags" -> getResource("tags.html")
+          "/comments/edtrox/reply" -> getResource("reply_form.html")
+          else -> ""
+        }
+      return Response.Builder()
+        .request(request)
+        .protocol(Protocol.HTTP_1_1)
+        .code(200)
+        .message("OK")
+        .body(body.toByteArray().toResponseBody("text/html; charset=utf-8".toMediaType()))
+        .build()
     }
-    controller.enqueue(LobstersApi::getCSRFToken) {
-      success(
-        CSRFTokenConverter.convert(
-          getResource("csrf_page.html").toResponseBody("text/html".toMediaType())
-        )
-      )
-    }
-    controller.enqueue(LobstersApi::getCSRFToken) {
-      success(
-        CSRFTokenConverter.convert(
-          getResource("csrf_page.html").toResponseBody("text/html".toMediaType())
-        )
-      )
-    }
-    controller.enqueue(LobstersApi::getCSRFToken) {
-      success(
-        CSRFTokenConverter.convert(
-          getResource("csrf_page.html").toResponseBody("text/html".toMediaType())
-        )
-      )
-    }
-    controller.enqueue(LobstersApi::upvoteComment) { success(Unit) }
-    controller.enqueue(LobstersApi::unvoteComment) { success(Unit) }
-    controller.enqueue(LobstersApi::getReplyForm) {
-      success(
-        dev.msfjarvis.claw.api.converters.ReplyFormConverter.convert(
-          getResource("reply_form.html").toResponseBody("text/html".toMediaType())
-        )
-      )
-    }
-    controller.enqueue(LobstersApi::postReply) { success(Unit) }
   }
 }

@@ -64,6 +64,7 @@ import dev.msfjarvis.claw.common.ui.ThemedRichText
 import dev.msfjarvis.claw.model.Comment
 import dev.msfjarvis.claw.model.LinkMetadata
 import dev.msfjarvis.claw.model.UIPost
+import kotlin.time.Clock
 import kotlin.time.Instant
 import kotlinx.collections.immutable.toImmutableList
 
@@ -359,6 +360,25 @@ private fun displayScore(score: Int, initiallyUpvoted: Boolean, isUpvoted: Boole
     else -> score - 1
   }
 }
+
+internal fun previewCommentNode(isUpvoted: Boolean = false) =
+  CommentNode(
+    comment =
+      Comment(
+        shortId = "preview-comment",
+        comment =
+          "<p>This is a preview comment with enough content to evaluate spacing, metadata, and future vote affordances.</p>",
+        score = 42,
+        timestamp = Clock.System.now(),
+        edited = false,
+        parentComment = null,
+        user = "Alice",
+        isUpvoted = isUpvoted,
+      ),
+    isPostAuthor = false,
+    isUnread = true,
+    indentLevel = 0,
+  )
 
 private fun buildCommentAgeString(timestamp: Instant, edited: Boolean): String {
   val now = System.currentTimeMillis()

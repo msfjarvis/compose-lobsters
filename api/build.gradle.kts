@@ -19,11 +19,10 @@ dependencies {
   api(libs.okhttp.core)
   api(libs.retrofit)
   api(projects.model)
+  api(projects.ziplineParser)
 
   implementation(libs.eithernet.integration.retrofit)
-  implementation(libs.ksoup)
-  implementation(libs.kspoon)
-  implementation(libs.retrofit.kotlinxSerializationConverter)
+  implementation(libs.zipline.loader)
 
   testImplementation(libs.eithernet.test.fixtures)
   testImplementation(libs.kotlin.reflect)

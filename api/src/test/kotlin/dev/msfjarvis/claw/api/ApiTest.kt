@@ -6,44 +6,45 @@
  */
 package dev.msfjarvis.claw.api
 
-import com.fleeksoft.ksoup.Ksoup
 import com.google.common.truth.Truth.assertThat
 import com.slack.eithernet.ApiResult.Success
-import com.slack.eithernet.test.newEitherNetController
-import dev.burnoo.kspoon.Kspoon
+import dev.msfjarvis.claw.model.CSRFToken
+import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.LobstersPostDetails
+import dev.msfjarvis.claw.model.Tag
 import dev.msfjarvis.claw.model.User
+import dev.msfjarvis.claw.parser.LobstersParserServiceImpl
 import dev.msfjarvis.claw.util.TestUtils.assertIs
 import kotlin.time.Instant
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 class ApiTest {
-  private val wrapper = ApiWrapper(newEitherNetController())
+  private val wrapper = ApiWrapper()
   private val api
     get() = wrapper.api
 
   @Test
   fun `api gets correct number of items`() = runTest {
     val posts = api.getHottestPosts(1)
-    assertIs<Success<PostsPage>>(posts)
-    assertThat(posts.value.posts).hasSize(25)
+    assertIs<Success<List<LobstersPost>>>(posts)
+    assertThat(posts.value).hasSize(25)
   }
 
   @Test
   fun `posts with no urls`() = runTest {
     val posts = api.getHottestPosts(1)
-    assertIs<Success<PostsPage>>(posts)
-    val commentsOnlyPosts = posts.value.posts.asSequence().filter { it.url.isEmpty() }.toSet()
+    assertIs<Success<List<LobstersPost>>>(posts)
+    val commentsOnlyPosts = posts.value.asSequence().filter { it.url.isEmpty() }.toSet()
     assertThat(commentsOnlyPosts).hasSize(0)
   }
 
   @Test
   fun `api parses hottest HTML fixture fields`() = runTest {
     val posts = api.getHottestPosts(1)
-    assertIs<Success<PostsPage>>(posts)
+    assertIs<Success<List<LobstersPost>>>(posts)
 
-    val firstPost = posts.value.posts[0]
+    val firstPost = posts.value[0]
     assertThat(firstPost.shortId).isEqualTo("jp3nva")
     assertThat(firstPost.title).isEqualTo("You probably don't need Yocto, and that's fine")
     assertThat(firstPost.submitter).isEqualTo("rw-rw-rw-")
@@ -55,7 +56,7 @@ class ApiTest {
     assertThat(firstPost.createdAt).isEqualTo("2026-05-29T09:08:12Z")
     Instant.parse(firstPost.createdAt)
 
-    val secondPost = posts.value.posts[1]
+    val secondPost = posts.value[1]
     assertThat(secondPost.shortId).isEqualTo("lc26ar")
     assertThat(secondPost.title).isEqualTo("SQLite Does Not Accept Agentic Code")
     assertThat(secondPost.submitter).isEqualTo("hoistbypetard")
@@ -65,7 +66,7 @@ class ApiTest {
     assertThat(secondPost.tags).containsExactly("vibecoding")
     assertThat(secondPost.userIsAuthor).isFalse()
 
-    val noCommentsPost = posts.value.posts.first { it.shortId == "1fkt8w" }
+    val noCommentsPost = posts.value.first { it.shortId == "1fkt8w" }
     assertThat(noCommentsPost.title).isEqualTo("Patching my guitar amp's firmware")
     assertThat(noCommentsPost.submitter).isEqualTo("mcf")
     assertThat(noCommentsPost.commentCount).isEqualTo(0)
@@ -78,8 +79,8 @@ class ApiTest {
   @Test
   fun `api gets newest posts`() = runTest {
     val posts = api.getNewestPosts(1)
-    assertIs<Success<PostsPage>>(posts)
-    assertThat(posts.value.posts).hasSize(25)
+    assertIs<Success<List<LobstersPost>>>(posts)
+    assertThat(posts.value).hasSize(25)
   }
 
   @Test
@@ -97,13 +98,10 @@ class ApiTest {
 
   @Test
   fun `comments without visible upvoter count have one point from the author`() {
-    val kspoon = Kspoon {
-      parse = { html -> Ksoup.parse(html, baseUri = LobstersApi.BASE_URL) }
-      coerceInputValues = true
-    }
+    val parser = LobstersParserServiceImpl()
 
     val postDetails =
-      kspoon.parse<LobstersPostDetails>(
+      parser.parsePostDetails(
         """
         <ol class="stories">
           <li class="story" data-shortid="story1">
@@ -172,9 +170,9 @@ class ApiTest {
   @Test
   fun `retrieve tags`() = runTest {
     val tags = api.getTags()
-    assertIs<Success<TagsPage>>(tags)
-    assertThat(tags.value.tags).isNotEmpty()
-    val rubyTag = tags.value.tags.first { it.tag == "ruby" }
+    assertIs<Success<List<Tag>>>(tags)
+    assertThat(tags.value).isNotEmpty()
+    val rubyTag = tags.value.first { it.tag == "ruby" }
     assertThat(rubyTag.description).isEqualTo("Ruby programming")
     assertThat(rubyTag.privileged).isFalse()
     assertThat(rubyTag.active).isTrue()
@@ -182,10 +180,10 @@ class ApiTest {
     assertThat(rubyTag.isMedia).isFalse()
     assertThat(rubyTag.hotnessMod).isEqualTo(0.0)
 
-    val newsTag = tags.value.tags.first { it.tag == "news" }
+    val newsTag = tags.value.first { it.tag == "news" }
     assertThat(newsTag.active).isFalse()
 
-    val videoTag = tags.value.tags.first { it.tag == "video" }
+    val videoTag = tags.value.first { it.tag == "video" }
     assertThat(videoTag.isMedia).isTrue()
   }
 }

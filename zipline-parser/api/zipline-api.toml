@@ -4,24 +4,24 @@ functions = [
   # fun close(): kotlin.Unit
   "moYx+T3e",
 
-  # fun parseCsrfToken(kotlin.String): dev.msfjarvis.claw.model.CSRFToken
-  "gkMJS2GI",
+  # fun parseCsrfToken(kotlin.String): dev.msfjarvis.claw.parser.model.CSRFToken
+  "XO8wcclo",
 
-  # fun parsePostDetails(kotlin.String): dev.msfjarvis.claw.model.LobstersPostDetails
-  "i9+0xMCY",
+  # fun parsePostDetails(kotlin.String): dev.msfjarvis.claw.parser.model.LobstersPostDetails
+  "K6Im4ZQe",
 
-  # fun parsePostsPage(kotlin.String): kotlin.collections.List<dev.msfjarvis.claw.model.LobstersPost>
-  "zBKz0A5i",
+  # fun parsePostsPage(kotlin.String): kotlin.collections.List<dev.msfjarvis.claw.parser.model.LobstersPost>
+  "qs/WBwxE",
 
-  # fun parseReplyForm(kotlin.String): dev.msfjarvis.claw.model.ReplyForm
-  "thcq4/sB",
+  # fun parseReplyForm(kotlin.String): dev.msfjarvis.claw.parser.model.ReplyForm
+  "Gv0fENP3",
 
-  # fun parseSearchResults(kotlin.String): kotlin.collections.List<dev.msfjarvis.claw.model.LobstersPost>
-  "72nr7mKP",
+  # fun parseSearchResults(kotlin.String): kotlin.collections.List<dev.msfjarvis.claw.parser.model.LobstersPost>
+  "MYlj2kop",
 
-  # fun parseTagsPage(kotlin.String): kotlin.collections.List<dev.msfjarvis.claw.model.Tag>
-  "YlLfGEit",
+  # fun parseTagsPage(kotlin.String): kotlin.collections.List<dev.msfjarvis.claw.parser.model.Tag>
+  "fR8RFEx1",
 
-  # fun parseUser(kotlin.String): dev.msfjarvis.claw.model.User
-  "6gFIDp9n",
+  # fun parseUser(kotlin.String): dev.msfjarvis.claw.parser.model.User
+  "K2X252uP",
 ]

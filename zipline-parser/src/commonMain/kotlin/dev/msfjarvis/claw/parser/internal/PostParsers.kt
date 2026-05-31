@@ -8,7 +8,7 @@ package dev.msfjarvis.claw.parser.internal
 
 import com.fleeksoft.ksoup.Ksoup
 import com.fleeksoft.ksoup.nodes.Element
-import dev.msfjarvis.claw.model.LobstersPost
+import dev.msfjarvis.claw.parser.model.LobstersPost
 
 private const val BASE_URL = "https://lobste.rs"
 private val commentCountRegex = "\\d+".toRegex()

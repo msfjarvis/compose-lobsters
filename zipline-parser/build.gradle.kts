@@ -22,9 +22,8 @@ kotlin {
   sourceSets {
     commonMain {
       dependencies {
-        api(projects.model)
+        api(projects.ziplineParserApi)
         api(libs.kotlinx.serialization.core)
-        api(libs.zipline)
         implementation(libs.ksoup)
       }
     }

@@ -7,7 +7,7 @@
 package dev.msfjarvis.claw.parser.internal
 
 import com.fleeksoft.ksoup.Ksoup
-import dev.msfjarvis.claw.model.User
+import dev.msfjarvis.claw.parser.model.User
 
 private const val BASE_URL = "https://lobste.rs"
 

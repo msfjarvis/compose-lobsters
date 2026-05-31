@@ -7,7 +7,7 @@
 package dev.msfjarvis.claw.parser.internal
 
 import com.fleeksoft.ksoup.nodes.Element
-import dev.msfjarvis.claw.model.Comment
+import dev.msfjarvis.claw.parser.model.Comment
 import kotlin.time.Instant
 
 internal fun parseComments(root: Element): List<Comment> {

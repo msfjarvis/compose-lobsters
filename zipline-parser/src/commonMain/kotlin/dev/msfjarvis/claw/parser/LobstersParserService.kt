@@ -7,12 +7,12 @@
 package dev.msfjarvis.claw.parser
 
 import app.cash.zipline.ZiplineService
-import dev.msfjarvis.claw.model.CSRFToken
-import dev.msfjarvis.claw.model.LobstersPost
-import dev.msfjarvis.claw.model.LobstersPostDetails
-import dev.msfjarvis.claw.model.ReplyForm
-import dev.msfjarvis.claw.model.Tag
-import dev.msfjarvis.claw.model.User
+import dev.msfjarvis.claw.parser.model.CSRFToken
+import dev.msfjarvis.claw.parser.model.LobstersPost
+import dev.msfjarvis.claw.parser.model.LobstersPostDetails
+import dev.msfjarvis.claw.parser.model.ReplyForm
+import dev.msfjarvis.claw.parser.model.Tag
+import dev.msfjarvis.claw.parser.model.User
 
 interface LobstersParserService : ZiplineService {
   fun parsePostsPage(html: String): List<LobstersPost>

@@ -7,8 +7,8 @@
 package dev.msfjarvis.claw.parser.internal
 
 import com.fleeksoft.ksoup.Ksoup
-import dev.msfjarvis.claw.model.CSRFToken
-import dev.msfjarvis.claw.model.ReplyForm
+import dev.msfjarvis.claw.parser.model.CSRFToken
+import dev.msfjarvis.claw.parser.model.ReplyForm
 
 private const val BASE_URL = "https://lobste.rs"
 

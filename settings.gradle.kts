@@ -163,4 +163,5 @@ include(
   "database:impl",
   "model",
   "zipline-parser",
+  "zipline-parser-api",
 )

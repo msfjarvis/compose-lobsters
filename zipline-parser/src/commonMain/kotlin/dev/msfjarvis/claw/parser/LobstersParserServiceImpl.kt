@@ -6,12 +6,6 @@
  */
 package dev.msfjarvis.claw.parser
 
-import dev.msfjarvis.claw.model.CSRFToken
-import dev.msfjarvis.claw.model.LobstersPost
-import dev.msfjarvis.claw.model.LobstersPostDetails
-import dev.msfjarvis.claw.model.ReplyForm
-import dev.msfjarvis.claw.model.Tag
-import dev.msfjarvis.claw.model.User
 import dev.msfjarvis.claw.parser.internal.parseCsrfToken as parseCsrfTokenHtml
 import dev.msfjarvis.claw.parser.internal.parsePostDetails as parsePostDetailsHtml
 import dev.msfjarvis.claw.parser.internal.parsePostsPage as parsePostsPageHtml
@@ -19,6 +13,12 @@ import dev.msfjarvis.claw.parser.internal.parseReplyForm as parseReplyFormHtml
 import dev.msfjarvis.claw.parser.internal.parseSearchResults as parseSearchResultsHtml
 import dev.msfjarvis.claw.parser.internal.parseTagsPage as parseTagsPageHtml
 import dev.msfjarvis.claw.parser.internal.parseUser as parseUserHtml
+import dev.msfjarvis.claw.parser.model.CSRFToken
+import dev.msfjarvis.claw.parser.model.LobstersPost
+import dev.msfjarvis.claw.parser.model.LobstersPostDetails
+import dev.msfjarvis.claw.parser.model.ReplyForm
+import dev.msfjarvis.claw.parser.model.Tag
+import dev.msfjarvis.claw.parser.model.User
 
 class LobstersParserServiceImpl : LobstersParserService {
   override fun parsePostsPage(html: String): List<LobstersPost> = parsePostsPageHtml(html)

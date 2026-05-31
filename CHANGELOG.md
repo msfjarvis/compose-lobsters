@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- You can now upvote and reply to comments from the app, if you're logged in
+
 ### Changed
 
 - The comments UI now tries to mimic Boost for Reddit

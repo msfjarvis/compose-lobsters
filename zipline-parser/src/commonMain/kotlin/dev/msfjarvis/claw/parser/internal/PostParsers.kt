@@ -11,7 +11,7 @@ import com.fleeksoft.ksoup.nodes.Element
 import dev.msfjarvis.claw.parser.model.LobstersPost
 
 private const val BASE_URL = "https://lobste.rs"
-private val commentCountRegex = "\\d+".toRegex()
+private val commentCountRegex by lazy(LazyThreadSafetyMode.NONE) { "\\d+".toRegex() }
 
 internal fun parsePostsPage(html: String): List<LobstersPost> {
   return Ksoup.parse(html, baseUri = BASE_URL).select("li.story").map(::parsePost)

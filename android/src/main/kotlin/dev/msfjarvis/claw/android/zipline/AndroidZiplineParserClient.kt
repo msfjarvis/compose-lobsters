@@ -9,7 +9,6 @@ package dev.msfjarvis.claw.android.zipline
 import android.content.Context
 import app.cash.zipline.Zipline
 import app.cash.zipline.ZiplineManifest
-import app.cash.zipline.loader.DefaultFreshnessCheckerNotFresh
 import app.cash.zipline.loader.FreshnessChecker
 import app.cash.zipline.loader.LoadResult
 import app.cash.zipline.loader.ManifestVerifier
@@ -83,8 +82,7 @@ class AndroidZiplineParserClient(
           embeddedDir = embeddedDir.absolutePath.toPath(),
         )
 
-    val freshnessChecker =
-      if (verifySignatures) EmbeddedFreshnessChecker else DefaultFreshnessCheckerNotFresh
+    val freshnessChecker = if (verifySignatures) EmbeddedFreshnessChecker else AlwaysFresh
 
     return when (
       val result =
@@ -128,6 +126,16 @@ class AndroidZiplineParserClient(
     ): Boolean {
       if (freshAtEpochMs <= 0L) return false
       return System.currentTimeMillis() - freshAtEpochMs <= maxAgeMs
+    }
+  }
+
+  /** Always prioritize the embedded files over the remote copy. */
+  private object AlwaysFresh : FreshnessChecker {
+    override fun isFresh(
+      manifest: ZiplineManifest,
+      freshAtEpochMs: Long,
+    ): Boolean {
+      return true
     }
   }
 }

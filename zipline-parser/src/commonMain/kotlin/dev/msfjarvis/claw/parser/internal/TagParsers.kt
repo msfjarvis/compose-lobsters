@@ -10,8 +10,6 @@ import com.fleeksoft.ksoup.Ksoup
 import com.fleeksoft.ksoup.nodes.Element
 import dev.msfjarvis.claw.parser.model.Tag
 
-private const val BASE_URL = "https://lobste.rs"
-
 internal fun parseTagsPage(html: String): List<Tag> {
   return Ksoup.parse(html, baseUri = BASE_URL).select("ol.category_tags > li").map(::parseTag)
 }

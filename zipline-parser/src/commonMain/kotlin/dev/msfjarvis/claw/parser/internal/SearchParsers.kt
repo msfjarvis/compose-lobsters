@@ -10,8 +10,6 @@ import com.fleeksoft.ksoup.Ksoup
 import com.fleeksoft.ksoup.nodes.Element
 import dev.msfjarvis.claw.parser.model.LobstersPost
 
-private const val BASE_URL = "https://lobste.rs"
-
 internal fun parseSearchResults(html: String): List<LobstersPost> {
   return Ksoup.parse(html, baseUri = BASE_URL)
     .select("div.story_liner.h-entry")

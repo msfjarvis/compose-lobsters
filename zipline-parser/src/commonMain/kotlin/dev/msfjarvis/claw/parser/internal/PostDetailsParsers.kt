@@ -9,8 +9,7 @@ package dev.msfjarvis.claw.parser.internal
 import com.fleeksoft.ksoup.Ksoup
 import dev.msfjarvis.claw.parser.model.LobstersPostDetails
 
-private const val BASE_URL = "https://lobste.rs"
-private val commentCountRegex by lazy(LazyThreadSafetyMode.NONE) {  "\\d+".toRegex() }
+private val commentCountRegex by lazy(LazyThreadSafetyMode.NONE) { "\\d+".toRegex() }
 private const val STORY_SELECTOR = "ol.stories > li.story"
 private const val SUBMITTER_SELECTOR =
   "ol.stories > li.story div.byline > a[href^=/~]:not([tabindex]):not([aria-hidden=true])"

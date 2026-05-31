@@ -10,8 +10,6 @@ import com.fleeksoft.ksoup.Ksoup
 import dev.msfjarvis.claw.parser.model.CSRFToken
 import dev.msfjarvis.claw.parser.model.ReplyForm
 
-private const val BASE_URL = "https://lobste.rs"
-
 internal fun parseCsrfToken(html: String): CSRFToken {
   val token =
     Ksoup.parse(html, baseUri = BASE_URL)

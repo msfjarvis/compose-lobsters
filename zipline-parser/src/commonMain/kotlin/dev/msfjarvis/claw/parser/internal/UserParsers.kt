@@ -9,8 +9,6 @@ package dev.msfjarvis.claw.parser.internal
 import com.fleeksoft.ksoup.Ksoup
 import dev.msfjarvis.claw.parser.model.User
 
-private const val BASE_URL = "https://lobste.rs"
-
 internal fun parseUser(html: String): User {
   val document = Ksoup.parse(html, baseUri = BASE_URL)
   return User(

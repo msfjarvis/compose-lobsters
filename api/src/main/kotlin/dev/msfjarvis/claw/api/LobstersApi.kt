@@ -77,6 +77,7 @@ interface LobstersApi {
     @Path("commentId") commentId: String,
     @Header("x-csrf-token") csrfToken: String,
     @Header("x-requested-with") requestedWith: String,
+    @Header("Referer") referer: String,
   ): ApiResult<ReplyForm, Unit>
 
   @Multipart
@@ -84,6 +85,9 @@ interface LobstersApi {
   suspend fun postReply(
     @Header("x-csrf-token") csrfToken: String,
     @Header("x-requested-with") requestedWith: String,
+    @Header("Referer") referer: String,
+    @Header("Origin") origin: String,
+    @Header("Accept") accept: String,
     @Part authenticityToken: MultipartBody.Part,
     @Part storyId: MultipartBody.Part,
     @Part method: MultipartBody.Part,

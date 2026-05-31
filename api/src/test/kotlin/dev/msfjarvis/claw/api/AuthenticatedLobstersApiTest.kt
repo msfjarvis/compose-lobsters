@@ -32,7 +32,7 @@ class AuthenticatedLobstersApiTest {
 
   @Test
   fun `reply succeeds`() = runTest {
-    val result = authenticatedApi.reply("edtrox", "Thanks for the details!")
+    val result = authenticatedApi.reply("edtrox", "znlkib", "Thanks for the details!")
 
     assertIs<Success<Unit>>(result)
   }

@@ -42,6 +42,7 @@ fun ReplyScreen(
   commentId: String,
   commentText: String,
   contentPadding: PaddingValues,
+  postId: String,
   onBack: () -> Unit,
   onReplySubmitted: () -> Unit,
   modifier: Modifier = Modifier,
@@ -64,7 +65,7 @@ fun ReplyScreen(
     onParentCommentClick = viewModel::showQuoteDialog,
     onDismissDialog = viewModel::dismissQuoteDialog,
     onQuote = { viewModel.insertQuote(commentText) },
-    onSubmit = { viewModel.submit(commentId) },
+    onSubmit = { viewModel.submit(commentId, postId) },
     modifier = modifier,
   )
 }

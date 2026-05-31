@@ -52,7 +52,7 @@ class ReplyViewModelTest {
       val viewModel =
         ReplyViewModel(api = AuthenticatedLobstersApi(fakeApi), ioDispatcher = dispatcher)
 
-      viewModel.submit(commentId = "c_1")
+      viewModel.submit(commentId = "c_1", postId = "story_1")
       advanceUntilIdle()
 
       assertThat(viewModel.uiState.errorMessage).isEqualTo("Reply cannot be blank")
@@ -67,7 +67,7 @@ class ReplyViewModelTest {
         ReplyViewModel(api = AuthenticatedLobstersApi(fakeApi), ioDispatcher = dispatcher)
       viewModel.updateEditor(TextFieldValue("reply body", TextRange("reply body".length)))
 
-      viewModel.submit(commentId = "c_1")
+      viewModel.submit(commentId = "c_1", postId = "story_1")
       advanceUntilIdle()
 
       assertThat(viewModel.uiState.isSubmitting).isFalse()
@@ -83,7 +83,7 @@ class ReplyViewModelTest {
         ReplyViewModel(api = AuthenticatedLobstersApi(fakeApi), ioDispatcher = dispatcher)
       viewModel.updateEditor(TextFieldValue("reply body", TextRange("reply body".length)))
 
-      viewModel.submit(commentId = "c_1")
+      viewModel.submit(commentId = "c_1", postId = "story_1")
       advanceUntilIdle()
 
       assertThat(viewModel.uiState.editor.text).isEqualTo("reply body")
@@ -129,6 +129,7 @@ private class FakeLobstersApi(
     commentId: String,
     csrfToken: String,
     requestedWith: String,
+    referer: String,
   ): ApiResult<ReplyForm, Unit> {
     return ApiResult.success(
       ReplyForm(
@@ -143,6 +144,9 @@ private class FakeLobstersApi(
   override suspend fun postReply(
     csrfToken: String,
     requestedWith: String,
+    referer: String,
+    origin: String,
+    accept: String,
     authenticityToken: MultipartBody.Part,
     storyId: MultipartBody.Part,
     method: MultipartBody.Part,

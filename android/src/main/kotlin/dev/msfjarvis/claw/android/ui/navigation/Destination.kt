@@ -35,7 +35,11 @@ interface NonStackable
 
 @Parcelize
 @Serializable
-data class Reply(val commentId: String, val commentText: String) : NavKey, Parcelable
+data class Reply(
+  val postId: String,
+  val commentId: String,
+  val commentText: String,
+) : NavKey, Parcelable
 
 @Parcelize @Serializable data object Search : NavKey, Parcelable
 

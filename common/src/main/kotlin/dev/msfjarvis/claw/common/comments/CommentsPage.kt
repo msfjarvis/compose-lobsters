@@ -33,7 +33,7 @@ fun CommentsPage(
   postActions: PostActions,
   contentPadding: PaddingValues,
   openUserProfile: (String) -> Unit,
-  openReplyScreen: (commentId: String, commentText: String) -> Unit,
+  openReplyScreen: (postId: String, commentId: String, commentText: String) -> Unit,
   modifier: Modifier = Modifier,
   viewModel: CommentsViewModel = metroViewModel(key = postId),
 ) {
@@ -64,7 +64,9 @@ fun CommentsPage(
           isLoggedIn = isLoggedIn,
           upvoteComment = viewModel::upvoteComment,
           unvoteComment = viewModel::unvoteComment,
-          openReplyScreen = openReplyScreen,
+          openReplyScreen = { commentId, commentText ->
+            openReplyScreen(postId, commentId, commentText)
+          },
           modifier = modifier.fillMaxSize(),
         )
       } else {

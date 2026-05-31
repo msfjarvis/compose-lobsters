@@ -11,7 +11,7 @@ plugins {
 kotlin {
   jvm()
   js {
-    browser()
+    nodejs()
   }
 
   sourceSets {

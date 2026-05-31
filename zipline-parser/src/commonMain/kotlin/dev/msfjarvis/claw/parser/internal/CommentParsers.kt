@@ -10,31 +10,29 @@ import com.fleeksoft.ksoup.nodes.Element
 import dev.msfjarvis.claw.parser.model.Comment
 
 internal fun parseComments(root: Element): List<Comment> {
-  val elements = root.select("ol.comments > li.comments_subtree")
   val seen = mutableSetOf<String>()
-  return buildList {
-    elements.forEach { subtree -> addSubtree(subtree, parentComment = null, seen) }
+  val workStack = ArrayDeque<Pair<Element, String?>>()
+  root.select("ol.comments > li.comments_subtree").asReversed().forEach { subtree ->
+    workStack.addLast(subtree to null)
   }
-}
-
-private fun MutableList<Comment>.addSubtree(
-  subtree: Element,
-  parentComment: String?,
-  seen: MutableSet<String>,
-) {
-  val commentElement =
-    if (subtree.`is`("div.comment")) subtree
-    else subtree.children().firstOrNull { it.`is`("div.comment") } ?: return
-  val shortId = commentElement.attr("data-shortid")
-  if (!seen.add(shortId)) return
-  val comment = commentElement.toComment(parentComment)
-  add(comment)
-  val childContainer = if (subtree.`is`("div.comment")) subtree.parent() ?: subtree else subtree
-  for (childList in childContainer.children()) {
-    if (!childList.`is`("ol.comments")) continue
-    for (child in childList.children()) {
-      if (!child.`is`("li.comments_subtree")) continue
-      addSubtree(child, parentComment = comment.shortId, seen)
+  return buildList {
+    while (workStack.isNotEmpty()) {
+      val (subtree, parentComment) = workStack.removeLast()
+      val commentElement =
+        if (subtree.`is`("div.comment")) subtree
+        else subtree.children().firstOrNull { it.`is`("div.comment") } ?: continue
+      val shortId = commentElement.attr("data-shortid")
+      if (!seen.add(shortId)) continue
+      val comment = commentElement.toComment(parentComment)
+      add(comment)
+      val childContainer = if (subtree.`is`("div.comment")) subtree.parent() ?: subtree else subtree
+      childContainer.children().asReversed().forEach { childList ->
+        if (!childList.`is`("ol.comments")) return@forEach
+        childList.children().asReversed().forEach { child ->
+          if (!child.`is`("li.comments_subtree")) return@forEach
+          workStack.addLast(child to comment.shortId)
+        }
+      }
     }
   }
 }

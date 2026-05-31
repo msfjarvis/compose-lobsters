@@ -8,7 +8,6 @@ package dev.msfjarvis.claw.parser.internal
 
 import com.fleeksoft.ksoup.nodes.Element
 import dev.msfjarvis.claw.parser.model.Comment
-import kotlin.time.Instant
 
 internal fun parseComments(root: Element): List<Comment> {
   val elements = root.select("ol.comments > li.comments_subtree")
@@ -57,7 +56,7 @@ private fun Element.toComment(parentComment: String?): Comment {
         ?.trim()
         ?.takeUnless { it == "~" }
         ?.toIntOrNull() ?: 1,
-    timestamp = timestamp.toInstant(),
+    timestamp = timestamp.toEpochSeconds(),
     edited = isEdited,
     parentComment = parentComment,
     user =
@@ -70,10 +69,10 @@ private fun Element.toComment(parentComment: String?): Comment {
   )
 }
 
-private fun String.toInstant(): Instant {
+private fun String.toEpochSeconds(): Long {
   return when {
-    isBlank() -> Instant.fromEpochSeconds(0)
-    all(Char::isDigit) -> Instant.fromEpochSeconds(toLong())
-    else -> Instant.parse(this)
+    isBlank() -> 0L
+    all(Char::isDigit) -> toLong()
+    else -> 0L
   }
 }

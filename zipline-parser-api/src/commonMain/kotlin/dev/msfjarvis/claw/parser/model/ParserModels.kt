@@ -7,7 +7,6 @@
 package dev.msfjarvis.claw.parser.model
 
 import kotlin.jvm.JvmInline
-import kotlin.time.Instant
 
 data class LobstersPost(
   val shortId: String,
@@ -41,7 +40,7 @@ data class Comment(
   val comment: String,
   val url: String = "",
   val score: Int = 1,
-  val timestamp: Instant,
+  val timestamp: Long,
   val edited: Boolean = false,
   val parentComment: String? = null,
   val user: String = "",

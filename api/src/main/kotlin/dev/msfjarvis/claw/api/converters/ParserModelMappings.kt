@@ -13,6 +13,7 @@ import dev.msfjarvis.claw.model.LobstersPostDetails
 import dev.msfjarvis.claw.model.ReplyForm
 import dev.msfjarvis.claw.model.Tag
 import dev.msfjarvis.claw.model.User
+import kotlin.time.Instant
 
 internal fun dev.msfjarvis.claw.parser.model.CSRFToken.toModel(): CSRFToken = CSRFToken(value)
 
@@ -51,7 +52,7 @@ internal fun dev.msfjarvis.claw.parser.model.Comment.toModel(): Comment =
     comment = comment,
     url = url,
     score = score,
-    timestamp = timestamp,
+    timestamp = Instant.fromEpochSeconds(timestamp),
     edited = edited,
     parentComment = parentComment,
     user = user,

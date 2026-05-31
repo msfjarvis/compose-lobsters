@@ -74,6 +74,7 @@ internal fun CommentsPageInternal(
   isLoggedIn: Boolean,
   upvoteComment: (String) -> Unit,
   unvoteComment: (String) -> Unit,
+  openReplyScreen: (String, String) -> Unit,
   modifier: Modifier = Modifier,
 ) {
   LaunchedEffect(key1 = details, key2 = seenCommentsState) {
@@ -137,6 +138,7 @@ internal fun CommentsPageInternal(
             isLoggedIn = isLoggedIn,
             upvoteComment = upvoteComment,
             unvoteComment = unvoteComment,
+            openReplyScreen = openReplyScreen,
           )
         }
 
@@ -167,6 +169,7 @@ private fun NodeBox(
   isLoggedIn: Boolean,
   upvoteComment: (String) -> Unit,
   unvoteComment: (String) -> Unit,
+  openReplyScreen: (String, String) -> Unit,
   modifier: Modifier = Modifier,
 ) {
   CommentEntry(
@@ -177,6 +180,7 @@ private fun NodeBox(
     isLoggedIn = isLoggedIn,
     upvoteComment = upvoteComment,
     unvoteComment = unvoteComment,
+    onReply = openReplyScreen,
     modifier = modifier,
   )
   HorizontalDivider()

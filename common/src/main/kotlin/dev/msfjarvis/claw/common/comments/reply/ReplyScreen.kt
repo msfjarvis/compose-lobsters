@@ -41,7 +41,7 @@ import dev.zacsweers.metrox.viewmodel.metroViewModel
 fun ReplyScreen(
   commentId: String,
   contentPadding: PaddingValues,
-  onBack: () -> Unit,
+  postId: String,
   onReplySubmitted: () -> Unit,
   modifier: Modifier = Modifier,
   viewModel: ReplyViewModel = metroViewModel(key = commentId),
@@ -64,7 +64,7 @@ fun ReplyScreen(
     onParentCommentClick = viewModel::showQuoteDialog,
     onDismissDialog = viewModel::dismissQuoteDialog,
     onQuote = { viewModel.insertQuote(commentText) },
-    onSubmit = { viewModel.submit(commentId) },
+    onSubmit = { viewModel.submit(commentId, postId) },
     modifier = modifier,
   )
 }

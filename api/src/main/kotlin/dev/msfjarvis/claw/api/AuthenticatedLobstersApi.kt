@@ -14,6 +14,8 @@ import java.io.IOException
 import okhttp3.MultipartBody
 
 private const val XML_HTTP_REQUEST = "XMLHttpRequest"
+private const val XML_HTTP_REQUEST_DUPLICATE = "XMLHttpRequest, XMLHttpRequest"
+private const val ACCEPT_ANY = "*/*"
 
 @Inject
 class AuthenticatedLobstersApi(private val api: LobstersApi) {
@@ -30,9 +32,10 @@ class AuthenticatedLobstersApi(private val api: LobstersApi) {
     }
   }
 
-  suspend fun reply(commentId: String, comment: String): ApiResult<Unit, Unit> {
+  suspend fun reply(commentId: String, storyId: String, comment: String): ApiResult<Unit, Unit> {
+    val referer = "${LobstersApi.BASE_URL}/s/$storyId"
     return withCSRFToken { csrfToken ->
-      when (val formResponse = api.getReplyForm(commentId, csrfToken, XML_HTTP_REQUEST)) {
+      when (val formResponse = api.getReplyForm(commentId, csrfToken, XML_HTTP_REQUEST, referer)) {
         is Success -> {
           val form = formResponse.value
           if (!form.isValid()) {
@@ -41,7 +44,10 @@ class AuthenticatedLobstersApi(private val api: LobstersApi) {
 
             api.postReply(
               csrfToken = csrfToken,
-              requestedWith = XML_HTTP_REQUEST,
+              requestedWith = XML_HTTP_REQUEST_DUPLICATE,
+              referer = referer,
+              origin = LobstersApi.BASE_URL,
+              accept = ACCEPT_ANY,
               authenticityToken = part("authenticity_token", form.authenticityToken),
               storyId = part("story_id", form.storyId),
               method = part("_method", form.method),

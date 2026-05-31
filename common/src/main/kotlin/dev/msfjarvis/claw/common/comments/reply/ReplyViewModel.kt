@@ -62,7 +62,7 @@ class ReplyViewModel(
     uiState = uiState.copy(submitSucceeded = false)
   }
 
-  fun submit(commentId: String) {
+  fun submit(commentId: String, postId: String) {
     val replyText = uiState.editor.text.trim()
     if (replyText.isBlank()) {
       uiState = uiState.copy(errorMessage = "Reply cannot be blank")
@@ -70,7 +70,7 @@ class ReplyViewModel(
     }
     uiState = uiState.copy(isSubmitting = true, errorMessage = null)
     viewModelScope.launch {
-      val result = withContext(ioDispatcher) { api.reply(commentId, replyText) }
+      val result = withContext(ioDispatcher) { api.reply(commentId, postId, replyText) }
       uiState =
         when (result) {
           is ApiResult.Success -> uiState.copy(isSubmitting = false, submitSucceeded = true)

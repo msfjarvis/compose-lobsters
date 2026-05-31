@@ -251,8 +251,8 @@ fun LobstersPostsScreen(
                 postActions = commentsPostActions,
                 contentPadding = contentPadding,
                 openUserProfile = { navigateTo(backStack, User(it)) },
-                openReplyScreen = { commentId, commentText ->
-                  navigateTo(backStack, Reply(commentId, commentText), allowStacking = true)
+                openReplyScreen = { postId, commentId ->
+                  navigateTo(backStack, Reply(postId, commentId), allowStacking = true)
                 },
               )
             }
@@ -260,7 +260,7 @@ fun LobstersPostsScreen(
               ReplyScreen(
                 commentId = dest.commentId,
                 contentPadding = contentPadding,
-                onBack = { popBackStack(backStack) },
+                postId = dest.postId,
                 onReplySubmitted = { popBackStack(backStack) },
                 modifier = Modifier.fillMaxSize(),
               )

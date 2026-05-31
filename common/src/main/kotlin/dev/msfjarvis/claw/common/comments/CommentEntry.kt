@@ -165,12 +165,8 @@ internal fun CommentEntry(
       initiallyUpvoted = comment.isUpvoted,
       isUpvoted = hasLocallyUpvoted,
     )
+  val theme = if (isSystemInDarkTheme()) ThemeMode.DARK else ThemeMode.LIGHT
   val indentGuideLevel = commentNode.indentLevel.minus(1).coerceAtLeast(0)
-  val threadGuideColor =
-    CommentTreeColors.colorForDepth(
-      depth = indentGuideLevel,
-      theme = if (isSystemInDarkTheme()) ThemeMode.DARK else ThemeMode.LIGHT,
-    )
   Box(
     modifier =
       modifier
@@ -181,7 +177,11 @@ internal fun CommentEntry(
             repeat(indentGuideLevel) { level ->
               val x = ThreadIndentWidth.toPx() * level + ThreadGuideOffset.toPx()
               drawLine(
-                color = threadGuideColor,
+                color =
+                  CommentTreeColors.colorForDepth(
+                    depth = level,
+                    theme = theme,
+                  ),
                 start = Offset(x, 0f),
                 end = Offset(x, size.height),
                 strokeWidth = ThreadGuideWidth.toPx(),

@@ -28,8 +28,12 @@ import kotlinx.coroutines.withContext
 @ContributesIntoMap(AppScope::class)
 class ReplyViewModel(
   private val api: AuthenticatedLobstersApi,
+  private val commentTextHolder: CommentTextHolder,
   @param:IODispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
+
+  fun getCommentText(commentId: String): String = commentTextHolder.retrieve(commentId)
+
   internal var uiState by mutableStateOf(ReplyUiState())
     private set
 

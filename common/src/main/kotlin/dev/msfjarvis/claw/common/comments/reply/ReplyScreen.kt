@@ -40,15 +40,14 @@ import dev.zacsweers.metrox.viewmodel.metroViewModel
 @Composable
 fun ReplyScreen(
   commentId: String,
-  commentText: String,
   contentPadding: PaddingValues,
   postId: String,
-  onBack: () -> Unit,
   onReplySubmitted: () -> Unit,
   modifier: Modifier = Modifier,
   viewModel: ReplyViewModel = metroViewModel(key = commentId),
 ) {
   val uiState = viewModel.uiState
+  val commentText = viewModel.getCommentText(commentId)
 
   LaunchedEffect(uiState.submitSucceeded) {
     if (uiState.submitSucceeded) {

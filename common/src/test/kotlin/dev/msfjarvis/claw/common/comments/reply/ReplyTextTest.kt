@@ -42,6 +42,6 @@ class ReplyTextTest {
   @Test
   fun `plainTextFromHtml strips markup for quoting`() {
     assertThat(plainTextFromHtml("<p>Hello <strong>world</strong></p><p>Next line</p>"))
-      .isEqualTo("Hello world Next line")
+      .isEqualTo("Hello world\nNext line")
   }
 }

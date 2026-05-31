@@ -50,7 +50,11 @@ class ReplyViewModelTest {
     runTest(dispatcher) {
       val fakeApi = FakeLobstersApi()
       val viewModel =
-        ReplyViewModel(api = AuthenticatedLobstersApi(fakeApi), ioDispatcher = dispatcher)
+        ReplyViewModel(
+          api = AuthenticatedLobstersApi(fakeApi),
+          commentTextHolder = CommentTextHolder(),
+          ioDispatcher = dispatcher,
+        )
 
       viewModel.submit(commentId = "c_1", postId = "story_1")
       advanceUntilIdle()
@@ -64,7 +68,11 @@ class ReplyViewModelTest {
     runTest(dispatcher) {
       val fakeApi = FakeLobstersApi()
       val viewModel =
-        ReplyViewModel(api = AuthenticatedLobstersApi(fakeApi), ioDispatcher = dispatcher)
+        ReplyViewModel(
+          api = AuthenticatedLobstersApi(fakeApi),
+          commentTextHolder = CommentTextHolder(),
+          ioDispatcher = dispatcher,
+        )
       viewModel.updateEditor(TextFieldValue("reply body", TextRange("reply body".length)))
 
       viewModel.submit(commentId = "c_1", postId = "story_1")
@@ -80,7 +88,11 @@ class ReplyViewModelTest {
     runTest(dispatcher) {
       val fakeApi = FakeLobstersApi(postReplyResult = ApiResult.unknownFailure(IOException("boom")))
       val viewModel =
-        ReplyViewModel(api = AuthenticatedLobstersApi(fakeApi), ioDispatcher = dispatcher)
+        ReplyViewModel(
+          api = AuthenticatedLobstersApi(fakeApi),
+          commentTextHolder = CommentTextHolder(),
+          ioDispatcher = dispatcher,
+        )
       viewModel.updateEditor(TextFieldValue("reply body", TextRange("reply body".length)))
 
       viewModel.submit(commentId = "c_1", postId = "story_1")

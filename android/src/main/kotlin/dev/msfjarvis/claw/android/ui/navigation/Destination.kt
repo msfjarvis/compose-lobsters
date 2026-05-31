@@ -33,6 +33,10 @@ interface NonStackable
 
 @Parcelize @Serializable data class User(val username: String) : NavKey, Parcelable, NonStackable
 
+@Parcelize
+@Serializable
+data class Reply(val commentId: String, val commentText: String) : NavKey, Parcelable
+
 @Parcelize @Serializable data object Search : NavKey, Parcelable
 
 @Parcelize @Serializable data object Settings : NavKey, Parcelable

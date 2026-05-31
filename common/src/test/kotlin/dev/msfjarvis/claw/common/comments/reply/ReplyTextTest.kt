@@ -38,4 +38,10 @@ class ReplyTextTest {
     assertThat(result.text).isEqualTo("hello > quoted\n")
     assertThat(result.selection.start).isEqualTo(result.text.length)
   }
+
+  @Test
+  fun `plainTextFromHtml strips markup for quoting`() {
+    assertThat(plainTextFromHtml("<p>Hello <strong>world</strong></p><p>Next line</p>"))
+      .isEqualTo("Hello world Next line")
+  }
 }

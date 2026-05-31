@@ -28,6 +28,7 @@
       android:name=".MainActivity"
       android:configChanges="assetsPaths|colorMode|density|fontScale|fontWeightAdjustment|grammaticalGender|keyboard|keyboardHidden|layoutDirection|locale|mcc|mnc|navigation|orientation|resourcesUnused|screenLayout|screenSize|smallestScreenSize|touchscreen|uiMode"
       android:launchMode="singleTask"
+      android:windowSoftInputMode="adjustResize"
       android:taskAffinity=""
       android:exported="true">
       <intent-filter>

@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.Reply
 import androidx.compose.material.icons.filled.Public
 import androidx.compose.material.icons.outlined.KeyboardArrowUp
 import androidx.compose.material3.Icon
@@ -50,6 +51,7 @@ import androidx.compose.ui.unit.dp
 import com.github.michaelbull.result.coroutines.runSuspendCatching
 import com.github.michaelbull.result.onOk
 import dev.msfjarvis.claw.common.R
+import dev.msfjarvis.claw.common.comments.reply.plainTextFromHtml
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.posts.PostTitle
 import dev.msfjarvis.claw.common.posts.Submitter
@@ -153,6 +155,7 @@ internal fun CommentEntry(
   isLoggedIn: Boolean,
   upvoteComment: (String) -> Unit,
   unvoteComment: (String) -> Unit,
+  onReply: (String, String) -> Unit,
   modifier: Modifier = Modifier,
 ) {
   val comment = commentNode.comment
@@ -270,6 +273,9 @@ internal fun CommentEntry(
               }
               hasLocallyUpvoted = !hasLocallyUpvoted
             },
+            onReplyClick = {
+              onReply(comment.shortId, plainTextFromHtml(comment.comment))
+            },
           )
         }
       }
@@ -281,6 +287,7 @@ internal fun CommentEntry(
 private fun CommentActionTray(
   isUpvoted: Boolean,
   onVoteClick: () -> Unit,
+  onReplyClick: () -> Unit,
   modifier: Modifier = Modifier,
 ) {
   Row(
@@ -300,14 +307,13 @@ private fun CommentActionTray(
         else MaterialTheme.colorScheme.onSurfaceVariant,
       modifier = Modifier.clickable(role = Role.Button, onClick = onVoteClick),
     )
-    /*
     Spacer(Modifier.size(12.dp))
     Icon(
       imageVector = Icons.AutoMirrored.Outlined.Reply,
       contentDescription = "Reply",
       tint = MaterialTheme.colorScheme.onSurfaceVariant,
+      modifier = Modifier.clickable(role = Role.Button, onClick = onReplyClick),
     )
-    */
   }
 }
 
@@ -323,6 +329,7 @@ internal fun PreviewCommentEntry(commentNode: CommentNode) {
         isLoggedIn = true,
         upvoteComment = {},
         unvoteComment = {},
+        onReply = { _, _ -> },
       )
     }
   }

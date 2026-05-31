@@ -8,12 +8,17 @@ package dev.msfjarvis.claw.common.comments.reply
 
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
+import com.fleeksoft.ksoup.Ksoup
 
 internal fun quoteText(commentText: String): String {
   return commentText
     .lines()
     .joinToString(separator = "\n") { line -> "> ${line.trimEnd()}" }
     .plus("\n")
+}
+
+internal fun plainTextFromHtml(commentText: String): String {
+  return Ksoup.parse(commentText).text().trim()
 }
 
 internal fun insertQuote(current: TextFieldValue, commentText: String): TextFieldValue {

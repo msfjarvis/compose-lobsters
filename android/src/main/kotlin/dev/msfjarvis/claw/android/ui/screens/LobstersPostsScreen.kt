@@ -66,6 +66,7 @@ import dev.msfjarvis.claw.android.ui.navigation.Hottest
 import dev.msfjarvis.claw.android.ui.navigation.Login
 import dev.msfjarvis.claw.android.ui.navigation.Newest
 import dev.msfjarvis.claw.android.ui.navigation.NonStackable
+import dev.msfjarvis.claw.android.ui.navigation.Reply
 import dev.msfjarvis.claw.android.ui.navigation.Saved
 import dev.msfjarvis.claw.android.ui.navigation.Search
 import dev.msfjarvis.claw.android.ui.navigation.SentryNavigation3Traced
@@ -76,6 +77,7 @@ import dev.msfjarvis.claw.android.ui.navigation.User
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.android.viewmodel.SettingsViewModel
 import dev.msfjarvis.claw.common.comments.CommentsPage
+import dev.msfjarvis.claw.common.comments.reply.ReplyScreen
 import dev.msfjarvis.claw.common.tags.TagFilterViewModel
 import dev.msfjarvis.claw.common.tags.TagList
 import dev.msfjarvis.claw.common.user.UserProfile
@@ -249,6 +251,19 @@ fun LobstersPostsScreen(
                 postActions = commentsPostActions,
                 contentPadding = contentPadding,
                 openUserProfile = { navigateTo(backStack, User(it)) },
+                openReplyScreen = { commentId, commentText ->
+                  navigateTo(backStack, Reply(commentId, commentText), allowStacking = true)
+                },
+              )
+            }
+            entry<Reply>(metadata = ListDetailSceneStrategy.extraPane()) { dest ->
+              ReplyScreen(
+                commentId = dest.commentId,
+                commentText = dest.commentText,
+                contentPadding = contentPadding,
+                onBack = { popBackStack(backStack) },
+                onReplySubmitted = { popBackStack(backStack) },
+                modifier = Modifier.fillMaxSize(),
               )
             }
             entry<User>(

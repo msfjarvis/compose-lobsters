@@ -203,8 +203,13 @@ internal fun CommentEntry(
             }
           )
           .combinedClickable(
-            enabled = isLoggedIn,
-            onClick = { isActionBarExpanded = !isActionBarExpanded },
+            onClick = {
+              if (isExpanded) {
+                if (isLoggedIn) isActionBarExpanded = !isActionBarExpanded
+              } else {
+                onToggleExpandedState(comment.shortId, true)
+              }
+            },
             onLongClick = {
               isActionBarExpanded = false
               onToggleExpandedState(comment.shortId, !isExpanded)
@@ -213,7 +218,14 @@ internal fun CommentEntry(
       verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
       Row(
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 12.dp),
+        modifier =
+          Modifier.fillMaxWidth()
+            .padding(
+              start = 16.dp,
+              end = 16.dp,
+              top = 12.dp,
+              bottom = if (!isExpanded) 12.dp else 0.dp,
+            ),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically,
       ) {
@@ -241,7 +253,7 @@ internal fun CommentEntry(
       if (isExpanded) {
         ThemedRichText(
           text = comment.comment,
-          modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+          modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 12.dp),
         )
         AnimatedVisibility(
           visible = isActionBarExpanded,

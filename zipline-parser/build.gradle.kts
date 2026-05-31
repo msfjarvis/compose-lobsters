@@ -8,7 +8,6 @@ import app.cash.zipline.loader.SignatureAlgorithmId
 
 plugins {
   kotlin("multiplatform")
-  alias(libs.plugins.kotlin.serialization)
   alias(libs.plugins.zipline)
 }
 
@@ -23,7 +22,6 @@ kotlin {
     commonMain {
       dependencies {
         api(projects.ziplineParserApi)
-        api(libs.kotlinx.serialization.core)
         implementation(libs.ksoup)
       }
     }

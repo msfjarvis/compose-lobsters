@@ -242,7 +242,7 @@ internal fun CommentEntry(
         Spacer(Modifier.weight(1f))
         if (!isExpanded) {
           Text(
-            text = "+${commentNode.descendantCount()}",
+            text = " +${commentNode.descendantCount()} ",
             style = MaterialTheme.typography.labelLargeEmphasized,
             color = MaterialTheme.colorScheme.onTertiary,
             modifier =

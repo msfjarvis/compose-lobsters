@@ -13,6 +13,7 @@ plugins {
 }
 
 dependencies {
+  api(libs.kotlinx.datetime)
   api(libs.kotlinx.serialization.core)
   api(libs.kspoon)
   api(projects.database.core)

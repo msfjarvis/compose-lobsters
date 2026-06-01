@@ -61,8 +61,7 @@ import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.common.ui.ThemedRichText
 import dev.msfjarvis.claw.model.LinkMetadata
 import dev.msfjarvis.claw.model.UIPost
-import java.time.Instant
-import java.time.temporal.TemporalAccessor
+import kotlin.time.Instant
 import kotlinx.collections.immutable.toImmutableList
 
 @Composable
@@ -336,11 +335,11 @@ private fun displayScore(score: Int, initiallyUpvoted: Boolean, isUpvoted: Boole
   }
 }
 
-private fun buildCommentAgeString(timestamp: TemporalAccessor, edited: Boolean): String {
+private fun buildCommentAgeString(timestamp: Instant, edited: Boolean): String {
   val now = System.currentTimeMillis()
   val relativeTime =
     DateUtils.getRelativeTimeSpanString(
-      Instant.from(timestamp).toEpochMilli(),
+      timestamp.toEpochMilliseconds(),
       now,
       DateUtils.MINUTE_IN_MILLIS,
       DateUtils.FORMAT_ABBREV_RELATIVE,

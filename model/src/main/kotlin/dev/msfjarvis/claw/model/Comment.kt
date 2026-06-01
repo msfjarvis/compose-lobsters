@@ -11,10 +11,7 @@ package dev.msfjarvis.claw.model
 import dev.burnoo.kspoon.SelectorHtmlTextMode
 import dev.burnoo.kspoon.annotation.Selector
 import dev.drewhamilton.poko.Poko
-import java.time.Instant
-import java.time.ZoneOffset
-import java.time.format.DateTimeFormatter
-import java.time.temporal.TemporalAccessor
+import kotlin.time.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -36,7 +33,7 @@ class Comment(
   val score: Int = 1,
   @Serializable(with = CommentInstantSerializer::class)
   @Selector("div.byline a[href^=/c/] time", attr = "data-at-unix", defValue = "")
-  val timestamp: TemporalAccessor,
+  val timestamp: Instant,
   @Serializable(with = CommentEditedSerializer::class)
   @Selector("div.byline span", defValue = "")
   val edited: Boolean = false,
@@ -51,27 +48,13 @@ class Comment(
   val isUpvoted: Boolean = false,
 )
 
-internal object CommentInstantSerializer : KSerializer<TemporalAccessor> {
+internal object CommentInstantSerializer : KSerializer<Instant> {
   override val descriptor: SerialDescriptor =
     PrimitiveSerialDescriptor("CommentInstant", PrimitiveKind.STRING)
 
-  override fun deserialize(decoder: Decoder): TemporalAccessor {
-    val value = decoder.decodeString()
-    val isoValue =
-      if (value.isBlank()) {
-        Instant.EPOCH.atOffset(ZoneOffset.UTC).format(DateTimeFormatter.ISO_OFFSET_DATE_TIME)
-      } else if (value.all(Char::isDigit)) {
-        Instant.ofEpochSecond(value.toLong())
-          .atOffset(ZoneOffset.UTC)
-          .format(DateTimeFormatter.ISO_OFFSET_DATE_TIME)
-      } else {
-        value
-      }
-    return DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(isoValue)
-  }
+  override fun deserialize(decoder: Decoder): Instant = decoder.decodeString().parseInstantOrEpoch()
 
-  override fun serialize(encoder: Encoder, value: TemporalAccessor) =
-    encoder.encodeString(value.toString())
+  override fun serialize(encoder: Encoder, value: Instant) = encoder.encodeString(value.toString())
 }
 
 internal object CommentScoreSerializer : KSerializer<Int> {

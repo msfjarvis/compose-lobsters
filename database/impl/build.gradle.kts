@@ -20,6 +20,7 @@ dependencies {
   api(projects.database.core)
 
   implementation(libs.androidx.sqlite)
+  implementation(libs.kotlinx.datetime)
   implementation(libs.sqldelight.androidDriver)
   implementation(libs.sqldelight.primitiveAdapters)
   implementation(libs.sqlite.android)

@@ -9,12 +9,8 @@ package dev.msfjarvis.claw.core.network
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoSet
 import dev.zacsweers.metro.Inject
-import java.time.Instant
-import java.time.ZonedDateTime
-import java.time.format.DateTimeFormatter
-import java.time.format.DateTimeParseException
-import java.util.Locale
 import java.util.concurrent.TimeUnit
+import kotlinx.datetime.format.DateTimeComponents
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -68,32 +64,23 @@ class RetryAfterInterceptor : Interceptor {
    * Returns the delay in seconds, or 0 if parsing fails.
    */
   private fun parseRetryAfter(retryAfter: String): Long {
-    // Try parsing as seconds first
     retryAfter.toLongOrNull()?.let {
       return it.coerceAtMost(MAX_RETRY_DELAY_SECONDS)
     }
 
-    // Try parsing as HTTP-date
-    try {
-      val retryDate = ZonedDateTime.parse(retryAfter, HTTP_DATE_FORMATTER)
-      val now = Instant.now()
-      val retryInstant = retryDate.toInstant()
-      val delaySeconds = retryInstant.epochSecond - now.epochSecond
-
-      // Only return positive delays, capped at max
-      return if (delaySeconds > 0) delaySeconds.coerceAtMost(MAX_RETRY_DELAY_SECONDS) else 0
-    } catch (e: DateTimeParseException) {
-      // If we can't parse it, don't retry
-      return 0
-    }
+    val retryInstant = parseHttpDate(retryAfter) ?: return 0
+    val delaySeconds = (retryInstant.toEpochMilliseconds() - System.currentTimeMillis()) / 1000
+    return if (delaySeconds > 0) delaySeconds.coerceAtMost(MAX_RETRY_DELAY_SECONDS) else 0
   }
 
-  private companion object {
-    // Cap retry delay at 5 minutes to avoid indefinite waits
-    private const val MAX_RETRY_DELAY_SECONDS = 300L
+  private fun parseHttpDate(value: String) =
+    try {
+      DateTimeComponents.Formats.RFC_1123.parse(value).toInstantUsingOffset()
+    } catch (_: IllegalArgumentException) {
+      null
+    }
 
-    // HTTP-date format as specified in RFC 7231
-    private val HTTP_DATE_FORMATTER =
-      DateTimeFormatter.ofPattern("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.US)
+  private companion object {
+    private const val MAX_RETRY_DELAY_SECONDS = 300L
   }
 }

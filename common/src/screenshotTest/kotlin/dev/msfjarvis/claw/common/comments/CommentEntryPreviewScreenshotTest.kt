@@ -20,7 +20,7 @@ import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.preview.DevicePreviews
 import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
 import dev.msfjarvis.claw.model.Comment
-import java.time.Instant
+import kotlin.time.Clock
 
 @PreviewTest
 @DevicePreviews
@@ -72,7 +72,7 @@ private fun previewCommentNode(isUpvoted: Boolean = false, hasChildren: Boolean 
           comment =
             "<p>This is a preview comment with enough content to evaluate spacing, metadata, and future vote affordances.</p>",
           score = 42,
-          timestamp = Instant.now(),
+          timestamp = Clock.System.now(),
           edited = false,
           parentComment = null,
           user = "Alice",
@@ -92,7 +92,7 @@ private fun previewCommentNode(isUpvoted: Boolean = false, hasChildren: Boolean 
                 comment =
                   "<p>This child comment helps preview expanded and collapsed thread states.</p>",
                 score = 7,
-                timestamp = Instant.now(),
+                timestamp = Clock.System.now(),
                 edited = false,
                 parentComment = parent.comment.shortId,
                 user = "Bob",

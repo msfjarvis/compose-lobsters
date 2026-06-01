@@ -14,8 +14,7 @@ import dev.burnoo.kspoon.Kspoon
 import dev.msfjarvis.claw.model.LobstersPostDetails
 import dev.msfjarvis.claw.model.User
 import dev.msfjarvis.claw.util.TestUtils.assertIs
-import java.time.Instant
-import java.time.format.DateTimeFormatter
+import kotlin.time.Instant
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -54,7 +53,7 @@ class ApiTest {
     assertThat(firstPost.tags).containsExactly("linux")
     assertThat(firstPost.userIsAuthor).isTrue()
     assertThat(firstPost.createdAt).isEqualTo("2026-05-29T09:08:12Z")
-    DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(firstPost.createdAt)
+    Instant.parse(firstPost.createdAt)
 
     val secondPost = posts.value.posts[1]
     assertThat(secondPost.shortId).isEqualTo("lc26ar")
@@ -143,7 +142,7 @@ class ApiTest {
 
     val editedComment = postDetails.value.comments.first { it.shortId == "pcvbcd" }
     assertThat(editedComment.edited).isTrue()
-    assertThat(Instant.from(editedComment.timestamp).epochSecond).isEqualTo(1658588955)
+    assertThat(editedComment.timestamp.epochSeconds).isEqualTo(1658588955)
   }
 
   @Test

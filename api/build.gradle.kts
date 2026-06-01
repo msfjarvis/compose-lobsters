@@ -28,5 +28,6 @@ dependencies {
   testImplementation(libs.eithernet.test.fixtures)
   testImplementation(libs.kotlin.reflect)
   testImplementation(libs.kotlinx.coroutines.test)
+  testImplementation(libs.kotlinx.datetime)
   addTestDependencies(project)
 }

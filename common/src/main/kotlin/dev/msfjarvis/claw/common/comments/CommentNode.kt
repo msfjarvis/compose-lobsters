@@ -37,6 +37,10 @@ internal data class CommentNode(
     }
   }
 
+  fun descendantCount(): Int {
+    return children.size + children.sumOf { it.descendantCount() }
+  }
+
   /**
    * [CommentNode.equals], [CommentNode.toString] and [CommentNode.hashCode] are hand-rolled to drop
    * the [CommentNode.parent] field from the comparison since it's possible for there to be cycles

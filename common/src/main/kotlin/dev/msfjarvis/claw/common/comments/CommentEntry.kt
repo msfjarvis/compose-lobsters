@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Reply
@@ -56,10 +57,8 @@ import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.posts.PostTitle
 import dev.msfjarvis.claw.common.posts.Submitter
 import dev.msfjarvis.claw.common.posts.TagRow
-import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.common.ui.ThemedRichText
-import dev.msfjarvis.claw.model.Comment
 import dev.msfjarvis.claw.model.LinkMetadata
 import dev.msfjarvis.claw.model.UIPost
 import java.time.Instant
@@ -241,6 +240,18 @@ internal fun CommentEntry(
           modifier = Modifier.clickable { openUserProfile(comment.user) },
         )
         Spacer(Modifier.weight(1f))
+        if (!isExpanded) {
+          Text(
+            text = "+${commentNode.descendantCount()}",
+            style = MaterialTheme.typography.labelLargeEmphasized,
+            color = MaterialTheme.colorScheme.onTertiary,
+            modifier =
+              Modifier.background(
+                color = MaterialTheme.colorScheme.tertiary,
+                shape = RoundedCornerShape(CornerSize(4.dp)),
+              ),
+          )
+        }
         Text(
           text = score.toString(),
           style = MaterialTheme.typography.labelLarge,
@@ -317,24 +328,6 @@ private fun CommentActionTray(
   }
 }
 
-@Composable
-internal fun PreviewCommentEntry(commentNode: CommentNode) {
-  LobstersTheme(darkTheme = true) {
-    Box(Modifier.background(MaterialTheme.colorScheme.background).padding(vertical = 8.dp)) {
-      CommentEntry(
-        isExpanded = true,
-        commentNode = commentNode,
-        openUserProfile = {},
-        onToggleExpandedState = { _, _ -> },
-        isLoggedIn = true,
-        upvoteComment = {},
-        unvoteComment = {},
-        onReply = { _, _ -> },
-      )
-    }
-  }
-}
-
 private fun displayScore(score: Int, initiallyUpvoted: Boolean, isUpvoted: Boolean): Int {
   return when {
     initiallyUpvoted == isUpvoted -> score
@@ -342,25 +335,6 @@ private fun displayScore(score: Int, initiallyUpvoted: Boolean, isUpvoted: Boole
     else -> score - 1
   }
 }
-
-internal fun previewCommentNode(isUpvoted: Boolean = false) =
-  CommentNode(
-    comment =
-      Comment(
-        shortId = "preview-comment",
-        comment =
-          "<p>This is a preview comment with enough content to evaluate spacing, metadata, and future vote affordances.</p>",
-        score = 42,
-        timestamp = Instant.now(),
-        edited = false,
-        parentComment = null,
-        user = "Alice",
-        isUpvoted = isUpvoted,
-      ),
-    isPostAuthor = false,
-    isUnread = true,
-    indentLevel = 0,
-  )
 
 private fun buildCommentAgeString(timestamp: TemporalAccessor, edited: Boolean): String {
   val now = System.currentTimeMillis()

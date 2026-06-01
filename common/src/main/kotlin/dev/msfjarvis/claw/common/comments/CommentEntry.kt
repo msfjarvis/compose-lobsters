@@ -25,6 +25,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.Reply
 import androidx.compose.material.icons.filled.Public
 import androidx.compose.material.icons.outlined.KeyboardArrowUp
 import androidx.compose.material3.Icon
@@ -50,6 +51,7 @@ import androidx.compose.ui.unit.dp
 import com.github.michaelbull.result.coroutines.runSuspendCatching
 import com.github.michaelbull.result.onOk
 import dev.msfjarvis.claw.common.R
+import dev.msfjarvis.claw.common.comments.reply.plainTextFromHtml
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.posts.PostTitle
 import dev.msfjarvis.claw.common.posts.Submitter
@@ -153,6 +155,7 @@ internal fun CommentEntry(
   isLoggedIn: Boolean,
   upvoteComment: (String) -> Unit,
   unvoteComment: (String) -> Unit,
+  onReply: (String, String) -> Unit,
   modifier: Modifier = Modifier,
 ) {
   val comment = commentNode.comment
@@ -165,12 +168,8 @@ internal fun CommentEntry(
       initiallyUpvoted = comment.isUpvoted,
       isUpvoted = hasLocallyUpvoted,
     )
+  val theme = if (isSystemInDarkTheme()) ThemeMode.DARK else ThemeMode.LIGHT
   val indentGuideLevel = commentNode.indentLevel.minus(1).coerceAtLeast(0)
-  val threadGuideColor =
-    CommentTreeColors.colorForDepth(
-      depth = indentGuideLevel,
-      theme = if (isSystemInDarkTheme()) ThemeMode.DARK else ThemeMode.LIGHT,
-    )
   Box(
     modifier =
       modifier
@@ -181,7 +180,11 @@ internal fun CommentEntry(
             repeat(indentGuideLevel) { level ->
               val x = ThreadIndentWidth.toPx() * level + ThreadGuideOffset.toPx()
               drawLine(
-                color = threadGuideColor,
+                color =
+                  CommentTreeColors.colorForDepth(
+                    depth = level,
+                    theme = theme,
+                  ),
                 start = Offset(x, 0f),
                 end = Offset(x, size.height),
                 strokeWidth = ThreadGuideWidth.toPx(),
@@ -203,8 +206,13 @@ internal fun CommentEntry(
             }
           )
           .combinedClickable(
-            enabled = isLoggedIn,
-            onClick = { isActionBarExpanded = !isActionBarExpanded },
+            onClick = {
+              if (isExpanded) {
+                if (isLoggedIn) isActionBarExpanded = !isActionBarExpanded
+              } else {
+                onToggleExpandedState(comment.shortId, true)
+              }
+            },
             onLongClick = {
               isActionBarExpanded = false
               onToggleExpandedState(comment.shortId, !isExpanded)
@@ -213,7 +221,14 @@ internal fun CommentEntry(
       verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
       Row(
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 12.dp),
+        modifier =
+          Modifier.fillMaxWidth()
+            .padding(
+              start = 16.dp,
+              end = 16.dp,
+              top = 12.dp,
+              bottom = if (!isExpanded) 12.dp else 0.dp,
+            ),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically,
       ) {
@@ -241,7 +256,7 @@ internal fun CommentEntry(
       if (isExpanded) {
         ThemedRichText(
           text = comment.comment,
-          modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+          modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 12.dp),
         )
         AnimatedVisibility(
           visible = isActionBarExpanded,
@@ -258,6 +273,9 @@ internal fun CommentEntry(
               }
               hasLocallyUpvoted = !hasLocallyUpvoted
             },
+            onReplyClick = {
+              onReply(comment.shortId, plainTextFromHtml(comment.comment))
+            },
           )
         }
       }
@@ -269,6 +287,7 @@ internal fun CommentEntry(
 private fun CommentActionTray(
   isUpvoted: Boolean,
   onVoteClick: () -> Unit,
+  onReplyClick: () -> Unit,
   modifier: Modifier = Modifier,
 ) {
   Row(
@@ -288,14 +307,13 @@ private fun CommentActionTray(
         else MaterialTheme.colorScheme.onSurfaceVariant,
       modifier = Modifier.clickable(role = Role.Button, onClick = onVoteClick),
     )
-    /*
     Spacer(Modifier.size(12.dp))
     Icon(
       imageVector = Icons.AutoMirrored.Outlined.Reply,
       contentDescription = "Reply",
       tint = MaterialTheme.colorScheme.onSurfaceVariant,
+      modifier = Modifier.clickable(role = Role.Button, onClick = onReplyClick),
     )
-    */
   }
 }
 
@@ -311,6 +329,7 @@ internal fun PreviewCommentEntry(commentNode: CommentNode) {
         isLoggedIn = true,
         upvoteComment = {},
         unvoteComment = {},
+        onReply = { _, _ -> },
       )
     }
   }

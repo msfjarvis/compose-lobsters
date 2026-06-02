@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The comments UI now tries to mimic Boost for Reddit
 
+### Fixed
+
+- Certificate pinning was removed to avoid errors when certificates were rotated
+
 ## [1.65.0] - 2026-05-29
 
 ### Fixed

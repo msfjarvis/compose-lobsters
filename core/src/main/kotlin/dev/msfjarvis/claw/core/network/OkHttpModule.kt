@@ -18,7 +18,6 @@ import java.net.Socket
 import java.util.concurrent.TimeUnit
 import javax.net.SocketFactory
 import okhttp3.Cache
-import okhttp3.CertificatePinner
 import okhttp3.CookieJar
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -32,15 +31,6 @@ object OkHttpModule {
   private const val CONNECT_TIMEOUT_SECONDS = 30L
   private const val READ_TIMEOUT_SECONDS = 30L
   private const val WRITE_TIMEOUT_SECONDS = 30L
-
-  @Provides
-  fun provideCertificatePinner(): CertificatePinner {
-    return CertificatePinner.Builder()
-      .add("lobste.rs", "sha256/Bla1TIdpGeHXQS0/CIrA5hhFhOTZd94IIJRS3G3AcIo=")
-      .add("lobste.rs", "sha256/jQJTbIh0grw0/1TkHSumWb+Fs0Ggogr621gT3PvPKG0=")
-      .add("lobste.rs", "sha256/C5+lpZ7tcVwmwQIMcRtPbsQtWLABXhQzejna0wHFr8M=")
-      .build()
-  }
 
   @Provides
   @SingleIn(AppScope::class)
@@ -64,7 +54,6 @@ object OkHttpModule {
     cache: Cache,
     socketFactory: SocketFactory,
     interceptors: Set<Interceptor>,
-    certificatePinner: CertificatePinner,
     cookieJar: CookieJar,
   ): OkHttpClient {
     return OkHttpClient.Builder()
@@ -82,7 +71,6 @@ object OkHttpModule {
         // RetryAfterInterceptor needs to call proceed() twice when retrying after a delay.
         interceptors.forEach(::addInterceptor)
         socketFactory(socketFactory)
-        certificatePinner(certificatePinner)
       }
       .build()
   }

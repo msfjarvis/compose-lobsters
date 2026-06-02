@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.66.0] - 2026-06-02
+
 ### Added
 
 - You can now upvote and reply to comments from the app, if you're logged in
@@ -633,7 +635,8 @@ Thanks to Charles Lombardo for contributing the action button UI changes.
 
 - Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.65.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.66.0...HEAD
+[1.66.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.65.0...v1.66.0
 [1.65.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.64.0...v1.65.0
 [1.64.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.63.0...v1.64.0
 [1.63.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.62.0...v1.63.0

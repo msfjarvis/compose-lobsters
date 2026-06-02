@@ -1,0 +1,12 @@
+
+### Added
+
+- You can now upvote and reply to comments from the app, if you're logged in
+
+### Changed
+
+- The comments UI now tries to mimic Boost for Reddit
+
+### Fixed
+
+- Certificate pinning was removed to avoid errors when certificates were rotated

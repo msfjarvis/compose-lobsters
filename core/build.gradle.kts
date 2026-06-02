@@ -24,6 +24,7 @@ dependencies {
   api(libs.retrofit)
 
   implementation(platform(libs.okhttp.bom))
+  implementation(libs.kotlinx.datetime)
   implementation(libs.kotlinx.serialization.core)
   implementation(libs.retrofit.kotlinxSerializationConverter)
 }

@@ -52,10 +52,12 @@ import dev.msfjarvis.claw.common.R
 import dev.msfjarvis.claw.common.ui.ProgressBar
 import dev.msfjarvis.claw.model.Tag
 import dev.zacsweers.metrox.viewmodel.metroViewModel
-import java.time.Instant
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
+import kotlin.time.Clock
+import kotlin.time.Duration.Companion.days
+import kotlin.time.Instant
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 
 @OptIn(ExperimentalFlexBoxApi::class, ExperimentalMaterial3Api::class)
 @Composable
@@ -72,9 +74,9 @@ fun TagList(
 
   selectedTagForDatePicker?.let { tagName ->
     if (showDatePicker) {
-      val tomorrow = Instant.now().plusMillis(24 * 60 * 60 * 1000)
+      val tomorrow = Clock.System.now().plus(1.days)
       val datePickerState =
-        rememberDatePickerState(initialSelectedDateMillis = tomorrow.toEpochMilli())
+        rememberDatePickerState(initialSelectedDateMillis = tomorrow.toEpochMilliseconds())
 
       DatePickerDialog(
         onDismissRequest = {
@@ -207,7 +209,7 @@ fun TagList(
 }
 
 private fun formatDate(millis: Long): String {
-  val instant = Instant.ofEpochMilli(millis)
-  val formatter = DateTimeFormatter.ofPattern("MMM dd").withZone(ZoneId.systemDefault())
-  return formatter.format(instant)
+  val date = Instant.fromEpochMilliseconds(millis).toLocalDateTime(TimeZone.currentSystemDefault())
+  val month = date.month.name.lowercase().take(3).replaceFirstChar(Char::titlecase)
+  return "$month ${date.day.toString().padStart(2, '0')}"
 }

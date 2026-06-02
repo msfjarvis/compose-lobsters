@@ -12,10 +12,6 @@ import dev.burnoo.kspoon.annotation.Selector
 import dev.drewhamilton.poko.Poko
 import io.mcarle.konvert.api.KonvertTo
 import io.mcarle.konvert.api.Mapping
-import java.time.Instant
-import java.time.LocalDateTime
-import java.time.ZoneOffset
-import java.time.format.DateTimeFormatter
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -70,23 +66,7 @@ internal object CreatedAtSerializer : KSerializer<String> {
 
   override fun deserialize(decoder: Decoder): String {
     val value = decoder.decodeString()
-    return when {
-      value.isBlank() -> ""
-      value.all(Char::isDigit) ->
-        value.toLongOrNull()?.let {
-          Instant.ofEpochSecond(it)
-            .atOffset(ZoneOffset.UTC)
-            .format(DateTimeFormatter.ISO_OFFSET_DATE_TIME)
-        } ?: ""
-      runCatching { DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(value) }.isSuccess -> value
-      else ->
-        runCatching {
-            LocalDateTime.parse(value, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
-              .atOffset(ZoneOffset.UTC)
-              .format(DateTimeFormatter.ISO_OFFSET_DATE_TIME)
-          }
-          .getOrDefault("")
-    }
+    return if (value.isBlank()) "" else value.parseInstantOrNull()?.toString().orEmpty()
   }
 
   override fun serialize(encoder: Encoder, value: String) = encoder.encodeString(value)

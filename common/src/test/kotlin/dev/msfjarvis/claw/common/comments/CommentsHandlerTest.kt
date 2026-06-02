@@ -9,7 +9,7 @@ package dev.msfjarvis.claw.common.comments
 import com.google.common.truth.Truth.assertThat
 import dev.msfjarvis.claw.database.local.PostComments
 import dev.msfjarvis.claw.model.Comment
-import java.time.Instant
+import kotlin.time.Instant
 import org.junit.jupiter.api.Test
 
 class CommentsHandlerTest {
@@ -157,7 +157,7 @@ class CommentsHandlerTest {
       comment = "Comment $shortId",
       url = "https://lobste.rs/s/$shortId",
       score = 1,
-      timestamp = Instant.EPOCH,
+      timestamp = Instant.fromEpochSeconds(0),
       edited = false,
       parentComment = parentComment,
       user = "user-$shortId",

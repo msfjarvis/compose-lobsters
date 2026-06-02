@@ -114,6 +114,7 @@ dependencies {
   implementation(libs.kotlin.parcelize.runtime)
   implementation(libs.kotlinx.collections.immutable)
   implementation(libs.kotlinx.coroutines.core)
+  implementation(libs.kotlinx.datetime)
   implementation(libs.kotlinx.serialization.core)
   implementation(libs.kotlinx.serialization.json)
   implementation(libs.kotlin.stdlib)

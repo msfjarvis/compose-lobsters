@@ -7,9 +7,8 @@
 package dev.msfjarvis.claw.database.local
 
 import com.google.common.truth.Truth.assertThat
-import java.time.Instant
-import java.time.format.DateTimeFormatter
-import java.time.temporal.ChronoUnit
+import kotlin.time.Clock
+import kotlin.time.Duration.Companion.days
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -114,13 +113,8 @@ class SavedPostQueriesTest {
 
   @Test
   fun `select posts from last N days`() {
-    val now = Instant.now()
-    val formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
-    fun dateOffset(daysToSubtract: Long): String {
-      return formatter.format(
-        now.minus(daysToSubtract, ChronoUnit.DAYS).atOffset(java.time.ZoneOffset.UTC)
-      )
-    }
+    val now = Clock.System.now()
+    fun dateOffset(daysToSubtract: Long): String = (now - daysToSubtract.days).toString()
 
     val recentPost = createPostWithDate(id = "recent_1", createdAt = dateOffset(5))
     val oldPost = createPostWithDate(id = "old_1", createdAt = dateOffset(40))
@@ -176,13 +170,8 @@ class SavedPostQueriesTest {
 
   @Test
   fun `selectRecentPosts returns posts in descending date order`() {
-    val now = Instant.now()
-    val formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
-    fun dateOffset(daysToSubtract: Long): String {
-      return formatter.format(
-        now.minus(daysToSubtract, ChronoUnit.DAYS).atOffset(java.time.ZoneOffset.UTC)
-      )
-    }
+    val now = Clock.System.now()
+    fun dateOffset(daysToSubtract: Long): String = (now - daysToSubtract.days).toString()
 
     val oldest = createPostWithDate(id = "oldest", createdAt = dateOffset(30))
     val middle = createPostWithDate(id = "middle", createdAt = dateOffset(15))
@@ -201,13 +190,8 @@ class SavedPostQueriesTest {
 
   @Test
   fun `selectAllPostsSortedByDate returns posts in descending date order`() {
-    val now = Instant.now()
-    val formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
-    fun dateOffset(daysToSubtract: Long): String {
-      return formatter.format(
-        now.minus(daysToSubtract, ChronoUnit.DAYS).atOffset(java.time.ZoneOffset.UTC)
-      )
-    }
+    val now = Clock.System.now()
+    fun dateOffset(daysToSubtract: Long): String = (now - daysToSubtract.days).toString()
 
     val post1 = createPostWithDate(id = "post_1", createdAt = dateOffset(20))
     val post2 = createPostWithDate(id = "post_2", createdAt = dateOffset(5))

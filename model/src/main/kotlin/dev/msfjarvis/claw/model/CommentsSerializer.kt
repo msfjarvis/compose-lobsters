@@ -8,10 +8,6 @@ package dev.msfjarvis.claw.model
 
 import com.fleeksoft.ksoup.nodes.Element
 import dev.burnoo.kspoon.decoder.KspoonDecoder
-import java.time.Instant
-import java.time.ZoneOffset
-import java.time.format.DateTimeFormatter
-import java.time.temporal.TemporalAccessor
 import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.SerialDescriptor
@@ -55,7 +51,7 @@ internal object CommentsSerializer : KSerializer<List<Comment>> {
   private fun Element.toComment(parentComment: String?): Comment {
     val byline = selectFirst("div.byline")
     val timestamp = byline?.selectFirst("a[href^=/c/] time")?.attr("data-at-unix").orEmpty()
-    val parsedTimestamp = timestamp.toTemporalAccessor()
+    val parsedTimestamp = timestamp.parseInstantOrEpoch()
     val isEdited = byline?.text()?.contains("edited") == true
     return Comment(
       shortId = attr("data-shortid"),
@@ -81,20 +77,6 @@ internal object CommentsSerializer : KSerializer<List<Comment>> {
           .orEmpty(),
       isUpvoted = classNames().contains("upvoted"),
     )
-  }
-
-  private fun String.toTemporalAccessor(): TemporalAccessor {
-    val isoValue =
-      if (isBlank()) {
-        Instant.EPOCH.atOffset(ZoneOffset.UTC).format(DateTimeFormatter.ISO_OFFSET_DATE_TIME)
-      } else if (all(Char::isDigit)) {
-        Instant.ofEpochSecond(toLong())
-          .atOffset(ZoneOffset.UTC)
-          .format(DateTimeFormatter.ISO_OFFSET_DATE_TIME)
-      } else {
-        this
-      }
-    return DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(isoValue)
   }
 
   override fun serialize(encoder: Encoder, value: List<Comment>) =

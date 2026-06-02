@@ -12,8 +12,7 @@ import dev.msfjarvis.claw.database.local.SavedPost
 import dev.zacsweers.metro.Inject
 import java.io.InputStream
 import java.io.OutputStream
-import java.time.Instant
-import java.time.format.DateTimeFormatter
+import kotlin.time.Instant
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
@@ -49,11 +48,8 @@ class DataTransferRepository(
   }
 
   suspend fun exportPostsAsHTML(output: OutputStream) {
-    fun computeTimestamp(post: SavedPost): Long {
-      val temporal = DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(post.createdAt)
-      val instant = Instant.from(temporal)
-      return instant.toEpochMilli()
-    }
+    fun computeTimestamp(post: SavedPost): Long =
+      Instant.parse(post.createdAt).toEpochMilliseconds()
 
     val posts = savedPostsRepository.savedPosts.first()
     val header =

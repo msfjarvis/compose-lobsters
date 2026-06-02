@@ -39,9 +39,8 @@ import dev.zacsweers.metro.binding
 import dev.zacsweers.metrox.viewmodel.ViewModelKey
 import java.io.InputStream
 import java.io.OutputStream
-import java.time.LocalDateTime
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
+import kotlin.time.Clock
+import kotlin.time.Instant
 import kotlinx.collections.immutable.toImmutableMap
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -49,6 +48,9 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 
 @Inject
 @ViewModelKey
@@ -173,7 +175,7 @@ class ClawViewModel(
    * solution.
    */
   private fun String.toLocalDateTime(): LocalDateTime {
-    if (isEmpty()) return LocalDateTime.now(ZoneId.systemDefault())
-    return LocalDateTime.from(DateTimeFormatter.ISO_OFFSET_DATE_TIME.parse(this))
+    if (isEmpty()) return Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
+    return Instant.parse(this).toLocalDateTime(TimeZone.currentSystemDefault())
   }
 }

@@ -64,6 +64,7 @@ dependencies {
   implementation(libs.kotlinResult)
   implementation(libs.kotlinResult.coroutines)
   implementation(libs.kotlinx.collections.immutable)
+  implementation(libs.kotlinx.datetime)
   implementation(libs.metrox.viewmodel.compose)
   implementation(libs.sqldelight.runtime)
   implementation(libs.sqldelight.extensions.coroutines)

@@ -152,7 +152,7 @@ sentry-android-sqlite = { module = "io.sentry:sentry-android-sqlite", version.re
 #noinspection UnusedVersionCatalogEntry
 sentry-bom = { module = "io.sentry:sentry-bom", version.ref = "sentry" }
 #noinspection UnusedVersionCatalogEntry
-slack-compose-lints = "com.slack.lint.compose:compose-lint-checks:1.5.1"
+slack-compose-lints = "com.slack.lint.compose:compose-lint-checks:1.5.2"
 #noinspection UnusedVersionCatalogEntry
 slack-lints = "com.slack.lint:slack-lint-checks:0.11.1"
 sqldelight-androidDriver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }

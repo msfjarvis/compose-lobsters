@@ -6,6 +6,9 @@
     "helpers:pinGitHubActionDigests",
     "github>msfjarvis/shared-workflows//renovate/automerge"
   ],
+  "ignorePresets": [
+    "group:monorepos"
+  ],
   "branchConcurrentLimit": 15,
   "github-actions": {
     "managerFilePatterns": [
@@ -25,6 +28,19 @@
       ],
     },
     {
+      "extends": [
+        "monorepo:kotlin"
+      ],
+      "groupName": "Kotlin and Compose",
+      "groupSlug": "kotlin-and-compose",
+      "matchUpdateTypes": [
+        "digest",
+        "patch",
+        "minor",
+        "major",
+      ],
+    },
+    {
       "matchDepNames": [
         "com.google.devtools.ksp",
         "dev.drewhamilton.poko",
@@ -33,6 +49,7 @@
         "org.jetbrains.kotlin.plugin.serialization",
       ],
       "groupName": "Kotlin and Compose",
+      "groupSlug": "kotlin-and-compose",
     },
     {
       "matchPackageNames": [

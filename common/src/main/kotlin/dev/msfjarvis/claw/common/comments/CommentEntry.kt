@@ -231,11 +231,13 @@ internal fun CommentEntry(
         verticalAlignment = Alignment.CenterVertically,
       ) {
         Text(
-          text = comment.user,
+          text =
+            buildString {
+              append(comment.user)
+              if (commentNode.isPostAuthor) append(" [OP]")
+            },
           style = MaterialTheme.typography.labelLarge,
-          color =
-            if (commentNode.isPostAuthor) MaterialTheme.colorScheme.tertiary
-            else MaterialTheme.colorScheme.onSurfaceVariant,
+          color = MaterialTheme.colorScheme.onSurfaceVariant,
           modifier = Modifier.clickable { openUserProfile(comment.user) },
         )
         Spacer(Modifier.weight(1f))

@@ -8,6 +8,8 @@ package dev.msfjarvis.claw.common.comments
 
 import android.text.format.DateUtils
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
@@ -225,21 +227,23 @@ internal fun CommentEntry(
               start = 16.dp,
               end = 16.dp,
               top = 12.dp,
-              bottom = if (!isExpanded) 12.dp else 0.dp,
+              bottom = 12.dp,
             ),
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically,
       ) {
         Text(
-          text = comment.user,
+          text =
+            buildString {
+              append(comment.user)
+              if (commentNode.isPostAuthor) append(" [OP]")
+            },
           style = MaterialTheme.typography.labelLarge,
-          color =
-            if (commentNode.isPostAuthor) MaterialTheme.colorScheme.tertiary
-            else MaterialTheme.colorScheme.onSurfaceVariant,
+          color = MaterialTheme.colorScheme.onSurfaceVariant,
           modifier = Modifier.clickable { openUserProfile(comment.user) },
         )
         Spacer(Modifier.weight(1f))
-        if (!isExpanded) {
+        if (!isExpanded && commentNode.descendantCount() > 0) {
           Text(
             text = " +${commentNode.descendantCount()} ",
             style = MaterialTheme.typography.labelLargeEmphasized,
@@ -263,31 +267,51 @@ internal fun CommentEntry(
         )
       }
 
-      if (isExpanded) {
+      AnimatedVisibility(
+        visible = isExpanded,
+        enter =
+          expandVertically(
+            expandFrom = Alignment.Top,
+            animationSpec = tween(durationMillis = 100, easing = LinearEasing),
+          ),
+        exit =
+          shrinkVertically(
+            shrinkTowards = Alignment.Top,
+            animationSpec = tween(durationMillis = 100, easing = LinearEasing),
+          ),
+      ) {
         ThemedRichText(
           text = comment.comment,
           modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 12.dp),
         )
-        AnimatedVisibility(
-          visible = isActionBarExpanded,
-          enter = expandVertically(expandFrom = Alignment.Top),
-          exit = shrinkVertically(shrinkTowards = Alignment.Top),
-        ) {
-          CommentActionTray(
-            isUpvoted = hasLocallyUpvoted,
-            onVoteClick = {
-              if (hasLocallyUpvoted) {
-                unvoteComment(comment.shortId)
-              } else {
-                upvoteComment(comment.shortId)
-              }
-              hasLocallyUpvoted = !hasLocallyUpvoted
-            },
-            onReplyClick = {
-              onReply(comment.shortId, plainTextFromHtml(comment.comment))
-            },
-          )
-        }
+      }
+      AnimatedVisibility(
+        visible = isActionBarExpanded,
+        enter =
+          expandVertically(
+            expandFrom = Alignment.Top,
+            animationSpec = tween(durationMillis = 50, easing = LinearEasing),
+          ),
+        exit =
+          shrinkVertically(
+            shrinkTowards = Alignment.Top,
+            animationSpec = tween(durationMillis = 50, easing = LinearEasing),
+          ),
+      ) {
+        CommentActionTray(
+          isUpvoted = hasLocallyUpvoted,
+          onVoteClick = {
+            if (hasLocallyUpvoted) {
+              unvoteComment(comment.shortId)
+            } else {
+              upvoteComment(comment.shortId)
+            }
+            hasLocallyUpvoted = !hasLocallyUpvoted
+          },
+          onReplyClick = {
+            onReply(comment.shortId, plainTextFromHtml(comment.comment))
+          },
+        )
       }
     }
   }

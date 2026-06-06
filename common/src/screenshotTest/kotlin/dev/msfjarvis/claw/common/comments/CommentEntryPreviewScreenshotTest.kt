@@ -62,6 +62,10 @@ private class CommentEntryPreviewParameterProvider :
       CommentEntryPreviewParameters(isUpvoted = true, hasChildren = true, isExpanded = true),
       CommentEntryPreviewParameters(isUpvoted = false, hasChildren = true, isExpanded = false),
     )
+
+  override fun getDisplayName(index: Int): String {
+    return values.toList()[index].toString()
+  }
 }
 
 private fun previewCommentNode(isUpvoted: Boolean = false, hasChildren: Boolean = false) =

@@ -241,7 +241,7 @@ internal fun CommentEntry(
           modifier = Modifier.clickable { openUserProfile(comment.user) },
         )
         Spacer(Modifier.weight(1f))
-        if (!isExpanded) {
+        if (!isExpanded && commentNode.descendantCount() > 0) {
           Text(
             text = " +${commentNode.descendantCount()} ",
             style = MaterialTheme.typography.labelLargeEmphasized,

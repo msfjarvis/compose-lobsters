@@ -286,7 +286,7 @@ internal fun CommentEntry(
         )
       }
       AnimatedVisibility(
-        visible = isActionBarExpanded,
+        visible = isActionBarExpanded && isExpanded,
         enter =
           expandVertically(
             expandFrom = Alignment.Top,

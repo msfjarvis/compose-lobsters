@@ -6,6 +6,7 @@
  */
 package dev.msfjarvis.claw.android.ui.decorations
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
@@ -50,6 +51,32 @@ private fun ClawAppBarSearchingPreviewScreenshot() {
       onQueryChange = {},
       onSearch = {},
       content = { Text("Fake result content") },
+    )
+  }
+}
+
+@PreviewTest
+@Preview(name = "SearchingWithResults")
+@Composable
+private fun ClawAppBarSearchingWithResultsPreviewScreenshot() {
+  LobstersTheme {
+    ClawAppBar(
+      activity = null,
+      isTopLevel = true,
+      mode = ClawTopBarMode.Searching(query = "compose", expanded = true, requestFocus = false),
+      navigateTo = {},
+      popBackStack = { null },
+      onStartSearch = {},
+      onDismissSearch = {},
+      onExpandedChange = {},
+      onQueryChange = {},
+      onSearch = {},
+      content = {
+        Column {
+          Text("Result 1")
+          Text("Result 2")
+        }
+      },
     )
   }
 }

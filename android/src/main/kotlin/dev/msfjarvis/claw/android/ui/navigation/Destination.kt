@@ -40,8 +40,6 @@ data class Reply(
   val commentId: String,
 ) : NavKey, Parcelable
 
-@Parcelize @Serializable data object Search : NavKey, Parcelable
-
 @Parcelize @Serializable data object Settings : NavKey, Parcelable
 
 @Parcelize @Serializable data object AboutLibraries : NavKey, Parcelable

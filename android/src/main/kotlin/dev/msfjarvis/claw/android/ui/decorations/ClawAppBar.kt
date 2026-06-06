@@ -36,7 +36,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.NavKey
 import dev.msfjarvis.claw.android.R
-import dev.msfjarvis.claw.android.ui.navigation.Search
 import dev.msfjarvis.claw.android.ui.navigation.Settings
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.preview.DevicePreviews
@@ -50,30 +49,6 @@ sealed interface ClawTopBarMode {
     val expanded: Boolean = true,
     val requestFocus: Boolean = true,
   ) : ClawTopBarMode
-}
-
-@Composable
-fun ClawAppBar(
-  activity: Activity?,
-  isTopLevel: Boolean,
-  navigateTo: (NavKey) -> Unit,
-  popBackStack: () -> NavKey?,
-  modifier: Modifier = Modifier,
-) {
-  ClawAppBar(
-    activity = activity,
-    isTopLevel = isTopLevel,
-    mode = ClawTopBarMode.Browsing,
-    navigateTo = navigateTo,
-    popBackStack = popBackStack,
-    onStartSearch = { navigateTo(Search) },
-    onDismissSearch = {},
-    onExpandedChange = {},
-    onQueryChange = {},
-    onSearch = {},
-    modifier = modifier,
-    content = {},
-  )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

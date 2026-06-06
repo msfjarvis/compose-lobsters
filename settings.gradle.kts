@@ -48,6 +48,10 @@ pluginManagement {
       }
     }
     includeBuild("build-logic")
+    maven("https://central.sonatype.com/repository/maven-snapshots/") {
+      name = "Sonatype Snapshots"
+      mavenContent { snapshotsOnly() }
+    }
     mavenCentral { mavenContent { releasesOnly() } }
   }
 }
@@ -90,6 +94,10 @@ dependencyResolutionManagement {
     maven("https://androidx.dev/storage/compose-compiler/repository") {
       name = "Compose Compiler Snapshots"
       content { includeGroup("androidx.compose.compiler") }
+    }
+    maven("https://central.sonatype.com/repository/maven-snapshots/") {
+      name = "Sonatype Snapshots"
+      mavenContent { snapshotsOnly() }
     }
     mavenCentral { mavenContent { releasesOnly() } }
   }

@@ -16,12 +16,12 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBars
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -304,7 +304,7 @@ fun LobstersPostsScreen(
             listState = searchResultsListState,
             postActions = postActions,
             filteredTags = filteredTags,
-            modifier = Modifier.padding(bottom = searchResultsBottomPadding),
+            contentPadding = PaddingValues(bottom = searchResultsBottomPadding),
           )
         }
       }

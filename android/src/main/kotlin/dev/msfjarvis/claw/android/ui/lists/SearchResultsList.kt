@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.model.UIPost
@@ -22,13 +21,14 @@ fun SearchResultsList(
   listState: LazyListState,
   postActions: PostActions,
   filteredTags: ImmutableSet<String>,
+  contentPadding: PaddingValues,
   modifier: Modifier = Modifier,
 ) {
   NetworkPosts(
     lazyPagingItems = lazyPagingItems,
     listState = listState,
     postActions = postActions,
-    contentPadding = PaddingValues(0.dp),
+    contentPadding = contentPadding,
     filteredTags = filteredTags,
     modifier = modifier,
   )

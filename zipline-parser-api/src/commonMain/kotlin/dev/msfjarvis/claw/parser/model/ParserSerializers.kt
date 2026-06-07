@@ -13,17 +13,7 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import kotlinx.serialization.json.JsonDecoder
-import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.JsonPrimitive
-import kotlinx.serialization.json.contentOrNull
-import kotlinx.serialization.json.intOrNull
-import kotlinx.serialization.json.jsonArray
-import kotlinx.serialization.json.jsonObject
-import kotlinx.serialization.json.jsonPrimitive
-import kotlinx.serialization.json.longOrNull
 import kotlinx.serialization.modules.SerializersModule
-import kotlinx.serialization.modules.contextual
 
 val ParserSerializersModule: SerializersModule = SerializersModule {
   contextual(LobstersPost::class, LobstersPostSerializer)
@@ -56,25 +46,21 @@ internal object LobstersPostSerializer : KSerializer<LobstersPost> {
     )
   }
 
-  override fun deserialize(decoder: Decoder): LobstersPost =
-    decoder.decodeJsonObjectOrPayload(
-      onObject = { it.toLobstersPost() },
-      onPayload = { payload ->
-        val reader = PacketReader(payload)
-        LobstersPost(
-          shortId = reader.string(),
-          createdAt = reader.string(),
-          title = reader.string(),
-          url = reader.string(),
-          description = reader.string(),
-          commentCount = reader.int(),
-          commentsUrl = reader.string(),
-          submitter = reader.string(),
-          userIsAuthor = reader.boolean(),
-          tags = reader.stringList(),
-        )
-      },
+  override fun deserialize(decoder: Decoder): LobstersPost {
+    val reader = PacketReader(decoder.decodeString())
+    return LobstersPost(
+      shortId = reader.string(),
+      createdAt = reader.string(),
+      title = reader.string(),
+      url = reader.string(),
+      description = reader.string(),
+      commentCount = reader.int(),
+      commentsUrl = reader.string(),
+      submitter = reader.string(),
+      userIsAuthor = reader.boolean(),
+      tags = reader.stringList(),
     )
+  }
 }
 
 internal object LobstersPostDetailsSerializer : KSerializer<LobstersPostDetails> {
@@ -101,36 +87,46 @@ internal object LobstersPostDetailsSerializer : KSerializer<LobstersPostDetails>
     encoder.encodeString(writer.boolean(value.userIsAuthor).build())
   }
 
-  override fun deserialize(decoder: Decoder): LobstersPostDetails =
-    decoder.decodeJsonObjectOrPayload(
-      onObject = { it.toLobstersPostDetails() },
-      onPayload = { payload ->
-        val reader = PacketReader(payload)
-        val shortId = reader.string()
-        val createdAt = reader.string()
-        val title = reader.string()
-        val url = reader.string()
-        val description = reader.string()
-        val commentCount = reader.int()
-        val commentsUrl = reader.string()
-        val submitter = reader.string()
-        val tags = reader.stringList()
-        val comments = List(reader.int()) { CommentSerializer.fromPayload(reader.string()) }
-        LobstersPostDetails(
-          shortId = shortId,
-          createdAt = createdAt,
-          title = title,
-          url = url,
-          description = description,
-          commentCount = commentCount,
-          commentsUrl = commentsUrl,
-          submitter = submitter,
-          tags = tags,
-          comments = comments,
-          userIsAuthor = reader.boolean(),
+  override fun deserialize(decoder: Decoder): LobstersPostDetails {
+    val reader = PacketReader(decoder.decodeString())
+    val shortId = reader.string()
+    val createdAt = reader.string()
+    val title = reader.string()
+    val url = reader.string()
+    val description = reader.string()
+    val commentCount = reader.int()
+    val commentsUrl = reader.string()
+    val submitter = reader.string()
+    val tags = reader.stringList()
+    val comments =
+      List(reader.int()) {
+        val reader = PacketReader(reader.string())
+        Comment(
+          shortId = reader.string(),
+          comment = reader.string(),
+          url = reader.string(),
+          score = reader.int(),
+          timestamp = reader.long(),
+          edited = reader.boolean(),
+          parentComment = reader.nullableString(),
+          user = reader.string(),
+          isUpvoted = reader.boolean(),
         )
-      },
+      }
+    return LobstersPostDetails(
+      shortId = shortId,
+      createdAt = createdAt,
+      title = title,
+      url = url,
+      description = description,
+      commentCount = commentCount,
+      commentsUrl = commentsUrl,
+      submitter = submitter,
+      tags = tags,
+      comments = comments,
+      userIsAuthor = reader.boolean(),
     )
+  }
 }
 
 internal object CommentSerializer : KSerializer<Comment> {
@@ -141,11 +137,20 @@ internal object CommentSerializer : KSerializer<Comment> {
     encoder.encodeString(toPayload(value))
   }
 
-  override fun deserialize(decoder: Decoder): Comment =
-    decoder.decodeJsonObjectOrPayload(
-      onObject = { it.toComment() },
-      onPayload = { payload -> fromPayload(payload) },
+  override fun deserialize(decoder: Decoder): Comment {
+    val reader = PacketReader(decoder.decodeString())
+    return Comment(
+      shortId = reader.string(),
+      comment = reader.string(),
+      url = reader.string(),
+      score = reader.int(),
+      timestamp = reader.long(),
+      edited = reader.boolean(),
+      parentComment = reader.nullableString(),
+      user = reader.string(),
+      isUpvoted = reader.boolean(),
     )
+  }
 
   fun toPayload(value: Comment): String =
     PacketWriter()
@@ -159,21 +164,6 @@ internal object CommentSerializer : KSerializer<Comment> {
       .string(value.user)
       .boolean(value.isUpvoted)
       .build()
-
-  fun fromPayload(payload: String): Comment {
-    val reader = PacketReader(payload)
-    return Comment(
-      shortId = reader.string(),
-      comment = reader.string(),
-      url = reader.string(),
-      score = reader.int(),
-      timestamp = reader.long(),
-      edited = reader.boolean(),
-      parentComment = reader.nullableString(),
-      user = reader.string(),
-      isUpvoted = reader.boolean(),
-    )
-  }
 }
 
 internal object UserSerializer : KSerializer<User> {
@@ -192,20 +182,16 @@ internal object UserSerializer : KSerializer<User> {
     )
   }
 
-  override fun deserialize(decoder: Decoder): User =
-    decoder.decodeJsonObjectOrPayload(
-      onObject = { it.toUser() },
-      onPayload = { payload ->
-        val reader = PacketReader(payload)
-        User(
-          username = reader.string(),
-          about = reader.string(),
-          invitedBy = reader.nullableString(),
-          avatarUrl = reader.string(),
-          createdAt = reader.string(),
-        )
-      },
+  override fun deserialize(decoder: Decoder): User {
+    val reader = PacketReader(decoder.decodeString())
+    return User(
+      username = reader.string(),
+      about = reader.string(),
+      invitedBy = reader.nullableString(),
+      avatarUrl = reader.string(),
+      createdAt = reader.string(),
     )
+  }
 }
 
 internal object TagSerializer : KSerializer<Tag> {
@@ -226,22 +212,18 @@ internal object TagSerializer : KSerializer<Tag> {
     )
   }
 
-  override fun deserialize(decoder: Decoder): Tag =
-    decoder.decodeJsonObjectOrPayload(
-      onObject = { it.toTag() },
-      onPayload = { payload ->
-        val reader = PacketReader(payload)
-        Tag(
-          tag = reader.string(),
-          description = reader.string(),
-          privileged = reader.boolean(),
-          active = reader.boolean(),
-          category = reader.string(),
-          isMedia = reader.boolean(),
-          hotnessMod = reader.double(),
-        )
-      },
+  override fun deserialize(decoder: Decoder): Tag {
+    val reader = PacketReader(decoder.decodeString())
+    return Tag(
+      tag = reader.string(),
+      description = reader.string(),
+      privileged = reader.boolean(),
+      active = reader.boolean(),
+      category = reader.string(),
+      isMedia = reader.boolean(),
+      hotnessMod = reader.double(),
     )
+  }
 }
 
 internal object CSRFTokenSerializer : KSerializer<CSRFToken> {
@@ -270,19 +252,15 @@ internal object ReplyFormSerializer : KSerializer<ReplyForm> {
     )
   }
 
-  override fun deserialize(decoder: Decoder): ReplyForm =
-    decoder.decodeJsonObjectOrPayload(
-      onObject = { it.toReplyForm() },
-      onPayload = { payload ->
-        val reader = PacketReader(payload)
-        ReplyForm(
-          authenticityToken = reader.string(),
-          storyId = reader.string(),
-          method = reader.string(),
-          parentCommentShortId = reader.string(),
-        )
-      },
+  override fun deserialize(decoder: Decoder): ReplyForm {
+    val reader = PacketReader(decoder.decodeString())
+    return ReplyForm(
+      authenticityToken = reader.string(),
+      storyId = reader.string(),
+      method = reader.string(),
+      parentCommentShortId = reader.string(),
     )
+  }
 }
 
 private class PacketWriter {
@@ -351,113 +329,3 @@ private class PacketReader(private val payload: String) {
 
   fun stringList(): List<String> = List(int()) { string() }
 }
-
-private inline fun <T> Decoder.decodeJsonObjectOrPayload(
-  onObject: (JsonObject) -> T,
-  onPayload: (String) -> T,
-): T {
-  val jsonDecoder = this as? JsonDecoder
-  if (jsonDecoder != null) {
-    return when (val element = jsonDecoder.decodeJsonElement()) {
-      is JsonObject -> onObject(element)
-      is JsonPrimitive -> onPayload(element.content)
-      else -> throw SerializationException("Unsupported payload element: $element")
-    }
-  }
-  return onPayload(decodeString())
-}
-
-private fun JsonObject.toLobstersPost(): LobstersPost =
-  LobstersPost(
-    shortId = requiredString("shortId"),
-    createdAt = optionalString("createdAt"),
-    title = requiredString("title"),
-    url = optionalString("url"),
-    description = optionalString("description"),
-    commentCount = optionalInt("commentCount", 0),
-    commentsUrl = optionalString("commentsUrl"),
-    submitter = requiredString("submitter"),
-    userIsAuthor = optionalBoolean("userIsAuthor", false),
-    tags = optionalStringList("tags"),
-  )
-
-private fun JsonObject.toLobstersPostDetails(): LobstersPostDetails =
-  LobstersPostDetails(
-    shortId = requiredString("shortId"),
-    createdAt = optionalString("createdAt"),
-    title = requiredString("title"),
-    url = optionalString("url"),
-    description = optionalString("description"),
-    commentCount = optionalInt("commentCount", 0),
-    commentsUrl = optionalString("commentsUrl"),
-    submitter = requiredString("submitter"),
-    tags = optionalStringList("tags"),
-    comments = this["comments"]?.jsonArray?.map { it.jsonObject.toComment() } ?: emptyList(),
-    userIsAuthor = optionalBoolean("userIsAuthor", false),
-  )
-
-private fun JsonObject.toComment(): Comment =
-  Comment(
-    shortId = requiredString("shortId"),
-    comment = requiredString("comment"),
-    url = optionalString("url"),
-    score = optionalInt("score", 1),
-    timestamp = requiredLong("timestamp"),
-    edited = optionalBoolean("edited", false),
-    parentComment = this["parentComment"]?.jsonPrimitive?.contentOrNull,
-    user = optionalString("user"),
-    isUpvoted = optionalBoolean("isUpvoted", false),
-  )
-
-private fun JsonObject.toUser(): User =
-  User(
-    username = requiredString("username"),
-    about = optionalString("about"),
-    invitedBy = this["invitedBy"]?.jsonPrimitive?.contentOrNull,
-    avatarUrl = optionalString("avatarUrl"),
-    createdAt = optionalString("createdAt"),
-  )
-
-private fun JsonObject.toTag(): Tag =
-  Tag(
-    tag = requiredString("tag"),
-    description = requiredString("description"),
-    privileged = optionalBoolean("privileged", false),
-    active = optionalBoolean("active", true),
-    category = optionalString("category"),
-    isMedia = optionalBoolean("isMedia", false),
-    hotnessMod = optionalString("hotnessMod").toDoubleOrNull() ?: 0.0,
-  )
-
-private fun JsonObject.toReplyForm(): ReplyForm =
-  ReplyForm(
-    authenticityToken = requiredString("authenticityToken"),
-    storyId = requiredString("storyId"),
-    method = requiredString("method"),
-    parentCommentShortId = requiredString("parentCommentShortId"),
-  )
-
-private fun JsonObject.requiredString(name: String): String =
-  this[name]?.jsonPrimitive?.contentOrNull
-    ?: throw SerializationException("Missing required string field '$name'")
-
-private fun JsonObject.optionalString(name: String): String =
-  this[name]?.jsonPrimitive?.contentOrNull ?: ""
-
-private fun JsonObject.optionalInt(name: String, default: Int): Int =
-  this[name]?.jsonPrimitive?.intOrNull ?: default
-
-private fun JsonObject.requiredLong(name: String): Long =
-  this[name]?.jsonPrimitive?.longOrNull
-    ?: throw SerializationException("Missing required long field '$name'")
-
-private fun JsonObject.optionalBoolean(name: String, default: Boolean): Boolean =
-  when (this[name]?.jsonPrimitive?.contentOrNull) {
-    null -> default
-    "true",
-    "1" -> true
-    else -> false
-  }
-
-private fun JsonObject.optionalStringList(name: String): List<String> =
-  this[name]?.jsonArray?.map { it.jsonPrimitive.contentOrNull ?: "" } ?: emptyList()

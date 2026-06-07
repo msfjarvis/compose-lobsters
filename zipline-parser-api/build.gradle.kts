@@ -18,7 +18,6 @@ kotlin {
     commonMain {
       dependencies {
         api(libs.zipline)
-        api(libs.kotlinx.serialization.json)
       }
     }
     jvmTest {

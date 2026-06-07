@@ -296,7 +296,9 @@ fun LobstersPostsScreen(
           executeSearch(query)
         },
       ) {
-        if (normalizedSearchQuery.isNotBlank()) {
+        if (
+          normalizedSearchQuery.isNotBlank() && normalizedSearchQuery == lastExecutedSearchQuery
+        ) {
           SearchResultsList(
             lazyPagingItems = searchResults,
             listState = searchResultsListState,

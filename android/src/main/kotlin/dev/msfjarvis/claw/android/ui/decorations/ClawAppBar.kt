@@ -102,7 +102,15 @@ fun ClawAppBar(
                 )
               },
               trailingIcon = {
-                IconButton(onClick = onDismissSearch) {
+                IconButton(
+                  onClick = {
+                    if (mode.query.isNotEmpty()) {
+                      onQueryChange("")
+                    } else {
+                      onDismissSearch()
+                    }
+                  }
+                ) {
                   Icon(
                     imageVector = Icons.Filled.Close,
                     contentDescription = stringResource(R.string.close_search),

@@ -15,6 +15,7 @@ import app.cash.zipline.loader.ManifestVerifier
 import app.cash.zipline.loader.ZiplineLoader
 import dev.msfjarvis.claw.api.LobstersParserClient
 import dev.msfjarvis.claw.parser.LobstersParserService
+import dev.msfjarvis.claw.parser.model.ParserSerializersModule
 import java.io.File
 import java.util.concurrent.Executors
 import kotlin.time.Duration.Companion.days
@@ -58,6 +59,7 @@ class AndroidZiplineParserClient(
     extractEmbeddedArtifacts()
 
     val embeddedDir = File(context.codeCacheDir, "zipline-embedded/zipline")
+    val embeddedManifestFile = File(embeddedDir, "zipline-parser.manifest.zipline.json")
 
     val manifestVerifier =
       if (verifySignatures) {
@@ -83,13 +85,20 @@ class AndroidZiplineParserClient(
         )
 
     val freshnessChecker = if (verifySignatures) EmbeddedFreshnessChecker else AlwaysFresh
+    val effectiveManifestUrl =
+      if (!verifySignatures && embeddedManifestFile.exists()) {
+        embeddedManifestFile.toURI().toString()
+      } else {
+        manifestUrl
+      }
 
     return when (
       val result =
         loader.loadOnce(
           applicationName = "zipline-parser",
           freshnessChecker = freshnessChecker,
-          manifestUrl = manifestUrl,
+          manifestUrl = effectiveManifestUrl,
+          serializersModule = ParserSerializersModule,
         )
     ) {
       is LoadResult.Success -> {

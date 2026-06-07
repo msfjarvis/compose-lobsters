@@ -35,7 +35,7 @@ interface NonStackable
 
 @Parcelize
 @Serializable
-data class Reply(
+class Reply(
   val postId: String,
   val commentId: String,
 ) : NavKey, Parcelable

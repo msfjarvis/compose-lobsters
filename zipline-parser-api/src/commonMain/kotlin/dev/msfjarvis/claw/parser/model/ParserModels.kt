@@ -8,7 +8,7 @@ package dev.msfjarvis.claw.parser.model
 
 import kotlin.jvm.JvmInline
 
-data class LobstersPost(
+class LobstersPost(
   val shortId: String,
   val createdAt: String = "",
   val title: String,
@@ -21,7 +21,7 @@ data class LobstersPost(
   val tags: List<String> = emptyList(),
 )
 
-data class LobstersPostDetails(
+class LobstersPostDetails(
   val shortId: String,
   val createdAt: String = "",
   val title: String,
@@ -35,7 +35,7 @@ data class LobstersPostDetails(
   val userIsAuthor: Boolean = false,
 )
 
-data class Comment(
+class Comment(
   val shortId: String,
   val comment: String,
   val url: String = "",
@@ -47,7 +47,7 @@ data class Comment(
   val isUpvoted: Boolean = false,
 )
 
-data class User(
+class User(
   val username: String,
   val about: String = "",
   val invitedBy: String? = null,
@@ -55,7 +55,7 @@ data class User(
   val createdAt: String = "",
 )
 
-data class Tag(
+class Tag(
   val tag: String,
   val description: String,
   val privileged: Boolean = false,
@@ -67,7 +67,7 @@ data class Tag(
 
 @JvmInline value class CSRFToken(val value: String)
 
-data class ReplyForm(
+class ReplyForm(
   val authenticityToken: String,
   val storyId: String,
   val method: String,

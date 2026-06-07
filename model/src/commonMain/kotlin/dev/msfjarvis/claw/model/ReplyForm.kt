@@ -9,7 +9,7 @@ package dev.msfjarvis.claw.model
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ReplyForm(
+class ReplyForm(
   val authenticityToken: String,
   val storyId: String,
   val method: String,

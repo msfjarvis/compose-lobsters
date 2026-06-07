@@ -16,8 +16,12 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -31,14 +35,18 @@ import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.UriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
@@ -55,9 +63,11 @@ import dev.msfjarvis.claw.android.ui.PostActions
 import dev.msfjarvis.claw.android.ui.decorations.ClawAppBar
 import dev.msfjarvis.claw.android.ui.decorations.ClawNavigationBar
 import dev.msfjarvis.claw.android.ui.decorations.ClawNavigationRail
+import dev.msfjarvis.claw.android.ui.decorations.ClawTopBarMode
 import dev.msfjarvis.claw.android.ui.decorations.NavigationItem
 import dev.msfjarvis.claw.android.ui.lists.DatabasePosts
 import dev.msfjarvis.claw.android.ui.lists.NetworkPosts
+import dev.msfjarvis.claw.android.ui.lists.SearchResultsList
 import dev.msfjarvis.claw.android.ui.navigation.AboutLibraries
 import dev.msfjarvis.claw.android.ui.navigation.AppDestinations
 import dev.msfjarvis.claw.android.ui.navigation.ClawNavigationType
@@ -68,7 +78,6 @@ import dev.msfjarvis.claw.android.ui.navigation.Newest
 import dev.msfjarvis.claw.android.ui.navigation.NonStackable
 import dev.msfjarvis.claw.android.ui.navigation.Reply
 import dev.msfjarvis.claw.android.ui.navigation.Saved
-import dev.msfjarvis.claw.android.ui.navigation.Search
 import dev.msfjarvis.claw.android.ui.navigation.SentryNavigation3Traced
 import dev.msfjarvis.claw.android.ui.navigation.Settings
 import dev.msfjarvis.claw.android.ui.navigation.TagFiltering
@@ -82,10 +91,34 @@ import dev.msfjarvis.claw.common.tags.TagFilterViewModel
 import dev.msfjarvis.claw.common.tags.TagList
 import dev.msfjarvis.claw.common.user.UserProfile
 import dev.zacsweers.metrox.viewmodel.metroViewModel
+import kotlin.time.Duration.Companion.milliseconds
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.persistentSetOf
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+
+private const val SEARCH_DEBOUNCE_MILLIS = 300L
+private const val SEARCH_WEB_URI = "https://lobste.rs/search"
+private const val HOTTEST_WEB_URI = "https://lobste.rs/"
+private const val NEWEST_WEB_URI = "https://lobste.rs/newest"
+
+enum class TopLevelBackAction {
+  DismissSearch,
+  PopNavigation,
+}
+
+@VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+fun handleTopLevelBack(
+  isSearchActive: Boolean,
+  isCurrentDestinationTopLevel: Boolean,
+): TopLevelBackAction {
+  return if (isSearchActive && isCurrentDestinationTopLevel) {
+    TopLevelBackAction.DismissSearch
+  } else {
+    TopLevelBackAction.PopNavigation
+  }
+}
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3AdaptiveApi::class)
 @Composable
@@ -122,13 +155,20 @@ fun LobstersPostsScreen(
   val filteredTags by tagFilterViewModel.filteredTags.collectAsStateWithLifecycle(persistentSetOf())
   val isLoggedIn by settingsViewModel.isLoggedIn.collectAsStateWithLifecycle(false)
   val username by settingsViewModel.username.collectAsStateWithLifecycle(null)
-
-  LaunchedEffect(deepLinkDestination) {
-    if (deepLinkDestination != null) {
-      navigateTo(backStack, deepLinkDestination, allowStacking = true)
-      clearDeepLink()
+  var isSearchActive by rememberSaveable { mutableStateOf(false) }
+  var searchQuery by rememberSaveable { mutableStateOf("") }
+  var lastExecutedSearchQuery by rememberSaveable { mutableStateOf<String?>(null) }
+  val searchResultsListState = rememberLazyListState()
+  val searchResults = viewModel.searchResults.collectAsLazyPagingItems()
+  val currentDestination = backStack.lastOrNull()
+  val currentDestinationIsTopLevel = currentDestination is TopLevelDestination
+  val normalizedSearchQuery = searchQuery.trim()
+  val searchResultsBottomPadding =
+    if (navigationType == ClawNavigationType.BOTTOM_NAVIGATION) {
+      80.dp + WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
+    } else {
+      0.dp
     }
-  }
 
   val navItems =
     persistentListOf(
@@ -144,31 +184,138 @@ fun LobstersPostsScreen(
     )
   // endregion
 
-  val postActions = remember {
-    PostActions(context, uriHandler, viewModel) {
-      navigateTo(backStack, Comments(it), allowStacking = false)
+  val executeSearch = { query: String ->
+    val normalizedQuery = query.trim()
+    lastExecutedSearchQuery = normalizedQuery
+    coroutineScope.launch { searchResultsListState.scrollToItem(0) }
+    viewModel.searchQuery = normalizedQuery
+    searchResults.refresh()
+  }
+  val dismissSearch = {
+    isSearchActive = false
+    searchQuery = ""
+    lastExecutedSearchQuery = ""
+    viewModel.searchQuery = ""
+  }
+  val navigateToDestination = { destination: NavKey, allowStacking: Boolean ->
+    if (isSearchActive) {
+      dismissSearch()
+    }
+    navigateTo(backStack, destination, allowStacking = allowStacking)
+  }
+  val startSearch = {
+    isSearchActive = true
+  }
+
+  val postActions =
+    remember(isSearchActive) {
+      PostActions(context, uriHandler, viewModel) {
+        navigateToDestination(Comments(it), false)
+      }
+    }
+
+  LaunchedEffect(deepLinkDestination) {
+    if (deepLinkDestination != null) {
+      navigateToDestination(deepLinkDestination, true)
+      clearDeepLink()
     }
   }
 
-  BackHandler(enabled = backStack.size > 1) { popBackStack(backStack) }
+  LaunchedEffect(currentDestination, isSearchActive) {
+    if (currentDestinationIsTopLevel) {
+      when {
+        isSearchActive -> setWebUri(SEARCH_WEB_URI)
+        currentDestination == Hottest -> setWebUri(HOTTEST_WEB_URI)
+        currentDestination == Newest -> setWebUri(NEWEST_WEB_URI)
+        currentDestination == Saved -> setWebUri(null)
+      }
+    }
+  }
+
+  LaunchedEffect(currentDestinationIsTopLevel, isSearchActive) {
+    if (!currentDestinationIsTopLevel && isSearchActive) {
+      dismissSearch()
+    }
+  }
+
+  LaunchedEffect(isSearchActive, normalizedSearchQuery) {
+    if (!isSearchActive) return@LaunchedEffect
+    delay(SEARCH_DEBOUNCE_MILLIS.milliseconds)
+    if (normalizedSearchQuery != lastExecutedSearchQuery) {
+      executeSearch(normalizedSearchQuery)
+    }
+  }
+
+  LaunchedEffect(
+    isSearchActive,
+    normalizedSearchQuery,
+    lastExecutedSearchQuery,
+    viewModel.searchQuery,
+  ) {
+    if (!isSearchActive) return@LaunchedEffect
+    if (normalizedSearchQuery.isBlank()) return@LaunchedEffect
+    if (
+      normalizedSearchQuery == lastExecutedSearchQuery &&
+        viewModel.searchQuery != normalizedSearchQuery
+    ) {
+      executeSearch(normalizedSearchQuery)
+    }
+  }
+
+  BackHandler(enabled = isSearchActive || backStack.size > 1) {
+    when (
+      handleTopLevelBack(
+        isSearchActive = isSearchActive,
+        isCurrentDestinationTopLevel = currentDestinationIsTopLevel,
+      )
+    ) {
+      TopLevelBackAction.DismissSearch -> dismissSearch()
+      TopLevelBackAction.PopNavigation -> popBackStack(backStack)
+    }
+  }
 
   Scaffold(
     topBar = {
       ClawAppBar(
         activity = activity,
-        isTopLevel = backStack.lastOrNull() is TopLevelDestination,
-        navigateTo = { destination -> navigateTo(backStack, destination) },
+        isTopLevel = currentDestinationIsTopLevel,
+        mode =
+          if (currentDestinationIsTopLevel && isSearchActive) {
+            ClawTopBarMode.Searching(query = searchQuery, expanded = true, requestFocus = true)
+          } else {
+            ClawTopBarMode.Browsing
+          },
+        navigateTo = { destination -> navigateToDestination(destination, false) },
         popBackStack = { popBackStack(backStack) },
-      )
+        onStartSearch = startSearch,
+        onDismissSearch = dismissSearch,
+        onExpandedChange = { expanded -> if (!expanded) dismissSearch() },
+        onQueryChange = { searchQuery = it },
+        onSearch = { query ->
+          searchQuery = query
+          executeSearch(query)
+        },
+      ) {
+        if (
+          normalizedSearchQuery.isNotBlank() && normalizedSearchQuery == lastExecutedSearchQuery
+        ) {
+          SearchResultsList(
+            lazyPagingItems = searchResults,
+            listState = searchResultsListState,
+            postActions = postActions,
+            filteredTags = filteredTags,
+            contentPadding = PaddingValues(bottom = searchResultsBottomPadding),
+          )
+        }
+      }
     },
     bottomBar = {
-      val currentDestination = backStack.lastOrNull()
       AnimatedVisibility(visible = navigationType == ClawNavigationType.BOTTOM_NAVIGATION) {
         ClawNavigationBar(
           items = navItems,
           currentNavKey = currentDestination,
-          navigateTo = { destination -> navigateTo(backStack, destination) },
-          isVisible = backStack.lastOrNull() is TopLevelDestination,
+          navigateTo = { destination -> navigateToDestination(destination, false) },
+          isVisible = currentDestinationIsTopLevel && !isSearchActive,
           hazeState = hazeState,
         )
       }
@@ -179,12 +326,11 @@ fun LobstersPostsScreen(
     SentryNavigation3Traced(backStack = backStack)
     Row {
       AnimatedVisibility(visible = navigationType == ClawNavigationType.NAVIGATION_RAIL) {
-        val currentDestination = backStack.lastOrNull()
         ClawNavigationRail(
           items = navItems,
           currentNavKey = currentDestination,
-          navigateTo = { destination -> navigateTo(backStack, destination) },
-          isVisible = backStack.lastOrNull() is TopLevelDestination,
+          navigateTo = { destination -> navigateToDestination(destination, false) },
+          isVisible = currentDestinationIsTopLevel && !isSearchActive,
         )
       }
       NavDisplay(
@@ -206,7 +352,7 @@ fun LobstersPostsScreen(
             entry<Hottest>(
               metadata = ListDetailSceneStrategy.listPane(detailPlaceholder = { Placeholder() })
             ) {
-              setWebUri("https://lobste.rs/")
+              setWebUri(HOTTEST_WEB_URI)
               val hottestPosts = viewModel.hottestPosts.collectAsLazyPagingItems()
               NetworkPosts(
                 lazyPagingItems = hottestPosts,
@@ -219,7 +365,7 @@ fun LobstersPostsScreen(
             entry<Newest>(
               metadata = ListDetailSceneStrategy.listPane(detailPlaceholder = { Placeholder() })
             ) {
-              setWebUri("https://lobste.rs/")
+              setWebUri(NEWEST_WEB_URI)
               val newestPosts = viewModel.newestPosts.collectAsLazyPagingItems()
               NetworkPosts(
                 lazyPagingItems = newestPosts,
@@ -241,18 +387,19 @@ fun LobstersPostsScreen(
               )
             }
             entry<Comments>(metadata = ListDetailSceneStrategy.detailPane()) { dest ->
-              val commentsPostActions = remember {
-                PostActions(context, uriHandler, viewModel) {
-                  navigateTo(backStack, Comments(it), allowStacking = true)
+              val commentsPostActions =
+                remember(isSearchActive) {
+                  PostActions(context, uriHandler, viewModel) {
+                    navigateToDestination(Comments(it), true)
+                  }
                 }
-              }
               CommentsPage(
                 postId = dest.postId,
                 postActions = commentsPostActions,
                 contentPadding = contentPadding,
-                openUserProfile = { navigateTo(backStack, User(it)) },
+                openUserProfile = { navigateToDestination(User(it), false) },
                 openReplyScreen = { postId, commentId ->
-                  navigateTo(backStack, Reply(postId, commentId), allowStacking = true)
+                  navigateToDestination(Reply(postId, commentId), true)
                 },
               )
             }
@@ -283,19 +430,19 @@ fun LobstersPostsScreen(
               UserProfile(
                 username = dest.username,
                 contentPadding = contentPadding,
-                openUserProfile = { navigateTo(backStack, User(it)) },
+                openUserProfile = { navigateToDestination(User(it), false) },
               )
             }
             entry<Settings>(metadata = ListDetailSceneStrategy.extraPane()) {
               SettingsScreen(
                 openInputStream = context.contentResolver::openInputStream,
                 openOutputStream = context.contentResolver::openOutputStream,
-                openLibrariesScreen = { navigateTo(backStack, AboutLibraries) },
+                openLibrariesScreen = { navigateToDestination(AboutLibraries, false) },
                 openRepository = {
                   uriHandler.openUri("https://github.com/msfjarvis/compose-lobsters")
                 },
-                openTagFiltering = { navigateTo(backStack, TagFiltering) },
-                openLoginScreen = { navigateTo(backStack, Login) },
+                openTagFiltering = { navigateToDestination(TagFiltering, false) },
+                openLoginScreen = { navigateToDestination(Login, false) },
                 onLogout = { settingsViewModel.logout() },
                 isLoggedIn = isLoggedIn,
                 username = username,
@@ -314,10 +461,6 @@ fun LobstersPostsScreen(
                 popBackStack = { popBackStack(backStack) },
                 modifier = Modifier.fillMaxSize(),
               )
-            }
-            entry<Search>(metadata = ListDetailSceneStrategy.extraPane()) {
-              setWebUri("https://lobste.rs/search")
-              SearchScreen(postActions = postActions, contentPadding = contentPadding)
             }
             entry<AboutLibraries>(metadata = ListDetailSceneStrategy.extraPane()) {
               LibrariesContainer(

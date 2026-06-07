@@ -38,7 +38,9 @@
   <string name="go_back_to_previous_screen">Go back to previous screen</string>
   <string name="the_app_icon_for_claw">The app icon for Claw</string>
   <string name="search_posts">Search posts</string>
+  <string name="close_search">Close search</string>
   <string name="settings">Settings</string>
   <string name="empty_inbox_icon">Empty inbox icon</string>
   <string name="no_saved_posts">No saved posts</string>
+  <string name="no_search_results">No search results</string>
 </resources>

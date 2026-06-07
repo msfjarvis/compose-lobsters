@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Search UI is now a proper search bar action
+
 ## [1.66.0] - 2026-06-02
 
 ### Added

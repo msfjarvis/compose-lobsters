@@ -22,7 +22,6 @@
   <string name="show_error">Show error</string>
   <string name="copy_stacktrace">Copy stacktrace</string>
   <string name="stacktrace">Stacktrace</string>
-  <string name="search">Search</string>
   <string name="reply_editor_label">Write a reply</string>
   <string name="submit_reply">Submit reply</string>
   <string name="in_reply_to">In reply to</string>

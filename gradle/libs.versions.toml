@@ -137,7 +137,7 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 metrox-android = { module = "dev.zacsweers.metro:metrox-android", version.ref = "metro" }
 metrox-viewmodel = { module = "dev.zacsweers.metro:metrox-viewmodel", version.ref = "metro" }
 metrox-viewmodel-compose = { module = "dev.zacsweers.metro:metrox-viewmodel-compose", version.ref = "metro" }
-okhttp-bom = "com.squareup.okhttp3:okhttp-bom:5.3.2"
+okhttp-bom = "com.squareup.okhttp3:okhttp-bom:5.4.0"
 okhttp-core = { module = "com.squareup.okhttp3:okhttp" }
 okhttp-loggingInterceptor = { module = "com.squareup.okhttp3:logging-interceptor" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }

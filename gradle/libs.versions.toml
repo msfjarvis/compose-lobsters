@@ -89,6 +89,7 @@ androidx-paging-compose = { module = "androidx.paging:paging-compose", version.r
 androidx-profileinstaller = "androidx.profileinstaller:profileinstaller:1.4.1"
 androidx-sqlite = { module = "androidx.sqlite:sqlite", version.ref = "sqlite" }
 androidx-test-core = { module = "androidx.test:core", version.ref = "androidx-test" }
+androidx-test-ext-junit = "androidx.test.ext:junit:1.3.0"
 androidx-test-rules = { module = "androidx.test:rules", version.ref = "androidx-test" }
 androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidx-test" }
 androidx-test-uiautomator = "androidx.test.uiautomator:uiautomator:2.4.0-beta02"
@@ -171,6 +172,7 @@ kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref =
 
 [plugins]
 aboutlibraries = { id = "com.mikepenz.aboutlibraries.plugin.android", version.ref = "aboutLibraries" }
+android-junit5 = { id = "de.mannodermaus.android-junit", version = "2.0.1" }
 android-lint = { id = "com.android.lint", version.ref = "agp" }
 android-test = { id = "com.android.test", version.ref = "agp" }
 dependencyAnalysis = "com.autonomousapps.dependency-analysis:3.14.1"

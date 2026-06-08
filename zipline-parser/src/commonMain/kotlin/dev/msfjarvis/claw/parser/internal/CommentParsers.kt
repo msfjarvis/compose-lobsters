@@ -1,0 +1,76 @@
+/*
+ * Copyright © Harsh Shandilya.
+ * Use of this source code is governed by an MIT-style
+ * license that can be found in the LICENSE file or at
+ * https://opensource.org/licenses/MIT.
+ */
+package dev.msfjarvis.claw.parser.internal
+
+import com.fleeksoft.ksoup.nodes.Element
+import dev.msfjarvis.claw.parser.model.Comment
+
+internal fun parseComments(root: Element): List<Comment> {
+  val seen = mutableSetOf<String>()
+  val workStack = ArrayDeque<Pair<Element, String?>>()
+  root.select("ol.comments > li.comments_subtree").asReversed().forEach { subtree ->
+    workStack.addLast(subtree to null)
+  }
+  return buildList {
+    while (workStack.isNotEmpty()) {
+      val (subtree, parentComment) = workStack.removeLast()
+      val commentElement =
+        if (subtree.`is`("div.comment")) subtree
+        else subtree.children().firstOrNull { it.`is`("div.comment") } ?: continue
+      val shortId = commentElement.attr("data-shortid")
+      if (!seen.add(shortId)) continue
+      val comment = commentElement.toComment(parentComment)
+      add(comment)
+      val childContainer = if (subtree.`is`("div.comment")) subtree.parent() ?: subtree else subtree
+      childContainer.children().asReversed().forEach { childList ->
+        if (!childList.`is`("ol.comments")) return@forEach
+        childList.children().asReversed().forEach { child ->
+          if (!child.`is`("li.comments_subtree")) return@forEach
+          workStack.addLast(child to comment.shortId)
+        }
+      }
+    }
+  }
+}
+
+private fun Element.toComment(parentComment: String?): Comment {
+  val byline = selectFirst("div.byline")
+  val timestamp = byline?.selectFirst("a[href^=/c/] time")?.attr("data-at-unix").orEmpty()
+  val isEdited = byline?.text()?.contains("edited") == true
+  return Comment(
+    shortId = attr("data-shortid"),
+    comment = selectFirst("div.comment_text")?.html().orEmpty(),
+    url = selectFirst("div.byline a[href^=/c/]")?.absUrl("href").orEmpty(),
+    score =
+      children()
+        .firstOrNull { it.hasClass("voters") }
+        ?.children()
+        ?.firstOrNull { it.hasClass("upvoter") }
+        ?.text()
+        ?.trim()
+        ?.takeUnless { it == "~" }
+        ?.toIntOrNull() ?: 1,
+    timestamp = timestamp.toEpochSeconds(),
+    edited = isEdited,
+    parentComment = parentComment,
+    user =
+      getElementsByClass("byline")
+        .flatMap { it.getElementsByTag("a") }
+        .firstOrNull { it.attr("href").contains("/~") && it.text().isNotBlank() }
+        ?.text()
+        .orEmpty(),
+    isUpvoted = classNames().contains("upvoted"),
+  )
+}
+
+private fun String.toEpochSeconds(): Long {
+  return when {
+    isBlank() -> 0L
+    all(Char::isDigit) -> toLong()
+    else -> 0L
+  }
+}

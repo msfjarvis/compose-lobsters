@@ -44,7 +44,7 @@ import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
 sealed interface ClawTopBarMode {
   data object Browsing : ClawTopBarMode
 
-  data class Searching(
+  class Searching(
     val query: String,
     val expanded: Boolean = true,
     val requestFocus: Boolean = true,

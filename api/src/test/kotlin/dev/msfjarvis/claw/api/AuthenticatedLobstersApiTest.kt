@@ -7,13 +7,12 @@
 package dev.msfjarvis.claw.api
 
 import com.slack.eithernet.ApiResult.Success
-import com.slack.eithernet.test.newEitherNetController
 import dev.msfjarvis.claw.util.TestUtils.assertIs
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
 class AuthenticatedLobstersApiTest {
-  private val wrapper = ApiWrapper(newEitherNetController())
+  private val wrapper = ApiWrapper()
   private val authenticatedApi = wrapper.authenticatedApi
 
   @Test

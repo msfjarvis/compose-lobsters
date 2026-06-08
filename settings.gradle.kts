@@ -70,7 +70,7 @@ develocity {
 }
 
 dependencyResolutionManagement {
-  repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+  repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
   repositories {
     google {
       mavenContent { releasesOnly() }
@@ -99,6 +99,52 @@ dependencyResolutionManagement {
       name = "Sonatype Snapshots"
       mavenContent { snapshotsOnly() }
     }
+    exclusiveContent {
+      forRepository {
+        ivy("https://download.jetbrains.com/kotlin/native/builds") {
+          name = "Kotlin Native"
+          patternLayout {
+            listOf(
+                "macos-x86_64",
+                "macos-aarch64",
+                "osx-x86_64",
+                "osx-aarch64",
+                "linux-x86_64",
+                "windows-x86_64",
+              )
+              .forEach { os ->
+                listOf("dev", "releases").forEach { stage ->
+                  artifact("$stage/[revision]/$os/[artifact]-[revision].[ext]")
+                }
+              }
+          }
+          metadataSources { artifact() }
+        }
+      }
+      filter { includeModuleByRegex(".*", ".*kotlin-native-prebuilt.*") }
+    }
+    exclusiveContent {
+      forRepository {
+        ivy("https://nodejs.org/dist/") {
+          name = "Node Distributions at $url"
+          patternLayout { artifact("v[revision]/[artifact](-v[revision]-[classifier]).[ext]") }
+          metadataSources { artifact() }
+          content { includeModule("org.nodejs", "node") }
+        }
+      }
+      filter { includeGroup("org.nodejs") }
+    }
+    exclusiveContent {
+      forRepository {
+        ivy("https://github.com/yarnpkg/yarn/releases/download") {
+          name = "Yarn Distributions at $url"
+          patternLayout { artifact("v[revision]/[artifact](-v[revision]).[ext]") }
+          metadataSources { artifact() }
+          content { includeModule("com.yarnpkg", "yarn") }
+        }
+      }
+      filter { includeGroup("com.yarnpkg") }
+    }
     mavenCentral { mavenContent { releasesOnly() } }
   }
 }
@@ -107,4 +153,15 @@ rootProject.name = "Claw"
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
-include("android", "api", "benchmark", "common", "core", "database:core", "database:impl", "model")
+include(
+  "android",
+  "api",
+  "benchmark",
+  "common",
+  "core",
+  "database:core",
+  "database:impl",
+  "model",
+  "zipline-parser",
+  "zipline-parser-api",
+)

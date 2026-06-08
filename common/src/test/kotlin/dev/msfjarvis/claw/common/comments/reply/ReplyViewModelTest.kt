@@ -11,12 +11,12 @@ import androidx.compose.ui.text.input.TextFieldValue
 import com.google.common.truth.Truth.assertThat
 import com.slack.eithernet.ApiResult
 import dev.msfjarvis.claw.api.AuthenticatedLobstersApi
-import dev.msfjarvis.claw.api.CSRFToken
 import dev.msfjarvis.claw.api.LobstersApi
-import dev.msfjarvis.claw.api.PostsPage
-import dev.msfjarvis.claw.api.ReplyForm
-import dev.msfjarvis.claw.api.TagsPage
+import dev.msfjarvis.claw.model.CSRFToken
+import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.LobstersPostDetails
+import dev.msfjarvis.claw.model.ReplyForm
+import dev.msfjarvis.claw.model.Tag
 import dev.msfjarvis.claw.model.User
 import java.io.IOException
 import kotlinx.coroutines.Dispatchers
@@ -109,9 +109,11 @@ private class FakeLobstersApi(
   var postReplyCallCount: Int = 0
     private set
 
-  override suspend fun getHottestPosts(page: Int): ApiResult<PostsPage, Unit> = error("unused")
+  override suspend fun getHottestPosts(page: Int): ApiResult<List<LobstersPost>, Unit> =
+    error("unused")
 
-  override suspend fun getNewestPosts(page: Int): ApiResult<PostsPage, Unit> = error("unused")
+  override suspend fun getNewestPosts(page: Int): ApiResult<List<LobstersPost>, Unit> =
+    error("unused")
 
   override suspend fun getPostDetails(postId: String): ApiResult<LobstersPostDetails, Unit> =
     error("unused")
@@ -121,7 +123,7 @@ private class FakeLobstersApi(
   override suspend fun getCSRFToken(): ApiResult<CSRFToken, Unit> =
     ApiResult.success(CSRFToken("csrf"))
 
-  override suspend fun getTags(): ApiResult<TagsPage, Unit> = error("unused")
+  override suspend fun getTags(): ApiResult<List<Tag>, Unit> = error("unused")
 
   override suspend fun upvoteComment(
     commentId: String,

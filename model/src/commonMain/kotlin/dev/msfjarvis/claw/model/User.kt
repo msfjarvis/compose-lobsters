@@ -1,0 +1,19 @@
+/*
+ * Copyright © Harsh Shandilya.
+ * Use of this source code is governed by an MIT-style
+ * license that can be found in the LICENSE file or at
+ * https://opensource.org/licenses/MIT.
+ */
+package dev.msfjarvis.claw.model
+
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+@Serializable
+class User(
+  val username: String,
+  val about: String = "",
+  @SerialName("invited_by_user") val invitedBy: String? = null,
+  val avatarUrl: String = "",
+  val createdAt: String = "",
+)

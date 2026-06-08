@@ -8,7 +8,11 @@ package dev.msfjarvis.claw.api
 
 import com.google.common.truth.Truth.assertThat
 import com.slack.eithernet.ApiResult
+import dev.msfjarvis.claw.model.CSRFToken
+import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.LobstersPostDetails
+import dev.msfjarvis.claw.model.ReplyForm
+import dev.msfjarvis.claw.model.Tag
 import dev.msfjarvis.claw.model.User
 import kotlinx.coroutines.test.runTest
 import okhttp3.MultipartBody
@@ -40,9 +44,11 @@ private class RecordingLobstersApi : LobstersApi {
   var postReplyOrigin: String? = null
   var postReplyAccept: String? = null
 
-  override suspend fun getHottestPosts(page: Int): ApiResult<PostsPage, Unit> = error("unused")
+  override suspend fun getHottestPosts(page: Int): ApiResult<List<LobstersPost>, Unit> =
+    error("unused")
 
-  override suspend fun getNewestPosts(page: Int): ApiResult<PostsPage, Unit> = error("unused")
+  override suspend fun getNewestPosts(page: Int): ApiResult<List<LobstersPost>, Unit> =
+    error("unused")
 
   override suspend fun getPostDetails(postId: String): ApiResult<LobstersPostDetails, Unit> =
     error("unused")
@@ -52,7 +58,7 @@ private class RecordingLobstersApi : LobstersApi {
   override suspend fun getCSRFToken(): ApiResult<CSRFToken, Unit> =
     ApiResult.success(CSRFToken("csrf-token"))
 
-  override suspend fun getTags(): ApiResult<TagsPage, Unit> = error("unused")
+  override suspend fun getTags(): ApiResult<List<Tag>, Unit> = error("unused")
 
   override suspend fun upvoteComment(
     commentId: String,

@@ -4,23 +4,41 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
+
 plugins {
-  id("dev.msfjarvis.claw.kotlin-jvm")
+  kotlin("multiplatform")
   alias(libs.plugins.kotlin.serialization)
-  alias(libs.plugins.poko)
-  alias(libs.plugins.ksp)
   alias(libs.plugins.dependencyAnalysis)
 }
 
-dependencies {
-  api(libs.kotlinx.datetime)
-  api(libs.kotlinx.serialization.core)
-  api(libs.kspoon)
-  api(projects.database.core)
+kotlin {
+  jvm()
+  js {
+    browser()
+  }
 
-  implementation(libs.ksoup)
+  sourceSets {
+    commonMain {
+      dependencies {
+        api(libs.kotlinx.datetime)
+        api(libs.kotlinx.serialization.core)
+      }
+    }
+    jvmMain {
+      dependencies {
+        api(projects.database.core)
+      }
+    }
+    jvmTest {
+      dependencies {
+        implementation(kotlin("test"))
+      }
+    }
+  }
+}
 
-  compileOnly(libs.konvert.annotations)
-
-  ksp(libs.konvert.processor)
+@Suppress("UnstableApiUsage")
+tasks.withType(KotlinCompilationTask::class.java).configureEach {
+  compilerOptions.freeCompilerArgs.add("-Xskip-prerelease-check")
 }

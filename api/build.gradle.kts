@@ -11,6 +11,7 @@ plugins {
   alias(libs.plugins.kotlin.serialization)
   alias(libs.plugins.dependencyAnalysis)
   alias(libs.plugins.metro)
+  alias(libs.plugins.zipline)
 }
 
 dependencies {
@@ -19,11 +20,10 @@ dependencies {
   api(libs.okhttp.core)
   api(libs.retrofit)
   api(projects.model)
+  api(projects.ziplineParser)
 
   implementation(libs.eithernet.integration.retrofit)
-  implementation(libs.ksoup)
-  implementation(libs.kspoon)
-  implementation(libs.retrofit.kotlinxSerializationConverter)
+  implementation(libs.zipline.loader)
 
   testImplementation(libs.eithernet.test.fixtures)
   testImplementation(libs.kotlin.reflect)

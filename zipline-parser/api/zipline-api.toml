@@ -1,0 +1,27 @@
+[dev.msfjarvis.claw.parser.LobstersParserService]
+
+functions = [
+  # fun close(): kotlin.Unit
+  "moYx+T3e",
+
+  # fun parseCsrfToken(kotlin.String): dev.msfjarvis.claw.parser.model.CSRFToken
+  "XO8wcclo",
+
+  # fun parsePostDetails(kotlin.String): dev.msfjarvis.claw.parser.model.LobstersPostDetails
+  "K6Im4ZQe",
+
+  # fun parsePostsPage(kotlin.String): kotlin.collections.List<dev.msfjarvis.claw.parser.model.LobstersPost>
+  "qs/WBwxE",
+
+  # fun parseReplyForm(kotlin.String): dev.msfjarvis.claw.parser.model.ReplyForm
+  "Gv0fENP3",
+
+  # fun parseSearchResults(kotlin.String): kotlin.collections.List<dev.msfjarvis.claw.parser.model.LobstersPost>
+  "MYlj2kop",
+
+  # fun parseTagsPage(kotlin.String): kotlin.collections.List<dev.msfjarvis.claw.parser.model.Tag>
+  "fR8RFEx1",
+
+  # fun parseUser(kotlin.String): dev.msfjarvis.claw.parser.model.User
+  "K2X252uP",
+]

@@ -43,7 +43,7 @@ class SpotlessPlugin : Plugin<Project> {
         endWithNewline()
         licenseHeaderFile(
           project.file("spotless/license.xml"),
-          "<(adaptive-icon|appwidget-provider|data-extraction-rules|full-backup-content|manifest|vector|resources)",
+          "<(adaptive-icon|appwidget-provider|data-extraction-rules|full-backup-content|manifest|network-security-config|vector|resources)",
         )
       }
     }

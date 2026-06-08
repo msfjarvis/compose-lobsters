@@ -35,7 +35,10 @@ class AndroidZiplineParserClient(
   private val verifySignatures: Boolean,
 ) : LobstersParserClient, AutoCloseable {
   private val dispatcher: ExecutorCoroutineDispatcher =
-    Executors.newSingleThreadExecutor().asCoroutineDispatcher()
+    Executors.newSingleThreadExecutor { runnable ->
+        Thread(null, runnable, "Claw-ZiplineParser", ZIPLINE_THREAD_STACK_SIZE_BYTES)
+      }
+      .asCoroutineDispatcher()
   private val mutex = Mutex()
   private var loadedZipline: Zipline? = null
   private var loadedService: LobstersParserService? = null
@@ -124,6 +127,10 @@ class AndroidZiplineParserClient(
         }
       }
     }
+  }
+
+  private companion object {
+    private const val ZIPLINE_THREAD_STACK_SIZE_BYTES = 8L * 1024L * 1024L
   }
 
   private object EmbeddedFreshnessChecker : FreshnessChecker {

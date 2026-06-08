@@ -9,6 +9,7 @@ package dev.msfjarvis.claw.android.zipline
 import android.content.Context
 import app.cash.zipline.Zipline
 import app.cash.zipline.ZiplineManifest
+import app.cash.zipline.loader.DefaultFreshnessCheckerNotFresh
 import app.cash.zipline.loader.FreshnessChecker
 import app.cash.zipline.loader.LoadResult
 import app.cash.zipline.loader.ManifestVerifier
@@ -19,7 +20,6 @@ import dev.msfjarvis.claw.parser.model.ParserSerializersModule
 import java.io.File
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicReference
-import kotlin.time.Duration.Companion.days
 import kotlinx.coroutines.ExecutorCoroutineDispatcher
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.runBlocking
@@ -99,7 +99,7 @@ class AndroidZiplineParserClient(
           embeddedDir = embeddedDir.absolutePath.toPath(),
         )
 
-    val freshnessChecker = if (verifySignatures) EmbeddedFreshnessChecker else AlwaysFresh
+    val freshnessChecker = if (verifySignatures) DefaultFreshnessCheckerNotFresh else AlwaysFresh
     val effectiveManifestUrl =
       if (!verifySignatures && embeddedManifestFile.exists()) {
         embeddedManifestFile.toURI().toString()
@@ -119,9 +119,7 @@ class AndroidZiplineParserClient(
       ) {
         is LoadResult.Success -> {
           loadedZipline = result.zipline
-          DispatcherConfinedLobstersParserService(
-            result.zipline.take("LobstersParserService")
-          )
+          DispatcherConfinedLobstersParserService(result.zipline.take("LobstersParserService"))
         }
         is LoadResult.Failure -> throw result.exception
       }
@@ -179,18 +177,6 @@ class AndroidZiplineParserClient(
 
   private companion object {
     private const val ZIPLINE_THREAD_STACK_SIZE_BYTES = 8L * 1024L * 1024L
-  }
-
-  private object EmbeddedFreshnessChecker : FreshnessChecker {
-    private val maxAgeMs = 30.days.inWholeMilliseconds
-
-    override fun isFresh(
-      manifest: ZiplineManifest,
-      freshAtEpochMs: Long,
-    ): Boolean {
-      if (freshAtEpochMs <= 0L) return false
-      return System.currentTimeMillis() - freshAtEpochMs <= maxAgeMs
-    }
   }
 
   /** Always prioritize the embedded files over the remote copy. */

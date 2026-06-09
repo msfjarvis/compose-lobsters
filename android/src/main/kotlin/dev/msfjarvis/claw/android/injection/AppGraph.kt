@@ -11,6 +11,7 @@ import androidx.work.ListenableWorker
 import androidx.work.WorkManager
 import dev.msfjarvis.claw.android.viewmodel.CachedRemotePostsRepository
 import dev.msfjarvis.claw.android.viewmodel.SavedPostsRepository
+import dev.msfjarvis.claw.android.zipline.AndroidZiplineParserClient
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.common.tags.TagBlockRepository
 import dev.msfjarvis.claw.core.coroutines.MainDispatcher
@@ -51,6 +52,8 @@ interface AppGraph : MetroAppComponentProviders, ViewModelGraph {
   val lobstersApi: LobstersApi
 
   val tagBlockRepository: TagBlockRepository
+
+  val ziplineClient: AndroidZiplineParserClient
 
   @MainDispatcher val mainDispatcher: CoroutineDispatcher
 

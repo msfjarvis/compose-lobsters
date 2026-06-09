@@ -9,7 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- The comments UI has been improved and animations are now faster
 - Search UI is now a proper search bar action
+- The HTML parser is now running on an architecture that lets it be updated over the air
 
 ## [1.66.0] - 2026-06-02
 

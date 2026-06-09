@@ -19,6 +19,7 @@ plugins {
   id("dev.msfjarvis.claw.sentry")
   id("dev.msfjarvis.claw.versioning-plugin")
   id("kotlin-parcelize")
+  alias(libs.plugins.android.junit5)
   alias(libs.plugins.aboutlibraries)
   alias(libs.plugins.modulegraphassert)
   alias(libs.plugins.baselineprofile)
@@ -123,6 +124,18 @@ android {
         "\"$ziplineProdManifestUrl\"",
       )
       buildConfigField("boolean", "ZIPLINE_PARSER_VERIFY_SIGNATURES", "true")
+    }
+  }
+
+  testOptions {
+    managedDevices {
+      localDevices {
+        create("pixel9api36") {
+          device = "Pixel 9"
+          apiLevel = 36
+          systemImageSource = "aosp"
+        }
+      }
     }
   }
 }
@@ -234,6 +247,10 @@ dependencies {
 
   screenshotTestImplementation(libs.screenshot.validation.api)
   screenshotTestImplementation(libs.androidx.compose.ui.tooling)
+
+  androidTestImplementation(libs.androidx.test.ext.junit)
+  androidTestImplementation(libs.androidx.test.rules)
+  androidTestImplementation(libs.androidx.test.runner)
 
   addTestDependencies(project)
 }

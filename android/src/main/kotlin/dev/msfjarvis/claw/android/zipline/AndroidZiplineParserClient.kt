@@ -14,9 +14,14 @@ import app.cash.zipline.loader.FreshnessChecker
 import app.cash.zipline.loader.LoadResult
 import app.cash.zipline.loader.ManifestVerifier
 import app.cash.zipline.loader.ZiplineLoader
+import dev.msfjarvis.claw.android.BuildConfig
 import dev.msfjarvis.claw.api.LobstersParserClient
 import dev.msfjarvis.claw.parser.LobstersParserService
 import dev.msfjarvis.claw.parser.model.ParserSerializersModule
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.binding
 import java.io.File
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicReference
@@ -31,11 +36,13 @@ import okio.ByteString.Companion.decodeHex
 import okio.FileSystem
 import okio.Path.Companion.toPath
 
+@Inject
+@ContributesBinding(AppScope::class, binding = binding<LobstersParserClient>())
 class AndroidZiplineParserClient(
   private val context: Context,
-  private val manifestUrl: String,
   private val httpClient: OkHttpClient,
-  private val verifySignatures: Boolean,
+  private val manifestUrl: String = BuildConfig.ZIPLINE_PARSER_MANIFEST_URL,
+  private val verifySignatures: Boolean = BuildConfig.ZIPLINE_PARSER_VERIFY_SIGNATURES,
 ) : LobstersParserClient, AutoCloseable {
   private val ziplineThread = AtomicReference<Thread>()
   private val dispatcher: ExecutorCoroutineDispatcher =

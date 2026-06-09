@@ -102,6 +102,7 @@ jobs:
     - name: Build release assets
       shell: bash
       env:
+        ZIPLINE_SIGNING_KEY: ${{ secrets.ZIPLINE_SIGNING_KEY }}
         SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
         SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
         SENTRY_VCS_HEAD_SHA: ${{ env.SENTRY_VCS_HEAD_SHA }}

@@ -41,8 +41,12 @@ kotlin {
 
 zipline {
   mainFunction.set("dev.msfjarvis.claw.parser.launchZipline")
+  val isRelease = providers.environmentVariable("SENTRY_DSN").orNull != null
   val signingKey = providers.environmentVariable("ZIPLINE_SIGNING_KEY").orNull
-  if (signingKey != null) {
+  if (isRelease) {
+    require(signingKey != null) {
+      "Signing key must be present for release builds"
+    }
     signingKeys {
       create("key0") {
         algorithmId = SignatureAlgorithmId.Ed25519

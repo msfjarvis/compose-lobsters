@@ -57,6 +57,7 @@ jobs:
           ./gradlew --no-configuration-cache --stacktrace assembleRelease uploadSentryProguardMappingsRelease collectReleaseBundle -PenableSentry
           ./scripts/signing-cleanup.sh
         env:
+          ZIPLINE_SIGNING_KEY: ${{ secrets.ZIPLINE_SIGNING_KEY }}
           AGE_SECRET_KEY: ${{ secrets.AGE_SECRET_KEY }}
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}

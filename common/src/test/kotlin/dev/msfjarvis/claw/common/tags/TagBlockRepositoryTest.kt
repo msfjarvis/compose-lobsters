@@ -81,6 +81,46 @@ class TagBlockRepositoryTest {
   }
 
   @Test
+  fun `replaceTagBlocks replaces permanent with temporary block`() = runTest {
+    val testDispatcher = StandardTestDispatcher(testScheduler)
+    val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
+    val expiration = System.currentTimeMillis() + 86_400_000
+
+    repository.saveTagBlock("kotlin", null)
+    repository.replaceTagBlocks(listOf(TagBlock("kotlin", expiration)))
+
+    val block = repository.getTagBlocks().first().single()
+    assertThat(block.tag).isEqualTo("kotlin")
+    assertThat(block.expirationMillis).isEqualTo(expiration)
+  }
+
+  @Test
+  fun `replaceTagBlocks replaces temporary with permanent block`() = runTest {
+    val testDispatcher = StandardTestDispatcher(testScheduler)
+    val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
+    val expiration = System.currentTimeMillis() + 86_400_000
+
+    repository.saveTagBlock("kotlin", expiration)
+    repository.replaceTagBlocks(listOf(TagBlock("kotlin", null)))
+
+    val block = repository.getTagBlocks().first().single()
+    assertThat(block.isPermanent).isTrue()
+  }
+
+  @Test
+  fun `replaceTagBlocks removes rows omitted from replacement set`() = runTest {
+    val testDispatcher = StandardTestDispatcher(testScheduler)
+    val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
+
+    repository.saveTagBlock("old", null)
+    repository.saveTagBlock("kept", null)
+
+    repository.replaceTagBlocks(listOf(TagBlock("kept", null)))
+
+    assertThat(repository.getTagBlocks().first().map { it.tag }).containsExactly("kept")
+  }
+
+  @Test
   fun `removeTagBlock deletes tag successfully`() = runTest {
     val testDispatcher = StandardTestDispatcher(testScheduler)
 
@@ -162,7 +202,7 @@ class TagBlockRepositoryTest {
 
     val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
     val emissions = mutableListOf<List<String>>()
-    val collectedBlocks = mutableListOf<List<dev.msfjarvis.claw.model.TagBlock>>()
+    val collectedBlocks = mutableListOf<List<TagBlock>>()
 
     val collector =
       backgroundScope.launch(testDispatcher) {

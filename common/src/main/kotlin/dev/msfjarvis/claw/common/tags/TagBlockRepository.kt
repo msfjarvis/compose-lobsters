@@ -41,6 +41,17 @@ class TagBlockRepository(
     withContext(writeDispatcher) { tagBlocksQueries.insertOrReplace(tag, expirationMillis) }
   }
 
+  suspend fun replaceTagBlocks(blocks: List<TagBlock>) {
+    withContext(writeDispatcher) {
+      tagBlocksQueries.transaction {
+        tagBlocksQueries.deleteAll()
+        blocks.forEach { block ->
+          tagBlocksQueries.insertOrReplace(block.tag, block.expirationMillis)
+        }
+      }
+    }
+  }
+
   suspend fun removeTagBlock(tag: String) {
     withContext(writeDispatcher) { tagBlocksQueries.deleteByTag(tag) }
   }

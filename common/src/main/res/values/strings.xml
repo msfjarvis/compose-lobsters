@@ -8,6 +8,9 @@
   <string name="block_until">Block Until</string>
   <string name="block_forever">Block Forever</string>
   <string name="failed_to_load_tags">Failed to load tags</string>
+  <string name="save_tag_filters">Save</string>
+  <string name="saving_tag_filters">Saving…</string>
+  <string name="failed_to_save_tag_filters">Failed to save tag filters</string>
   <string name="posts_with_selected_tags_will_be_filtere">Posts with selected tags will be filtered out of hottest/newest/search feeds</string>
   <string name="expirationmillis"> • %1$s</string>
   <string name="debug_controls">Debug Controls</string>
@@ -27,4 +30,8 @@
   <string name="in_reply_to">In reply to</string>
   <string name="quote">Quote</string>
   <string name="cancel">Cancel</string>
+  <string name="discard_tag_filter_changes_title">Discard tag filter changes?</string>
+  <string name="discard_tag_filter_changes_message">Your unsaved tag filter changes will be lost.</string>
+  <string name="discard_changes">Discard</string>
+  <string name="keep_editing">Keep editing</string>
 </resources>

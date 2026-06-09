@@ -5,12 +5,15 @@
  * https://opensource.org/licenses/MIT.
  */
 @file:Suppress("UnstableApiUsage")
+@file:OptIn(ExperimentalTime::class)
 
 import dev.msfjarvis.claw.gradle.addTestDependencies
 import dev.zacsweers.metro.gradle.DiagnosticSeverity
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 import java.io.File
+import kotlin.time.Clock
+import kotlin.time.ExperimentalTime
 
 plugins {
   id("dev.msfjarvis.claw.android-application")
@@ -78,7 +81,7 @@ val prepareEmbeddedZiplineParser =
 
       val unsigned =
         ((parsed["unsigned"] as? Map<*, *>)?.toMutableMap() ?: mutableMapOf()).apply {
-          put("freshAtEpochMs", System.currentTimeMillis())
+          put("freshAtEpochMs", Clock.System.now().toEpochMilliseconds())
         }
       parsed["unsigned"] = unsigned
 

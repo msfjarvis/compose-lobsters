@@ -162,6 +162,10 @@ class AndroidZiplineParserClient(
 
     override fun parseReplyForm(html: String) = onZiplineThread { delegate.parseReplyForm(html) }
 
+    override fun parseFiltersPage(html: String) = onZiplineThread {
+      delegate.parseFiltersPage(html)
+    }
+
     override fun close() = onZiplineThread { delegate.close() }
   }
 

@@ -8,12 +8,16 @@ package dev.msfjarvis.claw.api
 
 import com.slack.eithernet.ApiResult
 import dev.msfjarvis.claw.model.CSRFToken
+import dev.msfjarvis.claw.model.FiltersPage
 import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.LobstersPostDetails
 import dev.msfjarvis.claw.model.ReplyForm
 import dev.msfjarvis.claw.model.Tag
 import dev.msfjarvis.claw.model.User
 import okhttp3.MultipartBody
+import retrofit2.http.Field
+import retrofit2.http.FieldMap
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Multipart
@@ -38,6 +42,16 @@ interface LobstersApi {
   @GET("/") suspend fun getCSRFToken(): ApiResult<CSRFToken, Unit>
 
   @GET("tags") suspend fun getTags(): ApiResult<List<Tag>, Unit>
+
+  @GET("filters") suspend fun getFilters(): ApiResult<FiltersPage, Unit>
+
+  @FormUrlEncoded
+  @POST("filters")
+  suspend fun saveFilters(
+    @Field("authenticity_token") authenticityToken: String,
+    @FieldMap(encoded = true) tags: Map<String, String>,
+    @Field("commit") commit: String = "Save Filters",
+  ): ApiResult<Unit, Unit>
 
   @Multipart
   @POST("comments/{commentId}/upvote")

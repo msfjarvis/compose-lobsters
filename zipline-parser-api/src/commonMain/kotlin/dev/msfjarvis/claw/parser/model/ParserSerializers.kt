@@ -23,6 +23,7 @@ val ParserSerializersModule: SerializersModule = SerializersModule {
   contextual(Tag::class, TagSerializer)
   contextual(CSRFToken::class, CSRFTokenSerializer)
   contextual(ReplyForm::class, ReplyFormSerializer)
+  contextual(FiltersPage::class, FiltersPageSerializer)
 }
 
 internal object LobstersPostSerializer : KSerializer<LobstersPost> {
@@ -199,21 +200,24 @@ internal object TagSerializer : KSerializer<Tag> {
     PrimitiveSerialDescriptor("dev.msfjarvis.claw.parser.model.Tag", PrimitiveKind.STRING)
 
   override fun serialize(encoder: Encoder, value: Tag) {
-    encoder.encodeString(
-      PacketWriter()
-        .string(value.tag)
-        .string(value.description)
-        .boolean(value.privileged)
-        .boolean(value.active)
-        .string(value.category)
-        .boolean(value.isMedia)
-        .double(value.hotnessMod)
-        .build()
-    )
+    encoder.encodeString(toPayload(value))
   }
 
-  override fun deserialize(decoder: Decoder): Tag {
-    val reader = PacketReader(decoder.decodeString())
+  override fun deserialize(decoder: Decoder): Tag = fromPayload(decoder.decodeString())
+
+  fun toPayload(value: Tag): String =
+    PacketWriter()
+      .string(value.tag)
+      .string(value.description)
+      .boolean(value.privileged)
+      .boolean(value.active)
+      .string(value.category)
+      .boolean(value.isMedia)
+      .double(value.hotnessMod)
+      .build()
+
+  fun fromPayload(payload: String): Tag {
+    val reader = PacketReader(payload)
     return Tag(
       tag = reader.string(),
       description = reader.string(),
@@ -259,6 +263,36 @@ internal object ReplyFormSerializer : KSerializer<ReplyForm> {
       storyId = reader.string(),
       method = reader.string(),
       parentCommentShortId = reader.string(),
+    )
+  }
+}
+
+internal object FiltersPageSerializer : KSerializer<FiltersPage> {
+  override val descriptor: SerialDescriptor =
+    PrimitiveSerialDescriptor("dev.msfjarvis.claw.parser.model.FiltersPage", PrimitiveKind.STRING)
+
+  override fun serialize(encoder: Encoder, value: FiltersPage) {
+    encoder.encodeString(
+      PacketWriter()
+        .string(value.authenticityToken)
+        .int(value.tags.size)
+        .apply { value.tags.forEach { string(TagSerializer.toPayload(it)) } }
+        .stringList(value.blockedTags.sorted())
+        .build()
+    )
+  }
+
+  override fun deserialize(decoder: Decoder): FiltersPage {
+    val reader = PacketReader(decoder.decodeString())
+    val authenticityToken = reader.string()
+    val tags =
+      List(reader.int()) {
+        TagSerializer.fromPayload(reader.string())
+      }
+    return FiltersPage(
+      authenticityToken = authenticityToken,
+      tags = tags,
+      blockedTags = reader.stringList().toSet(),
     )
   }
 }

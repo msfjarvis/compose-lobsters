@@ -8,6 +8,7 @@ package dev.msfjarvis.claw.parser
 
 import app.cash.zipline.ZiplineService
 import dev.msfjarvis.claw.parser.model.CSRFToken
+import dev.msfjarvis.claw.parser.model.FiltersPage
 import dev.msfjarvis.claw.parser.model.LobstersPost
 import dev.msfjarvis.claw.parser.model.LobstersPostDetails
 import dev.msfjarvis.claw.parser.model.ReplyForm
@@ -28,4 +29,6 @@ interface LobstersParserService : ZiplineService {
   fun parseCsrfToken(html: String): CSRFToken
 
   fun parseReplyForm(html: String): ReplyForm
+
+  fun parseFiltersPage(html: String): FiltersPage
 }

@@ -8,6 +8,7 @@ package dev.msfjarvis.claw.api.converters
 
 import dev.msfjarvis.claw.model.CSRFToken
 import dev.msfjarvis.claw.model.Comment
+import dev.msfjarvis.claw.model.FiltersPage
 import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.LobstersPostDetails
 import dev.msfjarvis.claw.model.ReplyForm
@@ -76,6 +77,13 @@ internal fun dev.msfjarvis.claw.parser.model.Tag.toModel(): Tag =
     category = category,
     isMedia = isMedia,
     hotnessMod = hotnessMod,
+  )
+
+internal fun dev.msfjarvis.claw.parser.model.FiltersPage.toModel(): FiltersPage =
+  FiltersPage(
+    authenticityToken = authenticityToken,
+    tags = tags.map { it.toModel() },
+    blockedTags = blockedTags,
   )
 
 internal fun dev.msfjarvis.claw.parser.model.User.toModel(): User =

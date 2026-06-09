@@ -9,6 +9,7 @@ package dev.msfjarvis.claw.api
 import com.google.common.truth.Truth.assertThat
 import com.slack.eithernet.ApiResult
 import dev.msfjarvis.claw.model.CSRFToken
+import dev.msfjarvis.claw.model.FiltersPage
 import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.LobstersPostDetails
 import dev.msfjarvis.claw.model.ReplyForm
@@ -59,6 +60,14 @@ private class RecordingLobstersApi : LobstersApi {
     ApiResult.success(CSRFToken("csrf-token"))
 
   override suspend fun getTags(): ApiResult<List<Tag>, Unit> = error("unused")
+
+  override suspend fun getFilters(): ApiResult<FiltersPage, Unit> = error("unused")
+
+  override suspend fun saveFilters(
+    authenticityToken: String,
+    tags: Map<String, String>,
+    commit: String,
+  ): ApiResult<Unit, Unit> = error("unused")
 
   override suspend fun upvoteComment(
     commentId: String,

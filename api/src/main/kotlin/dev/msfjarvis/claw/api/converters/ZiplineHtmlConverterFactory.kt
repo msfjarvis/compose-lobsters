@@ -8,6 +8,7 @@ package dev.msfjarvis.claw.api.converters
 
 import dev.msfjarvis.claw.api.LobstersParserClient
 import dev.msfjarvis.claw.model.CSRFToken
+import dev.msfjarvis.claw.model.FiltersPage
 import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.LobstersPostDetails
 import dev.msfjarvis.claw.model.ReplyForm
@@ -50,6 +51,8 @@ class ZiplineHtmlConverterFactory(private val parserClient: LobstersParserClient
         HtmlConverter { html -> parserClient.service().parsePostDetails(html).toModel() }
       normalizedType == ReplyForm::class.java ->
         HtmlConverter { html -> parserClient.service().parseReplyForm(html).toModel() }
+      normalizedType == FiltersPage::class.java ->
+        HtmlConverter { html -> parserClient.service().parseFiltersPage(html).toModel() }
       normalizedType == User::class.java ->
         HtmlConverter { html -> parserClient.service().parseUser(html).toModel() }
       else -> null

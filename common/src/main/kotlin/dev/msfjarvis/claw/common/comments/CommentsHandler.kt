@@ -9,13 +9,13 @@ package dev.msfjarvis.claw.common.comments
 import dev.msfjarvis.claw.model.Comment
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 
 internal class CommentsHandler {
 
   private var rootNodes = emptyList<CommentNode>()
-  private val _visibleNodes: MutableStateFlow<List<CommentNode>> = MutableStateFlow(emptyList())
-  val listItems: StateFlow<List<CommentNode>> = _visibleNodes.asStateFlow()
+  val listItems: StateFlow<List<CommentNode>>
+    field = MutableStateFlow(emptyList())
+
   private var collapsedCommentIds = setOf<String>()
 
   private fun updateVisibleNodes() {
@@ -27,7 +27,7 @@ internal class CommentsHandler {
       }
     }
     rootNodes.forEach { traverse(it) }
-    _visibleNodes.value = flatList
+    listItems.value = flatList
   }
 
   private fun isUnread(commentId: String, seenCommentsState: SeenCommentsState) =

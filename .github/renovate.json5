@@ -39,6 +39,7 @@
         "minor",
         "major",
       ],
+      "enabled": false,
     },
     {
       "matchDepNames": [
@@ -63,12 +64,6 @@
         "/^sentry/",
       ],
       "groupName": "Sentry"
-    },
-    {
-      "matchPackageNames": [
-        "/^com.squareup.anvil/"
-      ],
-      "allowedVersions": "!/.*-1-8$/",
     },
     {
       "matchManagers": [

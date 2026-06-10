@@ -7,6 +7,7 @@
 package dev.msfjarvis.claw.parser
 
 import dev.msfjarvis.claw.parser.internal.parseCsrfToken as parseCsrfTokenHtml
+import dev.msfjarvis.claw.parser.internal.parseFiltersPage as parseFiltersPageHtml
 import dev.msfjarvis.claw.parser.internal.parsePostDetails as parsePostDetailsHtml
 import dev.msfjarvis.claw.parser.internal.parsePostsPage as parsePostsPageHtml
 import dev.msfjarvis.claw.parser.internal.parseReplyForm as parseReplyFormHtml
@@ -14,6 +15,7 @@ import dev.msfjarvis.claw.parser.internal.parseSearchResults as parseSearchResul
 import dev.msfjarvis.claw.parser.internal.parseTagsPage as parseTagsPageHtml
 import dev.msfjarvis.claw.parser.internal.parseUser as parseUserHtml
 import dev.msfjarvis.claw.parser.model.CSRFToken
+import dev.msfjarvis.claw.parser.model.FiltersPage
 import dev.msfjarvis.claw.parser.model.LobstersPost
 import dev.msfjarvis.claw.parser.model.LobstersPostDetails
 import dev.msfjarvis.claw.parser.model.ReplyForm
@@ -34,4 +36,6 @@ class LobstersParserServiceImpl : LobstersParserService {
   override fun parseCsrfToken(html: String): CSRFToken = parseCsrfTokenHtml(html)
 
   override fun parseReplyForm(html: String): ReplyForm = parseReplyFormHtml(html)
+
+  override fun parseFiltersPage(html: String): FiltersPage = parseFiltersPageHtml(html)
 }

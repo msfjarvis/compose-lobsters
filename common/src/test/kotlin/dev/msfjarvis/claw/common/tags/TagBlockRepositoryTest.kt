@@ -10,6 +10,8 @@ import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import com.google.common.truth.Truth.assertThat
 import dev.msfjarvis.claw.database.LobstersDatabase
 import dev.msfjarvis.claw.database.local.TagBlocksQueries
+import dev.msfjarvis.claw.model.TagBlock
+import kotlin.time.Clock
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.take
@@ -43,7 +45,7 @@ class TagBlockRepositoryTest {
     val testDispatcher = StandardTestDispatcher(testScheduler)
     val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
 
-    val expirationTime = System.currentTimeMillis() + 86400000
+    val expirationTime = Clock.System.now().toEpochMilliseconds() + 86400000
     repository.saveTagBlock("android", expirationTime)
     val tags = repository.getSavedTags().first()
     assertThat(tags).containsExactly("android")
@@ -69,15 +71,55 @@ class TagBlockRepositoryTest {
 
     val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
 
-    val firstExpiration = System.currentTimeMillis() + 86400000
+    val firstExpiration = Clock.System.now().toEpochMilliseconds() + 86400000
     repository.saveTagBlock("rust", firstExpiration)
 
-    val secondExpiration = System.currentTimeMillis() + 172800000
+    val secondExpiration = Clock.System.now().toEpochMilliseconds() + 172800000
     repository.saveTagBlock("rust", secondExpiration)
 
     val tagBlocks = repository.getTagBlocks().first()
     assertThat(tagBlocks).hasSize(1)
     assertThat(tagBlocks[0].expirationMillis).isEqualTo(secondExpiration)
+  }
+
+  @Test
+  fun `replaceTagBlocks replaces permanent with temporary block`() = runTest {
+    val testDispatcher = StandardTestDispatcher(testScheduler)
+    val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
+    val expiration = Clock.System.now().toEpochMilliseconds() + 86_400_000
+
+    repository.saveTagBlock("kotlin", null)
+    repository.replaceTagBlocks(listOf(TagBlock("kotlin", expiration)))
+
+    val block = repository.getTagBlocks().first().single()
+    assertThat(block.tag).isEqualTo("kotlin")
+    assertThat(block.expirationMillis).isEqualTo(expiration)
+  }
+
+  @Test
+  fun `replaceTagBlocks replaces temporary with permanent block`() = runTest {
+    val testDispatcher = StandardTestDispatcher(testScheduler)
+    val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
+    val expiration = Clock.System.now().toEpochMilliseconds() + 86_400_000
+
+    repository.saveTagBlock("kotlin", expiration)
+    repository.replaceTagBlocks(listOf(TagBlock("kotlin", null)))
+
+    val block = repository.getTagBlocks().first().single()
+    assertThat(block.isPermanent).isTrue()
+  }
+
+  @Test
+  fun `replaceTagBlocks removes rows omitted from replacement set`() = runTest {
+    val testDispatcher = StandardTestDispatcher(testScheduler)
+    val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
+
+    repository.saveTagBlock("old", null)
+    repository.saveTagBlock("kept", null)
+
+    repository.replaceTagBlocks(listOf(TagBlock("kept", null)))
+
+    assertThat(repository.getTagBlocks().first().map { it.tag }).containsExactly("kept")
   }
 
   @Test
@@ -104,8 +146,8 @@ class TagBlockRepositoryTest {
 
     val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
 
-    val pastTime = System.currentTimeMillis() - 1000
-    val futureTime = System.currentTimeMillis() + 86400000
+    val pastTime = Clock.System.now().toEpochMilliseconds() - 1000
+    val futureTime = Clock.System.now().toEpochMilliseconds() + 86400000
 
     repository.saveTagBlock("expired-tag", pastTime)
     repository.saveTagBlock("active-tag", futureTime)
@@ -143,8 +185,8 @@ class TagBlockRepositoryTest {
 
     val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
 
-    val pastTime = System.currentTimeMillis() - 1000
-    val futureTime = System.currentTimeMillis() + 86400000
+    val pastTime = Clock.System.now().toEpochMilliseconds() - 1000
+    val futureTime = Clock.System.now().toEpochMilliseconds() + 86400000
 
     repository.saveTagBlock("expired", pastTime)
     repository.saveTagBlock("active", futureTime)
@@ -162,7 +204,7 @@ class TagBlockRepositoryTest {
 
     val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
     val emissions = mutableListOf<List<String>>()
-    val collectedBlocks = mutableListOf<List<dev.msfjarvis.claw.model.TagBlock>>()
+    val collectedBlocks = mutableListOf<List<TagBlock>>()
 
     val collector =
       backgroundScope.launch(testDispatcher) {
@@ -187,8 +229,8 @@ class TagBlockRepositoryTest {
 
     val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
 
-    val pastTime = System.currentTimeMillis() - 1000
-    val futureTime = System.currentTimeMillis() + 86400000
+    val pastTime = Clock.System.now().toEpochMilliseconds() - 1000
+    val futureTime = Clock.System.now().toEpochMilliseconds() + 86400000
 
     repository.saveTagBlock("expired1", pastTime)
     repository.saveTagBlock("expired2", pastTime - 5000)

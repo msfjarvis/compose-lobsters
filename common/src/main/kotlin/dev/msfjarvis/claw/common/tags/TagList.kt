@@ -6,6 +6,7 @@
  */
 package dev.msfjarvis.claw.common.tags
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,6 +25,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccessTime
 import androidx.compose.material.icons.filled.Block
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -63,6 +65,7 @@ import kotlinx.datetime.toLocalDateTime
 @Composable
 fun TagList(
   contentPadding: PaddingValues,
+  popBackStack: () -> Unit,
   modifier: Modifier = Modifier,
   viewModel: TagFilterViewModel = metroViewModel(key = "tag_filter"),
 ) {
@@ -71,6 +74,32 @@ fun TagList(
   val tagBlocks by viewModel.tagBlocks.collectAsStateWithLifecycle(emptyList())
   var showDatePicker by remember { mutableStateOf(false) }
   var selectedTagForDatePicker by remember { mutableStateOf<String?>(null) }
+  var showDiscardDialog by remember { mutableStateOf(false) }
+
+  BackHandler(enabled = viewModel.isDirty) { showDiscardDialog = true }
+
+  if (showDiscardDialog) {
+    AlertDialog(
+      onDismissRequest = { showDiscardDialog = false },
+      title = { Text(stringResource(R.string.discard_tag_filter_changes_title)) },
+      text = { Text(stringResource(R.string.discard_tag_filter_changes_message)) },
+      confirmButton = {
+        TextButton(
+          onClick = {
+            viewModel.discardChanges()
+            showDiscardDialog = false
+          }
+        ) {
+          Text(stringResource(R.string.discard_changes))
+        }
+      },
+      dismissButton = {
+        TextButton(onClick = { showDiscardDialog = false }) {
+          Text(stringResource(R.string.keep_editing))
+        }
+      },
+    )
+  }
 
   selectedTagForDatePicker?.let { tagName ->
     if (showDatePicker) {
@@ -133,6 +162,24 @@ fun TagList(
       Column(
         modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp).padding(contentPadding)
       ) {
+        Row(
+          modifier = Modifier.fillMaxWidth(),
+          horizontalArrangement = Arrangement.End,
+        ) {
+          TextButton(
+            enabled = viewModel.isDirty && !viewModel.isSaving,
+            onClick = {
+              viewModel.save()
+              popBackStack()
+            },
+          ) {
+            Text(
+              stringResource(
+                if (viewModel.isSaving) R.string.saving_tag_filters else R.string.save_tag_filters
+              )
+            )
+          }
+        }
         if (BuildConfig.DEBUG) {
           TagExpirationTestControls(onTriggerCleanup = { viewModel.triggerCleanupNow() })
         }
@@ -141,6 +188,14 @@ fun TagList(
           style = MaterialTheme.typography.bodyMedium,
           color = MaterialTheme.colorScheme.onBackground,
         )
+        viewModel.saveError?.let {
+          Text(
+            text = stringResource(R.string.failed_to_save_tag_filters),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.error,
+            modifier = Modifier.padding(top = 8.dp),
+          )
+        }
         FlexBox(
           modifier = modifier.fillMaxWidth().verticalScroll(rememberScrollState()),
           config = {

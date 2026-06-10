@@ -381,7 +381,7 @@ internal fun previewCommentNode(isUpvoted: Boolean = false) =
   )
 
 private fun buildCommentAgeString(timestamp: Instant, edited: Boolean): String {
-  val now = System.currentTimeMillis()
+  val now = Clock.System.now().toEpochMilliseconds()
   val relativeTime =
     DateUtils.getRelativeTimeSpanString(
       timestamp.toEpochMilliseconds(),

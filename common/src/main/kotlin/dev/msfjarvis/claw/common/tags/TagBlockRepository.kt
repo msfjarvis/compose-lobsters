@@ -13,6 +13,7 @@ import dev.msfjarvis.claw.core.coroutines.DatabaseWriteDispatcher
 import dev.msfjarvis.claw.database.local.TagBlocksQueries
 import dev.msfjarvis.claw.model.TagBlock
 import dev.zacsweers.metro.Inject
+import kotlin.time.Clock
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -25,7 +26,7 @@ class TagBlockRepository(
   @param:DatabaseWriteDispatcher private val writeDispatcher: CoroutineDispatcher,
 ) {
   fun getSavedTags(): Flow<Set<String>> {
-    val now = System.currentTimeMillis()
+    val now = Clock.System.now().toEpochMilliseconds()
     return tagBlocksQueries.selectActiveTags(now).asFlow().mapToList(readDispatcher).map {
       it.toSet()
     }
@@ -41,12 +42,23 @@ class TagBlockRepository(
     withContext(writeDispatcher) { tagBlocksQueries.insertOrReplace(tag, expirationMillis) }
   }
 
+  suspend fun replaceTagBlocks(blocks: List<TagBlock>) {
+    withContext(writeDispatcher) {
+      tagBlocksQueries.transaction {
+        tagBlocksQueries.deleteAll()
+        blocks.forEach { block ->
+          tagBlocksQueries.insertOrReplace(block.tag, block.expirationMillis)
+        }
+      }
+    }
+  }
+
   suspend fun removeTagBlock(tag: String) {
     withContext(writeDispatcher) { tagBlocksQueries.deleteByTag(tag) }
   }
 
   suspend fun removeExpiredTags() {
-    val now = System.currentTimeMillis()
+    val now = Clock.System.now().toEpochMilliseconds()
     withContext(writeDispatcher) { tagBlocksQueries.deleteExpired(now) }
   }
 }

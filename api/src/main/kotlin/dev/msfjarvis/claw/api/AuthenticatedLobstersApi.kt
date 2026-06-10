@@ -9,6 +9,7 @@ package dev.msfjarvis.claw.api
 import com.slack.eithernet.ApiResult
 import com.slack.eithernet.ApiResult.Failure
 import com.slack.eithernet.ApiResult.Success
+import dev.msfjarvis.claw.model.FiltersPage
 import dev.msfjarvis.claw.model.ReplyForm
 import dev.zacsweers.metro.Inject
 import java.io.IOException
@@ -60,6 +61,30 @@ class AuthenticatedLobstersApi(private val api: LobstersApi) {
         }
         is Failure -> formResponse.toUnitFailure()
       }
+    }
+  }
+
+  suspend fun getFiltersPage(): ApiResult<FiltersPage, Unit> = api.getFilters()
+
+  suspend fun saveBlockedTags(tags: Set<String>): ApiResult<Set<String>, Unit> {
+    return when (val page = getFiltersPage()) {
+      is Success -> {
+        val authenticityToken = page.value.authenticityToken
+        if (authenticityToken.isBlank()) {
+          ApiResult.unknownFailure(IOException("Lobsters filters page token was empty"))
+        } else {
+          val fields = tags.sorted().associate { tag -> "tags[$tag]" to "1" }
+          when (val save = api.saveFilters(authenticityToken, fields)) {
+            is Success ->
+              when (val refreshed = getFiltersPage()) {
+                is Success -> ApiResult.success(refreshed.value.blockedTags)
+                is Failure -> refreshed.toUnitFailure()
+              }
+            is Failure -> save.toUnitFailure()
+          }
+        }
+      }
+      is Failure -> page.toUnitFailure()
     }
   }
 

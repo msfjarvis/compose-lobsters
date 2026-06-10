@@ -469,7 +469,12 @@ fun LobstersPostsScreen(
                 modifier = Modifier.fillMaxSize(),
               )
             }
-            entry<TagFiltering> { TagList(contentPadding = contentPadding) }
+            entry<TagFiltering> {
+              TagList(
+                popBackStack = { popBackStack(backStack) },
+                contentPadding = contentPadding,
+              )
+            }
           },
       )
     }

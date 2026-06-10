@@ -73,3 +73,9 @@ class ReplyForm(
   val method: String,
   val parentCommentShortId: String,
 )
+
+class FiltersPage(
+  val authenticityToken: String,
+  val tags: List<Tag>,
+  val blockedTags: Set<String>,
+)

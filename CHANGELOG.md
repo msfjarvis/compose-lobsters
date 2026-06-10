@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Permanent tag blocks are now synced to Lobsters if you are logged in
+
 ### Changed
 
 - The comments UI has been improved and animations are now faster

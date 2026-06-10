@@ -7,6 +7,9 @@ functions = [
   # fun parseCsrfToken(kotlin.String): dev.msfjarvis.claw.parser.model.CSRFToken
   "XO8wcclo",
 
+  # fun parseFiltersPage(kotlin.String): dev.msfjarvis.claw.parser.model.FiltersPage
+  "wMkF4F2r",
+
   # fun parsePostDetails(kotlin.String): dev.msfjarvis.claw.parser.model.LobstersPostDetails
   "K6Im4ZQe",
 

@@ -10,6 +10,7 @@ import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoSet
 import dev.zacsweers.metro.Inject
 import java.util.concurrent.TimeUnit
+import kotlin.time.Clock
 import kotlinx.datetime.format.DateTimeComponents
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -69,7 +70,8 @@ class RetryAfterInterceptor : Interceptor {
     }
 
     val retryInstant = parseHttpDate(retryAfter) ?: return 0
-    val delaySeconds = (retryInstant.toEpochMilliseconds() - System.currentTimeMillis()) / 1000
+    val delaySeconds =
+      (retryInstant.toEpochMilliseconds() - Clock.System.now().toEpochMilliseconds()) / 1000
     return if (delaySeconds > 0) delaySeconds.coerceAtMost(MAX_RETRY_DELAY_SECONDS) else 0
   }
 

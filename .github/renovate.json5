@@ -50,6 +50,7 @@
       ],
       "groupName": "Kotlin and Compose",
       "groupSlug": "kotlin-and-compose",
+      "enabled": false,
     },
     {
       "matchPackageNames": [
@@ -63,12 +64,6 @@
         "/^sentry/",
       ],
       "groupName": "Sentry"
-    },
-    {
-      "matchPackageNames": [
-        "/^com.squareup.anvil/"
-      ],
-      "allowedVersions": "!/.*-1-8$/",
     },
     {
       "matchManagers": [

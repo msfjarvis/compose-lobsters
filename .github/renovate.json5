@@ -39,6 +39,7 @@
         "minor",
         "major",
       ],
+      "enabled": false,
     },
     {
       "matchDepNames": [
@@ -50,7 +51,6 @@
       ],
       "groupName": "Kotlin and Compose",
       "groupSlug": "kotlin-and-compose",
-      "enabled": false,
     },
     {
       "matchPackageNames": [

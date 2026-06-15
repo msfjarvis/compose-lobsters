@@ -6,14 +6,18 @@
  */
 package dev.msfjarvis.claw.common.comments.reply
 
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material3.AlertDialog
@@ -80,6 +84,7 @@ internal fun ReplyScreenContent(
   onQuote: () -> Unit,
   onSubmit: () -> Unit,
   modifier: Modifier = Modifier,
+  scrollState: ScrollState = rememberScrollState(),
 ) {
   Column(
     modifier =
@@ -88,6 +93,7 @@ internal fun ReplyScreenContent(
         .padding(contentPadding)
         .consumeWindowInsets(contentPadding)
         .imePadding()
+        .verticalScroll(scrollState)
         .padding(16.dp),
     verticalArrangement = Arrangement.spacedBy(16.dp),
   ) {
@@ -102,7 +108,7 @@ internal fun ReplyScreenContent(
         uiState.errorMessage?.let { Text(text = it, color = MaterialTheme.colorScheme.error) }
       },
       enabled = !uiState.isSubmitting,
-      modifier = Modifier.fillMaxWidth().weight(1f),
+      modifier = Modifier.fillMaxWidth().heightIn(min = 200.dp),
     )
     Button(
       onClick = onSubmit,

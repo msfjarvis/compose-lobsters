@@ -1,6 +1,13 @@
 # Claw for [lobste.rs](https://lobste.rs) [![CI](https://github.com/msfjarvis/compose-lobsters/actions/workflows/ci.yml/badge.svg)](https://github.com/msfjarvis/compose-lobsters/actions/workflows/ci.yml)
 
-Unofficial Android app the [lobste.rs](https://lobste.rs) linkblogging community, built with [Jetpack Compose](https://developer.android.com/jetpack/compose).
+Unofficial Android app for the [lobste.rs](https://lobste.rs) linkblogging community, built with [Jetpack Compose](https://developer.android.com/jetpack/compose).
+
+## Features
+
+- Browse posts in the frontpage (Hottest) and Newest feeds
+- Save posts for future reading in-app
+- Upvote and reply to comments
+- Share post URLs
 
 <a href="https://play.google.com/store/apps/details?id=dev.msfjarvis.claw.android">
   <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"

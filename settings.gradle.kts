@@ -162,6 +162,7 @@ include(
   "database:core",
   "database:impl",
   "model",
+  "smoke-tests",
   "zipline-parser",
   "zipline-parser-api",
 )

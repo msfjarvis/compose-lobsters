@@ -246,8 +246,6 @@ dependencies {
 
   compileOnly(libs.androidx.compose.glance.preview)
 
-  debugRuntimeOnly(libs.androidx.compose.glance)
-
   runtimeOnly(libs.androidx.profileinstaller)
 
   screenshotTestImplementation(libs.screenshot.validation.api)

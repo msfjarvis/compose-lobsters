@@ -12,10 +12,10 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.slack.eithernet.ApiResult.Success
 import dev.msfjarvis.claw.android.glance.SavedPostsWidget
+import dev.msfjarvis.claw.android.injection.InjectedWorkerFactory
+import dev.msfjarvis.claw.android.injection.WorkerKey
 import dev.msfjarvis.claw.android.viewmodel.SavedPostsRepository
 import dev.msfjarvis.claw.api.LobstersApi
-import dev.msfjarvis.claw.core.injection.InjectedWorkerFactory
-import dev.msfjarvis.claw.core.injection.WorkerKey
 import dev.msfjarvis.claw.database.local.SavedPost
 import dev.msfjarvis.claw.model.toSavedPost
 import dev.zacsweers.metro.AppScope

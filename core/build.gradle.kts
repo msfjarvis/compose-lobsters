@@ -5,25 +5,19 @@
  * https://opensource.org/licenses/MIT.
  */
 plugins {
-  id("dev.msfjarvis.claw.android-library")
-  id("dev.msfjarvis.claw.kotlin-android")
+  id("dev.msfjarvis.claw.kotlin-jvm")
   alias(libs.plugins.dependencyAnalysis)
   alias(libs.plugins.metro)
 }
 
-android { namespace = "dev.msfjarvis.claw.core" }
-
 dependencies {
-  api(libs.androidx.lifecycle.viewmodel)
-  api(libs.androidx.work.runtime)
+  api(platform(libs.okhttp.bom))
   api(libs.kotlinx.coroutines.core)
   api(libs.kotlinx.serialization.json)
-  api(libs.metrox.viewmodel)
   api(libs.okhttp.core)
   api(libs.okhttp.loggingInterceptor)
   api(libs.retrofit)
 
-  implementation(platform(libs.okhttp.bom))
   implementation(libs.kotlinx.datetime)
   implementation(libs.kotlinx.serialization.core)
   implementation(libs.retrofit.kotlinxSerializationConverter)

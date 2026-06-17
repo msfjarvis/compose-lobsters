@@ -26,13 +26,13 @@ import androidx.core.net.toUri
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation3.runtime.NavKey
+import dev.msfjarvis.claw.android.injection.InjectedViewModelFactory
 import dev.msfjarvis.claw.android.ui.navigation.Comments
 import dev.msfjarvis.claw.android.ui.navigation.Hottest
 import dev.msfjarvis.claw.android.ui.navigation.Newest
 import dev.msfjarvis.claw.android.ui.navigation.Saved
 import dev.msfjarvis.claw.android.ui.screens.LobstersPostsScreen
 import dev.msfjarvis.claw.common.theme.LobstersTheme
-import dev.msfjarvis.claw.core.injection.InjectedViewModelFactory
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.Inject

@@ -21,10 +21,6 @@ object LintConfig {
     noLines = false
     showAll = true
     explainIssues = true
-    textReport = false
-    xmlReport = false
-    htmlReport = true
-    sarifReport = false
     if (!isJVM) {
       enable += "ComposeM2Api"
       error += "ComposeM2Api"

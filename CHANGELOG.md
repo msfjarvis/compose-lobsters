@@ -13,9 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- The comments UI has been improved and animations are now faster
-- Search UI is now a proper search bar action
-- The HTML parser is now running on an architecture that lets it be updated over the air
+- Search UX has been redone to match Material guidelines
+- Comments now indicated the OP like the site does, and the animations are faster.
+- The HTML parser has been reimplemented so it can be updated out-of-band from
+  app updates, ensuring fixes for site markup changes can be rolled out faster.
 
 ## [1.66.0] - 2026-06-02
 

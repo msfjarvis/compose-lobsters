@@ -4,7 +4,7 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
-package dev.msfjarvis.claw.common.injection
+package dev.msfjarvis.claw.android.injection
 
 import android.app.Application
 import coil3.ImageLoader
@@ -13,14 +13,13 @@ import coil3.disk.DiskCache
 import coil3.disk.directory
 import coil3.memory.MemoryCache
 import coil3.request.crossfade
-import dev.msfjarvis.claw.core.injection.AppPlugin
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoSet
 import dev.zacsweers.metro.Inject
 
 @ContributesIntoSet(AppScope::class)
 @Inject
-class CoilAppPlugin() : AppPlugin {
+class CoilAppPlugin : AppPlugin {
   override fun apply(application: Application) {
     SingletonImageLoader.setSafe {
       ImageLoader.Builder(application)
@@ -33,14 +32,13 @@ class CoilAppPlugin() : AppPlugin {
             .maxSizeBytes(DISK_CACHE_MAX_SIZE)
             .build()
         }
-        // Show a short crossfade when loading images asynchronously.
         .crossfade(true)
         .build()
     }
   }
 
   private companion object {
-    private const val MEMORY_CACHE_RATIO = 0.10 // 10% of application heap
-    private const val DISK_CACHE_MAX_SIZE = 100L * 1024 * 1024 // 100 MB
+    private const val MEMORY_CACHE_RATIO = 0.10
+    private const val DISK_CACHE_MAX_SIZE = 100L * 1024 * 1024
   }
 }

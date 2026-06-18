@@ -9,9 +9,9 @@ package dev.msfjarvis.claw.android.work
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
+import dev.msfjarvis.claw.android.injection.InjectedWorkerFactory
+import dev.msfjarvis.claw.android.injection.WorkerKey
 import dev.msfjarvis.claw.common.tags.TagBlockRepository
-import dev.msfjarvis.claw.core.injection.InjectedWorkerFactory
-import dev.msfjarvis.claw.core.injection.WorkerKey
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.Assisted
 import dev.zacsweers.metro.AssistedFactory

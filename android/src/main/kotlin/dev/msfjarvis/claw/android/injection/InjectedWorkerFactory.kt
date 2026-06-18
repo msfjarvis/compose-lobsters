@@ -4,7 +4,7 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
-package dev.msfjarvis.claw.core.injection
+package dev.msfjarvis.claw.android.injection
 
 import android.content.Context
 import androidx.work.ListenableWorker

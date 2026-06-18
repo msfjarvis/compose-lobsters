@@ -8,7 +8,6 @@ package dev.msfjarvis.claw.android.injection
 
 import android.app.Application
 import dev.msfjarvis.claw.api.LobstersApi
-import dev.msfjarvis.claw.core.injection.AppPlugin
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoSet
 import dev.zacsweers.metro.Inject

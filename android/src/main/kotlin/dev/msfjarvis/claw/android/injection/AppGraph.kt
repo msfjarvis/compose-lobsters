@@ -15,8 +15,6 @@ import dev.msfjarvis.claw.android.zipline.AndroidZiplineParserClient
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.common.tags.TagBlockRepository
 import dev.msfjarvis.claw.core.coroutines.MainDispatcher
-import dev.msfjarvis.claw.core.injection.AppPlugin
-import dev.msfjarvis.claw.core.injection.InjectedWorkerFactory
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.DependencyGraph
 import dev.zacsweers.metro.Multibinds

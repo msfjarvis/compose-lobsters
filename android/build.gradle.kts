@@ -212,6 +212,8 @@ dependencies {
   implementation(libs.androidx.paging.common)
   implementation(libs.androidx.paging.compose)
   implementation(libs.androidx.work.runtime)
+  implementation(libs.coil3.compose)
+  implementation(libs.coil3.core)
   implementation(libs.eithernet)
   implementation(libs.haze)
   implementation(libs.haze.blur)
@@ -243,8 +245,6 @@ dependencies {
   implementation(projects.model)
 
   compileOnly(libs.androidx.compose.glance.preview)
-
-  debugRuntimeOnly(libs.androidx.compose.glance)
 
   runtimeOnly(libs.androidx.profileinstaller)
 

@@ -20,4 +20,4 @@ jobs:
           cache-read-only: true
 
       - name: Run smoke probe
-        run: build-brief ./gradlew --no-configuration-cache --stacktrace :smoke-tests:run
+        run: ./gradlew --no-configuration-cache --stacktrace :smoke-tests:run

@@ -191,6 +191,8 @@ class TagFilterViewModel(
     isDirty = normalized != initialBlocks
   }
 
-  private fun List<TagBlock>.normalized(): List<TagBlock> =
-    distinctBy { it.tag }.sortedBy { it.tag }
+  private fun List<TagBlock>.normalized(): List<TagBlock> = distinctBy {
+    it.tag
+  }
+    .sortedBy { it.tag }
 }

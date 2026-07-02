@@ -6,6 +6,7 @@
  */
 package dev.msfjarvis.claw.smoketests
 
+import kotlin.system.exitProcess
 import kotlinx.coroutines.runBlocking
 
 fun main() {
@@ -14,7 +15,8 @@ fun main() {
   if (!result.isSuccess) {
     System.err.println("Smoke probe failed")
     result.errors().forEach { System.err.println(it) }
-    kotlin.system.exitProcess(1)
+    exitProcess(1)
   }
   println("Smoke probe passed")
+  exitProcess(0)
 }

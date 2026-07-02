@@ -5,14 +5,19 @@
  * https://opensource.org/licenses/MIT.
  */
 plugins {
-  application
+  java
   id("dev.msfjarvis.claw.kotlin-jvm")
   alias(libs.plugins.dependencyAnalysis)
   alias(libs.plugins.metro)
 }
 
-application {
-  mainClass.set("dev.msfjarvis.claw.smoketests.MainKt")
+val smokeTestsMainClass = "dev.msfjarvis.claw.smoketests.MainKt"
+
+tasks.register<JavaExec>("run") {
+  group = "application"
+  description = "Runs the smoke tests application."
+  classpath = sourceSets.main.get().runtimeClasspath
+  mainClass.set(smokeTestsMainClass)
 }
 
 dependencies {

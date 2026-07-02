@@ -18,7 +18,7 @@ glance = "1.2.0-rc01"
 haze = "2.0.0-alpha03"
 screenshot = "0.0.1-alpha15"
 junit = "6.1.1"
-kotlin = "2.3.20"
+kotlin = "2.4.0"
 kotlinResult = "2.3.1"
 lifecycle = "2.11.0"
 metro = "1.3.0"
@@ -183,6 +183,6 @@ licensee = "app.cash.licensee:1.14.1"
 metro = { id = "dev.zacsweers.metro", version.ref = "metro" }
 screenshot = { id = "com.android.compose.screenshot", version.ref = "screenshot" }
 modulegraphassert = "com.jraska.module.graph.assertion:2.9.1"
-poko = "dev.drewhamilton.poko:0.22.1"
+poko = "dev.drewhamilton.poko:0.23.1"
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 zipline = { id = "app.cash.zipline", version.ref = "zipline" }

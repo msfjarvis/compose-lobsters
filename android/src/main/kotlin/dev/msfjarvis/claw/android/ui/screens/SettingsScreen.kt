@@ -88,7 +88,6 @@ fun SettingsScreen(
     SectionHeader(title = "Account")
     if (isLoggedIn) {
       ListItem(
-        headlineContent = { Text("Log out") },
         supportingContent = { Text(loggedInAccountText(username)) },
         leadingContent = {
           Icon(
@@ -98,10 +97,9 @@ fun SettingsScreen(
           )
         },
         modifier = Modifier.clickable(onClick = onLogout),
-      )
+      ) { Text("Log out") }
     } else {
       ListItem(
-        headlineContent = { Text("Log in with lobste.rs") },
         supportingContent = { Text("Sign in to your lobste.rs account") },
         leadingContent = {
           Icon(
@@ -111,14 +109,13 @@ fun SettingsScreen(
           )
         },
         modifier = Modifier.clickable(onClick = openLoginScreen),
-      )
+      ) { Text("Log in with lobste.rs") }
     }
     Spacer(modifier = Modifier.height(24.dp))
 
     // Data Management Section
     SectionHeader(title = stringResource(R.string.data_management))
     ListItem(
-      headlineContent = { Text(stringResource(R.string.data_transfer)) },
       supportingContent = { Text(stringResource(R.string.import_and_export_your_saved_posts)) },
       leadingContent = {
         Icon(
@@ -139,14 +136,13 @@ fun SettingsScreen(
           )
         }
       },
-    )
+    ) { Text(stringResource(R.string.data_transfer)) }
 
     Spacer(modifier = Modifier.height(24.dp))
 
     // App Information Section
     SectionHeader(title = stringResource(R.string.app_information))
     ListItem(
-      headlineContent = { Text(stringResource(R.string.version)) },
       supportingContent = {
         Text(
           stringResource(
@@ -163,9 +159,8 @@ fun SettingsScreen(
           modifier = Modifier.height(32.dp),
         )
       },
-    )
+    ) { Text(stringResource(R.string.version)) }
     ListItem(
-      headlineContent = { Text(stringResource(R.string.saved_posts)) },
       supportingContent = { Text(stringResource(R.string.posts_saved_locally, savedPostsCount)) },
       leadingContent = {
         Icon(
@@ -174,9 +169,8 @@ fun SettingsScreen(
           modifier = Modifier.height(32.dp),
         )
       },
-    )
+    ) { Text(stringResource(R.string.saved_posts)) }
     ListItem(
-      headlineContent = { Text(stringResource(R.string.tag_filtering)) },
       supportingContent = { Text(stringResource(R.string.filter_posts_by_tags)) },
       leadingContent = {
         Icon(
@@ -186,14 +180,13 @@ fun SettingsScreen(
         )
       },
       modifier = Modifier.clickable(onClick = openTagFiltering),
-    )
+    ) { Text(stringResource(R.string.tag_filtering)) }
 
     Spacer(modifier = Modifier.height(24.dp))
 
     // About Section
     SectionHeader(title = stringResource(R.string.about))
     ListItem(
-      headlineContent = { Text(stringResource(R.string.libraries)) },
       supportingContent = {
         Text(stringResource(R.string.view_open_source_libraries_used_in_this_))
       },
@@ -205,9 +198,8 @@ fun SettingsScreen(
         )
       },
       modifier = Modifier.clickable(onClick = openLibrariesScreen),
-    )
+    ) { Text(stringResource(R.string.libraries)) }
     ListItem(
-      headlineContent = { Text(stringResource(R.string.source_code)) },
       supportingContent = { Text(stringResource(R.string.view_the_source_code_on_github)) },
       leadingContent = {
         Icon(
@@ -217,7 +209,7 @@ fun SettingsScreen(
         )
       },
       modifier = Modifier.clickable(onClick = openRepository),
-    )
+    ) { Text(stringResource(R.string.source_code)) }
   }
 }
 

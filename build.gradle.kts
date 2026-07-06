@@ -5,9 +5,7 @@
  * https://opensource.org/licenses/MIT.
  */
 plugins {
-  id("dev.msfjarvis.claw.spotless")
   id("dev.msfjarvis.claw.versions")
-  id("dev.msfjarvis.claw.kotlin-common")
   alias(libs.plugins.android.test) apply false
   alias(libs.plugins.dependencyAnalysis)
 }

@@ -21,7 +21,7 @@ kotlin {
   sourceSets {
     commonMain {
       dependencies {
-        api(projects.ziplineParserApi)
+        api(libs.zipline)
         implementation(libs.ksoup)
       }
     }

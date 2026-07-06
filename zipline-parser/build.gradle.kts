@@ -7,7 +7,7 @@
 import app.cash.zipline.loader.SignatureAlgorithmId
 
 plugins {
-  kotlin("multiplatform")
+  id("dev.msfjarvis.claw.kotlin-multiplatform")
   alias(libs.plugins.zipline)
 }
 

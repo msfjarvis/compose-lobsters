@@ -42,6 +42,10 @@ gradlePlugin {
       id = "dev.msfjarvis.claw.kotlin-jvm"
       implementationClass = "dev.msfjarvis.claw.gradle.KotlinJvmPlugin"
     }
+    register("kotlin-multiplatform") {
+      id = "dev.msfjarvis.claw.kotlin-multiplatform"
+      implementationClass = "dev.msfjarvis.claw.gradle.KotlinMultiplatformPlugin"
+    }
     register("rename-artifacts") {
       id = "dev.msfjarvis.claw.rename-artifacts"
       implementationClass = "dev.msfjarvis.claw.gradle.RenameArtifactsPlugin"

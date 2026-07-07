@@ -7,7 +7,7 @@
 import app.cash.zipline.loader.SignatureAlgorithmId
 
 plugins {
-  kotlin("multiplatform")
+  id("dev.msfjarvis.claw.kotlin-multiplatform")
   alias(libs.plugins.zipline)
 }
 
@@ -21,7 +21,7 @@ kotlin {
   sourceSets {
     commonMain {
       dependencies {
-        api(projects.ziplineParserApi)
+        api(libs.zipline)
         implementation(libs.ksoup)
       }
     }

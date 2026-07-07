@@ -164,5 +164,4 @@ include(
   "model",
   "smoke-tests",
   "zipline-parser",
-  "zipline-parser-api",
 )

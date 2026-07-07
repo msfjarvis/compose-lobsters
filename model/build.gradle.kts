@@ -7,7 +7,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
 plugins {
-  kotlin("multiplatform")
+  id("dev.msfjarvis.claw.kotlin-multiplatform")
   alias(libs.plugins.kotlin.serialization)
   alias(libs.plugins.dependencyAnalysis)
 }

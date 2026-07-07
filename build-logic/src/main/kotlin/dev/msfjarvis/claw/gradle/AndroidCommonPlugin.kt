@@ -29,6 +29,7 @@ class AndroidCommonPlugin : Plugin<Project> {
   override fun apply(project: Project) {
     project.configureSlimTests()
     project.pluginManager.apply(AndroidCacheFixPlugin::class)
+    project.pluginManager.apply(SpotlessPlugin::class)
     project.extensions.configure<CommonExtension> {
       compileSdk { version = release(COMPILE_SDK) }
       defaultConfig.apply {

@@ -105,7 +105,7 @@ class HottestPostsWidget : GlanceAppWidget() {
   }
 
   override suspend fun providePreview(context: Context, widgetCategory: Int) {
-    provideContent { Content(context, samplePosts()) }
+    provideContent { LobstersGlanceTheme { PreviewContent(context, generatedWidgetPreviewPosts()) } }
   }
 
   @SuppressLint("ComposeUnstableReceiver")
@@ -114,44 +114,65 @@ class HottestPostsWidget : GlanceAppWidget() {
     context: Context,
     posts: ImmutableList<UIPost>,
     modifier: GlanceModifier = GlanceModifier,
+    actionsEnabled: Boolean = true,
+    showFooterAction: Boolean = true,
   ) {
     WidgetContainer(
       "Hottest posts",
       listContent = {
         items(posts) { post ->
-          Box(GlanceModifier.padding(horizontal = 16.dp, vertical = 4.dp)) { WidgetPostEntry(post) }
+          Box(GlanceModifier.padding(horizontal = 16.dp, vertical = 4.dp)) {
+            WidgetPostEntry(post, actionsEnabled = actionsEnabled)
+          }
         }
-        item {
-          Box(
-            contentAlignment = Alignment.Center,
-            modifier = GlanceModifier.fillMaxWidth().padding(16.dp),
-          ) {
+        if (showFooterAction) {
+          item {
             Box(
               contentAlignment = Alignment.Center,
-              modifier =
-                GlanceModifier.background(GlanceTheme.colors.primary)
-                  .cornerRadius(20.dp)
-                  .padding(horizontal = 24.dp, vertical = 10.dp)
-                  .clickable(
-                    actionStartActivity(
-                      Intent(Intent.ACTION_VIEW, "${BuildConfig.DEEPLINK_SCHEME}://hottest".toUri())
-                        .apply {
-                          addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                          setClass(LocalContext.current, MainActivity::class.java)
-                        }
-                    )
-                  ),
+              modifier = GlanceModifier.fillMaxWidth().padding(16.dp),
             ) {
-              Text(
-                text = context.getString(R.string.see_more_posts),
-                style =
-                  TextStyle(color = GlanceTheme.colors.onPrimary, textAlign = TextAlign.Center),
-              )
+              Box(
+                contentAlignment = Alignment.Center,
+                modifier =
+                  GlanceModifier.background(GlanceTheme.colors.primary)
+                    .cornerRadius(20.dp)
+                    .padding(horizontal = 24.dp, vertical = 10.dp)
+                    .clickable(
+                      actionStartActivity(
+                        Intent(Intent.ACTION_VIEW, "${BuildConfig.DEEPLINK_SCHEME}://hottest".toUri())
+                          .apply {
+                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            setClass(LocalContext.current, MainActivity::class.java)
+                          }
+                      )
+                    ),
+              ) {
+                Text(
+                  text = context.getString(R.string.see_more_posts),
+                  style =
+                    TextStyle(color = GlanceTheme.colors.onPrimary, textAlign = TextAlign.Center),
+                )
+              }
             }
           }
         }
       },
       modifier = modifier,
+    )
+  }
+
+  @Composable
+  private fun PreviewContent(
+    context: Context,
+    posts: ImmutableList<UIPost>,
+    modifier: GlanceModifier = GlanceModifier,
+  ) {
+    Content(
+      context = context,
+      posts = posts,
+      modifier = modifier,
+      actionsEnabled = false,
+      showFooterAction = false,
     )
   }
 }

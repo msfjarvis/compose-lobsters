@@ -70,3 +70,31 @@ fun samplePosts(
 ): PersistentList<UIPost> {
   return buildList(count) { repeat(count) { add(TEST_POST.mutator(it)) } }.toPersistentList()
 }
+
+internal fun generatedWidgetPreviewPosts(): PersistentList<UIPost> {
+  return listOf(
+      TEST_POST.copy(
+        shortId = "widget-preview-1",
+        title = "Rust 2026 roadmap",
+        url = "/s/widget_preview_1",
+        commentCount = 18,
+        commentsUrl = "https://lobste.rs/s/widget_preview_1/rust_2026_roadmap",
+        submitter = "alice",
+        tags = listOf("rust", "roadmap"),
+        description = "",
+      ),
+      TEST_POST.copy(
+        shortId = "widget-preview-2",
+        title = "SQLite tips for mobile apps",
+        url = "/s/widget_preview_2",
+        commentCount = 7,
+        commentsUrl = "https://lobste.rs/s/widget_preview_2/sqlite_tips_for_mobile_apps",
+        submitter = "bob",
+        tags = listOf("sqlite", "android"),
+        description = "",
+      ),
+    )
+    .toPersistentList()
+}
+
+internal fun generatedWidgetPreviewDelayMinutes(): Long = 15L

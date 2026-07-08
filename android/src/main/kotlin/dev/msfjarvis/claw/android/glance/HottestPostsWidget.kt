@@ -166,6 +166,7 @@ class HottestPostsWidget : GlanceAppWidget() {
     )
   }
 
+  @SuppressLint("ComposeUnstableReceiver")
   @Composable
   private fun PreviewContent(
     context: Context,

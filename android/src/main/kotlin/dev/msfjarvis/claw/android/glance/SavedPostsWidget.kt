@@ -109,6 +109,7 @@ class SavedPostsWidget : GlanceAppWidget() {
     )
   }
 
+  @SuppressLint("ComposeUnstableReceiver")
   @Composable
   private fun PreviewContent(
     posts: ImmutableList<UIPost>,

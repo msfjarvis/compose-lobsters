@@ -36,37 +36,51 @@ import dev.msfjarvis.claw.model.UIPost
 @SuppressLint("ArgInFormattedQuantityStringRes")
 @Composable
 @GlanceComposable
-fun WidgetPostEntry(post: UIPost, modifier: GlanceModifier = GlanceModifier) {
+fun WidgetPostEntry(
+  post: UIPost,
+  modifier: GlanceModifier = GlanceModifier,
+  actionsEnabled: Boolean = true,
+) {
   val titleStyle = MaterialTheme.typography.bodyMedium
   val context = LocalContext.current
   val commentsAction =
-    actionStartActivity(
-      Intent(context, WidgetClickActivity::class.java).apply {
-        action = WidgetClickActivity.ACTION_OPEN_COMMENTS
-        putExtra(WidgetClickActivity.EXTRA_SHORT_ID, post.shortId)
-      }
-    )
+    if (actionsEnabled) {
+      actionStartActivity(
+        Intent(context, WidgetClickActivity::class.java).apply {
+          action = WidgetClickActivity.ACTION_OPEN_COMMENTS
+          putExtra(WidgetClickActivity.EXTRA_SHORT_ID, post.shortId)
+        }
+      )
+    } else {
+      null
+    }
   val postAction =
-    if (post.url.startsWith('/') || post.url.isEmpty()) commentsAction
-    else
+    if (!actionsEnabled) {
+      null
+    } else if (post.url.startsWith('/') || post.url.isEmpty()) {
+      commentsAction
+    } else {
       actionStartActivity(
         Intent(context, WidgetClickActivity::class.java).apply {
           putExtra(WidgetClickActivity.EXTRA_URL, post.url)
           putExtra(WidgetClickActivity.EXTRA_SHORT_ID, post.shortId)
         }
       )
+    }
   Row(
     verticalAlignment = Alignment.CenterVertically,
     modifier =
       modifier.fillMaxWidth().cornerRadius(8.dp).background(GlanceTheme.colors.secondaryContainer),
   ) {
+    val titleModifier =
+      GlanceModifier.defaultWeight()
+        .padding(horizontal = 8.dp, vertical = 4.dp)
+        .padding(start = 4.dp)
+    val commentsModifier =
+      GlanceModifier.padding(horizontal = 8.dp, vertical = 4.dp).padding(horizontal = 4.dp)
     Text(
       text = post.title,
-      modifier =
-        GlanceModifier.defaultWeight()
-          .clickable(postAction)
-          .padding(horizontal = 8.dp, vertical = 4.dp)
-          .padding(start = 4.dp),
+      modifier = if (postAction != null) titleModifier.clickable(postAction) else titleModifier,
       maxLines = 1,
       style =
         TextStyle(color = GlanceTheme.colors.onSecondaryContainer, fontSize = titleStyle.fontSize),
@@ -81,9 +95,8 @@ fun WidgetPostEntry(post: UIPost, modifier: GlanceModifier = GlanceModifier) {
         ),
       colorFilter = ColorFilter.tint(GlanceTheme.colors.onSecondaryContainer),
       modifier =
-        GlanceModifier.clickable(commentsAction)
-          .padding(horizontal = 8.dp, vertical = 4.dp)
-          .padding(horizontal = 4.dp),
+        if (commentsAction != null) commentsModifier.clickable(commentsAction)
+        else commentsModifier,
     )
   }
 }
@@ -93,5 +106,5 @@ fun WidgetPostEntry(post: UIPost, modifier: GlanceModifier = GlanceModifier) {
 @GlanceComposable
 @Composable
 private fun WidgetPostEntryPreview() {
-  WidgetPostEntry(samplePosts(1).first())
+  WidgetPostEntry(generatedWidgetPreviewPosts().first(), actionsEnabled = false)
 }

@@ -89,6 +89,10 @@ private fun validatePosts(name: String, posts: List<LobstersPost>, failures: Mut
     if (post.shortId.isBlank()) failures += "$name: post[$index] blank id"
     if (post.title.isBlank()) failures += "$name: post[$index] blank title"
     if (post.url.isBlank()) failures += "$name: post[$index] blank url"
+    if (post.tags.isEmpty()) failures += "$name: post[$index] empty tags"
+    post.tags.forEachIndexed { tagIndex, tag ->
+      if (tag.isBlank()) failures += "$name: post[$index] tag[$tagIndex] blank name"
+    }
   }
 }
 
@@ -126,6 +130,10 @@ private fun validatePostDetails(
   if (details.title.isBlank()) failures += "getPostDetails($expectedShortId): blank title"
   if (details.submitter.isNotBlank() && details.submitter != expectedSubmitter) {
     failures += "getPostDetails($expectedShortId): returned submitter '${details.submitter}'"
+  }
+  if (details.tags.isEmpty()) failures += "getPostDetails($expectedShortId): empty tags"
+  details.tags.forEachIndexed { index, tag ->
+    if (tag.isBlank()) failures += "getPostDetails($expectedShortId): tag[$index] blank name"
   }
   details.comments.forEachIndexed { index, comment ->
     validateComment(expectedShortId, comment, index, failures)

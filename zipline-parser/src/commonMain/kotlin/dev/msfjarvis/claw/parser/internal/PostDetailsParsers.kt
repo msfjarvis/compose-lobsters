@@ -21,7 +21,7 @@ internal fun parsePostDetails(html: String): LobstersPostDetails {
   val titleElement = document.select("$STORY_SELECTOR span.link.h-cite > a")
   val commentsElement = document.select("$STORY_SELECTOR span.comments_label a")
   val submitterElement = document.select(SUBMITTER_SELECTOR)
-  val tags = document.select("$STORY_SELECTOR span.tags > a").map { it.text() }
+  val tags = document.select("$STORY_SELECTOR .tags a").map { it.text() }
   return LobstersPostDetails(
     shortId = storyElement.attr("data-shortid"),
     createdAt = normalizeCreatedAt(timestampElement.attr("data-at-unix")),

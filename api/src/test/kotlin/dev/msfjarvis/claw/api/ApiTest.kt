@@ -45,35 +45,40 @@ class ApiTest {
     assertIs<Success<List<LobstersPost>>>(posts)
 
     val firstPost = posts.value[0]
-    assertThat(firstPost.shortId).isEqualTo("jp3nva")
-    assertThat(firstPost.title).isEqualTo("You probably don't need Yocto, and that's fine")
-    assertThat(firstPost.submitter).isEqualTo("rw-rw-rw-")
-    assertThat(firstPost.commentCount).isEqualTo(9)
+    assertThat(firstPost.shortId).isEqualTo("0mam5k")
+    assertThat(firstPost.title).isEqualTo("Lobsters Interview with mitchellh")
+    assertThat(firstPost.submitter).isEqualTo("veqq")
+    assertThat(firstPost.commentCount).isEqualTo(5)
     assertThat(firstPost.commentsUrl)
-      .isEqualTo("https://lobste.rs/s/jp3nva/you_probably_don_t_need_yocto_s_fine")
-    assertThat(firstPost.tags).containsExactly("linux")
+      .isEqualTo("https://lobste.rs/s/0mam5k/lobsters_interview_with_mitchellh")
+    assertThat(firstPost.tags).containsExactly("interview", "person")
     assertThat(firstPost.userIsAuthor).isTrue()
-    assertThat(firstPost.createdAt).isEqualTo("2026-05-29T09:08:12Z")
+    assertThat(firstPost.createdAt).isEqualTo("2026-07-09T15:41:15Z")
     Instant.parse(firstPost.createdAt)
 
     val secondPost = posts.value[1]
-    assertThat(secondPost.shortId).isEqualTo("lc26ar")
-    assertThat(secondPost.title).isEqualTo("SQLite Does Not Accept Agentic Code")
-    assertThat(secondPost.submitter).isEqualTo("hoistbypetard")
-    assertThat(secondPost.commentCount).isEqualTo(15)
+    assertThat(secondPost.shortId).isEqualTo("tedi5h")
+    assertThat(secondPost.title)
+      .isEqualTo(
+        "You paid me, a long-time Linux user, to use Windows 11 exclusively for a month: here’s how it went"
+      )
+    assertThat(secondPost.submitter).isEqualTo("ninakali")
+    assertThat(secondPost.commentCount).isEqualTo(19)
     assertThat(secondPost.commentsUrl)
-      .isEqualTo("https://lobste.rs/s/lc26ar/sqlite_does_not_accept_agentic_code")
-    assertThat(secondPost.tags).containsExactly("vibecoding")
+      .isEqualTo("https://lobste.rs/s/tedi5h/you_paid_me_long_time_linux_user_use")
+    assertThat(secondPost.tags).containsExactly("windows")
     assertThat(secondPost.userIsAuthor).isFalse()
 
-    val noCommentsPost = posts.value.first { it.shortId == "1fkt8w" }
-    assertThat(noCommentsPost.title).isEqualTo("Patching my guitar amp's firmware")
-    assertThat(noCommentsPost.submitter).isEqualTo("mcf")
-    assertThat(noCommentsPost.commentCount).isEqualTo(0)
-    assertThat(noCommentsPost.commentsUrl)
-      .isEqualTo("https://lobste.rs/s/1fkt8w/patching_my_guitar_amp_s_firmware")
-    assertThat(noCommentsPost.tags).containsExactly("hardware", "reversing")
-    assertThat(noCommentsPost.userIsAuthor).isTrue()
+    val thirdPost = posts.value[2]
+    assertThat(thirdPost.shortId).isEqualTo("3eo2nv")
+    assertThat(thirdPost.title)
+      .isEqualTo("I Did Not Kill Stanley Lieber: How to draw (with 9front)")
+    assertThat(thirdPost.submitter).isEqualTo("pmjv")
+    assertThat(thirdPost.commentCount).isEqualTo(6)
+    assertThat(thirdPost.commentsUrl)
+      .isEqualTo("https://lobste.rs/s/3eo2nv/i_did_not_kill_stanley_lieber_how_draw_with")
+    assertThat(thirdPost.tags).containsExactly("art")
+    assertThat(thirdPost.userIsAuthor).isTrue()
   }
 
   @Test
@@ -81,12 +86,14 @@ class ApiTest {
     val posts = api.getNewestPosts(1)
     assertIs<Success<List<LobstersPost>>>(posts)
     assertThat(posts.value).hasSize(25)
+    assertThat(posts.value.first().tags).isNotEmpty()
   }
 
   @Test
   fun `post details with comments`() = runTest {
     val postDetails = api.getPostDetails("tdfoqh")
     assertIs<Success<LobstersPostDetails>>(postDetails)
+    assertThat(postDetails.value.tags).containsExactly("meta")
     val comments = postDetails.value.comments
     assertThat(comments).hasSize(10)
     assertThat(comments.first().user).isEqualTo("dpercy")

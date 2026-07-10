@@ -83,6 +83,8 @@ class AndroidZiplineParserClient(
     val embeddedDir = File(context.codeCacheDir, "zipline-embedded/zipline")
     val embeddedManifestFile = File(embeddedDir, "zipline-parser.manifest.zipline.json")
 
+    evictManifestCacheEntry()
+
     val manifestVerifier =
       if (verifySignatures) {
         ManifestVerifier.Builder()
@@ -167,6 +169,19 @@ class AndroidZiplineParserClient(
     }
 
     override fun close() = onZiplineThread { delegate.close() }
+  }
+
+  // Workaround for the pinned /current manifest being served without the right
+  // Cache-Control headers.
+  private fun evictManifestCacheEntry() {
+    val cache = httpClient.cache ?: return
+    val urls = cache.urls()
+    while (urls.hasNext()) {
+      if (urls.next() == manifestUrl) {
+        urls.remove()
+        return
+      }
+    }
   }
 
   private fun extractEmbeddedArtifacts() {

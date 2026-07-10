@@ -45,15 +45,7 @@ private fun Element.toComment(parentComment: String?): Comment {
     shortId = attr("data-shortid"),
     comment = selectFirst("div.comment_text")?.html().orEmpty(),
     url = selectFirst("div.byline a[href^=/c/]")?.absUrl("href").orEmpty(),
-    score =
-      children()
-        .firstOrNull { it.hasClass("voters") }
-        ?.children()
-        ?.firstOrNull { it.hasClass("upvoter") }
-        ?.text()
-        ?.trim()
-        ?.takeUnless { it == "~" }
-        ?.toIntOrNull() ?: 1,
+    score = parseCommentScore(),
     timestamp = timestamp.toEpochSeconds(),
     edited = isEdited,
     parentComment = parentComment,
@@ -65,6 +57,14 @@ private fun Element.toComment(parentComment: String?): Comment {
         .orEmpty(),
     isUpvoted = classNames().contains("upvoted"),
   )
+}
+
+private fun Element.parseCommentScore(): Int {
+  val upvoter = selectFirst("div.voters .upvoter") ?: return 1
+  val rawScore =
+    listOf(upvoter.attr("title").trim(), upvoter.text().trim()).firstOrNull { it.isNotEmpty() }
+      ?: return 1
+  return if (rawScore == "~") 1 else rawScore.toIntOrNull() ?: 1
 }
 
 private fun String.toEpochSeconds(): Long {

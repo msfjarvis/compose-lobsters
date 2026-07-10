@@ -19,6 +19,7 @@ class RealLobstersHtmlParserJvmTest {
     val posts = service.parsePostsPage(html)
 
     assertTrue(posts.isNotEmpty())
+    assertEquals(listOf("interview", "person"), posts.first().tags)
   }
 
   @Test
@@ -90,6 +91,7 @@ class RealLobstersHtmlParserJvmTest {
     val details = service.parsePostDetails(html)
 
     assertTrue(details.title.isNotBlank())
+    assertEquals(listOf("meta"), details.tags)
     assertTrue(details.comments.isNotEmpty())
   }
 

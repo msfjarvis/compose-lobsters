@@ -26,7 +26,7 @@ private fun parsePost(element: Element): LobstersPost {
 
   val timestampElement = element.select("> div.story_liner div.byline > time")
   val descriptionElement = element.select("> div.story_liner a.description_present")
-  val tags = element.select("> div.story_liner span.tags > a").map(Element::text)
+  val tags = element.select("> div.story_liner .tags a").map(Element::text)
 
   return LobstersPost(
     shortId = element.attr("data-shortid"),

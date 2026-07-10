@@ -1,0 +1,15 @@
+
+### Added
+
+- Permanent tag blocks are now synced to Lobsters if you are logged in.
+
+### Changed
+
+- Search UX has been redone to match Material guidelines
+- Comments now indicated the OP like the site does, and the animations are faster.
+- The HTML parser has been reimplemented so it can be updated out-of-band from
+  app updates, ensuring fixes for site markup changes can be rolled out faster.
+
+### Fixed
+
+- Tags are now parsed properly again.

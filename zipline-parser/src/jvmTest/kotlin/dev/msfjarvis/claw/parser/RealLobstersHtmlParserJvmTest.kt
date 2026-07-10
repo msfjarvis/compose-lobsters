@@ -130,4 +130,43 @@ class RealLobstersHtmlParserJvmTest {
 
     kotlin.test.assertEquals(1, details.comments.single().score)
   }
+
+  @Test
+  fun commentScoresUseUpvoterTitleWhenVisibleTextIsOmitted() {
+    val html =
+      """
+      <ol class="stories">
+        <li class="story" data-shortid="story1">
+          <span class="link h-cite"><a href="/s/story1/test">Test story</a></span>
+          <div class="byline">
+            <a class="u-author" href="/~/submitter">submitter</a>
+            <time data-at-unix="1710000000"></time>
+          </div>
+        </li>
+      </ol>
+      <ol class="comments">
+        <li class="comments_subtree">
+          <div class="comment" data-shortid="abc123">
+            <div class="voters">
+              <label for="comment_folder_abc123" class="comment_folder"></label>
+              <a class="upvoter" title="12" href="/login"></a>
+            </div>
+            <div class="details">
+              <div class="byline">
+                <a href="/~/author">author</a>
+                <a href="/c/abc123"><time data-at-unix="1710000000"></time></a>
+              </div>
+              <div class="comment_text"><p>Hello</p></div>
+            </div>
+          </div>
+        </li>
+      </ol>
+      """
+        .trimIndent()
+    val service = LobstersParserServiceImpl()
+
+    val details = service.parsePostDetails(html)
+
+    kotlin.test.assertEquals(12, details.comments.single().score)
+  }
 }

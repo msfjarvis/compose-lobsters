@@ -43,6 +43,9 @@ zipline {
   mainFunction.set("dev.msfjarvis.claw.parser.launchZipline")
   val isRelease = providers.environmentVariable("SENTRY_DSN").orNull != null
   val signingKey = providers.environmentVariable("ZIPLINE_SIGNING_KEY").orNull
+  if (!isRelease && signingKey != null) {
+    logger.warn("'ZIPLING_SIGNING_KEY' is set but not used")
+  }
   if (isRelease) {
     require(signingKey != null) {
       "Signing key must be present for release builds"

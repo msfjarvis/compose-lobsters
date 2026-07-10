@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Permanent tag blocks are now synced to Lobsters if you are logged in
+- Permanent tag blocks are now synced to Lobsters if you are logged in.
 
 ### Changed
 
@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Comments now indicated the OP like the site does, and the animations are faster.
 - The HTML parser has been reimplemented so it can be updated out-of-band from
   app updates, ensuring fixes for site markup changes can be rolled out faster.
+
+### Fixed
+
+- Tags are now parsed properly again.
 
 ## [1.66.0] - 2026-06-02
 

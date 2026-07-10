@@ -31,6 +31,18 @@ class SearchApiTest {
     private val results =
       listOf(
         LobstersPost(
+          shortId = "2cjb1z",
+          createdAt = "",
+          title = "Why I am against GenAI and everything it stands for",
+          url = "https://lpcvoid.com/blog/0018_why_i_am_against_genai/index.html",
+          description = "",
+          commentCount = 42,
+          commentsUrl = "https://lobste.rs/s/2cjb1z/why_i_am_against_genai_everything_it",
+          submitter = "Marc",
+          userIsAuthor = true,
+          tags = listOf("culture", "education", "vibecoding"),
+        ),
+        LobstersPost(
           shortId = "kgem4b",
           createdAt = "",
           title = "The social contract of writing",
@@ -40,19 +52,7 @@ class SearchApiTest {
           commentsUrl = "https://lobste.rs/s/kgem4b/social_contract_writing",
           submitter = "joladev",
           userIsAuthor = true,
-          tags = listOf("philosophy", "vibecoding"),
-        ),
-        LobstersPost(
-          shortId = "gydtkf",
-          createdAt = "",
-          title = "AI Resist List",
-          url = "https://airesistlist.org/",
-          description = "",
-          commentCount = 0,
-          commentsUrl = "https://lobste.rs/s/gydtkf/ai_resist_list",
-          submitter = "chobeat",
-          userIsAuthor = false,
-          tags = listOf("ai"),
+          tags = listOf("vibecoding", "philosophy"),
         ),
       )
   }

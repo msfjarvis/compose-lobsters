@@ -27,7 +27,7 @@ private fun parseSearchPost(elem: Element): LobstersPost {
     url = titleElement.attr("abs:href"),
     commentCount = commentCount,
     commentsUrl = BASE_URL + linkElement.attr("href"),
-    tags = elem.select("span.tags > a").map(Element::text),
+    tags = elem.select(".tags a").map(Element::text),
     submitter =
       elem.select("div.byline > a[href^=/~]:not([tabindex]):not([aria-hidden=true])").text(),
     createdAt = "",

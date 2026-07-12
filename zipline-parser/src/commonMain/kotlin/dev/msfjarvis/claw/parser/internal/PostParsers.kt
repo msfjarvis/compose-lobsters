@@ -37,7 +37,10 @@ private fun parsePost(element: Element): LobstersPost {
     commentCount = commentCountRegex.find(commentElement.text())?.value?.toInt() ?: 0,
     commentsUrl = commentElement.attr("abs:href"),
     submitter = submitterElement.text(),
-    userIsAuthor = submitterElement.attr("class").split(' ').contains("user_is_author"),
+    userIsAuthor =
+      submitterElement.attr("class").split(' ').any {
+        it == "user_is_author" || it == "user_is_submitter"
+      },
     tags = tags,
   )
 }

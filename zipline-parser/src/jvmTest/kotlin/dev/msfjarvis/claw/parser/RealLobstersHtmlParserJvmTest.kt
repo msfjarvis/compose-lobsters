@@ -92,7 +92,19 @@ class RealLobstersHtmlParserJvmTest {
 
     assertTrue(details.title.isNotBlank())
     assertEquals(listOf("meta"), details.tags)
+    assertTrue(details.userIsAuthor)
     assertTrue(details.comments.isNotEmpty())
+  }
+
+  @Test
+  fun parsesPostDetailsWithSubmitterComment() {
+    val html =
+      checkNotNull(javaClass.classLoader.getResource("post_details_ktew3s.html")).readText()
+    val service = LobstersParserServiceImpl()
+
+    val details = service.parsePostDetails(html)
+
+    assertTrue(details.userIsAuthor)
   }
 
   @Test

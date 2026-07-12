@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Comment votes and tags in search results are now parsed correctly again (Already deployed via OTA)
+
 ## [1.67.0] - 2026-07-10
 
 ### Added

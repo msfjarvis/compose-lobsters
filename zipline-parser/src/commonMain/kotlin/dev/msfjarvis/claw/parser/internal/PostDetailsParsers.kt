@@ -33,6 +33,6 @@ internal fun parsePostDetails(html: String): LobstersPostDetails {
     submitter = submitterElement.text(),
     tags = tags,
     comments = parseComments(document),
-    userIsAuthor = submitterElement.attr("class").split(' ').contains("user_is_author"),
+    userIsAuthor = document.select(".user_is_author, .user_is_submitter").isNotEmpty(),
   )
 }

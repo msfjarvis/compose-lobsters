@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Comment votes and tags in search results are now parsed correctly again (Already deployed via OTA)
 
+### Added
+
+- Direct links to comments can now be shared via the context menu, tap on a comment to reveal it
+
 ## [1.67.0] - 2026-07-10
 
 ### Added

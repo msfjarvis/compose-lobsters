@@ -40,15 +40,11 @@ fun PostActions(
     }
 
     override fun share(post: UIPost) {
-      val sendIntent: Intent =
-        Intent().apply {
-          action = Intent.ACTION_SEND
-          putExtra(Intent.EXTRA_TEXT, post.url.ifEmpty { post.commentsUrl })
-          putExtra(Intent.EXTRA_TITLE, post.title)
-          type = "text/plain"
-        }
-      val shareIntent = Intent.createChooser(sendIntent, null)
-      context.startActivity(shareIntent)
+      shareUrl(post.url.ifEmpty { post.commentsUrl }, post.title)
+    }
+
+    override fun shareComment(commentId: String) {
+      shareUrl("https://lobste.rs/c/$commentId")
     }
 
     override fun isPostRead(post: UIPost): Boolean = viewModel.isPostRead(post)
@@ -57,6 +53,16 @@ fun PostActions(
 
     override suspend fun getLinkMetadata(url: String): LinkMetadata {
       return viewModel.getLinkMetadata(url)
+    }
+
+    private fun shareUrl(url: String, title: String? = null) {
+      val sendIntent =
+        Intent(Intent.ACTION_SEND).apply {
+          putExtra(Intent.EXTRA_TEXT, url)
+          title?.let { putExtra(Intent.EXTRA_TITLE, it) }
+          type = "text/plain"
+        }
+      context.startActivity(Intent.createChooser(sendIntent, null))
     }
   }
 }

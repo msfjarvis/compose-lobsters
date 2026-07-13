@@ -22,6 +22,8 @@ interface PostActions {
 
   fun share(post: UIPost)
 
+  fun shareComment(commentId: String)
+
   fun isPostRead(post: UIPost): Boolean
 
   fun isPostSaved(post: UIPost): Boolean

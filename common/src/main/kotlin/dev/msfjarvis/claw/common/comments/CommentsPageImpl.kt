@@ -139,6 +139,7 @@ internal fun CommentsPageInternal(
             upvoteComment = upvoteComment,
             unvoteComment = unvoteComment,
             openReplyScreen = openReplyScreen,
+            shareComment = postActions::shareComment,
           )
         }
 
@@ -170,6 +171,7 @@ private fun NodeBox(
   upvoteComment: (String) -> Unit,
   unvoteComment: (String) -> Unit,
   openReplyScreen: (String, String) -> Unit,
+  shareComment: (String) -> Unit,
   modifier: Modifier = Modifier,
 ) {
   CommentEntry(
@@ -181,6 +183,7 @@ private fun NodeBox(
     upvoteComment = upvoteComment,
     unvoteComment = unvoteComment,
     onReply = openReplyScreen,
+    onShare = shareComment,
     modifier = modifier,
   )
   HorizontalDivider()

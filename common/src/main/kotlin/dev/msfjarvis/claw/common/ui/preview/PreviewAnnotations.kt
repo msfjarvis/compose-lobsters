@@ -11,19 +11,22 @@ import androidx.compose.ui.tooling.preview.Preview
 
 /**
  * Multipreview annotation that represents light and dark themes. Add this annotation to a
- * composable to render the both themes.
+ * composable to render the both themes. Hardcodes API 36 as [Preview.apiLevel] since that is the
+ * maximum supported as of now.
  */
 @Preview(
   uiMode = Configuration.UI_MODE_NIGHT_NO,
   name = "Light theme",
   showBackground = true,
   backgroundColor = 0xFFFFFF,
+  apiLevel = 36,
 )
 @Preview(
   uiMode = Configuration.UI_MODE_NIGHT_YES,
   name = "Dark theme",
   showBackground = true,
   backgroundColor = 0x000000,
+  apiLevel = 36,
 )
 annotation class ThemePreviews
 

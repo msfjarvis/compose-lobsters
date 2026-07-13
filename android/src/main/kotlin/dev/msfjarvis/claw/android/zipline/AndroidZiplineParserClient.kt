@@ -23,6 +23,7 @@ import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.binding
 import java.io.File
+import java.io.IOException
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicReference
 import kotlinx.coroutines.ExecutorCoroutineDispatcher
@@ -35,6 +36,25 @@ import okhttp3.OkHttpClient
 import okio.ByteString.Companion.decodeHex
 import okio.FileSystem
 import okio.Path.Companion.toPath
+
+internal object EmbeddedAssetsFreshnessChecker : FreshnessChecker {
+  override fun isFresh(
+    manifest: ZiplineManifest,
+    freshAtEpochMs: Long,
+  ): Boolean = true
+}
+
+internal suspend fun loadWithEmbeddedFallback(
+  initialFreshnessChecker: FreshnessChecker,
+  load: suspend (FreshnessChecker) -> LoadResult,
+): LoadResult {
+  val initialResult = load(initialFreshnessChecker)
+  return if (initialResult is LoadResult.Failure && initialResult.exception is IOException) {
+    load(EmbeddedAssetsFreshnessChecker)
+  } else {
+    initialResult
+  }
+}
 
 @Inject
 @ContributesBinding(AppScope::class, binding = binding<LobstersParserClient>())
@@ -108,7 +128,12 @@ class AndroidZiplineParserClient(
           embeddedDir = embeddedDir.absolutePath.toPath(),
         )
 
-    val freshnessChecker = if (verifySignatures) DefaultFreshnessCheckerNotFresh else AlwaysFresh
+    val freshnessChecker =
+      if (verifySignatures) {
+        DefaultFreshnessCheckerNotFresh
+      } else {
+        EmbeddedAssetsFreshnessChecker
+      }
     val effectiveManifestUrl =
       if (!verifySignatures && embeddedManifestFile.exists()) {
         embeddedManifestFile.toURI().toString()
@@ -119,12 +144,14 @@ class AndroidZiplineParserClient(
     return withContext(dispatcher) {
       when (
         val result =
-          loader.loadOnce(
-            applicationName = "zipline-parser",
-            freshnessChecker = freshnessChecker,
-            manifestUrl = effectiveManifestUrl,
-            serializersModule = ParserSerializersModule,
-          )
+          loadWithEmbeddedFallback(freshnessChecker) { attemptFreshnessChecker ->
+            loader.loadOnce(
+              applicationName = "zipline-parser",
+              freshnessChecker = attemptFreshnessChecker,
+              manifestUrl = effectiveManifestUrl,
+              serializersModule = ParserSerializersModule,
+            )
+          }
       ) {
         is LoadResult.Success -> {
           loadedZipline = result.zipline
@@ -203,15 +230,5 @@ class AndroidZiplineParserClient(
 
   private companion object {
     private const val ZIPLINE_THREAD_STACK_SIZE_BYTES = 8L * 1024L * 1024L
-  }
-
-  /** Always prioritize the embedded files over the remote copy. */
-  private object AlwaysFresh : FreshnessChecker {
-    override fun isFresh(
-      manifest: ZiplineManifest,
-      freshAtEpochMs: Long,
-    ): Boolean {
-      return true
-    }
   }
 }

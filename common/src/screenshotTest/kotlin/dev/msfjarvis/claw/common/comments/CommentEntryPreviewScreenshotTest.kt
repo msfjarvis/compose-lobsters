@@ -42,6 +42,7 @@ private fun CommentEntryPreview(
         upvoteComment = {},
         unvoteComment = {},
         onReply = { _, _ -> },
+        onShare = {},
       )
     }
   }

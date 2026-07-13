@@ -252,6 +252,8 @@ val TEST_POST_ACTIONS =
 
     override fun share(post: UIPost) {}
 
+    override fun shareComment(commentId: String) {}
+
     override fun isPostRead(post: UIPost): Boolean {
       return true
     }

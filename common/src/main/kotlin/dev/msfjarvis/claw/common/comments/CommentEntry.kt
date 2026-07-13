@@ -31,6 +31,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Reply
 import androidx.compose.material.icons.filled.Public
 import androidx.compose.material.icons.outlined.KeyboardArrowUp
+import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -158,6 +159,7 @@ internal fun CommentEntry(
   upvoteComment: (String) -> Unit,
   unvoteComment: (String) -> Unit,
   onReply: (String, String) -> Unit,
+  onShare: (String) -> Unit,
   modifier: Modifier = Modifier,
 ) {
   val comment = commentNode.comment
@@ -210,7 +212,7 @@ internal fun CommentEntry(
           .combinedClickable(
             onClick = {
               if (isExpanded) {
-                if (isLoggedIn) isActionBarExpanded = !isActionBarExpanded
+                isActionBarExpanded = !isActionBarExpanded
               } else {
                 onToggleExpandedState(comment.shortId, true)
               }
@@ -301,6 +303,7 @@ internal fun CommentEntry(
           ),
       ) {
         CommentActionTray(
+          isLoggedIn = isLoggedIn,
           isUpvoted = hasLocallyUpvoted,
           onVoteClick = {
             if (hasLocallyUpvoted) {
@@ -313,6 +316,7 @@ internal fun CommentEntry(
           onReplyClick = {
             onReply(comment.shortId, plainTextFromHtml(comment.comment))
           },
+          onShareClick = { onShare(comment.shortId) },
         )
       }
     }
@@ -321,9 +325,11 @@ internal fun CommentEntry(
 
 @Composable
 private fun CommentActionTray(
+  isLoggedIn: Boolean,
   isUpvoted: Boolean,
   onVoteClick: () -> Unit,
   onReplyClick: () -> Unit,
+  onShareClick: () -> Unit,
   modifier: Modifier = Modifier,
 ) {
   Row(
@@ -335,21 +341,32 @@ private fun CommentActionTray(
     horizontalArrangement = Arrangement.End,
     verticalAlignment = Alignment.CenterVertically,
   ) {
+    if (isLoggedIn) {
+      Icon(
+        imageVector = Icons.Outlined.KeyboardArrowUp,
+        contentDescription = if (isUpvoted) "Remove upvote" else "Upvote",
+        tint =
+          if (isUpvoted) MaterialTheme.colorScheme.error
+          else MaterialTheme.colorScheme.onSurfaceVariant,
+        modifier = Modifier.size(24.dp).clickable(role = Role.Button, onClick = onVoteClick),
+      )
+      Spacer(Modifier.size(12.dp))
+    }
     Icon(
-      imageVector = Icons.Outlined.KeyboardArrowUp,
-      contentDescription = if (isUpvoted) "Remove upvote" else "Upvote",
-      tint =
-        if (isUpvoted) MaterialTheme.colorScheme.error
-        else MaterialTheme.colorScheme.onSurfaceVariant,
-      modifier = Modifier.clickable(role = Role.Button, onClick = onVoteClick),
-    )
-    Spacer(Modifier.size(12.dp))
-    Icon(
-      imageVector = Icons.AutoMirrored.Outlined.Reply,
-      contentDescription = "Reply",
+      imageVector = Icons.Outlined.Share,
+      contentDescription = "Share",
       tint = MaterialTheme.colorScheme.onSurfaceVariant,
-      modifier = Modifier.clickable(role = Role.Button, onClick = onReplyClick),
+      modifier = Modifier.size(24.dp).clickable(role = Role.Button, onClick = onShareClick),
     )
+    if (isLoggedIn) {
+      Spacer(Modifier.size(12.dp))
+      Icon(
+        imageVector = Icons.AutoMirrored.Outlined.Reply,
+        contentDescription = "Reply",
+        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+        modifier = Modifier.size(24.dp).clickable(role = Role.Button, onClick = onReplyClick),
+      )
+    }
   }
 }
 

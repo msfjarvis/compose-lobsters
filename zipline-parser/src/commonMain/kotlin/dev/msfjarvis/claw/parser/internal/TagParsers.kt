@@ -8,8 +8,8 @@ package dev.msfjarvis.claw.parser.internal
 
 import com.fleeksoft.ksoup.Ksoup
 import com.fleeksoft.ksoup.nodes.Element
-import dev.msfjarvis.claw.parser.model.FiltersPage
-import dev.msfjarvis.claw.parser.model.Tag
+import dev.msfjarvis.claw.model.FiltersPage
+import dev.msfjarvis.claw.model.Tag
 
 internal fun parseTagsPage(html: String): List<Tag> {
   return Ksoup.parse(html, baseUri = BASE_URL).select("ol.category_tags > li").map(::parseTag)

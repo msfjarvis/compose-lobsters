@@ -17,7 +17,6 @@ import app.cash.zipline.loader.ZiplineLoader
 import dev.msfjarvis.claw.android.BuildConfig
 import dev.msfjarvis.claw.api.LobstersParserClient
 import dev.msfjarvis.claw.parser.LobstersParserService
-import dev.msfjarvis.claw.parser.model.ParserSerializersModule
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
@@ -149,7 +148,6 @@ class AndroidZiplineParserClient(
               applicationName = "zipline-parser",
               freshnessChecker = attemptFreshnessChecker,
               manifestUrl = effectiveManifestUrl,
-              serializersModule = ParserSerializersModule,
             )
           }
       ) {

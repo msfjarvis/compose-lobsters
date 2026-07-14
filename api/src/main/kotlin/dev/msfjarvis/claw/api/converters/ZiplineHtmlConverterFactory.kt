@@ -36,25 +36,25 @@ class ZiplineHtmlConverterFactory(private val parserClient: LobstersParserClient
       normalizedType.isListOf(LobstersPost::class.java) &&
         getPath?.startsWith("/search") == true -> {
         HtmlConverter { html ->
-          parserClient.service().parseSearchResults(html).map { it.toModel() }
+          parserClient.service().parseSearchResults(html)
         }
       }
       normalizedType.isListOf(LobstersPost::class.java) -> {
-        HtmlConverter { html -> parserClient.service().parsePostsPage(html).map { it.toModel() } }
+        HtmlConverter { html -> parserClient.service().parsePostsPage(html) }
       }
       normalizedType.isListOf(Tag::class.java) -> {
-        HtmlConverter { html -> parserClient.service().parseTagsPage(html).map { it.toModel() } }
+        HtmlConverter { html -> parserClient.service().parseTagsPage(html) }
       }
       normalizedType == CSRFToken::class.java ->
-        HtmlConverter { html -> parserClient.service().parseCsrfToken(html).toModel() }
+        HtmlConverter { html -> parserClient.service().parseCsrfToken(html) }
       normalizedType == LobstersPostDetails::class.java ->
-        HtmlConverter { html -> parserClient.service().parsePostDetails(html).toModel() }
+        HtmlConverter { html -> parserClient.service().parsePostDetails(html) }
       normalizedType == ReplyForm::class.java ->
-        HtmlConverter { html -> parserClient.service().parseReplyForm(html).toModel() }
+        HtmlConverter { html -> parserClient.service().parseReplyForm(html) }
       normalizedType == FiltersPage::class.java ->
-        HtmlConverter { html -> parserClient.service().parseFiltersPage(html).toModel() }
+        HtmlConverter { html -> parserClient.service().parseFiltersPage(html) }
       normalizedType == User::class.java ->
-        HtmlConverter { html -> parserClient.service().parseUser(html).toModel() }
+        HtmlConverter { html -> parserClient.service().parseUser(html) }
       else -> null
     }
   }

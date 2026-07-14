@@ -7,7 +7,7 @@
 package dev.msfjarvis.claw.parser.internal
 
 import com.fleeksoft.ksoup.Ksoup
-import dev.msfjarvis.claw.parser.model.LobstersPostDetails
+import dev.msfjarvis.claw.model.LobstersPostDetails
 
 private val commentCountRegex by lazy(LazyThreadSafetyMode.NONE) { "\\d+".toRegex() }
 private const val STORY_SELECTOR = "ol.stories > li.story"

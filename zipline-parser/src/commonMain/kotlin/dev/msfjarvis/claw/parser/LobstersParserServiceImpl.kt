@@ -14,13 +14,13 @@ import dev.msfjarvis.claw.parser.internal.parseReplyForm as parseReplyFormHtml
 import dev.msfjarvis.claw.parser.internal.parseSearchResults as parseSearchResultsHtml
 import dev.msfjarvis.claw.parser.internal.parseTagsPage as parseTagsPageHtml
 import dev.msfjarvis.claw.parser.internal.parseUser as parseUserHtml
-import dev.msfjarvis.claw.parser.model.CSRFToken
-import dev.msfjarvis.claw.parser.model.FiltersPage
-import dev.msfjarvis.claw.parser.model.LobstersPost
-import dev.msfjarvis.claw.parser.model.LobstersPostDetails
-import dev.msfjarvis.claw.parser.model.ReplyForm
-import dev.msfjarvis.claw.parser.model.Tag
-import dev.msfjarvis.claw.parser.model.User
+import dev.msfjarvis.claw.model.CSRFToken
+import dev.msfjarvis.claw.model.FiltersPage
+import dev.msfjarvis.claw.model.LobstersPost
+import dev.msfjarvis.claw.model.LobstersPostDetails
+import dev.msfjarvis.claw.model.ReplyForm
+import dev.msfjarvis.claw.model.Tag
+import dev.msfjarvis.claw.model.User
 
 class LobstersParserServiceImpl : LobstersParserService {
   override fun parsePostsPage(html: String): List<LobstersPost> = parsePostsPageHtml(html)

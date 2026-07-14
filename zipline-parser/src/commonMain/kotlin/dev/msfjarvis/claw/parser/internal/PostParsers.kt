@@ -8,7 +8,7 @@ package dev.msfjarvis.claw.parser.internal
 
 import com.fleeksoft.ksoup.Ksoup
 import com.fleeksoft.ksoup.nodes.Element
-import dev.msfjarvis.claw.parser.model.LobstersPost
+import dev.msfjarvis.claw.model.LobstersPost
 
 private val commentCountRegex by lazy(LazyThreadSafetyMode.NONE) { "\\d+".toRegex() }
 

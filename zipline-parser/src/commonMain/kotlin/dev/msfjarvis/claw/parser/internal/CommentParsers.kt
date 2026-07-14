@@ -7,7 +7,8 @@
 package dev.msfjarvis.claw.parser.internal
 
 import com.fleeksoft.ksoup.nodes.Element
-import dev.msfjarvis.claw.parser.model.Comment
+import kotlin.time.Instant
+import dev.msfjarvis.claw.model.Comment
 
 internal fun parseComments(root: Element): List<Comment> {
   val seen = mutableSetOf<String>()
@@ -46,7 +47,7 @@ private fun Element.toComment(parentComment: String?): Comment {
     comment = selectFirst("div.comment_text")?.html().orEmpty(),
     url = selectFirst("div.byline a[href^=/c/]")?.absUrl("href").orEmpty(),
     score = parseCommentScore(),
-    timestamp = timestamp.toEpochSeconds(),
+    timestamp = Instant.fromEpochSeconds(timestamp.toEpochSeconds()),
     edited = isEdited,
     parentComment = parentComment,
     user =

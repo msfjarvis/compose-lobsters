@@ -22,6 +22,7 @@ kotlin {
     commonMain {
       dependencies {
         api(libs.zipline)
+        api(projects.model)
         implementation(libs.ksoup)
       }
     }

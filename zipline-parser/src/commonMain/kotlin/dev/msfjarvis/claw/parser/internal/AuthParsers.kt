@@ -7,8 +7,8 @@
 package dev.msfjarvis.claw.parser.internal
 
 import com.fleeksoft.ksoup.Ksoup
-import dev.msfjarvis.claw.parser.model.CSRFToken
-import dev.msfjarvis.claw.parser.model.ReplyForm
+import dev.msfjarvis.claw.model.CSRFToken
+import dev.msfjarvis.claw.model.ReplyForm
 
 internal fun parseCsrfToken(html: String): CSRFToken {
   val token =

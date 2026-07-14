@@ -7,14 +7,13 @@
 package dev.msfjarvis.claw.parser
 
 import app.cash.zipline.Zipline
-import dev.msfjarvis.claw.parser.model.ParserSerializersModule
 import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport
 
 @OptIn(ExperimentalJsExport::class)
 @JsExport
 fun launchZipline() {
-  Zipline.get(ParserSerializersModule)
+  Zipline.get()
     .bind<LobstersParserService>(
       name = "LobstersParserService",
       instance = LobstersParserServiceImpl(),

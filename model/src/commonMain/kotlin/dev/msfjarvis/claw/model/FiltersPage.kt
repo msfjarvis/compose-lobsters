@@ -6,6 +6,9 @@
  */
 package dev.msfjarvis.claw.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 class FiltersPage(
   val authenticityToken: String,
   val tags: List<Tag>,

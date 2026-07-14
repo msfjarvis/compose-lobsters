@@ -8,7 +8,7 @@ package dev.msfjarvis.claw.parser.internal
 
 import com.fleeksoft.ksoup.Ksoup
 import com.fleeksoft.ksoup.nodes.Element
-import dev.msfjarvis.claw.parser.model.LobstersPost
+import dev.msfjarvis.claw.model.LobstersPost
 
 internal fun parseSearchResults(html: String): List<LobstersPost> {
   return Ksoup.parse(html, baseUri = BASE_URL)

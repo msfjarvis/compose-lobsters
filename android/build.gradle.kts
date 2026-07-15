@@ -40,7 +40,7 @@ val ziplineDevManifestUrl =
     .gradleProperty("claw.ziplineParserManifestUrl")
     .orElse("http://10.0.2.2:8080/manifest.zipline.json")
     .get()
-val ziplineProdManifestUrl = "https://claw.msfjarvis.dev/current/manifest.zipline.json"
+val ziplineProdManifestUrl = "https://claw.msfjarvis.dev/current/v2/manifest.zipline.json"
 val embeddedZiplineAssetsRoot = layout.buildDirectory.dir("generated/ziplineEmbeddedAssets")
 val embeddedZiplineAssetsRootFile =
   layout.buildDirectory.get().dir("generated/ziplineEmbeddedAssets").asFile

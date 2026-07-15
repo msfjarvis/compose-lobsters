@@ -1,3 +1,9 @@
+# Releasing a **BREAKING** update for the Zipline module
+
+1. Update the deployment URL and path
+   1. `sd \/current\/$curVer \/current\/$nextVer scripts/deploy-zipline-parser.sh android/build.gradle.kts`
+2. Follow the steps below
+
 # Releasing an update for the Zipline module
 
 1. Set `ZIPLINE_SIGNING_KEY` in environment

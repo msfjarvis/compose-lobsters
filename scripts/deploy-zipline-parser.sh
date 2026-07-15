@@ -15,8 +15,8 @@ Usage:
 
 Commands:
   release   Create a timestamped release in <target-dir>/releases/<timestamp>
-            and atomically repoint <target-dir>/current to it.
-  rollback  Repoint <target-dir>/current to an existing release timestamp.
+            and atomically repoint <target-dir>/current/v2 to it.
+  rollback  Repoint <target-dir>/current/v2 to an existing release timestamp.
   list      List available release timestamps.
   status    Print the current active release.
   prune     Delete all but the 5 most recent releases. Never deletes the active release.
@@ -71,7 +71,7 @@ release_command() {
 
   tmp_link="${target_dir}/.current.${timestamp}.tmp"
   ln -sfn "${release_dir}" "${tmp_link}"
-  mv -Tf "${tmp_link}" "${target_dir}/current"
+  mv -Tf "${tmp_link}" "${target_dir}/current/v2"
 
   echo "Activated release ${timestamp}"
 }
@@ -87,7 +87,7 @@ rollback_command() {
   [[ -f "${release_dir}/${manifest_name}" ]] || err "release is missing manifest: ${release_dir}/${manifest_name}"
 
   ln -sfn "${release_dir}" "${tmp_link}"
-  mv -Tf "${tmp_link}" "${target_dir}/current"
+  mv -Tf "${tmp_link}" "${target_dir}/current/v2"
 
   echo "Rolled back current release to ${timestamp}"
 }
@@ -103,7 +103,7 @@ list_command() {
 
 status_command() {
   local target_dir="$1"
-  local current_link="${target_dir}/current"
+  local current_link="${target_dir}/current/v2"
 
   require_dir "${target_dir}"
   [[ -L "${current_link}" ]] || err "current release symlink is missing: ${current_link}"
@@ -120,7 +120,7 @@ status_command() {
 prune_command() {
   local target_dir="$1"
   local releases_dir="${target_dir}/releases"
-  local current_link="${target_dir}/current"
+  local current_link="${target_dir}/current/v2"
 
   require_dir "${target_dir}"
   mkdir -p "${releases_dir}"

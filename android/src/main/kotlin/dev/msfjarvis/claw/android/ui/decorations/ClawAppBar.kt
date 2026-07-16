@@ -9,7 +9,6 @@ package dev.msfjarvis.claw.android.ui.decorations
 import android.app.Activity
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material.icons.Icons
@@ -17,7 +16,8 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Tune
-import androidx.compose.material3.ExpandedFullScreenSearchBar
+import androidx.compose.material3.AppBarWithSearch
+import androidx.compose.material3.ExpandedFullScreenContainedSearchBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -85,39 +85,53 @@ fun ClawAppBar(
       val textFieldState = rememberTextFieldState()
       val searchBarState = rememberSearchBarState()
       val focusRequester = remember { FocusRequester() }
-      Box(modifier = modifier) {
-        ExpandedFullScreenSearchBar(
-          state = searchBarState,
-          inputField = {
-            SearchBarDefaults.InputField(
-              textFieldState = textFieldState,
-              searchBarState = searchBarState,
-              onSearch = onSearch,
-              leadingIcon = {
-                Icon(
-                  imageVector = Icons.Filled.Search,
-                  contentDescription = null,
-                )
-              },
-              trailingIcon = {
-                IconButton(
-                  onClick = {
-                    if (mode.query.isNotEmpty()) {
-                      onQueryChange("")
-                    } else {
-                      onDismissSearch()
-                    }
+      val appBarWithSearchColors =
+        SearchBarDefaults.appBarWithSearchColors(
+          searchBarColors = SearchBarDefaults.containedColors(state = searchBarState)
+        )
+
+      val inputField =
+        @Composable {
+          SearchBarDefaults.InputField(
+            textFieldState = textFieldState,
+            searchBarState = searchBarState,
+            onSearch = onSearch,
+            colors = appBarWithSearchColors.searchBarColors.inputFieldColors,
+            leadingIcon = {
+              Icon(
+                imageVector = Icons.Filled.Search,
+                contentDescription = null,
+              )
+            },
+            trailingIcon = {
+              IconButton(
+                onClick = {
+                  if (mode.query.isNotEmpty()) {
+                    onQueryChange("")
+                  } else {
+                    onDismissSearch()
                   }
-                ) {
-                  Icon(
-                    imageVector = Icons.Filled.Close,
-                    contentDescription = stringResource(R.string.close_search),
-                  )
                 }
-              },
-            )
-          },
-          modifier = Modifier.shadow(8.dp).fillMaxWidth(),
+              ) {
+                Icon(
+                  imageVector = Icons.Filled.Close,
+                  contentDescription = stringResource(R.string.close_search),
+                )
+              }
+            },
+          )
+        }
+
+      Box(modifier = modifier) {
+        AppBarWithSearch(
+          state = searchBarState,
+          colors = appBarWithSearchColors,
+          inputField = inputField,
+        )
+        ExpandedFullScreenContainedSearchBar(
+          state = searchBarState,
+          inputField = inputField,
+          colors = appBarWithSearchColors.searchBarColors,
           content = content,
         )
         LaunchedEffect(mode.requestFocus) {

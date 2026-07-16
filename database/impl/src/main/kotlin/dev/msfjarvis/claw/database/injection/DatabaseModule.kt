@@ -12,6 +12,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import app.cash.sqldelight.adapter.primitive.IntColumnAdapter
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import app.cash.sqldelight.logs.LogSqliteDriver
+import com.osmerion.android.database.sqlite.OsmerionSQLiteOpenHelperFactory
+import com.osmerion.android.database.sqlite.SQLiteDatabase
 import dev.msfjarvis.claw.database.LobstersDatabase
 import dev.msfjarvis.claw.database.local.CachedRemotePost
 import dev.msfjarvis.claw.database.local.PostComments
@@ -22,8 +24,6 @@ import dev.zacsweers.metro.BindingContainer
 import dev.zacsweers.metro.ContributesTo
 import dev.zacsweers.metro.Provides
 import dev.zacsweers.metro.SingleIn
-import io.requery.android.database.sqlite.RequerySQLiteOpenHelperFactory
-import io.requery.android.database.sqlite.SQLiteDatabase
 import io.sentry.android.sqlite.SentrySupportSQLiteOpenHelper
 
 @BindingContainer
@@ -44,7 +44,7 @@ object DatabaseModule {
           context = context,
           name = LOBSTERS_DATABASE_NAME,
           factory = { configuration ->
-            val delegate = RequerySQLiteOpenHelperFactory().create(configuration)
+            val delegate = OsmerionSQLiteOpenHelperFactory().create(configuration)
             SentrySupportSQLiteOpenHelper.create(delegate)
           },
           callback =

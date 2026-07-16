@@ -82,15 +82,6 @@ dependencyResolutionManagement {
         includeGroup("com.google.testing.platform")
       }
     }
-    exclusiveContent {
-      forRepository {
-        maven("https://jitpack.io") {
-          name = "JitPack"
-          mavenContent { releasesOnly() }
-        }
-      }
-      filter { includeGroup("com.github.requery") }
-    }
     maven("https://androidx.dev/storage/compose-compiler/repository") {
       name = "Compose Compiler Snapshots"
       content { includeGroup("androidx.compose.compiler") }

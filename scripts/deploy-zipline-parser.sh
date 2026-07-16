@@ -14,7 +14,7 @@ Usage:
   deploy-zipline-parser.sh prune <target-dir>
 
 Commands:
-  release   Create a timestamped release in <target-dir>/releases/<timestamp>
+  release   Create a timestamped release in <target-dir>/releases/v2/<timestamp>
             and atomically repoint <target-dir>/current/v2 to it.
   rollback  Repoint <target-dir>/current/v2 to an existing release timestamp.
   list      List available release timestamps.
@@ -42,7 +42,7 @@ release_command() {
   local target_dir="$2"
   local timestamp="${3:-$(timestamp_now)}"
   local manifest_path="${src_dir}/${manifest_name}"
-  local releases_dir="${target_dir}/releases"
+  local releases_dir="${target_dir}/releases/v2"
   local release_dir="${releases_dir}/${timestamp}"
   local tmp_link
 
@@ -79,7 +79,7 @@ release_command() {
 rollback_command() {
   local target_dir="$1"
   local timestamp="$2"
-  local release_dir="${target_dir}/releases/${timestamp}"
+  local release_dir="${target_dir}/releases/v2/${timestamp}"
   local tmp_link="${target_dir}/.current.${timestamp}.tmp"
 
   require_dir "${target_dir}"
@@ -94,7 +94,7 @@ rollback_command() {
 
 list_command() {
   local target_dir="$1"
-  local releases_dir="${target_dir}/releases"
+  local releases_dir="${target_dir}/releases/v2"
 
   require_dir "${target_dir}"
   mkdir -p "${releases_dir}"
@@ -119,7 +119,7 @@ status_command() {
 
 prune_command() {
   local target_dir="$1"
-  local releases_dir="${target_dir}/releases"
+  local releases_dir="${target_dir}/releases/v2"
   local current_link="${target_dir}/current/v2"
 
   require_dir "${target_dir}"

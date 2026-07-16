@@ -281,7 +281,7 @@ fun LobstersPostsScreen(
         isTopLevel = currentDestinationIsTopLevel,
         mode =
           if (currentDestinationIsTopLevel && isSearchActive) {
-            ClawTopBarMode.Searching(query = searchQuery, expanded = true, requestFocus = true)
+            ClawTopBarMode.Searching(query = searchQuery, requestFocus = true)
           } else {
             ClawTopBarMode.Browsing
           },
@@ -289,7 +289,6 @@ fun LobstersPostsScreen(
         popBackStack = { popBackStack(backStack) },
         onStartSearch = startSearch,
         onDismissSearch = dismissSearch,
-        onExpandedChange = { expanded -> if (!expanded) dismissSearch() },
         onQueryChange = { searchQuery = it },
         onSearch = { query ->
           searchQuery = query

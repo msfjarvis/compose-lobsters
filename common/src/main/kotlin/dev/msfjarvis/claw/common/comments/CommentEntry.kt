@@ -191,6 +191,19 @@ internal fun CommentEntry(
             }
           }
         }
+        .combinedClickable(
+          onClick = {
+            if (isExpanded) {
+              isActionBarExpanded = !isActionBarExpanded
+            } else {
+              onToggleExpandedState(comment.shortId, true)
+            }
+          },
+          onLongClick = {
+            isActionBarExpanded = false
+            onToggleExpandedState(comment.shortId, !isExpanded)
+          },
+        )
         .padding(start = ThreadIndentWidth * indentGuideLevel)
   ) {
     Column(
@@ -202,19 +215,6 @@ internal fun CommentEntry(
             } else {
               MaterialTheme.colorScheme.background
             }
-          )
-          .combinedClickable(
-            onClick = {
-              if (isExpanded) {
-                isActionBarExpanded = !isActionBarExpanded
-              } else {
-                onToggleExpandedState(comment.shortId, true)
-              }
-            },
-            onLongClick = {
-              isActionBarExpanded = false
-              onToggleExpandedState(comment.shortId, !isExpanded)
-            },
           ),
       verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {

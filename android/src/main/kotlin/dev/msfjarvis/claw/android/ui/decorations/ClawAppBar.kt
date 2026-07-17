@@ -9,27 +9,28 @@ package dev.msfjarvis.claw.android.ui.decorations
 import android.app.Activity
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Tune
+import androidx.compose.material3.AppBarWithSearch
+import androidx.compose.material3.ExpandedFullScreenContainedSearchBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.SearchBar
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.rememberSearchBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -46,7 +47,6 @@ sealed interface ClawTopBarMode {
 
   class Searching(
     val query: String,
-    val expanded: Boolean = true,
     val requestFocus: Boolean = true,
   ) : ClawTopBarMode
 }
@@ -61,7 +61,6 @@ fun ClawAppBar(
   popBackStack: () -> NavKey?,
   onStartSearch: () -> Unit,
   onDismissSearch: () -> Unit,
-  onExpandedChange: (Boolean) -> Unit,
   onQueryChange: (String) -> Unit,
   onSearch: (String) -> Unit,
   modifier: Modifier = Modifier,
@@ -83,45 +82,56 @@ fun ClawAppBar(
       )
     }
     mode is ClawTopBarMode.Searching -> {
+      val textFieldState = rememberTextFieldState()
+      val searchBarState = rememberSearchBarState()
       val focusRequester = remember { FocusRequester() }
-      Box(modifier = modifier) {
-        SearchBar(
-          inputField = {
-            SearchBarDefaults.InputField(
-              query = mode.query,
-              onQueryChange = onQueryChange,
-              onSearch = onSearch,
-              expanded = mode.expanded,
-              onExpandedChange = onExpandedChange,
-              placeholder = { Text(text = stringResource(R.string.search_posts)) },
-              modifier = Modifier.focusRequester(focusRequester),
-              leadingIcon = {
-                Icon(
-                  imageVector = Icons.Filled.Search,
-                  contentDescription = null,
-                )
-              },
-              trailingIcon = {
-                IconButton(
-                  onClick = {
-                    if (mode.query.isNotEmpty()) {
-                      onQueryChange("")
-                    } else {
-                      onDismissSearch()
-                    }
+      val appBarWithSearchColors =
+        SearchBarDefaults.appBarWithSearchColors(
+          searchBarColors = SearchBarDefaults.containedColors(state = searchBarState)
+        )
+
+      val inputField =
+        @Composable {
+          SearchBarDefaults.InputField(
+            textFieldState = textFieldState,
+            searchBarState = searchBarState,
+            onSearch = onSearch,
+            colors = appBarWithSearchColors.searchBarColors.inputFieldColors,
+            leadingIcon = {
+              Icon(
+                imageVector = Icons.Filled.Search,
+                contentDescription = null,
+              )
+            },
+            trailingIcon = {
+              IconButton(
+                onClick = {
+                  if (mode.query.isNotEmpty()) {
+                    onQueryChange("")
+                  } else {
+                    onDismissSearch()
                   }
-                ) {
-                  Icon(
-                    imageVector = Icons.Filled.Close,
-                    contentDescription = stringResource(R.string.close_search),
-                  )
                 }
-              },
-            )
-          },
-          expanded = mode.expanded,
-          onExpandedChange = onExpandedChange,
-          modifier = Modifier.shadow(8.dp).fillMaxWidth(),
+              ) {
+                Icon(
+                  imageVector = Icons.Filled.Close,
+                  contentDescription = stringResource(R.string.close_search),
+                )
+              }
+            },
+          )
+        }
+
+      Box(modifier = modifier) {
+        AppBarWithSearch(
+          state = searchBarState,
+          colors = appBarWithSearchColors,
+          inputField = inputField,
+        )
+        ExpandedFullScreenContainedSearchBar(
+          state = searchBarState,
+          inputField = inputField,
+          colors = appBarWithSearchColors.searchBarColors,
           content = content,
         )
         LaunchedEffect(mode.requestFocus) {
@@ -181,7 +191,6 @@ private fun ClawAppBarBrowsingPreview() {
       popBackStack = { null },
       onStartSearch = {},
       onDismissSearch = {},
-      onExpandedChange = {},
       onQueryChange = {},
       onSearch = {},
       content = { FakeSearchResults() },
@@ -197,12 +206,11 @@ private fun ClawAppBarSearchingPreview() {
     ClawAppBar(
       activity = null,
       isTopLevel = true,
-      mode = ClawTopBarMode.Searching(query = "compose", expanded = true, requestFocus = false),
+      mode = ClawTopBarMode.Searching(query = "compose", requestFocus = false),
       navigateTo = {},
       popBackStack = { null },
       onStartSearch = {},
       onDismissSearch = {},
-      onExpandedChange = {},
       onQueryChange = {},
       onSearch = {},
       content = { FakeSearchResults() },

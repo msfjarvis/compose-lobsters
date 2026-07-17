@@ -15,7 +15,6 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -62,7 +61,6 @@ import dev.msfjarvis.claw.common.posts.Submitter
 import dev.msfjarvis.claw.common.posts.TagRow
 import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.common.ui.ThemedRichText
-import dev.msfjarvis.claw.model.Comment
 import dev.msfjarvis.claw.model.LinkMetadata
 import dev.msfjarvis.claw.model.UIPost
 import kotlin.time.Clock
@@ -172,7 +170,6 @@ internal fun CommentEntry(
       initiallyUpvoted = comment.isUpvoted,
       isUpvoted = hasLocallyUpvoted,
     )
-  val theme = if (isSystemInDarkTheme()) ThemeMode.DARK else ThemeMode.LIGHT
   val indentGuideLevel = commentNode.indentLevel.minus(1).coerceAtLeast(0)
   Box(
     modifier =
@@ -184,11 +181,7 @@ internal fun CommentEntry(
             repeat(indentGuideLevel) { level ->
               val x = ThreadIndentWidth.toPx() * level + ThreadGuideOffset.toPx()
               drawLine(
-                color =
-                  CommentTreeColors.colorForDepth(
-                    depth = level,
-                    theme = theme,
-                  ),
+                color = CommentTreeColors.colorForDepth(depth = level),
                 start = Offset(x, 0f),
                 end = Offset(x, size.height),
                 strokeWidth = ThreadGuideWidth.toPx(),
@@ -197,6 +190,19 @@ internal fun CommentEntry(
             }
           }
         }
+        .combinedClickable(
+          onClick = {
+            if (isExpanded) {
+              isActionBarExpanded = !isActionBarExpanded
+            } else {
+              onToggleExpandedState(comment.shortId, true)
+            }
+          },
+          onLongClick = {
+            isActionBarExpanded = false
+            onToggleExpandedState(comment.shortId, !isExpanded)
+          },
+        )
         .padding(start = ThreadIndentWidth * indentGuideLevel)
   ) {
     Column(
@@ -208,19 +214,6 @@ internal fun CommentEntry(
             } else {
               MaterialTheme.colorScheme.background
             }
-          )
-          .combinedClickable(
-            onClick = {
-              if (isExpanded) {
-                isActionBarExpanded = !isActionBarExpanded
-              } else {
-                onToggleExpandedState(comment.shortId, true)
-              }
-            },
-            onLongClick = {
-              isActionBarExpanded = false
-              onToggleExpandedState(comment.shortId, !isExpanded)
-            },
           ),
       verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
@@ -377,25 +370,6 @@ private fun displayScore(score: Int, initiallyUpvoted: Boolean, isUpvoted: Boole
     else -> score - 1
   }
 }
-
-internal fun previewCommentNode(isUpvoted: Boolean = false) =
-  CommentNode(
-    comment =
-      Comment(
-        shortId = "preview-comment",
-        comment =
-          "<p>This is a preview comment with enough content to evaluate spacing, metadata, and future vote affordances.</p>",
-        score = 42,
-        timestamp = Clock.System.now(),
-        edited = false,
-        parentComment = null,
-        user = "Alice",
-        isUpvoted = isUpvoted,
-      ),
-    isPostAuthor = false,
-    isUnread = true,
-    indentLevel = 0,
-  )
 
 private fun buildCommentAgeString(timestamp: Instant, edited: Boolean): String {
   val now = Clock.System.now().toEpochMilliseconds()

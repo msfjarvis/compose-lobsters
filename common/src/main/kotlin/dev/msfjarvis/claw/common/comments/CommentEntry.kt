@@ -15,7 +15,6 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -172,7 +171,6 @@ internal fun CommentEntry(
       initiallyUpvoted = comment.isUpvoted,
       isUpvoted = hasLocallyUpvoted,
     )
-  val theme = if (isSystemInDarkTheme()) ThemeMode.DARK else ThemeMode.LIGHT
   val indentGuideLevel = commentNode.indentLevel.minus(1).coerceAtLeast(0)
   Box(
     modifier =
@@ -184,11 +182,7 @@ internal fun CommentEntry(
             repeat(indentGuideLevel) { level ->
               val x = ThreadIndentWidth.toPx() * level + ThreadGuideOffset.toPx()
               drawLine(
-                color =
-                  CommentTreeColors.colorForDepth(
-                    depth = level,
-                    theme = theme,
-                  ),
+                color = CommentTreeColors.colorForDepth(depth = level),
                 start = Offset(x, 0f),
                 end = Offset(x, size.height),
                 strokeWidth = ThreadGuideWidth.toPx(),

@@ -1,0 +1,10 @@
+
+### Fixed
+
+- Comment votes and tags in search results are now parsed correctly again (Already deployed via OTA)
+- Failing to fetch the remote HTML parser manifest now falls back to the embedded copy
+- Fixed tags failing to be fetched from the server
+
+### Added
+
+- Direct links to comments can now be shared via the context menu, tap on a comment to reveal it

@@ -227,8 +227,8 @@ class ApiTest {
     assertThat(rubyTag.isMedia).isFalse()
     assertThat(rubyTag.hotnessMod).isEqualTo(0.0)
 
-    val newsTag = tags.value.first { it.tag == "news" }
-    assertThat(newsTag.active).isFalse()
+    val vibecodingTag = tags.value.first { it.tag == "vibecoding" }
+    assertThat(vibecodingTag.active).isTrue()
 
     val videoTag = tags.value.first { it.tag == "video" }
     assertThat(videoTag.isMedia).isTrue()

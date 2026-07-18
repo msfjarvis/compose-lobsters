@@ -7,10 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.68.0] - 2026-07-18
+
 ### Fixed
 
 - Comment votes and tags in search results are now parsed correctly again (Already deployed via OTA)
-- Failing to retrieve the remote HTML parser manifests now falls back to the embedded copy
+- Failing to fetch the remote HTML parser manifest now falls back to the embedded copy
+- Fixed tags failing to be fetched from the server
 
 ### Added
 
@@ -661,7 +664,8 @@ Thanks to Charles Lombardo for contributing the action button UI changes.
 
 - Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.67.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.68.0...HEAD
+[1.68.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.67.0...v1.68.0
 [1.67.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.66.0...v1.67.0
 [1.66.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.65.0...v1.66.0
 [1.65.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.64.0...v1.65.0

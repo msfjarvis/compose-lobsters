@@ -10,7 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Comment votes and tags in search results are now parsed correctly again (Already deployed via OTA)
-- Failing to retrieve the remote HTML parser manifests now falls back to the embedded copy
+- Failing to fetch the remote HTML parser manifest now falls back to the embedded copy
+- Fixed tags failing to be fetched from the server
 
 ### Added
 

@@ -17,6 +17,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.LibraryBooks
 import androidx.compose.material.icons.filled.AccountCircle
@@ -83,10 +85,10 @@ fun SettingsScreen(
   modifier: Modifier = Modifier,
 ) {
   val coroutineScope = rememberCoroutineScope()
-  Column(modifier.padding(contentPadding)) {
+  Column(modifier.padding(contentPadding).verticalScroll(rememberScrollState())) {
     // Account Section
     SectionHeader(title = "Account")
-    if (isLoggedIn) {
+    if (isLoggedIn && !username.isNullOrBlank()) {
       ListItem(
         supportingContent = { Text(loggedInAccountText(username)) },
         leadingContent = {

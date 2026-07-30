@@ -14,6 +14,7 @@ import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import app.cash.sqldelight.logs.LogSqliteDriver
 import com.osmerion.android.database.sqlite.OsmerionSQLiteOpenHelperFactory
 import com.osmerion.android.database.sqlite.SQLiteDatabase
+import dev.msfjarvis.claw.database.BuildConfig
 import dev.msfjarvis.claw.database.LobstersDatabase
 import dev.msfjarvis.claw.database.local.CachedRemotePost
 import dev.msfjarvis.claw.database.local.PostComments
@@ -37,26 +38,28 @@ object DatabaseModule {
   @SingleIn(AppScope::class)
   fun provideDatabase(context: Context): LobstersDatabase {
     System.loadLibrary(SQLiteDatabase.LIBRARY_NAME)
-    val driver =
-      LogSqliteDriver(
-        AndroidSqliteDriver(
-          schema = LobstersDatabase.Schema,
-          context = context,
-          name = LOBSTERS_DATABASE_NAME,
-          factory = { configuration ->
-            val delegate = OsmerionSQLiteOpenHelperFactory().create(configuration)
-            SentrySupportSQLiteOpenHelper.create(delegate)
+    val androidDriver =
+      AndroidSqliteDriver(
+        schema = LobstersDatabase.Schema,
+        context = context,
+        name = LOBSTERS_DATABASE_NAME,
+        factory = { configuration ->
+          val delegate = OsmerionSQLiteOpenHelperFactory().create(configuration)
+          SentrySupportSQLiteOpenHelper.create(delegate)
+        },
+        callback =
+          object : AndroidSqliteDriver.Callback(LobstersDatabase.Schema) {
+            override fun onConfigure(db: SupportSQLiteDatabase) {
+              super.onConfigure(db)
+              db.enableWriteAheadLogging()
+            }
           },
-          callback =
-            object : AndroidSqliteDriver.Callback(LobstersDatabase.Schema) {
-              override fun onConfigure(db: SupportSQLiteDatabase) {
-                super.onConfigure(db)
-                db.enableWriteAheadLogging()
-              }
-            },
-        )
-      ) { message ->
-        Log.d("SQLDelightQuery", message)
+      )
+    val driver =
+      if (BuildConfig.DEBUG) {
+        LogSqliteDriver(androidDriver) { message -> Log.d("SQLDelightQuery", message) }
+      } else {
+        androidDriver
       }
     return LobstersDatabase(
       driver = driver,

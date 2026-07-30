@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup build environment
-        uses: msfjarvis/compose-lobsters/.github/reusable-workflows/setup-gradle@main
+        uses: $/.github/reusable-workflows/setup-gradle
         with:
           cache-read-only: true
           fetch-depth: 0

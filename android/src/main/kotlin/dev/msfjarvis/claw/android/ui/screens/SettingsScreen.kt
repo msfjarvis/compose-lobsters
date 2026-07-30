@@ -88,7 +88,7 @@ fun SettingsScreen(
   Column(modifier.padding(contentPadding).verticalScroll(rememberScrollState())) {
     // Account Section
     SectionHeader(title = "Account")
-    if (isLoggedIn) {
+    if (isLoggedIn && !username.isNullOrBlank()) {
       ListItem(
         supportingContent = { Text(loggedInAccountText(username)) },
         leadingContent = {

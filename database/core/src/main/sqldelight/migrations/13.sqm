@@ -1,0 +1,10 @@
+ALTER TABLE ReadPosts RENAME TO ReadPosts_Old;
+
+CREATE TABLE ReadPosts(
+  id TEXT NOT NULL PRIMARY KEY
+) WITHOUT ROWID;
+
+INSERT INTO ReadPosts(id)
+SELECT id FROM ReadPosts_Old;
+
+DROP TABLE ReadPosts_Old;

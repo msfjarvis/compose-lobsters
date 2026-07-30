@@ -14,7 +14,6 @@ import java.io.InputStream
 import java.io.OutputStream
 import kotlin.time.Instant
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.builtins.ListSerializer
@@ -43,7 +42,7 @@ class DataTransferRepository(
   }
 
   suspend fun exportPostsAsJson(output: OutputStream) {
-    val posts = savedPostsRepository.savedPosts.first()
+    val posts = savedPostsRepository.getSavedPosts()
     withContext(ioDispatcher) { json.encodeToStream(serializer, posts, output) }
   }
 
@@ -51,7 +50,7 @@ class DataTransferRepository(
     fun computeTimestamp(post: SavedPost): Long =
       Instant.parse(post.createdAt).toEpochMilliseconds()
 
-    val posts = savedPostsRepository.savedPosts.first()
+    val posts = savedPostsRepository.getSavedPosts()
     val header =
       """
       <!DOCTYPE NETSCAPE-Bookmark-file-1>

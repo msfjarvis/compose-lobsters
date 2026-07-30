@@ -1,15 +1,16 @@
 CREATE TABLE IF NOT EXISTS ReadPosts(
   id TEXT NOT NULL PRIMARY KEY
-);
+) WITHOUT ROWID;
 
 selectAllPosts:
-SELECT *
+SELECT id
 FROM ReadPosts;
 
 markRead:
-INSERT OR IGNORE
-INTO ReadPosts(id)
-VALUES (?);
+INSERT INTO ReadPosts(id)
+VALUES (:id)
+ON CONFLICT(id) DO NOTHING
+RETURNING id;
 
 markUnread:
 DELETE FROM ReadPosts

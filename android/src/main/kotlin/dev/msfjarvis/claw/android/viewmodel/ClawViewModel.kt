@@ -110,7 +110,7 @@ class ClawViewModel(
       )
       .flow
   val savedPosts = savedPostsRepository.savedPosts.map { it.map(UIPost.Companion::fromSavedPost) }
-  val savedPostsCount = savedPostsRepository.savedPosts.map { it.size.toLong() }
+  val savedPostsCount = savedPostsRepository.savedPostsCount
   val savedPostsByMonth
     get() =
       savedPostsRepository.savedPostsSortedByDate.map { posts ->
@@ -130,10 +130,11 @@ class ClawViewModel(
 
   init {
     viewModelScope.launch {
-      savedPosts.collectLatest { _savedPosts = it.map(UIPost::shortId).toSet() }
+      savedPostsRepository.savedPostIds.collectLatest { _savedPosts = it.toSet() }
     }
     viewModelScope.launch {
-      readPostsRepository.readPosts.collectLatest { _readPosts = it.toSet() }
+      readPostsRepository.initialize()
+      readPostsRepository.readPosts.collectLatest { _readPosts = it }
     }
   }
 

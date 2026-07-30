@@ -1,0 +1,2 @@
+CREATE INDEX IF NOT EXISTS SavedPost_createdAt_shortId
+ON SavedPost(datetime(createdAt) DESC, shortId);

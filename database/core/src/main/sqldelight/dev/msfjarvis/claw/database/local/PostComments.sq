@@ -7,11 +7,12 @@ CREATE TABLE IF NOT EXISTS PostComments(
 );
 
 rememberComments:
-INSERT OR REPLACE
-INTO PostComments
-VALUES ?;
+INSERT INTO PostComments
+VALUES ?
+ON CONFLICT(postId) DO UPDATE SET
+  commentIds = excluded.commentIds;
 
 getCommentIds:
-SELECT *
+SELECT commentIds
 FROM PostComments
 WHERE postId = ?;

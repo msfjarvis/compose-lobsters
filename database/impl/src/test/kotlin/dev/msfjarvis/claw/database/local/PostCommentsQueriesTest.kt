@@ -31,7 +31,7 @@ class PostCommentsQueriesTest {
     val comments = PostComments(postId, List(10) { UUID.randomUUID().toString() })
     postQueries.rememberComments(comments)
 
-    val ids = postQueries.getCommentIds(postId).executeAsOne().commentIds
+    val ids = postQueries.getCommentIds(postId).executeAsOne()
     assertThat(ids).hasSize(10)
   }
 }

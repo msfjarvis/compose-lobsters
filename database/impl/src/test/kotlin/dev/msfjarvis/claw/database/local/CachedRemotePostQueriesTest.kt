@@ -36,6 +36,7 @@ class CachedRemotePostQueriesTest {
     postQueries.insertOrReplacePost(post)
 
     val newPost = post.copy(submitterName = "Updated name")
+    postQueries.deleteAllPosts()
     postQueries.insertOrReplacePost(newPost)
 
     val postsFromDb = postQueries.selectAllPosts().executeAsList()

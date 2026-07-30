@@ -42,7 +42,6 @@ import dev.msfjarvis.claw.model.fromCachedRemotePost
 import dev.msfjarvis.claw.model.toUIPost
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.coroutines.flow.first
 
 class HottestPostsWidget : GlanceAppWidget() {
 
@@ -52,7 +51,7 @@ class HottestPostsWidget : GlanceAppWidget() {
     val tagBlockRepository = appGraph.tagBlockRepository
     val filteredTags =
       try {
-        tagBlockRepository.getSavedTags().first()
+        tagBlockRepository.getSavedTagsSnapshot()
       } catch (_: Exception) {
         emptySet()
       }

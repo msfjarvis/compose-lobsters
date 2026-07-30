@@ -41,7 +41,7 @@ fun CommentsPage(
   val seenCommentsState by
     produceState<SeenCommentsState>(initialValue = SeenCommentsState.Loading, key1 = postId) {
       value =
-        SeenCommentsState.from(postComments = viewModel.getSeenComments(postId), hasLoaded = true)
+        SeenCommentsState.from(seenCommentIds = viewModel.getSeenComments(postId), hasLoaded = true)
     }
   val commentListState = rememberLazyListState()
   val isLoggedIn by viewModel.isLoggedIn.collectAsStateWithLifecycle()

@@ -36,7 +36,6 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -136,7 +135,7 @@ class TagFilterViewModel(
         is Failure.HttpFailure -> throw result.toError()
         is Failure.ApiFailure -> throw IOException("API returned an invalid response")
       }
-    val currentBlocks = tagBlockRepository.getTagBlocks().first().normalized()
+    val currentBlocks = tagBlockRepository.getTagBlocksSnapshot().normalized()
     val shouldUseRemoteState = startedAuthenticated && sessionCookieStore.getUsername() != null
     val mergedBlocks =
       if (shouldUseRemoteState) {

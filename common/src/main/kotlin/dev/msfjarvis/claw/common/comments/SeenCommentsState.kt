@@ -13,12 +13,17 @@ internal sealed interface SeenCommentsState {
 
   data object NoBaseline : SeenCommentsState
 
-  data class BaselineLoaded(val postComments: PostComments) : SeenCommentsState
+  data class BaselineLoaded(val seenCommentIds: Set<String>) : SeenCommentsState {
+    constructor(postComments: PostComments) : this(postComments.commentIds.toSet())
+  }
 
   companion object {
-    fun from(postComments: PostComments?, hasLoaded: Boolean): SeenCommentsState {
+    fun from(seenCommentIds: Set<String>?, hasLoaded: Boolean): SeenCommentsState {
       if (!hasLoaded) return Loading
-      return if (postComments == null) NoBaseline else BaselineLoaded(postComments)
+      return if (seenCommentIds == null) NoBaseline else BaselineLoaded(seenCommentIds)
     }
+
+    fun from(postComments: PostComments?, hasLoaded: Boolean): SeenCommentsState =
+      from(postComments?.commentIds?.toSet(), hasLoaded)
   }
 }

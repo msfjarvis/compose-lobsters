@@ -13,7 +13,6 @@ import dev.msfjarvis.claw.core.coroutines.DatabaseWriteDispatcher
 import dev.msfjarvis.claw.database.local.TagBlocksQueries
 import dev.msfjarvis.claw.model.TagBlock
 import dev.zacsweers.metro.Inject
-import kotlin.time.Clock
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -25,12 +24,8 @@ class TagBlockRepository(
   @param:DatabaseReadDispatcher private val readDispatcher: CoroutineDispatcher,
   @param:DatabaseWriteDispatcher private val writeDispatcher: CoroutineDispatcher,
 ) {
-  fun getSavedTags(): Flow<Set<String>> {
-    val now = Clock.System.now().toEpochMilliseconds()
-    return tagBlocksQueries.selectActiveTags(now).asFlow().mapToList(readDispatcher).map {
-      it.toSet()
-    }
-  }
+  fun getSavedTags(): Flow<Set<String>> =
+    tagBlocksQueries.selectActiveTags().asFlow().mapToList(readDispatcher).map { it.toSet() }
 
   fun getTagBlocks(): Flow<List<TagBlock>> {
     return tagBlocksQueries.selectAll().asFlow().mapToList(readDispatcher).map { blocks ->
@@ -38,8 +33,16 @@ class TagBlockRepository(
     }
   }
 
+  suspend fun getSavedTagsSnapshot(): Set<String> =
+    withContext(readDispatcher) { tagBlocksQueries.selectActiveTags().executeAsList().toSet() }
+
+  suspend fun getTagBlocksSnapshot(): List<TagBlock> =
+    withContext(readDispatcher) {
+      tagBlocksQueries.selectAll().executeAsList().map { TagBlock(it.tag, it.expiration_millis) }
+    }
+
   suspend fun saveTagBlock(tag: String, expirationMillis: Long?) {
-    withContext(writeDispatcher) { tagBlocksQueries.insertOrReplace(tag, expirationMillis) }
+    withContext(writeDispatcher) { tagBlocksQueries.upsert(tag, expirationMillis) }
   }
 
   suspend fun replaceTagBlocks(blocks: List<TagBlock>) {
@@ -47,7 +50,7 @@ class TagBlockRepository(
       tagBlocksQueries.transaction {
         tagBlocksQueries.deleteAll()
         blocks.forEach { block ->
-          tagBlocksQueries.insertOrReplace(block.tag, block.expirationMillis)
+          tagBlocksQueries.insert(block.tag, block.expirationMillis)
         }
       }
     }
@@ -58,7 +61,6 @@ class TagBlockRepository(
   }
 
   suspend fun removeExpiredTags() {
-    val now = Clock.System.now().toEpochMilliseconds()
-    withContext(writeDispatcher) { tagBlocksQueries.deleteExpired(now) }
+    withContext(writeDispatcher) { tagBlocksQueries.deleteExpired() }
   }
 }

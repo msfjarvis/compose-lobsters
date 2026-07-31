@@ -49,7 +49,7 @@ internal fun buildCommentsVisitDecision(
     SeenCommentsState.Loading -> CommentsVisitDecision(unreadCount = 0, shouldPersist = false)
     SeenCommentsState.NoBaseline -> CommentsVisitDecision(unreadCount = 0, shouldPersist = true)
     is SeenCommentsState.BaselineLoaded -> {
-      val seenCommentIds = seenCommentsState.postComments.commentIds.toSet()
+      val seenCommentIds = seenCommentsState.seenCommentIds
       CommentsVisitDecision(
         unreadCount = currentCommentIds.count { it !in seenCommentIds },
         shouldPersist = true,

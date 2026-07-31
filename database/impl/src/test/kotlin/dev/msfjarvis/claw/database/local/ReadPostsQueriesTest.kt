@@ -20,10 +20,13 @@ class ReadPostsQueriesTest {
   }
 
   @Test
-  fun `mark post as read`() {
+  fun `mark post as read returns an ID only once`() {
     val id = UUID.randomUUID().toString()
-    postQueries.markRead(id)
+
+    assertThat(postQueries.markRead(id).executeAsOne()).isEqualTo(id)
+    assertThat(postQueries.markRead(id).executeAsOneOrNull()).isNull()
     assertThat(postQueries.selectAllPosts().executeAsList()).contains(id)
+
     postQueries.markUnread(id)
     assertThat(postQueries.selectAllPosts().executeAsList()).doesNotContain(id)
   }

@@ -9,6 +9,7 @@ package dev.msfjarvis.claw.android.viewmodel
 import android.util.Log
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
+import app.cash.sqldelight.coroutines.mapToOne
 import dev.msfjarvis.claw.android.BuildConfig
 import dev.msfjarvis.claw.core.coroutines.DatabaseReadDispatcher
 import dev.msfjarvis.claw.core.coroutines.DatabaseWriteDispatcher
@@ -29,26 +30,31 @@ class SavedPostsRepository(
   val savedPosts = savedPostQueries.selectAllPosts().asFlow().mapToList(readDispatcher)
   val savedPostsSortedByDate =
     savedPostQueries.selectAllPostsSortedByDate().asFlow().mapToList(readDispatcher)
+  val savedPostsCount = savedPostQueries.selectCount().asFlow().mapToOne(readDispatcher)
+  val savedPostIds = savedPostQueries.selectPostIds().asFlow().mapToList(readDispatcher)
 
-  fun getPostsFromLastNDays(days: Long) =
-    savedPostQueries.selectPostsFromLastNDays(days.toString()).asFlow().mapToList(readDispatcher)
+  suspend fun getSavedPosts() =
+    withContext(readDispatcher) { savedPostQueries.selectAllPosts().executeAsList() }
 
-  fun getRecentPosts(limit: Long) =
-    savedPostQueries.selectRecentPosts(limit).asFlow().mapToList(readDispatcher)
+  suspend fun getPostIdsFromLastNDays(days: Long) =
+    withContext(readDispatcher) {
+      savedPostQueries.selectPostIdsFromLastNDays(days.toString()).executeAsList()
+    }
+
+  suspend fun getRecentPosts(limit: Long) =
+    withContext(readDispatcher) { savedPostQueries.selectRecentPosts(limit).executeAsList() }
 
   suspend fun toggleSave(post: UIPost) {
-    val exists =
-      withContext(readDispatcher) { savedPostQueries.postExists(post.shortId).executeAsOne() }
-    if (exists) {
-      if (BuildConfig.DEBUG) {
-        Log.d(TAG, "Removing post: ${post.shortId}")
+    withContext(writeDispatcher) {
+      savedPostQueries.transaction {
+        val removed = savedPostQueries.deletePost(post.shortId).executeAsOneOrNull() != null
+        if (removed) {
+          if (BuildConfig.DEBUG) Log.d(TAG, "Removing post: ${post.shortId}")
+        } else {
+          if (BuildConfig.DEBUG) Log.d(TAG, "Saving post: ${post.shortId}")
+          savedPostQueries.insertOrReplacePost(post.toSavedPost())
+        }
       }
-      withContext(writeDispatcher) { savedPostQueries.deletePost(post.shortId) }
-    } else {
-      if (BuildConfig.DEBUG) {
-        Log.d(TAG, "Saving post: ${post.shortId}")
-      }
-      withContext(writeDispatcher) { savedPostQueries.insertOrReplacePost(post.toSavedPost()) }
     }
   }
 

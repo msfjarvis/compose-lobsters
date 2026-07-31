@@ -35,7 +35,7 @@ internal class CommentsHandler {
       SeenCommentsState.Loading -> false
       SeenCommentsState.NoBaseline -> false
       is SeenCommentsState.BaselineLoaded -> {
-        !seenCommentsState.postComments.commentIds.contains(commentId)
+        !seenCommentsState.seenCommentIds.contains(commentId)
       }
     }
 

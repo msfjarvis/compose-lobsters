@@ -16,19 +16,49 @@ CREATE TABLE IF NOT EXISTS SavedPost(
   userIsAuthor INTEGER AS Boolean NOT NULL DEFAULT 0
 );
 
+CREATE INDEX IF NOT EXISTS SavedPost_createdAt_shortId
+ON SavedPost(datetime(createdAt) DESC, shortId);
+
 insertOrReplacePost:
-INSERT OR REPLACE
-INTO SavedPost
-VALUES ?;
+INSERT INTO SavedPost
+VALUES ?
+ON CONFLICT(shortId) DO UPDATE SET
+  title = excluded.title,
+  url = excluded.url,
+  createdAt = excluded.createdAt,
+  commentCount = excluded.commentCount,
+  commentsUrl = excluded.commentsUrl,
+  submitterName = excluded.submitterName,
+  tags = excluded.tags,
+  description = excluded.description,
+  userIsAuthor = excluded.userIsAuthor
+WHERE title IS NOT excluded.title
+  OR url IS NOT excluded.url
+  OR createdAt IS NOT excluded.createdAt
+  OR commentCount IS NOT excluded.commentCount
+  OR commentsUrl IS NOT excluded.commentsUrl
+  OR submitterName IS NOT excluded.submitterName
+  OR tags IS NOT excluded.tags
+  OR description IS NOT excluded.description
+  OR userIsAuthor IS NOT excluded.userIsAuthor;
 
 selectAllPosts:
-SELECT *
+SELECT shortId, title, url, createdAt, commentCount, commentsUrl, submitterName, tags, description, userIsAuthor
 FROM SavedPost;
 
-selectPostsFromLastNDays:
-SELECT *
+selectPostIds:
+SELECT shortId
+FROM SavedPost;
+
+selectPostIdsFromLastNDays:
+SELECT shortId
 FROM SavedPost
-WHERE datetime(createdAt) >= datetime('now', '-' || ? || ' days');
+WHERE datetime(createdAt) >= datetime('now', '-' || :days || ' days');
+
+selectPostsInIdRange:
+SELECT shortId, title, url, createdAt, commentCount, commentsUrl, submitterName, tags, description, userIsAuthor
+FROM SavedPost
+WHERE shortId >= :lowerId AND shortId <= :upperId;
 
 selectCount:
 SELECT COUNT(*)
@@ -41,22 +71,16 @@ FROM SavedPost;
 deletePost:
 DELETE
 FROM SavedPost
-WHERE shortId = ?;
-
-postExists:
-SELECT EXISTS(
-  SELECT 1
-  FROM SavedPost
-  WHERE shortId = ?
-);
+WHERE shortId = :shortId
+RETURNING shortId;
 
 selectRecentPosts:
-SELECT *
+SELECT shortId, title, url, createdAt, commentCount, commentsUrl, submitterName, tags, description, userIsAuthor
 FROM SavedPost
 ORDER BY datetime(createdAt) DESC
 LIMIT :limit;
 
 selectAllPostsSortedByDate:
-SELECT *
+SELECT shortId, title, url, createdAt, commentCount, commentsUrl, submitterName, tags, description, userIsAuthor
 FROM SavedPost
 ORDER BY datetime(createdAt) DESC;

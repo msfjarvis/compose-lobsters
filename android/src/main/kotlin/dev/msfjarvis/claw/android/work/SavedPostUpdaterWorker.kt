@@ -26,7 +26,6 @@ import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.binding
 import kotlin.random.Random
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.first
 
 /**
  * WorkManager-backed [CoroutineWorker] that gets all the posts from [SavedPostsRepository] that
@@ -43,7 +42,7 @@ class SavedPostUpdaterWorker(
   private val lobstersApi: LobstersApi,
 ) : CoroutineWorker(context, params) {
   override suspend fun doWork(): Result {
-    val postsToUpdate = savedPostsRepository.getPostsFromLastNDays(DAYS_TO_UPDATE).first()
+    val postsToUpdate = savedPostsRepository.getPostIdsFromLastNDays(DAYS_TO_UPDATE)
 
     if (postsToUpdate.isEmpty()) {
       return Result.success()
@@ -52,7 +51,7 @@ class SavedPostUpdaterWorker(
     val updatedPosts = mutableListOf<SavedPost>()
 
     for ((index, post) in postsToUpdate.withIndex()) {
-      when (val result = lobstersApi.getPostDetails(post.shortId)) {
+      when (val result = lobstersApi.getPostDetails(post)) {
         is Success -> {
           updatedPosts.add(result.value.toSavedPost())
         }

@@ -18,17 +18,17 @@ CREATE TABLE IF NOT EXISTS CachedRemotePost(
 );
 
 insertOrReplacePost:
-INSERT OR REPLACE
+INSERT
 INTO CachedRemotePost
 VALUES ?;
 
 selectAllPosts:
-SELECT *
+SELECT shortId, title, url, createdAt, commentCount, commentsUrl, submitterName, tags, description, userIsAuthor, insertionOrder
 FROM CachedRemotePost
 ORDER BY insertionOrder ASC;
 
 selectRecentPosts:
-SELECT *
+SELECT shortId, title, url, createdAt, commentCount, commentsUrl, submitterName, tags, description, userIsAuthor, insertionOrder
 FROM CachedRemotePost
 ORDER BY insertionOrder ASC
 LIMIT :limit;

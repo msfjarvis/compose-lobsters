@@ -7,8 +7,6 @@
 package dev.msfjarvis.claw.android.viewmodel
 
 import android.util.Log
-import app.cash.sqldelight.coroutines.asFlow
-import app.cash.sqldelight.coroutines.mapToList
 import dev.msfjarvis.claw.android.BuildConfig
 import dev.msfjarvis.claw.core.coroutines.DatabaseReadDispatcher
 import dev.msfjarvis.claw.core.coroutines.DatabaseWriteDispatcher
@@ -24,14 +22,12 @@ class CachedRemotePostsRepository(
   @param:DatabaseReadDispatcher private val readDispatcher: CoroutineDispatcher,
   @param:DatabaseWriteDispatcher private val writeDispatcher: CoroutineDispatcher,
 ) {
-  val cachedPosts = cachedRemotePostQueries.selectAllPosts().asFlow().mapToList(readDispatcher)
-
-  fun getRecentPosts(limit: Long) =
-    cachedRemotePostQueries.selectRecentPosts(limit).asFlow().mapToList(readDispatcher)
-
   suspend fun getCachedPosts(): List<CachedRemotePost> {
     return withContext(readDispatcher) { cachedRemotePostQueries.selectAllPosts().executeAsList() }
   }
+
+  suspend fun getRecentPosts(limit: Long): List<CachedRemotePost> =
+    withContext(readDispatcher) { cachedRemotePostQueries.selectRecentPosts(limit).executeAsList() }
 
   suspend fun savePosts(posts: List<CachedRemotePost>) {
     if (BuildConfig.DEBUG) {

@@ -11,7 +11,10 @@ getUsername:
 SELECT username FROM SessionCookie WHERE id = 1;
 
 upsert:
-INSERT OR REPLACE INTO SessionCookie(id, value, username) VALUES (1, ?, ?);
+INSERT INTO SessionCookie(id, value, username) VALUES (1, ?, ?)
+ON CONFLICT(id) DO UPDATE SET
+  value = excluded.value,
+  username = excluded.username;
 
 deleteAll:
 DELETE FROM SessionCookie;

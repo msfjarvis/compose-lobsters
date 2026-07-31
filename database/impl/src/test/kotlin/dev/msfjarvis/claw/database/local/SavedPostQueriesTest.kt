@@ -87,7 +87,7 @@ class SavedPostQueriesTest {
     posts.forEach { postQueries.insertOrReplacePost(it) }
 
     // Delete 2nd post
-    postQueries.deletePost("test_id_2")
+    postQueries.deletePost("test_id_2").executeAsOne()
 
     val postsFromDB = postQueries.selectAllPosts().executeAsList()
 
@@ -124,28 +124,35 @@ class SavedPostQueriesTest {
     postQueries.insertOrReplacePost(oldPost)
     postQueries.insertOrReplacePost(veryRecentPost)
 
-    val postsFromLast30Days = postQueries.selectPostsFromLastNDays("30").executeAsList()
+    val postIdsFromLast30Days = postQueries.selectPostIdsFromLastNDays("30").executeAsList()
 
-    assertThat(postsFromLast30Days).hasSize(2)
-    assertThat(postsFromLast30Days.map { it.shortId }).containsExactly("recent_1", "recent_2")
-    assertThat(postsFromLast30Days.map { it.shortId }).doesNotContain("old_1")
+    assertThat(postIdsFromLast30Days).containsExactly("recent_1", "recent_2")
+    assertThat(postIdsFromLast30Days).doesNotContain("old_1")
   }
 
   @Test
-  fun `postExists returns true when post exists`() {
-    val post = createTestData(1).first()
-    postQueries.insertOrReplacePost(post)
+  fun `select posts in id range`() {
+    createTestData(5).forEach { postQueries.insertOrReplacePost(it) }
 
-    val exists = postQueries.postExists("test_id_1").executeAsOne()
+    val posts = postQueries.selectPostsInIdRange("test_id_2", "test_id_4").executeAsList()
 
-    assertThat(exists).isTrue()
+    assertThat(posts.map { it.shortId })
+      .containsExactly("test_id_2", "test_id_3", "test_id_4")
+      .inOrder()
   }
 
   @Test
-  fun `postExists returns false when post does not exist`() {
-    val exists = postQueries.postExists("nonexistent_id").executeAsOne()
+  fun `select post IDs returns only saved post IDs`() {
+    createTestData(2).forEach { postQueries.insertOrReplacePost(it) }
 
-    assertThat(exists).isFalse()
+    assertThat(postQueries.selectPostIds().executeAsList())
+      .containsExactly("test_id_1", "test_id_2")
+      .inOrder()
+  }
+
+  @Test
+  fun `delete post returns nothing when it does not exist`() {
+    assertThat(postQueries.deletePost("nonexistent_id").executeAsOneOrNull()).isNull()
   }
 
   @Test

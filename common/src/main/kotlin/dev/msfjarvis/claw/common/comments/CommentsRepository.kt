@@ -22,8 +22,10 @@ class CommentsRepository(
   @param:DatabaseWriteDispatcher private val writeDispatcher: CoroutineDispatcher,
 ) {
 
-  suspend fun getSeenComments(postId: String) =
-    withContext(readDispatcher) { postCommentsQueries.getCommentIds(postId).executeAsOneOrNull() }
+  suspend fun getSeenComments(postId: String): Set<String>? =
+    withContext(readDispatcher) {
+      postCommentsQueries.getCommentIds(postId).executeAsOneOrNull()?.toSet()
+    }
 
   suspend fun markSeenComments(postId: String, comments: List<Comment>) {
     withContext(writeDispatcher) {

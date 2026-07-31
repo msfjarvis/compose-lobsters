@@ -6,14 +6,22 @@ CREATE TABLE TagBlocks (
 );
 
 selectAll:
-SELECT * FROM TagBlocks;
+SELECT tag, expiration_millis FROM TagBlocks ORDER BY tag;
 
 selectActiveTags:
-SELECT tag FROM TagBlocks
-WHERE expiration_millis IS NULL OR expiration_millis > :currentTimeMillis;
+SELECT tag
+FROM TagBlocks
+WHERE expiration_millis IS NULL
+  OR expiration_millis > CAST(unixepoch('subsec') * 1000 AS INTEGER);
 
-insertOrReplace:
-INSERT OR REPLACE INTO TagBlocks(tag, expiration_millis)
+upsert:
+INSERT INTO TagBlocks(tag, expiration_millis)
+VALUES (?, ?)
+ON CONFLICT(tag) DO UPDATE SET
+  expiration_millis = excluded.expiration_millis;
+
+insert:
+INSERT INTO TagBlocks(tag, expiration_millis)
 VALUES (?, ?);
 
 deleteByTag:
@@ -21,7 +29,8 @@ DELETE FROM TagBlocks WHERE tag = ?;
 
 deleteExpired:
 DELETE FROM TagBlocks
-WHERE expiration_millis IS NOT NULL AND expiration_millis <= :currentTimeMillis;
+WHERE expiration_millis IS NOT NULL
+  AND expiration_millis <= CAST(unixepoch('subsec') * 1000 AS INTEGER);
 
 deleteAll:
 DELETE FROM TagBlocks;

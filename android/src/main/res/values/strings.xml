@@ -31,10 +31,6 @@
   <string name="view_the_source_code_on_github">View the source code on GitHub</string>
   <string name="import_action">Import</string>
   <string name="export">Export</string>
-  <string name="json">JSON</string>
-  <string name="export_as_json">Export as JSON</string>
-  <string name="bookmarks">Bookmarks</string>
-  <string name="export_as_browser_bookmarks">Export as browser bookmarks</string>
   <string name="go_back_to_previous_screen">Go back to previous screen</string>
   <string name="the_app_icon_for_claw">The app icon for Claw</string>
   <string name="search_posts">Search posts</string>

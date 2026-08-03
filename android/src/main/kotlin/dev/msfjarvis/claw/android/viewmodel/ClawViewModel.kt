@@ -162,9 +162,6 @@ class ClawViewModel(
   suspend fun exportPostsAsJson(output: OutputStream) =
     dataTransferRepository.exportPostsAsJson(output)
 
-  suspend fun exportPostsAsHtml(output: OutputStream) =
-    dataTransferRepository.exportPostsAsHTML(output)
-
   fun markPostAsRead(postId: String) {
     viewModelScope.launch { readPostsRepository.markRead(postId) }
   }

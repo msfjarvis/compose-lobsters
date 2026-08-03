@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- You can now manually refresh after the app reports an error fetching posts
+
+### Changed
+
+- Removed the export as bookmarks feature since it has barely any usage
+
 ## [1.68.0] - 2026-07-18
 
 ### Fixed

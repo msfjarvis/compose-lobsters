@@ -447,7 +447,6 @@ fun LobstersPostsScreen(
                 username = username,
                 importPosts = viewModel::importPosts,
                 exportPostsAsJson = viewModel::exportPostsAsJson,
-                exportPostsAsHtml = viewModel::exportPostsAsHtml,
                 savedPostsCount = savedPostsCount,
                 snackbarHostState = snackbarHostState,
                 contentPadding = contentPadding,

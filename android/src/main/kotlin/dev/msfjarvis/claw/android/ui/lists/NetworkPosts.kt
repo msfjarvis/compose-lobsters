@@ -7,6 +7,7 @@
 package dev.msfjarvis.claw.android.ui.lists
 
 import androidx.activity.compose.ReportDrawnWhen
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,6 +16,8 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
@@ -70,11 +73,15 @@ fun NetworkPosts(
     },
   ) {
     if (lazyPagingItems.itemCount == 0 && refreshLoadState is LoadState.Error) {
-      NetworkError(
-        label = "Failed to load posts",
-        error = (refreshLoadState as LoadState.Error).error,
-        modifier = Modifier.align(Alignment.Center),
-      )
+      Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()),
+      ) {
+        NetworkError(
+          label = "Failed to load posts",
+          error = (refreshLoadState as LoadState.Error).error,
+        )
+      }
     } else {
       LazyColumn(contentPadding = contentPadding, state = listState) {
         items(

@@ -5,7 +5,6 @@
  * https://opensource.org/licenses/MIT.
  */
 plugins {
-  id("dev.msfjarvis.claw.versions")
   alias(libs.plugins.android.test) apply false
   alias(libs.plugins.dependencyAnalysis)
 }

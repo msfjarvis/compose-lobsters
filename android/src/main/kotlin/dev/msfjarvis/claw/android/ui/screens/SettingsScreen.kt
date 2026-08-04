@@ -26,8 +26,6 @@ import androidx.compose.material.icons.filled.Bookmarks
 import androidx.compose.material.icons.filled.Code
 import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.ImportExport
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
@@ -36,11 +34,7 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -55,7 +49,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 private const val JSON_MIME_TYPE = "application/json"
-private const val HTML_MIME_TYPE = "application/html"
 
 internal fun loggedInAccountText(username: String?): String {
   return if (username.isNullOrBlank()) {
@@ -79,7 +72,6 @@ fun SettingsScreen(
   openOutputStream: (Uri) -> OutputStream?,
   importPosts: suspend (InputStream) -> Result<Unit>,
   exportPostsAsJson: suspend (OutputStream) -> Unit,
-  exportPostsAsHtml: suspend (OutputStream) -> Unit,
   contentPadding: PaddingValues,
   savedPostsCount: Long,
   modifier: Modifier = Modifier,
@@ -138,7 +130,6 @@ fun SettingsScreen(
             snackbarHostState,
             openOutputStream,
             exportPostsAsJson,
-            exportPostsAsHtml,
           )
         }
       },
@@ -294,7 +285,6 @@ private inline fun ExportPosts(
   snackbarHostState: SnackbarHostState,
   crossinline openOutputStream: (Uri) -> OutputStream?,
   crossinline exportPostsAsJson: suspend (OutputStream) -> Unit,
-  crossinline exportPostsAsHtml: suspend (OutputStream) -> Unit,
   modifier: Modifier = Modifier,
 ) {
   val jsonExportAction =
@@ -321,65 +311,12 @@ private inline fun ExportPosts(
         }
       }
     }
-  val htmlExportAction =
-    rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument(HTML_MIME_TYPE)) { uri
-      ->
-      if (uri == null) {
-        coroutineScope.launch { snackbarHostState.showSnackbarDismissing("No file selected") }
-        return@rememberLauncherForActivityResult
-      }
-      coroutineScope.launch {
-        try {
-          openOutputStream(uri)?.use { stream ->
-            exportPostsAsHtml(stream)
-            snackbarHostState.showSnackbarDismissing("Successfully exported posts")
-            Sentry.metrics().count("html_export_success", 1.0)
-          }
-            ?: run {
-              snackbarHostState.showSnackbarDismissing("Unable to open output file")
-              Sentry.metrics().count("html_export_failure", 1.0)
-            }
-        } catch (e: Exception) {
-          snackbarHostState.showSnackbarDismissing("Failed to export posts: ${e.message}")
-          Sentry.metrics().count("html_export_failure", 1.0)
-        }
-      }
-    }
-  var expanded by remember { mutableStateOf(false) }
   OutlinedButton(
-    onClick = { expanded = true },
+    onClick = { jsonExportAction.launch("claw-export.json") },
     shape = MaterialTheme.shapes.extraSmall,
     modifier = modifier,
   ) {
     Text(text = stringResource(R.string.export))
-    DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-      DropdownMenuItem(
-        text = { Text(stringResource(R.string.json)) },
-        onClick = {
-          expanded = false
-          jsonExportAction.launch("claw-export.json")
-        },
-        leadingIcon = {
-          Icon(
-            imageVector = Icons.Filled.Code,
-            contentDescription = stringResource(R.string.export_as_json),
-          )
-        },
-      )
-      DropdownMenuItem(
-        text = { Text(stringResource(R.string.bookmarks)) },
-        onClick = {
-          expanded = false
-          htmlExportAction.launch("claw-export.html")
-        },
-        leadingIcon = {
-          Icon(
-            imageVector = Icons.Filled.Bookmarks,
-            contentDescription = stringResource(R.string.export_as_browser_bookmarks),
-          )
-        },
-      )
-    }
   }
 }
 
@@ -406,7 +343,6 @@ private fun SettingsScreenPreview() {
       openOutputStream = { null },
       importPosts = { Result.success(Unit) },
       exportPostsAsJson = {},
-      exportPostsAsHtml = {},
       contentPadding = PaddingValues(),
       savedPostsCount = 42,
     )

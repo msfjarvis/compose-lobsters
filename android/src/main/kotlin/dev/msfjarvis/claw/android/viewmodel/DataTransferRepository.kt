@@ -12,7 +12,6 @@ import dev.msfjarvis.claw.database.local.SavedPost
 import dev.zacsweers.metro.Inject
 import java.io.InputStream
 import java.io.OutputStream
-import kotlin.time.Instant
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -44,45 +43,5 @@ class DataTransferRepository(
   suspend fun exportPostsAsJson(output: OutputStream) {
     val posts = savedPostsRepository.getSavedPosts()
     withContext(ioDispatcher) { json.encodeToStream(serializer, posts, output) }
-  }
-
-  suspend fun exportPostsAsHTML(output: OutputStream) {
-    fun computeTimestamp(post: SavedPost): Long =
-      Instant.parse(post.createdAt).toEpochMilliseconds()
-
-    val posts = savedPostsRepository.getSavedPosts()
-    val header =
-      """
-      <!DOCTYPE NETSCAPE-Bookmark-file-1>
-      <!-- This is an automatically generated file.
-           It will be read and overwritten.
-           DO NOT EDIT! -->
-      <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
-      <TITLE>Bookmarks</TITLE>
-      <H1>Bookmarks</H1>
-      """
-        .trimIndent()
-    val html = buildString {
-      append(header)
-      append("<DD><p>\n")
-      for (post in posts) {
-        append(
-          """
-            <DT><A HREF="${post.url.ifEmpty { post.commentsUrl }}" ADD_DATE="${computeTimestamp(post)}" PRIVATE="0" TAGS="${post.tags.joinToString(",")}">${post.title}</A>
-            <DD>${post.title}
-          """
-            .trimIndent()
-        )
-      }
-      append(
-        """
-        <DT><A HREF="https://example.com/" ADD_DATE="0" PRIVATE="0" TAGS="delete,me,pls">Padding post</A>
-        <DD>Linkding ignores the last entry so this pads the difference for imports
-        """
-          .trimIndent()
-      )
-      append("</DD></p>\n")
-    }
-    withContext(ioDispatcher) { output.bufferedWriter().use { writer -> writer.write(html) } }
   }
 }

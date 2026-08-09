@@ -27,10 +27,11 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.NavKey
+import dev.chrisbanes.haze.HazeInput
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.blur.HazeBlurDefaults
-import dev.chrisbanes.haze.blur.blurEffect
-import dev.chrisbanes.haze.hazeEffect
+import dev.chrisbanes.haze.blur.HazeBlurStyle
+import dev.chrisbanes.haze.blur.hazeBlur
 import dev.msfjarvis.claw.android.ui.navigation.AppDestinations
 import dev.msfjarvis.claw.common.ui.FloatingNavigationBar
 import kotlinx.collections.immutable.ImmutableList
@@ -71,14 +72,15 @@ fun ClawNavigationBar(
             .padding(horizontal = 16.dp)
             .navigationBarsPadding()
             .clip(MaterialTheme.shapes.extraLarge)
-            .hazeEffect(hazeState) {
-              blurEffect {
-                backgroundColor = surfaceColor
-                colorEffects = emptyList()
-                blurRadius = 24.dp
-                noiseFactor = 0f
-              }
-            },
+            .hazeBlur(
+              input = HazeInput.Sources(hazeState),
+              style = HazeBlurStyle {
+                backgroundColor(surfaceColor)
+                colorEffects(emptyList())
+                blurRadius(24.dp)
+                noiseFactor(0f)
+              },
+            ),
         containerColor = if (HazeBlurDefaults.blurEnabled()) Color.Transparent else surfaceColor,
       ) {
         items.forEach { navItem ->

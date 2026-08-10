@@ -74,12 +74,13 @@ fun ClawNavigationBar(
             .clip(MaterialTheme.shapes.extraLarge)
             .hazeBlur(
               input = HazeInput.Sources(hazeState),
-              style = HazeBlurStyle {
-                backgroundColor(surfaceColor)
-                colorEffects(emptyList())
-                blurRadius(24.dp)
-                noiseFactor(0f)
-              },
+              style =
+                HazeBlurStyle {
+                  backgroundColor(surfaceColor)
+                  colorEffects(emptyList())
+                  blurRadius(24.dp)
+                  noiseFactor(0f)
+                },
             ),
         containerColor = if (HazeBlurDefaults.blurEnabled()) Color.Transparent else surfaceColor,
       ) {

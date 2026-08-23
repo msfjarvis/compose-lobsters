@@ -10,10 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - You can now manually refresh after the app reports an error fetching posts
+- Settings can now be scrolled when its content does not fit on screen
+- The logout option no longer appears for anonymous users
 
-### Changed
+### Removed
 
-- Removed the export as bookmarks feature since it has barely any usage
+- Exporting saved posts as browser bookmarks
 
 ## [1.68.0] - 2026-07-18
 

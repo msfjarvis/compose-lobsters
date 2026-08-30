@@ -1,5 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "ignorePaths": ["assets-worker/*"],
   "extends": [
     "config:recommended",
     ":dependencyDashboard",

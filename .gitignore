@@ -249,3 +249,5 @@ screenshots/
 claw-export.json
 .kotlin/
 .worktrees/
+
+*.zip

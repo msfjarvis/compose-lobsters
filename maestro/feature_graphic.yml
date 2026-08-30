@@ -28,6 +28,7 @@ appId: dev.msfjarvis.claw.android
     timeout: 2000
 - takeScreenshot: "SearchPage"
 - back
+- back
 - tapOn: "Settings"
 - takeScreenshot: "SettingsPage"
 - tapOn: "Tag filtering"
@@ -38,7 +39,7 @@ appId: dev.msfjarvis.claw.android
 - tapOn: "css"
 - tapOn: "Block Forever"
 - takeScreenshot: "TagFiltering"
-- back
+- tapOn: "Save"
 - back
 - tapOn: "Hottest"
 - waitForAnimationToEnd:

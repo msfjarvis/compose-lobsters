@@ -217,6 +217,23 @@ class SavedPostQueriesTest {
       .inOrder()
   }
 
+  @Test
+  fun `getRandomPosts does not repeat in a 1 per cent sampling rate`() {
+    val posts = createTestData(1_000)
+    postQueries.transaction {
+      posts.forEach { postQueries.insertOrReplacePost(it) }
+    }
+
+    assertThat(postQueries.selectCount().executeAsOne()).isEqualTo(1_000)
+
+    val randomPosts = arrayListOf<GetRandomPost>()
+    repeat(10) {
+      val result = postQueries.getRandomPost().executeAsOne()
+      assertThat(randomPosts).doesNotContain(result)
+      randomPosts.add(result)
+    }
+  }
+
   private fun createTestData(count: Int): ArrayList<SavedPost> {
     val posts = arrayListOf<SavedPost>()
 
@@ -224,6 +241,8 @@ class SavedPostQueriesTest {
       val post =
         createPostWithDate(
           id = "test_id_$i",
+          title = "test_post_$i",
+          url = "test_url_$i",
           createdAt = "0",
           submitterName = "test_user_$i",
           userIsAuthor = i % 2 == 0,
@@ -238,14 +257,16 @@ class SavedPostQueriesTest {
   private fun createPostWithDate(
     id: String,
     createdAt: String,
+    title: String = "test_post",
+    url: String = "test_url",
     submitterName: String = "test_user",
     userIsAuthor: Boolean = false,
   ): SavedPost {
     return SavedPost(
       shortId = id,
       createdAt = createdAt,
-      title = "test_post",
-      url = "test_url",
+      title = title,
+      url = url,
       commentCount = 0,
       commentsUrl = "test_comments_url",
       submitterName = submitterName,

@@ -84,3 +84,8 @@ selectAllPostsSortedByDate:
 SELECT shortId, title, url, createdAt, commentCount, commentsUrl, submitterName, tags, description, userIsAuthor
 FROM SavedPost
 ORDER BY datetime(createdAt) DESC;
+
+getRandomPost:
+SELECT title, url
+FROM SavedPost
+ORDER BY RANDOM() LIMIT 1;

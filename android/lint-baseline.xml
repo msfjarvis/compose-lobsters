@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<issues format="6" by="lint 9.4.0-alpha03" type="baseline" client="gradle" dependencies="true" name="AGP (9.4.0-alpha03)" variant="all" version="9.4.0-alpha03">
+<issues format="6" by="lint 9.5.0-alpha03" type="baseline" client="gradle" dependencies="true" name="AGP (9.5.0-alpha03)" variant="all" version="9.5.0-alpha03">
 
     <issue
         id="Instantiatable"
@@ -118,7 +118,7 @@
         errorLine2="                                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/dev/msfjarvis/claw/android/ui/screens/LobstersPostsScreen.kt"
-            line="421"
+            line="420"
             column="49"/>
     </issue>
 

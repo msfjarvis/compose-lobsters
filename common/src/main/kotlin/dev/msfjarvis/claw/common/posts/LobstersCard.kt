@@ -13,7 +13,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalFlexBoxApi
 import androidx.compose.foundation.layout.FlexBox
 import androidx.compose.foundation.layout.FlexDirection
 import androidx.compose.foundation.layout.FlexWrap
@@ -33,7 +32,6 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -172,7 +170,6 @@ private fun SaveButton(isSaved: Boolean, onClick: () -> Unit, modifier: Modifier
   }
 }
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 private fun CommentsButton(commentCount: Int, onClick: () -> Unit, modifier: Modifier = Modifier) {
   Button(
@@ -211,7 +208,6 @@ private fun CommentsButton(commentCount: Int, onClick: () -> Unit, modifier: Mod
 }
 
 @Composable
-@OptIn(ExperimentalFlexBoxApi::class)
 internal fun TagRow(tags: ImmutableList<String>, modifier: Modifier = Modifier) {
   FlexBox(
     modifier = modifier,

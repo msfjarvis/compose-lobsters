@@ -1,0 +1,10 @@
+
+### Fixed
+
+- You can now manually refresh after the app reports an error fetching posts
+- Settings can now be scrolled when its content does not fit on screen
+- The logout option no longer appears for anonymous users
+
+### Removed
+
+- Exporting saved posts as browser bookmarks

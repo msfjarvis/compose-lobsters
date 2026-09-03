@@ -15,9 +15,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Settings can now be scrolled when its content does not fit on screen
 - The logout option no longer appears for anonymous users
 
-### Removed
+### Changed
 
-- Exporting saved posts as browser bookmarks
+- Exporting saved posts as browser bookmarks is no longer supported
 
 ## [1.68.0] - 2026-07-18
 

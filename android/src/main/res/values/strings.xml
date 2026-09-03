@@ -18,7 +18,7 @@
   <string name="data_management">Data Management</string>
   <string name="data_transfer">Data transfer</string>
   <string name="import_and_export_your_saved_posts">Import and export your saved posts</string>
-  <string name="app_information">App Information</string>
+  <string name="posts">Posts</string>
   <string name="version">Version</string>
   <string name="version_placeholder">%1$s (%2$s)</string>
   <string name="posts_saved_locally">%1$s posts saved locally</string>
@@ -39,4 +39,6 @@
   <string name="empty_inbox_icon">Empty inbox icon</string>
   <string name="no_saved_posts">No saved posts</string>
   <string name="no_search_results">No search results</string>
+  <string name="enable_post_a_day_reminders">Enable post-a-day reminders</string>
+  <string name="enable_post_a_day_reminders_summary">Get a notification with a random saved post every day</string>
 </resources>

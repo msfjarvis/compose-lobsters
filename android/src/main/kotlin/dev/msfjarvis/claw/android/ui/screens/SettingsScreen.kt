@@ -26,6 +26,7 @@ import androidx.compose.material.icons.filled.Bookmarks
 import androidx.compose.material.icons.filled.Code
 import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.ImportExport
+import androidx.compose.material.icons.filled.NotificationsActive
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
@@ -140,7 +141,53 @@ fun SettingsScreen(
     Spacer(modifier = Modifier.height(24.dp))
 
     // App Information Section
-    SectionHeader(title = stringResource(R.string.app_information))
+    SectionHeader(title = stringResource(R.string.posts))
+    ListItem(
+      supportingContent = { Text(stringResource(R.string.filter_posts_by_tags)) },
+      leadingContent = {
+        Icon(
+          imageVector = Icons.Filled.FilterList,
+          contentDescription = null,
+          modifier = Modifier.height(32.dp),
+        )
+      },
+      modifier = Modifier.clickable(onClick = openTagFiltering),
+    ) {
+      Text(stringResource(R.string.tag_filtering))
+    }
+    if (BuildConfig.DEBUG) {
+      ListItem(
+        supportingContent = {
+          Text(stringResource(R.string.enable_post_a_day_reminders_summary))
+        },
+        leadingContent = {
+          Icon(
+            imageVector = Icons.Filled.NotificationsActive,
+            contentDescription = null,
+            modifier = Modifier.height(32.dp),
+          )
+        },
+      ) {
+        Text(stringResource(R.string.enable_post_a_day_reminders))
+      }
+    }
+    ListItem(
+      supportingContent = { Text(stringResource(R.string.posts_saved_locally, savedPostsCount)) },
+      leadingContent = {
+        Icon(
+          imageVector = Icons.Filled.Bookmarks,
+          contentDescription = null,
+          modifier = Modifier.height(32.dp),
+        )
+      },
+    ) {
+      Text(stringResource(R.string.saved_posts))
+    }
+
+    Spacer(modifier = Modifier.height(24.dp))
+
+    // About Section
+    SectionHeader(title = stringResource(R.string.about))
     ListItem(
       supportingContent = {
         Text(
@@ -161,36 +208,6 @@ fun SettingsScreen(
     ) {
       Text(stringResource(R.string.version))
     }
-    ListItem(
-      supportingContent = { Text(stringResource(R.string.posts_saved_locally, savedPostsCount)) },
-      leadingContent = {
-        Icon(
-          imageVector = Icons.Filled.Bookmarks,
-          contentDescription = null,
-          modifier = Modifier.height(32.dp),
-        )
-      },
-    ) {
-      Text(stringResource(R.string.saved_posts))
-    }
-    ListItem(
-      supportingContent = { Text(stringResource(R.string.filter_posts_by_tags)) },
-      leadingContent = {
-        Icon(
-          imageVector = Icons.Filled.FilterList,
-          contentDescription = null,
-          modifier = Modifier.height(32.dp),
-        )
-      },
-      modifier = Modifier.clickable(onClick = openTagFiltering),
-    ) {
-      Text(stringResource(R.string.tag_filtering))
-    }
-
-    Spacer(modifier = Modifier.height(24.dp))
-
-    // About Section
-    SectionHeader(title = stringResource(R.string.about))
     ListItem(
       supportingContent = {
         Text(stringResource(R.string.view_open_source_libraries_used_in_this_))

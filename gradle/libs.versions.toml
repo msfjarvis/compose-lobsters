@@ -1,6 +1,6 @@
 [versions]
 aboutLibraries = "15.2.0"
-agp = "9.5.0-alpha03"
+agp = "9.5.0-alpha04"
 androidx-test = "1.7.0"
 activity = "1.14.0-alpha01"
 annotation = "1.11.0-alpha02"

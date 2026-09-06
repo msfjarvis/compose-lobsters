@@ -21,6 +21,9 @@ import okhttp3.Request
 class SentryConfigurationPlugin : AppPlugin {
   override fun apply(application: Application) {
     SentryAndroid.init(application) { options ->
+      options.addEventProcessor(
+        SentryNativeLoadErrorProcessor { nativeLoadDiagnostics(application) }
+      )
       options.beforeSend = SentryOptions.BeforeSendCallback { event, hint ->
         val request = hint.getAs(OKHTTP_REQUEST, Request::class.java)
 

@@ -9,6 +9,7 @@ package dev.msfjarvis.claw.android.injection
 import android.content.Context
 import androidx.work.ListenableWorker
 import androidx.work.WorkManager
+import dev.msfjarvis.claw.android.reminders.DailySavedPostReminderScheduler
 import dev.msfjarvis.claw.android.viewmodel.CachedRemotePostsRepository
 import dev.msfjarvis.claw.android.viewmodel.SavedPostsRepository
 import dev.msfjarvis.claw.android.zipline.AndroidZiplineParserClient
@@ -23,7 +24,9 @@ import dev.zacsweers.metro.SingleIn
 import dev.zacsweers.metrox.android.MetroAppComponentProviders
 import dev.zacsweers.metrox.viewmodel.ViewModelGraph
 import kotlin.reflect.KClass
+import kotlin.time.Clock
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.datetime.TimeZone
 
 @DependencyGraph(AppScope::class)
 interface AppGraph : MetroAppComponentProviders, ViewModelGraph {
@@ -31,11 +34,17 @@ interface AppGraph : MetroAppComponentProviders, ViewModelGraph {
 
   val workManager: WorkManager
 
+  val dailySavedPostReminderScheduler: DailySavedPostReminderScheduler
+
   @Provides
   @SingleIn(AppScope::class)
   fun providesWorkManager(application: Context): WorkManager {
     return WorkManager.getInstance(application)
   }
+
+  @Provides fun providesClock(): Clock = Clock.System
+
+  @Provides fun providesZoneId(): TimeZone = TimeZone.currentSystemDefault()
 
   @Multibinds
   val workerProviders:

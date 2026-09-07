@@ -125,7 +125,7 @@ class TagFilterViewModel(
   }
 
   private suspend fun loadTagsInternal(): ImmutableList<Tag> {
-    val startedAuthenticated = sessionCookieStore.getUsername() != null
+    val startedAuthenticated = !sessionCookieStore.getUsername().isNullOrBlank()
     authenticatedAtLoad = startedAuthenticated
     val page =
       when (val result = api.getFilters()) {
@@ -136,7 +136,8 @@ class TagFilterViewModel(
         is Failure.ApiFailure -> throw IOException("API returned an invalid response")
       }
     val currentBlocks = tagBlockRepository.getTagBlocksSnapshot().normalized()
-    val shouldUseRemoteState = startedAuthenticated && sessionCookieStore.getUsername() != null
+    val shouldUseRemoteState =
+      startedAuthenticated && !sessionCookieStore.getUsername().isNullOrBlank()
     val mergedBlocks =
       if (shouldUseRemoteState) {
         val temporaryRows =

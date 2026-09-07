@@ -171,6 +171,39 @@ class TagFilterViewModelTest {
     }
 
   @Test
+  fun `anonymous session persists permanent block locally`() =
+    runTest(dispatcher) {
+      val repository = repository()
+      val api = FakeTagFiltersApi(filtersResponses = ArrayDeque(listOf(filtersPage())))
+      val viewModel = viewModel(repository, api, username = "")
+      advanceUntilIdle()
+
+      viewModel.saveTagBlock("kotlin", null)
+      viewModel.save()
+      advanceUntilIdle()
+
+      assertThat(repository.getTagBlocks().first().map { it.tag to it.expirationMillis })
+        .containsExactly("kotlin" to null)
+      assertThat(api.savedTags).isNull()
+      assertThat(viewModel.saveError).isNull()
+    }
+
+  @Test
+  fun `anonymous session retains permanent block when filters reload`() =
+    runTest(dispatcher) {
+      val repository = repository()
+      repository.saveTagBlock("kotlin", null)
+      val api = FakeTagFiltersApi(filtersResponses = ArrayDeque(listOf(filtersPage())))
+      val viewModel = viewModel(repository, api, username = "")
+      advanceUntilIdle()
+
+      assertThat(viewModel.tagBlocks.value.map { it.tag to it.expirationMillis })
+        .containsExactly("kotlin" to null)
+      assertThat(repository.getTagBlocks().first().map { it.tag to it.expirationMillis })
+        .containsExactly("kotlin" to null)
+    }
+
+  @Test
   fun `authenticated save sends only permanent tags and preserves non conflicting temporary rows locally`() =
     runTest(dispatcher) {
       val repository = repository()

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Permanent tag blocks would not get applied for logged out users
+
 ## [1.69.0] - 2026-09-03
 
 ### Fixed

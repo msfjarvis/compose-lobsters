@@ -1,0 +1,30 @@
+import kotlin.Long;
+
+CREATE TABLE DailySavedPostNotification(
+  localDate TEXT NOT NULL PRIMARY KEY,
+  shortId TEXT NOT NULL,
+  title TEXT NOT NULL,
+  url TEXT NOT NULL,
+  selectedAtEpochMillis INTEGER NOT NULL,
+  deliveredAtEpochMillis INTEGER
+);
+
+selectionForDate:
+SELECT localDate, shortId, title, url, selectedAtEpochMillis, deliveredAtEpochMillis
+FROM DailySavedPostNotification
+WHERE localDate = :localDate;
+
+createSelectionIfAbsent:
+INSERT OR IGNORE INTO DailySavedPostNotification(
+  localDate, shortId, title, url, selectedAtEpochMillis, deliveredAtEpochMillis
+)
+SELECT :localDate, shortId, title, url, :selectedAtEpochMillis, NULL
+FROM SavedPost
+ORDER BY RANDOM()
+LIMIT 1;
+
+markDelivered:
+UPDATE DailySavedPostNotification
+SET deliveredAtEpochMillis = :deliveredAtEpochMillis
+WHERE localDate = :localDate
+  AND deliveredAtEpochMillis IS NULL;

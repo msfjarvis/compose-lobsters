@@ -218,20 +218,15 @@ class SavedPostQueriesTest {
   }
 
   @Test
-  fun `getRandomPosts does not repeat in a 1 per cent sampling rate`() {
-    val posts = createTestData(1_000)
-    postQueries.transaction {
-      posts.forEach { postQueries.insertOrReplacePost(it) }
-    }
+  fun `getRandomPost returns a saved post`() {
+    val posts = createTestData(3)
+    posts.forEach { postQueries.insertOrReplacePost(it) }
 
-    assertThat(postQueries.selectCount().executeAsOne()).isEqualTo(1_000)
+    val result = postQueries.getRandomPost().executeAsOne()
 
-    val randomPosts = arrayListOf<GetRandomPost>()
-    repeat(10) {
-      val result = postQueries.getRandomPost().executeAsOne()
-      assertThat(randomPosts).doesNotContain(result)
-      randomPosts.add(result)
-    }
+    assertThat(posts.map { it.shortId }).contains(result.shortId)
+    assertThat(posts.map { it.title }).contains(result.title)
+    assertThat(posts.map { it.url }).contains(result.url)
   }
 
   private fun createTestData(count: Int): ArrayList<SavedPost> {

@@ -86,6 +86,6 @@ FROM SavedPost
 ORDER BY datetime(createdAt) DESC;
 
 getRandomPost:
-SELECT title, url
+SELECT shortId, title, url
 FROM SavedPost
 ORDER BY RANDOM() LIMIT 1;

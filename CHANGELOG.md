@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.70.0] - 2026-09-07
+
 ### Fixed
 
 - Permanent tag blocks would not get applied for logged out users
@@ -680,7 +682,8 @@ Thanks to Charles Lombardo for contributing the action button UI changes.
 
 - Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.69.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.70.0...HEAD
+[1.70.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.69.0...v1.70.0
 [1.69.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.68.0...v1.69.0
 [1.68.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.67.0...v1.68.0
 [1.67.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.66.0...v1.67.0

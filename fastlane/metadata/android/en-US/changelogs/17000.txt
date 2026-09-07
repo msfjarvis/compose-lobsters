@@ -1,0 +1,4 @@
+
+### Fixed
+
+- Permanent tag blocks would not get applied for logged out users

@@ -33,6 +33,7 @@ import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -75,6 +76,8 @@ fun SettingsScreen(
   exportPostsAsJson: suspend (OutputStream) -> Unit,
   contentPadding: PaddingValues,
   savedPostsCount: Long,
+  isDailySavedPostReminderEnabled: Boolean,
+  onDailySavedPostReminderEnabledChange: (Boolean) -> Unit,
   modifier: Modifier = Modifier,
 ) {
   val coroutineScope = rememberCoroutineScope()
@@ -155,21 +158,25 @@ fun SettingsScreen(
     ) {
       Text(stringResource(R.string.tag_filtering))
     }
-    if (BuildConfig.DEBUG) {
-      ListItem(
-        supportingContent = {
-          Text(stringResource(R.string.enable_post_a_day_reminders_summary))
-        },
-        leadingContent = {
-          Icon(
-            imageVector = Icons.Filled.NotificationsActive,
-            contentDescription = null,
-            modifier = Modifier.height(32.dp),
-          )
-        },
-      ) {
-        Text(stringResource(R.string.enable_post_a_day_reminders))
-      }
+    ListItem(
+      supportingContent = {
+        Text(stringResource(R.string.enable_post_a_day_reminders_summary))
+      },
+      leadingContent = {
+        Icon(
+          imageVector = Icons.Filled.NotificationsActive,
+          contentDescription = null,
+          modifier = Modifier.height(32.dp),
+        )
+      },
+      trailingContent = {
+        Switch(
+          checked = isDailySavedPostReminderEnabled,
+          onCheckedChange = onDailySavedPostReminderEnabledChange,
+        )
+      },
+    ) {
+      Text(stringResource(R.string.enable_post_a_day_reminders))
     }
     ListItem(
       supportingContent = { Text(stringResource(R.string.posts_saved_locally, savedPostsCount)) },
@@ -362,6 +369,8 @@ private fun SettingsScreenPreview() {
       exportPostsAsJson = {},
       contentPadding = PaddingValues(),
       savedPostsCount = 42,
+      isDailySavedPostReminderEnabled = false,
+      onDailySavedPostReminderEnabledChange = {},
     )
   }
 }

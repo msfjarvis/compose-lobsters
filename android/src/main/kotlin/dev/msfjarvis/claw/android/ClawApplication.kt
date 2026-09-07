@@ -47,6 +47,7 @@ class ClawApplication : Application(), MetroApplication {
       existingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.KEEP,
       request = tagCleanupWorkRequest,
     )
+    appGraph.dailySavedPostReminderScheduler.reconcile()
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
       GeneratedWidgetPreviewUpdateWorker.enqueue(appGraph.workManager)
     }

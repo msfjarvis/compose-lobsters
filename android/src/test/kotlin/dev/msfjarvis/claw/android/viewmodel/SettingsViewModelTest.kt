@@ -7,8 +7,12 @@
 package dev.msfjarvis.claw.android.viewmodel
 
 import com.google.common.truth.Truth.assertThat
+import dev.msfjarvis.claw.android.reminders.DailySavedPostReminderScheduler
+import dev.msfjarvis.claw.android.reminders.DailySavedPostReminderSettings
 import dev.msfjarvis.claw.core.network.SessionCookieStore
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flowOf
 import org.junit.jupiter.api.Test
 
@@ -18,7 +22,13 @@ class SettingsViewModelTest {
   fun `logout clears persisted and webview sessions`() {
     val sessionCookieStore = FakeSessionCookieStore()
     val webViewCookieStore = FakeWebViewCookieStore()
-    val viewModel = SettingsViewModel(sessionCookieStore, webViewCookieStore)
+    val viewModel =
+      SettingsViewModel(
+        sessionCookieStore,
+        webViewCookieStore,
+        FakeDailySavedPostReminderSettings(),
+        FakeDailySavedPostReminderScheduler(),
+      )
 
     viewModel.logout()
 
@@ -29,12 +39,34 @@ class SettingsViewModelTest {
   @Test
   fun `saveCookie persists username`() {
     val sessionCookieStore = FakeSessionCookieStore()
-    val viewModel = SettingsViewModel(sessionCookieStore, FakeWebViewCookieStore())
+    val viewModel =
+      SettingsViewModel(
+        sessionCookieStore,
+        FakeWebViewCookieStore(),
+        FakeDailySavedPostReminderSettings(),
+        FakeDailySavedPostReminderScheduler(),
+      )
 
     viewModel.saveCookie("cookie=value", "alice")
 
     assertThat(sessionCookieStore.savedCookie).isEqualTo("cookie=value")
     assertThat(sessionCookieStore.savedUsername).isEqualTo("alice")
+  }
+
+  @Test
+  fun `enabling reminder delegates scheduling`() {
+    val scheduler = FakeDailySavedPostReminderScheduler()
+    val viewModel =
+      SettingsViewModel(
+        FakeSessionCookieStore(),
+        FakeWebViewCookieStore(),
+        FakeDailySavedPostReminderSettings(),
+        scheduler,
+      )
+
+    viewModel.setDailySavedPostReminderEnabled(true)
+
+    assertThat(scheduler.lastEnabled).isTrue()
   }
 
   private class FakeSessionCookieStore : SessionCookieStore {
@@ -60,6 +92,25 @@ class SettingsViewModelTest {
     override fun isLoggedIn(): Flow<Boolean> = flowOf(savedUsername != null)
 
     override fun username(): Flow<String?> = flowOf(savedUsername)
+  }
+
+  private class FakeDailySavedPostReminderSettings : DailySavedPostReminderSettings {
+    private val enabled = MutableStateFlow(false)
+    override val isEnabled: StateFlow<Boolean> = enabled
+
+    override fun setEnabled(enabled: Boolean) {
+      this.enabled.value = enabled
+    }
+  }
+
+  private class FakeDailySavedPostReminderScheduler : DailySavedPostReminderScheduler {
+    var lastEnabled = false
+
+    override fun setEnabled(enabled: Boolean) {
+      lastEnabled = enabled
+    }
+
+    override fun reconcile() = Unit
   }
 
   private class FakeWebViewCookieStore : WebViewCookieStore {

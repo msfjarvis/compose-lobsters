@@ -15,6 +15,7 @@ import kotlin.time.Instant
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.test.runTest
+import kotlinx.datetime.LocalTime
 import kotlinx.datetime.TimeZone
 import org.junit.jupiter.api.Test
 
@@ -179,8 +180,12 @@ class DailySavedPostReminderDeliveryTest {
 
   private class FakeSettings(enabled: Boolean = true) : DailySavedPostReminderSettings {
     override val isEnabled: StateFlow<Boolean> = MutableStateFlow(enabled)
+    override val reminderTime: StateFlow<LocalTime> =
+      MutableStateFlow(DEFAULT_DAILY_SAVED_POST_REMINDER_TIME)
 
     override fun setEnabled(enabled: Boolean) = Unit
+
+    override fun setReminderTime(time: LocalTime) = Unit
   }
 
   private class FakeRepository(private val selection: DailySavedPostNotification?) :

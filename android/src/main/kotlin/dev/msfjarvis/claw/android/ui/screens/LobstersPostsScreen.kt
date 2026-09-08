@@ -67,6 +67,7 @@ import com.mikepenz.aboutlibraries.ui.compose.m3.LibrariesContainer
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeSource
 import dev.msfjarvis.claw.android.R
+import dev.msfjarvis.claw.android.reminders.DEFAULT_DAILY_SAVED_POST_REMINDER_TIME
 import dev.msfjarvis.claw.android.ui.PostActions
 import dev.msfjarvis.claw.android.ui.decorations.ClawAppBar
 import dev.msfjarvis.claw.android.ui.decorations.ClawNavigationBar
@@ -165,6 +166,10 @@ fun LobstersPostsScreen(
   val username by settingsViewModel.username.collectAsStateWithLifecycle(null)
   val isDailySavedPostReminderEnabled by
     settingsViewModel.isDailySavedPostReminderEnabled.collectAsStateWithLifecycle(false)
+  val dailySavedPostReminderTime by
+    settingsViewModel.dailySavedPostReminderTime.collectAsStateWithLifecycle(
+      DEFAULT_DAILY_SAVED_POST_REMINDER_TIME
+    )
   val notificationPermissionDeniedMessage =
     stringResource(R.string.daily_saved_post_notification_permission_denied)
   val notificationSnackbarActionLabel = stringResource(R.string.settings)
@@ -495,7 +500,10 @@ fun LobstersPostsScreen(
                 exportPostsAsJson = viewModel::exportPostsAsJson,
                 savedPostsCount = savedPostsCount,
                 isDailySavedPostReminderEnabled = isDailySavedPostReminderEnabled,
+                dailySavedPostReminderTime = dailySavedPostReminderTime,
                 onDailySavedPostReminderEnabledChange = onDailySavedPostReminderEnabledChange,
+                onDailySavedPostReminderTimeChange =
+                  settingsViewModel::setDailySavedPostReminderTime,
                 snackbarHostState = snackbarHostState,
                 contentPadding = contentPadding,
                 modifier = Modifier.fillMaxSize(),

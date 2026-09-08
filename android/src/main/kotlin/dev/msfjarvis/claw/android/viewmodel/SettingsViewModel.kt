@@ -18,6 +18,8 @@ import dev.zacsweers.metro.binding
 import dev.zacsweers.metrox.viewmodel.ViewModelKey
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
+import kotlinx.datetime.LocalTime
 
 @Inject
 @ViewModelKey
@@ -48,9 +50,14 @@ class SettingsViewModel(
       )
 
   val isDailySavedPostReminderEnabled = dailySavedPostReminderSettings.isEnabled
+  val dailySavedPostReminderTime = dailySavedPostReminderSettings.reminderTime
 
   fun setDailySavedPostReminderEnabled(enabled: Boolean) {
     dailySavedPostReminderScheduler.setEnabled(enabled)
+  }
+
+  fun setDailySavedPostReminderTime(time: LocalTime) {
+    dailySavedPostReminderScheduler.setReminderTime(time)
   }
 
   fun logout() {

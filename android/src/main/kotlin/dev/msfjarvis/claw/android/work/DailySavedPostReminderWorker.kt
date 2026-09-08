@@ -12,6 +12,7 @@ import androidx.work.WorkerParameters
 import dev.msfjarvis.claw.android.injection.InjectedWorkerFactory
 import dev.msfjarvis.claw.android.injection.WorkerKey
 import dev.msfjarvis.claw.android.reminders.DailySavedPostReminderDelivery
+import dev.msfjarvis.claw.android.reminders.DailySavedPostReminderScheduler
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.Assisted
 import dev.zacsweers.metro.AssistedFactory
@@ -25,9 +26,16 @@ class DailySavedPostReminderWorker(
   context: Context,
   @Assisted params: WorkerParameters,
   private val delivery: DailySavedPostReminderDelivery,
+  private val scheduler: DailySavedPostReminderScheduler,
 ) : CoroutineWorker(context, params) {
 
-  override suspend fun doWork(): Result = delivery.deliver()
+  override suspend fun doWork(): Result {
+    return delivery.deliver().also { result ->
+      if (result == Result.success()) {
+        scheduler.scheduleNext()
+      }
+    }
+  }
 
   @WorkerKey(DailySavedPostReminderWorker::class)
   @ContributesIntoMap(

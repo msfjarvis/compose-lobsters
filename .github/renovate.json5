@@ -29,20 +29,6 @@
       ],
     },
     {
-      "extends": [
-        "monorepo:kotlin"
-      ],
-      "groupName": "Kotlin and Compose",
-      "groupSlug": "kotlin-and-compose",
-      "matchUpdateTypes": [
-        "digest",
-        "patch",
-        "minor",
-        "major",
-      ],
-      "enabled": false,
-    },
-    {
       "matchDepNames": [
         "com.google.devtools.ksp",
         "dev.drewhamilton.poko",
@@ -65,15 +51,6 @@
         "/^sentry/",
       ],
       "groupName": "Sentry"
-    },
-    {
-      "matchManagers": [
-        "github-actions"
-      ],
-      "matchDepNames": [
-        "msfjarvis/compose-lobsters"
-      ],
-      "enabled": false,
     },
   ],
   "customManagers": [

@@ -37,8 +37,3 @@ kotlin {
     }
   }
 }
-
-@Suppress("UnstableApiUsage")
-tasks.withType(KotlinCompilationTask::class.java).configureEach {
-  compilerOptions.freeCompilerArgs.add("-Xskip-prerelease-check")
-}

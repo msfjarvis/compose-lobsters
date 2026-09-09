@@ -6,6 +6,7 @@
  */
 package dev.msfjarvis.claw.android.reminders
 
+import android.util.Log
 import androidx.work.ListenableWorker
 import dev.msfjarvis.claw.android.viewmodel.DailySavedPostNotificationRepository
 import dev.zacsweers.metro.Inject
@@ -42,7 +43,13 @@ class DailySavedPostReminderDelivery(
         return ListenableWorker.Result.retry()
       } ?: return ListenableWorker.Result.success()
 
-    if (selection.deliveredAtEpochMillis != null) return ListenableWorker.Result.success()
+    if (selection.deliveredAtEpochMillis != null) {
+      Log.d(
+        LOG_TAG,
+        "Skipping delivery as post for $localDate was already delivered at ${selection.deliveredAtEpochMillis}",
+      )
+      return ListenableWorker.Result.success()
+    }
 
     when (notifier.notify(localDate, selection)) {
       Unavailable -> return ListenableWorker.Result.success()
@@ -57,5 +64,9 @@ class DailySavedPostReminderDelivery(
       if (exception is CancellationException) throw exception
       ListenableWorker.Result.retry()
     }
+  }
+
+  private companion object {
+    const val LOG_TAG = "SavedPostReminderDelivery"
   }
 }

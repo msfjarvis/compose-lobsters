@@ -9,6 +9,7 @@ package dev.msfjarvis.claw.android.reminders
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
+import dev.msfjarvis.claw.android.viewmodel.DailySavedPostNotificationRepository
 import dev.msfjarvis.claw.android.work.DailySavedPostReminderWorker
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
@@ -31,7 +32,7 @@ import kotlinx.datetime.toLocalDateTime
 interface DailySavedPostReminderScheduler {
   fun setEnabled(enabled: Boolean)
 
-  fun setReminderTime(time: LocalTime)
+  suspend fun setReminderTime(time: LocalTime)
 
   fun reconcile()
 
@@ -43,15 +44,24 @@ interface DailySavedPostReminderScheduler {
 class WorkManagerDailySavedPostReminderScheduler(
   private val workManager: WorkManager,
   private val settings: DailySavedPostReminderSettings,
+  private val notificationRepository: DailySavedPostNotificationRepository,
+  private val clock: Clock,
+  private val timeZone: TimeZone,
 ) : DailySavedPostReminderScheduler {
   override fun setEnabled(enabled: Boolean) {
     settings.setEnabled(enabled)
     scheduleNext()
   }
 
-  override fun setReminderTime(time: LocalTime) {
-    settings.setReminderTime(time)
-    scheduleNext()
+  override suspend fun setReminderTime(time: LocalTime) {
+    updateSchedule(
+      time = time,
+      settings = settings,
+      notificationRepository = notificationRepository,
+      clock = clock,
+      timeZone = timeZone,
+      scheduleNext = ::scheduleNext,
+    )
   }
 
   override fun reconcile() {
@@ -82,6 +92,21 @@ class WorkManagerDailySavedPostReminderScheduler(
     const val WORK_NAME = "dailySavedPostReminderV2"
     const val LEGACY_WORK_NAME = "dailySavedPostReminder"
   }
+}
+
+internal suspend fun updateSchedule(
+  time: LocalTime,
+  settings: DailySavedPostReminderSettings,
+  notificationRepository: DailySavedPostNotificationRepository,
+  clock: Clock,
+  timeZone: TimeZone,
+  scheduleNext: () -> Unit,
+) {
+  settings.setReminderTime(time)
+  notificationRepository.deleteDeliveryForDate(
+    clock.now().toLocalDateTime(timeZone).date.toString()
+  )
+  scheduleNext()
 }
 
 internal fun dailySavedPostReminderInitialDelay(

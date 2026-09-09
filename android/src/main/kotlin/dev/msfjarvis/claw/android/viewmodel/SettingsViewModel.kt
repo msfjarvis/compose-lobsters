@@ -57,7 +57,7 @@ class SettingsViewModel(
   }
 
   fun setDailySavedPostReminderTime(time: LocalTime) {
-    dailySavedPostReminderScheduler.setReminderTime(time)
+    viewModelScope.launch { dailySavedPostReminderScheduler.setReminderTime(time) }
   }
 
   fun logout() {

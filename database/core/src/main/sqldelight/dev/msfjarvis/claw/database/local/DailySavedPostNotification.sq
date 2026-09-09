@@ -28,3 +28,7 @@ UPDATE DailySavedPostNotification
 SET deliveredAtEpochMillis = :deliveredAtEpochMillis
 WHERE localDate = :localDate
   AND deliveredAtEpochMillis IS NULL;
+
+deleteDeliveryForDate:
+DELETE FROM DailySavedPostNotification
+WHERE localDate = :localDate;

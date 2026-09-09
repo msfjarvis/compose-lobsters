@@ -11,10 +11,17 @@ import dev.msfjarvis.claw.android.reminders.DEFAULT_DAILY_SAVED_POST_REMINDER_TI
 import dev.msfjarvis.claw.android.reminders.DailySavedPostReminderScheduler
 import dev.msfjarvis.claw.android.reminders.DailySavedPostReminderSettings
 import dev.msfjarvis.claw.core.network.SessionCookieStore
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
 import kotlinx.datetime.LocalTime
 import org.junit.jupiter.api.Test
 
@@ -72,19 +79,26 @@ class SettingsViewModelTest {
   }
 
   @Test
-  fun `setting reminder time delegates scheduling`() {
-    val scheduler = FakeDailySavedPostReminderScheduler()
-    val viewModel =
-      SettingsViewModel(
-        FakeSessionCookieStore(),
-        FakeWebViewCookieStore(),
-        FakeDailySavedPostReminderSettings(),
-        scheduler,
-      )
+  @OptIn(ExperimentalCoroutinesApi::class)
+  fun `setting reminder time delegates scheduling`() = runTest {
+    Dispatchers.setMain(StandardTestDispatcher(testScheduler))
+    try {
+      val scheduler = FakeDailySavedPostReminderScheduler()
+      val viewModel =
+        SettingsViewModel(
+          FakeSessionCookieStore(),
+          FakeWebViewCookieStore(),
+          FakeDailySavedPostReminderSettings(),
+          scheduler,
+        )
 
-    viewModel.setDailySavedPostReminderTime(LocalTime(13, 30))
+      viewModel.setDailySavedPostReminderTime(LocalTime(13, 30))
+      advanceUntilIdle()
 
-    assertThat(scheduler.lastReminderTime).isEqualTo(LocalTime(13, 30))
+      assertThat(scheduler.lastReminderTime).isEqualTo(LocalTime(13, 30))
+    } finally {
+      Dispatchers.resetMain()
+    }
   }
 
   private class FakeSessionCookieStore : SessionCookieStore {
@@ -136,7 +150,7 @@ class SettingsViewModelTest {
       lastEnabled = enabled
     }
 
-    override fun setReminderTime(time: LocalTime) {
+    override suspend fun setReminderTime(time: LocalTime) {
       lastReminderTime = time
     }
 

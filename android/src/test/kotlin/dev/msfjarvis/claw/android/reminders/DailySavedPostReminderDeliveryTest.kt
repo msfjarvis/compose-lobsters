@@ -204,6 +204,8 @@ class DailySavedPostReminderDeliveryTest {
     override suspend fun markDelivered(localDate: String, deliveredAtEpochMillis: Long) {
       markedDelivered += localDate to deliveredAtEpochMillis
     }
+
+    override suspend fun deleteDeliveryForDate(localDate: String) = Unit
   }
 
   private class FakeNotifier(

@@ -78,6 +78,31 @@ class DailySavedPostNotificationQueriesTest {
   }
 
   @Test
+  fun `deleting a delivery permits another selection for that date`() {
+    postQueries.insertOrReplacePost(createPost("only-post"))
+    notificationQueries.createSelectionIfAbsent("2026-09-05", 100L)
+    notificationQueries.createSelectionIfAbsent("2026-09-06", 200L)
+    notificationQueries.markDelivered(deliveredAtEpochMillis = 300L, localDate = "2026-09-05")
+    notificationQueries.markDelivered(deliveredAtEpochMillis = 400L, localDate = "2026-09-06")
+
+    notificationQueries.deleteDeliveryForDate("2026-09-05")
+    notificationQueries.createSelectionIfAbsent("2026-09-05", 500L)
+
+    assertThat(
+        notificationQueries.selectionForDate("2026-09-05").executeAsOne().selectedAtEpochMillis
+      )
+      .isEqualTo(500L)
+    assertThat(
+        notificationQueries.selectionForDate("2026-09-05").executeAsOne().deliveredAtEpochMillis
+      )
+      .isNull()
+    assertThat(
+        notificationQueries.selectionForDate("2026-09-06").executeAsOne().deliveredAtEpochMillis
+      )
+      .isEqualTo(400L)
+  }
+
+  @Test
   fun `saved post changes do not change an existing snapshot`() {
     postQueries.insertOrReplacePost(createPost("post", title = "before"))
     notificationQueries.createSelectionIfAbsent("2026-09-05", 100L)

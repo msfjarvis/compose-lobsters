@@ -23,6 +23,8 @@ interface DailySavedPostNotificationRepository {
   ): DailySavedPostNotification?
 
   suspend fun markDelivered(localDate: String, deliveredAtEpochMillis: Long)
+
+  suspend fun deleteDeliveryForDate(localDate: String)
 }
 
 @Inject
@@ -51,5 +53,9 @@ class SqlDelightDailySavedPostNotificationRepository(
         localDate = localDate,
       )
     }
+  }
+
+  override suspend fun deleteDeliveryForDate(localDate: String) {
+    withContext(writeDispatcher) { notificationQueries.deleteDeliveryForDate(localDate) }
   }
 }

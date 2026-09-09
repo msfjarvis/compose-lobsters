@@ -44,5 +44,6 @@
   <string name="daily_saved_post_reminder_time">Reminder time</string>
   <string name="daily_saved_post_notification_channel_name">Daily saved post</string>
   <string name="daily_saved_post_notification_text">A saved post for today</string>
+  <string name="daily_saved_post_discussion_action">Check out the discussion</string>
   <string name="daily_saved_post_notification_permission_denied">Notification permission is required for daily reminders</string>
 </resources>

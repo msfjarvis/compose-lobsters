@@ -32,7 +32,7 @@ class SqlDelightSessionCookieStore(
   }
 
   override fun getUsername(): String? {
-    return queries.getUsername().executeAsOneOrNull()?.username
+    return queries.getUsername().executeAsOneOrNull()?.username?.takeIf(String::isNotBlank)
   }
 
   override fun set(cookie: String, username: String) {
@@ -45,11 +45,13 @@ class SqlDelightSessionCookieStore(
 
   override fun isLoggedIn(): Flow<Boolean> {
     return queries.getUsername().asFlow().mapToOneOrNull(readDispatcher).map {
-      it?.username != null
+      !it?.username.isNullOrBlank()
     }
   }
 
   override fun username(): Flow<String?> {
-    return queries.getUsername().asFlow().mapToOneOrNull(readDispatcher).map { it?.username }
+    return queries.getUsername().asFlow().mapToOneOrNull(readDispatcher).map {
+      it?.username?.takeIf(String::isNotBlank)
+    }
   }
 }

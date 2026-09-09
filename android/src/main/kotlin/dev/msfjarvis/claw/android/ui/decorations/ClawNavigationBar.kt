@@ -82,7 +82,8 @@ fun ClawNavigationBar(
                   noiseFactor(0f)
                 },
             ),
-        containerColor = if (HazeBlurDefaults.blurEnabled()) Color.Transparent else surfaceColor,
+        containerColor =
+          if (HazeBlurDefaults.isBlurEnabledByDefault()) Color.Transparent else surfaceColor,
       ) {
         items.forEach { navItem ->
           val isSelected = currentNavKey == navItem.navKey

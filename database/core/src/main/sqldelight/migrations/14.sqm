@@ -1,0 +1,8 @@
+CREATE TABLE DailySavedPostNotification(
+  localDate TEXT NOT NULL PRIMARY KEY,
+  shortId TEXT NOT NULL,
+  title TEXT NOT NULL,
+  url TEXT NOT NULL,
+  selectedAtEpochMillis INTEGER NOT NULL,
+  deliveredAtEpochMillis INTEGER
+);

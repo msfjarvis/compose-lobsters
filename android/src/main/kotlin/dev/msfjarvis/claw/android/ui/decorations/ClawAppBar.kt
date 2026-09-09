@@ -27,6 +27,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberSearchBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -174,6 +175,7 @@ fun ClawAppBar(
 }
 
 @Composable
+@NonRestartableComposable
 private fun FakeSearchResults() {
   Text(text = "Fake result content")
 }

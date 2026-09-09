@@ -19,7 +19,12 @@ interface WebViewCookieStore {
 @ContributesBinding(AppScope::class)
 class AndroidWebViewCookieStore : WebViewCookieStore {
   override fun clearLobstersCookies() {
-    CookieManager.getInstance().removeAllCookies(null)
-    CookieManager.getInstance().flush()
+    try {
+      CookieManager.getInstance().removeAllCookies(null)
+      CookieManager.getInstance().flush()
+    } catch (_: Exception) {
+      // I would directly catch `android.webkit.WebViewFactory$MissingWebViewPackageException`
+      // but it is not public, so just swallow all exceptions and forget it.
+    }
   }
 }

@@ -10,6 +10,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.NonRestartableComposable
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.glance.GlanceId
@@ -111,6 +112,7 @@ class HottestPostsWidget : GlanceAppWidget() {
 
   @SuppressLint("ComposeUnstableReceiver")
   @Composable
+  @NonRestartableComposable
   private fun Content(
     context: Context,
     posts: ImmutableList<UIPost>,
@@ -167,6 +169,7 @@ class HottestPostsWidget : GlanceAppWidget() {
 
   @SuppressLint("ComposeUnstableReceiver")
   @Composable
+  @NonRestartableComposable
   private fun PreviewContent(
     context: Context,
     posts: ImmutableList<UIPost>,

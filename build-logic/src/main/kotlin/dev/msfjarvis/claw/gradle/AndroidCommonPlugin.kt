@@ -31,7 +31,12 @@ class AndroidCommonPlugin : Plugin<Project> {
     project.pluginManager.apply(AndroidCacheFixPlugin::class)
     project.pluginManager.apply(SpotlessPlugin::class)
     project.extensions.configure<CommonExtension> {
-      compileSdk { version = release(COMPILE_SDK) }
+      compileSdk {
+        version =
+          release(COMPILE_SDK) {
+            minorApiLevel = COMPILE_SDK_MINOR
+          }
+      }
       defaultConfig.apply {
         // Required by Metro, I don't care for this to be more broadly usable at the expense of my
         // personal development experience.

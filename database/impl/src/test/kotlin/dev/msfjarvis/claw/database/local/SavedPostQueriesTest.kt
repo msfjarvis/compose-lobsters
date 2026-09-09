@@ -217,6 +217,18 @@ class SavedPostQueriesTest {
       .inOrder()
   }
 
+  @Test
+  fun `getRandomPost returns a saved post`() {
+    val posts = createTestData(3)
+    posts.forEach { postQueries.insertOrReplacePost(it) }
+
+    val result = postQueries.getRandomPost().executeAsOne()
+
+    assertThat(posts.map { it.shortId }).contains(result.shortId)
+    assertThat(posts.map { it.title }).contains(result.title)
+    assertThat(posts.map { it.url }).contains(result.url)
+  }
+
   private fun createTestData(count: Int): ArrayList<SavedPost> {
     val posts = arrayListOf<SavedPost>()
 
@@ -224,6 +236,8 @@ class SavedPostQueriesTest {
       val post =
         createPostWithDate(
           id = "test_id_$i",
+          title = "test_post_$i",
+          url = "test_url_$i",
           createdAt = "0",
           submitterName = "test_user_$i",
           userIsAuthor = i % 2 == 0,
@@ -238,14 +252,16 @@ class SavedPostQueriesTest {
   private fun createPostWithDate(
     id: String,
     createdAt: String,
+    title: String = "test_post",
+    url: String = "test_url",
     submitterName: String = "test_user",
     userIsAuthor: Boolean = false,
   ): SavedPost {
     return SavedPost(
       shortId = id,
       createdAt = createdAt,
-      title = "test_post",
-      url = "test_url",
+      title = title,
+      url = url,
       commentCount = 0,
       commentsUrl = "test_comments_url",
       submitterName = submitterName,

@@ -8,6 +8,7 @@ package dev.msfjarvis.claw.gradle
 
 import com.diffplug.gradle.spotless.SpotlessExtension
 import com.diffplug.gradle.spotless.SpotlessPlugin
+import com.diffplug.spotless.LineEnding
 import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -27,17 +28,21 @@ class SpotlessPlugin : Plugin<Project> {
       isolated.rootProject.projectDirectory.file(path)
     }
     project.pluginManager.apply(SpotlessPlugin::class)
+    // Invoking setLineEndings apparently fixes this bug that is causing CC invalidation
+    // https://github.com/diffplug/spotless/issues/2416
     project.extensions.configure<SpotlessExtension> {
       kotlin {
         ktfmt(KTFMT_VERSION).googleStyle()
         target("src/**/*.kt")
         targetExclude("**/SentryNavigation3Integration.kt")
         licenseHeaderFile(rootFile("spotless/license.kt"))
+        setLineEndings(LineEnding.UNIX)
       }
       kotlinGradle {
         ktfmt(KTFMT_VERSION).googleStyle()
         target("*.kts")
         licenseHeaderFile(rootFile("spotless/license.kt"), "import|plugins|@file")
+        setLineEndings(LineEnding.UNIX)
       }
       format("xml") {
         target("src/**/*.xml")
@@ -48,6 +53,7 @@ class SpotlessPlugin : Plugin<Project> {
           rootFile("spotless/license.xml"),
           "<(adaptive-icon|appwidget-provider|data-extraction-rules|full-backup-content|manifest|network-security-config|vector|resources)",
         )
+        setLineEndings(LineEnding.UNIX)
       }
     }
   }

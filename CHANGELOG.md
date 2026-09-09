@@ -7,13 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.70.0] - 2026-09-07
+
+### Fixed
+
+- Permanent tag blocks would not get applied for logged out users
+
+## [1.69.0] - 2026-09-03
+
 ### Fixed
 
 - You can now manually refresh after the app reports an error fetching posts
+- Settings can now be scrolled when its content does not fit on screen
+- The logout option no longer appears for anonymous users
 
 ### Changed
 
-- Removed the export as bookmarks feature since it has barely any usage
+- Exporting saved posts as browser bookmarks is no longer supported
 
 ## [1.68.0] - 2026-07-18
 
@@ -672,7 +682,9 @@ Thanks to Charles Lombardo for contributing the action button UI changes.
 
 - Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.68.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.70.0...HEAD
+[1.70.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.69.0...v1.70.0
+[1.69.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.68.0...v1.69.0
 [1.68.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.67.0...v1.68.0
 [1.67.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.66.0...v1.67.0
 [1.66.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.65.0...v1.66.0

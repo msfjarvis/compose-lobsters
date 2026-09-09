@@ -1,0 +1,39 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "claw-zipline-assets-worker",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-08-30",
+  "compatibility_flags": ["nodejs_compat"],
+  "secrets": {
+    "required": ["ADMIN_PASSWORD"]
+  },
+  "r2_buckets": [
+    {
+      "binding": "ASSETS",
+      "bucket_name": "claw-zipline-assets"
+    }
+  ],
+  "kv_namespaces": [
+    {
+      "binding": "RELEASES",
+      "id": "283210e7cba04597b8aa8cdd5a4e6291"
+    }
+  ],
+  "observability": {
+    "enabled": true,
+    "logs": {
+      "head_sampling_rate": 1
+    },
+    "traces": {
+      "enabled": true,
+      "head_sampling_rate": 0.01
+    }
+  },
+  "workers_dev": false,
+  "routes": [
+    {
+      "pattern": "claw.msfjarvis.dev",
+      "custom_domain": true
+    }
+  ]
+}

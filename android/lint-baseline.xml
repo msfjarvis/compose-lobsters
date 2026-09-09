@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<issues format="6" by="lint 9.4.0-alpha03" type="baseline" client="gradle" dependencies="true" name="AGP (9.4.0-alpha03)" variant="all" version="9.4.0-alpha03">
+<issues format="6" by="lint 9.5.0-alpha04" type="baseline" client="gradle" dependencies="true" name="AGP (9.5.0-alpha04)" variant="all" version="9.5.0-alpha04">
+
+    <issue
+        id="AvoidUsingNotNullOperator"
+        message="Avoid using the `!!` operator"
+        errorLine1="    assertThat(event.getThrowable()!!.cause).isSameInstanceAs(original)"
+        errorLine2="                                   ~~">
+        <location
+            file="src/test/kotlin/dev/msfjarvis/claw/android/injection/SentryNativeLoadErrorProcessorTest.kt"
+            line="44"
+            column="36"/>
+    </issue>
+
+    <issue
+        id="AvoidUsingNotNullOperator"
+        message="Avoid using the `!!` operator"
+        errorLine1="    assertThat(event.extras!![&quot;native_load_error.supported_abis&quot;])"
+        errorLine2="                           ~~">
+        <location
+            file="src/test/kotlin/dev/msfjarvis/claw/android/injection/SentryNativeLoadErrorProcessorTest.kt"
+            line="57"
+            column="28"/>
+    </issue>
 
     <issue
         id="Instantiatable"
@@ -112,13 +134,24 @@
     </issue>
 
     <issue
+        id="DeprecatedCall"
+        message="android.content.pm.PackageManager.getInstallerPackageName is deprecated; consider using an alternative."
+        errorLine1="    application.packageManager.getInstallerPackageName(application.packageName)"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/kotlin/dev/msfjarvis/claw/android/injection/SentryNativeLoadErrorProcessor.kt"
+            line="59"
+            column="5"/>
+    </issue>
+
+    <issue
         id="MemberExtensionConflict"
         message="`KeepUntilTransitionsFinished` is defined both as a member in class `androidx.compose.animation.ExitTransition.Companion` and an extension in package `androidx.compose.animation`. The defined behavior for this is to use the member, but since the extension is explicitly imported into this file, there&apos;s a chance that this was not expected. (One common way this happens is for members to be added to a class after code was already written to use an extension)."
         errorLine1="                  ) togetherWith ExitTransition.KeepUntilTransitionsFinished"
         errorLine2="                                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/dev/msfjarvis/claw/android/ui/screens/LobstersPostsScreen.kt"
-            line="421"
+            line="420"
             column="49"/>
     </issue>
 

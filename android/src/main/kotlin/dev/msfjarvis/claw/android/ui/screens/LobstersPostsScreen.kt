@@ -6,8 +6,15 @@
  */
 package dev.msfjarvis.claw.android.ui.screens
 
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
+import android.provider.Settings as AndroidSettings
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.LocalActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.VisibleForTesting
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
@@ -23,10 +30,10 @@ import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.navigation3.ListDetailSceneStrategy
@@ -47,6 +54,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
@@ -59,6 +67,7 @@ import com.mikepenz.aboutlibraries.ui.compose.m3.LibrariesContainer
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeSource
 import dev.msfjarvis.claw.android.R
+import dev.msfjarvis.claw.android.reminders.DEFAULT_DAILY_SAVED_POST_REMINDER_TIME
 import dev.msfjarvis.claw.android.ui.PostActions
 import dev.msfjarvis.claw.android.ui.decorations.ClawAppBar
 import dev.msfjarvis.claw.android.ui.decorations.ClawNavigationBar
@@ -120,7 +129,7 @@ fun handleTopLevelBack(
   }
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3AdaptiveApi::class)
+@OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
 fun LobstersPostsScreen(
   uriHandler: UriHandler,
@@ -155,6 +164,35 @@ fun LobstersPostsScreen(
   val filteredTags by tagFilterViewModel.filteredTags.collectAsStateWithLifecycle(persistentSetOf())
   val isLoggedIn by settingsViewModel.isLoggedIn.collectAsStateWithLifecycle(false)
   val username by settingsViewModel.username.collectAsStateWithLifecycle(null)
+  val isDailySavedPostReminderEnabled by
+    settingsViewModel.isDailySavedPostReminderEnabled.collectAsStateWithLifecycle(false)
+  val dailySavedPostReminderTime by
+    settingsViewModel.dailySavedPostReminderTime.collectAsStateWithLifecycle(
+      DEFAULT_DAILY_SAVED_POST_REMINDER_TIME
+    )
+  val notificationPermissionDeniedMessage =
+    stringResource(R.string.daily_saved_post_notification_permission_denied)
+  val notificationSnackbarActionLabel = stringResource(R.string.settings)
+  val notificationPermissionLauncher =
+    rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+      if (granted) {
+        settingsViewModel.setDailySavedPostReminderEnabled(true)
+      } else {
+        coroutineScope.launch {
+          val result =
+            snackbarHostState.showSnackbar(
+              message = notificationPermissionDeniedMessage,
+              actionLabel = notificationSnackbarActionLabel,
+            )
+          if (result == SnackbarResult.ActionPerformed) {
+            context.startActivity(
+              Intent(AndroidSettings.ACTION_APP_NOTIFICATION_SETTINGS)
+                .putExtra(AndroidSettings.EXTRA_APP_PACKAGE, context.packageName)
+            )
+          }
+        }
+      }
+    }
   var isSearchActive by rememberSaveable { mutableStateOf(false) }
   var searchQuery by rememberSaveable { mutableStateOf("") }
   var lastExecutedSearchQuery by rememberSaveable { mutableStateOf<String?>(null) }
@@ -169,6 +207,19 @@ fun LobstersPostsScreen(
     } else {
       0.dp
     }
+
+  val onDailySavedPostReminderEnabledChange: (Boolean) -> Unit = { enabled ->
+    if (
+      !enabled ||
+        Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
+        ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) ==
+          PackageManager.PERMISSION_GRANTED
+    ) {
+      settingsViewModel.setDailySavedPostReminderEnabled(enabled)
+    } else {
+      notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+    }
+  }
 
   val navItems =
     persistentListOf(
@@ -448,6 +499,11 @@ fun LobstersPostsScreen(
                 importPosts = viewModel::importPosts,
                 exportPostsAsJson = viewModel::exportPostsAsJson,
                 savedPostsCount = savedPostsCount,
+                isDailySavedPostReminderEnabled = isDailySavedPostReminderEnabled,
+                dailySavedPostReminderTime = dailySavedPostReminderTime,
+                onDailySavedPostReminderEnabledChange = onDailySavedPostReminderEnabledChange,
+                onDailySavedPostReminderTimeChange =
+                  settingsViewModel::setDailySavedPostReminderTime,
                 snackbarHostState = snackbarHostState,
                 contentPadding = contentPadding,
                 modifier = Modifier.fillMaxSize(),

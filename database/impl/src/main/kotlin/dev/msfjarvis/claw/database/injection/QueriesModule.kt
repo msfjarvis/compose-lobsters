@@ -8,6 +8,7 @@ package dev.msfjarvis.claw.database.injection
 
 import dev.msfjarvis.claw.database.LobstersDatabase
 import dev.msfjarvis.claw.database.local.CachedRemotePostQueries
+import dev.msfjarvis.claw.database.local.DailySavedPostNotificationQueries
 import dev.msfjarvis.claw.database.local.PostCommentsQueries
 import dev.msfjarvis.claw.database.local.ReadPostsQueries
 import dev.msfjarvis.claw.database.local.SavedPostQueries
@@ -27,6 +28,14 @@ object QueriesModule {
   @SingleIn(AppScope::class)
   fun provideSavedPostsQueries(@InternalDatabaseApi database: LobstersDatabase): SavedPostQueries {
     return database.savedPostQueries
+  }
+
+  @Provides
+  @SingleIn(AppScope::class)
+  fun provideDailySavedPostNotificationQueries(
+    @InternalDatabaseApi database: LobstersDatabase
+  ): DailySavedPostNotificationQueries {
+    return database.dailySavedPostNotificationQueries
   }
 
   @Provides

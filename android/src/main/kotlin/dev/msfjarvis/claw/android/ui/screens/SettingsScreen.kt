@@ -6,7 +6,10 @@
  */
 package dev.msfjarvis.claw.android.ui.screens
 
+import android.app.TimePickerDialog
+import android.content.Context
 import android.net.Uri
+import android.text.format.DateFormat
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
@@ -17,6 +20,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -26,16 +30,19 @@ import androidx.compose.material.icons.filled.Bookmarks
 import androidx.compose.material.icons.filled.Code
 import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.ImportExport
+import androidx.compose.material.icons.filled.NotificationsActive
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.msfjarvis.claw.android.BuildConfig
@@ -45,8 +52,11 @@ import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
 import io.sentry.Sentry
 import java.io.InputStream
 import java.io.OutputStream
+import java.time.format.DateTimeFormatter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import kotlinx.datetime.LocalTime
+import kotlinx.datetime.toJavaLocalTime
 
 private const val JSON_MIME_TYPE = "application/json"
 
@@ -74,8 +84,13 @@ fun SettingsScreen(
   exportPostsAsJson: suspend (OutputStream) -> Unit,
   contentPadding: PaddingValues,
   savedPostsCount: Long,
+  isDailySavedPostReminderEnabled: Boolean,
+  dailySavedPostReminderTime: LocalTime,
+  onDailySavedPostReminderEnabledChange: (Boolean) -> Unit,
+  onDailySavedPostReminderTimeChange: (LocalTime) -> Unit,
   modifier: Modifier = Modifier,
 ) {
+  val context = LocalContext.current
   val coroutineScope = rememberCoroutineScope()
   Column(modifier.padding(contentPadding).verticalScroll(rememberScrollState())) {
     // Account Section
@@ -140,7 +155,84 @@ fun SettingsScreen(
     Spacer(modifier = Modifier.height(24.dp))
 
     // App Information Section
-    SectionHeader(title = stringResource(R.string.app_information))
+    SectionHeader(title = stringResource(R.string.posts))
+    ListItem(
+      supportingContent = { Text(stringResource(R.string.filter_posts_by_tags)) },
+      leadingContent = {
+        Icon(
+          imageVector = Icons.Filled.FilterList,
+          contentDescription = null,
+          modifier = Modifier.height(32.dp),
+        )
+      },
+      modifier = Modifier.clickable(onClick = openTagFiltering),
+    ) {
+      Text(stringResource(R.string.tag_filtering))
+    }
+    ListItem(
+      supportingContent = {
+        Text(stringResource(R.string.enable_post_a_day_reminders_summary))
+      },
+      leadingContent = {
+        Icon(
+          imageVector = Icons.Filled.NotificationsActive,
+          contentDescription = null,
+          modifier = Modifier.height(32.dp),
+        )
+      },
+      trailingContent = {
+        Switch(
+          checked = isDailySavedPostReminderEnabled,
+          onCheckedChange = onDailySavedPostReminderEnabledChange,
+        )
+      },
+    ) {
+      Text(stringResource(R.string.enable_post_a_day_reminders))
+    }
+    if (isDailySavedPostReminderEnabled) {
+      ListItem(
+        supportingContent = {
+          Text(formatDailySavedPostReminderTime(context, dailySavedPostReminderTime))
+        },
+        leadingContent = {
+          // 24.dp is the internal default "small icon" size but the token is not public, so I'm
+          // just hard coding it here.
+          Spacer(Modifier.size(24.dp))
+        },
+        modifier =
+          Modifier.clickable {
+            TimePickerDialog(
+                context,
+                { _, hour, minute ->
+                  onDailySavedPostReminderTimeChange(LocalTime(hour, minute))
+                },
+                dailySavedPostReminderTime.hour,
+                dailySavedPostReminderTime.minute,
+                DateFormat.is24HourFormat(context),
+              )
+              .show()
+          },
+      ) {
+        Text(stringResource(R.string.daily_saved_post_reminder_time))
+      }
+    }
+    ListItem(
+      supportingContent = { Text(stringResource(R.string.posts_saved_locally, savedPostsCount)) },
+      leadingContent = {
+        Icon(
+          imageVector = Icons.Filled.Bookmarks,
+          contentDescription = null,
+          modifier = Modifier.height(32.dp),
+        )
+      },
+    ) {
+      Text(stringResource(R.string.saved_posts))
+    }
+
+    Spacer(modifier = Modifier.height(24.dp))
+
+    // About Section
+    SectionHeader(title = stringResource(R.string.about))
     ListItem(
       supportingContent = {
         Text(
@@ -161,36 +253,6 @@ fun SettingsScreen(
     ) {
       Text(stringResource(R.string.version))
     }
-    ListItem(
-      supportingContent = { Text(stringResource(R.string.posts_saved_locally, savedPostsCount)) },
-      leadingContent = {
-        Icon(
-          imageVector = Icons.Filled.Bookmarks,
-          contentDescription = null,
-          modifier = Modifier.height(32.dp),
-        )
-      },
-    ) {
-      Text(stringResource(R.string.saved_posts))
-    }
-    ListItem(
-      supportingContent = { Text(stringResource(R.string.filter_posts_by_tags)) },
-      leadingContent = {
-        Icon(
-          imageVector = Icons.Filled.FilterList,
-          contentDescription = null,
-          modifier = Modifier.height(32.dp),
-        )
-      },
-      modifier = Modifier.clickable(onClick = openTagFiltering),
-    ) {
-      Text(stringResource(R.string.tag_filtering))
-    }
-
-    Spacer(modifier = Modifier.height(24.dp))
-
-    // About Section
-    SectionHeader(title = stringResource(R.string.about))
     ListItem(
       supportingContent = {
         Text(stringResource(R.string.view_open_source_libraries_used_in_this_))
@@ -219,6 +281,20 @@ fun SettingsScreen(
     ) {
       Text(stringResource(R.string.source_code))
     }
+  }
+}
+
+/**
+ * Forced to use [java.time.format.DateTimeFormatter] here instead of just `kotlinx.datetime`
+ * because there is no Locale aware formatting in it yet. Being tracked in issue
+ * https://github.com/Kotlin/kotlinx-datetime/issues/352
+ */
+private fun formatDailySavedPostReminderTime(context: Context, time: LocalTime): String {
+  val is24HourZone = DateFormat.is24HourFormat(context)
+  return if (is24HourZone) {
+    time.toString()
+  } else {
+    DateTimeFormatter.ofPattern("KK:mm a").format(time.toJavaLocalTime())
   }
 }
 
@@ -345,6 +421,10 @@ private fun SettingsScreenPreview() {
       exportPostsAsJson = {},
       contentPadding = PaddingValues(),
       savedPostsCount = 42,
+      isDailySavedPostReminderEnabled = false,
+      dailySavedPostReminderTime = LocalTime(9, 0),
+      onDailySavedPostReminderEnabledChange = {},
+      onDailySavedPostReminderTimeChange = {},
     )
   }
 }

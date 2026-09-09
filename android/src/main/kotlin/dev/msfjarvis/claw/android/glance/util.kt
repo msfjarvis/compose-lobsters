@@ -80,7 +80,7 @@ internal fun generatedWidgetPreviewPosts(): PersistentList<UIPost> {
         commentCount = 18,
         commentsUrl = "https://lobste.rs/s/widget_preview_1/rust_2026_roadmap",
         submitter = "alice",
-        tags = listOf("rust", "roadmap"),
+        tags = ["rust", "roadmap"],
         description = "",
       ),
       TEST_POST.copy(
@@ -90,7 +90,7 @@ internal fun generatedWidgetPreviewPosts(): PersistentList<UIPost> {
         commentCount = 7,
         commentsUrl = "https://lobste.rs/s/widget_preview_2/sqlite_tips_for_mobile_apps",
         submitter = "bob",
-        tags = listOf("sqlite", "android"),
+        tags = ["sqlite", "android"],
         description = "",
       ),
     )

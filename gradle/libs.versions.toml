@@ -35,7 +35,7 @@ sqldelight = "2.3.2"
 sqlite = "2.7.0"
 tracing-perfetto = "1.0.1"
 workmanager = "2.12.0-rc01"
-zipline = "1.27.0"
+zipline = "1.28.0-SNAPSHOT"
 
 [libraries]
 aboutLibraries-compose-core = { module = "com.mikepenz:aboutlibraries-compose-core", version.ref = "aboutLibraries" }

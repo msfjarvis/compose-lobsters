@@ -40,7 +40,7 @@ class SearchApiTest {
           commentsUrl = "https://lobste.rs/s/2cjb1z/why_i_am_against_genai_everything_it",
           submitter = "Marc",
           userIsAuthor = true,
-          tags = listOf("culture", "education", "vibecoding"),
+          tags = ["culture", "education", "vibecoding"],
         ),
         LobstersPost(
           shortId = "kgem4b",
@@ -52,7 +52,7 @@ class SearchApiTest {
           commentsUrl = "https://lobste.rs/s/kgem4b/social_contract_writing",
           submitter = "joladev",
           userIsAuthor = true,
-          tags = listOf("vibecoding", "philosophy"),
+          tags = ["vibecoding", "philosophy"],
         ),
       )
   }

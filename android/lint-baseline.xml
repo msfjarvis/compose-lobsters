@@ -2,35 +2,13 @@
 <issues format="6" by="lint 9.5.0-alpha04" type="baseline" client="gradle" dependencies="true" name="AGP (9.5.0-alpha04)" variant="all" version="9.5.0-alpha04">
 
     <issue
-        id="AvoidUsingNotNullOperator"
-        message="Avoid using the `!!` operator"
-        errorLine1="    assertThat(event.getThrowable()!!.cause).isSameInstanceAs(original)"
-        errorLine2="                                   ~~">
-        <location
-            file="src/test/kotlin/dev/msfjarvis/claw/android/injection/SentryNativeLoadErrorProcessorTest.kt"
-            line="44"
-            column="36"/>
-    </issue>
-
-    <issue
-        id="AvoidUsingNotNullOperator"
-        message="Avoid using the `!!` operator"
-        errorLine1="    assertThat(event.extras!![&quot;native_load_error.supported_abis&quot;])"
-        errorLine2="                           ~~">
-        <location
-            file="src/test/kotlin/dev/msfjarvis/claw/android/injection/SentryNativeLoadErrorProcessorTest.kt"
-            line="57"
-            column="28"/>
-    </issue>
-
-    <issue
         id="Instantiatable"
         message="This class should provide a default constructor (a public constructor with no arguments) (`dev.msfjarvis.claw.android.MainActivity`)"
         errorLine1="      android:name=&quot;.MainActivity&quot;"
         errorLine2="                    ~~~~~~~~~~~~~">
         <location
             file="src/main/AndroidManifest.xml"
-            line="28"
+            line="29"
             column="21"/>
     </issue>
 
@@ -151,7 +129,7 @@
         errorLine2="                                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/dev/msfjarvis/claw/android/ui/screens/LobstersPostsScreen.kt"
-            line="420"
+            line="471"
             column="49"/>
     </issue>
 

@@ -30,7 +30,7 @@ class SentryNativeLoadErrorProcessorTest {
         "source_dir" to "/data/app/base.apk",
         "split_source_dirs" to listOf("/data/app/config.arm64_v8a.apk"),
         "native_library_dir" to "/data/app/lib/arm64",
-        "supported_abis" to listOf("arm64-v8a", "armeabi-v7a"),
+        "supported_abis" to ["arm64-v8a", "armeabi-v7a"],
         "process_64bit" to true,
         "installer" to "com.android.vending",
       )
@@ -41,19 +41,19 @@ class SentryNativeLoadErrorProcessorTest {
     assertThat(processed).isSameInstanceAs(event)
     assertThat(event.throwableMechanism).isSameInstanceAs(wrapped)
     assertThat(event.getThrowable()).isSameInstanceAs(throwable)
-    assertThat(event.getThrowable()!!.cause).isSameInstanceAs(original)
+    assertThat(event.getThrowable()?.cause).isSameInstanceAs(original)
     assertThat(event.extras).containsEntry("native_load_error.source_dir", "/data/app/base.apk")
     assertThat(event.extras)
       .containsEntry(
         "native_load_error.split_source_dirs",
-        listOf("/data/app/config.arm64_v8a.apk"),
+        ["/data/app/config.arm64_v8a.apk"],
       )
     assertThat(event.extras)
       .containsEntry("native_load_error.native_library_dir", "/data/app/lib/arm64")
     assertThat(event.extras).containsEntry("native_load_error.process_64bit", true)
     assertThat(event.extras).containsEntry("native_load_error.installer", "com.android.vending")
-    assertThat(event.extras!!["native_load_error.supported_abis"])
-      .isEqualTo(listOf("arm64-v8a", "armeabi-v7a"))
+    assertThat(event.extras?.get("native_load_error.supported_abis"))
+      .isEqualTo(["arm64-v8a", "armeabi-v7a"])
     assertThat(event.extras)
       .containsEntry("native_load_error.linker_exception", original.toString())
     assertThat(calls.get()).isEqualTo(1)

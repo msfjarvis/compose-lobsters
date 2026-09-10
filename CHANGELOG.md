@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Feature to send a random saved post at a configured time as a notification
+
 ## [1.70.0] - 2026-09-07
 
 ### Fixed

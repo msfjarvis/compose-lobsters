@@ -263,7 +263,7 @@ val TEST_POST_ACTIONS =
     }
   }
 
-@VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+@VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
 val TEST_POST =
   UIPost(
     shortId = "bdzmde",

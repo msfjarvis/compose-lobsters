@@ -4,7 +4,6 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
 plugins {
   id("dev.msfjarvis.claw.kotlin-multiplatform")

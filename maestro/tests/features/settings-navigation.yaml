@@ -6,11 +6,14 @@ tags:
 - runFlow: ../helpers/launch-app.yaml
 - tapOn: "Settings"
 - waitForAnimationToEnd
-- assertVisible: "Data Management"
+- assertVisible: "Account"
 - assertVisible: "Import"
 - assertVisible: "Export"
-- assertVisible: "App Information"
+- assertVisible: "Posts"
+- assertVisible: "Tag filtering"
+- assertVisible: "Enable post-a-day reminders"
 - assertVisible: "About"
+- assertVisible: "Version"
 - scroll
 - back
 - assertVisible: "Hottest"

@@ -16,7 +16,7 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
 
-@Suppress("Unused", "UnstableApiUsage")
+@Suppress("Unused")
 class SentryPlugin : Plugin<Project> {
 
   override fun apply(project: Project) {

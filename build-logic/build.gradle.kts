@@ -20,7 +20,7 @@ gradlePlugin {
   plugins {
     register("android-application") {
       id = "dev.msfjarvis.claw.android-application"
-      implementationClass = "dev.msfjarvis.claw.gradle.ApplicationPlugin"
+      implementationClass = "dev.msfjarvis.claw.gradle.AndroidApplicationPlugin"
     }
     register("android-common") {
       id = "dev.msfjarvis.claw.android-common"
@@ -28,7 +28,7 @@ gradlePlugin {
     }
     register("android-library") {
       id = "dev.msfjarvis.claw.android-library"
-      implementationClass = "dev.msfjarvis.claw.gradle.LibraryPlugin"
+      implementationClass = "dev.msfjarvis.claw.gradle.AndroidLibraryPlugin"
     }
     register("kotlin-android") {
       id = "dev.msfjarvis.claw.kotlin-android"
@@ -62,10 +62,6 @@ gradlePlugin {
       id = "dev.msfjarvis.claw.versioning-plugin"
       implementationClass = "dev.msfjarvis.claw.gradle.versioning.VersioningPlugin"
     }
-    register("versions") {
-      id = "dev.msfjarvis.claw.versions"
-      implementationClass = "dev.msfjarvis.claw.gradle.DependencyUpdatesPlugin"
-    }
   }
 }
 
@@ -85,7 +81,6 @@ dependencies {
   implementation(libs.build.semver)
   implementation(libs.build.sentry)
   implementation(libs.build.spotless)
-  implementation(libs.build.vcu)
 
   // Expose the generated version catalog API to the plugin.
   implementation(files(libs::class.java.superclass.protectionDomain.codeSource.location))

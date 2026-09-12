@@ -24,8 +24,6 @@ object LintConfig {
     if (!isJVM) {
       enable += "ComposeM2Api"
       error += "ComposeM2Api"
-      // The Lint baseline message changes too frequently for this
-      disable += "Aligned16KB"
       // This is already giving me false positives
       disable += "ComposeRedundantComposable"
     }

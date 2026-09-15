@@ -21,13 +21,15 @@ jobs:
         token: ${{ secrets.POST_RELEASE_GH_TOKEN }}
         fetch-depth: 0
         cache-read-only: ${{ github.ref != 'refs/heads/main' }}
-        persist-credentials: true
 
-    - name: Set up Git author
+    - name: Set up Git author and credentials
       shell: bash
+      env:
+        GITHUB_TOKEN: ${{ secrets.POST_RELEASE_GH_TOKEN }}
       run: |
         git config user.name "GitHub Actions"
         git config user.email noreply@github.com
+        git config --local credential.helper '!f() { echo "username=x-access-token"; echo "password=${GITHUB_TOKEN}"; }; f'
 
     - name: Decrypt secrets
       run: |

@@ -15,6 +15,7 @@ permissions: {}
 
 jobs:
   publish-google-play-release:
+    name: Publish Google Play release
     runs-on: macos-26
     permissions:
       contents: read

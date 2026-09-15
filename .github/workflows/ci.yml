@@ -18,6 +18,7 @@ permissions: {}
 
 jobs:
   check:
+    name: Verify
     runs-on: macos-26
     permissions:
       contents: write # Submit dependency graph snapshots
@@ -48,6 +49,7 @@ jobs:
           path: '**/build/reports/tests/**'
 
   dependency-review:
+    name: Review dependencies
     runs-on: macos-26
     permissions:
       contents: read
@@ -67,6 +69,7 @@ jobs:
           head-ref: ${{ github.ref }}
 
   release-app:
+    name: Build release app
     runs-on: macos-26
     permissions:
       contents: read

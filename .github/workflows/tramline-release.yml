@@ -11,6 +11,7 @@ permissions: {}
 
 jobs:
   signed-build:
+    name: Build signed release
     runs-on: ubuntu-latest
     permissions:
       contents: read

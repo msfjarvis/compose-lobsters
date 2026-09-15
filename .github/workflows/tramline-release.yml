@@ -7,9 +7,13 @@ on:
         description: "Tramline input"
         required: false
 
+permissions: {}
+
 jobs:
   signed-build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Setup build environment
         uses: $/.github/reusable-workflows/setup-gradle

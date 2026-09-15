@@ -11,9 +11,13 @@ on:
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
 
+permissions: {}
+
 jobs:
   publish-google-play-release:
     runs-on: macos-26
+    permissions:
+      contents: read
     steps:
     - name: Setup build environment
       uses: $/.github/reusable-workflows/setup-gradle

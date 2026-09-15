@@ -14,9 +14,13 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions: {}
+
 jobs:
   check:
     runs-on: macos-26
+    permissions:
+      contents: write # Submit dependency graph snapshots
     steps:
     - name: Setup build environment
       uses: $/.github/reusable-workflows/setup-gradle
@@ -45,6 +49,8 @@ jobs:
 
   dependency-review:
     runs-on: macos-26
+    permissions:
+      contents: read
     if: "github.event_name == 'push' && github.event.ref != 'refs/heads/main'"
     needs:
       - check
@@ -62,6 +68,8 @@ jobs:
 
   release-app:
     runs-on: macos-26
+    permissions:
+      contents: read
     needs:
       - check
     steps:

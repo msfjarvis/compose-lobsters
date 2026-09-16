@@ -48,7 +48,7 @@ private fun CommentEntryPreview(
   }
 }
 
-private class CommentEntryPreviewParameters(
+private data class CommentEntryPreviewParameters(
   val isUpvoted: Boolean,
   val hasChildren: Boolean,
   val isExpanded: Boolean,

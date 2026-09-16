@@ -4,11 +4,14 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
+@file:OptIn(ExperimentalTime::class)
+
 package dev.msfjarvis.claw.database.local
 
 import com.google.common.truth.Truth.assertThat
 import kotlin.time.Clock
 import kotlin.time.Duration.Companion.days
+import kotlin.time.ExperimentalTime
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -124,7 +127,11 @@ class SavedPostQueriesTest {
     postQueries.insertOrReplacePost(oldPost)
     postQueries.insertOrReplacePost(veryRecentPost)
 
-    val postIdsFromLast30Days = postQueries.selectPostsFromLastNDays("30").executeAsList()
+    val postIdsFromLast30Days =
+      postQueries
+        .selectPostsFromLastNDays("30")
+        .executeAsList()
+        .map(SelectPostsFromLastNDays::shortId)
 
     assertThat(postIdsFromLast30Days).containsExactly("recent_1", "recent_2")
     assertThat(postIdsFromLast30Days).doesNotContain("old_1")

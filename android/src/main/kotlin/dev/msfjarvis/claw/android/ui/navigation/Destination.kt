@@ -29,7 +29,9 @@ interface NonStackable
 
 @Parcelize @Serializable data object Saved : NavKey, TopLevelDestination, Parcelable
 
-@Parcelize @Serializable data class Comments(val postId: String) : NavKey, Parcelable, NonStackable
+@Parcelize
+@Serializable
+data class Comments(val postId: String, val commentsUrl: String) : NavKey, Parcelable, NonStackable
 
 @Parcelize @Serializable data class User(val username: String) : NavKey, Parcelable, NonStackable
 

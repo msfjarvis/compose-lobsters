@@ -124,7 +124,7 @@ class SavedPostQueriesTest {
     postQueries.insertOrReplacePost(oldPost)
     postQueries.insertOrReplacePost(veryRecentPost)
 
-    val postIdsFromLast30Days = postQueries.selectPostIdsFromLastNDays("30").executeAsList()
+    val postIdsFromLast30Days = postQueries.selectPostsFromLastNDays("30").executeAsList()
 
     assertThat(postIdsFromLast30Days).containsExactly("recent_1", "recent_2")
     assertThat(postIdsFromLast30Days).doesNotContain("old_1")

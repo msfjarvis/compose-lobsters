@@ -50,8 +50,8 @@ selectPostIds:
 SELECT shortId
 FROM SavedPost;
 
-selectPostIdsFromLastNDays:
-SELECT shortId
+selectPostsFromLastNDays:
+SELECT shortId, commentsUrl
 FROM SavedPost
 WHERE datetime(createdAt) >= datetime('now', '-' || :days || ' days');
 

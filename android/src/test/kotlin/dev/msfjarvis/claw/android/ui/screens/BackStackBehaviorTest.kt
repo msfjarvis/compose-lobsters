@@ -33,39 +33,59 @@ class BackStackBehaviorTest {
 
   @Test
   fun `NonStackable destinations do not stack by default`() {
-    val backStack = makeBackStack(Hottest, Comments("abc123"))
+    val backStack = makeBackStack(Hottest, Comments("abc123", "https://lobste.rs/s/abc123/c"))
 
-    navigateTo(backStack, Comments("def456"))
+    navigateTo(backStack, Comments("def456", "https://lobste.rs/s/def456/c"))
 
-    assertThat(backStack).containsExactly(Hottest, Comments("def456")).inOrder()
+    assertThat(backStack)
+      .containsExactly(Hottest, Comments("def456", "https://lobste.rs/s/def456/c"))
+      .inOrder()
   }
 
   @Test
   fun `NonStackable destinations stack when allowStacking = true`() {
-    val backStack = makeBackStack(Hottest, Comments("abc123"))
+    val backStack = makeBackStack(Hottest, Comments("abc123", "https://lobste.rs/s/abc123/c"))
 
-    navigateTo(backStack, Comments("def456"), allowStacking = true)
+    navigateTo(backStack, Comments("def456", "https://lobste.rs/s/def456/c"), allowStacking = true)
 
-    assertThat(backStack).containsExactly(Hottest, Comments("abc123"), Comments("def456")).inOrder()
+    assertThat(backStack)
+      .containsExactly(
+        Hottest,
+        Comments("abc123", "https://lobste.rs/s/abc123/c"),
+        Comments("def456", "https://lobste.rs/s/def456/c"),
+      )
+      .inOrder()
   }
 
   @Test
   fun `Same destination cannot be stacked on itself`() {
-    val backStack = makeBackStack(Hottest, Comments("abc123"))
+    val backStack = makeBackStack(Hottest, Comments("abc123", "https://lobste.rs/s/abc123/c"))
 
-    navigateTo(backStack, Comments("abc123"), allowStacking = true)
+    navigateTo(backStack, Comments("abc123", "https://lobste.rs/s/abc123/c"), allowStacking = true)
 
-    assertThat(backStack).containsExactly(Hottest, Comments("abc123")).inOrder()
+    assertThat(backStack)
+      .containsExactly(Hottest, Comments("abc123", "https://lobste.rs/s/abc123/c"))
+      .inOrder()
   }
 
   @Test
   fun `Same destination can be stacked with a gap in between`() {
-    val backStack = makeBackStack(Hottest, Comments("abc123"), Comments("def456"))
+    val backStack =
+      makeBackStack(
+        Hottest,
+        Comments("abc123", "https://lobste.rs/s/abc123/c"),
+        Comments("def456", "https://lobste.rs/s/def456/c"),
+      )
 
-    navigateTo(backStack, Comments("abc123"), allowStacking = true)
+    navigateTo(backStack, Comments("abc123", "https://lobste.rs/s/abc123/c"), allowStacking = true)
 
     assertThat(backStack)
-      .containsExactly(Hottest, Comments("abc123"), Comments("def456"), Comments("abc123"))
+      .containsExactly(
+        Hottest,
+        Comments("abc123", "https://lobste.rs/s/abc123/c"),
+        Comments("def456", "https://lobste.rs/s/def456/c"),
+        Comments("abc123", "https://lobste.rs/s/abc123/c"),
+      )
       .inOrder()
   }
 

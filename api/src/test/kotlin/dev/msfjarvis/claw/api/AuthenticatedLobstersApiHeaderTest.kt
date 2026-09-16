@@ -51,7 +51,7 @@ private class RecordingLobstersApi : LobstersApi {
   override suspend fun getNewestPosts(page: Int): ApiResult<List<LobstersPost>, Unit> =
     error("unused")
 
-  override suspend fun getPostDetails(postId: String): ApiResult<LobstersPostDetails, Unit> =
+  override suspend fun getPostDetails(postUrl: String): ApiResult<LobstersPostDetails, Unit> =
     error("unused")
 
   override suspend fun getUser(username: String): ApiResult<User, Unit> = error("unused")

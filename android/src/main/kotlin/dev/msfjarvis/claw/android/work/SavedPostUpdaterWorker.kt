@@ -25,6 +25,7 @@ import dev.zacsweers.metro.AssistedInject
 import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.binding
 import kotlin.random.Random
+import kotlin.time.Duration.Companion.milliseconds
 import kotlinx.coroutines.delay
 
 /**
@@ -51,7 +52,9 @@ class SavedPostUpdaterWorker(
     val updatedPosts = mutableListOf<SavedPost>()
 
     for ((index, post) in postsToUpdate.withIndex()) {
-      when (val result = lobstersApi.getPostDetails(post)) {
+      // Any title slug is accepted when fetching a story's details; only the short id is
+      // required. Construct one since the updater only tracks short ids here.
+      when (val result = lobstersApi.getPostDetails(post.commentsUrl)) {
         is Success -> {
           updatedPosts.add(result.value.toSavedPost())
         }
@@ -61,7 +64,7 @@ class SavedPostUpdaterWorker(
       if (index < postsToUpdate.lastIndex) {
         // Add a random delay between API calls to avoid rate limiting
         val delayMs = Random.nextLong(MIN_DELAY_MS, MAX_DELAY_MS)
-        delay(delayMs)
+        delay(delayMs.milliseconds)
       }
     }
 

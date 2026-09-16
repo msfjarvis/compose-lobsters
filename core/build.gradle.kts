@@ -4,6 +4,10 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
+@file:Suppress("UnstableApiUsage")
+
+import dev.msfjarvis.claw.gradle.addTestDependencies
+
 plugins {
   id("dev.msfjarvis.claw.kotlin-jvm")
   alias(libs.plugins.dependencyAnalysis)
@@ -21,4 +25,6 @@ dependencies {
   implementation(libs.kotlinx.datetime)
   implementation(libs.kotlinx.serialization.core)
   implementation(libs.retrofit.kotlinxSerializationConverter)
+
+  addTestDependencies(project)
 }

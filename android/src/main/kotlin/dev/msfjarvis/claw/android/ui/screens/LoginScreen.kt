@@ -34,6 +34,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import dev.msfjarvis.claw.core.network.CHROME_USER_AGENT
 
 private const val LOGIN_URL = "https://lobste.rs/login"
 private const val LOBSTERS_URL = "https://lobste.rs"
@@ -79,6 +80,12 @@ fun LoginScreen(
               .apply {
                 @SuppressLint("SetJavaScriptEnabled")
                 settings.javaScriptEnabled = true
+                // Keep the WebView User-Agent identical to the one [UserAgentInterceptor]
+                // sends on OkHttp requests. Anubis embeds the requesting User-Agent in the
+                // challenge metadata and issues challenge cookies keyed to it, so presenting
+                // the system WebView default User-Agent here would yield cookies that the
+                // data API requests don't get accepted with.
+                settings.userAgentString = CHROME_USER_AGENT
                 webViewClient =
                   object : WebViewClient() {
                     override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {

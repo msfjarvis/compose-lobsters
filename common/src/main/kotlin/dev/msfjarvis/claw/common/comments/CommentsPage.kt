@@ -30,6 +30,7 @@ import dev.zacsweers.metrox.viewmodel.metroViewModel
 @Composable
 fun CommentsPage(
   postId: String,
+  commentsUrl: String,
   postActions: PostActions,
   contentPadding: PaddingValues,
   openUserProfile: (String) -> Unit,
@@ -37,7 +38,9 @@ fun CommentsPage(
   modifier: Modifier = Modifier,
   viewModel: CommentsViewModel = metroViewModel(key = postId),
 ) {
-  LaunchedEffect(postId) { viewModel.loadPostDetails(postId) }
+  LaunchedEffect(postId, commentsUrl) {
+    viewModel.loadPostDetails(postId, commentsUrl)
+  }
   val seenCommentsState by
     produceState<SeenCommentsState>(initialValue = SeenCommentsState.Loading, key1 = postId) {
       value =

@@ -38,7 +38,7 @@ class SavedPostsRepository(
 
   suspend fun getPostIdsFromLastNDays(days: Long) =
     withContext(readDispatcher) {
-      savedPostQueries.selectPostIdsFromLastNDays(days.toString()).executeAsList()
+      savedPostQueries.selectPostsFromLastNDays(days.toString()).executeAsList()
     }
 
   suspend fun getRecentPosts(limit: Long) =

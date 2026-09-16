@@ -79,7 +79,7 @@ fun LobstersCard(
       SaveButton(isSaved = isSaved, onClick = { postActions.toggleSave(post) })
       CommentsButton(
         commentCount = post.commentCount,
-        onClick = { postActions.viewComments(post.shortId) },
+        onClick = { postActions.viewComments(post.shortId, post.commentsUrl) },
       )
     }
   }
@@ -240,7 +240,7 @@ val TEST_POST_ACTIONS =
   object : PostActions {
     override fun viewPost(postId: String, postUrl: String, commentsUrl: String) {}
 
-    override fun viewComments(postId: String) {}
+    override fun viewComments(postId: String, commentsUrl: String) {}
 
     override fun viewCommentsPage(post: UIPost) {}
 

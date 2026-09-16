@@ -64,7 +64,7 @@ class CommentsViewModel(
         initialValue = false,
       )
 
-  suspend fun loadPostDetails(postId: String) {
+  suspend fun loadPostDetails(postId: String, commentsUrl: String) {
     if (postDetails is NetworkState.Error) {
       // If the post details failed to load previously, reset the state to loading
       postDetails = NetworkState.Loading
@@ -72,7 +72,7 @@ class CommentsViewModel(
     postDetails =
       runSuspendCatching<UIPost> {
           withContext(ioDispatcher) {
-            when (val result = api.getPostDetails(postId)) {
+            when (val result = api.getPostDetails(commentsUrl)) {
               is Success -> result.value.toUIPost()
               is Failure.NetworkFailure -> throw result.error
               is Failure.UnknownFailure -> throw result.error

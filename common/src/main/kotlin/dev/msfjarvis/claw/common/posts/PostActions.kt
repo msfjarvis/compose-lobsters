@@ -14,7 +14,7 @@ import dev.msfjarvis.claw.model.UIPost
 interface PostActions {
   fun viewPost(postId: String, postUrl: String, commentsUrl: String)
 
-  fun viewComments(postId: String)
+  fun viewComments(postId: String, commentsUrl: String)
 
   fun viewCommentsPage(post: UIPost)
 

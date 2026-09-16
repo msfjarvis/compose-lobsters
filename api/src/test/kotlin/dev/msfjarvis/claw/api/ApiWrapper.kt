@@ -54,6 +54,7 @@ class ApiWrapper {
         when (request.url.encodedPath) {
           "/page/1" -> getResource("hottest_page.html")
           "/newest/page/1" -> getResource("hottest_page.html")
+          "/s/tdfoqh/c" -> getResource("post_details_tdfoqh.html")
           "/s/tdfoqh" -> getResource("post_details_tdfoqh.html")
           "/~msfjarvis" -> getResource("msfjarvis.html")
           "/" -> getResource("csrf_page.html")

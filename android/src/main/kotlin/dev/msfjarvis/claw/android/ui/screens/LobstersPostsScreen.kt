@@ -260,8 +260,8 @@ fun LobstersPostsScreen(
 
   val postActions =
     remember(isSearchActive) {
-      PostActions(context, uriHandler, viewModel) {
-        navigateToDestination(Comments(it), false)
+      PostActions(context, uriHandler, viewModel) { postId, commentsUrl ->
+        navigateToDestination(Comments(postId, commentsUrl), false)
       }
     }
 
@@ -439,12 +439,13 @@ fun LobstersPostsScreen(
             entry<Comments>(metadata = ListDetailSceneStrategy.detailPane()) { dest ->
               val commentsPostActions =
                 remember(isSearchActive) {
-                  PostActions(context, uriHandler, viewModel) {
-                    navigateToDestination(Comments(it), true)
+                  PostActions(context, uriHandler, viewModel) { postId, commentsUrl ->
+                    navigateToDestination(Comments(postId, commentsUrl), true)
                   }
                 }
               CommentsPage(
                 postId = dest.postId,
+                commentsUrl = dest.commentsUrl,
                 postActions = commentsPostActions,
                 contentPadding = contentPadding,
                 openUserProfile = { navigateToDestination(User(it), false) },

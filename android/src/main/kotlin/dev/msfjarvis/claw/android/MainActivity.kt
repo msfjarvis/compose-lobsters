@@ -97,7 +97,9 @@ class MainActivity(
         "comments" -> {
           val postId = data.pathSegments.firstOrNull()
           if (postId != null) {
-            deepLinkDestination = Comments(postId)
+            // Deep links only carry the short id; any title slug works for fetching comments,
+            // so synthesize one.
+            deepLinkDestination = Comments(postId, "https://lobste.rs/s/$postId/c")
           }
         }
         "newest" -> deepLinkDestination = Newest

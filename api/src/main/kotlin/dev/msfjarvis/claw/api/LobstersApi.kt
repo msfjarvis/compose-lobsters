@@ -24,6 +24,7 @@ import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
 import retrofit2.http.Path
+import retrofit2.http.Url
 
 /** Simple interface defining an API for lobste.rs */
 interface LobstersApi {
@@ -34,8 +35,14 @@ interface LobstersApi {
   @GET("newest/page/{page}")
   suspend fun getNewestPosts(@Path("page") page: Int): ApiResult<List<LobstersPost>, Unit>
 
-  @GET("s/{postId}")
-  suspend fun getPostDetails(@Path("postId") postId: String): ApiResult<LobstersPostDetails, Unit>
+  /**
+   * Fetches a story's details and its server-rendered comments.
+   *
+   * Must be passed the full comments URL (including the title slug, e.g.
+   * `https://lobste.rs/s/abcd12/example_slug`): the bare `s/{shortId}` form routes through the
+   * Anubis challenge layer, which serves a comment-stripped page.
+   */
+  @GET suspend fun getPostDetails(@Url postUrl: String): ApiResult<LobstersPostDetails, Unit>
 
   @GET("~{username}") suspend fun getUser(@Path("username") username: String): ApiResult<User, Unit>
 

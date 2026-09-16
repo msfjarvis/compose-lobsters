@@ -91,7 +91,7 @@ class ApiTest {
 
   @Test
   fun `post details with comments`() = runTest {
-    val postDetails = api.getPostDetails("tdfoqh")
+    val postDetails = api.getPostDetails("https://lobste.rs/s/tdfoqh/c")
     assertIs<Success<LobstersPostDetails>>(postDetails)
     assertThat(postDetails.value.tags).containsExactly("meta")
     val comments = postDetails.value.comments
@@ -182,7 +182,7 @@ class ApiTest {
 
   @Test
   fun `edited comments expose a single timestamp and edited state`() = runTest {
-    val postDetails = api.getPostDetails("tdfoqh")
+    val postDetails = api.getPostDetails("https://lobste.rs/s/tdfoqh/c")
     assertIs<Success<LobstersPostDetails>>(postDetails)
 
     val editedComment = postDetails.value.comments.first { it.shortId == "pcvbcd" }

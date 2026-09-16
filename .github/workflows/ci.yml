@@ -37,7 +37,7 @@ jobs:
         validation_level: error
 
     - name: Run unit tests
-      run: ./gradlew --no-configuration-cache --stacktrace :build-logic:check check -PslimTests
+      run: ./gradlew --no-configuration-cache --stacktrace :build-logic:check check validateDebugScreenshotTest -PslimTests
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

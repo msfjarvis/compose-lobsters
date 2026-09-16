@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Comments not loading
+- Logged in state not being persisted
+- Comment upvote button state not being visually distinct
+
 ### Added
 
 - Feature to send a random saved post at a configured time as a notification

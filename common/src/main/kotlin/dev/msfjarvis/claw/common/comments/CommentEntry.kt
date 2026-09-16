@@ -29,7 +29,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.Reply
 import androidx.compose.material.icons.filled.Public
-import androidx.compose.material.icons.outlined.KeyboardArrowUp
+import androidx.compose.material.icons.filled.ThumbUpAlt
+import androidx.compose.material.icons.filled.ThumbUpOffAlt
 import androidx.compose.material.icons.outlined.Share
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -336,7 +337,7 @@ private fun CommentActionTray(
   ) {
     if (isLoggedIn) {
       Icon(
-        imageVector = Icons.Outlined.KeyboardArrowUp,
+        imageVector = if (isUpvoted) Icons.Filled.ThumbUpAlt else Icons.Filled.ThumbUpOffAlt,
         contentDescription = if (isUpvoted) "Remove upvote" else "Upvote",
         tint =
           if (isUpvoted) MaterialTheme.colorScheme.error

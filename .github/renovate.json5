@@ -54,6 +54,15 @@
     },
     {
       "matchPackageNames": [
+        "com.android.tools.build:gradle",
+        "com.android.lint",
+        "com.android.test",
+      ],
+      // alpha06 is missing a corresponding Studio release, keep this pinned until resolved
+      "allowedVersions": "9.5.0-alpha05",
+    },
+    {
+      "matchPackageNames": [
         "/^androidx.*/",
       ],
       "groupName": "AndroidX"

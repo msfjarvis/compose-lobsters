@@ -9,6 +9,8 @@ package dev.msfjarvis.claw.android.injection
 import android.content.Context
 import androidx.work.ListenableWorker
 import androidx.work.WorkManager
+import com.google.android.play.core.appupdate.AppUpdateManager
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import dev.msfjarvis.claw.android.reminders.DailySavedPostReminderScheduler
 import dev.msfjarvis.claw.android.viewmodel.CachedRemotePostsRepository
 import dev.msfjarvis.claw.android.viewmodel.SavedPostsRepository
@@ -41,6 +43,11 @@ interface AppGraph : MetroAppComponentProviders, ViewModelGraph {
   fun providesWorkManager(application: Context): WorkManager {
     return WorkManager.getInstance(application)
   }
+
+  @Provides
+  @SingleIn(AppScope::class)
+  fun providesAppUpdateManager(context: Context): AppUpdateManager =
+    AppUpdateManagerFactory.create(context)
 
   @Provides fun providesClock(): Clock = Clock.System
 

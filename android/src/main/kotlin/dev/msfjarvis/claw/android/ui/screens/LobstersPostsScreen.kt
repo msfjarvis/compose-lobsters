@@ -92,6 +92,7 @@ import dev.msfjarvis.claw.android.ui.navigation.Settings
 import dev.msfjarvis.claw.android.ui.navigation.TagFiltering
 import dev.msfjarvis.claw.android.ui.navigation.TopLevelDestination
 import dev.msfjarvis.claw.android.ui.navigation.User
+import dev.msfjarvis.claw.android.ui.updates.InAppUpdates
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.android.viewmodel.SettingsViewModel
 import dev.msfjarvis.claw.common.comments.CommentsPage
@@ -324,6 +325,8 @@ fun LobstersPostsScreen(
       TopLevelBackAction.PopNavigation -> popBackStack(backStack)
     }
   }
+
+  InAppUpdates(snackbarHostState = snackbarHostState)
 
   Scaffold(
     topBar = {

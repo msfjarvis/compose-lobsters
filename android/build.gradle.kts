@@ -160,6 +160,12 @@ licensee {
   ignoreDependencies("org.commonmark") { because("Commonmark is BSD licensed") }
   allowUrl("https://jsoup.org/license") { because("Jsoup is MIT licensed") }
   allowUrl("https://opensource.org/license/MIT") { because("Ksoup is MIT licensed") }
+  allowUrl("https://developer.android.com/guide/playcore/license") {
+    because("Play Core is licensed under the Play Core SDK terms of service")
+  }
+  allowUrl("https://developer.android.com/studio/terms.html") {
+    because("Google Play services is licensed under the Android SDK terms of service")
+  }
   allowUrl("https://github.com/Osmerion/sqlite-android/blob/master/LICENSE") {
     because("sqlite-android is MIT licensed")
   }
@@ -231,6 +237,7 @@ dependencies {
   implementation(libs.metrox.viewmodel)
   implementation(libs.metrox.viewmodel.compose)
   implementation(libs.okhttp.core)
+  implementation(libs.play.app.update)
   implementation(libs.retrofit)
   implementation(libs.sentry)
   implementation(libs.sentry.android.core)

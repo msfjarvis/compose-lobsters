@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- In-app updates: new versions download in the background and are installed after a restart
+
 ## [1.71.0] - 2026-09-17
 
 ### Fixed

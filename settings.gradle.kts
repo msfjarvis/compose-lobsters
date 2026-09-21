@@ -79,6 +79,7 @@ dependencyResolutionManagement {
         includeGroupAndSubgroups("com.android")
         includeGroup("com.google.android.gms")
         includeModule("com.google.android.material", "material")
+        includeGroupAndSubgroups("com.google.android.play")
         includeGroup("com.google.testing.platform")
       }
     }

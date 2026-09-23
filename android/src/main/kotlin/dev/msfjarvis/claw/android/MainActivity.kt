@@ -90,6 +90,18 @@ class MainActivity(
     handleIntent(intent)
   }
 
+  override fun onProvideAssistContent(outContent: AssistContent?) {
+    super.onProvideAssistContent(outContent)
+    val uri = webUri
+    if (outContent != null) {
+      if (uri != null) {
+        outContent.webUri = uri.toUri()
+      } else {
+        outContent.webUri = null
+      }
+    }
+  }
+
   private fun handleIntent(intent: Intent) {
     val data = intent.data
     if (data != null && data.scheme == BuildConfig.DEEPLINK_SCHEME) {
@@ -105,18 +117,6 @@ class MainActivity(
         "newest" -> deepLinkDestination = Newest
         "hottest" -> deepLinkDestination = Hottest
         "saved" -> deepLinkDestination = Saved
-      }
-    }
-  }
-
-  override fun onProvideAssistContent(outContent: AssistContent?) {
-    super.onProvideAssistContent(outContent)
-    val uri = webUri
-    if (outContent != null) {
-      if (uri != null) {
-        outContent.webUri = uri.toUri()
-      } else {
-        outContent.webUri = null
       }
     }
   }

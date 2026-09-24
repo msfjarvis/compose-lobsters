@@ -9,12 +9,9 @@ package dev.msfjarvis.claw.android
 import android.app.Activity
 import android.app.assist.AssistContent
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.getValue
@@ -24,6 +21,7 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.UriHandler
 import androidx.core.net.toUri
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.WindowCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation3.runtime.NavKey
 import dev.msfjarvis.claw.android.injection.InjectedViewModelFactory
@@ -59,10 +57,7 @@ class MainActivity(
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     installSplashScreen()
-    enableEdgeToEdge(
-      statusBarStyle = SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT)
-      // Don't set navigation bar style, the default matches the platform behavior.
-    )
+    WindowCompat.enableEdgeToEdge(window)
     handleIntent(intent)
     setContent {
       LobstersTheme(
@@ -90,6 +85,18 @@ class MainActivity(
     handleIntent(intent)
   }
 
+  override fun onProvideAssistContent(outContent: AssistContent?) {
+    super.onProvideAssistContent(outContent)
+    val uri = webUri
+    if (outContent != null) {
+      if (uri != null) {
+        outContent.webUri = uri.toUri()
+      } else {
+        outContent.webUri = null
+      }
+    }
+  }
+
   private fun handleIntent(intent: Intent) {
     val data = intent.data
     if (data != null && data.scheme == BuildConfig.DEEPLINK_SCHEME) {
@@ -105,18 +112,6 @@ class MainActivity(
         "newest" -> deepLinkDestination = Newest
         "hottest" -> deepLinkDestination = Hottest
         "saved" -> deepLinkDestination = Saved
-      }
-    }
-  }
-
-  override fun onProvideAssistContent(outContent: AssistContent?) {
-    super.onProvideAssistContent(outContent)
-    val uri = webUri
-    if (outContent != null) {
-      if (uri != null) {
-        outContent.webUri = uri.toUri()
-      } else {
-        outContent.webUri = null
       }
     }
   }

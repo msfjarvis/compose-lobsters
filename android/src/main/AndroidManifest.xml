@@ -120,5 +120,7 @@
     <!-- set the environment for this build -->
     <meta-data android:name="io.sentry.environment" android:value="${sentryEnvironment}" />
     <meta-data android:name="io.sentry.auto-init" android:value="false" />
+    <!-- enable Tombstone collection -->
+    <meta-data android:name="io.sentry.tombstone.enable" android:value="true" />
   </application>
 </manifest>

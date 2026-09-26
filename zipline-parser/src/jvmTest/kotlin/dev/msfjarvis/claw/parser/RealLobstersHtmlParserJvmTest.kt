@@ -97,6 +97,47 @@ class RealLobstersHtmlParserJvmTest {
   }
 
   @Test
+  fun postDetailsUseOnlyThePrimaryStoryWhenRecommendationsArePresent() {
+    val html =
+      """
+      <ol class="stories">
+        <li class="story" data-shortid="sxlf4a">
+          <span class="link h-cite"><a href="/s/sxlf4a/goodbye-google">Goodbye Google</a></span>
+          <span class="comments_label"><a href="/s/sxlf4a/goodbye-google">23 comments</a></span>
+          <div class="byline">
+            <a href="/~/classichasclass">classichasclass</a>
+            <time data-at-unix="1710000000"></time>
+          </div>
+          <div class="tags"><a>ai</a><a>person</a></div>
+          <div class="story_content"><div class="story_text">Story description</div></div>
+        </li>
+      </ol>
+      <ol class="stories">
+        <li class="story" data-shortid="other1">
+          <span class="link h-cite"><a href="/s/other1/unrelated">Unrelated</a></span>
+          <span class="comments_label"><a href="/s/other1/unrelated">8 comments</a></span>
+          <div class="byline">
+            <a class="user_is_author" href="/~/unrelated">unrelated</a>
+            <time data-at-unix="1710000001"></time>
+          </div>
+          <div class="tags"><a>security</a></div>
+        </li>
+      </ol>
+      """
+        .trimIndent()
+    val service = LobstersParserServiceImpl()
+
+    val details = service.parsePostDetails(html)
+
+    assertEquals("Goodbye Google", details.title)
+    assertEquals("classichasclass", details.submitter)
+    assertEquals(listOf("ai", "person"), details.tags)
+    assertEquals(23, details.commentCount)
+    assertEquals("https://lobste.rs/s/sxlf4a/goodbye-google", details.commentsUrl)
+    assertEquals(false, details.userIsAuthor)
+  }
+
+  @Test
   fun parsesPostDetailsWithSubmitterComment() {
     val html =
       checkNotNull(javaClass.classLoader.getResource("post_details_ktew3s.html")).readText()

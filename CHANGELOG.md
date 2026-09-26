@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - In-app updates: new versions download in the background and are installed after a restart
 
+### Fixed
+
+- Post details no longer include data from unrelated stories, preventing saved posts from being corrupted
+
 ## [1.71.0] - 2026-09-17
 
 ### Fixed

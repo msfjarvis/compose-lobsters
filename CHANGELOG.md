@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Post details no longer include data from unrelated stories, preventing saved posts from being corrupted
+- In some cases the latest saved post could get corrupted causing it to become an amalgamation of multiple posts
 
 ## [1.71.0] - 2026-09-17
 

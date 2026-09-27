@@ -1,0 +1,9 @@
+
+### Added
+
+- In-app updates: new versions download in the background and are installed after a restart
+
+### Fixed
+
+- Post details no longer include data from unrelated stories, preventing saved posts from being corrupted
+- In some cases the latest saved post could get corrupted causing it to become an amalgamation of multiple posts

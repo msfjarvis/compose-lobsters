@@ -63,12 +63,15 @@ class AndroidCommonPlugin : Plugin<Project> {
         when (name) {
           "release" -> {
             buildConfigField("String", "DEEPLINK_SCHEME", "\"claw\"")
+            buildConfigField("boolean", "ENABLE_LOGS", "false")
           }
           "debug" -> {
             buildConfigField("String", "DEEPLINK_SCHEME", "\"claw-debug\"")
+            buildConfigField("boolean", "ENABLE_LOGS", "true")
           }
           "internal" -> {
             buildConfigField("String", "DEEPLINK_SCHEME", "\"claw\"")
+            buildConfigField("boolean", "ENABLE_LOGS", "true")
           }
         }
       }

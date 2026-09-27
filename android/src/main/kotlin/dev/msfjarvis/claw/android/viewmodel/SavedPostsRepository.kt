@@ -49,9 +49,9 @@ class SavedPostsRepository(
       savedPostQueries.transaction {
         val removed = savedPostQueries.deletePost(post.shortId).executeAsOneOrNull() != null
         if (removed) {
-          if (BuildConfig.DEBUG) Log.d(TAG, "Removing post: ${post.shortId}")
+          if (BuildConfig.ENABLE_LOGS) Log.d(TAG, "Removing post: ${post.shortId}")
         } else {
-          if (BuildConfig.DEBUG) Log.d(TAG, "Saving post: ${post.shortId}")
+          if (BuildConfig.ENABLE_LOGS) Log.d(TAG, "Saving post: ${post.shortId}")
           savedPostQueries.insertOrReplacePost(post.toSavedPost())
         }
       }
@@ -59,7 +59,7 @@ class SavedPostsRepository(
   }
 
   suspend fun savePosts(posts: List<SavedPost>) {
-    if (BuildConfig.DEBUG) {
+    if (BuildConfig.ENABLE_LOGS) {
       Log.d(TAG, "Saving posts: ${posts.joinToString(",") { it.shortId }}")
     }
     withContext(writeDispatcher) {

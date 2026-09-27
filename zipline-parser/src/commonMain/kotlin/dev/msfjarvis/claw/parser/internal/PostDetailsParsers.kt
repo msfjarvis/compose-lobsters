@@ -17,19 +17,23 @@ private const val SUBMITTER_SELECTOR =
 internal fun parsePostDetails(html: String): LobstersPostDetails {
   val document = Ksoup.parse(html, baseUri = BASE_URL)
   val storyElement = checkNotNull(document.selectFirst(STORY_SELECTOR)) { "Story not found" }
+  val shortId = storyElement.attr("data-shortid")
+  val canonicalUrl =
+    document.selectFirst("link[rev=canonical][href]")?.attr("abs:href")
+      ?.takeIf { it.startsWith("$BASE_URL/s/$shortId/") } ?: "$BASE_URL/s/$shortId/c"
   val timestampElement = storyElement.select("div.byline > time")
   val titleElement = storyElement.select("span.link.h-cite > a")
   val commentsElement = storyElement.select("span.comments_label a")
   val submitterElement = storyElement.select(SUBMITTER_SELECTOR)
   val tags = storyElement.select(".tags a").map { it.text() }
   return LobstersPostDetails(
-    shortId = storyElement.attr("data-shortid"),
+    shortId = shortId,
     createdAt = normalizeCreatedAt(timestampElement.attr("data-at-unix")),
     title = titleElement.text(),
     url = titleElement.attr("abs:href"),
     description = document.select("div.story_content div.story_text").html(),
     commentCount = commentCountRegex.find(commentsElement.text())?.value?.toInt() ?: 0,
-    commentsUrl = commentsElement.attr("abs:href"),
+    commentsUrl = canonicalUrl,
     submitter = submitterElement.text(),
     tags = tags,
     comments = parseComments(document),

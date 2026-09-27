@@ -40,7 +40,7 @@ class GeneratedWidgetPreviewUpdateWorker(
       val result =
         GlanceAppWidgetManager(applicationContext)
           .setWidgetPreviews(SavedPostsWidgetReceiver::class)
-      if (BuildConfig.DEBUG) {
+      if (BuildConfig.ENABLE_LOGS) {
         Log.d("WidgetPreviewUpdateWorker", "GlanceAppWidgetManager#setWidgetPreviews -> $result")
       }
     } catch (_: IllegalArgumentException) {

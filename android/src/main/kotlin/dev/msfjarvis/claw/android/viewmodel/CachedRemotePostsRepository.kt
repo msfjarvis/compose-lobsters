@@ -30,7 +30,7 @@ class CachedRemotePostsRepository(
     withContext(readDispatcher) { cachedRemotePostQueries.selectRecentPosts(limit).executeAsList() }
 
   suspend fun savePosts(posts: List<CachedRemotePost>) {
-    if (BuildConfig.DEBUG) {
+    if (BuildConfig.ENABLE_LOGS) {
       Log.d(TAG, "Caching remote posts: ${posts.joinToString(",") { it.shortId }}")
     }
     withContext(writeDispatcher) {

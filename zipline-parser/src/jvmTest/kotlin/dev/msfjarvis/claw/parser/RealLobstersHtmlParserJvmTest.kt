@@ -91,6 +91,10 @@ class RealLobstersHtmlParserJvmTest {
     val details = service.parsePostDetails(html)
 
     assertTrue(details.title.isNotBlank())
+    assertEquals(
+      "https://lobste.rs/s/tdfoqh/ranking_comments_by_sum_replies_scores",
+      details.commentsUrl,
+    )
     assertEquals(listOf("meta"), details.tags)
     assertTrue(details.userIsAuthor)
     assertTrue(details.comments.isNotEmpty())
@@ -100,10 +104,11 @@ class RealLobstersHtmlParserJvmTest {
   fun postDetailsUseOnlyThePrimaryStoryWhenRecommendationsArePresent() {
     val html =
       """
+      <link href="https://lobste.rs/s/other1/unrelated" rev="canonical">
       <ol class="stories">
         <li class="story" data-shortid="sxlf4a">
           <span class="link h-cite"><a href="/s/sxlf4a/goodbye-google">Goodbye Google</a></span>
-          <span class="comments_label"><a href="/s/sxlf4a/goodbye-google">23 comments</a></span>
+          <span class="comments_label"><a href="#comments-sxlf4a">23 comments</a></span>
           <div class="byline">
             <a href="/~/classichasclass">classichasclass</a>
             <time data-at-unix="1710000000"></time>
@@ -115,7 +120,7 @@ class RealLobstersHtmlParserJvmTest {
       <ol class="stories">
         <li class="story" data-shortid="other1">
           <span class="link h-cite"><a href="/s/other1/unrelated">Unrelated</a></span>
-          <span class="comments_label"><a href="/s/other1/unrelated">8 comments</a></span>
+          <span class="comments_label"><a href="#comments-other1">8 comments</a></span>
           <div class="byline">
             <a class="user_is_author" href="/~/unrelated">unrelated</a>
             <time data-at-unix="1710000001"></time>
@@ -133,7 +138,7 @@ class RealLobstersHtmlParserJvmTest {
     assertEquals("classichasclass", details.submitter)
     assertEquals(listOf("ai", "person"), details.tags)
     assertEquals(23, details.commentCount)
-    assertEquals("https://lobste.rs/s/sxlf4a/goodbye-google", details.commentsUrl)
+    assertEquals("https://lobste.rs/s/sxlf4a/c", details.commentsUrl)
     assertEquals(false, details.userIsAuthor)
   }
 

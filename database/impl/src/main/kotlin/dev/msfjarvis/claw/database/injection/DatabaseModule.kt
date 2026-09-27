@@ -56,7 +56,7 @@ object DatabaseModule {
           },
       )
     val driver =
-      if (BuildConfig.DEBUG) {
+      if (BuildConfig.ENABLE_LOGS) {
         LogSqliteDriver(androidDriver) { message -> Log.d("SQLDelightQuery", message) }
       } else {
         androidDriver

@@ -17,6 +17,7 @@ import dev.msfjarvis.claw.android.injection.WorkerKey
 import dev.msfjarvis.claw.android.viewmodel.SavedPostsRepository
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.database.local.SavedPost
+import dev.msfjarvis.claw.model.LobstersPostDetails
 import dev.msfjarvis.claw.model.toSavedPost
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.Assisted
@@ -52,11 +53,11 @@ class SavedPostUpdaterWorker(
     val updatedPosts = mutableListOf<SavedPost>()
 
     for ((index, post) in postsToUpdate.withIndex()) {
-      // Any title slug is accepted when fetching a story's details; only the short id is
-      // required. Construct one since the updater only tracks short ids here.
-      when (val result = lobstersApi.getPostDetails(post.commentsUrl)) {
+      // A previous refresh may have stored a detail-page comment anchor rather than a story URL.
+      val requestUrl = savedPostRefreshUrl(post.shortId, post.commentsUrl)
+      when (val result = lobstersApi.getPostDetails(requestUrl)) {
         is Success -> {
-          updatedPosts.add(result.value.toSavedPost())
+          refreshedSavedPost(post.shortId, requestUrl, result.value)?.let(updatedPosts::add)
         }
         else -> {}
       }
@@ -90,3 +91,22 @@ class SavedPostUpdaterWorker(
   @AssistedFactory
   abstract class Factory : InjectedWorkerFactory.WorkerInstanceFactory<SavedPostUpdaterWorker>
 }
+
+private val storySlug = Regex("[a-zA-Z0-9_-]+")
+
+internal fun savedPostRefreshUrl(shortId: String, commentsUrl: String): String {
+  val storyPrefix = "https://lobste.rs/s/$shortId/"
+  val slug = commentsUrl.removePrefix(storyPrefix)
+  return if (commentsUrl.startsWith(storyPrefix) && storySlug.matches(slug)) {
+    commentsUrl
+  } else {
+    "${storyPrefix}c"
+  }
+}
+
+internal fun refreshedSavedPost(
+  requestedShortId: String,
+  requestUrl: String,
+  details: LobstersPostDetails,
+): SavedPost? =
+  details.takeIf { it.shortId == requestedShortId }?.toSavedPost()?.copy(commentsUrl = requestUrl)

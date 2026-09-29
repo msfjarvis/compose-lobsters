@@ -43,6 +43,45 @@ private const val IMMEDIATE_UPDATE_PRIORITY_THRESHOLD = 4
  */
 data class StartUpdateEvent(val updateInfo: AppUpdateInfo, val updateType: Int)
 
+/** Process-local guards for asynchronous update checks and update-flow launches. */
+internal class InAppUpdateFlowGuard {
+  private var latestCheckId = 0L
+  var hasRequestedUpdate = false
+    private set
+
+  var isFlowInFlight = false
+    private set
+
+  fun beginCheck(): Long = ++latestCheckId
+
+  fun isLatestCheck(checkId: Long): Boolean = checkId == latestCheckId
+
+  fun beginFlow(): Boolean {
+    if (isFlowInFlight) return false
+    isFlowInFlight = true
+    return true
+  }
+
+  fun markUpdateRequested() {
+    hasRequestedUpdate = true
+  }
+
+  fun onRequestDeliveryFailed() {
+    hasRequestedUpdate = false
+    isFlowInFlight = false
+  }
+
+  fun onLaunchFailed() = onRequestDeliveryFailed()
+
+  fun onFlowResult() {
+    isFlowInFlight = false
+  }
+
+  fun onDownloadFailed() {
+    hasRequestedUpdate = false
+  }
+}
+
 @Inject
 @ViewModelKey
 @ContributesIntoMap(scope = AppScope::class, binding = binding<ViewModel>())
@@ -65,14 +104,14 @@ class InAppUpdateViewModel(private val appUpdateManager: AppUpdateManager) : Vie
    * Tracks whether the current process has already asked the user to update. Prevents the update
    * dialog from reappearing on every resume after the user dismisses it.
    */
-  private var hasRequestedUpdate = false
+  private val flowGuard = InAppUpdateFlowGuard()
 
   private val installStateListener = InstallStateUpdatedListener { state ->
     if (state.installStatus() == InstallStatus.DOWNLOADED) {
       _restartPrompts.tryEmit(Unit)
     } else if (state.installStatus() == InstallStatus.FAILED) {
       // Let the next foreground check offer the update again.
-      hasRequestedUpdate = false
+      flowGuard.onDownloadFailed()
       Sentry.captureMessage("In-app update download failed")
     }
   }
@@ -91,17 +130,23 @@ class InAppUpdateViewModel(private val appUpdateManager: AppUpdateManager) : Vie
    * whenever the app comes to the foreground so interrupted updates are resumed.
    */
   fun checkForUpdate() {
+    val checkId = flowGuard.beginCheck()
     appUpdateManager.appUpdateInfo.addOnSuccessListener { updateInfo ->
+      // Only the result of the newest request is authoritative. In particular, an older delayed
+      // response must not enqueue a second flow after a more recent check has already done so.
+      if (!flowGuard.isLatestCheck(checkId)) return@addOnSuccessListener
+
       when {
         updateInfo.updateAvailability() ==
           UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS -> {
           // An immediate update was interrupted, resume it.
-          _startUpdateEvents.trySend(StartUpdateEvent(updateInfo, AppUpdateType.IMMEDIATE))
+          enqueueUpdateFlow(StartUpdateEvent(updateInfo, AppUpdateType.IMMEDIATE))
         }
         updateInfo.installStatus() == InstallStatus.DOWNLOADED -> {
           _restartPrompts.tryEmit(Unit)
         }
-        !hasRequestedUpdate &&
+        !flowGuard.hasRequestedUpdate &&
+          !flowGuard.isFlowInFlight &&
           updateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE -> {
           val updateType =
             when {
@@ -112,13 +157,18 @@ class InAppUpdateViewModel(private val appUpdateManager: AppUpdateManager) : Vie
               else -> null
             }
           if (updateType != null) {
-            hasRequestedUpdate = true
-            if (_startUpdateEvents.trySend(StartUpdateEvent(updateInfo, updateType)).isFailure) {
-              hasRequestedUpdate = false
-            }
+            flowGuard.markUpdateRequested()
+            enqueueUpdateFlow(StartUpdateEvent(updateInfo, updateType))
           }
         }
       }
+    }
+  }
+
+  private fun enqueueUpdateFlow(event: StartUpdateEvent) {
+    if (!flowGuard.beginFlow()) return
+    if (_startUpdateEvents.trySend(event).isFailure) {
+      flowGuard.onRequestDeliveryFailed()
     }
   }
 
@@ -128,14 +178,17 @@ class InAppUpdateViewModel(private val appUpdateManager: AppUpdateManager) : Vie
    */
   fun startUpdate(event: StartUpdateEvent, launcher: ActivityResultLauncher<IntentSenderRequest>) {
     val started =
-      appUpdateManager.startUpdateFlowForResult(
-        event.updateInfo,
-        launcher,
-        AppUpdateOptions.newBuilder(event.updateType).build(),
-      )
-    if (!started) {
-      hasRequestedUpdate = false
-    }
+      try {
+        appUpdateManager.startUpdateFlowForResult(
+          event.updateInfo,
+          launcher,
+          AppUpdateOptions.newBuilder(event.updateType).build(),
+        )
+      } catch (exception: Exception) {
+        flowGuard.onLaunchFailed()
+        throw exception
+      }
+    if (!started) flowGuard.onLaunchFailed()
   }
 
   /**
@@ -143,6 +196,7 @@ class InAppUpdateViewModel(private val appUpdateManager: AppUpdateManager) : Vie
    * intentionally does not reset the prompt guard so the user is not asked again in this process.
    */
   fun onUpdateFlowResult(resultCode: Int) {
+    flowGuard.onFlowResult()
     if (resultCode != Activity.RESULT_OK && resultCode != Activity.RESULT_CANCELED) {
       Sentry.captureMessage("In-app update flow failed with result code $resultCode")
     }

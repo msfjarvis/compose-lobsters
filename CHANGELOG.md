@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Remove proprietary Play Core dependency from IzzyOnDroid builds
+
 ## [1.72.0] - 2026-09-27
 
 ### Added

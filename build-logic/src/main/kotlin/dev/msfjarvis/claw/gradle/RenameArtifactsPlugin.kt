@@ -29,7 +29,7 @@ class RenameArtifactsPlugin : Plugin<Project> {
             apkFolder.set(variant.artifacts.get(SingleArtifact.APK))
             mappingFile.set(variant.artifacts.get(SingleArtifact.OBFUSCATION_MAPPING_FILE))
             builtArtifactsLoader.set(variant.artifacts.getBuiltArtifactsLoader())
-            outputDirectory.set(project.layout.projectDirectory.dir("apk"))
+            outputDirectory.set(project.layout.projectDirectory.dir("apk/${variant.name}"))
           }
           project.tasks.register<CollectBundleTask>("${taskPrefix}Bundle") {
             val mainOutput =
@@ -40,7 +40,7 @@ class RenameArtifactsPlugin : Plugin<Project> {
             versionName.set(mainOutput.versionName)
             mappingFile.set(variant.artifacts.get(SingleArtifact.OBFUSCATION_MAPPING_FILE))
             bundleFile.set(variant.artifacts.get(SingleArtifact.BUNDLE))
-            outputDirectory.set(project.layout.projectDirectory.dir("bundle"))
+            outputDirectory.set(project.layout.projectDirectory.dir("bundle/${variant.name}"))
           }
         }
       }

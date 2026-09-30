@@ -63,7 +63,7 @@ jobs:
         run: |
           ./scripts/setup-age.sh
           ./scripts/signing-setup.sh "$AGE_SECRET_KEY"
-          ./gradlew --no-configuration-cache --stacktrace assembleRelease uploadSentryProguardMappingsRelease collectReleaseBundle -PenableSentry
+          ./gradlew --no-configuration-cache --stacktrace assembleGplayRelease uploadSentryProguardMappingsGplayRelease collectGplayReleaseBundle -PenableSentry
           ./scripts/signing-cleanup.sh
         env:
           ZIPLINE_SIGNING_KEY: ${{ secrets.ZIPLINE_SIGNING_KEY }}
@@ -79,4 +79,4 @@ jobs:
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: release-aab
-          path: android/build/outputs/bundle/release/android-release.aab
+          path: android/build/outputs/bundle/gplayRelease/android-release.aab

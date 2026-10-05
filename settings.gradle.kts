@@ -153,6 +153,7 @@ include(
   "core",
   "database:core",
   "database:impl",
+  "html-renderer",
   "model",
   "zipline-parser",
 )

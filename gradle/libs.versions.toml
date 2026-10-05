@@ -71,6 +71,8 @@ androidx-compose-runtime-annotation = { module = "androidx.compose.runtime:runti
 androidx-compose-runtime-saveable = { module = "androidx.compose.runtime:runtime-saveable", version.ref = "runtimeSaveable" }
 androidx-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose-ui" }
 androidx-compose-ui-graphics = { module = "androidx.compose.ui:ui-graphics", version.ref = "compose-ui" }
+androidx-compose-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose-ui" }
+androidx-compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose-ui" }
 androidx-compose-ui-text = { module = "androidx.compose.ui:ui-text", version.ref = "compose-ui" }
 androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose-ui" }
 androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose-ui" }
@@ -113,7 +115,6 @@ eithernet-integration-retrofit = { module = "com.slack.eithernet:eithernet-integ
 eithernet-test-fixtures = { module = "com.slack.eithernet:eithernet-test-fixtures", version.ref = "eithernet" }
 haze = { module = "dev.chrisbanes.haze:haze", version.ref = "haze" }
 haze-blur = { module = "dev.chrisbanes.haze:haze-blur", version.ref = "haze" }
-htmlconverter = "be.digitalia.compose.htmlconverter:htmlconverter:1.1.1"
 ksoup = "com.fleeksoft.ksoup:ksoup:0.2.6"
 # Referenced in build-logic
 #noinspection UnusedVersionCatalogEntry

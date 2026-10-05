@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- The HTML renderer was rewritten to fix longstanding bugs with lists and quotes
+- Lists should be more tightly packed now, and quotes now have visible indicators
+
 ## [1.73.0] - 2026-09-29
 
 ### Fixed

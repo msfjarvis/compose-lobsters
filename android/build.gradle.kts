@@ -132,7 +132,7 @@ android {
         "ZIPLINE_PARSER_MANIFEST_URL",
         "\"$ziplineProdManifestUrl\"",
       )
-      buildConfigField("boolean", "ZIPLINE_PARSER_VERIFY_SIGNATURES", "true")
+      buildConfigField("boolean", "ZIPLINE_PARSER_VERIFY_SIGNATURES", "false")
     }
   }
 

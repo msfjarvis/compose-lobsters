@@ -2,6 +2,11 @@ name: Release to Google Play
 on:
   workflow_dispatch:
     inputs:
+      track:
+        description: 'Track to publish the binaries to'
+        type: string
+        default: 'production'
+        required: false
       inAppUpdatePriority:
         description: 'In app update priority (0-5)'
         type: number
@@ -137,7 +142,7 @@ jobs:
         releaseFiles: android/bundle/gplayRelease/*.aab
         serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
         status: completed
-        track: production
+        tracks: ${{ inputs.track }}
         whatsNewDirectory: distribution/whatsnew
         inAppUpdatePriority: ${{ inputs.inAppUpdatePriority }}
 

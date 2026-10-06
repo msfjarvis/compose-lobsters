@@ -129,7 +129,7 @@
         errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/dev/msfjarvis/claw/android/injection/SentryNativeLoadErrorProcessor.kt"
-            line="59"
+            line="158"
             column="5"/>
     </issue>
 

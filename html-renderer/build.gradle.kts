@@ -25,6 +25,10 @@ android {
   defaultConfig { testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner" }
 }
 
+kotlin {
+  explicitApi()
+}
+
 dependencies {
   implementation(libs.ksoup)
   implementation(libs.kotlinx.collections.immutable)

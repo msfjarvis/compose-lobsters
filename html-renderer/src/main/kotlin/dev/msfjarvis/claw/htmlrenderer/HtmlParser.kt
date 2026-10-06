@@ -79,49 +79,27 @@ private class HtmlNormalizer {
             orphanListIndex = null
           }
           if (tag in skippedTags) return
-          val nested =
-            when (tag) {
-              "b",
-              "strong" -> style.copy(boldDepth = style.boldDepth + 1)
-              "em",
-              "cite",
-              "dfn",
-              "i" -> style.copy(italic = true)
-              "u" -> style.copy(underline = true)
-              "del",
-              "s",
-              "strike" -> style.copy(strike = true)
-              "tt",
-              "code",
-              "pre" -> style.copy(monospace = true)
-              "big" -> style.copy(scale = style.scale * 1.25f)
-              "small" -> style.copy(scale = style.scale * .8f)
-              "sup" -> style.copy(baseline = .5f)
-              "sub" -> style.copy(baseline = -.5f)
-              "a" ->
-                if (node.hasAttr("href")) style.copy(anchor = Anchor(anchorId++, node.attr("href")))
-                else style
-              else -> style
-            }
-          when {
-            tag == "br" -> buffer.hardBreak(nested)
-            tag == "hr" -> {
+          val nested = style.nestedStyleFor(node, tag)
+          when (tag) {
+            "br" -> buffer.hardBreak(nested)
+            "hr" -> {
               flush()
               if (result.lastOrNull() !is HrSeparator) result += HrSeparator
               pendingGap = false
             }
-            tag == "blockquote" -> {
+            "blockquote" -> {
               flush()
               val children = blocks(node.childNodes(), nested, pre = pre)
               if (children.isNotEmpty()) emit(Quote(children))
             }
-            tag == "ul" || tag == "ol" -> {
+            "ul",
+            "ol" -> {
               flush()
               val children = blocks(node.childNodes(), nested, pre = pre, listOwner = true)
               if (children.isNotEmpty())
                 emit(ListBlock(tag == "ol", children, before = !itemOwner, after = !itemOwner))
             }
-            tag == "li" -> {
+            "li" -> {
               flush()
               val owned = listOwner && direct
               if (owned) ordinal++ else orphanOrdinal++
@@ -144,12 +122,12 @@ private class HtmlNormalizer {
                 }
               }
             }
-            tag in genericTags ||
-              tag == "p" ||
-              tag == "pre" ||
-              tag == "dt" ||
-              tag == "dd" ||
-              tag in headingTags -> {
+            in genericTags,
+            "p",
+            "pre",
+            "dt",
+            "dd",
+            in headingTags -> {
               flush()
               val blockKind =
                 when (tag) {
@@ -163,6 +141,7 @@ private class HtmlNormalizer {
                   "h4",
                   "h5",
                   "h6" -> TextKind.Heading
+
                   else -> kind
                 }
               val level = if (tag in headingTags) tag.last().digitToInt() else heading
@@ -205,6 +184,31 @@ private class HtmlNormalizer {
     nodes.forEach { visit(it, inherited) }
     flush()
     return result.toImmutableList()
+  }
+
+  private fun InlineStyle.nestedStyleFor(node: Node, tag: String): InlineStyle {
+    return when (tag) {
+      "b",
+      "strong" -> copy(boldDepth = boldDepth + 1)
+      "em",
+      "cite",
+      "dfn",
+      "i" -> copy(italic = true)
+      "u" -> copy(underline = true)
+      "del",
+      "s",
+      "strike" -> copy(strike = true)
+      "tt",
+      "code",
+      "pre" -> copy(monospace = true)
+      "big" -> copy(scale = scale * 1.25f)
+      "small" -> copy(scale = scale * .8f)
+      "sup" -> copy(baseline = .5f)
+      "sub" -> copy(baseline = -.5f)
+      "a" ->
+        if (node.hasAttr("href")) copy(anchor = Anchor(anchorId++, node.attr("href"))) else this
+      else -> this
+    }
   }
 }
 

@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.74.0] - 2026-10-06
+
 ### Fixed
 
 - The HTML renderer was rewritten to fix longstanding bugs with lists and quotes
@@ -717,7 +719,8 @@ Thanks to Charles Lombardo for contributing the action button UI changes.
 
 - Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.73.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.74.0...HEAD
+[1.74.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.73.0...v1.74.0
 [1.73.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.72.0...v1.73.0
 [1.72.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.71.0...v1.72.0
 [1.71.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.70.0...v1.71.0

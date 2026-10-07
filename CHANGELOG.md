@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- The search bar now correctly requests focus when expanded
+
 ## [1.74.0] - 2026-10-06
 
 ### Fixed

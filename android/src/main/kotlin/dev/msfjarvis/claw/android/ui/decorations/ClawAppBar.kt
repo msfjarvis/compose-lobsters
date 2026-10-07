@@ -28,10 +28,8 @@ import androidx.compose.material3.rememberSearchBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.NonRestartableComposable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -85,7 +83,6 @@ fun ClawAppBar(
     mode is ClawTopBarMode.Searching -> {
       val textFieldState = rememberTextFieldState()
       val searchBarState = rememberSearchBarState()
-      val focusRequester = remember { FocusRequester() }
       val appBarWithSearchColors =
         SearchBarDefaults.appBarWithSearchColors(
           searchBarColors = SearchBarDefaults.containedColors(state = searchBarState)
@@ -135,9 +132,9 @@ fun ClawAppBar(
           colors = appBarWithSearchColors.searchBarColors,
           content = content,
         )
-        LaunchedEffect(mode.requestFocus) {
+        LaunchedEffect(searchBarState, mode.requestFocus) {
           if (mode.requestFocus) {
-            focusRequester.requestFocus()
+            searchBarState.animateToExpanded()
           }
         }
       }

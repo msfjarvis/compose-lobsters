@@ -18,9 +18,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -282,7 +285,7 @@ fun SettingsScreen(
       Text(stringResource(R.string.source_code))
     }
     // Spacer to offset any navigation bars and keep the last item clickable
-    Spacer(modifier = Modifier.height(48.dp))
+    Spacer(modifier = Modifier.windowInsetsBottomHeight(WindowInsets.systemBars))
   }
 }
 

@@ -46,16 +46,27 @@ internal fun BlockColumn(
   paragraphGap: Int,
   modifier: Modifier = Modifier,
   leadingInset: Int = 0,
+  suppressListBaselines: Boolean = false,
   content: @Composable () -> Unit,
 ) {
   val policy =
-    remember(blocks, paragraphGap, leadingInset) {
-      BlockMeasurePolicy(blockGaps(blocks, paragraphGap), leadingInset)
+    remember(blocks, paragraphGap, leadingInset, suppressListBaselines) {
+      BlockMeasurePolicy(
+        gaps = blockGaps(blocks, paragraphGap),
+        leadingInset = leadingInset,
+        blocksWithoutBaselineForwarding =
+          if (suppressListBaselines) blocks.indices.filter { blocks[it] is ListBlock }.toSet()
+          else emptySet(),
+      )
     }
   Layout(content = content, modifier = modifier, measurePolicy = policy)
 }
 
-private class BlockMeasurePolicy(val gaps: List<Int>, val leadingInset: Int) : MeasurePolicy {
+private class BlockMeasurePolicy(
+  val gaps: List<Int>,
+  val leadingInset: Int,
+  val blocksWithoutBaselineForwarding: Set<Int>,
+) : MeasurePolicy {
   override fun MeasureScope.measure(
     measurables: List<Measurable>,
     constraints: Constraints,
@@ -71,9 +82,15 @@ private class BlockMeasurePolicy(val gaps: List<Int>, val leadingInset: Int) : M
     children.forEachIndexed { index, child ->
       if (index > 0) height += gaps[index - 1]
       offsets += height
-      if (first == AlignmentLine.Unspecified && child[FirstBaseline] != AlignmentLine.Unspecified)
-        first = height + child[FirstBaseline]
-      if (child[LastBaseline] != AlignmentLine.Unspecified) last = height + child[LastBaseline]
+      // ListMeasurePolicy handles marker baselines internally; callers of the whole
+      // document do not need to traverse a list's nested layout tree for its baselines.
+      if (index !in blocksWithoutBaselineForwarding) {
+        val childFirstBaseline = child.alignmentLineOrUnspecified(FirstBaseline)
+        if (first == AlignmentLine.Unspecified && childFirstBaseline != AlignmentLine.Unspecified)
+          first = height + childFirstBaseline
+        val childLastBaseline = child.alignmentLineOrUnspecified(LastBaseline)
+        if (childLastBaseline != AlignmentLine.Unspecified) last = height + childLastBaseline
+      }
       height += child.height
     }
     val lines =

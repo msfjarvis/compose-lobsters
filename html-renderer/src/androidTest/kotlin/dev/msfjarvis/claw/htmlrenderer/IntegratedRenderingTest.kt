@@ -6,15 +6,22 @@
  */
 package dev.msfjarvis.claw.htmlrenderer
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toPixelMap
+import androidx.compose.ui.layout.LookaheadScope
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assert
+import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
@@ -32,6 +39,51 @@ import org.junit.Test
 
 class IntegratedRenderingTest {
   @get:Rule val compose = createComposeRule()
+
+  @Test
+  fun listInExpandedLazyCommentRendersInsideLookahead() {
+    val comment =
+      """<p>Some of the ideas seem more techno-optimism than industry analysis.</p>
+        <p>Some points:</p>
+        <ul>
+          <li>Accessibility has never been and never will be a far-reaching concern.</li>
+          <li>CSS will most likely improve past what most people thought was bad.</li>
+          <li>Soft skills I agree.</li>
+          <li>React will be with us for years and years.</li>
+          <li>About Github, I don't think people really care about its shortcomings.</li>
+        </ul>
+        <p>My point is that one can probably have a sustainable career for 10+ years.</p>"""
+    compose.setContent {
+      LookaheadScope {
+        LazyColumn {
+          item {
+            Column {
+              Row {
+                Text("dlisboa")
+                Text("9")
+              }
+              AnimatedVisibility(visible = true) {
+                HtmlText(
+                  comment,
+                  style = TextStyle(fontSize = 16.sp, lineHeight = 24.sp),
+                  color = Color.Black,
+                  linkStyles = TextLinkStyles(),
+                  quoteBarColor = Color.Gray,
+                  modifier = Modifier.width(320.dp),
+                )
+              }
+            }
+          }
+        }
+      }
+    }
+    compose
+      .onNodeWithText("Accessibility has never been and never will be a far-reaching concern.")
+      .assertIsDisplayed()
+    compose
+      .onNodeWithText("My point is that one can probably have a sustainable career for 10+ years.")
+      .assertIsDisplayed()
+  }
 
   @Test
   fun mixedNestingPreservesGapsBaselinesIndentationSilentBarsAndSourceOrder() {

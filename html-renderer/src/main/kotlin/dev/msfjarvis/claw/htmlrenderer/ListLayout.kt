@@ -113,21 +113,31 @@ private class ListMeasurePolicy(
     var last = AlignmentLine.Unspecified
     contents.forEachIndexed { index, content ->
       val marker = markerByRow[index]
+      // Baselines are only needed outside the lookahead pass; a stale lookahead node can still
+      // make Compose throw while resolving one during the approach pass.
+      val contentFirstBaseline =
+        if (isLookingAhead) AlignmentLine.Unspecified
+        else content.alignmentLineOrUnspecified(FirstBaseline)
+      val markerFirstBaseline =
+        if (isLookingAhead || marker == null) AlignmentLine.Unspecified
+        else marker.alignmentLineOrUnspecified(FirstBaseline)
       val baselineDelta =
         if (
-          marker != null &&
-            content[FirstBaseline] != AlignmentLine.Unspecified &&
-            marker[FirstBaseline] != AlignmentLine.Unspecified
+          contentFirstBaseline != AlignmentLine.Unspecified &&
+            markerFirstBaseline != AlignmentLine.Unspecified
         )
-          content[FirstBaseline] - marker[FirstBaseline]
+          contentFirstBaseline - markerFirstBaseline
         else 0
       // A fallback font's marker line box must not add leading or trailing item space.
       // Content owns row height; the marker's glyph is placed on its descendant baseline.
       contentOffsets[index] = height
       markerOffsets[index] = height + baselineDelta
-      if (first == AlignmentLine.Unspecified && content[FirstBaseline] != AlignmentLine.Unspecified)
-        first = height + content[FirstBaseline]
-      if (content[LastBaseline] != AlignmentLine.Unspecified) last = height + content[LastBaseline]
+      if (!isLookingAhead) {
+        if (first == AlignmentLine.Unspecified && contentFirstBaseline != AlignmentLine.Unspecified)
+          first = height + contentFirstBaseline
+        val contentLastBaseline = content.alignmentLineOrUnspecified(LastBaseline)
+        if (contentLastBaseline != AlignmentLine.Unspecified) last = height + contentLastBaseline
+      }
       height += content.height
     }
     val lines =

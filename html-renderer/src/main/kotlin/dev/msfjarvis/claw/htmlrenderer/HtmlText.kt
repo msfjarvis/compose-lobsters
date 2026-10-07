@@ -95,7 +95,7 @@ internal fun RenderBlocks(
   modifier: Modifier = Modifier,
   listDepth: Int = 0,
 ) {
-  BlockColumn(blocks, paragraphGap, modifier) {
+  BlockColumn(blocks, paragraphGap, modifier, suppressListBaselines = listDepth == 0) {
     blocks.forEach { block ->
       when (block) {
         is TextBlock -> {

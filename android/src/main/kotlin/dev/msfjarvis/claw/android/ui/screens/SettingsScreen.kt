@@ -281,6 +281,8 @@ fun SettingsScreen(
     ) {
       Text(stringResource(R.string.source_code))
     }
+    // Spacer to offset any navigation bars and keep the last item clickable
+    Spacer(modifier = Modifier.height(48.dp))
   }
 }
 

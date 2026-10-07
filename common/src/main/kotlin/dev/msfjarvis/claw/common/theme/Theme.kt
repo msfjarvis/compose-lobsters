@@ -106,7 +106,14 @@ fun LobstersTheme(
   if (!view.isInEditMode) {
     SideEffect {
       val window = view.context.findActivity()?.window ?: return@SideEffect
-      WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
+      WindowCompat.getInsetsController(window, view).apply {
+        isAppearanceLightStatusBars = !darkTheme
+        isAppearanceLightNavigationBars = !darkTheme
+      }
+
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        window.isNavigationBarContrastEnforced = true
+      }
     }
   }
   CompositionLocalProvider(*providedValues) {

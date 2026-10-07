@@ -11,8 +11,6 @@ import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.text.capitalize
-import androidx.compose.ui.text.intl.Locale
 import androidx.glance.appwidget.updateAll
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
@@ -109,7 +107,6 @@ class ClawViewModel(
         pagingSourceFactory = { searchPagingSourceFactory.create { searchQuery } },
       )
       .flow
-  val savedPosts = savedPostsRepository.savedPosts.map { it.map(UIPost.Companion::fromSavedPost) }
   val savedPostsCount = savedPostsRepository.savedPostsCount
   val savedPostsByMonth
     get() =
@@ -118,7 +115,7 @@ class ClawViewModel(
           .map(UIPost.Companion::fromSavedPost)
           .groupBy { post ->
             val time = post.createdAt.toLocalDateTime()
-            "${time.month.name.lowercase().capitalize(Locale.current)} ${time.year}"
+            "${time.month.name.lowercase().replaceFirstChar { it.uppercase() }} ${time.year}"
           }
           .toImmutableMap()
       }

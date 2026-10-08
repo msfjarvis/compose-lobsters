@@ -11,7 +11,10 @@ import io.sentry.Hint
 import io.sentry.SentryEvent
 import io.sentry.exception.ExceptionMechanismException
 import io.sentry.protocol.Mechanism
+import java.nio.file.Files
 import java.util.concurrent.atomic.AtomicInteger
+import java.util.zip.ZipEntry
+import java.util.zip.ZipOutputStream
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Timeout
 
@@ -57,6 +60,95 @@ class SentryNativeLoadErrorProcessorTest {
     assertThat(event.extras)
       .containsEntry("native_load_error.linker_exception", original.toString())
     assertThat(calls.get()).isEqualTo(1)
+  }
+
+  @Test
+  fun `reports matching native library entries in each APK without extracting them`() {
+    val apk = Files.createTempFile("native-library-fixture", ".apk")
+    ZipOutputStream(Files.newOutputStream(apk)).use { zip ->
+      zip.putNextEntry(ZipEntry("lib/arm64-v8a/libsqlite3x.so"))
+      zip.closeEntry()
+      zip.putNextEntry(ZipEntry("lib/armeabi-v7a/libsqlite3x.so"))
+      zip.closeEntry()
+      zip.putNextEntry(ZipEntry("lib/x86_64/libother.so"))
+      zip.closeEntry()
+    }
+
+    val diagnostics =
+      apkNativeLibraryDiagnostics(
+        listOf(apk.toString()),
+        listOf("arm64-v8a", "x86_64"),
+        listOf("arm64-v8a"),
+      )
+
+    assertThat(diagnostics["apk_native_library_inventory_status"]).isEqualTo("complete")
+    assertThat(diagnostics["apk_native_library_inventory"])
+      .isEqualTo(
+        listOf(
+          mapOf(
+            "apk_path" to apk.toString(),
+            "status" to "present",
+            "available_entries" to
+              listOf("lib/arm64-v8a/libsqlite3x.so", "lib/armeabi-v7a/libsqlite3x.so"),
+            "supported_entries" to listOf("lib/arm64-v8a/libsqlite3x.so"),
+            "process_compatible_entries" to listOf("lib/arm64-v8a/libsqlite3x.so"),
+          )
+        )
+      )
+    Files.deleteIfExists(apk)
+  }
+
+  @Test
+  fun `distinguishes absent library from unreadable APK and includes every path`() {
+    val apk = Files.createTempFile("native-library-absent", ".apk")
+    ZipOutputStream(Files.newOutputStream(apk)).use { zip ->
+      zip.putNextEntry(ZipEntry("assets/placeholder"))
+      zip.closeEntry()
+    }
+    val missingApk = apk.resolveSibling("missing-native-library.apk")
+
+    val inventory =
+      apkNativeLibraryDiagnostics(
+        listOf(apk.toString(), missingApk.toString()),
+        listOf("arm64-v8a"),
+        listOf("arm64-v8a"),
+      )["apk_native_library_inventory"]
+
+    assertThat(inventory)
+      .isEqualTo(
+        listOf(
+          mapOf(
+            "apk_path" to apk.toString(),
+            "status" to "absent",
+            "available_entries" to emptyList<String>(),
+            "supported_entries" to emptyList<String>(),
+            "process_compatible_entries" to emptyList<String>(),
+          ),
+          mapOf(
+            "apk_path" to missingApk.toString(),
+            "status" to "unreadable",
+            "read_error" to "NoSuchFileException",
+          ),
+        )
+      )
+    Files.deleteIfExists(apk)
+  }
+
+  @Test
+  fun `process compatible ABIs follow process bitness instead of the first supported ABI`() {
+    val abis = listOf("armeabi-v7a", "arm64-v8a", "x86_64")
+
+    assertThat(processCompatibleAbis(abis, true)).containsExactly("arm64-v8a", "x86_64").inOrder()
+    assertThat(processCompatibleAbis(abis, false)).containsExactly("armeabi-v7a")
+  }
+
+  @Test
+  fun `empty APK list produces an explicit empty inventory`() {
+    val diagnostics =
+      apkNativeLibraryDiagnostics(emptyList(), listOf("arm64-v8a"), listOf("arm64-v8a"))
+
+    assertThat(diagnostics["apk_native_library_inventory"]).isEqualTo(emptyList<Any?>())
+    assertThat(diagnostics["apk_native_library_inventory_status"]).isEqualTo("complete")
   }
 
   @Test

@@ -256,7 +256,9 @@ internal fun CommentEntry(
         Text(
           text = score.toString(),
           style = MaterialTheme.typography.labelLarge,
-          color = MaterialTheme.colorScheme.onBackground,
+          color =
+            if (hasLocallyUpvoted) MaterialTheme.colorScheme.onPrimaryContainer
+            else MaterialTheme.colorScheme.onBackground,
         )
         Text(
           text = buildCommentAgeString(comment.timestamp, comment.edited),

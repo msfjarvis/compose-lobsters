@@ -90,23 +90,26 @@ class BackStackBehaviorTest {
   }
 
   @Test
-  fun `back closes active top level search before popping navigation`() {
-    val result = handleTopLevelBack(isSearchActive = true, isCurrentDestinationTopLevel = true)
-
-    assertThat(result).isEqualTo(TopLevelBackAction.DismissSearch)
+  fun `back dismisses active top level search`() {
+    assertThat(
+        shouldDismissSearchOnBack(isSearchActive = true, isCurrentDestinationTopLevel = true)
+      )
+      .isTrue()
   }
 
   @Test
-  fun `back pops navigation when search is inactive`() {
-    val result = handleTopLevelBack(isSearchActive = false, isCurrentDestinationTopLevel = true)
-
-    assertThat(result).isEqualTo(TopLevelBackAction.PopNavigation)
+  fun `back does not intercept navigation when search is inactive`() {
+    assertThat(
+        shouldDismissSearchOnBack(isSearchActive = false, isCurrentDestinationTopLevel = true)
+      )
+      .isFalse()
   }
 
   @Test
-  fun `back pops navigation when hidden search state exists on non top level destination`() {
-    val result = handleTopLevelBack(isSearchActive = true, isCurrentDestinationTopLevel = false)
-
-    assertThat(result).isEqualTo(TopLevelBackAction.PopNavigation)
+  fun `back does not intercept navigation from a non top level destination`() {
+    assertThat(
+        shouldDismissSearchOnBack(isSearchActive = true, isCurrentDestinationTopLevel = false)
+      )
+      .isFalse()
   }
 }

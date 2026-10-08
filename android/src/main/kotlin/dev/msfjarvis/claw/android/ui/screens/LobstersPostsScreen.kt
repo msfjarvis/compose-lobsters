@@ -113,22 +113,11 @@ private const val SEARCH_WEB_URI = "https://lobste.rs/search"
 private const val HOTTEST_WEB_URI = "https://lobste.rs/"
 private const val NEWEST_WEB_URI = "https://lobste.rs/newest"
 
-enum class TopLevelBackAction {
-  DismissSearch,
-  PopNavigation,
-}
-
 @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-fun handleTopLevelBack(
+fun shouldDismissSearchOnBack(
   isSearchActive: Boolean,
   isCurrentDestinationTopLevel: Boolean,
-): TopLevelBackAction {
-  return if (isSearchActive && isCurrentDestinationTopLevel) {
-    TopLevelBackAction.DismissSearch
-  } else {
-    TopLevelBackAction.PopNavigation
-  }
-}
+): Boolean = isSearchActive && isCurrentDestinationTopLevel
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
@@ -314,16 +303,9 @@ fun LobstersPostsScreen(
     }
   }
 
-  BackHandler(enabled = isSearchActive || backStack.size > 1) {
-    when (
-      handleTopLevelBack(
-        isSearchActive = isSearchActive,
-        isCurrentDestinationTopLevel = currentDestinationIsTopLevel,
-      )
-    ) {
-      TopLevelBackAction.DismissSearch -> dismissSearch()
-      TopLevelBackAction.PopNavigation -> popBackStack(backStack)
-    }
+  // Let NavDisplay own back-stack pops so predictive back can animate the previous destination.
+  BackHandler(enabled = shouldDismissSearchOnBack(isSearchActive, currentDestinationIsTopLevel)) {
+    dismissSearch()
   }
 
   InAppUpdates(snackbarHostState = snackbarHostState)
@@ -395,6 +377,10 @@ fun LobstersPostsScreen(
           if (popBackStack(backStack) == null) {
             activity?.finish()
           }
+        },
+        popTransitionSpec = {
+          slideInHorizontally(initialOffsetX = { -it }, animationSpec = tween(200)) togetherWith
+            slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(200))
         },
         predictivePopTransitionSpec = {
           slideInHorizontally(initialOffsetX = { -it }, animationSpec = tween(200)) togetherWith
@@ -476,6 +462,10 @@ fun LobstersPostsScreen(
                 } +
                   NavDisplay.popTransitionSpec {
                     // Slide old content down, revealing the new content in place underneath
+                    EnterTransition.None togetherWith
+                      slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(200))
+                  } +
+                  NavDisplay.predictivePopTransitionSpec {
                     EnterTransition.None togetherWith
                       slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(200))
                   } +

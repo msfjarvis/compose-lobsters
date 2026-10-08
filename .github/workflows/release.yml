@@ -2,6 +2,11 @@ name: Release to Google Play
 on:
   workflow_dispatch:
     inputs:
+      track:
+        description: 'Track to publish the binaries to'
+        type: string
+        default: 'production'
+        required: false
       inAppUpdatePriority:
         description: 'In app update priority (0-5)'
         type: number
@@ -116,7 +121,7 @@ jobs:
         SENTRY_VCS_BASE_SHA: ${{ env.SENTRY_VCS_BASE_SHA }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        ./gradlew --no-configuration-cache assembleRelease uploadSentryProguardMappingsRelease collectReleaseApks collectReleaseBundle -PenableSentry
+        ./gradlew --no-configuration-cache assembleFossRelease assembleGplayRelease uploadSentryProguardMappingsGplayRelease collectFossReleaseApks collectFossReleaseBundle collectGplayReleaseApks collectGplayReleaseBundle -PenableSentry
 
     - name: Clean secrets
       run: scripts/signing-cleanup.sh
@@ -132,12 +137,12 @@ jobs:
     - name: Publish bundle to Google Play
       uses: r0adkll/upload-google-play@e738b9dd8f2476ea806d921b64aacd24f34515a5 # v1.1.5
       with:
-        mappingFile: android/bundle/mapping.txt
+        mappingFile: android/bundle/gplayRelease/mapping.txt
         packageName: dev.msfjarvis.claw.android
-        releaseFiles: android/bundle/*.aab
+        releaseFiles: android/bundle/gplayRelease/*.aab
         serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
         status: completed
-        track: production
+        tracks: ${{ inputs.track }}
         whatsNewDirectory: distribution/whatsnew
         inAppUpdatePriority: ${{ inputs.inAppUpdatePriority }}
 
@@ -173,7 +178,7 @@ jobs:
         } > "$RELEASE_NOTES"
 
         # Create a GitHub release
-        gh release create "v${VERSION}" --notes-file "$RELEASE_NOTES" --title "v${VERSION}" ./android/apk/*.apk ./android/bundle/*.aab
+        gh release create "v${VERSION}" --notes-file "$RELEASE_NOTES" --title "v${VERSION}" ./android/apk/fossRelease/*.apk ./android/apk/gplayRelease/*.apk ./android/bundle/fossRelease/*.aab ./android/bundle/gplayRelease/*.aab
 
         # Clean up temp file
         rm "$RELEASE_NOTES"

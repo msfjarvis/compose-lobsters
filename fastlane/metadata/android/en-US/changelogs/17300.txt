@@ -1,0 +1,4 @@
+
+### Fixed
+
+- Remove proprietary Play Core dependency from IzzyOnDroid builds

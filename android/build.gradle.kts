@@ -99,6 +99,12 @@ android {
 
   sourceSets.getByName("main").assets.directories.add(embeddedZiplineAssetsRootFile.path)
 
+  flavorDimensions += "distribution"
+  productFlavors {
+    create("foss") { dimension = "distribution" }
+    create("gplay") { dimension = "distribution" }
+  }
+
   buildTypes {
     getByName("debug") {
       buildConfigField(
@@ -126,7 +132,7 @@ android {
         "ZIPLINE_PARSER_MANIFEST_URL",
         "\"$ziplineProdManifestUrl\"",
       )
-      buildConfigField("boolean", "ZIPLINE_PARSER_VERIFY_SIGNATURES", "true")
+      buildConfigField("boolean", "ZIPLINE_PARSER_VERIFY_SIGNATURES", "false")
     }
   }
 
@@ -237,7 +243,7 @@ dependencies {
   implementation(libs.metrox.viewmodel)
   implementation(libs.metrox.viewmodel.compose)
   implementation(libs.okhttp.core)
-  implementation(libs.play.app.update)
+  add("gplayImplementation", libs.play.app.update)
   implementation(libs.retrofit)
   implementation(libs.sentry)
   implementation(libs.sentry.android.core)

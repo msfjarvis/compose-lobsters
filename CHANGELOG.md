@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- The search bar now correctly requests focus when expanded
+- Rare crash caused when scrolling through comments
+- Navigation bar being fully transparent and blocking content — thanks to Michel Le Bihan
+- Upvoted comments are now also indicated with a differently colored count
+
+## [1.74.0] - 2026-10-06
+
+### Fixed
+
+- The HTML renderer was rewritten to fix longstanding bugs with lists and quotes
+- Lists should be more tightly packed now, and quotes now have visible indicators
+- Predictive back animations now render properly again
+
+## [1.73.0] - 2026-09-29
+
+### Fixed
+
+- Remove proprietary Play Core dependency from IzzyOnDroid builds
+
 ## [1.72.0] - 2026-09-27
 
 ### Added
@@ -705,7 +726,9 @@ Thanks to Charles Lombardo for contributing the action button UI changes.
 
 - Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.72.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.74.0...HEAD
+[1.74.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.73.0...v1.74.0
+[1.73.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.72.0...v1.73.0
 [1.72.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.71.0...v1.72.0
 [1.71.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.70.0...v1.71.0
 [1.70.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.69.0...v1.70.0

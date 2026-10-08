@@ -1,0 +1,6 @@
+
+### Fixed
+
+- The HTML renderer was rewritten to fix longstanding bugs with lists and quotes
+- Lists should be more tightly packed now, and quotes now have visible indicators
+- Predictive back animations now render properly again

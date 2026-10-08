@@ -7,129 +7,38 @@
 package dev.msfjarvis.claw.common.ui
 
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.ExperimentalTextApi
-import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.LineBreak
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.core.net.toUri
-import be.digitalia.compose.htmlconverter.HtmlStyle
-import be.digitalia.compose.htmlconverter.htmlToAnnotatedString
-import com.fleeksoft.ksoup.Ksoup
-import dev.msfjarvis.claw.api.LobstersApi
-import dev.msfjarvis.claw.common.BuildConfig
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
+import dev.msfjarvis.claw.htmlrenderer.HtmlText
 
 @Composable
 internal fun ThemedRichText(text: String, modifier: Modifier = Modifier) {
-  val linkBackground = MaterialTheme.colorScheme.surfaceVariant
-  val linkColor = MaterialTheme.colorScheme.onSurface
-  val convertedText =
-    remember(text) {
-      val preprocessedHtml = preprocessHtml(text)
-      val annotatedString =
-        htmlToAnnotatedString(
-          html = preprocessedHtml,
-          style =
-            HtmlStyle(
-              textLinkStyles =
-                TextLinkStyles(
-                  style =
-                    SpanStyle(
-                      background = linkBackground,
-                      color = linkColor,
-                      fontWeight = FontWeight.Bold,
-                      textDecoration = TextDecoration.Underline,
-                    )
-                )
-            ),
-        )
-      rewriteLobstersLinksToDeepLinks(annotatedString)
-    }
-  Text(
-    text = convertedText,
+  HtmlText(
+    html = text,
+    linkStyles =
+      TextLinkStyles(
+        style =
+          SpanStyle(
+            background = MaterialTheme.colorScheme.surfaceVariant,
+            color = MaterialTheme.colorScheme.onSurface,
+            fontWeight = FontWeight.Bold,
+            textDecoration = TextDecoration.Underline,
+          )
+      ),
+    quoteBarColor = MaterialTheme.colorScheme.outlineVariant,
+    transformDestination = ::rewriteUrlIfLobstersPost,
     color = contentColorFor(MaterialTheme.colorScheme.background),
     style = MaterialTheme.typography.bodyLarge.copy(lineBreak = LineBreak.Paragraph),
     modifier = modifier,
   )
-}
-
-internal fun preprocessHtml(html: String): String {
-  val document = Ksoup.parse(html)
-  document.select("li").forEach { li ->
-    li.select("p").forEach { p ->
-      p.childNodes().forEach { child -> p.before(child) }
-      p.remove()
-    }
-
-    if (li.nextElementSibling() != null && li.nextElementSibling()?.tagName() == "li") {
-      li.after("<br>")
-    }
-  }
-  return document.body().html()
-}
-
-@OptIn(ExperimentalTextApi::class)
-private fun rewriteLobstersLinksToDeepLinks(annotatedString: AnnotatedString): AnnotatedString {
-  val linkAnnotations = annotatedString.getLinkAnnotations(0, annotatedString.length)
-
-  if (linkAnnotations.isEmpty()) {
-    return annotatedString
-  }
-
-  return AnnotatedString.Builder(annotatedString)
-    .apply {
-      linkAnnotations.forEach { annotation ->
-        val link = annotation.item
-        if (link is LinkAnnotation.Url) {
-          val url = link.url
-          val rewrittenUrl = rewriteUrlIfLobstersPost(url)
-
-          addLink(
-            LinkAnnotation.Url(
-              rewrittenUrl,
-              styles = link.styles,
-              linkInteractionListener = link.linkInteractionListener,
-            ),
-            start = annotation.start,
-            end = annotation.end,
-          )
-        }
-      }
-    }
-    .toAnnotatedString()
-}
-
-private fun rewriteUrlIfLobstersPost(url: String): String {
-  val lobstersUri = LobstersApi.BASE_URL.toUri()
-  return try {
-    val uri = url.toUri()
-    if (
-      uri.scheme in setOf("http", "https") &&
-        uri.host == lobstersUri.host &&
-        uri.path?.startsWith("/s/") == true
-    ) {
-      val pathSegments = uri.path?.split("/").orEmpty()
-      if (pathSegments.size >= 3) {
-        val shortId = pathSegments[2]
-        if (shortId.isNotEmpty()) {
-          return "${BuildConfig.DEEPLINK_SCHEME}://comments/$shortId"
-        }
-      }
-    }
-    url
-  } catch (_: Exception) {
-    url
-  }
 }
 
 @ThemePreviews

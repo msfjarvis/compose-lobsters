@@ -43,7 +43,7 @@ jobs:
 
     - name: (Fail-only) Upload test report
       if: failure()
-      uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
       with:
           name: Test report
           path: '**/build/reports/tests/**'
@@ -85,7 +85,7 @@ jobs:
         run: |
           ./scripts/setup-age.sh
           ./scripts/signing-setup.sh "$AGE_SECRET_KEY"
-          ./gradlew --no-configuration-cache --stacktrace assembleRelease collectReleaseBundle
+          ./gradlew --no-configuration-cache --stacktrace assembleFossRelease assembleGplayRelease collectGplayReleaseBundle
           ./scripts/signing-cleanup.sh
         env:
           AGE_SECRET_KEY: ${{ secrets.AGE_SECRET_KEY }}

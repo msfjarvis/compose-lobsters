@@ -27,11 +27,11 @@ class SentryConfigurationPlugin : AppPlugin {
       options.beforeSend = SentryOptions.BeforeSendCallback { event, hint ->
         val request = hint.getAs(OKHTTP_REQUEST, Request::class.java)
 
-        // Drop all OkHttp errors that are not about Lobsters specifically.
-        if (request != null && !LobstersApi.BASE_URL.contains(request.url.host)) {
-          null
-        } else {
-          event
+        // Drop known scanner noise and OkHttp errors that are not about Lobsters.
+        when {
+          isKnownBadNativeLoadEvent(event) -> null
+          request != null && !LobstersApi.BASE_URL.contains(request.url.host) -> null
+          else -> event
         }
       }
     }

@@ -23,6 +23,8 @@ android {
   buildFeatures { compose = true }
   experimentalProperties["android.experimental.enableScreenshotTest"] = true
   namespace = "dev.msfjarvis.claw.common"
+  packaging.resources.merges += setOf("META-INF/LICENSE.md", "META-INF/LICENSE-notice.md")
+  defaultConfig { testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner" }
 }
 
 dependencies {
@@ -60,7 +62,6 @@ dependencies {
   implementation(libs.coil3.network.okhttp)
   implementation(libs.coil3.plain)
   implementation(libs.eithernet)
-  implementation(libs.htmlconverter)
   implementation(libs.ksoup)
   implementation(libs.kotlinResult)
   implementation(libs.kotlinResult.coroutines)
@@ -69,6 +70,7 @@ dependencies {
   implementation(libs.metrox.viewmodel.compose)
   implementation(libs.sqldelight.runtime)
   implementation(libs.sqldelight.extensions.coroutines)
+  implementation(projects.htmlRenderer)
 
   compileOnly(libs.androidx.compose.ui.tooling.preview)
 
@@ -80,5 +82,10 @@ dependencies {
   screenshotTestImplementation(libs.screenshot.validation.api)
   screenshotTestImplementation(libs.androidx.compose.ui.tooling)
 
+  androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+  androidTestImplementation(libs.androidx.test.runner)
+  androidTestImplementation(libs.androidx.test.ext.junit)
+  androidTestImplementation(libs.junit.legacy)
+  debugImplementation(libs.androidx.compose.ui.test.manifest)
   addTestDependencies(project)
 }

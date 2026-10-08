@@ -50,6 +50,7 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.github.michaelbull.result.coroutines.runSuspendCatching
@@ -255,9 +256,12 @@ internal fun CommentEntry(
         }
         Text(
           text = score.toString(),
-          style = MaterialTheme.typography.labelLarge,
+          style =
+            MaterialTheme.typography.labelLarge.let {
+              if (hasLocallyUpvoted) it.copy(fontWeight = FontWeight.Bold) else it
+            },
           color =
-            if (hasLocallyUpvoted) MaterialTheme.colorScheme.onPrimaryContainer
+            if (hasLocallyUpvoted) MaterialTheme.colorScheme.secondary
             else MaterialTheme.colorScheme.onBackground,
         )
         Text(

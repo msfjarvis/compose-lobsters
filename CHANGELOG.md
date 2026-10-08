@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The search bar now correctly requests focus when expanded
 - Rare crash caused when scrolling through comments
 - Navigation bar being fully transparent and blocking content — thanks to Michel Le Bihan
+- Upvoted comments are now also indicated with a differently colored count
 
 ## [1.74.0] - 2026-10-06
 

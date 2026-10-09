@@ -1,6 +1,6 @@
 [versions]
 aboutLibraries = "15.2.0"
-agp = "9.5.0-alpha08"
+agp = "9.5.0-alpha09"
 androidx-test = "1.7.0"
 activity = "1.14.0-alpha03"
 annotation = "1.11.0"
@@ -105,7 +105,7 @@ build-cachefix = "org.gradle.android.cache-fix:org.gradle.android.cache-fix.grad
 build-kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 build-semver = "com.github.zafarkhaja:java-semver:0.10.2"
 build-sentry = "io.sentry.android.gradle:io.sentry.android.gradle.gradle.plugin:6.23.0"
-build-spotless = "com.diffplug.spotless:spotless-plugin-gradle:8.10.3"
+build-spotless = "com.diffplug.spotless:spotless-plugin-gradle:8.10.4"
 coil3-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil3" }
 coil3-core = { module = "io.coil-kt.coil3:coil-core", version.ref = "coil3" }
 coil3-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coil3" }

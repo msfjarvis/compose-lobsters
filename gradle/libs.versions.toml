@@ -175,7 +175,7 @@ kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref =
 
 [plugins]
 aboutlibraries = { id = "com.mikepenz.aboutlibraries.plugin.android", version.ref = "aboutLibraries" }
-android-junit5 = { id = "de.mannodermaus.android-junit", version = "2.0.1" }
+android-junit5 = { id = "de.mannodermaus.android-junit", version = "2.0.2" }
 android-lint = { id = "com.android.lint", version.ref = "agp" }
 android-test = { id = "com.android.test", version.ref = "agp" }
 dependencyAnalysis = "com.autonomousapps.dependency-analysis:3.19.2"

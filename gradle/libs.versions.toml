@@ -30,7 +30,7 @@ paging = "3.5.3"
 playAppUpdate = "2.1.0"
 retrofit = "3.0.0"
 runtimeSaveable = "1.13.0-beta01"
-sentry = "8.60.0"
+sentry = "8.61.0"
 serialization = "1.12.0-RC"
 sqldelight = "2.4.1"
 sqlite = "2.8.0-alpha01"
@@ -175,7 +175,7 @@ kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref =
 
 [plugins]
 aboutlibraries = { id = "com.mikepenz.aboutlibraries.plugin.android", version.ref = "aboutLibraries" }
-android-junit5 = { id = "de.mannodermaus.android-junit", version = "2.0.1" }
+android-junit5 = { id = "de.mannodermaus.android-junit", version = "2.0.2" }
 android-lint = { id = "com.android.lint", version.ref = "agp" }
 android-test = { id = "com.android.test", version.ref = "agp" }
 dependencyAnalysis = "com.autonomousapps.dependency-analysis:3.19.2"

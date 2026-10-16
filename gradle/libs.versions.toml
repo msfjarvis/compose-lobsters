@@ -148,6 +148,7 @@ retrofit-kotlinxSerializationConverter = { module = "com.squareup.retrofit2:conv
 screenshot-validation-api = { module = "com.android.tools.screenshot:screenshot-validation-api", version.ref = "screenshot" }
 sentry = { module = "io.sentry:sentry", version.ref = "sentry" }
 sentry-android-core = { module = "io.sentry:sentry-android-core", version.ref = "sentry" }
+sentry-android-navigation3 = { module = "io.sentry:sentry-android-navigation3", version.ref = "sentry" }
 sentry-android-sqlite = { module = "io.sentry:sentry-android-sqlite", version.ref = "sentry" }
 # Referenced in build-logic
 #noinspection UnusedVersionCatalogEntry

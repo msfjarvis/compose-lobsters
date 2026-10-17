@@ -247,6 +247,7 @@ dependencies {
   implementation(libs.retrofit)
   implementation(libs.sentry)
   implementation(libs.sentry.android.core)
+  implementation(libs.sentry.android.navigation3)
   implementation(libs.sqldelight.extensions.coroutines)
   implementation(libs.sqldelight.runtime)
   implementation(libs.swipe)

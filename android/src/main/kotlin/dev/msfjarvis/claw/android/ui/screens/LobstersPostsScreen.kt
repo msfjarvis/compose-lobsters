@@ -87,7 +87,6 @@ import dev.msfjarvis.claw.android.ui.navigation.Newest
 import dev.msfjarvis.claw.android.ui.navigation.NonStackable
 import dev.msfjarvis.claw.android.ui.navigation.Reply
 import dev.msfjarvis.claw.android.ui.navigation.Saved
-import dev.msfjarvis.claw.android.ui.navigation.SentryNavigation3Traced
 import dev.msfjarvis.claw.android.ui.navigation.Settings
 import dev.msfjarvis.claw.android.ui.navigation.TagFiltering
 import dev.msfjarvis.claw.android.ui.navigation.TopLevelDestination
@@ -101,6 +100,9 @@ import dev.msfjarvis.claw.common.tags.TagFilterViewModel
 import dev.msfjarvis.claw.common.tags.TagList
 import dev.msfjarvis.claw.common.user.UserProfile
 import dev.zacsweers.metrox.viewmodel.metroViewModel
+import io.sentry.compose.navigation3.SentryBackStackEntry
+import io.sentry.compose.navigation3.SentryNavEffect
+import io.sentry.compose.navigation3.SentryNavOptions
 import kotlin.time.Duration.Companion.milliseconds
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
@@ -310,6 +312,39 @@ fun LobstersPostsScreen(
 
   InAppUpdates(snackbarHostState = snackbarHostState)
 
+  @Suppress("UnstableApiUsage")
+  SentryNavEffect(
+    backStack = backStack,
+    backStackEntryMapper = { entry ->
+      when (entry) {
+        is Hottest -> SentryBackStackEntry("Hottest")
+        is Newest -> SentryBackStackEntry("Newest")
+        is Saved -> SentryBackStackEntry("Saved")
+        is Comments -> SentryBackStackEntry("Comments", mapOf("post_id" to entry.postId))
+        is Reply ->
+          SentryBackStackEntry(
+            "Reply",
+            mapOf("replying_to" to entry.commentId, "replying_on" to entry.postId),
+          )
+        is User -> SentryBackStackEntry("User", mapOf("user" to entry.username))
+        is Settings -> SentryBackStackEntry("Settings")
+        is Login -> SentryBackStackEntry("Login")
+        is AboutLibraries -> SentryBackStackEntry("AboutLibraries")
+        is TagFiltering -> SentryBackStackEntry("TagFiltering")
+        else -> null
+      }
+    },
+    // These are all defaults, just keeping it here so I can remember how to tweak if the new data
+    // looks off.
+    options =
+      SentryNavOptions {
+        enableNavigationBreadcrumbs = true
+        enableNavigationTransactions = true
+        captureBackStack = true
+        maxCapturedBackStackEntries = 5
+      },
+  )
+
   Scaffold(
     topBar = {
       ClawAppBar(
@@ -358,7 +393,6 @@ fun LobstersPostsScreen(
     snackbarHost = { SnackbarHost(snackbarHostState) },
     modifier = Modifier.semantics { testTagsAsResourceId = true },
   ) { contentPadding ->
-    SentryNavigation3Traced(backStack = backStack)
     Row {
       AnimatedVisibility(visible = navigationType == ClawNavigationType.NAVIGATION_RAIL) {
         ClawNavigationRail(

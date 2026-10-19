@@ -37,6 +37,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.msfjarvis.claw.common.R
 import dev.msfjarvis.claw.common.theme.LobstersTheme
+import dev.msfjarvis.claw.common.ui.ThemedRichText
 import dev.msfjarvis.claw.common.ui.preview.DevicePreviews
 import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
 import dev.zacsweers.metrox.viewmodel.metroViewModel
@@ -98,7 +99,7 @@ internal fun ReplyScreenContent(
     verticalArrangement = Arrangement.spacedBy(16.dp),
   ) {
     ElevatedCard(onClick = onParentCommentClick, modifier = Modifier.fillMaxWidth()) {
-      Text(text = commentText, modifier = Modifier.padding(16.dp))
+      ThemedRichText(text = commentText, modifier = Modifier.padding(16.dp))
     }
     TextField(
       value = uiState.editor,
@@ -133,6 +134,14 @@ internal fun ReplyScreenContent(
   }
 }
 
+internal const val COMMENT_TEXT =
+  """
+<blockquote>
+<p>“Ende” is an anagram of “Deno”</p>
+</blockquote>
+<p>How is it an <a href="https://en.wikipedia.org/wiki/Anagram" rel="ugc">anagram</a> ?</p>
+"""
+
 @ThemePreviews
 @DevicePreviews
 @Preview
@@ -140,7 +149,7 @@ internal fun ReplyScreenContent(
 private fun ReplyScreenPreview() {
   LobstersTheme {
     ReplyScreenContent(
-      commentText = "Parent comment body",
+      commentText = COMMENT_TEXT,
       uiState = ReplyUiState(editor = TextFieldValue("Draft")),
       contentPadding = PaddingValues(),
       onEditorChanged = {},
@@ -157,7 +166,7 @@ private fun ReplyScreenPreview() {
 private fun ReplyScreenDialogPreview() {
   LobstersTheme {
     ReplyScreenContent(
-      commentText = "Parent comment body",
+      commentText = COMMENT_TEXT,
       uiState = ReplyUiState(isQuoteDialogOpen = true),
       contentPadding = PaddingValues(),
       onEditorChanged = {},
@@ -174,7 +183,7 @@ private fun ReplyScreenDialogPreview() {
 private fun ReplyScreenSubmittingPreview() {
   LobstersTheme {
     ReplyScreenContent(
-      commentText = "Parent comment body",
+      commentText = COMMENT_TEXT,
       uiState = ReplyUiState(editor = TextFieldValue("Draft"), isSubmitting = true),
       contentPadding = PaddingValues(),
       onEditorChanged = {},

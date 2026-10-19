@@ -40,6 +40,9 @@ data class Comments(val postId: String, val commentsUrl: String) : NavKey, Parce
 class Reply(
   val postId: String,
   val commentId: String,
+  // This can potentially be massive, but I'm trusting that anybody wanting to reply to a wall of
+  // text will probably want a physical keyboard to write their rebuttal.
+  val commentText: String,
 ) : NavKey, Parcelable
 
 @Parcelize @Serializable data object Settings : NavKey, Parcelable

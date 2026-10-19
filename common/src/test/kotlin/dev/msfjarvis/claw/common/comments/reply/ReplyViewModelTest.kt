@@ -53,7 +53,6 @@ class ReplyViewModelTest {
       val viewModel =
         ReplyViewModel(
           api = AuthenticatedLobstersApi(fakeApi),
-          commentTextHolder = CommentTextHolder(),
           ioDispatcher = dispatcher,
         )
 
@@ -71,7 +70,6 @@ class ReplyViewModelTest {
       val viewModel =
         ReplyViewModel(
           api = AuthenticatedLobstersApi(fakeApi),
-          commentTextHolder = CommentTextHolder(),
           ioDispatcher = dispatcher,
         )
       viewModel.updateEditor(TextFieldValue("reply body", TextRange("reply body".length)))
@@ -91,7 +89,6 @@ class ReplyViewModelTest {
       val viewModel =
         ReplyViewModel(
           api = AuthenticatedLobstersApi(fakeApi),
-          commentTextHolder = CommentTextHolder(),
           ioDispatcher = dispatcher,
         )
       viewModel.updateEditor(TextFieldValue("reply body", TextRange("reply body".length)))

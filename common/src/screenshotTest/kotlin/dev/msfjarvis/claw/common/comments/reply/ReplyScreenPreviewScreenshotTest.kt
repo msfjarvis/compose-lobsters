@@ -21,7 +21,7 @@ import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
 private fun ReplyScreenPreviewScreenshot() {
   LobstersTheme {
     ReplyScreenContent(
-      commentText = "Parent comment body",
+      commentText = COMMENT_TEXT,
       uiState = ReplyUiState(),
       contentPadding = PaddingValues(),
       onEditorChanged = {},
@@ -42,17 +42,25 @@ private fun ReplyScreenLongCommentPreviewScreenshot() {
     ReplyScreenContent(
       commentText =
         """
+        <p>
         This is a very long parent comment intended to exercise the reply screen when the quoted target
         takes up a lot of vertical space. It should be possible to scroll this content out of view and
         still reach the reply editor and submit button without them disappearing behind the keyboard.
+        </p>
 
+        <p>
         Paragraph two adds more height so that the preview meaningfully captures the long-content state.
         We want this screenshot to guard against regressions where the editor becomes unreachable.
+        </p>
 
+        <p>
         Paragraph three is just more realistic body text, similar to a real Lobsters thread where someone
         writes a multi-paragraph explanation with examples, caveats, and extra context.
+        </p>
 
+        <p>
         Paragraph four keeps the card tall enough to validate the scrolling layout on phone-sized screens.
+        </p>
         """
           .trimIndent(),
       uiState = ReplyUiState(),

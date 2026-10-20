@@ -472,17 +472,18 @@ fun LobstersPostsScreen(
                 postActions = commentsPostActions,
                 contentPadding = contentPadding,
                 openUserProfile = { navigateToDestination(User(it), false) },
-                openReplyScreen = { postId, commentId ->
-                  navigateToDestination(Reply(postId, commentId), true)
+                openReplyScreen = { postId, commentId, commentText ->
+                  navigateToDestination(Reply(postId, commentId, commentText), true)
                 },
               )
             }
             entry<Reply>(metadata = ListDetailSceneStrategy.extraPane()) { dest ->
               ReplyScreen(
-                commentId = dest.commentId,
-                contentPadding = contentPadding,
                 postId = dest.postId,
+                commentId = dest.commentId,
+                commentText = dest.commentText,
                 onReplySubmitted = { popBackStack(backStack) },
+                contentPadding = contentPadding,
                 modifier = Modifier.fillMaxSize(),
               )
             }

@@ -197,7 +197,7 @@ private fun CommentsButton(commentCount: Int, onClick: () -> Unit, modifier: Mod
         contentAlignment = Alignment.Center,
       ) {
         Text(
-          text = commentCount.toString(),
+          text = if (commentCount > 99) "∞" else commentCount.toString(),
           style = MaterialTheme.typography.labelMedium,
           color = MaterialTheme.colorScheme.onTertiaryContainer,
           modifier = Modifier.testTag("comment_count").padding(2.dp),

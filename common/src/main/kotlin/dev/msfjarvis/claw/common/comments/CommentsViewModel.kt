@@ -19,7 +19,6 @@ import dev.msfjarvis.claw.api.AuthenticatedLobstersApi
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.api.toError
 import dev.msfjarvis.claw.common.NetworkState
-import dev.msfjarvis.claw.common.comments.reply.CommentTextHolder
 import dev.msfjarvis.claw.core.coroutines.IODispatcher
 import dev.msfjarvis.claw.core.network.SessionCookieStore
 import dev.msfjarvis.claw.model.Comment
@@ -44,9 +43,8 @@ class CommentsViewModel(
   private val api: LobstersApi,
   private val authenticatedApi: AuthenticatedLobstersApi,
   private val commentsRepository: CommentsRepository,
-  private val commentTextHolder: CommentTextHolder,
-  private val sessionCookieStore: SessionCookieStore,
   @param:IODispatcher private val ioDispatcher: CoroutineDispatcher,
+  sessionCookieStore: SessionCookieStore,
 ) : ViewModel() {
   private val commentsHandler = CommentsHandler()
 
@@ -119,9 +117,5 @@ class CommentsViewModel(
 
   internal fun updateUnreadStatus(seenCommentsState: SeenCommentsState) {
     commentsHandler.updateUnreadStatus(seenCommentsState)
-  }
-
-  fun storeCommentText(commentId: String, text: String) {
-    commentTextHolder.store(commentId, text)
   }
 }

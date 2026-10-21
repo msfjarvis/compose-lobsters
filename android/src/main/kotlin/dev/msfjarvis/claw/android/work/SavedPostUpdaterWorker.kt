@@ -109,4 +109,7 @@ internal fun refreshedSavedPost(
   requestUrl: String,
   details: LobstersPostDetails,
 ): SavedPost? =
-  details.takeIf { it.shortId == requestedShortId }?.toSavedPost()?.copy(commentsUrl = requestUrl)
+  details
+    .takeIf { it.stories.firstOrNull()?.shortId == requestedShortId }
+    ?.toSavedPost()
+    ?.copy(commentsUrl = requestUrl)

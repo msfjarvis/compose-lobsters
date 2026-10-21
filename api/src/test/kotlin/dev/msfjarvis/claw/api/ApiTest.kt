@@ -93,7 +93,7 @@ class ApiTest {
   fun `post details with comments`() = runTest {
     val postDetails = api.getPostDetails("https://lobste.rs/s/tdfoqh/c")
     assertIs<Success<LobstersPostDetails>>(postDetails)
-    assertThat(postDetails.value.tags).containsExactly("meta")
+    assertThat(postDetails.value.stories.first().tags).containsExactly("meta")
     val comments = postDetails.value.comments
     assertThat(comments).hasSize(10)
     assertThat(comments.first().user).isEqualTo("dpercy")

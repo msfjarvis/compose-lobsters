@@ -10,7 +10,7 @@ import com.fleeksoft.ksoup.nodes.Element
 import kotlin.time.Instant
 import dev.msfjarvis.claw.model.Comment
 
-internal fun parseComments(root: Element): List<Comment> {
+internal fun parseComments(root: Element, sourceStoryId: String): List<Comment> {
   val seen = mutableSetOf<String>()
   val workStack = ArrayDeque<Pair<Element, String?>>()
   root.select("ol.comments > li.comments_subtree").asReversed().forEach { subtree ->
@@ -24,7 +24,7 @@ internal fun parseComments(root: Element): List<Comment> {
         else subtree.children().firstOrNull { it.`is`("div.comment") } ?: continue
       val shortId = commentElement.attr("data-shortid")
       if (!seen.add(shortId)) continue
-      val comment = commentElement.toComment(parentComment)
+      val comment = commentElement.toComment(parentComment, sourceStoryId)
       add(comment)
       val childContainer = if (subtree.`is`("div.comment")) subtree.parent() ?: subtree else subtree
       childContainer.children().asReversed().forEach { childList ->
@@ -38,7 +38,7 @@ internal fun parseComments(root: Element): List<Comment> {
   }
 }
 
-private fun Element.toComment(parentComment: String?): Comment {
+private fun Element.toComment(parentComment: String?, sourceStoryId: String): Comment {
   val byline = selectFirst("div.byline")
   val timestamp = byline?.selectFirst("a[href^=/c/] time")?.attr("data-at-unix").orEmpty()
   val isEdited = byline?.text()?.contains("edited") == true
@@ -50,6 +50,7 @@ private fun Element.toComment(parentComment: String?): Comment {
     timestamp = Instant.fromEpochSeconds(timestamp.toEpochSeconds()),
     edited = isEdited,
     parentComment = parentComment,
+    sourceStoryId = sourceStoryId,
     user =
       getElementsByClass("byline")
         .flatMap { it.getElementsByTag("a") }

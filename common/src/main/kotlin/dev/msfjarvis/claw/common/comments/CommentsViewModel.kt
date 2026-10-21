@@ -106,8 +106,13 @@ class CommentsViewModel(
   }
 
   internal fun createCommentNodes(details: UIPost, seenCommentsState: SeenCommentsState) {
+    val storiesById = details.discussion.stories.associateBy { it.shortId }
     commentsHandler.createListNode(details.comments, seenCommentsState) { comment ->
-      details.userIsAuthor && comment.user == details.submitter
+      val source =
+        requireNotNull(storiesById[comment.sourceStoryId]) {
+          "No source story found for comment ${comment.shortId} (source ${comment.sourceStoryId})"
+        }
+      source.userIsAuthor && comment.user == source.submitter
     }
   }
 

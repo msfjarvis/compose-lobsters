@@ -11,28 +11,38 @@ import dev.msfjarvis.claw.database.local.SavedPost
 
 fun UIPost.Companion.fromSavedPost(post: SavedPost): UIPost =
   UIPost(
-    shortId = post.shortId,
-    createdAt = post.createdAt,
-    title = post.title,
-    url = post.url,
+    discussion = Discussion(stories = listOf(post.toSourceStory())),
     description = post.description,
     commentCount = post.commentCount ?: 0,
     commentsUrl = post.commentsUrl,
-    submitter = post.submitterName,
-    tags = post.tags,
-    userIsAuthor = post.userIsAuthor,
   )
 
 fun UIPost.Companion.fromCachedRemotePost(post: CachedRemotePost): UIPost =
   UIPost(
-    shortId = post.shortId,
-    createdAt = post.createdAt,
-    title = post.title,
-    url = post.url,
+    discussion = Discussion(stories = listOf(post.toSourceStory())),
     description = post.description,
     commentCount = post.commentCount ?: 0,
     commentsUrl = post.commentsUrl,
-    submitter = post.submitterName,
-    tags = post.tags,
-    userIsAuthor = post.userIsAuthor,
+  )
+
+private fun SavedPost.toSourceStory() =
+  SourceStory(
+    shortId = shortId,
+    createdAt = createdAt,
+    title = title,
+    url = url,
+    submitter = submitterName,
+    tags = tags,
+    userIsAuthor = userIsAuthor,
+  )
+
+private fun CachedRemotePost.toSourceStory() =
+  SourceStory(
+    shortId = shortId,
+    createdAt = createdAt,
+    title = title,
+    url = url,
+    submitter = submitterName,
+    tags = tags,
+    userIsAuthor = userIsAuthor,
   )

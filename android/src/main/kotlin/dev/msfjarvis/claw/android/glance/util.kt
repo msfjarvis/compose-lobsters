@@ -30,6 +30,7 @@ import androidx.glance.text.TextStyle
 import dev.msfjarvis.claw.common.posts.TEST_POST
 import dev.msfjarvis.claw.common.theme.DarkThemeColors
 import dev.msfjarvis.claw.common.theme.LightThemeColors
+import dev.msfjarvis.claw.model.SourceStory
 import dev.msfjarvis.claw.model.UIPost
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toPersistentList
@@ -73,28 +74,39 @@ fun samplePosts(
 
 internal fun generatedWidgetPreviewPosts(): PersistentList<UIPost> {
   return listOf(
-      TEST_POST.copy(
-        shortId = "widget-preview-1",
-        title = "Rust 2026 roadmap",
-        url = "/s/widget_preview_1",
-        commentCount = 18,
-        commentsUrl = "https://lobste.rs/s/widget_preview_1/rust_2026_roadmap",
-        submitter = "alice",
-        tags = ["rust", "roadmap"],
-        description = "",
-      ),
-      TEST_POST.copy(
-        shortId = "widget-preview-2",
-        title = "SQLite tips for mobile apps",
-        url = "/s/widget_preview_2",
-        commentCount = 7,
-        commentsUrl = "https://lobste.rs/s/widget_preview_2/sqlite_tips_for_mobile_apps",
-        submitter = "bob",
-        tags = ["sqlite", "android"],
-        description = "",
-      ),
+      TEST_POST.withPrimaryStory {
+          copy(
+            shortId = "widget-preview-1",
+            title = "Rust 2026 roadmap",
+            url = "/s/widget_preview_1",
+            submitter = "alice",
+            tags = ["rust", "roadmap"],
+          )
+        }
+        .copy(
+          commentCount = 18,
+          commentsUrl = "https://lobste.rs/s/widget_preview_1/rust_2026_roadmap",
+          description = "",
+        ),
+      TEST_POST.withPrimaryStory {
+          copy(
+            shortId = "widget-preview-2",
+            title = "SQLite tips for mobile apps",
+            url = "/s/widget_preview_2",
+            submitter = "bob",
+            tags = ["sqlite", "android"],
+          )
+        }
+        .copy(
+          commentCount = 7,
+          commentsUrl = "https://lobste.rs/s/widget_preview_2/sqlite_tips_for_mobile_apps",
+          description = "",
+        ),
     )
     .toPersistentList()
 }
+
+internal fun UIPost.withPrimaryStory(update: SourceStory.() -> SourceStory): UIPost =
+  copy(discussion = discussion.copy(stories = listOf(update(discussion.first))))
 
 internal fun generatedWidgetPreviewDelayMinutes(): Long = 15L

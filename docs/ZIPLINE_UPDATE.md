@@ -25,7 +25,7 @@ The production build remains signed with `ZIPLINE_SIGNING_KEY`, but releases are
    curl --fail --request POST https://claw.msfjarvis.dev/admin/releases \
      --header "Authorization: Bearer $ADMIN_PASSWORD" \
      --header "Content-Type: application/zip" \
-     --header "X-Zipline-Version: v2" \
+     --header "X-Zipline-Version: v3" \
      --data-binary @zipline-release.zip
    ```
 
@@ -37,6 +37,6 @@ The upload response contains the release timestamp. To reactivate a previous ABI
 curl --fail --request POST https://claw.msfjarvis.dev/admin/rollback \
   --header "Authorization: Bearer $ADMIN_PASSWORD" \
   --header "Content-Type: application/json" \
-  --header "X-Zipline-Version: v2" \
+  --header "X-Zipline-Version: v3" \
   --data '{"releaseTimestamp":"20260830T000000Z"}'
 ```

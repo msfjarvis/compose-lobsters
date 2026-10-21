@@ -8,48 +8,50 @@ package dev.msfjarvis.claw.model
 
 import dev.msfjarvis.claw.database.local.SavedPost
 
+fun LobstersPost.toSourceStory(): SourceStory =
+  SourceStory(
+    shortId = shortId,
+    createdAt = createdAt,
+    title = title,
+    url = url,
+    submitter = submitter,
+    tags = tags,
+    userIsAuthor = userIsAuthor,
+  )
+
 fun LobstersPost.toUIPost(): UIPost =
   UIPost(
-    shortId = shortId,
-    createdAt = createdAt,
-    title = title,
-    url = url,
+    discussion = Discussion(stories = listOf(toSourceStory())),
     description = description,
     commentCount = commentCount,
     commentsUrl = commentsUrl,
-    submitter = submitter,
-    tags = tags,
-    userIsAuthor = userIsAuthor,
   )
 
-fun LobstersPostDetails.toUIPost(): UIPost =
-  UIPost(
-    shortId = shortId,
-    createdAt = createdAt,
-    title = title,
-    url = url,
-    description = description,
+fun LobstersPostDetails.toUIPost(): UIPost {
+  val primary = stories.first()
+  return UIPost(
+    discussion = Discussion(stories = stories.map(LobstersPost::toSourceStory), comments = comments),
+    description = primary.description,
     commentCount = commentCount,
     commentsUrl = commentsUrl,
-    submitter = submitter,
-    tags = tags,
-    comments = comments,
-    userIsAuthor = userIsAuthor,
   )
+}
 
-fun LobstersPostDetails.toSavedPost(): SavedPost =
-  SavedPost(
-    shortId = shortId,
-    title = title,
-    url = url,
-    createdAt = createdAt,
+fun LobstersPostDetails.toSavedPost(): SavedPost {
+  val primary = stories.first()
+  return SavedPost(
+    shortId = primary.shortId,
+    title = primary.title,
+    url = primary.url,
+    createdAt = primary.createdAt,
     commentCount = commentCount,
     commentsUrl = commentsUrl,
-    submitterName = submitter,
-    tags = tags,
-    description = description,
-    userIsAuthor = userIsAuthor,
+    submitterName = primary.submitter,
+    tags = primary.tags,
+    description = primary.description,
+    userIsAuthor = primary.userIsAuthor,
   )
+}
 
 fun UIPost.toSavedPost(): SavedPost =
   SavedPost(

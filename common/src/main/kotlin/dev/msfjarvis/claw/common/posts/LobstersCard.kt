@@ -154,7 +154,7 @@ internal fun Submitter(
 private fun SaveButton(isSaved: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
   Crossfade(targetState = isSaved, label = "save-button") { saved ->
     Button(
-      modifier = modifier,
+      modifier = modifier.testTag("save_button"),
       onClick = onClick,
       contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
       colors =
@@ -166,7 +166,6 @@ private fun SaveButton(isSaved: Boolean, onClick: () -> Unit, modifier: Modifier
       Icon(
         imageVector = if (saved) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
         contentDescription = if (saved) "Remove from saved posts" else "Add to saved posts",
-        modifier = Modifier.testTag("save_button"),
       )
     }
   }

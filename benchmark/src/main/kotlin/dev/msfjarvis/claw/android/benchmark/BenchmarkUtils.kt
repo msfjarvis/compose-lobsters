@@ -6,6 +6,7 @@
  */
 package dev.msfjarvis.claw.android.benchmark
 
+import androidx.benchmark.macro.MacrobenchmarkScope
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.BySelector
 import androidx.test.uiautomator.UiDevice
@@ -19,18 +20,32 @@ private const val NAV_ID_HOTTEST = "HOTTEST"
 private const val NAV_ID_NEWEST = "NEWEST"
 private const val NAV_ID_SAVED = "SAVED"
 
-fun UiDevice.savePosts() {
+fun MacrobenchmarkScope.exploreUI(warmupStep: MacrobenchmarkScope.() -> Unit = {}) {
+  warmupStep()
+
+  startActivityAndWait()
+
+  device.waitForIdle()
+
+  device.savePosts()
+
+  device.exploreScreens()
+
+  device.returnToHottestScreen()
+}
+
+private fun UiDevice.savePosts() {
   waitForObject(By.res(SAVE_BUTTON_ID)).click()
 }
 
-fun UiDevice.exploreScreens() {
+private fun UiDevice.exploreScreens() {
   listOf(NAV_ID_HOTTEST, NAV_ID_NEWEST, NAV_ID_SAVED).forEach { tag ->
     waitForObject(By.res(tag)).click()
     waitForIdle()
   }
 }
 
-fun UiDevice.returnToHottestScreen() {
+private fun UiDevice.returnToHottestScreen() {
   waitForObject(By.res(NAV_ID_HOTTEST)).click()
 }
 

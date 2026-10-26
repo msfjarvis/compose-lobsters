@@ -174,7 +174,7 @@ private fun SaveButton(isSaved: Boolean, onClick: () -> Unit, modifier: Modifier
 @Composable
 private fun CommentsButton(commentCount: Int, onClick: () -> Unit, modifier: Modifier = Modifier) {
   Button(
-    modifier = modifier,
+    modifier = modifier.testTag("comments_button"),
     onClick = onClick,
     contentPadding = PaddingValues(start = 8.dp, end = 8.dp, top = 6.dp, bottom = 4.dp),
     colors =
@@ -187,7 +187,7 @@ private fun CommentsButton(commentCount: Int, onClick: () -> Unit, modifier: Mod
       Icon(
         imageVector = Icons.AutoMirrored.Filled.Comment,
         contentDescription = stringResource(R.string.open_comments),
-        modifier = Modifier.align(Alignment.Center).testTag("comments_button"),
+        modifier = Modifier.align(Alignment.Center),
       )
       Box(
         modifier =

@@ -16,6 +16,8 @@ import androidx.test.uiautomator.Until
 const val PACKAGE_NAME = "dev.msfjarvis.claw.android"
 private const val AWAIT_TIMEOUT = 10_000L
 private const val SAVE_BUTTON_ID = "save_button"
+private const val COMMENTS_BUTTON_ID = "comments_button"
+private const val COMMENTS_HEADER_ID = "comments_header"
 private const val NAV_ID_HOTTEST = "HOTTEST"
 private const val NAV_ID_NEWEST = "NEWEST"
 private const val NAV_ID_SAVED = "SAVED"
@@ -29,6 +31,8 @@ fun MacrobenchmarkScope.exploreUI(warmupStep: MacrobenchmarkScope.() -> Unit = {
 
   device.savePosts()
 
+  device.viewComments()
+
   device.exploreScreens()
 
   device.returnToHottestScreen()
@@ -36,6 +40,12 @@ fun MacrobenchmarkScope.exploreUI(warmupStep: MacrobenchmarkScope.() -> Unit = {
 
 private fun UiDevice.savePosts() {
   waitForObject(By.res(SAVE_BUTTON_ID)).click()
+}
+
+private fun UiDevice.viewComments() {
+  waitForObject(By.res(COMMENTS_BUTTON_ID)).click()
+  waitForObject(By.res(COMMENTS_HEADER_ID))
+  pressBack()
 }
 
 private fun UiDevice.exploreScreens() {

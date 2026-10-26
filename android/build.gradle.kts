@@ -7,6 +7,7 @@
 @file:Suppress("UnstableApiUsage")
 @file:OptIn(ExperimentalTime::class)
 
+import com.android.build.api.variant.HasUnitTestBuilder
 import dev.msfjarvis.claw.gradle.addTestDependencies
 import dev.zacsweers.metro.gradle.DiagnosticSeverity
 import groovy.json.JsonOutput
@@ -90,6 +91,13 @@ val prepareEmbeddedZiplineParser =
     }
   }
 
+// Compose Preview runfiles are generated from the unit-test component for each app variant.
+androidComponents {
+  beforeVariants { variant ->
+    (variant as HasUnitTestBuilder).enableUnitTest = true
+  }
+}
+
 android {
   namespace = "dev.msfjarvis.claw.android"
   defaultConfig.applicationId = "dev.msfjarvis.claw.android"
@@ -137,6 +145,8 @@ android {
   }
 
   testOptions {
+    // Compose Preview runfiles need Android resources on the unit-test runtime classpath.
+    unitTests.isIncludeAndroidResources = true
     managedDevices {
       localDevices {
         create("pixel9api36") {

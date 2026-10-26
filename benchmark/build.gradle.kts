@@ -22,6 +22,12 @@ android {
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
 
+  flavorDimensions += "distribution"
+  productFlavors {
+    create("foss") { dimension = "distribution" }
+    create("gplay") { dimension = "distribution" }
+  }
+
   buildTypes {
     create("benchmark") {
       isDebuggable = true

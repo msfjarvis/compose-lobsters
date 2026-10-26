@@ -6,6 +6,7 @@
  */
 package dev.msfjarvis.claw.gradle
 
+import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.variant.ApplicationAndroidComponentsExtension
 import io.sentry.android.gradle.extensions.InstrumentationFeature
 import io.sentry.android.gradle.extensions.SentryPluginExtension
@@ -32,6 +33,12 @@ class SentryPlugin : Plugin<Project> {
           if (isRelease) "production" else "dev",
         )
       }
+    }
+    // Fallback setup for :benchmark which doesn't seem to implement androidComponents DSL
+    project.extensions.configure<ApplicationExtension> {
+      defaultConfig.manifestPlaceholders["sentryDsn"] =
+        project.providers.environmentVariable(SENTRY_DSN_PROPERTY).getOrElse("")
+      defaultConfig.manifestPlaceholders["sentryEnvironment"] = "dev"
     }
     if (!enableSentry) return
     project.plugins.apply(io.sentry.android.gradle.SentryPlugin::class)

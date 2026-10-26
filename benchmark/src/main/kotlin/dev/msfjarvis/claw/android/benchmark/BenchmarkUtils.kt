@@ -27,8 +27,6 @@ fun MacrobenchmarkScope.exploreUI(warmupStep: MacrobenchmarkScope.() -> Unit = {
 
   startActivityAndWait()
 
-  device.waitForIdle()
-
   device.savePosts()
 
   device.viewComments()
@@ -39,16 +37,19 @@ fun MacrobenchmarkScope.exploreUI(warmupStep: MacrobenchmarkScope.() -> Unit = {
 }
 
 private fun UiDevice.savePosts() {
+  waitForIdle()
   waitForObject(By.res(SAVE_BUTTON_ID)).click()
 }
 
 private fun UiDevice.viewComments() {
+  waitForIdle()
   waitForObject(By.res(COMMENTS_BUTTON_ID)).click()
   waitForObject(By.res(COMMENTS_HEADER_ID))
   pressBack()
 }
 
 private fun UiDevice.exploreScreens() {
+  waitForIdle()
   listOf(NAV_ID_HOTTEST, NAV_ID_NEWEST, NAV_ID_SAVED).forEach { tag ->
     waitForObject(By.res(tag)).click()
     waitForIdle()
@@ -56,6 +57,7 @@ private fun UiDevice.exploreScreens() {
 }
 
 private fun UiDevice.returnToHottestScreen() {
+  waitForIdle()
   waitForObject(By.res(NAV_ID_HOTTEST)).click()
 }
 

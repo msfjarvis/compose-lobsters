@@ -41,6 +41,7 @@ import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.UIPost
 import dev.msfjarvis.claw.model.fromCachedRemotePost
 import dev.msfjarvis.claw.model.toUIPost
+import java.util.concurrent.CancellationException
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 
@@ -86,8 +87,7 @@ class HottestPostsWidget : GlanceAppWidget() {
         }
         else -> {
           // Fall back to cached posts when network fails
-          cachedRemotePostsRepository
-            .getCachedPosts()
+          cachedPostsOrEmpty { cachedRemotePostsRepository.getCachedPosts() }
             .map(UIPost::fromCachedRemotePost)
             .toImmutableList()
         }
@@ -182,5 +182,15 @@ class HottestPostsWidget : GlanceAppWidget() {
       actionsEnabled = false,
       showFooterAction = false,
     )
+  }
+}
+
+internal suspend fun <T> cachedPostsOrEmpty(loader: suspend () -> List<T>): List<T> {
+  return try {
+    loader()
+  } catch (cancellation: CancellationException) {
+    throw cancellation
+  } catch (_: Exception) {
+    emptyList()
   }
 }

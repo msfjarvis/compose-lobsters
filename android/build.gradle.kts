@@ -5,16 +5,10 @@
  * https://opensource.org/licenses/MIT.
  */
 @file:Suppress("UnstableApiUsage")
-@file:OptIn(ExperimentalTime::class)
 
 import com.android.build.api.variant.HasUnitTestBuilder
 import dev.msfjarvis.claw.gradle.addTestDependencies
 import dev.zacsweers.metro.gradle.DiagnosticSeverity
-import groovy.json.JsonOutput
-import groovy.json.JsonSlurper
-import java.io.File
-import kotlin.time.Clock
-import kotlin.time.ExperimentalTime
 
 plugins {
   id("dev.msfjarvis.claw.android-application")
@@ -33,63 +27,14 @@ plugins {
   alias(libs.plugins.kotlin.serialization)
   alias(libs.plugins.dependencyAnalysis)
   alias(libs.plugins.metro)
-  alias(libs.plugins.zipline)
+  id("dev.msfjarvis.claw.zipline-setup")
 }
 
-val ziplineDevManifestUrl =
-  providers
-    .gradleProperty("claw.ziplineParserManifestUrl")
-    .orElse("http://10.0.2.2:8080/manifest.zipline.json")
-    .get()
-val ziplineProdManifestUrl = "https://claw.msfjarvis.dev/current/v3/manifest.zipline.json"
-val embeddedZiplineAssetsRoot = layout.buildDirectory.dir("generated/ziplineEmbeddedAssets")
-val embeddedZiplineAssetsRootFile =
-  layout.buildDirectory.get().dir("generated/ziplineEmbeddedAssets").asFile
-val prepareEmbeddedZiplineParser =
-  tasks.register("prepareEmbeddedZiplineParser") {
-    val sourceDir =
-      rootProject.layout.projectDirectory.dir("zipline-parser/build/zipline/Production")
-    val outputRoot = embeddedZiplineAssetsRoot
-    inputs.dir(sourceDir)
-    outputs.dir(outputRoot)
-    dependsOn(":zipline-parser:compileProductionExecutableKotlinJsZipline")
-    description = "Embed compiled Zipline artifacts into the app"
-
-    doLast {
-      val outputDir = outputRoot.get().asFile
-      val ziplineDir = File(outputDir, "zipline")
-      ziplineDir.deleteRecursively()
-      ziplineDir.mkdirs()
-
-      val sourceManifestFile = File(sourceDir.asFile, "manifest.zipline.json")
-      check(sourceManifestFile.exists()) { "Missing Zipline manifest: $sourceManifestFile" }
-
-      @Suppress("UNCHECKED_CAST")
-      val parsed = JsonSlurper().parse(sourceManifestFile) as MutableMap<String, Any?>
-      val modules = parsed["modules"] as? Map<*, *>
-      check(!modules.isNullOrEmpty()) {
-        "Zipline manifest contains no modules: $sourceManifestFile"
-      }
-
-      for ((_, moduleValue) in modules) {
-        val module = moduleValue as Map<*, *>
-        val sourceName = module["url"] as String
-        val targetName = module["sha256"] as String
-        val sourceFile = File(sourceDir.asFile, sourceName)
-        check(sourceFile.exists()) { "Missing Zipline module: $sourceFile" }
-        sourceFile.copyTo(File(ziplineDir, targetName), overwrite = true)
-      }
-
-      val unsigned =
-        ((parsed["unsigned"] as? Map<*, *>)?.toMutableMap() ?: mutableMapOf()).apply {
-          put("freshAtEpochMs", Clock.System.now().toEpochMilliseconds())
-        }
-      parsed["unsigned"] = unsigned
-
-      val embeddedManifestFile = File(ziplineDir, "zipline-parser.manifest.zipline.json")
-      embeddedManifestFile.writeText(JsonOutput.toJson(parsed))
-    }
-  }
+zipline {
+  ziplineApiVersion.set("v3")
+  devBuildTypes.set(listOf("debug"))
+  enforceSignatureCheckBuildTypes.set(listOf("release"))
+}
 
 // Compose Preview runfiles are generated from the unit-test component for each app variant.
 androidComponents {
@@ -105,8 +50,6 @@ android {
   buildFeatures.compose = true
   experimentalProperties["android.experimental.enableScreenshotTest"] = true
 
-  sourceSets.getByName("main").assets.directories.add(embeddedZiplineAssetsRootFile.path)
-
   flavorDimensions += "distribution"
   productFlavors {
     create("foss") { dimension = "distribution" }
@@ -114,33 +57,11 @@ android {
   }
 
   buildTypes {
-    getByName("debug") {
-      buildConfigField(
-        "String",
-        "ZIPLINE_PARSER_MANIFEST_URL",
-        "\"$ziplineDevManifestUrl\"",
-      )
-      buildConfigField("boolean", "ZIPLINE_PARSER_VERIFY_SIGNATURES", "false")
-    }
-    getByName("release") {
-      buildConfigField(
-        "String",
-        "ZIPLINE_PARSER_MANIFEST_URL",
-        "\"$ziplineProdManifestUrl\"",
-      )
-      buildConfigField("boolean", "ZIPLINE_PARSER_VERIFY_SIGNATURES", "true")
-    }
     create("internal") {
       matchingFallbacks += "release"
       signingConfig = signingConfigs["debug"]
       applicationIdSuffix = ".internal"
       isDebuggable = true
-      buildConfigField(
-        "String",
-        "ZIPLINE_PARSER_MANIFEST_URL",
-        "\"$ziplineProdManifestUrl\"",
-      )
-      buildConfigField("boolean", "ZIPLINE_PARSER_VERIFY_SIGNATURES", "false")
     }
   }
 
@@ -158,8 +79,6 @@ android {
     }
   }
 }
-
-tasks.named("preBuild").configure { dependsOn(prepareEmbeddedZiplineParser) }
 
 aboutLibraries.collect.gitHubApiToken = providers.environmentVariable("GITHUB_TOKEN").orNull
 

@@ -58,6 +58,10 @@ gradlePlugin {
       id = "dev.msfjarvis.claw.spotless"
       implementationClass = "dev.msfjarvis.claw.gradle.SpotlessPlugin"
     }
+    register("zipline-setup") {
+      id = "dev.msfjarvis.claw.zipline-setup"
+      implementationClass = "dev.msfjarvis.claw.gradle.ZiplineSetupPlugin"
+    }
     register("versioning") {
       id = "dev.msfjarvis.claw.versioning-plugin"
       implementationClass = "dev.msfjarvis.claw.gradle.versioning.VersioningPlugin"
@@ -84,6 +88,8 @@ dependencies {
 
   // Expose the generated version catalog API to the plugin.
   implementation(files(libs::class.java.superclass.protectionDomain.codeSource.location))
+
+  testImplementation(kotlin("test"))
 
   lintChecks(libs.androidx.lint.gradle)
 }

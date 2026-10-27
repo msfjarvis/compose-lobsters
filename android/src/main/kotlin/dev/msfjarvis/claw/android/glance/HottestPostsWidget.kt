@@ -123,13 +123,13 @@ class HottestPostsWidget : GlanceAppWidget() {
     WidgetContainer(
       "Hottest posts",
       listContent = {
-        items(posts) { post ->
+        items(posts, itemId = { post -> widgetPostItemId(post.shortId) }) { post ->
           Box(GlanceModifier.padding(horizontal = 16.dp, vertical = 4.dp)) {
             WidgetPostEntry(post, actionsEnabled = actionsEnabled)
           }
         }
         if (showFooterAction) {
-          item {
+          item(itemId = WidgetFooterItemId) {
             Box(
               contentAlignment = Alignment.Center,
               modifier = GlanceModifier.fillMaxWidth().padding(16.dp),

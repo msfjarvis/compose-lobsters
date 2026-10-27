@@ -32,6 +32,8 @@ import dev.msfjarvis.claw.common.theme.DarkThemeColors
 import dev.msfjarvis.claw.common.theme.LightThemeColors
 import dev.msfjarvis.claw.model.SourceStory
 import dev.msfjarvis.claw.model.UIPost
+import java.nio.ByteBuffer
+import java.security.MessageDigest
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toPersistentList
 
@@ -110,3 +112,12 @@ internal fun UIPost.withPrimaryStory(update: SourceStory.() -> SourceStory): UIP
   copy(discussion = discussion.copy(stories = listOf(update(discussion.first))))
 
 internal fun generatedWidgetPreviewDelayMinutes(): Long = 15L
+
+internal const val WidgetFooterItemId: Long = 4_611_686_018_427_387_904L
+
+private const val MAX_WIDGET_POST_ITEM_ID = 4_611_686_018_427_387_903L
+
+internal fun widgetPostItemId(shortId: String): Long {
+  val digest = MessageDigest.getInstance("SHA-256").digest(shortId.toByteArray(Charsets.UTF_8))
+  return ByteBuffer.wrap(digest).long and MAX_WIDGET_POST_ITEM_ID
+}

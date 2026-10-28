@@ -30,7 +30,8 @@ fun LobstersPost.toUIPost(): UIPost =
 fun LobstersPostDetails.toUIPost(): UIPost {
   val primary = stories.first()
   return UIPost(
-    discussion = Discussion(stories = stories.map(LobstersPost::toSourceStory), comments = comments),
+    discussion =
+      Discussion(stories = stories.map(LobstersPost::toSourceStory), comments = comments),
     description = primary.description,
     commentCount = commentCount,
     commentsUrl = commentsUrl,

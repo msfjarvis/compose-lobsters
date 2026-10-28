@@ -7,8 +7,8 @@
 package dev.msfjarvis.claw.parser.internal
 
 import com.fleeksoft.ksoup.nodes.Element
-import kotlin.time.Instant
 import dev.msfjarvis.claw.model.Comment
+import kotlin.time.Instant
 
 internal fun parseComments(root: Element, sourceStoryId: String): List<Comment> {
   val seen = mutableSetOf<String>()

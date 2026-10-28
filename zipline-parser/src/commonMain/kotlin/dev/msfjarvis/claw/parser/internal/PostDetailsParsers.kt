@@ -12,7 +12,8 @@ import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.LobstersPostDetails
 
 private val commentCountRegex by lazy(LazyThreadSafetyMode.NONE) { "\\d+".toRegex() }
-private val sourceStoryIdRegex by lazy(LazyThreadSafetyMode.NONE) { Regex("#comments-([A-Za-z0-9]+)") }
+private val sourceStoryIdRegex by
+  lazy(LazyThreadSafetyMode.NONE) { Regex("#comments-([A-Za-z0-9]+)") }
 private const val STORY_SELECTOR = "ol.stories > li.story"
 private const val SUBMITTER_SELECTOR =
   "div.byline > a[href^=/~]:not([tabindex]):not([aria-hidden=true])"
@@ -22,7 +23,8 @@ internal fun parsePostDetails(html: String): LobstersPostDetails {
   val storyElement =
     requireNotNull(document.selectFirst(STORY_SELECTOR)) { "Post details have no story" }
   val primaryId = storyElement.attr("data-shortid")
-  val primaryDescription = document.selectFirst("div.story_content div.story_text")?.html().orEmpty()
+  val primaryDescription =
+    document.selectFirst("div.story_content div.story_text")?.html().orEmpty()
   val sourceHeaders = storyElement.select("div.details[id^=header_story_]")
   val sources =
     sourceHeaders
@@ -37,8 +39,10 @@ internal fun parsePostDetails(html: String): LobstersPostDetails {
       }
       .ifEmpty {
         listOf(
-          (storyElement.selectFirst("div.details") ?: storyElement)
-            .toPost(primaryId, primaryDescription)
+          (storyElement.selectFirst("div.details") ?: storyElement).toPost(
+            primaryId,
+            primaryDescription,
+          )
         )
       }
   val commentCount =
@@ -47,16 +51,17 @@ internal fun parsePostDetails(html: String): LobstersPostDetails {
       ?.value
       ?.toIntOrNull() ?: 0
   val canonicalUrl =
-    document.selectFirst("link[rev=canonical][href]")?.attr("abs:href")
-      ?.takeIf { it.startsWith("$BASE_URL/s/$primaryId/") } ?: "$BASE_URL/s/$primaryId/c"
-  val comments =
-    sources.flatMap { source ->
-      val section = document.selectFirst("li.comments_subtree[id=comments-${source.shortId}]")
-      val container = section?.selectFirst("ol#story_comments")
-      if (container != null) parseComments(container, source.shortId)
-      else if (sources.size == 1) parseComments(document.selectFirst("ol.comments") ?: document, source.shortId)
-      else throw IllegalStateException("Merged source ${source.shortId} has no comment container")
-    }
+    document.selectFirst("link[rev=canonical][href]")?.attr("abs:href")?.takeIf {
+      it.startsWith("$BASE_URL/s/$primaryId/")
+    } ?: "$BASE_URL/s/$primaryId/c"
+  val comments = sources.flatMap { source ->
+    val section = document.selectFirst("li.comments_subtree[id=comments-${source.shortId}]")
+    val container = section?.selectFirst("ol#story_comments")
+    if (container != null) parseComments(container, source.shortId)
+    else if (sources.size == 1)
+      parseComments(document.selectFirst("ol.comments") ?: document, source.shortId)
+    else throw IllegalStateException("Merged source ${source.shortId} has no comment container")
+  }
   return LobstersPostDetails(
     stories = sources,
     comments = comments,
@@ -78,11 +83,14 @@ private fun Element.toPost(shortId: String, description: String): LobstersPost {
   val titleElement = selectFirst("span.link.h-cite > a")
   val submitter = select(SUBMITTER_SELECTOR).firstOrNull()
   val commentsCount =
-    commentCountRegex.find(selectFirst("span.comments_label")?.text().orEmpty())?.value?.toIntOrNull()
-      ?: 0
+    commentCountRegex
+      .find(selectFirst("span.comments_label")?.text().orEmpty())
+      ?.value
+      ?.toIntOrNull() ?: 0
   return LobstersPost(
     shortId = shortId,
-    createdAt = normalizeCreatedAt(selectFirst("div.byline > time")?.attr("data-at-unix").orEmpty()),
+    createdAt =
+      normalizeCreatedAt(selectFirst("div.byline > time")?.attr("data-at-unix").orEmpty()),
     title = titleElement?.text().orEmpty(),
     url = titleElement?.attr("abs:href").orEmpty(),
     description = description,

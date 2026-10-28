@@ -31,8 +31,11 @@ data class Discussion(
     }
   }
 
-  val first: SourceStory get() = stories.first()
-  val allTags: List<String> get() = stories.flatMap(SourceStory::tags)
+  val first: SourceStory
+    get() = stories.first()
+
+  val allTags: List<String>
+    get() = stories.flatMap(SourceStory::tags)
 }
 
 data class UIPost(
@@ -41,14 +44,29 @@ data class UIPost(
   val commentCount: Int,
   val commentsUrl: String,
 ) {
-  val shortId: String get() = discussion.first.shortId
-  val createdAt: String get() = discussion.first.createdAt
-  val title: String get() = discussion.first.title
-  val url: String get() = discussion.first.url
-  val submitter: String get() = discussion.first.submitter
-  val tags: List<String> get() = discussion.first.tags
-  val userIsAuthor: Boolean get() = discussion.first.userIsAuthor
-  val comments: List<Comment> get() = discussion.comments
+  val shortId: String
+    get() = discussion.first.shortId
+
+  val createdAt: String
+    get() = discussion.first.createdAt
+
+  val title: String
+    get() = discussion.first.title
+
+  val url: String
+    get() = discussion.first.url
+
+  val submitter: String
+    get() = discussion.first.submitter
+
+  val tags: List<String>
+    get() = discussion.first.tags
+
+  val userIsAuthor: Boolean
+    get() = discussion.first.userIsAuthor
+
+  val comments: List<Comment>
+    get() = discussion.comments
 
   companion object
 }

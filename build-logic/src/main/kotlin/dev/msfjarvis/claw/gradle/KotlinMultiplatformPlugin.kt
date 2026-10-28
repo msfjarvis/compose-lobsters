@@ -1,3 +1,9 @@
+/*
+ * Copyright © Harsh Shandilya.
+ * Use of this source code is governed by an MIT-style
+ * license that can be found in the LICENSE file or at
+ * https://opensource.org/licenses/MIT.
+ */
 package dev.msfjarvis.claw.gradle
 
 import com.android.build.api.dsl.Lint
@@ -17,6 +23,7 @@ class KotlinMultiplatformPlugin : Plugin<Project> {
     project.pluginManager.apply {
       apply(KotlinMultiplatformPluginWrapper::class)
       apply(LintPlugin::class)
+      apply(SpotlessPlugin::class)
     }
     val extension = project.extensions.getByType<KotlinMultiplatformExtension>()
     extension.targets.configureEach {

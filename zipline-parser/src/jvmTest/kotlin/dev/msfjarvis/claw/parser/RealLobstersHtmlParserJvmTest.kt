@@ -142,7 +142,8 @@ class RealLobstersHtmlParserJvmTest {
       <li class="comments_subtree" id="comments-secondary2"><ol class="comments" id="story_comments">
         <li class="comments_subtree"><div class="comment" data-shortid="comment1"><div class="byline"><a href="/~carol">carol</a><a href="/c/comment1"><time data-at-unix="1710000002"></time></a></div><div class="comment_text">Hello</div></div></li>
       </ol></li>
-      """.trimIndent()
+      """
+        .trimIndent()
 
     val details = LobstersParserServiceImpl().parsePostDetails(html)
 

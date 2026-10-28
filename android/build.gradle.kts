@@ -14,6 +14,8 @@ plugins {
   id("dev.msfjarvis.claw.android-application")
   id("dev.msfjarvis.claw.rename-artifacts")
   id("dev.msfjarvis.claw.kotlin-android")
+  id("dev.msfjarvis.claw.android-distribution")
+  id("dev.msfjarvis.claw.android-test-devices")
   id("dev.msfjarvis.claw.sentry")
   id("dev.msfjarvis.claw.versioning-plugin")
   id("kotlin-parcelize")
@@ -50,12 +52,6 @@ android {
   buildFeatures.compose = true
   experimentalProperties["android.experimental.enableScreenshotTest"] = true
 
-  flavorDimensions += "distribution"
-  productFlavors {
-    create("foss") { dimension = "distribution" }
-    create("gplay") { dimension = "distribution" }
-  }
-
   buildTypes {
     create("internal") {
       matchingFallbacks += "release"
@@ -68,15 +64,6 @@ android {
   testOptions {
     // Compose Preview runfiles need Android resources on the unit-test runtime classpath.
     unitTests.isIncludeAndroidResources = true
-    managedDevices {
-      localDevices {
-        create("pixel9api36") {
-          device = "Pixel 9"
-          apiLevel = 36
-          systemImageSource = "aosp"
-        }
-      }
-    }
   }
 }
 

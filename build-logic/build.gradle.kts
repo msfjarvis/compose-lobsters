@@ -22,6 +22,14 @@ gradlePlugin {
       id = "dev.msfjarvis.claw.android-application"
       implementationClass = "dev.msfjarvis.claw.gradle.AndroidApplicationPlugin"
     }
+    register("android-distribution") {
+      id = "dev.msfjarvis.claw.android-distribution"
+      implementationClass = "dev.msfjarvis.claw.gradle.AndroidDistributionPlugin"
+    }
+    register("android-test-devices") {
+      id = "dev.msfjarvis.claw.android-test-devices"
+      implementationClass = "dev.msfjarvis.claw.gradle.AndroidTestDevicesPlugin"
+    }
     register("android-common") {
       id = "dev.msfjarvis.claw.android-common"
       implementationClass = "dev.msfjarvis.claw.gradle.AndroidCommonPlugin"

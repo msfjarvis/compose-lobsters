@@ -104,6 +104,7 @@ androidx-work-runtime = { module = "androidx.work:work-runtime", version.ref = "
 build-agp = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 build-cachefix = "org.gradle.android.cache-fix:org.gradle.android.cache-fix.gradle.plugin:3.0.3"
 build-kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+build-screenshot = { module = "com.android.compose.screenshot:com.android.compose.screenshot.gradle.plugin", version.ref = "screenshot" }
 build-semver = "com.github.zafarkhaja:java-semver:0.10.2"
 build-sentry = "io.sentry.android.gradle:io.sentry.android.gradle.gradle.plugin:6.24.0"
 build-spotless = { module = "com.diffplug.spotless:spotless-plugin-gradle", version.ref = "spotless" }

@@ -11,7 +11,7 @@ import dev.msfjarvis.claw.gradle.addTestDependencies
 plugins {
   id("dev.msfjarvis.claw.android-library")
   id("dev.msfjarvis.claw.kotlin-android")
-  alias(libs.plugins.screenshot)
+  id("dev.msfjarvis.claw.android-screenshot")
   alias(libs.plugins.kotlin.composeCompiler)
   alias(libs.plugins.dependencyAnalysis)
   alias(libs.plugins.metro)
@@ -19,12 +19,7 @@ plugins {
 }
 
 android {
-  androidResources.enable = true
-  buildFeatures { compose = true }
-  experimentalProperties["android.experimental.enableScreenshotTest"] = true
   namespace = "dev.msfjarvis.claw.common"
-  packaging.resources.merges += setOf("META-INF/LICENSE.md", "META-INF/LICENSE-notice.md")
-  defaultConfig { testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner" }
 }
 
 dependencies {
@@ -79,13 +74,5 @@ dependencies {
   testImplementation(libs.kotlinx.coroutines.test)
   testImplementation(libs.sqldelight.jvmDriver)
 
-  screenshotTestImplementation(libs.screenshot.validation.api)
-  screenshotTestImplementation(libs.androidx.compose.ui.tooling)
-
-  androidTestImplementation(libs.androidx.compose.ui.test.junit4)
-  androidTestImplementation(libs.androidx.test.runner)
-  androidTestImplementation(libs.androidx.test.ext.junit)
-  androidTestImplementation(libs.junit.legacy)
-  debugImplementation(libs.androidx.compose.ui.test.manifest)
   addTestDependencies(project)
 }

@@ -8,6 +8,7 @@ plugins {
   id("dev.msfjarvis.claw.spotless")
   alias(libs.plugins.kotlin.jvm) apply false
   alias(libs.plugins.spotless) apply false
+  alias(libs.plugins.screenshot) apply false
   alias(libs.plugins.android.test) apply false
   alias(libs.plugins.dependencyAnalysis)
 }

@@ -30,6 +30,10 @@ gradlePlugin {
       id = "dev.msfjarvis.claw.android-test-devices"
       implementationClass = "dev.msfjarvis.claw.gradle.AndroidTestDevicesPlugin"
     }
+    register("android-screenshot") {
+      id = "dev.msfjarvis.claw.android-screenshot"
+      implementationClass = "dev.msfjarvis.claw.gradle.AndroidScreenshotPlugin"
+    }
     register("android-common") {
       id = "dev.msfjarvis.claw.android-common"
       implementationClass = "dev.msfjarvis.claw.gradle.AndroidCommonPlugin"
@@ -90,6 +94,7 @@ dependencies {
   implementation(libs.build.agp)
   implementation(libs.build.cachefix)
   implementation(libs.build.kotlin.gradle)
+  implementation(libs.build.screenshot)
   implementation(libs.build.semver)
   implementation(libs.build.sentry)
   implementation(libs.build.spotless)

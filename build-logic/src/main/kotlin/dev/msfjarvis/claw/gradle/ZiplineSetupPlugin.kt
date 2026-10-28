@@ -56,6 +56,15 @@ class ZiplineSetupPlugin : Plugin<Project> {
           attribute(ZiplineParserArtifacts.formatAttribute, ZiplineParserArtifacts.PRODUCTION)
         }
       }
+    project.tasks.register<UploadZiplineReleaseTask>("uploadZiplineRelease") {
+      group = "zipline"
+      description = "Package and upload the production Zipline parser release"
+      sourceDirectory.set(
+        project.layout.dir(parser.flatMap { it.elements }.map { it.single().asFile })
+      )
+      ziplineApiVersion.set(extension.ziplineApiVersion)
+    }
+
     val prepare =
       project.tasks.register<PrepareEmbeddedZiplineParserTask>("prepareEmbeddedZiplineParser") {
         group = "zipline"

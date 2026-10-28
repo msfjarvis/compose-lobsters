@@ -17,7 +17,7 @@ android { namespace = "dev.msfjarvis.claw.database" }
 
 dependencies {
   api(libs.sqldelight.runtime)
-  api(projects.database.core)
+  api(projects.databaseCore)
 
   implementation(libs.androidx.sqlite)
   implementation(libs.kotlinx.datetime)

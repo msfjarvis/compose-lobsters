@@ -151,9 +151,13 @@ include(
   "benchmark",
   "common",
   "core",
-  "database:core",
-  "database:impl",
+  "database-core",
+  "database-impl",
   "html-renderer",
   "model",
   "zipline-parser",
 )
+
+project(":database-core").projectDir = file("database/core")
+
+project(":database-impl").projectDir = file("database/impl")

@@ -174,8 +174,8 @@ dependencies {
   implementation(projects.api)
   implementation(projects.common)
   implementation(projects.core)
-  implementation(projects.database.core)
-  implementation(projects.database.impl)
+  implementation(projects.databaseCore)
+  implementation(projects.databaseImpl)
   implementation(projects.model)
 
   compileOnly(libs.androidx.compose.glance.preview)

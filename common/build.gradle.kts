@@ -34,7 +34,7 @@ dependencies {
   api(libs.metrox.viewmodel)
   api(projects.api)
   api(projects.core)
-  api(projects.database.core)
+  api(projects.databaseCore)
   api(projects.model)
 
   implementation(platform(libs.okhttp.bom))

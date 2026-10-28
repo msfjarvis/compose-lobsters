@@ -25,7 +25,7 @@ kotlin {
     }
     jvmMain {
       dependencies {
-        api(projects.database.core)
+        api(projects.databaseCore)
       }
     }
     jvmTest {

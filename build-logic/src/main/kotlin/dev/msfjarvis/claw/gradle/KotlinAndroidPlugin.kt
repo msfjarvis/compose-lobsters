@@ -14,7 +14,7 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.tasks.compile.JavaCompile
 import org.gradle.kotlin.dsl.apply
-import org.gradle.kotlin.dsl.findByType
+import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.withType
 
 @Suppress("Unused")
@@ -22,17 +22,23 @@ class KotlinAndroidPlugin : Plugin<Project> {
 
   override fun apply(project: Project) {
     project.pluginManager.run { apply(KotlinCommonPlugin::class) }
-    project.extensions.findByType<LibraryExtension>()?.compileOptions {
-      sourceCompatibility = JavaVersion.VERSION_21
-      targetCompatibility = JavaVersion.VERSION_21
+    project.pluginManager.withPlugin("com.android.library") {
+      project.extensions.getByType<LibraryExtension>().compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
+      }
     }
-    project.extensions.findByType<ApplicationExtension>()?.compileOptions {
-      sourceCompatibility = JavaVersion.VERSION_21
-      targetCompatibility = JavaVersion.VERSION_21
+    project.pluginManager.withPlugin("com.android.application") {
+      project.extensions.getByType<ApplicationExtension>().compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
+      }
     }
-    project.extensions.findByType<TestExtension>()?.compileOptions {
-      sourceCompatibility = JavaVersion.VERSION_21
-      targetCompatibility = JavaVersion.VERSION_21
+    project.pluginManager.withPlugin("com.android.test") {
+      project.extensions.getByType<TestExtension>().compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
+      }
     }
     project.tasks.withType<JavaCompile>().configureEach {
       sourceCompatibility = JavaVersion.VERSION_21.toString()

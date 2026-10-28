@@ -182,6 +182,8 @@ android-lint = { id = "com.android.lint", version.ref = "agp" }
 android-test = { id = "com.android.test", version.ref = "agp" }
 dependencyAnalysis = "com.autonomousapps.dependency-analysis:3.19.2"
 baselineprofile = { id = "androidx.baselineprofile", version.ref = "androidx-benchmark" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 kotlin-composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 licensee = "app.cash.licensee:1.14.1"

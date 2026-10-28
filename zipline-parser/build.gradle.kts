@@ -4,7 +4,9 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
+import app.cash.zipline.gradle.ZiplineCompileTask
 import app.cash.zipline.loader.SignatureAlgorithmId
+import dev.msfjarvis.claw.gradle.ZiplineParserArtifacts
 
 plugins {
   id("dev.msfjarvis.claw.kotlin-multiplatform")
@@ -38,6 +40,17 @@ kotlin {
       }
     }
   }
+}
+
+configurations.consumable("embeddedParserElements") {
+  attributes {
+    attribute(ZiplineParserArtifacts.formatAttribute, ZiplineParserArtifacts.PRODUCTION)
+  }
+  outgoing.artifact(
+    tasks.named<ZiplineCompileTask>("compileProductionExecutableKotlinJsZipline").flatMap {
+      it.outputDir
+    }
+  )
 }
 
 zipline {

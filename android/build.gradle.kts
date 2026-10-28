@@ -103,6 +103,7 @@ moduleGraphAssert {
 
 dependencies {
   baselineProfile(projects.benchmark)
+  add("embeddedZiplineParser", projects.ziplineParser)
 
   implementation(platform(libs.okhttp.bom))
   implementation(libs.aboutLibraries.compose.core)

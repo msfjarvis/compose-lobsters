@@ -11,12 +11,14 @@ import groovy.json.JsonSlurper
 import java.io.File
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.DirectoryProperty
+import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.InputDirectory
 import org.gradle.api.tasks.OutputDirectory
 import org.gradle.api.tasks.PathSensitive
 import org.gradle.api.tasks.PathSensitivity
 import org.gradle.api.tasks.TaskAction
 
+@CacheableTask
 abstract class PrepareEmbeddedZiplineParserTask : DefaultTask() {
   @get:InputDirectory
   @get:PathSensitive(PathSensitivity.RELATIVE)
@@ -44,7 +46,8 @@ abstract class PrepareEmbeddedZiplineParserTask : DefaultTask() {
     }
     val unsigned =
       ((parsed["unsigned"] as? Map<*, *>)?.toMutableMap() ?: mutableMapOf()).apply {
-        put("freshAtEpochMs", System.currentTimeMillis())
+        // Embedded freshness is decided by the application, not by the build clock.
+        put("freshAtEpochMs", 0L)
       }
     parsed["unsigned"] = unsigned
     File(ziplineDir, "zipline-parser.manifest.zipline.json").writeText(JsonOutput.toJson(parsed))

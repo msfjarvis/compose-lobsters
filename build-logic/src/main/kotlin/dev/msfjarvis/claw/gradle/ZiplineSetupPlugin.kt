@@ -48,38 +48,57 @@ class ZiplineSetupPlugin : Plugin<Project> {
     extension.devBuildTypes.convention(emptyList())
     extension.enforceSignatureCheckBuildTypes.convention(emptyList())
 
+    project.configurations.dependencyScope("embeddedZiplineParser")
+    val parser =
+      project.configurations.resolvable("embeddedZiplineParserClasspath") {
+        extendsFrom(project.configurations.getByName("embeddedZiplineParser"))
+        attributes {
+          attribute(ZiplineParserArtifacts.formatAttribute, ZiplineParserArtifacts.PRODUCTION)
+        }
+      }
     val prepare =
       project.tasks.register<PrepareEmbeddedZiplineParserTask>("prepareEmbeddedZiplineParser") {
+        group = "zipline"
+        description = "Prepare the production parser for embedding as Android assets"
         sourceDirectory.set(
-          project.isolated.rootProject.projectDirectory.dir(
-            "zipline-parser/build/zipline/Production"
-          )
+          project.layout.dir(parser.flatMap { it.elements }.map { it.single().asFile })
         )
         outputDirectory.set(project.layout.buildDirectory.dir("generated/ziplineEmbeddedAssets"))
-        dependsOn(":zipline-parser:compileProductionExecutableKotlinJsZipline")
       }
 
     project.pluginManager.withPlugin("com.android.application") {
       project.extensions.configure<ApplicationAndroidComponentsExtension> {
         onVariants { variant ->
-          val version = extension.ziplineApiVersion.get()
-          val (url, verify) =
-            ziplineVariantSettings(
-              variant.buildType,
-              version,
-              extension.devBuildTypes.get(),
-              extension.enforceSignatureCheckBuildTypes.get(),
-              project.providers.gradleProperty("claw.ziplineParserManifestUrl").orNull,
-            )
+          val buildType = variant.buildType
+          val inputs =
+            with(extension) {
+              ziplineApiVersion.zip(devBuildTypes, ::Pair).zip(enforceSignatureCheckBuildTypes) {
+                (version, devTypes),
+                signatureTypes ->
+                Triple(version, devTypes, signatureTypes)
+              }
+            }
+          val settings =
+            inputs.zip(
+              project.providers.gradleProperty("claw.ziplineParserManifestUrl").orElse("")
+            ) { (version, devTypes, signatureTypes), devUrl ->
+              ziplineVariantSettings(
+                buildType,
+                version,
+                devTypes,
+                signatureTypes,
+                devUrl.takeIf { it.isNotEmpty() },
+              )
+            }
           val fields =
             requireNotNull(variant.buildConfigFields) { "Zipline setup requires BuildConfig" }
           fields.put(
             "ZIPLINE_PARSER_MANIFEST_URL",
-            BuildConfigField("String", JsonOutput.toJson(url), null),
+            settings.map { (url, _) -> BuildConfigField("String", JsonOutput.toJson(url), null) },
           )
           fields.put(
             "ZIPLINE_PARSER_VERIFY_SIGNATURES",
-            BuildConfigField("boolean", verify.toString(), null),
+            settings.map { (_, verify) -> BuildConfigField("boolean", verify.toString(), null) },
           )
           variant.sources.assets?.addGeneratedSourceDirectory(
             prepare,

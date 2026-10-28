@@ -6,12 +6,15 @@
  */
 package dev.msfjarvis.claw.gradle
 
+import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.tasks.compile.JavaCompile
 import org.gradle.api.tasks.testing.Test
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.withType
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -23,10 +26,15 @@ class KotlinCommonPlugin : Plugin<Project> {
     project.tasks.run {
       withType<KotlinCompile>().configureEach {
         compilerOptions {
+          jvmTarget.set(JvmTarget.JVM_21)
           allWarningsAsErrors.set(true)
           freeCompilerArgs.addAll(ADDITIONAL_COMPILER_ARGS)
           languageVersion.set(KotlinVersion.KOTLIN_2_4)
         }
+      }
+      withType<JavaCompile>().configureEach {
+        sourceCompatibility = JavaVersion.VERSION_21.toString()
+        targetCompatibility = JavaVersion.VERSION_21.toString()
       }
       withType<Test>().configureEach {
         maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).coerceAtLeast(1)

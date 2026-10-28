@@ -9,7 +9,6 @@ package dev.msfjarvis.claw.gradle
 import com.diffplug.gradle.spotless.SpotlessExtension
 import com.diffplug.gradle.spotless.SpotlessPlugin
 import com.diffplug.spotless.LineEnding
-import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.file.RegularFile
@@ -20,10 +19,8 @@ import org.gradle.kotlin.dsl.configure
 class SpotlessPlugin : Plugin<Project> {
 
   override fun apply(project: Project) {
-    if (project.isolated.rootProject == project.isolated) {
-      throw GradleException("Spotless plugin must only be applied to the root project.")
-    }
     val isolated = project.isolated
+    val isRoot = isolated.rootProject.projectDirectory == isolated.projectDirectory
     val rootFile: (String) -> RegularFile = { path ->
       isolated.rootProject.projectDirectory.file(path)
     }
@@ -33,14 +30,14 @@ class SpotlessPlugin : Plugin<Project> {
     project.extensions.configure<SpotlessExtension> {
       kotlin {
         ktfmt(KTFMT_VERSION).googleStyle()
-        target("src/**/*.kt")
+        target(if (isRoot) "build-logic/src/**/*.kt" else "src/**/*.kt")
         targetExclude("**/SentryNavigation3Integration.kt")
         licenseHeaderFile(rootFile("spotless/license.kt"))
         setLineEndings(LineEnding.UNIX)
       }
       kotlinGradle {
         ktfmt(KTFMT_VERSION).googleStyle()
-        target("*.kts")
+        target(if (isRoot) listOf("*.kts", "build-logic/*.kts") else listOf("*.kts"))
         licenseHeaderFile(rootFile("spotless/license.kt"), "import|plugins|@file")
         setLineEndings(LineEnding.UNIX)
       }

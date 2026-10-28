@@ -6,8 +6,8 @@
  */
 package dev.msfjarvis.claw.gradle
 
-import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.variant.ApplicationAndroidComponentsExtension
+import com.android.build.api.variant.TestComponent
 import io.sentry.android.gradle.extensions.InstrumentationFeature
 import io.sentry.android.gradle.extensions.SentryPluginExtension
 import java.util.EnumSet
@@ -21,65 +21,66 @@ import org.gradle.kotlin.dsl.configure
 class SentryPlugin : Plugin<Project> {
 
   override fun apply(project: Project) {
-    val enableSentry = project.providers.gradleProperty(SENTRY_ENABLE_GRADLE_PROPERTY).isPresent
-    val libs = project.extensions.getByName("libs") as LibrariesForLibs
-    project.extensions.configure<ApplicationAndroidComponentsExtension> {
-      onVariants(selector().all()) { variant ->
-        val sentryDsn = project.providers.environmentVariable(SENTRY_DSN_PROPERTY).getOrElse("")
-        val isRelease = variant.name.contains("release", true)
-        variant.manifestPlaceholders.put("sentryDsn", sentryDsn)
-        variant.manifestPlaceholders.put(
-          "sentryEnvironment",
-          if (isRelease) "production" else "dev",
-        )
+    project.pluginManager.withPlugin("com.android.application") {
+      val enableSentry = project.providers.gradleProperty(SENTRY_ENABLE_GRADLE_PROPERTY).isPresent
+      project.extensions.configure<ApplicationAndroidComponentsExtension> {
+        onVariants(selector().all()) { variant ->
+          val sentryDsn = project.providers.environmentVariable(SENTRY_DSN_PROPERTY).orElse("")
+          val isRelease = variant.name.contains("release", true)
+          variant.manifestPlaceholders.put("sentryDsn", sentryDsn)
+          variant.manifestPlaceholders.put(
+            "sentryEnvironment",
+            if (isRelease) "production" else "dev",
+          )
+          // Host/device test manifests do not inherit the main variant's placeholder map.
+          variant.nestedComponents.filterIsInstance<TestComponent>().forEach { test ->
+            test.manifestPlaceholders.put("sentryDsn", sentryDsn)
+            test.manifestPlaceholders.put("sentryEnvironment", "dev")
+          }
+        }
       }
-    }
-    // Fallback setup for :benchmark which doesn't seem to implement androidComponents DSL
-    project.extensions.configure<ApplicationExtension> {
-      defaultConfig.manifestPlaceholders["sentryDsn"] =
-        project.providers.environmentVariable(SENTRY_DSN_PROPERTY).getOrElse("")
-      defaultConfig.manifestPlaceholders["sentryEnvironment"] = "dev"
-    }
-    if (!enableSentry) return
-    project.plugins.apply(io.sentry.android.gradle.SentryPlugin::class)
-    project.extensions.configure<SentryPluginExtension> {
-      includeProguardMapping.set(true)
-      autoUploadProguardMapping.set(true)
-      uploadNativeSymbols.set(false)
-      autoUploadNativeSymbols.set(true)
-      includeNativeSources.set(false)
-      ignoredVariants.set(emptySet())
-      ignoredBuildTypes.set(setOf("benchmark"))
-      ignoredFlavors.set(emptySet())
-      tracingInstrumentation {
-        enabled.set(true)
+      if (!enableSentry) return@withPlugin
+      val libs = project.extensions.getByName("libs") as LibrariesForLibs
+      project.plugins.apply(io.sentry.android.gradle.SentryPlugin::class)
+      project.extensions.configure<SentryPluginExtension> {
+        includeProguardMapping.set(true)
+        autoUploadProguardMapping.set(true)
+        uploadNativeSymbols.set(false)
+        autoUploadNativeSymbols.set(true)
+        includeNativeSources.set(false)
+        ignoredVariants.set(emptySet())
+        ignoredBuildTypes.set(setOf("benchmark"))
+        ignoredFlavors.set(emptySet())
+        tracingInstrumentation {
+          enabled.set(true)
+          debug.set(false)
+          logcat.enabled.set(true)
+          forceInstrumentDependencies.set(false)
+          features.set(EnumSet.allOf(InstrumentationFeature::class.java))
+        }
+        dexguardEnabled.set(false)
+        autoInstallation {
+          enabled.set(true)
+          sentryVersion.set(libs.versions.sentry)
+        }
+        includeDependenciesReport.set(true)
+        includeSourceContext.set(true)
+        autoUploadSourceContext.set(true)
+        additionalSourceDirsForSourceContext.set(emptySet())
         debug.set(false)
-        logcat.enabled.set(true)
-        forceInstrumentDependencies.set(false)
-        features.set(EnumSet.allOf(InstrumentationFeature::class.java))
-      }
-      dexguardEnabled.set(false)
-      autoInstallation {
-        enabled.set(true)
-        sentryVersion.set(libs.versions.sentry)
-      }
-      includeDependenciesReport.set(true)
-      includeSourceContext.set(true)
-      autoUploadSourceContext.set(true)
-      additionalSourceDirsForSourceContext.set(emptySet())
-      debug.set(false)
-      org.set("claw")
-      projectName.set("compose-lobsters")
-      authToken.set(project.providers.environmentVariable("SENTRY_AUTH_TOKEN"))
-      url.set(null as String?)
-      telemetry.set(false)
-      telemetryDsn.set(null as String?)
-      vcsInfo {
-        headSha.set(project.providers.environmentVariable("SENTRY_VCS_HEAD_SHA"))
-        baseSha.set(project.providers.environmentVariable("SENTRY_VCS_BASE_SHA"))
-        vcsProvider.set("github")
-        headRepoName.set("msfjarvis/compose-lobsters")
-        baseRepoName.set("msfjarvis/compose-lobsters")
+        org.set("claw")
+        projectName.set("compose-lobsters")
+        authToken.set(project.providers.environmentVariable("SENTRY_AUTH_TOKEN"))
+        url.set(null as String?)
+        telemetry.set(false)
+        telemetryDsn.set(null as String?)
+        vcsInfo {
+          headSha.set(project.providers.environmentVariable("SENTRY_VCS_HEAD_SHA"))
+          baseSha.set(project.providers.environmentVariable("SENTRY_VCS_BASE_SHA"))
+          vcsProvider.set("github")
+          headRepoName.set("msfjarvis/compose-lobsters")
+          baseRepoName.set("msfjarvis/compose-lobsters")
+        }
       }
     }
   }

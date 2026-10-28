@@ -1,5 +1,12 @@
 # Releasing the Zipline parser
 
+## Via Gradle
+
+1. Set `ZIPLINE_SIGNING_KEY` and `ADMIN_PASSWORD` env vars.
+2. Run `gradle uploadZiplineRelease` task.
+
+## Manually
+
 The production build remains signed with `ZIPLINE_SIGNING_KEY`, but releases are uploaded directly to the assets Worker instead of `wailord`.
 
 1. Set `ZIPLINE_SIGNING_KEY`.

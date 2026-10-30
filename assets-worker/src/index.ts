@@ -65,8 +65,10 @@ function parseAssetRequest(pathname: string): AssetRequest | null {
 
 function parseCurrentReleaseVersion(pathname: string): string | null {
   const segments = pathname.split("/");
-  return segments.length === 3 && segments[0] === "" && segments[1] === "current" &&
-      ZIPLINE_VERSION.test(segments[2])
+  return segments.length === 3 &&
+    segments[0] === "" &&
+    segments[1] === "current" &&
+    ZIPLINE_VERSION.test(segments[2])
     ? segments[2]
     : null;
 }
@@ -79,25 +81,15 @@ function releasePrefix(ziplineVersion: string, releaseTimestamp: string): string
   return `releases/${ziplineVersion}/${releaseTimestamp}`;
 }
 
-function objectKey(
-  ziplineVersion: string,
-  releaseTimestamp: string,
-  assetName: string,
-): string {
+function objectKey(ziplineVersion: string, releaseTimestamp: string, assetName: string): string {
   return `${releasePrefix(ziplineVersion, releaseTimestamp)}/${assetName}`;
 }
 
 function contentType(assetName: string): string {
-  return assetName === "manifest.zipline.json"
-    ? "application/json"
-    : "application/octet-stream";
+  return assetName === "manifest.zipline.json" ? "application/json" : "application/octet-stream";
 }
 
-function responseHeaders(
-  object: R2Object,
-  assetName: string,
-  cacheControl: string,
-): Headers {
+function responseHeaders(object: R2Object, assetName: string, cacheControl: string): Headers {
   const headers = new Headers();
   object.writeHttpMetadata(headers);
   headers.set("Cache-Control", cacheControl);
@@ -213,12 +205,8 @@ async function resolveReleaseTimestamp(
     return assetRequest.releaseTimestamp;
   }
 
-  const releaseTimestamp = await env.RELEASES.get(
-    currentReleaseKey(assetRequest.ziplineVersion),
-  );
-  return releaseTimestamp && RELEASE_TIMESTAMP.test(releaseTimestamp)
-    ? releaseTimestamp
-    : null;
+  const releaseTimestamp = await env.RELEASES.get(currentReleaseKey(assetRequest.ziplineVersion));
+  return releaseTimestamp && RELEASE_TIMESTAMP.test(releaseTimestamp) ? releaseTimestamp : null;
 }
 
 async function handleCurrentReleaseRequest(
@@ -252,11 +240,7 @@ async function handleAssetRequest(
     return new Response("Current release is unavailable", { status: 503 });
   }
 
-  const key = objectKey(
-    assetRequest.ziplineVersion,
-    releaseTimestamp,
-    assetRequest.assetName,
-  );
+  const key = objectKey(assetRequest.ziplineVersion, releaseTimestamp, assetRequest.assetName);
   if (request.method === "HEAD") {
     const object = await env.ASSETS.head(key);
     return object

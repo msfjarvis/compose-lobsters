@@ -1,7 +1,7 @@
 {
   "name": "claw-zipline-assets-worker",
-  "private": true,
   "version": "0.1.0",
+  "private": true,
   "type": "module",
   "scripts": {
     "check": "tsc --noEmit && tsc --project test/tsconfig.json --noEmit",
@@ -9,6 +9,9 @@
     "test": "ADMIN_PASSWORD=test-admin-password vitest run",
     "test:watch": "ADMIN_PASSWORD=test-admin-password vitest",
     "types": "wrangler types"
+  },
+  "dependencies": {
+    "fflate": "^0.8.3"
   },
   "devDependencies": {
     "@cloudflare/vitest-plugin": "^1.1.2",
@@ -23,8 +26,5 @@
     "esbuild@0.28.1": true,
     "fsevents@2.3.3": true,
     "workerd@1.20260828.1": true
-  },
-  "dependencies": {
-    "fflate": "^0.8.3"
   }
 }

@@ -24,6 +24,7 @@ type ReleaseArchive = {
 };
 
 class BadRequestError extends Error {}
+
 class ConflictError extends Error {}
 
 function parseAssetRequest(pathname: string): AssetRequest | null {
@@ -65,6 +66,7 @@ function parseAssetRequest(pathname: string): AssetRequest | null {
 
 function parseCurrentReleaseVersion(pathname: string): string | null {
   const segments = pathname.split("/");
+
   return segments.length === 3 &&
     segments[0] === "" &&
     segments[1] === "current" &&
@@ -97,6 +99,7 @@ function responseHeaders(object: R2Object, assetName: string, cacheControl: stri
   headers.set("Content-Type", headers.get("Content-Type") ?? contentType(assetName));
   headers.set("ETag", object.httpEtag);
   headers.set("Last-Modified", object.uploaded.toUTCString());
+
   return headers;
 }
 
@@ -110,10 +113,12 @@ function currentTimestamp(): string {
 function joinChunks(chunks: readonly Uint8Array[], size: number): Uint8Array {
   const output = new Uint8Array(size);
   let offset = 0;
+
   for (const chunk of chunks) {
     output.set(chunk, offset);
     offset += chunk.byteLength;
   }
+
   return output;
 }
 
@@ -121,16 +126,20 @@ function parseArchive(archive: Uint8Array): ReleaseArchive {
   const files = new Map<string, Uint8Array>();
   let totalUncompressedBytes = 0;
   let moduleCount = 0;
+
   const unzipper = new Unzip((file) => {
     if (!ASSET_NAME.test(file.name)) {
       throw new BadRequestError(
         "The ZIP archive must contain only top-level Zipline modules and manifest.zipline.json",
       );
     }
+
     const originalSize = file.originalSize;
+
     if (originalSize === undefined || originalSize > MAX_UNCOMPRESSED_BYTES) {
       throw new BadRequestError("The ZIP archive contains an oversized or unsupported entry");
     }
+
     if (file.name.endsWith(".zipline") && ++moduleCount > MAX_MODULES) {
       throw new BadRequestError(`The ZIP archive cannot contain more than ${MAX_MODULES} modules`);
     }
@@ -144,17 +153,21 @@ function parseArchive(archive: Uint8Array): ReleaseArchive {
 
       size += chunk.byteLength;
       totalUncompressedBytes += chunk.byteLength;
+
       if (size > originalSize || totalUncompressedBytes > MAX_UNCOMPRESSED_BYTES) {
         throw new BadRequestError("The ZIP archive expands beyond the 32 MiB limit");
       }
+
       chunks.push(chunk);
 
       if (final) {
         files.set(file.name, joinChunks(chunks, size));
       }
     };
+
     file.start();
   });
+
   unzipper.register(UnzipInflate);
 
   try {
@@ -163,11 +176,13 @@ function parseArchive(archive: Uint8Array): ReleaseArchive {
     if (error instanceof BadRequestError) {
       throw error;
     }
+
     throw new BadRequestError("The request body is not a valid ZIP archive");
   }
 
   const manifest = files.get("manifest.zipline.json");
   const modules = [...files].filter(([name]) => name.endsWith(".zipline"));
+
   if (!manifest || modules.length === 0) {
     throw new BadRequestError(
       "The ZIP archive must contain manifest.zipline.json and at least one .zipline module",
@@ -185,15 +200,18 @@ function parseArchive(archive: Uint8Array): ReleaseArchive {
 
 async function isAuthorized(request: Request, env: Env): Promise<boolean> {
   const token = request.headers.get("Authorization")?.match(/^Bearer (.+)$/i)?.[1];
+
   if (!token || !env.ADMIN_PASSWORD) {
     return false;
   }
 
   const encoder = new TextEncoder();
+
   const [tokenDigest, passwordDigest] = await Promise.all([
     crypto.subtle.digest("SHA-256", encoder.encode(token)),
     crypto.subtle.digest("SHA-256", encoder.encode(env.ADMIN_PASSWORD)),
   ]);
+
   return crypto.subtle.timingSafeEqual(tokenDigest, passwordDigest);
 }
 
@@ -206,6 +224,7 @@ async function resolveReleaseTimestamp(
   }
 
   const releaseTimestamp = await env.RELEASES.get(currentReleaseKey(assetRequest.ziplineVersion));
+
   return releaseTimestamp && RELEASE_TIMESTAMP.test(releaseTimestamp) ? releaseTimestamp : null;
 }
 
@@ -215,16 +234,19 @@ async function handleCurrentReleaseRequest(
   ziplineVersion: string,
 ): Promise<Response> {
   const releaseTimestamp = await env.RELEASES.get(currentReleaseKey(ziplineVersion));
+
   if (!releaseTimestamp || !RELEASE_TIMESTAMP.test(releaseTimestamp)) {
     return new Response("Current release is unavailable", { status: 503 });
   }
 
   const body = JSON.stringify({ releaseTimestamp, ziplineVersion });
+
   const headers = new Headers({
     "Cache-Control": CURRENT_CACHE_CONTROL,
     "Content-Length": String(new TextEncoder().encode(body).byteLength),
     "Content-Type": "application/json",
   });
+
   return request.method === "HEAD"
     ? new Response(null, { headers })
     : new Response(body, { headers });
@@ -236,13 +258,16 @@ async function handleAssetRequest(
   assetRequest: AssetRequest,
 ): Promise<Response> {
   const releaseTimestamp = await resolveReleaseTimestamp(assetRequest, env);
+
   if (!releaseTimestamp) {
     return new Response("Current release is unavailable", { status: 503 });
   }
 
   const key = objectKey(assetRequest.ziplineVersion, releaseTimestamp, assetRequest.assetName);
+
   if (request.method === "HEAD") {
     const object = await env.ASSETS.head(key);
+
     return object
       ? new Response(null, {
           headers: responseHeaders(object, assetRequest.assetName, assetRequest.cacheControl),
@@ -251,6 +276,7 @@ async function handleAssetRequest(
   }
 
   const object = await env.ASSETS.get(key);
+
   return object
     ? new Response(object.body, {
         headers: responseHeaders(object, assetRequest.assetName, assetRequest.cacheControl),
@@ -266,13 +292,19 @@ async function reserveReleaseUpdate(env: Env, ziplineVersion: string): Promise<v
   const lock = await env.ASSETS.put(publishingLockKey(ziplineVersion), "", {
     onlyIf: new Headers({ "If-None-Match": "*" }),
   });
+
   if (!lock) {
     throw new ConflictError("A release is already being published for this Zipline ABI");
   }
 }
 
+function isString(value: unknown): value is string {
+  return Object.prototype.toString.call(value) === "[object String]";
+}
+
 async function rollbackReleaseTimestamp(request: Request): Promise<string> {
   let body: unknown;
+
   try {
     body = await request.json();
   } catch {
@@ -280,14 +312,15 @@ async function rollbackReleaseTimestamp(request: Request): Promise<string> {
   }
 
   if (
-    typeof body !== "object" ||
-    body === null ||
+    !(body instanceof Object) ||
+    Array.isArray(body) ||
     !("releaseTimestamp" in body) ||
-    typeof body.releaseTimestamp !== "string" ||
+    !isString(body.releaseTimestamp) ||
     !RELEASE_TIMESTAMP.test(body.releaseTimestamp)
   ) {
     throw new BadRequestError("releaseTimestamp must be a UTC timestamp such as 20260830T000000Z");
   }
+
   return body.releaseTimestamp;
 }
 
@@ -307,15 +340,19 @@ async function handleAdminRelease(request: Request, env: Env): Promise<Response>
   }
 
   const ziplineVersion = request.headers.get("X-Zipline-Version");
+
   if (!ziplineVersion || !ZIPLINE_VERSION.test(ziplineVersion)) {
     throw new BadRequestError("X-Zipline-Version must be a version such as v2 or v3");
   }
 
   const contentLengthHeader = request.headers.get("Content-Length");
+
   if (contentLengthHeader === null) {
     throw new BadRequestError("Content-Length is required");
   }
+
   const contentLength = Number(contentLengthHeader);
+
   if (
     !Number.isSafeInteger(contentLength) ||
     contentLength < 0 ||
@@ -325,12 +362,14 @@ async function handleAdminRelease(request: Request, env: Env): Promise<Response>
   }
 
   const archiveBytes = new Uint8Array(await request.arrayBuffer());
+
   if (archiveBytes.byteLength > MAX_ARCHIVE_BYTES || archiveBytes.byteLength !== contentLength) {
     throw new BadRequestError("The request body does not match the permitted Content-Length");
   }
 
   const archive = parseArchive(archiveBytes);
   await reserveReleaseUpdate(env, ziplineVersion);
+
   try {
     const releaseTimestamp = currentTimestamp();
     await Promise.all(
@@ -369,21 +408,26 @@ async function handleAdminRollback(request: Request, env: Env): Promise<Response
   }
 
   const ziplineVersion = request.headers.get("X-Zipline-Version");
+
   if (!ziplineVersion || !ZIPLINE_VERSION.test(ziplineVersion)) {
     throw new BadRequestError("X-Zipline-Version must be a version such as v2 or v3");
   }
 
   const releaseTimestamp = await rollbackReleaseTimestamp(request);
+
   const manifest = await env.ASSETS.head(
     objectKey(ziplineVersion, releaseTimestamp, "manifest.zipline.json"),
   );
+
   if (!manifest) {
     return new Response("Release not found", { status: 404 });
   }
 
   await reserveReleaseUpdate(env, ziplineVersion);
+
   try {
     await env.RELEASES.put(currentReleaseKey(ziplineVersion), releaseTimestamp);
+
     return Response.json({ releaseTimestamp, ziplineVersion });
   } finally {
     await env.ASSETS.delete(publishingLockKey(ziplineVersion));
@@ -394,9 +438,11 @@ export default {
   async fetch(request: Request, env: Env): Promise<Response> {
     try {
       const url = new URL(request.url);
+
       if (url.pathname === ADMIN_RELEASE_PATH) {
         return await handleAdminRelease(request, env);
       }
+
       if (url.pathname === ADMIN_ROLLBACK_PATH) {
         return await handleAdminRollback(request, env);
       }
@@ -409,11 +455,13 @@ export default {
       }
 
       const currentReleaseVersion = parseCurrentReleaseVersion(url.pathname);
+
       if (currentReleaseVersion) {
         return await handleCurrentReleaseRequest(request, env, currentReleaseVersion);
       }
 
       const assetRequest = parseAssetRequest(url.pathname);
+
       if (!assetRequest) {
         return new Response("Not found", { status: 404 });
       }
@@ -423,6 +471,7 @@ export default {
       if (error instanceof BadRequestError) {
         return new Response(error.message, { status: 400 });
       }
+
       if (error instanceof ConflictError) {
         return new Response(error.message, { status: 409 });
       }
@@ -434,6 +483,7 @@ export default {
           url: request.url,
         }),
       );
+
       return new Response("Internal server error", { status: 500 });
     }
   },

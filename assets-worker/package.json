@@ -6,6 +6,7 @@
   "scripts": {
     "check": "tsc --noEmit && tsc --project test/tsconfig.json --noEmit",
     "fmt": "oxfmt",
+    "lint": "oxlint",
     "test": "ADMIN_PASSWORD=test-admin-password vitest run",
     "test:watch": "ADMIN_PASSWORD=test-admin-password vitest",
     "types": "wrangler types"
@@ -15,9 +16,11 @@
   },
   "devDependencies": {
     "@cloudflare/vitest-plugin": "^1.1.2",
+    "@oxlint/plugins": "^1.90.0",
     "@types/node": "^26.4.0",
     "cf": "1.0.0-beta.25",
     "oxfmt": "^0.75.0",
+    "oxlint": "^1.90.0",
     "typescript": "^5.9.3",
     "vitest": "^4.1.11",
     "wrangler": "^4.155.0"

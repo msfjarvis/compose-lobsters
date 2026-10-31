@@ -18,7 +18,7 @@ internal fun parseSearchResults(html: String): List<LobstersPost> {
 
 private fun parseSearchPost(elem: Element): LobstersPost {
   val parent = elem.parent() ?: error("$elem must have a parent")
-  val titleElement = elem.select("span.link.h-cite > a")
+  val titleElement = elem.select("h2.link.h-cite > a")
   val linkElement = elem.select("span.comments_label a")
   val commentCount = linkElement.text().trimStart().substringBefore(" ").toIntOrNull() ?: 0
   return LobstersPost(

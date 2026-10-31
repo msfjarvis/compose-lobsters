@@ -17,7 +17,7 @@ internal fun parsePostsPage(html: String): List<LobstersPost> {
 }
 
 private fun parsePost(element: Element): LobstersPost {
-  val titleElement = element.select("> div.story_liner span.link.h-cite > a")
+  val titleElement = element.select("> div.story_liner h2.link.h-cite > a")
   val commentElement = element.select("> div.story_liner span.comments_label a")
   val submitterElement =
     element.select(

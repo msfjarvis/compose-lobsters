@@ -1,60 +1,1842 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" >
 <head>
-  <link href="https://lobste.rs/s/d7m5j1/setting_up_ssh_keys_on_macos_with_touch_id" rev="canonical" rel="self alternate shorter shorturl shortlink">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <link rel="icon" sizes="144x144" type="image/png" href="/touch-icon-144.png">
+  <link rel="apple-touch-icon" sizes="57x57" href="/touch-icon.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/touch-icon.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/touch-icon-144.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/touch-icon-144.png">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="Lobsters">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="always">
+  <meta name="theme-color" content="#AC130D">
+  <meta name="story-flags" content="{&quot;O&quot;:&quot;Off-topic&quot;,&quot;A&quot;:&quot;Already Posted&quot;,&quot;B&quot;:&quot;Broken Link&quot;,&quot;S&quot;:&quot;Spam&quot;,&quot;&quot;:&quot;Cancel&quot;}">
+  <meta name="comment-flags" content="{&quot;O&quot;:&quot;Off-topic&quot;,&quot;M&quot;:&quot;Me-too&quot;,&quot;T&quot;:&quot;Troll&quot;,&quot;U&quot;:&quot;Unkind&quot;,&quot;S&quot;:&quot;Spam&quot;,&quot;&quot;:&quot;Cancel&quot;}">
+
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Lobsters">
+    <meta property="og:title" content="Setting up SSH keys on macOS with Touch ID">
+    <meta property="og:description" content="26 comments">
+    <meta property="og:image" content="https://lobste.rs/story_image/d7m5j1.png">
+    <meta property="article:author" content="https://lobste.rs/~nmattia">
+  <link rel="shortcut icon" href="/favicon.ico">
+    <link href="https://lobste.rs/s/d7m5j1/setting_up_ssh_keys_on_macos_with_touch_id" rev="canonical" rel="self alternate shorter shorturl shortlink">
+  <title>Setting up SSH keys on macOS with Touch ID | Lobsters</title>
+
+    <link rel="stylesheet" href="/application.css">
+    <link rel="stylesheet" href="/system-system.css">
+    <script src="/application.js" type="module"></script>
+
+  <meta name="csrf-param" content="authenticity_token">
+<meta name="csrf-token" content="M9yYRDuG2DbU551lGeHpFJFrpcv1tb_1AgNNn7AwB03iNBWLxrBMVAgLXZuPLDPEqZaDK2_R18_mUM4wEn1i3A">
+  <meta name="robots" content="noai, noimageai">
+    <script type="speculationrules" nonce="TRhLBV51PxFQS2sWM28UWA==">
+      {
+        "prefetch": [
+          {
+            "where": {
+              "href_matches": "/*"
+            },
+            "eagerness": "moderate"
+          }
+        ]
+      }
+    </script>
 </head>
-<body>
-  <ol class="stories">
-    <li id="story_d7m5j1" data-shortid="d7m5j1" class="story">
-      <div class="details" id="header_story_01m5cddq8fewmvj5853khj4500">
-        <span class="link h-cite u-repost-of">
-          <a href="https://nmattia.com/posts/2026-10-19-setting-up-ssh-keys-touch-id/">Setting up SSH keys on macOS with Touch ID</a>
-        </span>
-        <ul class="tags">
-          <li><a>cryptography</a></li>
-          <li><a>mac</a></li>
-          <li><a>security</a></li>
+<body data-username=''>
+  <header id="header">
+    <div id="header-top">
+      <h1 style="background-color: #ac130d;" id="logo">
+        <a href="/" title="Lobsters (Current traffic: 0%)">
+          <b class="sr-only" aria-hidden="true">Lobsters</b>
+        </a>
+        
+      </h1>
+
+      <nav aria-label="Menu">
+        <ul>
+          <li><a href="/active">Active</a></li>
+          <li><a href="/recent">Recent</a></li>
+          <li><a href="/comments">Comments</a></li>
+
+
+          <li><a href="/search">Search</a></li>
+
+
+            <li class="push-right"><a href="/login">Login</a></li>
         </ul>
-        <div class="byline">
-          <span>authored by</span>
-          <a class="u-author h-card user_is_author" href="/~nmattia">nmattia</a>
-          <time data-at-unix="1792491838">2026-10-20</time>
-          <span class="comments_label"><a href="#comments-d7m5j1">24 comments</a></span>
-        </div>
+      </nav>
+    </div>
+
+
+  </header>
+
+  <main id="inside">
+
+
+    
+<ol class="stories">
+  
+
+
+<li id="story_d7m5j1" data-shortid="d7m5j1" class="story">
+<div class="story_liner h-entry">
+  <div class="voters">
+    <a class="upvoter" href="/login">69</a>
+  </div>
+
+    <div class="details" id="header_story_01m5cddq8fewmvj5853khj4500">
+      <h2 class="link h-cite u-repost-of">
+        <a href="https://nmattia.com/posts/2026-10-19-setting-up-ssh-keys-touch-id/" rel="ugc noreferrer" class="u-url">Setting up SSH keys on macOS with Touch ID</a>
+      </h2>
+
+
+      <ul class="tags" aria-label="Tags">
+          <li><a aria-label="Tag cryptography" class="tag tag_cryptography" title="Cryptography" href="/t/cryptography">cryptography</a></li>
+          <li><a aria-label="Tag mac" class="tag tag_mac" title="Apple macOS" href="/t/mac">mac</a></li>
+          <li><a aria-label="Tag security" class="tag tag_security" title="Netsec, appsec, and infosec" href="/t/security">security</a></li>
+      </ul>
+
+        <a class="domain" href="/domains/nmattia.com">nmattia.com</a>
+
+      <div class="byline">
+        <span>authored by</span>
+        <a tabindex="-1" aria-hidden="true" href="/~nmattia"><img srcset="/avatars/nmattia-16.png 1x, /avatars/nmattia-32.png 2x" class="avatar" alt="" loading="lazy" decoding="async" src="/avatars/nmattia-16.png" width="16" height="16"></a>
+        <a class="u-author h-card user_is_author" href="/~nmattia">nmattia</a> 
+
+          <time title="2026-10-20 05:23:58" datetime="2026-10-20 05:23:58" data-at-unix="1792491838">2026-10-20 05:23:58</time>
+
+
+
+
+
+            <span aria-hidden="true"> | </span>
+            <details class="caches" name="caches">
+              <summary>caches</summary>
+                <ul>
+                  <li><a href="https://web.archive.org/web/3/https%3A%2F%2Fnmattia.com%2Fposts%2F2026-10-19-setting-up-ssh-keys-touch-id%2F">Archive.org</a></li>
+                  <li><a href="https://ghostarchive.org/search?term=https%3A%2F%2Fnmattia.com%2Fposts%2F2026-10-19-setting-up-ssh-keys-touch-id%2F">Ghostarchive</a></li>
+                </ul>
+            </details>
+
+          <span class="comments_label">
+            <span aria-hidden="true"> | </span>
+              <a href="#comments-d7m5j1">26 comments</a>
+          </span>
+
       </div>
-    </li>
-  </ol>
-  <div class="story_content"><div class="story_text"></div></div>
-  <ol class="comments">
-    <li class="comments_subtree" id="comments-d7m5j1">
-      <ol class="comments" id="story_comments">
+    </div>
+
+
+</div>
+</li>
+
+</ol>
+
+<div class="story_content">
+
+
+
+</div>
+
+
+
+    <ol class="comments comments1">
         <li class="comments_subtree">
-          <div class="comment" data-shortid="gzepau">
-            <div class="details">
-              <div class="byline">
-                <a href="/~msangi">msangi</a>
-                <a href="/c/gzepau"><time data-at-unix="1792500777"></time></a>
-              </div>
-              <div class="comment_text">Helpful addition.</div>
-            </div>
-          </div>
-          <ol class="comments">
-            <li class="comments_subtree">
-              <div class="comment" data-shortid="eaxy4y">
-                <div class="details">
-                  <div class="byline">
-                    <a class="user_is_author user_is_submitter" href="/~nmattia">nmattia</a>
-                    <a href="/c/eaxy4y"><time data-at-unix="1792501071"></time></a>
-                  </div>
-                  <div class="comment_text">Yep, that's a good idea!</div>
-                </div>
-              </div>
-              <ol class="comments"></ol>
+<div class="comment_form_container" data-shortid="">
+<form action="/comments" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="3ghd8_Qyva4npzMj0SVKHqiMwLHTyfyf1PnlSfHuDW7_NKRIWBpVJ08nWe5dfBRH0yRePslWmLsgAXcwOn9fvA" autocomplete="off">
+
+  <input autocomplete="off" value="d7m5j1" type="hidden" name="story_id" id="story_id" />
+  <input autocomplete="off" value="post" type="hidden" name="_method" id="_method" />
+
+
+
+
+  <div style="width: 100%;">
+    <textarea rows="5" disabled="disabled" placeholder="You must be logged in to leave a comment." required="required" name="comment" id="comment">
+</textarea>
+
+    <div class="controls">
+      <div class="buttons">
+        <input type="submit" name="commit" value="Post" class="comment-post" disabled="disabled" data-disable-with="Post">
+        &nbsp;
+        <button name="button" type="button" class="comment-preview" disabled="disabled">Preview</button>
+      </div>
+
+
+    </div>
+  </div>
+
+  <p></p>
+</form>
+<div class="preview">
+</div>
+
+</div>
+</li>
+
+      <li class="comments_subtree" id="comments-d7m5j1">
+
+        <ol class="comments" id="story_comments">
+
+
+    <li class="comments_subtree">
+
+
+  <input
+    id="comment_folder_gzepau"
+    class="comment_folder_button" type="checkbox"
+
+  >
+
+<div id="c_gzepau"
+  data-shortid="gzepau"
+  class="comment
+    
+    
+    
+    
+  ">
+
+  <div class="voters">
+      <label for="comment_folder_gzepau" class="comment_folder"></label>
+        <a class="upvoter" title="12" href="/login">12</a>
+  </div>
+
+  <div class="details">
+    <div class="byline">
+      <a name="c_gzepau"></a>
+
+
+      <span class="">
+        <a tabindex="-1" aria-hidden="true" href="/~msangi"><img srcset="/avatars/msangi-16.png 1x, /avatars/msangi-32.png 2x" class="avatar" alt="" loading="lazy" decoding="async" src="/avatars/msangi-16.png" width="16" height="16"></a>
+        <a href="/~msangi">msangi</a>
+        
+
+
+            <a href="/c/gzepau"><time title="2026-10-20 07:52:57" datetime="2026-10-20 07:52:57" data-at-unix="1792500777">2026-10-20 07:52:57</time></a>
+          
+      </span>
+
+
+
+          <span class="flagger flagger_stub"></span>
+
+
+
+        <span class="reason">
+        </span>
+    </div>
+    <div role="heading" aria-level="3" class="comment_text">
+        <p>To make it a bit less tedious adding back the key after a reboot I export <code>SSH_SK_PROVIDER=/usr/lib/ssh-keychain.dylib</code> so that I only need to type <code>ssh-add -K</code></p>
+
+    </div>
+  </div>
+</div>
+
+
+
+        <ol class="comments">
+
+    <li class="comments_subtree">
+
+
+  <input
+    id="comment_folder_eaxy4y"
+    class="comment_folder_button" type="checkbox"
+
+  >
+
+<div id="c_eaxy4y"
+  data-shortid="eaxy4y"
+  class="comment
+    
+    
+    
+    
+  ">
+
+  <div class="voters">
+      <label for="comment_folder_eaxy4y" class="comment_folder"></label>
+        <a class="upvoter" title="4" href="/login">4</a>
+  </div>
+
+  <div class="details">
+    <div class="byline">
+      <a name="c_eaxy4y"></a>
+
+
+      <span class="">
+        <a tabindex="-1" aria-hidden="true" href="/~nmattia"><img srcset="/avatars/nmattia-16.png 1x, /avatars/nmattia-32.png 2x" class="avatar" alt="" loading="lazy" decoding="async" src="/avatars/nmattia-16.png" width="16" height="16"></a>
+        <a class="user_is_author user_is_submitter" aria-label="nmattia - Submitter" href="/~nmattia">nmattia</a>
+        
+
+
+            <a href="/c/eaxy4y"><time title="2026-10-20 07:57:51" datetime="2026-10-20 07:57:51" data-at-unix="1792501071">2026-10-20 07:57:51</time></a>
+          
+      </span>
+
+
+
+          <span class="flagger flagger_stub"></span>
+
+
+
+        <span class="reason">
+        </span>
+    </div>
+    <div role="heading" aria-level="3" class="comment_text">
+        <p>Yep, that's a good idea! You can also set it in the ~/.ssh/config: <a href="https://gist.github.com/arianvp/5f59f1783e3eaf1a2d4cd8e952bb4acf#using-the-securitykeyprovider-by-default" rel="ugc">https://gist.github.com/arianvp/5f59f1783e3eaf1a2d4cd8e952bb4acf#using-the-securitykeyprovider-by-default</a></p>
+<p>I added it explicitly in the post because I'm a big fan of less hardcoded configuration, and so that it can be enabled/disabled explicitly (you may not always want to use ssh-keychain when adding keys). Maybe should I have mentioned it though!</p>
+
+    </div>
+  </div>
+</div>
+
+
+
+        <ol class="comments"></ol>
+
             </li>
           </ol>
+
         </li>
-      </ol>
-    </li>
-  </ol>
+
+    <li class="comments_subtree">
+
+
+  <input
+    id="comment_folder_msq62l"
+    class="comment_folder_button" type="checkbox"
+
+  >
+
+<div id="c_msq62l"
+  data-shortid="msq62l"
+  class="comment
+    
+    
+    
+    
+  ">
+
+  <div class="voters">
+      <label for="comment_folder_msq62l" class="comment_folder"></label>
+        <a class="upvoter" title="9" href="/login">9</a>
+  </div>
+
+  <div class="details">
+    <div class="byline">
+      <a name="c_msq62l"></a>
+
+
+      <span class="">
+        <a tabindex="-1" aria-hidden="true" href="/~eta"><img srcset="/avatars/eta-16.png 1x, /avatars/eta-32.png 2x" class="avatar" alt="" loading="lazy" decoding="async" src="/avatars/eta-16.png" width="16" height="16"></a>
+        <a href="/~eta">eta</a>
+        
+
+
+            <a href="/c/msq62l"><time title="2026-10-20 06:20:27" datetime="2026-10-20 06:20:27" data-at-unix="1792495227">2026-10-20 06:20:27</time></a>
+          
+      </span>
+
+
+
+          <span class="flagger flagger_stub"></span>
+
+
+
+        <span class="reason">
+        </span>
+    </div>
+    <div role="heading" aria-level="3" class="comment_text">
+        <p>Cool! I personally use <a href="https://secretive.dev/" rel="ugc">Secretive</a> for this but I had no idea you could do it all with OS-provided tooling.</p>
+
+    </div>
+  </div>
+</div>
+
+
+
+        <ol class="comments">
+
+    <li class="comments_subtree">
+
+
+  <input
+    id="comment_folder_bvldol"
+    class="comment_folder_button" type="checkbox"
+
+  >
+
+<div id="c_bvldol"
+  data-shortid="bvldol"
+  class="comment
+    
+    
+    
+    
+  ">
+
+  <div class="voters">
+      <label for="comment_folder_bvldol" class="comment_folder"></label>
+        <a class="upvoter" title="11" href="/login">11</a>
+  </div>
+
+  <div class="details">
+    <div class="byline">
+      <a name="c_bvldol"></a>
+
+
+      <span class="">
+        <a tabindex="-1" aria-hidden="true" href="/~nmattia"><img srcset="/avatars/nmattia-16.png 1x, /avatars/nmattia-32.png 2x" class="avatar" alt="" loading="lazy" decoding="async" src="/avatars/nmattia-16.png" width="16" height="16"></a>
+        <a class="user_is_author user_is_submitter" aria-label="nmattia - Submitter" href="/~nmattia">nmattia</a>
+        
+
+
+            <a href="/c/bvldol"><time title="2026-10-20 06:26:47" datetime="2026-10-20 06:26:47" data-at-unix="1792495607">2026-10-20 06:26:47</time></a>
+          
+      </span>
+
+
+
+          <span class="flagger flagger_stub"></span>
+
+
+
+        <span class="reason">
+        </span>
+    </div>
+    <div role="heading" aria-level="3" class="comment_text">
+        <p>It's recent that macOS ships with all the tools to do this natively. I prefer to avoid relying on 3rd party tools but I read some good things about Secretive while researching this!</p>
+
+    </div>
+  </div>
+</div>
+
+
+
+        <ol class="comments"></ol>
+
+            </li>
+          </ol>
+
+        </li>
+
+    <li class="comments_subtree">
+
+
+  <input
+    id="comment_folder_rql2iu"
+    class="comment_folder_button" type="checkbox"
+
+  >
+
+<div id="c_rql2iu"
+  data-shortid="rql2iu"
+  class="comment
+    
+    
+    
+    
+  ">
+
+  <div class="voters">
+      <label for="comment_folder_rql2iu" class="comment_folder"></label>
+        <a class="upvoter" title="6" href="/login">6</a>
+  </div>
+
+  <div class="details">
+    <div class="byline">
+      <a name="c_rql2iu"></a>
+
+
+      <span class="">
+        <a tabindex="-1" aria-hidden="true" href="/~nmattia"><img srcset="/avatars/nmattia-16.png 1x, /avatars/nmattia-32.png 2x" class="avatar" alt="" loading="lazy" decoding="async" src="/avatars/nmattia-16.png" width="16" height="16"></a>
+        <a class="user_is_author user_is_submitter" aria-label="nmattia - Submitter" href="/~nmattia">nmattia</a>
+        
+
+
+            <a href="/c/rql2iu"><time title="2026-10-20 05:25:16" datetime="2026-10-20 05:25:16" data-at-unix="1792491916">2026-10-20 05:25:16</time></a>
+          
+      </span>
+
+
+
+          <span class="flagger flagger_stub"></span>
+
+
+
+        <span class="reason">
+        </span>
+    </div>
+    <div role="heading" aria-level="3" class="comment_text">
+        <p>Post author here. This was the result of a lot of experimentation; if there are experts that want to chime in, I'd love to hear your thoughts!</p>
+
+    </div>
+  </div>
+</div>
+
+
+
+        <ol class="comments">
+
+    <li class="comments_subtree">
+
+
+  <input
+    id="comment_folder_d7rv7u"
+    class="comment_folder_button" type="checkbox"
+
+  >
+
+<div id="c_d7rv7u"
+  data-shortid="d7rv7u"
+  class="comment
+    
+    
+    
+    
+  ">
+
+  <div class="voters">
+      <label for="comment_folder_d7rv7u" class="comment_folder"></label>
+        <a class="upvoter" title="1" href="/login">1</a>
+  </div>
+
+  <div class="details">
+    <div class="byline">
+      <a name="c_d7rv7u"></a>
+
+
+      <span class="">
+        <a tabindex="-1" aria-hidden="true" href="/~hwj"><img srcset="/avatars/hwj-16.png 1x, /avatars/hwj-32.png 2x" class="avatar" alt="" loading="lazy" decoding="async" src="/avatars/hwj-16.png" width="16" height="16"></a>
+        <a href="/~hwj">hwj</a>
+        
+
+
+            <a href="/c/d7rv7u"><time title="2026-10-21 01:46:42" datetime="2026-10-21 01:46:42" data-at-unix="1792565202">2026-10-21 01:46:42</time></a>
+          
+      </span>
+
+
+
+          <span class="flagger flagger_stub"></span>
+
+
+
+        <span class="reason">
+        </span>
+    </div>
+    <div role="heading" aria-level="3" class="comment_text">
+        <p>Not an expert by any stretch but I prefer to generate private keys using open-source software running on offline hardware. My reasons:</p>
+<ul>
+<li>
+<p>(audited) OSS gives me more confidence of having a good entropy. Remeber the Yubikey revision which generated "deterministic" keys?</p>
+</li>
+<li>
+<p>Keys are usually easier to backup.</p>
+</li>
+</ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+        <ol class="comments"></ol>
+
+            </li>
+          </ol>
+
+        </li>
+
+    <li class="comments_subtree">
+
+
+  <input
+    id="comment_folder_dibabg"
+    class="comment_folder_button" type="checkbox"
+
+  >
+
+<div id="c_dibabg"
+  data-shortid="dibabg"
+  class="comment
+    
+    
+    
+    
+  ">
+
+  <div class="voters">
+      <label for="comment_folder_dibabg" class="comment_folder"></label>
+        <a class="upvoter" title="3" href="/login">3</a>
+  </div>
+
+  <div class="details">
+    <div class="byline">
+      <a name="c_dibabg"></a>
+
+
+      <span class="">
+        <a tabindex="-1" aria-hidden="true" href="/~bityard"><img srcset="/avatars/bityard-16.png 1x, /avatars/bityard-32.png 2x" class="avatar" alt="" loading="lazy" decoding="async" src="/avatars/bityard-16.png" width="16" height="16"></a>
+        <a href="/~bityard">bityard</a>
+        
+
+
+            <a href="/c/dibabg"><time title="2026-10-20 11:42:08" datetime="2026-10-20 11:42:08" data-at-unix="1792514528">2026-10-20 11:42:08</time></a>
+          
+      </span>
+
+
+
+          <span class="flagger flagger_stub"></span>
+
+
+
+        <span class="reason">
+        </span>
+    </div>
+    <div role="heading" aria-level="3" class="comment_text">
+        <p>Thanks for writing this, I will have to try it out. I only skimmed the article because I'm not familiar with a lot of the secure enclave/Apple-specific stuff, but I have a question: Does this setup require biometric authentication every time the key is used, or does the system "remember" your authorization for some length of time?</p>
+<p>When I use regular SSH keys on my desktop machines, I typically set the SSH key passphrase to be the same as the login passphrase and then configure the OS/desktop to unlock the SSH key automatically on login. This is reasonably secure and very convenient, especially since I often connect to various hosts through automation. (SSHFS, Ansible, etc.)</p>
+
+    </div>
+  </div>
+</div>
+
+
+
+        <ol class="comments">
+
+    <li class="comments_subtree">
+
+
+  <input
+    id="comment_folder_ucaggl"
+    class="comment_folder_button" type="checkbox"
+
+  >
+
+<div id="c_ucaggl"
+  data-shortid="ucaggl"
+  class="comment
+    
+    
+    
+    
+  ">
+
+  <div class="voters">
+      <label for="comment_folder_ucaggl" class="comment_folder"></label>
+        <a class="upvoter" title="2" href="/login">2</a>
+  </div>
+
+  <div class="details">
+    <div class="byline">
+      <a name="c_ucaggl"></a>
+
+
+      <span class="">
+        <a tabindex="-1" aria-hidden="true" href="/~nikaro"><img srcset="/avatars/nikaro-16.png 1x, /avatars/nikaro-32.png 2x" class="avatar" alt="" loading="lazy" decoding="async" src="/avatars/nikaro-16.png" width="16" height="16"></a>
+        <a href="/~nikaro">nikaro</a>
+        
+
+
+            <a href="/c/ucaggl"><time title="2026-10-20 14:07:01" datetime="2026-10-20 14:07:01" data-at-unix="1792523221">2026-10-20 14:07:01</time></a>
+          
+      </span>
+
+
+
+          <span class="flagger flagger_stub"></span>
+
+
+
+        <span class="reason">
+        </span>
+    </div>
+    <div role="heading" aria-level="3" class="comment_text">
+        <p>Then you could use <code>-t none</code> (instead of <code>-t bio</code>), this would do the sme as your current setup.</p>
+
+    </div>
+  </div>
+</div>
+
+
+
+        <ol class="comments"></ol>
+
+            </li>
+          </ol>
+
+        </li>
+
+    <li class="comments_subtree">
+
+
+  <input
+    id="comment_folder_vmfyji"
+    class="comment_folder_button" type="checkbox"
+
+  >
+
+<div id="c_vmfyji"
+  data-shortid="vmfyji"
+  class="comment
+    
+    
+    
+    
+  ">
+
+  <div class="voters">
+      <label for="comment_folder_vmfyji" class="comment_folder"></label>
+        <a class="upvoter" title="2" href="/login">2</a>
+  </div>
+
+  <div class="details">
+    <div class="byline">
+      <a name="c_vmfyji"></a>
+
+
+      <span class="">
+        <a tabindex="-1" aria-hidden="true" href="/~atmosx"><img srcset="/avatars/atmosx-16.png 1x, /avatars/atmosx-32.png 2x" class="avatar" alt="" loading="lazy" decoding="async" src="/avatars/atmosx-16.png" width="16" height="16"></a>
+        <a href="/~atmosx">atmosx</a>
+        
+
+
+            <a href="/c/vmfyji"><time title="2026-10-20 07:24:20" datetime="2026-10-20 07:24:20" data-at-unix="1792499060">2026-10-20 07:24:20</time></a>
+          
+      </span>
+
+
+
+          <span class="flagger flagger_stub"></span>
+
+
+
+        <span class="reason">
+        </span>
+    </div>
+    <div role="heading" aria-level="3" class="comment_text">
+        <p>Cool stuff.</p>
+<p>Key management depends on how you use your setup I suppose. I share SSH keys between machines, so in my case 1Password handles it nicely, but there are drawbacks as well (e.g. some systems are not well supported).</p>
+<p>I can see plenty of reasons to go one key per laptop though, but since I use roughly 3 different Apple laptops and ~5 systems (in total) that I want to be able to SSH from, and the targets number is 10+ (RPis, Linux boxes, routers, etc.), key distribution becomes a real pain for me.</p>
+
+    </div>
+  </div>
+</div>
+
+
+
+        <ol class="comments">
+
+    <li class="comments_subtree">
+
+
+  <input
+    id="comment_folder_qo6opy"
+    class="comment_folder_button" type="checkbox"
+
+  >
+
+<div id="c_qo6opy"
+  data-shortid="qo6opy"
+  class="comment
+    
+    
+    
+    
+  ">
+
+  <div class="voters">
+      <label for="comment_folder_qo6opy" class="comment_folder"></label>
+        <a class="upvoter" title="3" href="/login">3</a>
+  </div>
+
+  <div class="details">
+    <div class="byline">
+      <a name="c_qo6opy"></a>
+
+
+      <span class="">
+        <a tabindex="-1" aria-hidden="true" href="/~bityard"><img srcset="/avatars/bityard-16.png 1x, /avatars/bityard-32.png 2x" class="avatar" alt="" loading="lazy" decoding="async" src="/avatars/bityard-16.png" width="16" height="16"></a>
+        <a href="/~bityard">bityard</a>
+        
+
+
+            edited
+            <a href="/c/qo6opy"><time title="2026-10-20 11:26:36" datetime="2026-10-20 11:26:36" data-at-unix="1792513596">2026-10-20 11:26:36</time></a>
+          
+      </span>
+
+
+
+          <span class="flagger flagger_stub"></span>
+
+
+
+        <span class="reason">
+        </span>
+    </div>
+    <div role="heading" aria-level="3" class="comment_text">
+        <p>Copying private keys away from the machine they were generated on is generally to be avoided. You could accidentally leave them somewhere you don't mean to (temp directory, thumb drive), or someone could steal/pwn one of your machines.</p>
+<p>SSH certificates are the solution you're looking for. You can set up a CA and then sign both host and user public keys with it. This avoids having to share/distribute user keys, and also solves the weakness of trust-on-first-use when connecting to a host for the first time. (Literally nobody verifies key fingerprints.) Setting up the CA and then using it to sign keys is of course a little work the first time but it can be automated.</p>
+
+    </div>
+  </div>
+</div>
+
+
+
+        <ol class="comments">
+
+    <li class="comments_subtree">
+
+
+  <input
+    id="comment_folder_7hdiwd"
+    class="comment_folder_button" type="checkbox"
+
+  >
+
+<div id="c_7hdiwd"
+  data-shortid="7hdiwd"
+  class="comment
+    
+    
+    
+    
+  ">
+
+  <div class="voters">
+      <label for="comment_folder_7hdiwd" class="comment_folder"></label>
+        <a class="upvoter" title="1" href="/login">1</a>
+  </div>
+
+  <div class="details">
+    <div class="byline">
+      <a name="c_7hdiwd"></a>
+
+
+      <span class="">
+        <a tabindex="-1" aria-hidden="true" href="/~atmosx"><img srcset="/avatars/atmosx-16.png 1x, /avatars/atmosx-32.png 2x" class="avatar" alt="" loading="lazy" decoding="async" src="/avatars/atmosx-16.png" width="16" height="16"></a>
+        <a href="/~atmosx">atmosx</a>
+        
+
+
+            <a href="/c/7hdiwd"><time title="2026-10-20 13:05:26" datetime="2026-10-20 13:05:26" data-at-unix="1792519526">2026-10-20 13:05:26</time></a>
+          
+      </span>
+
+
+
+          <span class="flagger flagger_stub"></span>
+
+
+
+        <span class="reason">
+        </span>
+    </div>
+    <div role="heading" aria-level="3" class="comment_text">
+        <blockquote>
+<p>Copying private keys away from the machine they were generated on is generally to be avoided.</p>
+</blockquote>
+<p>I agree. In my setup the private key lives in the 1P vault and it's accessible during the ssh session via touchID auth. The vault is then synced from one laptop to the next via cloud. Same with passkeys and all other secrets.</p>
+<blockquote>
+<p>You can set up a CA and then sign both host and user public keys with it.</p>
+</blockquote>
+<p>For my setup that would really be an overkill. It's a SOHO after all. These are pets not cattle. :-)</p>
+
+    </div>
+  </div>
+</div>
+
+
+
+        <ol class="comments">
+
+    <li class="comments_subtree">
+
+
+  <input
+    id="comment_folder_he4jyi"
+    class="comment_folder_button" type="checkbox"
+
+  >
+
+<div id="c_he4jyi"
+  data-shortid="he4jyi"
+  class="comment
+    
+    
+    
+    
+  ">
+
+  <div class="voters">
+      <label for="comment_folder_he4jyi" class="comment_folder"></label>
+        <a class="upvoter" title="2" href="/login">2</a>
+  </div>
+
+  <div class="details">
+    <div class="byline">
+      <a name="c_he4jyi"></a>
+
+
+      <span class="">
+        <a tabindex="-1" aria-hidden="true" href="/~colonelpanic"><img srcset="/avatars/colonelpanic-16.png 1x, /avatars/colonelpanic-32.png 2x" class="avatar" alt="" loading="lazy" decoding="async" src="/avatars/colonelpanic-16.png" width="16" height="16"></a>
+        <a href="/~colonelpanic">colonelpanic</a>
+        
+
+
+            edited
+            <a href="/c/he4jyi"><time title="2026-10-20 17:28:06" datetime="2026-10-20 17:28:06" data-at-unix="1792535286">2026-10-20 17:28:06</time></a>
+          
+      </span>
+
+
+
+          <span class="flagger flagger_stub"></span>
+
+
+
+        <span class="reason">
+        </span>
+    </div>
+    <div role="heading" aria-level="3" class="comment_text">
+        <p>"set up a CA" is really simple.</p>
+<pre lang="console"><code>ssh-keygen -t ed25519 -f certificate_authority -C "User Certificate Authority"
+</code></pre>
+<p>copy to server and add this to your sshd_config:</p>
+<pre><code>TrustedUserCAKeys /etc/ssh/certificate_authority.pub
+</code></pre>
+<p>Then you sign your ssh public key:</p>
+<pre lang="console"><code>ssh-keygen -s certificate_authority -I $(uuidgen) -z '0001' -n username id_ed25519.pub
+</code></pre>
+<p>ssh config:</p>
+<pre><code>Host server01
+	User username
+	IdentitiesOnly yes
+	IdentityFile ~/.ssh/id_ed25519
+	CertificateFile ~/.ssh/id_ed25519-cert.pub
+</code></pre>
+
+    </div>
+  </div>
+</div>
+
+
+
+        <ol class="comments"></ol>
+
+            </li>
+          </ol>
+            </li>
+          </ol>
+
+        </li>
+
+    <li class="comments_subtree">
+
+
+  <input
+    id="comment_folder_zonvay"
+    class="comment_folder_button" type="checkbox"
+
+  >
+
+<div id="c_zonvay"
+  data-shortid="zonvay"
+  class="comment
+    
+    
+    
+    
+  ">
+
+  <div class="voters">
+      <label for="comment_folder_zonvay" class="comment_folder"></label>
+        <a class="upvoter" title="2" href="/login">2</a>
+  </div>
+
+  <div class="details">
+    <div class="byline">
+      <a name="c_zonvay"></a>
+
+
+      <span class="">
+        <a tabindex="-1" aria-hidden="true" href="/~nmattia"><img srcset="/avatars/nmattia-16.png 1x, /avatars/nmattia-32.png 2x" class="avatar" alt="" loading="lazy" decoding="async" src="/avatars/nmattia-16.png" width="16" height="16"></a>
+        <a class="user_is_author user_is_submitter" aria-label="nmattia - Submitter" href="/~nmattia">nmattia</a>
+        
+
+
+            <a href="/c/zonvay"><time title="2026-10-20 07:28:21" datetime="2026-10-20 07:28:21" data-at-unix="1792499301">2026-10-20 07:28:21</time></a>
+          
+      </span>
+
+
+
+          <span class="flagger flagger_stub"></span>
+
+
+
+        <span class="reason">
+        </span>
+    </div>
+    <div role="heading" aria-level="3" class="comment_text">
+        <p>Agreed, there's different ways to go about this. For what it's worth I also have a couple of MacBooks and some linux systems, but they each get their own SSH key. That way I have more fine-grained (per-machine) access control.</p>
+<p>Sorry if this is a dumb question: do you simply save the private key to 1Password and copy it to new machines, or does 1pass act as a security key provider for SSH?</p>
+
+    </div>
+  </div>
+</div>
+
+
+
+        <ol class="comments">
+
+    <li class="comments_subtree">
+
+
+  <input
+    id="comment_folder_0reh1a"
+    class="comment_folder_button" type="checkbox"
+
+  >
+
+<div id="c_0reh1a"
+  data-shortid="0reh1a"
+  class="comment
+    
+    
+    
+    
+  ">
+
+  <div class="voters">
+      <label for="comment_folder_0reh1a" class="comment_folder"></label>
+        <a class="upvoter" title="2" href="/login">2</a>
+  </div>
+
+  <div class="details">
+    <div class="byline">
+      <a name="c_0reh1a"></a>
+
+
+      <span class="">
+        <a tabindex="-1" aria-hidden="true" href="/~atmosx"><img srcset="/avatars/atmosx-16.png 1x, /avatars/atmosx-32.png 2x" class="avatar" alt="" loading="lazy" decoding="async" src="/avatars/atmosx-16.png" width="16" height="16"></a>
+        <a href="/~atmosx">atmosx</a>
+        
+
+
+            <a href="/c/0reh1a"><time title="2026-10-20 08:42:28" datetime="2026-10-20 08:42:28" data-at-unix="1792503748">2026-10-20 08:42:28</time></a>
+          
+      </span>
+
+
+
+          <span class="flagger flagger_stub"></span>
+
+
+
+        <span class="reason">
+        </span>
+    </div>
+    <div role="heading" aria-level="3" class="comment_text">
+        <p>1P can be used to generate or save existing ssh keys. The app knows that the type of secret is an ssh key. There's a background agent that needs to be enabled. At that point you just configure the IdentityAgent socket:</p>
+<pre><code>IdentityAgent "~/Library/Group Containers/ABC.com.1password/t/agent.sock"
+</code></pre>
+<p>Then the SSH agent will trigger a touchID authentication during session init and wait for your fingerprint. The data is synced via cloud, so when I setup a new machine, all I have to do is setup 1P via mobile QR code and I have access to all my private keys.</p>
+<p>See: <a href="https://www.1password.dev/ssh" rel="ugc">https://www.1password.dev/ssh</a></p>
+
+    </div>
+  </div>
+</div>
+
+
+
+        <ol class="comments">
+
+    <li class="comments_subtree">
+
+
+  <input
+    id="comment_folder_dmrhpq"
+    class="comment_folder_button" type="checkbox"
+
+  >
+
+<div id="c_dmrhpq"
+  data-shortid="dmrhpq"
+  class="comment
+    
+    
+    
+    
+  ">
+
+  <div class="voters">
+      <label for="comment_folder_dmrhpq" class="comment_folder"></label>
+        <a class="upvoter" title="1" href="/login">1</a>
+  </div>
+
+  <div class="details">
+    <div class="byline">
+      <a name="c_dmrhpq"></a>
+
+
+      <span class="">
+        <a tabindex="-1" aria-hidden="true" href="/~nmattia"><img srcset="/avatars/nmattia-16.png 1x, /avatars/nmattia-32.png 2x" class="avatar" alt="" loading="lazy" decoding="async" src="/avatars/nmattia-16.png" width="16" height="16"></a>
+        <a class="user_is_author user_is_submitter" aria-label="nmattia - Submitter" href="/~nmattia">nmattia</a>
+        
+
+
+            <a href="/c/dmrhpq"><time title="2026-10-20 09:01:49" datetime="2026-10-20 09:01:49" data-at-unix="1792504909">2026-10-20 09:01:49</time></a>
+          
+      </span>
+
+
+
+          <span class="flagger flagger_stub"></span>
+
+
+
+        <span class="reason">
+        </span>
+    </div>
+    <div role="heading" aria-level="3" class="comment_text">
+        <p>I see, thanks! I guess this means you can only use 1Password keys, since you're bypassing the default agent? Or does 1Pass also go look for keys in <code>~/.ssh</code>?</p>
+
+    </div>
+  </div>
+</div>
+
+
+
+        <ol class="comments">
+
+    <li class="comments_subtree">
+
+
+  <input
+    id="comment_folder_ksrvpq"
+    class="comment_folder_button" type="checkbox"
+
+  >
+
+<div id="c_ksrvpq"
+  data-shortid="ksrvpq"
+  class="comment
+    
+    
+    
+    
+  ">
+
+  <div class="voters">
+      <label for="comment_folder_ksrvpq" class="comment_folder"></label>
+        <a class="upvoter" title="6" href="/login">6</a>
+  </div>
+
+  <div class="details">
+    <div class="byline">
+      <a name="c_ksrvpq"></a>
+
+
+      <span class="">
+        <a tabindex="-1" aria-hidden="true" href="/~JustinAzoff"><img srcset="/avatars/JustinAzoff-16.png 1x, /avatars/JustinAzoff-32.png 2x" class="avatar" alt="" loading="lazy" decoding="async" src="/avatars/JustinAzoff-16.png" width="16" height="16"></a>
+        <a href="/~JustinAzoff">JustinAzoff</a>
+        
+
+
+            <a href="/c/ksrvpq"><time title="2026-10-20 09:53:16" datetime="2026-10-20 09:53:16" data-at-unix="1792507996">2026-10-20 09:53:16</time></a>
+          
+      </span>
+
+
+
+          <span class="flagger flagger_stub"></span>
+
+
+
+        <span class="reason">
+        </span>
+    </div>
+    <div role="heading" aria-level="3" class="comment_text">
+        <p>Not exactly true, you can set IdentityAgent per host or hosts by using match blocks in your ssh configuration file.</p>
+
+    </div>
+  </div>
+</div>
+
+
+
+        <ol class="comments"></ol>
+
+
+        </li>
+
+    <li class="comments_subtree">
+
+
+  <input
+    id="comment_folder_ok4hxz"
+    class="comment_folder_button" type="checkbox"
+
+  >
+
+<div id="c_ok4hxz"
+  data-shortid="ok4hxz"
+  class="comment
+    
+    
+    
+    
+  ">
+
+  <div class="voters">
+      <label for="comment_folder_ok4hxz" class="comment_folder"></label>
+        <a class="upvoter" title="1" href="/login">1</a>
+  </div>
+
+  <div class="details">
+    <div class="byline">
+      <a name="c_ok4hxz"></a>
+
+
+      <span class="">
+        <a tabindex="-1" aria-hidden="true" href="/~atmosx"><img srcset="/avatars/atmosx-16.png 1x, /avatars/atmosx-32.png 2x" class="avatar" alt="" loading="lazy" decoding="async" src="/avatars/atmosx-16.png" width="16" height="16"></a>
+        <a href="/~atmosx">atmosx</a>
+        
+
+
+            edited
+            <a href="/c/ok4hxz"><time title="2026-10-20 13:06:52" datetime="2026-10-20 13:06:52" data-at-unix="1792519612">2026-10-20 13:06:52</time></a>
+          
+      </span>
+
+
+
+          <span class="flagger flagger_stub"></span>
+
+
+
+        <span class="reason">
+        </span>
+    </div>
+    <div role="heading" aria-level="3" class="comment_text">
+        <blockquote>
+<p>I guess this means you can only use 1Password keys, since you're bypassing the default agent?</p>
+</blockquote>
+<p>That's correct. In order to use the default ssh agent, when I connect to the M4 or M1 via SSH, I have to comment the 1P integration (the line I shared earlier). In that can I use ssh forwarding, which works pretty well (I still get the touchID auth).</p>
+<p>ps. <a href="https://lobste.rs/~justinazoff" rel="ugc">@JustinAzoff</a>  is correct, you can have multiple <code>IdentityAgent</code> sections in your config and thus, you can direct the client to which socket to connect for keys.</p>
+
+    </div>
+  </div>
+</div>
+
+
+
+        <ol class="comments"></ol>
+
+            </li>
+          </ol>
+            </li>
+          </ol>
+            </li>
+          </ol>
+            </li>
+          </ol>
+
+        </li>
+
+    <li class="comments_subtree">
+
+
+  <input
+    id="comment_folder_xvqidm"
+    class="comment_folder_button" type="checkbox"
+
+  >
+
+<div id="c_xvqidm"
+  data-shortid="xvqidm"
+  class="comment
+    
+    
+    
+    
+  ">
+
+  <div class="voters">
+      <label for="comment_folder_xvqidm" class="comment_folder"></label>
+        <a class="upvoter" title="1" href="/login">1</a>
+  </div>
+
+  <div class="details">
+    <div class="byline">
+      <a name="c_xvqidm"></a>
+
+
+      <span class="">
+        <a tabindex="-1" aria-hidden="true" href="/~klingtnet"><img srcset="/avatars/klingtnet-16.png 1x, /avatars/klingtnet-32.png 2x" class="avatar" alt="" loading="lazy" decoding="async" src="/avatars/klingtnet-16.png" width="16" height="16"></a>
+        <a href="/~klingtnet">klingtnet</a>
+        
+
+
+            <a href="/c/xvqidm"><time title="2026-10-21 07:16:43" datetime="2026-10-21 07:16:43" data-at-unix="1792585003">2026-10-21 07:16:43</time></a>
+          
+      </span>
+
+
+
+          <span class="flagger flagger_stub"></span>
+
+
+
+        <span class="reason">
+        </span>
+    </div>
+    <div role="heading" aria-level="3" class="comment_text">
+        <p>This is from <a href="https://github.com/maxgoedjen/secretive#backups-and-transfers-to-new-machines" rel="ugc">Secretive's README</a> but also applies to the setup described in the article:</p>
+<blockquote>
+<p>Because secrets in the Secure Enclave are not exportable, they are not able to be backed up, and you will not be able to transfer them to a new machine. If you get a new Mac, just create a new set of secrets specific to that Mac.</p>
+</blockquote>
+<p>For me, the inability to back up my keys is a dealbreaker.</p>
+
+    </div>
+  </div>
+</div>
+
+
+
+        <ol class="comments"></ol>
+
+
+        </li>
+
+    <li class="comments_subtree">
+
+
+  <input
+    id="comment_folder_swhtgb"
+    class="comment_folder_button" type="checkbox"
+
+  >
+
+<div id="c_swhtgb"
+  data-shortid="swhtgb"
+  class="comment
+    
+    
+    
+    
+  ">
+
+  <div class="voters">
+      <label for="comment_folder_swhtgb" class="comment_folder"></label>
+        <a class="upvoter" title="1" href="/login">1</a>
+  </div>
+
+  <div class="details">
+    <div class="byline">
+      <a name="c_swhtgb"></a>
+
+
+      <span class="">
+        <a tabindex="-1" aria-hidden="true" href="/~bramh"><img srcset="/avatars/bramh-16.png 1x, /avatars/bramh-32.png 2x" class="avatar" alt="" loading="lazy" decoding="async" src="/avatars/bramh-16.png" width="16" height="16"></a>
+        <a href="/~bramh">bramh</a>
+        
+
+
+            <a href="/c/swhtgb"><time title="2026-10-20 16:29:23" datetime="2026-10-20 16:29:23" data-at-unix="1792531763">2026-10-20 16:29:23</time></a>
+          
+      </span>
+
+
+
+          <span class="flagger flagger_stub"></span>
+
+
+
+        <span class="reason">
+        </span>
+    </div>
+    <div role="heading" aria-level="3" class="comment_text">
+        <blockquote>
+<p>The private material cannot be extracted, is never shown, cannot be stolen</p>
+</blockquote>
+<p>Does this also mean you cannot back up your private key? I guess it's less important for SSH compared to something like GPG, but I still have physical prints of the keys I deem important in case of hardware failure.</p>
+
+    </div>
+  </div>
+</div>
+
+
+
+        <ol class="comments">
+
+    <li class="comments_subtree">
+
+
+  <input
+    id="comment_folder_lvid5m"
+    class="comment_folder_button" type="checkbox"
+
+  >
+
+<div id="c_lvid5m"
+  data-shortid="lvid5m"
+  class="comment
+    
+    
+    
+    
+  ">
+
+  <div class="voters">
+      <label for="comment_folder_lvid5m" class="comment_folder"></label>
+        <a class="upvoter" title="3" href="/login">3</a>
+  </div>
+
+  <div class="details">
+    <div class="byline">
+      <a name="c_lvid5m"></a>
+
+
+      <span class="">
+        <a tabindex="-1" aria-hidden="true" href="/~tonyarkles"><img srcset="/avatars/tonyarkles-16.png 1x, /avatars/tonyarkles-32.png 2x" class="avatar" alt="" loading="lazy" decoding="async" src="/avatars/tonyarkles-16.png" width="16" height="16"></a>
+        <a href="/~tonyarkles">tonyarkles</a>
+        
+
+
+            <a href="/c/lvid5m"><time title="2026-10-20 17:14:38" datetime="2026-10-20 17:14:38" data-at-unix="1792534478">2026-10-20 17:14:38</time></a>
+          
+      </span>
+
+
+
+          <span class="flagger flagger_stub"></span>
+
+
+
+        <span class="reason">
+        </span>
+    </div>
+    <div role="heading" aria-level="3" class="comment_text">
+        <p>I ran into a similar question a while ago when trying to do something similar using a Yubikey as an SSH key. The procedure used in the blog post here generates the key in-enclave, which is the most secure from a privacy perspective (if it has never left the secure enclave it can't be intercepted) but not the most secure from an availability perspective (you don't have a way to back it up).</p>
+<p>On the Yubikey side, my strategy was to generate the key off-Yubikey, back it up (I put it on a USB drive with a passphrase and then put it in my safe), and then load it onto the Yubikey. Slight tradeoff here in that the key does exist in memory in plaintext at one point, so technically open to interception by malware or whatever, but I do get a backup of it.</p>
+<p>I haven't tried it, but based on what was in the blog post I looked at the man page for <code>sc_util</code> and it does have <code>import-ctk-identities</code> and <code>import-ctk-certificate</code> sub-commands as well. The <code>import-ctk-identities</code> sub-command explicitly has a flag to specify how the private key is protected inside the PKCS#12 archive, so that at least suggests to me that you could do a similar flow where you generate a private key, import it into the enclave, and then delete the key material from your machine (or remove the media the key is stored on).</p>
+
+    </div>
+  </div>
+</div>
+
+
+
+        <ol class="comments"></ol>
+
+            </li>
+          </ol>
+
+        </li>
+
+    <li class="comments_subtree">
+
+
+  <input
+    id="comment_folder_xjyurx"
+    class="comment_folder_button" type="checkbox"
+
+  >
+
+<div id="c_xjyurx"
+  data-shortid="xjyurx"
+  class="comment
+    
+    
+    
+    
+  ">
+
+  <div class="voters">
+      <label for="comment_folder_xjyurx" class="comment_folder"></label>
+        <a class="upvoter" title="1" href="/login">1</a>
+  </div>
+
+  <div class="details">
+    <div class="byline">
+      <a name="c_xjyurx"></a>
+
+
+      <span class="">
+        <a tabindex="-1" aria-hidden="true" href="/~iv"><img srcset="/avatars/iv-16.png 1x, /avatars/iv-32.png 2x" class="avatar" alt="" loading="lazy" decoding="async" src="/avatars/iv-16.png" width="16" height="16"></a>
+        <a class="inactive_user" aria-label="iv - Inactive user" href="/~iv">iv</a>
+        
+
+
+            <a href="/c/xjyurx"><time title="2026-10-20 06:03:10" datetime="2026-10-20 06:03:10" data-at-unix="1792494190">2026-10-20 06:03:10</time></a>
+          
+      </span>
+
+
+
+          <span class="flagger flagger_stub"></span>
+
+
+
+        <span class="reason">
+        </span>
+    </div>
+    <div role="heading" aria-level="3" class="comment_text">
+        <p>Nice!</p>
+<p>Do you know if it’s possible to do GPG commit signing in Git with this? (I.e. private key in the enclave.)</p>
+
+    </div>
+  </div>
+</div>
+
+
+
+        <ol class="comments">
+
+    <li class="comments_subtree">
+
+
+  <input
+    id="comment_folder_rgc4c5"
+    class="comment_folder_button" type="checkbox"
+
+  >
+
+<div id="c_rgc4c5"
+  data-shortid="rgc4c5"
+  class="comment
+    
+    
+    
+    
+  ">
+
+  <div class="voters">
+      <label for="comment_folder_rgc4c5" class="comment_folder"></label>
+        <a class="upvoter" title="7" href="/login">7</a>
+  </div>
+
+  <div class="details">
+    <div class="byline">
+      <a name="c_rgc4c5"></a>
+
+
+      <span class="">
+        <a tabindex="-1" aria-hidden="true" href="/~adamcstephens"><img srcset="/avatars/adamcstephens-16.png 1x, /avatars/adamcstephens-32.png 2x" class="avatar" alt="" loading="lazy" decoding="async" src="/avatars/adamcstephens-16.png" width="16" height="16"></a>
+        <a href="/~adamcstephens">adamcstephens</a>
+        
+
+
+            edited
+            <a href="/c/rgc4c5"><time title="2026-10-20 11:03:17" datetime="2026-10-20 11:03:17" data-at-unix="1792512197">2026-10-20 11:03:17</time></a>
+          
+      </span>
+
+
+
+          <span class="flagger flagger_stub"></span>
+
+
+
+        <span class="reason">
+        </span>
+    </div>
+    <div role="heading" aria-level="3" class="comment_text">
+        <p>Git can use an SSH key for its signing, so yes it can as long as you’re not tied to explicitly GPG keys.</p>
+
+    </div>
+  </div>
+</div>
+
+
+
+        <ol class="comments">
+
+    <li class="comments_subtree">
+
+
+  <input
+    id="comment_folder_a2pg9h"
+    class="comment_folder_button" type="checkbox"
+
+  >
+
+<div id="c_a2pg9h"
+  data-shortid="a2pg9h"
+  class="comment
+    
+    
+    
+    
+  ">
+
+  <div class="voters">
+      <label for="comment_folder_a2pg9h" class="comment_folder"></label>
+        <a class="upvoter" title="1" href="/login">1</a>
+  </div>
+
+  <div class="details">
+    <div class="byline">
+      <a name="c_a2pg9h"></a>
+
+
+      <span class="">
+        <a tabindex="-1" aria-hidden="true" href="/~iv"><img srcset="/avatars/iv-16.png 1x, /avatars/iv-32.png 2x" class="avatar" alt="" loading="lazy" decoding="async" src="/avatars/iv-16.png" width="16" height="16"></a>
+        <a class="inactive_user" aria-label="iv - Inactive user" href="/~iv">iv</a>
+        
+
+
+            <a href="/c/a2pg9h"><time title="2026-10-21 02:52:21" datetime="2026-10-21 02:52:21" data-at-unix="1792569141">2026-10-21 02:52:21</time></a>
+          
+      </span>
+
+
+
+          <span class="flagger flagger_stub"></span>
+
+
+
+        <span class="reason">
+        </span>
+    </div>
+    <div role="heading" aria-level="3" class="comment_text">
+        <p>I’m stuck with GPG.</p>
+
+    </div>
+  </div>
+</div>
+
+
+
+        <ol class="comments"></ol>
+
+            </li>
+          </ol>
+
+        </li>
+
+    <li class="comments_subtree">
+
+
+  <input
+    id="comment_folder_plnu9p"
+    class="comment_folder_button" type="checkbox"
+
+  >
+
+<div id="c_plnu9p"
+  data-shortid="plnu9p"
+  class="comment
+    
+    
+    
+    
+  ">
+
+  <div class="voters">
+      <label for="comment_folder_plnu9p" class="comment_folder"></label>
+        <a class="upvoter" title="1" href="/login">1</a>
+  </div>
+
+  <div class="details">
+    <div class="byline">
+      <a name="c_plnu9p"></a>
+
+
+      <span class="">
+        <a tabindex="-1" aria-hidden="true" href="/~kwas"><img srcset="/avatars/kwas-16.png 1x, /avatars/kwas-32.png 2x" class="avatar" alt="" loading="lazy" decoding="async" src="/avatars/kwas-16.png" width="16" height="16"></a>
+        <a href="/~kwas">kwas</a>
+        
+
+
+            <a href="/c/plnu9p"><time title="2026-10-21 07:26:01" datetime="2026-10-21 07:26:01" data-at-unix="1792585561">2026-10-21 07:26:01</time></a>
+          
+      </span>
+
+
+
+          <span class="flagger flagger_stub"></span>
+
+
+
+        <span class="reason">
+        </span>
+    </div>
+    <div role="heading" aria-level="3" class="comment_text">
+        <p>I guess have enclave unlock a secret to unlock age, age unlock pgp key, and pgp-agent load the latter. Dear Lord, perhaps skip the age part.</p>
+
+    </div>
+  </div>
+</div>
+
+
+
+        <ol class="comments"></ol>
+
+
+        </li>
+
+    <li class="comments_subtree">
+
+
+  <input
+    id="comment_folder_fuiz3q"
+    class="comment_folder_button" type="checkbox"
+
+  >
+
+<div id="c_fuiz3q"
+  data-shortid="fuiz3q"
+  class="comment
+    
+    
+    
+    
+  ">
+
+  <div class="voters">
+      <label for="comment_folder_fuiz3q" class="comment_folder"></label>
+        <a class="upvoter" title="1" href="/login">1</a>
+  </div>
+
+  <div class="details">
+    <div class="byline">
+      <a name="c_fuiz3q"></a>
+
+
+      <span class="">
+        <a tabindex="-1" aria-hidden="true" href="/~nmattia"><img srcset="/avatars/nmattia-16.png 1x, /avatars/nmattia-32.png 2x" class="avatar" alt="" loading="lazy" decoding="async" src="/avatars/nmattia-16.png" width="16" height="16"></a>
+        <a class="user_is_author user_is_submitter" aria-label="nmattia - Submitter" href="/~nmattia">nmattia</a>
+        
+
+
+            <a href="/c/fuiz3q"><time title="2026-10-20 06:18:55" datetime="2026-10-20 06:18:55" data-at-unix="1792495135">2026-10-20 06:18:55</time></a>
+          
+      </span>
+
+
+
+          <span class="flagger flagger_stub"></span>
+
+
+
+        <span class="reason">
+        </span>
+    </div>
+    <div role="heading" aria-level="3" class="comment_text">
+        <p>Oh, that's a great question. I would need to research this a bit but my guess would be yes theoretically, though in practice it might require some finicking!</p>
+
+    </div>
+  </div>
+</div>
+
+
+
+        <ol class="comments"></ol>
+
+            </li>
+          </ol>
+
+        </li>
+
+    <li class="comments_subtree">
+
+
+  <input
+    id="comment_folder_ctyyky"
+    class="comment_folder_button" type="checkbox"
+
+  >
+
+<div id="c_ctyyky"
+  data-shortid="ctyyky"
+  class="comment
+    
+    
+    
+    
+  ">
+
+  <div class="voters">
+      <label for="comment_folder_ctyyky" class="comment_folder"></label>
+        <a class="upvoter" title="1" href="/login">1</a>
+  </div>
+
+  <div class="details">
+    <div class="byline">
+      <a name="c_ctyyky"></a>
+
+
+      <span class="">
+        <a tabindex="-1" aria-hidden="true" href="/~mandeep"><img srcset="/avatars/mandeep-16.png 1x, /avatars/mandeep-32.png 2x" class="avatar" alt="" loading="lazy" decoding="async" src="/avatars/mandeep-16.png" width="16" height="16"></a>
+        <a href="/~mandeep">mandeep</a>
+        
+
+
+            <a href="/c/ctyyky"><time title="2026-10-20 18:18:22" datetime="2026-10-20 18:18:22" data-at-unix="1792538302">2026-10-20 18:18:22</time></a>
+          
+      </span>
+
+
+
+          <span class="flagger flagger_stub"></span>
+
+
+
+        <span class="reason">
+        </span>
+    </div>
+    <div role="heading" aria-level="3" class="comment_text">
+        <p>And of course, thanks to Anthropic, we can now trust NIST P-256 ;)</p>
+<p>(Secure Enclave only supports P-256 keys)</p>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+  <ol class="comments"></ol>
+
+
+  </li>
+
+</ol>
+
+      </li>
+
+    </ol>
+    <br>
+
+
+  </main>
+
+  <footer>
+    <span id="office-hours-live">
+    </span>
+
+    <nav>
+      <a href="/about">About</a>
+      <a href="/tags">Tags</a>
+      <a href="/filters">Filter</a>
+      <a href="/moderations">Moderation Log</a>
+    </nav>
+  </footer>
+
+  <span id="iab-pcm-sdk"></span><span id="iab-autofill-sdk"></span>
 </body>
 </html>

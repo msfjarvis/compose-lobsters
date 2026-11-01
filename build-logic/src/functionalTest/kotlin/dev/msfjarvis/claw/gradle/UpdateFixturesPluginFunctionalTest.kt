@@ -78,22 +78,37 @@ class UpdateFixturesPluginFunctionalTest {
   private fun run(project: Path, vararg tasks: String) =
     GradleRunner.create()
       .withProjectDir(project.toFile())
-      .withPluginClasspath()
       .withArguments(*tasks, "--stacktrace")
       .build()
 
   private fun withProject(fixturesConfiguration: String, block: (Path) -> Unit) {
+    val functionalTestRepo =
+      requireNotNull(System.getProperty("com.autonomousapps.plugin-under-test.repo"))
+    val pluginVersion =
+      requireNotNull(System.getProperty("com.autonomousapps.plugin-under-test.version"))
     val project = Files.createTempDirectory("update-fixtures-test")
     try {
       Files.writeString(
         project.resolve("settings.gradle.kts"),
-        "rootProject.name = \"fixture-test\"",
+        """
+        pluginManagement {
+          repositories {
+            maven { url = uri("$functionalTestRepo") }
+            google()
+            mavenCentral()
+            gradlePluginPortal()
+          }
+        }
+
+        rootProject.name = "fixture-test"
+        """
+          .trimIndent(),
       )
       Files.writeString(
         project.resolve("build.gradle.kts"),
         """
         plugins {
-          id("dev.msfjarvis.claw.update-fixtures")
+          id("dev.msfjarvis.claw.update-fixtures") version "$pluginVersion"
           `java-test-fixtures`
         }
 

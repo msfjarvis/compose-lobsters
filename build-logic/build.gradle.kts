@@ -12,9 +12,14 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
   `kotlin-dsl`
+  id("com.autonomousapps.testkit") version "0.21"
   alias(libs.plugins.android.lint)
   alias(libs.plugins.dependencyAnalysis)
 }
+
+group = "dev.msfjarvis.claw"
+
+version = "1.0"
 
 gradlePlugin {
   plugins {
@@ -87,6 +92,8 @@ gradlePlugin {
 
 lint.baseline = project.file("lint-baseline.xml")
 
+tasks.named<Test>("functionalTest") { useJUnitPlatform() }
+
 tasks.withType<KotlinCompile>().configureEach {
   compilerOptions.jvmTarget.set(JvmTarget.JVM_21)
 }
@@ -109,7 +116,10 @@ dependencies {
   implementation(files(libs::class.java.superclass.protectionDomain.codeSource.location))
 
   testImplementation(kotlin("test"))
-  testImplementation(gradleTestKit())
+
+  functionalTestImplementation(kotlin("test-junit5"))
+  functionalTestRuntimeOnly("org.junit.platform:junit-platform-launcher")
+  functionalTestImplementation(gradleTestKit())
 
   lintChecks(libs.androidx.lint.gradle)
 }

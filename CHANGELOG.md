@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.76.0] - 2026-11-01
+
 ### Fixed
 
 - The parent comment shown when replying uses the new HTML renderer
@@ -734,7 +736,8 @@ Thanks to Charles Lombardo for contributing the action button UI changes.
 
 - Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.75.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.76.0...HEAD
+[1.76.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.75.0...v1.76.0
 [1.75.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.74.0...v1.75.0
 [1.74.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.73.0...v1.74.0
 [1.73.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.72.0...v1.73.0

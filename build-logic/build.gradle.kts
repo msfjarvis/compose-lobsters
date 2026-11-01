@@ -74,6 +74,10 @@ gradlePlugin {
       id = "dev.msfjarvis.claw.zipline-setup"
       implementationClass = "dev.msfjarvis.claw.gradle.ZiplineSetupPlugin"
     }
+    register("update-fixtures") {
+      id = "dev.msfjarvis.claw.update-fixtures"
+      implementationClass = "dev.msfjarvis.claw.gradle.UpdateFixturesPlugin"
+    }
     register("versioning") {
       id = "dev.msfjarvis.claw.versioning-plugin"
       implementationClass = "dev.msfjarvis.claw.gradle.versioning.VersioningPlugin"
@@ -105,6 +109,7 @@ dependencies {
   implementation(files(libs::class.java.superclass.protectionDomain.codeSource.location))
 
   testImplementation(kotlin("test"))
+  testImplementation(gradleTestKit())
 
   lintChecks(libs.androidx.lint.gradle)
 }

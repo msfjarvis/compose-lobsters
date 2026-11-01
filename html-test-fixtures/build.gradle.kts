@@ -6,5 +6,6 @@
  */
 plugins {
   id("dev.msfjarvis.claw.kotlin-jvm")
+  id("dev.msfjarvis.claw.update-fixtures")
   `java-test-fixtures`
 }

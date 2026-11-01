@@ -35,7 +35,15 @@ class RealLobstersHtmlParserJvmTest {
       checkNotNull(javaClass.classLoader.getResource("search_chatgpt_page.html")).readText()
     val service = LobstersParserServiceImpl()
 
-    assertTrue(service.parseSearchResults(html).isNotEmpty())
+    val posts = service.parseSearchResults(html)
+
+    assertTrue(posts.isNotEmpty())
+    assertEquals("1kesjm", posts.first().shortId)
+    assertEquals("Abolish AI! Manifesto", posts.first().title)
+    assertEquals("https://abolish-ai.net/abolish-ai-a-manifesto/", posts.first().url)
+    assertEquals(13, posts.first().commentCount)
+    assertEquals(listOf("vibecoding"), posts.first().tags)
+    assertEquals("janus", posts.first().submitter)
   }
 
   @Test

@@ -24,6 +24,8 @@ kotlin {
 }
 
 dependencies {
+  testImplementation(testFixtures(projects.htmlTestFixtures))
+
   implementation(libs.ksoup)
   implementation(libs.kotlinx.collections.immutable)
   implementation(libs.androidx.compose.material3)

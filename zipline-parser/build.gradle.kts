@@ -31,8 +31,8 @@ kotlin {
     jvmTest {
       dependencies {
         implementation(kotlin("test"))
+        implementation(project.dependencies.testFixtures(projects.htmlTestFixtures))
       }
-      resources.srcDir("../api/src/test/resources")
     }
     jsTest {
       dependencies {

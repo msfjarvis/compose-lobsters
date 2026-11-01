@@ -7,19 +7,16 @@
 package dev.msfjarvis.claw.util
 
 import com.google.common.truth.Truth.assertThat
-import java.io.File
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
 
 @OptIn(ExperimentalContracts::class)
 object TestUtils {
   fun getResource(path: String): String {
-    // Load the JSON response
-    val uri =
+    val resource =
       requireNotNull(javaClass.classLoader) { "if this is null something has gone very wrong" }
         .getResource(path)
-    val file = File(uri.path)
-    return String(file.readBytes())
+    return resource.readText()
   }
 
   inline fun <reified T> assertIs(value: Any?) {

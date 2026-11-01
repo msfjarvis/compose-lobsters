@@ -15,6 +15,8 @@ plugins {
 }
 
 dependencies {
+  testImplementation(testFixtures(projects.htmlTestFixtures))
+
   api(libs.eithernet)
   api(libs.kotlinx.serialization.core)
   api(libs.okhttp.core)

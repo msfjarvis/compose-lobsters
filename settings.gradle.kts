@@ -146,6 +146,7 @@ include(
   "database-core",
   "database-impl",
   "html-renderer",
+  "html-test-fixtures",
   "model",
   "zipline-parser",
 )

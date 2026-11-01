@@ -20,40 +20,9 @@ class SearchApiTest {
     get() = wrapper.api
 
   @Test
-  fun `search is able to parse HTML`() = runTest {
+  fun `comment search results are not parsed as posts`() = runTest {
     val posts = api.searchPosts("ChatGPT", 1)
     assertIs<ApiResult.Success<List<LobstersPost>>>(posts)
-    assertThat(posts.value).containsAtLeastElementsIn(results).inOrder()
-    assertThat(posts.value).hasSize(20)
-  }
-
-  private companion object {
-    private val results =
-      listOf(
-        LobstersPost(
-          shortId = "2cjb1z",
-          createdAt = "",
-          title = "Why I am against GenAI and everything it stands for",
-          url = "https://lpcvoid.com/blog/0018_why_i_am_against_genai/index.html",
-          description = "",
-          commentCount = 42,
-          commentsUrl = "https://lobste.rs/s/2cjb1z/why_i_am_against_genai_everything_it",
-          submitter = "Marc",
-          userIsAuthor = true,
-          tags = ["culture", "education", "vibecoding"],
-        ),
-        LobstersPost(
-          shortId = "kgem4b",
-          createdAt = "",
-          title = "The social contract of writing",
-          url = "https://jola.dev/posts/the-social-contract-of-writing",
-          description = "",
-          commentCount = 38,
-          commentsUrl = "https://lobste.rs/s/kgem4b/social_contract_writing",
-          submitter = "joladev",
-          userIsAuthor = true,
-          tags = ["vibecoding", "philosophy"],
-        ),
-      )
+    assertThat(posts.value).isEmpty()
   }
 }

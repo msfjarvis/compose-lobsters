@@ -19,7 +19,14 @@ class RealLobstersHtmlParserJvmTest {
     val posts = service.parsePostsPage(html)
 
     assertTrue(posts.isNotEmpty())
-    assertEquals(listOf("interview", "person"), posts.first().tags)
+    val firstPost = posts.first()
+    assertEquals("drwd4j", firstPost.shortId)
+    assertEquals("Jepsen: ParticleDB 1.1.4", firstPost.title)
+    assertEquals("https://jepsen.io/analyses/particledb-1.1.4", firstPost.url)
+    assertEquals("aphyr", firstPost.submitter)
+    assertEquals(17, firstPost.commentCount)
+    assertEquals(listOf("databases", "testing"), firstPost.tags)
+    assertTrue(firstPost.userIsAuthor)
   }
 
   @Test
@@ -91,8 +98,8 @@ class RealLobstersHtmlParserJvmTest {
     val details = service.parsePostDetails(html)
     val story = details.stories.first()
 
-    assertTrue(story.title.isNotBlank())
-    assertTrue(story.description.isNotBlank())
+    assertEquals("Ranking comments by sum of replies' scores", story.title)
+    assertTrue(story.description.contains("comments with a poor score"))
     assertEquals(
       "https://lobste.rs/s/tdfoqh/ranking_comments_by_sum_replies_scores",
       details.commentsUrl,

@@ -80,7 +80,7 @@ private fun sourceStoryId(document: Element, header: Element): String? {
 }
 
 private fun Element.toPost(shortId: String, description: String): LobstersPost {
-  val titleElement = selectFirst("span.link.h-cite > a")
+  val titleElement = selectFirst("h2.link.h-cite > a, span.link.h-cite > a")
   val submitter = select(SUBMITTER_SELECTOR).firstOrNull()
   val commentsCount =
     commentCountRegex

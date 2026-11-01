@@ -17,7 +17,10 @@ internal fun parsePostsPage(html: String): List<LobstersPost> {
 }
 
 private fun parsePost(element: Element): LobstersPost {
-  val titleElement = element.select("> div.story_liner span.link.h-cite > a")
+  val titleElement =
+    element.select(
+      "> div.story_liner div.details h2.link.h-cite > a, > div.story_liner span.link.h-cite > a"
+    )
   val commentElement = element.select("> div.story_liner span.comments_label a")
   val submitterElement =
     element.select(
@@ -37,7 +40,9 @@ private fun parsePost(element: Element): LobstersPost {
     commentCount = commentCountRegex.find(commentElement.text())?.value?.toInt() ?: 0,
     commentsUrl = commentElement.attr("abs:href"),
     submitter = submitterElement.text(),
-    userIsAuthor = submitterElement.select(".user_is_author, .user_is_submitter").isNotEmpty(),
+    userIsAuthor =
+      submitterElement.any { it.hasClass("user_is_author") || it.hasClass("user_is_submitter") } ||
+        submitterElement.select(".user_is_author, .user_is_submitter").isNotEmpty(),
     tags = tags,
   )
 }

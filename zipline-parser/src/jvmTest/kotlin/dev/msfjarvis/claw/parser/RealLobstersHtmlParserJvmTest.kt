@@ -19,7 +19,14 @@ class RealLobstersHtmlParserJvmTest {
     val posts = service.parsePostsPage(html)
 
     assertTrue(posts.isNotEmpty())
-    assertEquals(listOf("interview", "person"), posts.first().tags)
+    val firstPost = posts.first()
+    assertEquals("drwd4j", firstPost.shortId)
+    assertEquals("Jepsen: ParticleDB 1.1.4", firstPost.title)
+    assertEquals("https://jepsen.io/analyses/particledb-1.1.4", firstPost.url)
+    assertEquals("aphyr", firstPost.submitter)
+    assertEquals(17, firstPost.commentCount)
+    assertEquals(listOf("databases", "testing"), firstPost.tags)
+    assertTrue(firstPost.userIsAuthor)
   }
 
   @Test
@@ -28,7 +35,15 @@ class RealLobstersHtmlParserJvmTest {
       checkNotNull(javaClass.classLoader.getResource("search_chatgpt_page.html")).readText()
     val service = LobstersParserServiceImpl()
 
-    assertTrue(service.parseSearchResults(html).isNotEmpty())
+    val posts = service.parseSearchResults(html)
+
+    assertTrue(posts.isNotEmpty())
+    assertEquals("1kesjm", posts.first().shortId)
+    assertEquals("Abolish AI! Manifesto", posts.first().title)
+    assertEquals("https://abolish-ai.net/abolish-ai-a-manifesto/", posts.first().url)
+    assertEquals(13, posts.first().commentCount)
+    assertEquals(listOf("vibecoding"), posts.first().tags)
+    assertEquals("janus", posts.first().submitter)
   }
 
   @Test
@@ -89,26 +104,69 @@ class RealLobstersHtmlParserJvmTest {
     val service = LobstersParserServiceImpl()
 
     val details = service.parsePostDetails(html)
+    val story = details.stories.first()
 
-    assertTrue(details.title.isNotBlank())
+    assertEquals("Ranking comments by sum of replies' scores", story.title)
+    assertTrue(story.description.contains("comments with a poor score"))
     assertEquals(
       "https://lobste.rs/s/tdfoqh/ranking_comments_by_sum_replies_scores",
       details.commentsUrl,
     )
-    assertEquals(listOf("meta"), details.tags)
-    assertTrue(details.userIsAuthor)
+    assertEquals(listOf("meta"), story.tags)
+    assertTrue(story.userIsAuthor)
     assertTrue(details.comments.isNotEmpty())
   }
 
   @Test
-  fun parsesPostDetailsWithSubmitterComment() {
+  fun commentSubmitterDoesNotMarkTheSourceStoryAsAuthored() {
     val html =
       checkNotNull(javaClass.classLoader.getResource("post_details_ktew3s.html")).readText()
     val service = LobstersParserServiceImpl()
 
     val details = service.parsePostDetails(html)
 
-    assertTrue(details.userIsAuthor)
+    assertEquals(false, details.stories.first().userIsAuthor)
+  }
+
+  @Test
+  fun parsesPostDetailsWithSubmitterComment() {
+    val html =
+      checkNotNull(javaClass.classLoader.getResource("post_details_d7m5j1.html")).readText()
+    val service = LobstersParserServiceImpl()
+
+    val details = service.parsePostDetails(html)
+    val story = details.stories.first()
+
+    assertTrue(story.userIsAuthor)
+    assertTrue(details.comments.any { it.user == story.submitter })
+  }
+
+  @Test
+  fun parsesMergedSourcesAndAttributesCommentsToTheirStory() {
+    val html =
+      """
+      <ol class="stories">
+        <li class="story" data-shortid="primary1">
+          <div class="details" id="header_story_primary"><span class="link h-cite"><a href="/s/primary1/primary">Primary</a></span><ul class="tags"><li><a>main</a></li></ul><div class="byline"><a href="/~alice">alice</a><time data-at-unix="1710000000"></time></div></div>
+          <div class="details" id="header_story_secondary"><span class="link h-cite"><a href="/s/secondary2/secondary">Secondary</a></span><ul class="tags"><li><a>other</a></li></ul><div class="byline"><a href="/~bob">bob</a><time data-at-unix="1710000001"></time></div></div>
+        </li>
+      </ol>
+      <div class="details" id="comments_story_primary"><a href="#comments-primary1">0 comments</a></div>
+      <div class="details" id="comments_story_secondary"><a href="#comments-secondary2">1 comment</a></div>
+      <li class="comments_subtree" id="comments-primary1"><ol class="comments" id="story_comments"></ol></li>
+      <li class="comments_subtree" id="comments-secondary2"><ol class="comments" id="story_comments">
+        <li class="comments_subtree"><div class="comment" data-shortid="comment1"><div class="byline"><a href="/~carol">carol</a><a href="/c/comment1"><time data-at-unix="1710000002"></time></a></div><div class="comment_text">Hello</div></div></li>
+      </ol></li>
+      """
+        .trimIndent()
+
+    val details = LobstersParserServiceImpl().parsePostDetails(html)
+
+    assertEquals(listOf("primary1", "secondary2"), details.stories.map { it.shortId })
+    assertEquals(listOf("main"), details.stories.first().tags)
+    assertEquals(listOf("other"), details.stories.last().tags)
+    assertEquals("secondary2", details.comments.single().sourceStoryId)
+    assertEquals("comment1", details.comments.single().shortId)
   }
 
   @Test

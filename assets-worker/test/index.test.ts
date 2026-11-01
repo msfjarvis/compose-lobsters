@@ -13,11 +13,9 @@ function zipRelease(files: Record<string, string>): Uint8Array {
   );
 }
 
-function adminRequest(
-  files: Record<string, string>,
-  ziplineVersion = "v3",
-): RequestInit {
+function adminRequest(files: Record<string, string>, ziplineVersion = "v3"): RequestInit {
   const body = zipRelease(files);
+
   return {
     method: "POST",
     headers: {
@@ -30,10 +28,7 @@ function adminRequest(
   };
 }
 
-function rollbackRequest(
-  releaseTimestamp: string,
-  ziplineVersion = "v3",
-): RequestInit {
+function rollbackRequest(releaseTimestamp: string, ziplineVersion = "v3"): RequestInit {
   return {
     method: "POST",
     headers: {
@@ -47,9 +42,11 @@ function rollbackRequest(
 
 beforeEach(async () => {
   const objects = await env.ASSETS.list();
+
   if (objects.truncated) {
     throw new Error("Test cleanup must not leave more than 1,000 R2 objects");
   }
+
   await env.ASSETS.delete(objects.objects.map((object) => object.key));
   await env.RELEASES.delete("current/v2");
   await env.RELEASES.delete("current/v3");
@@ -114,9 +111,7 @@ describe("Zipline asset worker", () => {
 
     expect(response.status).toBe(200);
     expect(new TextDecoder().decode(await response.arrayBuffer())).toBe("module");
-    expect(response.headers.get("Cache-Control")).toBe(
-      "public, max-age=31536000, immutable",
-    );
+    expect(response.headers.get("Cache-Control")).toBe("public, max-age=31536000, immutable");
     expect(response.headers.get("Content-Type")).toBe("application/octet-stream");
   });
 
@@ -199,10 +194,12 @@ describe("Zipline release administration", () => {
     );
 
     expect(response.status).toBe(201);
+
     const { releaseTimestamp, ziplineVersion } = await response.json<{
       releaseTimestamp: string;
       ziplineVersion: string;
     }>();
+
     expect(releaseTimestamp).toMatch(/^\d{8}T\d{6}Z$/);
     expect(ziplineVersion).toBe("v3");
     expect(await env.RELEASES.get("current/v3")).toBe(releaseTimestamp);
@@ -210,9 +207,8 @@ describe("Zipline release administration", () => {
     const currentManifest = await exports.default.fetch(
       "https://assets.example/current/v3/manifest.zipline.json",
     );
-    const module = await env.ASSETS.get(
-      `releases/v3/${releaseTimestamp}/zipline-parser.zipline`,
-    );
+
+    const module = await env.ASSETS.get(`releases/v3/${releaseTimestamp}/zipline-parser.zipline`);
     expect(await currentManifest.text()).toBe("{}");
     expect(new TextDecoder().decode(await module?.arrayBuffer())).toBe("module");
     expect(module?.httpMetadata?.contentType).toBe("application/octet-stream");
@@ -223,6 +219,7 @@ describe("Zipline release administration", () => {
       "manifest.zipline.json": "{}",
       "zipline-parser.zipline": "module",
     });
+
     const headers = new Headers(request.headers);
     headers.set("Authorization", "Bearer incorrect");
 
@@ -255,6 +252,7 @@ describe("Zipline release administration", () => {
       "manifest.zipline.json": "{}",
       "zipline-parser.zipline": "module",
     });
+
     const headers = new Headers(request.headers);
     headers.delete("X-Zipline-Version");
 
@@ -275,10 +273,7 @@ describe("Zipline release administration", () => {
   });
 
   it("rolls an ABI back to an existing release", async () => {
-    await env.ASSETS.put(
-      `releases/v3/${PREVIOUS_RELEASE_TIMESTAMP}/manifest.zipline.json`,
-      "{}",
-    );
+    await env.ASSETS.put(`releases/v3/${PREVIOUS_RELEASE_TIMESTAMP}/manifest.zipline.json`, "{}");
     await env.RELEASES.put("current/v3", RELEASE_TIMESTAMP);
 
     const response = await exports.default.fetch(
@@ -307,10 +302,7 @@ describe("Zipline release administration", () => {
   });
 
   it("rejects unauthorized rollback requests without changing the active release", async () => {
-    await env.ASSETS.put(
-      `releases/v3/${PREVIOUS_RELEASE_TIMESTAMP}/manifest.zipline.json`,
-      "{}",
-    );
+    await env.ASSETS.put(`releases/v3/${PREVIOUS_RELEASE_TIMESTAMP}/manifest.zipline.json`, "{}");
     await env.RELEASES.put("current/v3", RELEASE_TIMESTAMP);
     const request = rollbackRequest(PREVIOUS_RELEASE_TIMESTAMP);
     const headers = new Headers(request.headers);

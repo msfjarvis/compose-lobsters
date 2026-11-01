@@ -30,16 +30,10 @@ class BaselineProfileGenerator {
       maxIterations = 8,
       includeInStartupProfile = true,
     ) {
-      device.executeShellCommand("pm clear $PACKAGE_NAME")
-
-      startActivityAndWait()
-
-      device.waitForIdle()
-
-      device.savePosts()
-
-      device.exploreScreens()
-
-      device.returnToHottestScreen()
+      exploreUI(
+        warmupStep = {
+          device.executeShellCommand("pm clear $PACKAGE_NAME")
+        }
+      )
     }
 }

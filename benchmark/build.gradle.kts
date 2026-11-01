@@ -10,6 +10,8 @@ plugins {
   alias(libs.plugins.android.test)
   id("dev.msfjarvis.claw.android-common")
   id("dev.msfjarvis.claw.kotlin-android")
+  id("dev.msfjarvis.claw.android-distribution")
+  id("dev.msfjarvis.claw.android-test-devices")
   alias(libs.plugins.baselineprofile)
   alias(libs.plugins.dependencyAnalysis)
 }
@@ -30,17 +32,6 @@ android {
     }
   }
   targetProjectPath = ":android"
-  testOptions {
-    managedDevices {
-      localDevices {
-        create("pixel9api36") {
-          device = "Pixel 9"
-          apiLevel = 36
-          systemImageSource = "aosp"
-        }
-      }
-    }
-  }
 }
 
 baselineProfile {

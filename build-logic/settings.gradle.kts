@@ -9,16 +9,10 @@
 rootProject.name = "build-logic"
 
 pluginManagement {
-  plugins { id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0" }
   repositories {
     exclusiveContent {
       forRepository { gradlePluginPortal() }
       filter {
-        includeModule(
-          "org.gradle.toolchains.foojay-resolver-convention",
-          "org.gradle.toolchains.foojay-resolver-convention.gradle.plugin",
-        )
-        includeModule("org.gradle.toolchains", "foojay-resolver")
         includeModule("org.gradle.kotlin.kotlin-dsl", "org.gradle.kotlin.kotlin-dsl.gradle.plugin")
         includeModule("org.gradle.kotlin", "gradle-kotlin-dsl-plugins")
       }

@@ -6,15 +6,14 @@
  */
 package dev.msfjarvis.claw.gradle.artifacts
 
-import java.io.File
 import java.nio.file.Files
-import java.nio.file.Path
 import java.nio.file.StandardCopyOption
-import kotlin.io.path.createDirectory
+import kotlin.io.path.createDirectories
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.Property
+import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.InputFile
 import org.gradle.api.tasks.Optional
@@ -23,6 +22,7 @@ import org.gradle.api.tasks.PathSensitive
 import org.gradle.api.tasks.PathSensitivity
 import org.gradle.api.tasks.TaskAction
 
+@CacheableTask
 abstract class CollectBundleTask : DefaultTask() {
   @get:InputFile
   @get:PathSensitive(PathSensitivity.NONE)
@@ -46,8 +46,8 @@ abstract class CollectBundleTask : DefaultTask() {
   @TaskAction
   fun taskAction() {
     val outputDir = outputDirectory.asFile.get().toPath()
-    Files.walk(outputDir).sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::delete)
-    outputDir.createDirectory()
+    check(outputDir.toFile().deleteRecursively()) { "Cannot clean artifact directory: $outputDir" }
+    outputDir.createDirectories()
     Files.copy(
       bundleFile.get().asFile.toPath(),
       outputDir.resolve("Claw-${variantName.get()}-${versionName.get()}.aab"),

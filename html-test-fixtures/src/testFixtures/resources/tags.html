@@ -7,6 +7,7 @@
   <link rel="apple-touch-icon" sizes="114x114" href="/touch-icon.png">
   <link rel="apple-touch-icon" sizes="72x72" href="/touch-icon-144.png">
   <link rel="apple-touch-icon" sizes="144x144" href="/touch-icon-144.png">
+  <link rel="manifest" href="/manifest.json">
   <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="Lobsters">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="referrer" content="always">
@@ -17,64 +18,55 @@
   <link rel="shortcut icon" href="/favicon.ico">
   <title>Filtered Tags | Lobsters</title>
 
-  <link rel="stylesheet" href="/assets/application-2c75eb3c.css">
-  <link rel="stylesheet" href="/assets/system-system-fd030c9d.css">
-  <link rel="stylesheet" href="/assets/tom-select-00e8031d.css" data-turbo-track="reload">
-  <link rel="stylesheet" href="/assets/TomSelect_remove_button-4d5c34b9.css" data-turbo-track="reload">
-
-    <script type="importmap" data-turbo-track="reload" nonce="uq8GNQq43lru7KfkKS2mAw==">{
-  "imports": {
-    "application": "/assets/application-2c756086.js",
-    "autosize": "/assets/autosize-31988e65.js",
-    "TomSelect": "/assets/TomSelect_base-96ff322f.js",
-    "TomSelect_caret_position": "/assets/TomSelect_caret_position-c2dfcfea.js",
-    "TomSelect_input_autogrow": "/assets/TomSelect_input_autogrow-0f9a20a9.js",
-    "TomSelect_remove_button": "/assets/TomSelect_remove_button-f2addd94.js"
-  }
-}</script>
-<link rel="modulepreload" href="/assets/application-2c756086.js" nonce="uq8GNQq43lru7KfkKS2mAw==">
-<link rel="modulepreload" href="/assets/autosize-31988e65.js" nonce="uq8GNQq43lru7KfkKS2mAw==">
-<link rel="modulepreload" href="/assets/TomSelect_base-96ff322f.js" nonce="uq8GNQq43lru7KfkKS2mAw==">
-<link rel="modulepreload" href="/assets/TomSelect_caret_position-c2dfcfea.js" nonce="uq8GNQq43lru7KfkKS2mAw==">
-<link rel="modulepreload" href="/assets/TomSelect_input_autogrow-0f9a20a9.js" nonce="uq8GNQq43lru7KfkKS2mAw==">
-<link rel="modulepreload" href="/assets/TomSelect_remove_button-f2addd94.js" nonce="uq8GNQq43lru7KfkKS2mAw==">
-<script type="module" nonce="uq8GNQq43lru7KfkKS2mAw==">import "application"</script>
+    <link rel="stylesheet" href="/application.css">
+    <link rel="stylesheet" href="/system-system.css">
+    <script src="/application.js" type="module"></script>
 
   <meta name="csrf-param" content="authenticity_token">
-<meta name="csrf-token" content="GJIUxcJAIbOCAVcgKwj18HTOD2rCWxzxC7B-7vI1orqTY8aKTCROQR9DOuoE3gbBxYPI3B7DbxkVa_IPXpqWPA">
+<meta name="csrf-token" content="o4Imi_oE_8FKB0PjcLdH2Tng3wixBJa1VeA1tFmnyJ8EQZjtOJGga3YyHWKaG7VbjajvRC0h7Vx_xdpRbYcY5Q">
   <meta name="robots" content="noai, noimageai">
+    <script type="speculationrules" nonce="sYzdJ4Xq5yNljwbNtGTXOg==">
+      {
+        "prefetch": [
+          {
+            "where": {
+              "href_matches": "/*"
+            },
+            "eagerness": "moderate"
+          }
+        ]
+      }
+    </script>
 </head>
-<body data-username='msfjarvis' data-now-unix='1784343964'>
-  <header id="nav">
-    <a id="logo" style="background-color: #500000;" href="/" title="Lobsters (Current traffic: 0%)"></a>
-    
+<body data-username=''>
+  <header id="header">
+    <div id="header-top">
+      <h1 style="background-color: #540000;" id="logo">
+        <a href="/" title="Lobsters (Current traffic: 2%)">
+          <b class="sr-only" aria-hidden="true">Lobsters</b>
+        </a>
+        
+      </h1>
 
-    <div class="navholder">
-      <nav class="links">
-        <a class="" href="/active">Active</a>
-        <a class="" href="/recent">Recent</a>
-        <a class="" href="/comments">Comments</a>
-
-          <a class="" href="/stories/new">Submit</a>
-
-        <a class="" href="/search">Search</a>
+      <nav aria-label="Menu">
+        <ul>
+          <li><a href="/active">Active</a></li>
+          <li><a href="/recent">Recent</a></li>
+          <li><a href="/comments">Comments</a></li>
 
 
-            <a class="inbox corner" href="/inbox">Inbox</a>
+          <li><a href="/search">Search</a></li>
 
-          <a class="" href="/threads">Threads</a>
-          <a class="" href="/saved">Saved</a>
-          <a class="" href="/settings">msfjarvis&nbsp;<span class='karma'>(2873)</span></a>
+
+            <li class="push-right"><a href="/login">Login</a></li>
+        </ul>
       </nav>
     </div>
 
-    <nav class="corner">
-          <a class="inbox" href="/inbox">&#9993;</a>
-    </nav>
+
   </header>
 
-
-  <div id="inside">
+  <main id="inside">
       <h1 class="">Filtered Tags</h1>
 
 
@@ -84,13 +76,12 @@
   </p>
 
     <p>
-    To apply your filters in your feed reader, use an RSS URL that includes your `rss_token`.
-    There's <a href="https://lobste.rs/rss?token=G5Ao1BoIubJu8zNpgIHR2hLK5oAmqsKvEgvXo5O0zBVYmCRFGExbsfiyeLky">all stories</a> and
-    <a href="https://lobste.rs/comments.rss?token=G5Ao1BoIubJu8zNpgIHR2hLK5oAmqsKvEgvXo5O0zBVYmCRFGExbsfiyeLky">all comments</a>,
-    and more feeds URLs appear in page <code>&lt;head&gt;</code> tags for your browser.
+    Since you are not logged in, your filters will be stored in a long-lasting
+    browser cookie.  To permanently store your tag filters and have them work
+    across browsers, <a href="/login">login</a> to your account.
     </p>
 
-  <form action="/filters" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="N5X93eCpPYcjAhClG6YDI1QOwnkK1iUAQLrzdhLFzDpw2FhY2Q8SdecVeRRUMkf65RyD0imZHeHRdpGww933lg" autocomplete="off">
+  <form action="/filters" accept-charset="UTF-8" method="post"><input type="hidden" name="authenticity_token" value="lPjDD5tA21Qfco7c4wyKvUdO2g7vyOM3gWRtNBkJvZcR5ktrPiiqoZW-_MCPKD7HSolxsLSJqZHAAJVLoSgAWQ" autocomplete="off">
     <table class="data zebra" cellspacing=0>
     <tr>
       <th>Hide</th>
@@ -107,13 +98,13 @@
           <td>
               <input type="checkbox" name="tags[ai]" id="tags_ai" value="ai">
           </td>
-          <td><a aria-label="Tag ai" class="tag tag_ai" title="Developing artificial intelligence, machine learning. Tag AI usage only with `vibecoding`." href="/t/ai">ai</a></td>
+          <td><a aria-label="Tag ai" class="tag tag_ai" title="Developing artificial intelligence, machine learning, LLMs." href="/t/ai">ai</a></td>
           <td>
             <label for="tags_ai">
-              <span class="">Developing artificial intelligence, machine learning. Tag AI usage only with `vibecoding`.</span>
+              <span class="">Developing artificial intelligence, machine learning, LLMs.</span>
 </label>          </td>
-          <td style="text-align: right;">2,795</td>
-          <td style="text-align: right; padding-right: 1em;">365</td>
+          <td style="text-align: right;">2,890</td>
+          <td style="text-align: right; padding-right: 1em;">420</td>
         </tr>
         <tr id="compsci">
           <td>
@@ -124,8 +115,8 @@
             <label for="tags_compsci">
               <span class="">Other computer science/programming</span>
 </label>          </td>
-          <td style="text-align: right;">4,098</td>
-          <td style="text-align: right; padding-right: 1em;">86</td>
+          <td style="text-align: right;">4,147</td>
+          <td style="text-align: right; padding-right: 1em;">87</td>
         </tr>
         <tr id="distributed">
           <td>
@@ -136,7 +127,7 @@
             <label for="tags_distributed">
               <span class="">Distributed systems</span>
 </label>          </td>
-          <td style="text-align: right;">2,916</td>
+          <td style="text-align: right;">2,975</td>
           <td style="text-align: right; padding-right: 1em;">86</td>
         </tr>
         <tr id="formalmethods">
@@ -148,8 +139,8 @@
             <label for="tags_formalmethods">
               <span class="">Formal methods</span>
 </label>          </td>
-          <td style="text-align: right;">1,409</td>
-          <td style="text-align: right; padding-right: 1em;">153</td>
+          <td style="text-align: right;">1,449</td>
+          <td style="text-align: right; padding-right: 1em;">154</td>
         </tr>
         <tr id="graphics">
           <td>
@@ -160,8 +151,8 @@
             <label for="tags_graphics">
               <span class="">Graphics programming</span>
 </label>          </td>
-          <td style="text-align: right;">2,531</td>
-          <td style="text-align: right; padding-right: 1em;">143</td>
+          <td style="text-align: right;">2,608</td>
+          <td style="text-align: right; padding-right: 1em;">145</td>
         </tr>
         <tr id="networking">
           <td>
@@ -172,7 +163,7 @@
             <label for="tags_networking">
               <span class="">Networking</span>
 </label>          </td>
-          <td style="text-align: right;">3,732</td>
+          <td style="text-align: right;">3,812</td>
           <td style="text-align: right; padding-right: 1em;">79</td>
         </tr>
         <tr id="osdev">
@@ -184,8 +175,8 @@
             <label for="tags_osdev">
               <span class="">Operating system design and development when no specific OS tag exists</span>
 </label>          </td>
-          <td style="text-align: right;">1,357</td>
-          <td style="text-align: right; padding-right: 1em;">52</td>
+          <td style="text-align: right;">1,401</td>
+          <td style="text-align: right; padding-right: 1em;">55</td>
         </tr>
         <tr id="plt">
           <td>
@@ -196,8 +187,8 @@
             <label for="tags_plt">
               <span class="">Programming language theory, types, design</span>
 </label>          </td>
-          <td style="text-align: right;">3,356</td>
-          <td style="text-align: right; padding-right: 1em;">79</td>
+          <td style="text-align: right;">3,479</td>
+          <td style="text-align: right; padding-right: 1em;">78</td>
         </tr>
         <tr id="programming">
           <td>
@@ -208,7 +199,7 @@
             <label for="tags_programming">
               <span class="">Use when every tag or no specific tag applies</span>
 </label>          </td>
-          <td style="text-align: right;">16,535</td>
+          <td style="text-align: right;">16,780</td>
           <td style="text-align: right; padding-right: 1em;">55</td>
         </tr>
       <tr>
@@ -226,8 +217,8 @@
                 |
                 <em>hotness mod -0.25</em>
 </label>          </td>
-          <td style="text-align: right;">4,042</td>
-          <td style="text-align: right; padding-right: 1em;">160</td>
+          <td style="text-align: right;">4,170</td>
+          <td style="text-align: right; padding-right: 1em;">163</td>
         </tr>
         <tr id="law">
           <td>
@@ -238,8 +229,8 @@
             <label for="tags_law">
               <span class="">Law, patents, and licensing</span>
 </label>          </td>
-          <td style="text-align: right;">1,661</td>
-          <td style="text-align: right; padding-right: 1em;">191</td>
+          <td style="text-align: right;">1,682</td>
+          <td style="text-align: right; padding-right: 1em;">194</td>
         </tr>
         <tr id="person">
           <td>
@@ -250,8 +241,8 @@
             <label for="tags_person">
               <span class="">Stories about particular persons</span>
 </label>          </td>
-          <td style="text-align: right;">1,139</td>
-          <td style="text-align: right; padding-right: 1em;">129</td>
+          <td style="text-align: right;">1,161</td>
+          <td style="text-align: right; padding-right: 1em;">131</td>
         </tr>
         <tr id="philosophy">
           <td>
@@ -262,8 +253,8 @@
             <label for="tags_philosophy">
               <span class="">Philosophy</span>
 </label>          </td>
-          <td style="text-align: right;">1,243</td>
-          <td style="text-align: right; padding-right: 1em;">144</td>
+          <td style="text-align: right;">1,284</td>
+          <td style="text-align: right; padding-right: 1em;">145</td>
         </tr>
       <tr>
         <th></th>
@@ -278,8 +269,8 @@
             <label for="tags_cogsci">
               <span class="">Cognitive Science</span>
 </label>          </td>
-          <td style="text-align: right;">401</td>
-          <td style="text-align: right; padding-right: 1em;">177</td>
+          <td style="text-align: right;">408</td>
+          <td style="text-align: right; padding-right: 1em;">183</td>
         </tr>
         <tr id="cryptography">
           <td>
@@ -290,7 +281,7 @@
             <label for="tags_cryptography">
               <span class="">Cryptography</span>
 </label>          </td>
-          <td style="text-align: right;">1,774</td>
+          <td style="text-align: right;">1,828</td>
           <td style="text-align: right; padding-right: 1em;">89</td>
         </tr>
         <tr id="education">
@@ -302,8 +293,8 @@
             <label for="tags_education">
               <span class="">Education</span>
 </label>          </td>
-          <td style="text-align: right;">845</td>
-          <td style="text-align: right; padding-right: 1em;">70</td>
+          <td style="text-align: right;">864</td>
+          <td style="text-align: right; padding-right: 1em;">72</td>
         </tr>
         <tr id="finance">
           <td>
@@ -314,8 +305,8 @@
             <label for="tags_finance">
               <span class="">Finance and economics</span>
 </label>          </td>
-          <td style="text-align: right;">516</td>
-          <td style="text-align: right; padding-right: 1em;">184</td>
+          <td style="text-align: right;">527</td>
+          <td style="text-align: right; padding-right: 1em;">193</td>
         </tr>
         <tr id="hardware">
           <td>
@@ -326,8 +317,8 @@
             <label for="tags_hardware">
               <span class="">Hardware</span>
 </label>          </td>
-          <td style="text-align: right;">7,123</td>
-          <td style="text-align: right; padding-right: 1em;">90</td>
+          <td style="text-align: right;">7,299</td>
+          <td style="text-align: right; padding-right: 1em;">92</td>
         </tr>
         <tr id="math">
           <td>
@@ -338,8 +329,8 @@
             <label for="tags_math">
               <span class="">Mathematics</span>
 </label>          </td>
-          <td style="text-align: right;">2,979</td>
-          <td style="text-align: right; padding-right: 1em;">141</td>
+          <td style="text-align: right;">3,079</td>
+          <td style="text-align: right; padding-right: 1em;">142</td>
         </tr>
         <tr id="science">
           <td>
@@ -350,8 +341,8 @@
             <label for="tags_science">
               <span class="">It&#39;s &quot;Science&quot;</span>
 </label>          </td>
-          <td style="text-align: right;">1,307</td>
-          <td style="text-align: right; padding-right: 1em;">102</td>
+          <td style="text-align: right;">1,329</td>
+          <td style="text-align: right; padding-right: 1em;">103</td>
         </tr>
       <tr>
         <th></th>
@@ -366,8 +357,8 @@
             <label for="tags_ask">
               <span class="">Ask Lobsters</span>
 </label>          </td>
-          <td style="text-align: right;">2,468</td>
-          <td style="text-align: right; padding-right: 1em;">75</td>
+          <td style="text-align: right;">2,523</td>
+          <td style="text-align: right; padding-right: 1em;">78</td>
         </tr>
         <tr id="audio">
           <td>
@@ -378,8 +369,8 @@
             <label for="tags_audio">
               <span class="">Link to audio (podcast, interview)</span>
 </label>          </td>
-          <td style="text-align: right;">409</td>
-          <td style="text-align: right; padding-right: 1em;">171</td>
+          <td style="text-align: right;">417</td>
+          <td style="text-align: right; padding-right: 1em;">181</td>
         </tr>
         <tr id="book">
           <td>
@@ -390,7 +381,7 @@
             <label for="tags_book">
               <span class="">Link to a book (not an ad or review)</span>
 </label>          </td>
-          <td style="text-align: right;">1,010</td>
+          <td style="text-align: right;">1,018</td>
           <td style="text-align: right; padding-right: 1em;">62</td>
         </tr>
         <tr id="pdf">
@@ -402,8 +393,8 @@
             <label for="tags_pdf">
               <span class="">Link to a PDF document</span>
 </label>          </td>
-          <td style="text-align: right;">4,949</td>
-          <td style="text-align: right; padding-right: 1em;">73</td>
+          <td style="text-align: right;">5,016</td>
+          <td style="text-align: right; padding-right: 1em;">74</td>
         </tr>
         <tr id="show">
           <td>
@@ -414,8 +405,8 @@
             <label for="tags_show">
               <span class="">Show Lobsters / Projects</span>
 </label>          </td>
-          <td style="text-align: right;">2,072</td>
-          <td style="text-align: right; padding-right: 1em;">57</td>
+          <td style="text-align: right;">2,128</td>
+          <td style="text-align: right; padding-right: 1em;">58</td>
         </tr>
         <tr id="slides">
           <td>
@@ -426,8 +417,8 @@
             <label for="tags_slides">
               <span class="">Slide deck</span>
 </label>          </td>
-          <td style="text-align: right;">531</td>
-          <td style="text-align: right; padding-right: 1em;">89</td>
+          <td style="text-align: right;">533</td>
+          <td style="text-align: right; padding-right: 1em;">88</td>
         </tr>
         <tr id="transcript">
           <td>
@@ -438,8 +429,8 @@
             <label for="tags_transcript">
               <span class="">Includes transcript of audio or video</span>
 </label>          </td>
-          <td style="text-align: right;">132</td>
-          <td style="text-align: right; padding-right: 1em;">41</td>
+          <td style="text-align: right;">135</td>
+          <td style="text-align: right; padding-right: 1em;">44</td>
         </tr>
         <tr id="video">
           <td>
@@ -450,8 +441,8 @@
             <label for="tags_video">
               <span class="">Link to a video</span>
 </label>          </td>
-          <td style="text-align: right;">5,095</td>
-          <td style="text-align: right; padding-right: 1em;">192</td>
+          <td style="text-align: right;">5,272</td>
+          <td style="text-align: right; padding-right: 1em;">205</td>
         </tr>
       <tr>
         <th></th>
@@ -466,8 +457,8 @@
             <label for="tags_art">
               <span class="">Art</span>
 </label>          </td>
-          <td style="text-align: right;">1,051</td>
-          <td style="text-align: right; padding-right: 1em;">127</td>
+          <td style="text-align: right;">1,090</td>
+          <td style="text-align: right; padding-right: 1em;">130</td>
         </tr>
         <tr id="event">
           <td>
@@ -478,8 +469,8 @@
             <label for="tags_event">
               <span class="">Events, conferences, and meetups</span>
 </label>          </td>
-          <td style="text-align: right;">851</td>
-          <td style="text-align: right; padding-right: 1em;">107</td>
+          <td style="text-align: right;">866</td>
+          <td style="text-align: right; padding-right: 1em;">111</td>
         </tr>
         <tr id="historical">
           <td>
@@ -490,8 +481,8 @@
             <label for="tags_historical">
               <span class="">History and retrospectives (not for things that happen to be old)</span>
 </label>          </td>
-          <td style="text-align: right;">4,555</td>
-          <td style="text-align: right; padding-right: 1em;">73</td>
+          <td style="text-align: right;">4,635</td>
+          <td style="text-align: right; padding-right: 1em;">77</td>
         </tr>
         <tr id="job">
           <td>
@@ -502,8 +493,8 @@
             <label for="tags_job">
               <span class="">Employment/Internship opportunities</span>
 </label>          </td>
-          <td style="text-align: right;">240</td>
-          <td style="text-align: right; padding-right: 1em;">171</td>
+          <td style="text-align: right;">246</td>
+          <td style="text-align: right; padding-right: 1em;">176</td>
         </tr>
         <tr id="rant">
           <td>
@@ -516,8 +507,8 @@
                 |
                 <em>hotness mod -0.25</em>
 </label>          </td>
-          <td style="text-align: right;">1,391</td>
-          <td style="text-align: right; padding-right: 1em;">193</td>
+          <td style="text-align: right;">1,444</td>
+          <td style="text-align: right; padding-right: 1em;">197</td>
         </tr>
         <tr id="release">
           <td>
@@ -528,7 +519,7 @@
             <label for="tags_release">
               <span class="">Software releases and announcements</span>
 </label>          </td>
-          <td style="text-align: right;">5,453</td>
+          <td style="text-align: right;">5,603</td>
           <td style="text-align: right; padding-right: 1em;">82</td>
         </tr>
         <tr id="satire">
@@ -542,8 +533,8 @@
                 |
                 <em>hotness mod -0.25</em>
 </label>          </td>
-          <td style="text-align: right;">864</td>
-          <td style="text-align: right; padding-right: 1em;">184</td>
+          <td style="text-align: right;">897</td>
+          <td style="text-align: right; padding-right: 1em;">189</td>
         </tr>
       <tr>
         <th></th>
@@ -558,8 +549,8 @@
             <label for="tags_a11y">
               <span class="">accessibility, assistive technology, standards</span>
 </label>          </td>
-          <td style="text-align: right;">431</td>
-          <td style="text-align: right; padding-right: 1em;">87</td>
+          <td style="text-align: right;">456</td>
+          <td style="text-align: right; padding-right: 1em;">90</td>
         </tr>
         <tr id="design">
           <td>
@@ -570,7 +561,7 @@
             <label for="tags_design">
               <span class="">Visual design</span>
 </label>          </td>
-          <td style="text-align: right;">1,907</td>
+          <td style="text-align: right;">1,961</td>
           <td style="text-align: right; padding-right: 1em;">116</td>
         </tr>
         <tr id="visualization">
@@ -582,8 +573,8 @@
             <label for="tags_visualization">
               <span class="">Data visualization</span>
 </label>          </td>
-          <td style="text-align: right;">1,124</td>
-          <td style="text-align: right; padding-right: 1em;">96</td>
+          <td style="text-align: right;">1,145</td>
+          <td style="text-align: right; padding-right: 1em;">99</td>
         </tr>
       <tr>
         <th></th>
@@ -598,8 +589,8 @@
             <label for="tags_apl">
               <span class="">Array Programming Languages such as APL, J, and K</span>
 </label>          </td>
-          <td style="text-align: right;">270</td>
-          <td style="text-align: right; padding-right: 1em;">178</td>
+          <td style="text-align: right;">289</td>
+          <td style="text-align: right; padding-right: 1em;">183</td>
         </tr>
         <tr id="assembly">
           <td>
@@ -610,7 +601,7 @@
             <label for="tags_assembly">
               <span class="">Assembly programming</span>
 </label>          </td>
-          <td style="text-align: right;">1,388</td>
+          <td style="text-align: right;">1,421</td>
           <td style="text-align: right; padding-right: 1em;">229</td>
         </tr>
         <tr id="c">
@@ -622,8 +613,8 @@
             <label for="tags_c">
               <span class="">C programming</span>
 </label>          </td>
-          <td style="text-align: right;">3,576</td>
-          <td style="text-align: right; padding-right: 1em;">172</td>
+          <td style="text-align: right;">3,658</td>
+          <td style="text-align: right; padding-right: 1em;">178</td>
         </tr>
         <tr id="c++">
           <td>
@@ -634,8 +625,8 @@
             <label for="tags_c__">
               <span class="">C++ programming</span>
 </label>          </td>
-          <td style="text-align: right;">2,585</td>
-          <td style="text-align: right; padding-right: 1em;">162</td>
+          <td style="text-align: right;">2,650</td>
+          <td style="text-align: right; padding-right: 1em;">167</td>
         </tr>
         <tr id="clojure">
           <td>
@@ -646,8 +637,8 @@
             <label for="tags_clojure">
               <span class="">Clojure programming</span>
 </label>          </td>
-          <td style="text-align: right;">792</td>
-          <td style="text-align: right; padding-right: 1em;">195</td>
+          <td style="text-align: right;">814</td>
+          <td style="text-align: right; padding-right: 1em;">204</td>
         </tr>
         <tr id="concatenative">
           <td>
@@ -658,8 +649,8 @@
             <label for="tags_concatenative">
               <span class=""> stackbased languages like Forth, Factor, Joy</span>
 </label>          </td>
-          <td style="text-align: right;">41</td>
-          <td style="text-align: right; padding-right: 1em;">44</td>
+          <td style="text-align: right;">55</td>
+          <td style="text-align: right; padding-right: 1em;">49</td>
         </tr>
         <tr id="css">
           <td>
@@ -670,8 +661,8 @@
             <label for="tags_css">
               <span class="">Cascading Style Sheets</span>
 </label>          </td>
-          <td style="text-align: right;">784</td>
-          <td style="text-align: right; padding-right: 1em;">152</td>
+          <td style="text-align: right;">810</td>
+          <td style="text-align: right; padding-right: 1em;">154</td>
         </tr>
         <tr id="d">
           <td>
@@ -683,7 +674,7 @@
               <span class="">D programming</span>
 </label>          </td>
           <td style="text-align: right;">102</td>
-          <td style="text-align: right; padding-right: 1em;">202</td>
+          <td style="text-align: right; padding-right: 1em;">211</td>
         </tr>
         <tr id="dotnet">
           <td>
@@ -694,8 +685,8 @@
             <label for="tags_dotnet">
               <span class="">C#, F#, .NET programming</span>
 </label>          </td>
-          <td style="text-align: right;">855</td>
-          <td style="text-align: right; padding-right: 1em;">424</td>
+          <td style="text-align: right;">859</td>
+          <td style="text-align: right; padding-right: 1em;">431</td>
         </tr>
         <tr id="elixir">
           <td>
@@ -706,8 +697,8 @@
             <label for="tags_elixir">
               <span class="">Elixir programming</span>
 </label>          </td>
-          <td style="text-align: right;">787</td>
-          <td style="text-align: right; padding-right: 1em;">259</td>
+          <td style="text-align: right;">793</td>
+          <td style="text-align: right; padding-right: 1em;">261</td>
         </tr>
         <tr id="elm">
           <td>
@@ -718,8 +709,8 @@
             <label for="tags_elm">
               <span class="">Elm programming</span>
 </label>          </td>
-          <td style="text-align: right;">259</td>
-          <td style="text-align: right; padding-right: 1em;">249</td>
+          <td style="text-align: right;">262</td>
+          <td style="text-align: right; padding-right: 1em;">252</td>
         </tr>
         <tr id="erlang">
           <td>
@@ -730,8 +721,8 @@
             <label for="tags_erlang">
               <span class="">Erlang development</span>
 </label>          </td>
-          <td style="text-align: right;">772</td>
-          <td style="text-align: right; padding-right: 1em;">283</td>
+          <td style="text-align: right;">776</td>
+          <td style="text-align: right; padding-right: 1em;">287</td>
         </tr>
         <tr id="fortran">
           <td>
@@ -743,7 +734,7 @@
               <span class="">Fortran programming</span>
 </label>          </td>
           <td style="text-align: right;">69</td>
-          <td style="text-align: right; padding-right: 1em;">235</td>
+          <td style="text-align: right; padding-right: 1em;">243</td>
         </tr>
         <tr id="gleam">
           <td>
@@ -754,8 +745,8 @@
             <label for="tags_gleam">
               <span class="">Strongly-typed BEAM language</span>
 </label>          </td>
-          <td style="text-align: right;">111</td>
-          <td style="text-align: right; padding-right: 1em;">65</td>
+          <td style="text-align: right;">128</td>
+          <td style="text-align: right; padding-right: 1em;">74</td>
         </tr>
         <tr id="go">
           <td>
@@ -766,7 +757,7 @@
             <label for="tags_go">
               <span class="">Golang programming</span>
 </label>          </td>
-          <td style="text-align: right;">3,505</td>
+          <td style="text-align: right;">3,576</td>
           <td style="text-align: right; padding-right: 1em;">224</td>
         </tr>
         <tr id="haskell">
@@ -778,8 +769,8 @@
             <label for="tags_haskell">
               <span class="">Haskell programming</span>
 </label>          </td>
-          <td style="text-align: right;">2,326</td>
-          <td style="text-align: right; padding-right: 1em;">303</td>
+          <td style="text-align: right;">2,374</td>
+          <td style="text-align: right; padding-right: 1em;">307</td>
         </tr>
         <tr id="java">
           <td>
@@ -790,8 +781,8 @@
             <label for="tags_java">
               <span class="">Java programming</span>
 </label>          </td>
-          <td style="text-align: right;">1,225</td>
-          <td style="text-align: right; padding-right: 1em;">327</td>
+          <td style="text-align: right;">1,251</td>
+          <td style="text-align: right; padding-right: 1em;">329</td>
         </tr>
         <tr id="javascript">
           <td>
@@ -802,8 +793,8 @@
             <label for="tags_javascript">
               <span class="">Javascript programming</span>
 </label>          </td>
-          <td style="text-align: right;">5,193</td>
-          <td style="text-align: right; padding-right: 1em;">235</td>
+          <td style="text-align: right;">5,245</td>
+          <td style="text-align: right; padding-right: 1em;">238</td>
         </tr>
         <tr id="kotlin">
           <td>
@@ -814,8 +805,8 @@
             <label for="tags_kotlin">
               <span class="">Kotlin programming</span>
 </label>          </td>
-          <td style="text-align: right;">117</td>
-          <td style="text-align: right; padding-right: 1em;">111</td>
+          <td style="text-align: right;">123</td>
+          <td style="text-align: right; padding-right: 1em;">115</td>
         </tr>
         <tr id="lisp">
           <td>
@@ -826,8 +817,8 @@
             <label for="tags_lisp">
               <span class="">Lisp and Scheme programming</span>
 </label>          </td>
-          <td style="text-align: right;">2,127</td>
-          <td style="text-align: right; padding-right: 1em;">269</td>
+          <td style="text-align: right;">2,176</td>
+          <td style="text-align: right; padding-right: 1em;">273</td>
         </tr>
         <tr id="logiclangs">
           <td>
@@ -838,8 +829,8 @@
             <label for="tags_logiclangs">
               <span class="">Prolog, Datalog, Z3, Picat, miniKanren, ASP etc. using clauses</span>
 </label>          </td>
-          <td style="text-align: right;">33</td>
-          <td style="text-align: right; padding-right: 1em;">18</td>
+          <td style="text-align: right;">38</td>
+          <td style="text-align: right; padding-right: 1em;">27</td>
         </tr>
         <tr id="lua">
           <td>
@@ -850,8 +841,8 @@
             <label for="tags_lua">
               <span class="">Lua programming</span>
 </label>          </td>
-          <td style="text-align: right;">402</td>
-          <td style="text-align: right; padding-right: 1em;">235</td>
+          <td style="text-align: right;">414</td>
+          <td style="text-align: right; padding-right: 1em;">239</td>
         </tr>
         <tr id="ml">
           <td>
@@ -862,8 +853,8 @@
             <label for="tags_ml">
               <span class="">MetaLanguage, OCaml programming</span>
 </label>          </td>
-          <td style="text-align: right;">795</td>
-          <td style="text-align: right; padding-right: 1em;">239</td>
+          <td style="text-align: right;">811</td>
+          <td style="text-align: right; padding-right: 1em;">243</td>
         </tr>
         <tr id="nodejs">
           <td>
@@ -874,8 +865,8 @@
             <label for="tags_nodejs">
               <span class="">Node.js programming</span>
 </label>          </td>
-          <td style="text-align: right;">544</td>
-          <td style="text-align: right; padding-right: 1em;">216</td>
+          <td style="text-align: right;">548</td>
+          <td style="text-align: right; padding-right: 1em;">223</td>
         </tr>
         <tr id="objectivec">
           <td>
@@ -886,8 +877,8 @@
             <label for="tags_objectivec">
               <span class="">Objective-C programming</span>
 </label>          </td>
-          <td style="text-align: right;">73</td>
-          <td style="text-align: right; padding-right: 1em;">239</td>
+          <td style="text-align: right;">74</td>
+          <td style="text-align: right; padding-right: 1em;">244</td>
         </tr>
         <tr id="perl">
           <td>
@@ -898,8 +889,8 @@
             <label for="tags_perl">
               <span class="">Perl programming</span>
 </label>          </td>
-          <td style="text-align: right;">313</td>
-          <td style="text-align: right; padding-right: 1em;">279</td>
+          <td style="text-align: right;">314</td>
+          <td style="text-align: right; padding-right: 1em;">287</td>
         </tr>
         <tr id="php">
           <td>
@@ -910,8 +901,8 @@
             <label for="tags_php">
               <span class="">PHP programming</span>
 </label>          </td>
-          <td style="text-align: right;">422</td>
-          <td style="text-align: right; padding-right: 1em;">419</td>
+          <td style="text-align: right;">436</td>
+          <td style="text-align: right; padding-right: 1em;">423</td>
         </tr>
         <tr id="python">
           <td>
@@ -922,8 +913,8 @@
             <label for="tags_python">
               <span class="">Python programming</span>
 </label>          </td>
-          <td style="text-align: right;">4,239</td>
-          <td style="text-align: right; padding-right: 1em;">201</td>
+          <td style="text-align: right;">4,306</td>
+          <td style="text-align: right; padding-right: 1em;">204</td>
         </tr>
         <tr id="ruby">
           <td>
@@ -934,8 +925,8 @@
             <label for="tags_ruby">
               <span class="">Ruby programming</span>
 </label>          </td>
-          <td style="text-align: right;">2,557</td>
-          <td style="text-align: right; padding-right: 1em;">333</td>
+          <td style="text-align: right;">2,595</td>
+          <td style="text-align: right; padding-right: 1em;">340</td>
         </tr>
         <tr id="rust">
           <td>
@@ -946,8 +937,8 @@
             <label for="tags_rust">
               <span class="">Rust programming</span>
 </label>          </td>
-          <td style="text-align: right;">5,160</td>
-          <td style="text-align: right; padding-right: 1em;">242</td>
+          <td style="text-align: right;">5,368</td>
+          <td style="text-align: right; padding-right: 1em;">241</td>
         </tr>
         <tr id="scala">
           <td>
@@ -958,8 +949,8 @@
             <label for="tags_scala">
               <span class="">Scala programming</span>
 </label>          </td>
-          <td style="text-align: right;">454</td>
-          <td style="text-align: right; padding-right: 1em;">342</td>
+          <td style="text-align: right;">458</td>
+          <td style="text-align: right; padding-right: 1em;">346</td>
         </tr>
         <tr id="swift">
           <td>
@@ -970,8 +961,8 @@
             <label for="tags_swift">
               <span class="">Swift programming</span>
 </label>          </td>
-          <td style="text-align: right;">567</td>
-          <td style="text-align: right; padding-right: 1em;">301</td>
+          <td style="text-align: right;">572</td>
+          <td style="text-align: right; padding-right: 1em;">304</td>
         </tr>
         <tr id="zig">
           <td>
@@ -982,8 +973,8 @@
             <label for="tags_zig">
               <span class="">Zig programming</span>
 </label>          </td>
-          <td style="text-align: right;">545</td>
-          <td style="text-align: right; padding-right: 1em;">112</td>
+          <td style="text-align: right;">587</td>
+          <td style="text-align: right; padding-right: 1em;">116</td>
         </tr>
       <tr>
         <th></th>
@@ -999,7 +990,7 @@
                 |
                 <em>hotness mod +1.0</em>
 </label>          </td>
-          <td style="text-align: right;">50</td>
+          <td style="text-align: right;">51</td>
           <td style="text-align: right; padding-right: 1em;"></td>
         </tr>
         <tr id="interview">
@@ -1010,7 +1001,7 @@
             <label for="tags_interview">
               <span class="">Lobsters interviews</span>
 </label>          </td>
-          <td style="text-align: right;">26</td>
+          <td style="text-align: right;">28</td>
           <td style="text-align: right; padding-right: 1em;"></td>
         </tr>
         <tr id="meta">
@@ -1024,8 +1015,8 @@
                 |
                 <em>hotness mod -0.25</em>
 </label>          </td>
-          <td style="text-align: right;">741</td>
-          <td style="text-align: right; padding-right: 1em;">1,385</td>
+          <td style="text-align: right;">756</td>
+          <td style="text-align: right; padding-right: 1em;">1,388</td>
         </tr>
       <tr>
         <th></th>
@@ -1040,8 +1031,8 @@
             <label for="tags_android">
               <span class="">Android</span>
 </label>          </td>
-          <td style="text-align: right;">917</td>
-          <td style="text-align: right; padding-right: 1em;">269</td>
+          <td style="text-align: right;">937</td>
+          <td style="text-align: right; padding-right: 1em;">270</td>
         </tr>
         <tr id="dragonflybsd">
           <td>
@@ -1052,8 +1043,8 @@
             <label for="tags_dragonflybsd">
               <span class="">DragonFly BSD</span>
 </label>          </td>
-          <td style="text-align: right;">81</td>
-          <td style="text-align: right; padding-right: 1em;">158</td>
+          <td style="text-align: right;">80</td>
+          <td style="text-align: right; padding-right: 1em;">160</td>
         </tr>
         <tr id="freebsd">
           <td>
@@ -1064,8 +1055,8 @@
             <label for="tags_freebsd">
               <span class="">FreeBSD</span>
 </label>          </td>
-          <td style="text-align: right;">1,376</td>
-          <td style="text-align: right; padding-right: 1em;">252</td>
+          <td style="text-align: right;">1,386</td>
+          <td style="text-align: right; padding-right: 1em;">251</td>
         </tr>
         <tr id="illumos">
           <td>
@@ -1077,7 +1068,7 @@
               <span class="">illumos</span>
 </label>          </td>
           <td style="text-align: right;">105</td>
-          <td style="text-align: right; padding-right: 1em;">156</td>
+          <td style="text-align: right; padding-right: 1em;">160</td>
         </tr>
         <tr id="ios">
           <td>
@@ -1088,8 +1079,8 @@
             <label for="tags_ios">
               <span class="">Apple iOS</span>
 </label>          </td>
-          <td style="text-align: right;">1,049</td>
-          <td style="text-align: right; padding-right: 1em;">263</td>
+          <td style="text-align: right;">1,058</td>
+          <td style="text-align: right; padding-right: 1em;">268</td>
         </tr>
         <tr id="linux">
           <td>
@@ -1100,7 +1091,7 @@
             <label for="tags_linux">
               <span class="">Linux</span>
 </label>          </td>
-          <td style="text-align: right;">6,346</td>
+          <td style="text-align: right;">6,528</td>
           <td style="text-align: right; padding-right: 1em;">79</td>
         </tr>
         <tr id="mac">
@@ -1112,8 +1103,8 @@
             <label for="tags_mac">
               <span class="">Apple macOS</span>
 </label>          </td>
-          <td style="text-align: right;">1,672</td>
-          <td style="text-align: right; padding-right: 1em;">195</td>
+          <td style="text-align: right;">1,723</td>
+          <td style="text-align: right; padding-right: 1em;">199</td>
         </tr>
         <tr id="netbsd">
           <td>
@@ -1124,8 +1115,8 @@
             <label for="tags_netbsd">
               <span class="">NetBSD</span>
 </label>          </td>
-          <td style="text-align: right;">669</td>
-          <td style="text-align: right; padding-right: 1em;">191</td>
+          <td style="text-align: right;">685</td>
+          <td style="text-align: right; padding-right: 1em;">192</td>
         </tr>
         <tr id="nix">
           <td>
@@ -1136,8 +1127,8 @@
             <label for="tags_nix">
               <span class="">package manager, distribution, and related systems like guix</span>
 </label>          </td>
-          <td style="text-align: right;">685</td>
-          <td style="text-align: right; padding-right: 1em;">146</td>
+          <td style="text-align: right;">744</td>
+          <td style="text-align: right; padding-right: 1em;">148</td>
         </tr>
         <tr id="openbsd">
           <td>
@@ -1148,8 +1139,8 @@
             <label for="tags_openbsd">
               <span class="">OpenBSD</span>
 </label>          </td>
-          <td style="text-align: right;">1,519</td>
-          <td style="text-align: right; padding-right: 1em;">240</td>
+          <td style="text-align: right;">1,542</td>
+          <td style="text-align: right; padding-right: 1em;">239</td>
         </tr>
         <tr id="unix">
           <td>
@@ -1160,7 +1151,7 @@
             <label for="tags_unix">
               <span class="">*nix</span>
 </label>          </td>
-          <td style="text-align: right;">2,879</td>
+          <td style="text-align: right;">2,918</td>
           <td style="text-align: right; padding-right: 1em;">70</td>
         </tr>
         <tr id="windows">
@@ -1172,8 +1163,8 @@
             <label for="tags_windows">
               <span class="">Windows</span>
 </label>          </td>
-          <td style="text-align: right;">1,448</td>
-          <td style="text-align: right; padding-right: 1em;">336</td>
+          <td style="text-align: right;">1,479</td>
+          <td style="text-align: right; padding-right: 1em;">339</td>
         </tr>
       <tr>
         <th></th>
@@ -1188,7 +1179,7 @@
             <label for="tags_browsers">
               <span class="">Web browsers</span>
 </label>          </td>
-          <td style="text-align: right;">2,172</td>
+          <td style="text-align: right;">2,218</td>
           <td style="text-align: right; padding-right: 1em;">99</td>
         </tr>
         <tr id="email">
@@ -1200,7 +1191,7 @@
             <label for="tags_email">
               <span class="">e-mail</span>
 </label>          </td>
-          <td style="text-align: right;">340</td>
+          <td style="text-align: right;">357</td>
           <td style="text-align: right; padding-right: 1em;">34</td>
         </tr>
         <tr id="games">
@@ -1212,8 +1203,8 @@
             <label for="tags_games">
               <span class="">Game design and study</span>
 </label>          </td>
-          <td style="text-align: right;">2,814</td>
-          <td style="text-align: right; padding-right: 1em;">165</td>
+          <td style="text-align: right;">2,897</td>
+          <td style="text-align: right; padding-right: 1em;">169</td>
         </tr>
         <tr id="merkle-trees">
           <td>
@@ -1224,8 +1215,8 @@
             <label for="tags_merkle-trees">
               <span class="">And related similar data structures. Not business/scam news.</span>
 </label>          </td>
-          <td style="text-align: right;">781</td>
-          <td style="text-align: right; padding-right: 1em;">306</td>
+          <td style="text-align: right;">783</td>
+          <td style="text-align: right; padding-right: 1em;">307</td>
         </tr>
         <tr id="mobile">
           <td>
@@ -1236,8 +1227,8 @@
             <label for="tags_mobile">
               <span class="">Mobile app/web development</span>
 </label>          </td>
-          <td style="text-align: right;">981</td>
-          <td style="text-align: right; padding-right: 1em;">152</td>
+          <td style="text-align: right;">994</td>
+          <td style="text-align: right; padding-right: 1em;">153</td>
         </tr>
         <tr id="retrocomputing">
           <td>
@@ -1248,8 +1239,8 @@
             <label for="tags_retrocomputing">
               <span class="">Reproductions, emulators, and other revivals of historic technologies</span>
 </label>          </td>
-          <td style="text-align: right;">419</td>
-          <td style="text-align: right; padding-right: 1em;">36</td>
+          <td style="text-align: right;">497</td>
+          <td style="text-align: right; padding-right: 1em;">37</td>
         </tr>
         <tr id="wasm">
           <td>
@@ -1260,8 +1251,8 @@
             <label for="tags_wasm">
               <span class="">webassembly</span>
 </label>          </td>
-          <td style="text-align: right;">657</td>
-          <td style="text-align: right; padding-right: 1em;">73</td>
+          <td style="text-align: right;">670</td>
+          <td style="text-align: right; padding-right: 1em;">74</td>
         </tr>
         <tr id="web">
           <td>
@@ -1272,8 +1263,8 @@
             <label for="tags_web">
               <span class="">Web development and news</span>
 </label>          </td>
-          <td style="text-align: right;">8,890</td>
-          <td style="text-align: right; padding-right: 1em;">117</td>
+          <td style="text-align: right;">9,058</td>
+          <td style="text-align: right; padding-right: 1em;">118</td>
         </tr>
       <tr>
         <th></th>
@@ -1288,8 +1279,8 @@
             <label for="tags_api">
               <span class="">API development/implementation</span>
 </label>          </td>
-          <td style="text-align: right;">1,622</td>
-          <td style="text-align: right; padding-right: 1em;">75</td>
+          <td style="text-align: right;">1,637</td>
+          <td style="text-align: right; padding-right: 1em;">76</td>
         </tr>
         <tr id="debugging">
           <td>
@@ -1300,8 +1291,8 @@
             <label for="tags_debugging">
               <span class="">Debugging techniques</span>
 </label>          </td>
-          <td style="text-align: right;">1,246</td>
-          <td style="text-align: right; padding-right: 1em;">37</td>
+          <td style="text-align: right;">1,262</td>
+          <td style="text-align: right; padding-right: 1em;">38</td>
         </tr>
         <tr id="devops">
           <td>
@@ -1312,8 +1303,8 @@
             <label for="tags_devops">
               <span class="">DevOps</span>
 </label>          </td>
-          <td style="text-align: right;">3,303</td>
-          <td style="text-align: right; padding-right: 1em;">142</td>
+          <td style="text-align: right;">3,352</td>
+          <td style="text-align: right; padding-right: 1em;">139</td>
         </tr>
         <tr id="performance">
           <td>
@@ -1324,8 +1315,8 @@
             <label for="tags_performance">
               <span class="">Performance and optimization</span>
 </label>          </td>
-          <td style="text-align: right;">3,605</td>
-          <td style="text-align: right; padding-right: 1em;">25</td>
+          <td style="text-align: right;">3,746</td>
+          <td style="text-align: right; padding-right: 1em;">26</td>
         </tr>
         <tr id="practices">
           <td>
@@ -1336,8 +1327,8 @@
             <label for="tags_practices">
               <span class="">Development and team practices</span>
 </label>          </td>
-          <td style="text-align: right;">8,252</td>
-          <td style="text-align: right; padding-right: 1em;">88</td>
+          <td style="text-align: right;">8,418</td>
+          <td style="text-align: right; padding-right: 1em;">89</td>
         </tr>
         <tr id="privacy">
           <td>
@@ -1348,7 +1339,7 @@
             <label for="tags_privacy">
               <span class="">Privacy</span>
 </label>          </td>
-          <td style="text-align: right;">2,400</td>
+          <td style="text-align: right;">2,440</td>
           <td style="text-align: right; padding-right: 1em;">77</td>
         </tr>
         <tr id="reversing">
@@ -1360,8 +1351,8 @@
             <label for="tags_reversing">
               <span class="">Reverse engineering</span>
 </label>          </td>
-          <td style="text-align: right;">1,825</td>
-          <td style="text-align: right; padding-right: 1em;">113</td>
+          <td style="text-align: right;">1,890</td>
+          <td style="text-align: right; padding-right: 1em;">114</td>
         </tr>
         <tr id="scaling">
           <td>
@@ -1372,8 +1363,8 @@
             <label for="tags_scaling">
               <span class="">Scaling and architecture</span>
 </label>          </td>
-          <td style="text-align: right;">1,008</td>
-          <td style="text-align: right; padding-right: 1em;">87</td>
+          <td style="text-align: right;">1,017</td>
+          <td style="text-align: right; padding-right: 1em;">88</td>
         </tr>
         <tr id="security">
           <td>
@@ -1384,8 +1375,8 @@
             <label for="tags_security">
               <span class="">Netsec, appsec, and infosec</span>
 </label>          </td>
-          <td style="text-align: right;">12,175</td>
-          <td style="text-align: right; padding-right: 1em;">85</td>
+          <td style="text-align: right;">12,511</td>
+          <td style="text-align: right; padding-right: 1em;">82</td>
         </tr>
         <tr id="testing">
           <td>
@@ -1396,7 +1387,7 @@
             <label for="tags_testing">
               <span class="">Software testing</span>
 </label>          </td>
-          <td style="text-align: right;">1,669</td>
+          <td style="text-align: right;">1,701</td>
           <td style="text-align: right; padding-right: 1em;">67</td>
         </tr>
         <tr id="virtualization">
@@ -1408,13 +1399,25 @@
             <label for="tags_virtualization">
               <span class="">Virtualization</span>
 </label>          </td>
-          <td style="text-align: right;">939</td>
-          <td style="text-align: right; padding-right: 1em;">98</td>
+          <td style="text-align: right;">956</td>
+          <td style="text-align: right; padding-right: 1em;">97</td>
         </tr>
       <tr>
         <th></th>
         <th colspan=4>tools</th>
       </tr>
+        <tr id="building-ai-tooling">
+          <td>
+              <input type="checkbox" name="tags[building-ai-tooling]" id="tags_building-ai-tooling" value="building-ai-tooling">
+          </td>
+          <td><a aria-label="Tag building-ai-tooling" class="tag tag_building-ai-tooling" title="The design, ux, development of AI/LLM-powered tools (excludes use)." href="/t/building-ai-tooling">building-ai-tooling</a></td>
+          <td>
+            <label for="tags_building-ai-tooling">
+              <span class="">The design, ux, development of AI/LLM-powered tools (excludes use).</span>
+</label>          </td>
+          <td style="text-align: right;">24</td>
+          <td style="text-align: right; padding-right: 1em;">126</td>
+        </tr>
         <tr id="compilers">
           <td>
               <input type="checkbox" name="tags[compilers]" id="tags_compilers" value="compilers">
@@ -1424,8 +1427,8 @@
             <label for="tags_compilers">
               <span class="">Compiler design</span>
 </label>          </td>
-          <td style="text-align: right;">2,867</td>
-          <td style="text-align: right; padding-right: 1em;">111</td>
+          <td style="text-align: right;">2,965</td>
+          <td style="text-align: right; padding-right: 1em;">112</td>
         </tr>
         <tr id="databases">
           <td>
@@ -1436,8 +1439,8 @@
             <label for="tags_databases">
               <span class="">Databases (SQL, NoSQL)</span>
 </label>          </td>
-          <td style="text-align: right;">4,740</td>
-          <td style="text-align: right; padding-right: 1em;">99</td>
+          <td style="text-align: right;">4,842</td>
+          <td style="text-align: right; padding-right: 1em;">103</td>
         </tr>
         <tr id="editors">
           <td>
@@ -1448,8 +1451,8 @@
             <label for="tags_editors">
               <span class="">Code editors and IDEs without a specific tag</span>
 </label>          </td>
-          <td style="text-align: right;">167</td>
-          <td style="text-align: right; padding-right: 1em;">8</td>
+          <td style="text-align: right;">190</td>
+          <td style="text-align: right; padding-right: 1em;">10</td>
         </tr>
         <tr id="emacs">
           <td>
@@ -1460,8 +1463,8 @@
             <label for="tags_emacs">
               <span class="">Emacs editor</span>
 </label>          </td>
-          <td style="text-align: right;">835</td>
-          <td style="text-align: right; padding-right: 1em;">378</td>
+          <td style="text-align: right;">869</td>
+          <td style="text-align: right; padding-right: 1em;">386</td>
         </tr>
         <tr id="systemd">
           <td>
@@ -1472,7 +1475,7 @@
             <label for="tags_systemd">
               <span class="">Linux systemd</span>
 </label>          </td>
-          <td style="text-align: right;">227</td>
+          <td style="text-align: right;">235</td>
           <td style="text-align: right; padding-right: 1em;">140</td>
         </tr>
         <tr id="vcs">
@@ -1484,20 +1487,8 @@
             <label for="tags_vcs">
               <span class="">Git, Mercurial, Perforce, Subversion, Jujutsu and other version control systems</span>
 </label>          </td>
-          <td style="text-align: right;">1,726</td>
-          <td style="text-align: right; padding-right: 1em;">75</td>
-        </tr>
-        <tr id="vibecoding">
-          <td>
-              <input type="checkbox" name="tags[vibecoding]" id="tags_vibecoding" value="vibecoding" checked="checked">
-          </td>
-          <td><a aria-label="Tag vibecoding" class="tag tag_vibecoding filtered" title="Using AI/LLM, coding tools. Don&#39;t also tag with `ai`." href="/t/vibecoding">vibecoding</a></td>
-          <td>
-            <label for="tags_vibecoding">
-              <span class="">Using AI/LLM, coding tools. Don&#39;t also tag with `ai`.</span>
-</label>          </td>
-          <td style="text-align: right;">2,886</td>
-          <td style="text-align: right; padding-right: 1em;">672</td>
+          <td style="text-align: right;">1,803</td>
+          <td style="text-align: right; padding-right: 1em;">76</td>
         </tr>
         <tr id="vim">
           <td>
@@ -1508,8 +1499,8 @@
             <label for="tags_vim">
               <span class="">Vim editor</span>
 </label>          </td>
-          <td style="text-align: right;">550</td>
-          <td style="text-align: right; padding-right: 1em;">191</td>
+          <td style="text-align: right;">558</td>
+          <td style="text-align: right; padding-right: 1em;">193</td>
         </tr>
         <tr id="vscode">
           <td>
@@ -1520,8 +1511,8 @@
             <label for="tags_vscode">
               <span class="">Visual Studio Code editor</span>
 </label>          </td>
-          <td style="text-align: right;">16</td>
-          <td style="text-align: right; padding-right: 1em;">77</td>
+          <td style="text-align: right;">18</td>
+          <td style="text-align: right; padding-right: 1em;">96</td>
         </tr>
     </table>
     <p>
@@ -1529,7 +1520,7 @@
     </p>
 </form></div>
 
-  </div>
+  </main>
 
   <footer>
     <span id="office-hours-live">

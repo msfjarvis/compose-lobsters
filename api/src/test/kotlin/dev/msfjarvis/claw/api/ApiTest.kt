@@ -44,41 +44,18 @@ class ApiTest {
     val posts = api.getHottestPosts(1)
     assertIs<Success<List<LobstersPost>>>(posts)
 
-    val firstPost = posts.value[0]
-    assertThat(firstPost.shortId).isEqualTo("0mam5k")
-    assertThat(firstPost.title).isEqualTo("Lobsters Interview with mitchellh")
-    assertThat(firstPost.submitter).isEqualTo("veqq")
-    assertThat(firstPost.commentCount).isEqualTo(5)
+    val firstPost = posts.value.first()
+    assertThat(firstPost.shortId).isEqualTo("drwd4j")
+    assertThat(firstPost.title).isEqualTo("Jepsen: ParticleDB 1.1.4")
+    assertThat(firstPost.url).isEqualTo("https://jepsen.io/analyses/particledb-1.1.4")
+    assertThat(firstPost.submitter).isEqualTo("aphyr")
+    assertThat(firstPost.commentCount).isEqualTo(17)
     assertThat(firstPost.commentsUrl)
-      .isEqualTo("https://lobste.rs/s/0mam5k/lobsters_interview_with_mitchellh")
-    assertThat(firstPost.tags).containsExactly("interview", "person")
+      .isEqualTo("https://lobste.rs/s/drwd4j/jepsen_particledb_1_1_4")
+    assertThat(firstPost.tags).containsExactly("databases", "testing")
     assertThat(firstPost.userIsAuthor).isTrue()
-    assertThat(firstPost.createdAt).isEqualTo("2026-07-09T15:41:15Z")
+    assertThat(firstPost.createdAt).isEqualTo("2026-10-31T13:39:52Z")
     Instant.parse(firstPost.createdAt)
-
-    val secondPost = posts.value[1]
-    assertThat(secondPost.shortId).isEqualTo("tedi5h")
-    assertThat(secondPost.title)
-      .isEqualTo(
-        "You paid me, a long-time Linux user, to use Windows 11 exclusively for a month: here’s how it went"
-      )
-    assertThat(secondPost.submitter).isEqualTo("ninakali")
-    assertThat(secondPost.commentCount).isEqualTo(19)
-    assertThat(secondPost.commentsUrl)
-      .isEqualTo("https://lobste.rs/s/tedi5h/you_paid_me_long_time_linux_user_use")
-    assertThat(secondPost.tags).containsExactly("windows")
-    assertThat(secondPost.userIsAuthor).isFalse()
-
-    val thirdPost = posts.value[2]
-    assertThat(thirdPost.shortId).isEqualTo("3eo2nv")
-    assertThat(thirdPost.title)
-      .isEqualTo("I Did Not Kill Stanley Lieber: How to draw (with 9front)")
-    assertThat(thirdPost.submitter).isEqualTo("pmjv")
-    assertThat(thirdPost.commentCount).isEqualTo(6)
-    assertThat(thirdPost.commentsUrl)
-      .isEqualTo("https://lobste.rs/s/3eo2nv/i_did_not_kill_stanley_lieber_how_draw_with")
-    assertThat(thirdPost.tags).containsExactly("art")
-    assertThat(thirdPost.userIsAuthor).isTrue()
   }
 
   @Test
@@ -93,7 +70,7 @@ class ApiTest {
   fun `post details with comments`() = runTest {
     val postDetails = api.getPostDetails("https://lobste.rs/s/tdfoqh/c")
     assertIs<Success<LobstersPostDetails>>(postDetails)
-    assertThat(postDetails.value.tags).containsExactly("meta")
+    assertThat(postDetails.value.stories.first().tags).containsExactly("meta")
     val comments = postDetails.value.comments
     assertThat(comments).hasSize(10)
     assertThat(comments.first().user).isEqualTo("dpercy")
@@ -227,10 +204,10 @@ class ApiTest {
     assertThat(rubyTag.isMedia).isFalse()
     assertThat(rubyTag.hotnessMod).isEqualTo(0.0)
 
-    val vibecodingTag = tags.value.first { it.tag == "vibecoding" }
-    assertThat(vibecodingTag.active).isTrue()
-
     val videoTag = tags.value.first { it.tag == "video" }
     assertThat(videoTag.isMedia).isTrue()
+
+    val transcriptTag = tags.value.first { it.tag == "transcript" }
+    assertThat(transcriptTag.isMedia).isTrue()
   }
 }

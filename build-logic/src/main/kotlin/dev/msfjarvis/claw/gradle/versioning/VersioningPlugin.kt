@@ -10,7 +10,6 @@ import com.android.build.api.variant.ApplicationAndroidComponentsExtension
 import com.android.build.api.variant.VariantOutputConfiguration
 import com.github.zafarkhaja.semver.Version
 import java.util.Properties
-import java.util.concurrent.atomic.AtomicBoolean
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -27,33 +26,36 @@ class VersioningPlugin : Plugin<Project> {
 
   override fun apply(project: Project) {
     with(project) {
-      val androidAppPluginApplied = AtomicBoolean(false)
+      pluginManager.apply("com.android.application")
       val propFile = layout.projectDirectory.file(VERSIONING_PROP_FILE)
       require(propFile.asFile.exists()) {
         "A 'version.properties' file must exist in the project subdirectory to use this plugin"
       }
       val contents = providers.fileContents(propFile).asText
-      val versionProps = Properties().also { it.load(contents.get().byteInputStream()) }
+      val versionProps = contents.map { text -> Properties().also { it.load(text.reader()) } }
       val versionName =
         providers
           .gradleProperty("VERSION_NAME")
           .orElse(
-            requireNotNull(versionProps.getProperty(VERSIONING_PROP_VERSION_NAME)) {
-              "version.properties must contain a '$VERSIONING_PROP_VERSION_NAME' property"
+            versionProps.map { props ->
+              requireNotNull(props.getProperty(VERSIONING_PROP_VERSION_NAME)) {
+                "version.properties must contain a '$VERSIONING_PROP_VERSION_NAME' property"
+              }
             }
           )
       val versionCode =
         providers
           .gradleProperty("VERSION_CODE")
           .orElse(
-            requireNotNull(versionProps.getProperty(VERSIONING_PROP_VERSION_CODE)) {
-              "version.properties must contain a '$VERSIONING_PROP_VERSION_CODE' property"
+            versionProps.map { props ->
+              requireNotNull(props.getProperty(VERSIONING_PROP_VERSION_CODE)) {
+                "version.properties must contain a '$VERSIONING_PROP_VERSION_CODE' property"
+              }
             }
           )
           .map(String::toInt)
 
       project.pluginManager.withPlugin("com.android.application") {
-        androidAppPluginApplied.set(true)
         extensions.configure<ApplicationAndroidComponentsExtension> {
           onVariants { variant ->
             val mainOutput =
@@ -90,11 +92,6 @@ class VersioningPlugin : Plugin<Project> {
         description = "Increment the minor version and add the `SNAPSHOT` suffix"
         semverString.set(version.map { it.nextMinorVersion("SNAPSHOT") }.map(Version::toString))
         propertyFile.set(propFile)
-      }
-      afterEvaluate {
-        check(androidAppPluginApplied.get()) {
-          "Plugin 'com.android.application' must be applied to ${project.displayName} to use the Versioning Plugin"
-        }
       }
     }
   }

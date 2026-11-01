@@ -40,11 +40,6 @@ pluginManagement {
         includeModule("com.gradle", "develocity-gradle-plugin")
         includeModule("com.gradle.develocity", "com.gradle.develocity.gradle.plugin")
         includeModule("com.jraska.module.graph.assertion", "plugin")
-        includeModule(
-          "org.gradle.toolchains.foojay-resolver-convention",
-          "org.gradle.toolchains.foojay-resolver-convention.gradle.plugin",
-        )
-        includeModule("org.gradle.toolchains", "foojay-resolver")
       }
     }
     includeBuild("build-logic")
@@ -56,10 +51,7 @@ pluginManagement {
   }
 }
 
-plugins {
-  id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
-  id("com.gradle.develocity") version "4.6.1"
-}
+plugins { id("com.gradle.develocity") version "4.6.1" }
 
 develocity {
   buildScan {
@@ -151,9 +143,14 @@ include(
   "benchmark",
   "common",
   "core",
-  "database:core",
-  "database:impl",
+  "database-core",
+  "database-impl",
   "html-renderer",
+  "html-test-fixtures",
   "model",
   "zipline-parser",
 )
+
+project(":database-core").projectDir = file("database/core")
+
+project(":database-impl").projectDir = file("database/impl")

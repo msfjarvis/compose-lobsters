@@ -7,6 +7,7 @@
 package dev.msfjarvis.claw.android.work
 
 import com.google.common.truth.Truth.assertThat
+import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.LobstersPostDetails
 import org.junit.jupiter.api.Test
 
@@ -46,9 +47,16 @@ class SavedPostUpdaterWorkerTest {
 
   private fun details(shortId: String) =
     LobstersPostDetails(
-      shortId = shortId,
-      title = "Goodbye Google",
-      submitter = "classichasclass",
+      stories =
+        listOf(
+          LobstersPost(
+            shortId = shortId,
+            title = "Goodbye Google",
+            submitter = "classichasclass",
+          )
+        ),
+      comments = emptyList(),
       commentsUrl = "https://lobste.rs#comments-$shortId",
+      commentCount = 0,
     )
 }

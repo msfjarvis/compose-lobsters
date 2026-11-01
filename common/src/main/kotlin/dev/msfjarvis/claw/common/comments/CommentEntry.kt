@@ -76,9 +76,10 @@ internal fun CommentsHeader(
   openUserProfile: (String) -> Unit,
   modifier: Modifier = Modifier,
 ) {
+  val primaryStory = post.discussion.first
   val linkMetadata by
-    produceState(initialValue = LinkMetadata(post.url, null), key1 = post) {
-      runSuspendCatching { postActions.getLinkMetadata(post.url) }
+    produceState(initialValue = LinkMetadata(primaryStory.url, null), key1 = post) {
+      runSuspendCatching { postActions.getLinkMetadata(primaryStory.url) }
         .onOk { metadata -> value = metadata }
     }
 
@@ -87,8 +88,8 @@ internal fun CommentsHeader(
       modifier = Modifier.padding(16.dp).fillMaxWidth(),
       verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-      PostTitle(title = post.title, isRead = false)
-      TagRow(tags = post.tags.toImmutableList())
+      PostTitle(title = primaryStory.title, isRead = false)
+      TagRow(tags = primaryStory.tags.toImmutableList())
       Spacer(Modifier.height(4.dp))
 
       if (linkMetadata.url.isNotBlank()) {
@@ -109,11 +110,11 @@ internal fun CommentsHeader(
       Submitter(
         text =
           AnnotatedString(
-            "${if (post.userIsAuthor) "Authored" else "Submitted"} by ${post.submitter}"
+            "${if (primaryStory.userIsAuthor) "Authored" else "Submitted"} by ${primaryStory.submitter}"
           ),
-        avatarUrl = "https://lobste.rs/avatars/${post.submitter}-100.png",
-        contentDescription = stringResource(R.string.user_avatar_for, post.submitter),
-        modifier = Modifier.clickable { openUserProfile(post.submitter) },
+        avatarUrl = "https://lobste.rs/avatars/${primaryStory.submitter}-100.png",
+        contentDescription = stringResource(R.string.user_avatar_for, primaryStory.submitter),
+        modifier = Modifier.clickable { openUserProfile(primaryStory.submitter) },
       )
     }
   }

@@ -4,7 +4,6 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
-
 plugins {
   id("dev.msfjarvis.claw.kotlin-multiplatform")
   alias(libs.plugins.kotlin.serialization)
@@ -26,7 +25,7 @@ kotlin {
     }
     jvmMain {
       dependencies {
-        api(projects.database.core)
+        api(projects.databaseCore)
       }
     }
     jvmTest {

@@ -19,6 +19,7 @@ class Comment(
   val timestamp: Instant,
   val edited: Boolean = false,
   val parentComment: String? = null,
+  val sourceStoryId: String,
   @SerialName("commenting_user") val user: String = "",
   val isUpvoted: Boolean = false,
 )

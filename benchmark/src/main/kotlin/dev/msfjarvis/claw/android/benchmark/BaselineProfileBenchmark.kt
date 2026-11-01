@@ -52,15 +52,7 @@ class BaselineProfileBenchmark {
       iterations = 10,
       setupBlock = { device.executeShellCommand("pm clear $PACKAGE_NAME") },
     ) {
-      startActivityAndWait()
-
-      device.waitForIdle()
-
-      device.savePosts()
-
-      device.exploreScreens()
-
-      device.returnToHottestScreen()
+      exploreUI()
     }
   }
 }

@@ -7,20 +7,18 @@
 package dev.msfjarvis.claw.gradle.artifacts
 
 import com.android.build.api.variant.BuiltArtifactsLoader
-import java.io.File
 import java.nio.file.Files
-import java.nio.file.Path
 import java.nio.file.Paths
 import java.nio.file.StandardCopyOption
-import kotlin.io.path.createDirectory
+import kotlin.io.path.createDirectories
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.DirectoryProperty
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.InputDirectory
 import org.gradle.api.tasks.InputFile
-import org.gradle.api.tasks.InputFiles
 import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.OutputDirectory
@@ -31,7 +29,9 @@ import org.gradle.api.tasks.TaskAction
 /** Task to collect APKs in a given [outputDirectory]. */
 @CacheableTask
 abstract class CollectApksTask : DefaultTask() {
-  @get:InputFiles @get:PathSensitive(PathSensitivity.NONE) abstract val apkFolder: DirectoryProperty
+  @get:InputDirectory
+  @get:PathSensitive(PathSensitivity.RELATIVE)
+  abstract val apkFolder: DirectoryProperty
 
   @get:InputFile
   @get:PathSensitive(PathSensitivity.NONE)
@@ -51,8 +51,8 @@ abstract class CollectApksTask : DefaultTask() {
   @TaskAction
   fun run() {
     val outputDir = outputDirectory.asFile.get().toPath()
-    Files.walk(outputDir).sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::delete)
-    outputDir.createDirectory()
+    check(outputDir.toFile().deleteRecursively()) { "Cannot clean artifact directory: $outputDir" }
+    outputDir.createDirectories()
     val builtArtifacts =
       builtArtifactsLoader.get().load(apkFolder.get()) ?: error("Cannot load APKs")
     builtArtifacts.elements.forEach { artifact ->

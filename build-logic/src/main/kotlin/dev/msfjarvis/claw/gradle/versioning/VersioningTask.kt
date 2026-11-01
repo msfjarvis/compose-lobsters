@@ -10,16 +10,17 @@ import com.github.zafarkhaja.semver.Version
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.Property
-import org.gradle.api.tasks.CacheableTask
 import org.gradle.api.tasks.Input
-import org.gradle.api.tasks.OutputFile
+import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.TaskAction
+import org.gradle.work.DisableCachingByDefault
 
-@CacheableTask
+@DisableCachingByDefault(because = "Updates a tracked source file rather than generating an output")
 abstract class VersioningTask : DefaultTask() {
   @get:Input abstract val semverString: Property<String>
 
-  @get:OutputFile abstract val propertyFile: RegularFileProperty
+  // Each operation mutates this file; none owns it as a generated/cache-restorable output.
+  @get:Internal abstract val propertyFile: RegularFileProperty
 
   /** Generate the Android 'versionCode' property */
   private fun Version.androidCode(): Long {

@@ -4,11 +4,11 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
+import org.gradle.api.JavaVersion
 import org.gradle.api.tasks.compile.JavaCompile
-import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.dsl.KotlinJvmExtension
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
   `kotlin-dsl`
@@ -21,6 +21,18 @@ gradlePlugin {
     register("android-application") {
       id = "dev.msfjarvis.claw.android-application"
       implementationClass = "dev.msfjarvis.claw.gradle.AndroidApplicationPlugin"
+    }
+    register("android-distribution") {
+      id = "dev.msfjarvis.claw.android-distribution"
+      implementationClass = "dev.msfjarvis.claw.gradle.AndroidDistributionPlugin"
+    }
+    register("android-test-devices") {
+      id = "dev.msfjarvis.claw.android-test-devices"
+      implementationClass = "dev.msfjarvis.claw.gradle.AndroidTestDevicesPlugin"
+    }
+    register("android-screenshot") {
+      id = "dev.msfjarvis.claw.android-screenshot"
+      implementationClass = "dev.msfjarvis.claw.gradle.AndroidScreenshotPlugin"
     }
     register("android-common") {
       id = "dev.msfjarvis.claw.android-common"
@@ -58,6 +70,14 @@ gradlePlugin {
       id = "dev.msfjarvis.claw.spotless"
       implementationClass = "dev.msfjarvis.claw.gradle.SpotlessPlugin"
     }
+    register("zipline-setup") {
+      id = "dev.msfjarvis.claw.zipline-setup"
+      implementationClass = "dev.msfjarvis.claw.gradle.ZiplineSetupPlugin"
+    }
+    register("update-fixtures") {
+      id = "dev.msfjarvis.claw.update-fixtures"
+      implementationClass = "dev.msfjarvis.claw.gradle.UpdateFixturesPlugin"
+    }
     register("versioning") {
       id = "dev.msfjarvis.claw.versioning-plugin"
       implementationClass = "dev.msfjarvis.claw.gradle.versioning.VersioningPlugin"
@@ -67,7 +87,9 @@ gradlePlugin {
 
 lint.baseline = project.file("lint-baseline.xml")
 
-extensions.getByType<KotlinJvmExtension>().compilerOptions { jvmTarget.set(JvmTarget.JVM_21) }
+tasks.withType<KotlinCompile>().configureEach {
+  compilerOptions.jvmTarget.set(JvmTarget.JVM_21)
+}
 
 tasks.withType<JavaCompile>().configureEach {
   sourceCompatibility = JavaVersion.VERSION_21.toString()
@@ -78,12 +100,16 @@ dependencies {
   implementation(libs.build.agp)
   implementation(libs.build.cachefix)
   implementation(libs.build.kotlin.gradle)
+  implementation(libs.build.screenshot)
   implementation(libs.build.semver)
   implementation(libs.build.sentry)
   implementation(libs.build.spotless)
 
   // Expose the generated version catalog API to the plugin.
   implementation(files(libs::class.java.superclass.protectionDomain.codeSource.location))
+
+  testImplementation(kotlin("test"))
+  testImplementation(gradleTestKit())
 
   lintChecks(libs.androidx.lint.gradle)
 }

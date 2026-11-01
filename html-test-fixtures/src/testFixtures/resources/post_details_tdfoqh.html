@@ -7,6 +7,7 @@
   <link rel="apple-touch-icon" sizes="114x114" href="/touch-icon.png">
   <link rel="apple-touch-icon" sizes="72x72" href="/touch-icon-144.png">
   <link rel="apple-touch-icon" sizes="144x144" href="/touch-icon-144.png">
+  <link rel="manifest" href="/manifest.json">
   <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="Lobsters">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="referrer" content="always">
@@ -18,22 +19,20 @@
     <meta property="og:site_name" content="Lobsters">
     <meta property="og:title" content="Ranking comments by sum of replies&#39; scores">
     <meta property="og:description" content="10 comments">
-    <meta property="og:image" content="https://lobste.rs/story_image/tdfoqh.png">
+    <meta property="og:image" content="https://lobste.rs/touch-icon-144.png">
     <meta property="article:author" content="https://lobste.rs/~gioele">
   <link rel="shortcut icon" href="/favicon.ico">
     <link href="https://lobste.rs/s/tdfoqh/ranking_comments_by_sum_replies_scores" rev="canonical" rel="self alternate shorter shorturl shortlink">
   <title>Ranking comments by sum of replies&#39; scores | Lobsters</title>
 
-  <link rel="stylesheet" href="/assets/application-d417b8b4.css">
-  <link rel="stylesheet" href="/assets/system-system-fd030c9d.css">
-  <link rel="stylesheet" href="/assets/tom-select-00e8031d.css" data-turbo-track="reload">
-  <link rel="stylesheet" href="/assets/TomSelect_remove_button-4d5c34b9.css" data-turbo-track="reload">
-
+    <link rel="stylesheet" href="/application.css">
+    <link rel="stylesheet" href="/system-system.css">
+    <script src="/application.js" type="module"></script>
 
   <meta name="csrf-param" content="authenticity_token">
-<meta name="csrf-token" content="x21lNnPzmG8xQppD1ULd26ofux_9rIbRINBAnkeKXk41Y0_S_aEHvYVgGU3yku7qxVwIpN5vOxWJoX07PHF4JA">
+<meta name="csrf-token" content="Ld6Hq3YME9NSiTPxXGDPtDiBWpYn5N8BIaeAqFeqvD4nB21jaRHUoMY4U6U5SovhOqG64dW6PM9O8foK9DwzYw">
   <meta name="robots" content="noai, noimageai">
-    <script type="speculationrules" nonce="KRObbTozM4i2tL2NUL7DWQ==">
+    <script type="speculationrules" nonce="HE2GVopB7CqDlhYEz0voXQ==">
       {
         "prefetch": [
           {
@@ -46,32 +45,35 @@
       }
     </script>
 </head>
-<body data-username='' data-now-unix='1783665557'>
-  <header id="nav">
-    <a id="logo" style="background-color: #5b0000;" href="/" title="Lobsters (Current traffic: 6%)"></a>
-    
+<body data-username=''>
+  <header id="header">
+    <div id="header-top">
+      <h1 style="background-color: #ac130d;" id="logo">
+        <a href="/" title="Lobsters (Current traffic: 0%)">
+          <b class="sr-only" aria-hidden="true">Lobsters</b>
+        </a>
+        
+      </h1>
 
-    <div class="navholder">
-      <nav class="links">
-        <a class="" href="/active">Active</a>
-        <a class="" href="/recent">Recent</a>
-        <a class="" href="/comments">Comments</a>
+      <nav aria-label="Menu">
+        <ul>
+          <li><a href="/active">Active</a></li>
+          <li><a href="/recent">Recent</a></li>
+          <li><a href="/comments">Comments</a></li>
 
 
-        <a class="" href="/search">Search</a>
+          <li><a href="/search">Search</a></li>
 
 
-          <a class="corner" href="/login">Login</a>
+            <li class="push-right"><a href="/login">Login</a></li>
+        </ul>
       </nav>
     </div>
 
-    <nav class="corner">
-        <a class="corner" href="/login">Login</a>
-    </nav>
+
   </header>
 
-
-  <div id="inside">
+  <main id="inside">
 
 
     
@@ -86,29 +88,23 @@
   </div>
 
     <div class="details" id="header_story_01g8ke0w20enk85qfby8bp0cgy">
-      <span role="heading" aria-level="1" class="link h-cite u-repost-of">
+      <h2 class="link h-cite u-repost-of">
         <a href="/s/tdfoqh/ranking_comments_by_sum_replies_scores" rel="ugc noreferrer" class="u-url">Ranking comments by sum of replies&#39; scores</a>
-      </span>
+      </h2>
 
-        <a class="description_present" title="There are often cases where comments with a poor score (say, 1 point), invite high-quality replies that receive many upvotes.
-
-These threads are not shown at the top of the story&#39;s comments page because their &quot;root comment&quot; has a low score.
-
-An example, as of 2022-07-22 17:00 UTC, is &lt;https://lobste.rs/s/ekvqcf/random_wallpaper_with_just_bash_systemd#c_vop9bt&gt;:
-* the root comment has 1 point,
-* the first reply has 12 points,
-* and, in total, 18 points have been accumulated by all the r..." href="/s/tdfoqh/ranking_comments_by_sum_replies_scores">&#x2636;</a>
+        <a class="description_present" aria-label="Story description" href="#story_text">&#x2636;</a>
 
       <ul class="tags" aria-label="Tags">
           <li><a aria-label="Tag meta" class="tag tag_meta" title="Lobsters-related bikeshedding - report bugs at https://github.com/lobsters/lobsters" href="/t/meta">meta</a></li>
       </ul>
 
+
       <div class="byline">
         <span>authored by</span>
         <a tabindex="-1" aria-hidden="true" href="/~gioele"><img srcset="/avatars/gioele-16.png 1x, /avatars/gioele-32.png 2x" class="avatar" alt="" loading="lazy" decoding="async" src="/avatars/gioele-16.png" width="16" height="16"></a>
-        <a class="user_is_author" href="/~gioele">gioele</a> 
+        <a class="u-author h-card user_is_author" href="/~gioele">gioele</a> 
 
-          <time title="2022-07-22 12:06:59" datetime="2022-07-22 12:06:59" data-at-unix="1658509619">3 years ago</time>
+          <time title="2022-07-22 12:06:59" datetime="2022-07-22 12:06:59" data-at-unix="1658509619">2022-07-22 12:06:59</time>
 
 
 
@@ -117,10 +113,7 @@ An example, as of 2022-07-22 17:00 UTC, is &lt;https://lobste.rs/s/ekvqcf/random
 
           <span class="comments_label">
             <span aria-hidden="true"> | </span>
-            <a role="heading" aria-level="2" href="#comments-tdfoqh">
-              10
-              comments
-            </a>
+              <a href="#comments-tdfoqh">10 comments</a>
           </span>
 
       </div>
@@ -133,7 +126,7 @@ An example, as of 2022-07-22 17:00 UTC, is &lt;https://lobste.rs/s/ekvqcf/random
 </ol>
 
 <div class="story_content">
-    <div class="story_text">
+    <div class="story_text" id="story_text">
       <p>There are often cases where comments with a poor score (say, 1 point), invite high-quality replies that receive many upvotes.</p>
 <p>These threads are not shown at the top of the story's comments page because their "root comment" has a low score.</p>
 <p>An example, as of 2022-07-22 17:00 UTC, is <a href="https://lobste.rs/s/ekvqcf/random_wallpaper_with_just_bash_systemd#c_vop9bt" rel="ugc">https://lobste.rs/s/ekvqcf/random_wallpaper_with_just_bash_systemd#c_vop9bt</a>:</p>
@@ -164,9 +157,11 @@ An example, as of 2022-07-22 17:00 UTC, is &lt;https://lobste.rs/s/ekvqcf/random
     <li class="comments_subtree">
 
 
-  <input id="comment_folder_ncdsfc"
+  <input
+    id="comment_folder_ncdsfc"
     class="comment_folder_button" type="checkbox"
-    >
+
+  >
 
 <div id="c_ncdsfc"
   data-shortid="ncdsfc"
@@ -193,7 +188,7 @@ An example, as of 2022-07-22 17:00 UTC, is &lt;https://lobste.rs/s/ekvqcf/random
         
 
 
-            <a href="/c/ncdsfc"><time title="2022-07-22 14:04:36" datetime="2022-07-22 14:04:36" data-at-unix="1658516676">3 years ago</time></a>
+            <a href="/c/ncdsfc"><time title="2022-07-22 14:04:36" datetime="2022-07-22 14:04:36" data-at-unix="1658516676">2022-07-22 14:04:36</time></a>
           
       </span>
 
@@ -226,9 +221,11 @@ An example, as of 2022-07-22 17:00 UTC, is &lt;https://lobste.rs/s/ekvqcf/random
     <li class="comments_subtree">
 
 
-  <input id="comment_folder_m3wyu5"
+  <input
+    id="comment_folder_m3wyu5"
     class="comment_folder_button" type="checkbox"
-    >
+
+  >
 
 <div id="c_m3wyu5"
   data-shortid="m3wyu5"
@@ -255,7 +252,7 @@ An example, as of 2022-07-22 17:00 UTC, is &lt;https://lobste.rs/s/ekvqcf/random
         
 
 
-            <a href="/c/m3wyu5"><time title="2022-07-23 01:04:43" datetime="2022-07-23 01:04:43" data-at-unix="1658556283">3 years ago</time></a>
+            <a href="/c/m3wyu5"><time title="2022-07-23 01:04:43" datetime="2022-07-23 01:04:43" data-at-unix="1658556283">2022-07-23 01:04:43</time></a>
           
       </span>
 
@@ -282,9 +279,11 @@ An example, as of 2022-07-22 17:00 UTC, is &lt;https://lobste.rs/s/ekvqcf/random
     <li class="comments_subtree">
 
 
-  <input id="comment_folder_pcvbcd"
+  <input
+    id="comment_folder_pcvbcd"
     class="comment_folder_button" type="checkbox"
-    >
+
+  >
 
 <div id="c_pcvbcd"
   data-shortid="pcvbcd"
@@ -312,7 +311,7 @@ An example, as of 2022-07-22 17:00 UTC, is &lt;https://lobste.rs/s/ekvqcf/random
 
 
             edited
-            <a href="/c/pcvbcd"><time title="2022-07-23 10:09:15" datetime="2022-07-23 10:09:15" data-at-unix="1658588955">3 years ago</time></a>
+            <a href="/c/pcvbcd"><time title="2022-07-23 10:09:15" datetime="2022-07-23 10:09:15" data-at-unix="1658588955">2022-07-23 10:09:15</time></a>
           
       </span>
 
@@ -348,9 +347,11 @@ An example, as of 2022-07-22 17:00 UTC, is &lt;https://lobste.rs/s/ekvqcf/random
     <li class="comments_subtree">
 
 
-  <input id="comment_folder_9vyyu5"
+  <input
+    id="comment_folder_9vyyu5"
     class="comment_folder_button" type="checkbox"
-    >
+
+  >
 
 <div id="c_9vyyu5"
   data-shortid="9vyyu5"
@@ -373,11 +374,11 @@ An example, as of 2022-07-22 17:00 UTC, is &lt;https://lobste.rs/s/ekvqcf/random
 
       <span class="">
         <a tabindex="-1" aria-hidden="true" href="/~kghose"><img srcset="/avatars/kghose-16.png 1x, /avatars/kghose-32.png 2x" class="avatar" alt="" loading="lazy" decoding="async" src="/avatars/kghose-16.png" width="16" height="16"></a>
-        <a href="/~kghose">kghose</a>
+        <a class="inactive_user" aria-label="kghose - Inactive user" href="/~kghose">kghose</a>
         
 
 
-            <a href="/c/9vyyu5"><time title="2022-07-22 13:39:20" datetime="2022-07-22 13:39:20" data-at-unix="1658515160">3 years ago</time></a>
+            <a href="/c/9vyyu5"><time title="2022-07-22 13:39:20" datetime="2022-07-22 13:39:20" data-at-unix="1658515160">2022-07-22 13:39:20</time></a>
           
       </span>
 
@@ -405,9 +406,11 @@ An example, as of 2022-07-22 17:00 UTC, is &lt;https://lobste.rs/s/ekvqcf/random
     <li class="comments_subtree">
 
 
-  <input id="comment_folder_owddle"
+  <input
+    id="comment_folder_owddle"
     class="comment_folder_button" type="checkbox"
-    >
+
+  >
 
 <div id="c_owddle"
   data-shortid="owddle"
@@ -434,7 +437,7 @@ An example, as of 2022-07-22 17:00 UTC, is &lt;https://lobste.rs/s/ekvqcf/random
         
 
 
-            <a href="/c/owddle"><time title="2022-07-22 13:57:19" datetime="2022-07-22 13:57:19" data-at-unix="1658516239">3 years ago</time></a>
+            <a href="/c/owddle"><time title="2022-07-22 13:57:19" datetime="2022-07-22 13:57:19" data-at-unix="1658516239">2022-07-22 13:57:19</time></a>
           
       </span>
 
@@ -466,9 +469,11 @@ An example, as of 2022-07-22 17:00 UTC, is &lt;https://lobste.rs/s/ekvqcf/random
     <li class="comments_subtree">
 
 
-  <input id="comment_folder_lqqn3a"
+  <input
+    id="comment_folder_lqqn3a"
     class="comment_folder_button" type="checkbox"
-    >
+
+  >
 
 <div id="c_lqqn3a"
   data-shortid="lqqn3a"
@@ -491,11 +496,11 @@ An example, as of 2022-07-22 17:00 UTC, is &lt;https://lobste.rs/s/ekvqcf/random
 
       <span class="">
         <a tabindex="-1" aria-hidden="true" href="/~kghose"><img srcset="/avatars/kghose-16.png 1x, /avatars/kghose-32.png 2x" class="avatar" alt="" loading="lazy" decoding="async" src="/avatars/kghose-16.png" width="16" height="16"></a>
-        <a href="/~kghose">kghose</a>
+        <a class="inactive_user" aria-label="kghose - Inactive user" href="/~kghose">kghose</a>
         
 
 
-            <a href="/c/lqqn3a"><time title="2022-07-22 14:28:27" datetime="2022-07-22 14:28:27" data-at-unix="1658518107">3 years ago</time></a>
+            <a href="/c/lqqn3a"><time title="2022-07-22 14:28:27" datetime="2022-07-22 14:28:27" data-at-unix="1658518107">2022-07-22 14:28:27</time></a>
           
       </span>
 
@@ -531,9 +536,11 @@ An example, as of 2022-07-22 17:00 UTC, is &lt;https://lobste.rs/s/ekvqcf/random
     <li class="comments_subtree">
 
 
-  <input id="comment_folder_7b0jgw"
+  <input
+    id="comment_folder_7b0jgw"
     class="comment_folder_button" type="checkbox"
-    >
+
+  >
 
 <div id="c_7b0jgw"
   data-shortid="7b0jgw"
@@ -560,7 +567,7 @@ An example, as of 2022-07-22 17:00 UTC, is &lt;https://lobste.rs/s/ekvqcf/random
         
 
 
-            <a href="/c/7b0jgw"><time title="2022-07-23 11:26:03" datetime="2022-07-23 11:26:03" data-at-unix="1658593563">3 years ago</time></a>
+            <a href="/c/7b0jgw"><time title="2022-07-23 11:26:03" datetime="2022-07-23 11:26:03" data-at-unix="1658593563">2022-07-23 11:26:03</time></a>
           
       </span>
 
@@ -591,9 +598,11 @@ An example, as of 2022-07-22 17:00 UTC, is &lt;https://lobste.rs/s/ekvqcf/random
     <li class="comments_subtree">
 
 
-  <input id="comment_folder_ei3nck"
+  <input
+    id="comment_folder_ei3nck"
     class="comment_folder_button" type="checkbox"
-    >
+
+  >
 
 <div id="c_ei3nck"
   data-shortid="ei3nck"
@@ -621,7 +630,7 @@ An example, as of 2022-07-22 17:00 UTC, is &lt;https://lobste.rs/s/ekvqcf/random
 
 
             edited
-            <a href="/c/ei3nck"><time title="2022-07-23 10:48:49" datetime="2022-07-23 10:48:49" data-at-unix="1658591329">3 years ago</time></a>
+            <a href="/c/ei3nck"><time title="2022-07-23 10:48:49" datetime="2022-07-23 10:48:49" data-at-unix="1658591329">2022-07-23 10:48:49</time></a>
           
       </span>
 
@@ -670,9 +679,11 @@ An example, as of 2022-07-22 17:00 UTC, is &lt;https://lobste.rs/s/ekvqcf/random
     <li class="comments_subtree">
 
 
-  <input id="comment_folder_4l8mzk"
+  <input
+    id="comment_folder_4l8mzk"
     class="comment_folder_button" type="checkbox"
-    >
+
+  >
 
 <div id="c_4l8mzk"
   data-shortid="4l8mzk"
@@ -699,7 +710,7 @@ An example, as of 2022-07-22 17:00 UTC, is &lt;https://lobste.rs/s/ekvqcf/random
         
 
 
-            <a href="/c/4l8mzk"><time title="2022-07-22 12:30:20" datetime="2022-07-22 12:30:20" data-at-unix="1658511020">3 years ago</time></a>
+            <a href="/c/4l8mzk"><time title="2022-07-22 12:30:20" datetime="2022-07-22 12:30:20" data-at-unix="1658511020">2022-07-22 12:30:20</time></a>
           
       </span>
 
@@ -726,9 +737,11 @@ An example, as of 2022-07-22 17:00 UTC, is &lt;https://lobste.rs/s/ekvqcf/random
     <li class="comments_subtree">
 
 
-  <input id="comment_folder_qy0l9k"
+  <input
+    id="comment_folder_qy0l9k"
     class="comment_folder_button" type="checkbox"
-    >
+
+  >
 
 <div id="c_qy0l9k"
   data-shortid="qy0l9k"
@@ -756,7 +769,7 @@ An example, as of 2022-07-22 17:00 UTC, is &lt;https://lobste.rs/s/ekvqcf/random
 
           <span class="hat hat_sysop" title="Granted 2017-10-15"><span class="crown">Sysop</span></span>
 
-            <a href="/c/qy0l9k"><time title="2022-07-22 16:12:09" datetime="2022-07-22 16:12:09" data-at-unix="1658524329">3 years ago</time></a>
+            <a href="/c/qy0l9k"><time title="2022-07-22 16:12:09" datetime="2022-07-22 16:12:09" data-at-unix="1658524329">2022-07-22 16:12:09</time></a>
           
       </span>
 
@@ -794,7 +807,7 @@ An example, as of 2022-07-22 17:00 UTC, is &lt;https://lobste.rs/s/ekvqcf/random
     <br>
 
 
-  </div>
+  </main>
 
   <footer>
     <span id="office-hours-live">

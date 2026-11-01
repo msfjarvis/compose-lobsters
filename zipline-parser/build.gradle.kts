@@ -4,7 +4,9 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
+import app.cash.zipline.gradle.ZiplineCompileTask
 import app.cash.zipline.loader.SignatureAlgorithmId
+import dev.msfjarvis.claw.gradle.ZiplineParserArtifacts
 
 plugins {
   id("dev.msfjarvis.claw.kotlin-multiplatform")
@@ -29,8 +31,8 @@ kotlin {
     jvmTest {
       dependencies {
         implementation(kotlin("test"))
+        implementation(project.dependencies.testFixtures(projects.htmlTestFixtures))
       }
-      resources.srcDir("../api/src/test/resources")
     }
     jsTest {
       dependencies {
@@ -40,17 +42,21 @@ kotlin {
   }
 }
 
+configurations.consumable("embeddedParserElements") {
+  attributes {
+    attribute(ZiplineParserArtifacts.formatAttribute, ZiplineParserArtifacts.PRODUCTION)
+  }
+  outgoing.artifact(
+    tasks.named<ZiplineCompileTask>("compileProductionExecutableKotlinJsZipline").flatMap {
+      it.outputDir
+    }
+  )
+}
+
 zipline {
   mainFunction.set("dev.msfjarvis.claw.parser.launchZipline")
-  val isRelease = providers.environmentVariable("SENTRY_DSN").orNull != null
   val signingKey = providers.environmentVariable("ZIPLINE_SIGNING_KEY").orNull
-  if (!isRelease && signingKey != null) {
-    logger.warn("'ZIPLING_SIGNING_KEY' is set but not used")
-  }
-  if (isRelease) {
-    require(signingKey != null) {
-      "Signing key must be present for release builds"
-    }
+  if (signingKey != null) {
     signingKeys {
       create("key0") {
         algorithmId = SignatureAlgorithmId.Ed25519

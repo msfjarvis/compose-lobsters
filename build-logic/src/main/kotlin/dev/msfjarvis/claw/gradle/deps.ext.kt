@@ -29,12 +29,15 @@ fun DependencyHandlerScope.addTestDependencies(project: Project) {
       }
       addProvider("${sourceSet}RuntimeOnly", libs.junit.jupiter.engine)
       addProvider("${sourceSet}RuntimeOnly", libs.junit.platform.launcher)
+      val legacyConfiguration =
+        if (sourceSet == "androidTest") "${sourceSet}Implementation" else "${sourceSet}RuntimeOnly"
       addProvider<MinimalExternalModuleDependency, ExternalModuleDependency>(
-        "${sourceSet}RuntimeOnly",
+        legacyConfiguration,
         libs.junit.legacy,
       ) {
+        // Instrumentation uses JUnit 4; Truth also needs it at runtime.
         // See https://github.com/google/truth/issues/333
-        because("Truth needs it")
+        because("Android instrumentation and Truth require JUnit 4")
       }
     }
 }

@@ -62,6 +62,7 @@ class CommentRichTextInteractionTest {
             timestamp = Instant.parse("2020-01-01T00:00:00Z"),
             edited = false,
             parentComment = "parent",
+            sourceStoryId = "story",
             user = "Alice",
             isUpvoted = false,
           ),

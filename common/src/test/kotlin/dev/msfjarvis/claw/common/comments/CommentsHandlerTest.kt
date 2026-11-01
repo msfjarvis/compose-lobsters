@@ -160,6 +160,7 @@ class CommentsHandlerTest {
       timestamp = Instant.fromEpochSeconds(0),
       edited = false,
       parentComment = parentComment,
+      sourceStoryId = "story",
       user = "user-$shortId",
     )
   }

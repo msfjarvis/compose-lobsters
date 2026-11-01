@@ -7,6 +7,7 @@
   <link rel="apple-touch-icon" sizes="114x114" href="/touch-icon.png">
   <link rel="apple-touch-icon" sizes="72x72" href="/touch-icon-144.png">
   <link rel="apple-touch-icon" sizes="144x144" href="/touch-icon-144.png">
+  <link rel="manifest" href="/manifest.json">
   <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="Lobsters">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="referrer" content="always">
@@ -25,16 +26,14 @@ openpgp4fpr:8F87050B0F9CB84115157399B7843F823355E9B9
   <link rel="shortcut icon" href="/favicon.ico">
   <title>msfjarvis | Lobsters</title>
 
-  <link rel="stylesheet" href="/assets/application-8d029e37.css">
-  <link rel="stylesheet" href="/assets/system-system-fd030c9d.css">
-  <link rel="stylesheet" href="/assets/tom-select-00e8031d.css" data-turbo-track="reload">
-  <link rel="stylesheet" href="/assets/TomSelect_remove_button-4d5c34b9.css" data-turbo-track="reload">
-
+    <link rel="stylesheet" href="/application.css">
+    <link rel="stylesheet" href="/system-system.css">
+    <script src="/application.js" type="module"></script>
 
   <meta name="csrf-param" content="authenticity_token">
-<meta name="csrf-token" content="qzhV0a2izz-6n516jIrQyKzp06y_9Fb33KCrZtCTdx6_KPhm894c4F-8c5CTUkxlC_xqaR2nsqf416xcza-daw">
+<meta name="csrf-token" content="kVeT4h19YXLcOfeXcGM8RWu99u1burxkZwiQjwxJWz1XUHARjo9lBsiI0bcf-4aeRnSHm5xQtm3gCjH8qZoVQA">
   <meta name="robots" content="noai, noimageai">
-    <script type="speculationrules" nonce="/3z7A9BvciTcEaW9gzJQnQ==">
+    <script type="speculationrules" nonce="EtUdOvBkr0aueI9XOtl/og==">
       {
         "prefetch": [
           {
@@ -47,32 +46,35 @@ openpgp4fpr:8F87050B0F9CB84115157399B7843F823355E9B9
       }
     </script>
 </head>
-<body data-username='' data-now-unix='1780070762'>
-  <header id="nav">
-    <a id="logo" style="background-color: #6e0000;" href="/" title="Lobsters (Current traffic: 17%)"></a>
-    
+<body data-username=''>
+  <header id="header">
+    <div id="header-top">
+      <h1 style="background-color: #540000;" id="logo">
+        <a href="/" title="Lobsters (Current traffic: 2%)">
+          <b class="sr-only" aria-hidden="true">Lobsters</b>
+        </a>
+        
+      </h1>
 
-    <div class="navholder">
-      <nav class="links">
-        <a class="" href="/active">Active</a>
-        <a class="" href="/recent">Recent</a>
-        <a class="" href="/comments">Comments</a>
+      <nav aria-label="Menu">
+        <ul>
+          <li><a href="/active">Active</a></li>
+          <li><a href="/recent">Recent</a></li>
+          <li><a href="/comments">Comments</a></li>
 
 
-        <a class="" href="/search">Search</a>
+          <li><a href="/search">Search</a></li>
 
 
-          <a class="corner" href="/login">Login</a>
+            <li class="push-right"><a href="/login">Login</a></li>
+        </ul>
       </nav>
     </div>
 
-    <nav class="corner">
-        <a class="corner" href="/login">Login</a>
-    </nav>
+
   </header>
 
-
-  <div id="inside">
+  <main id="inside">
       <h1 class="">msfjarvis</h1>
 
 
@@ -80,77 +82,77 @@ openpgp4fpr:8F87050B0F9CB84115157399B7843F823355E9B9
 
 
 <section class="profile">
-    <div id="gravatar">
-      <img srcset="/avatars/msfjarvis-100.png 1x, /avatars/msfjarvis-200.png 2x" class="avatar" alt="msfjarvis avatar" loading="lazy" decoding="async" src="/avatars/msfjarvis-100.png" width="100" height="100">
+    <div id="gravatar" aria-hidden="true">
+      <img srcset="/avatars/msfjarvis-100.png 1x, /avatars/msfjarvis-200.png 2x" class="avatar" alt="" loading="lazy" decoding="async" src="/avatars/msfjarvis-100.png" width="100" height="100">
     </div>
 
-  <div class="labelled_grid">
-  <label>Status</label>
-  <span>
-      Active
-      user
-  </span>
+  <dl class="labelled_grid">
+    <dt>Status</dt>
+    <dd>
+        Active
+        user
+    </dd>
 
-    <label>Joined</label>
-    <span>
-      <time title="2020-04-24 11:41:56" datetime="2020-04-24 11:41:56" data-at-unix="1587746516">6 years ago</time>
+    <dt>Joined</dt>
+    <dd>
+      <time title="2020-04-24 11:41:56" datetime="2020-04-24 11:41:56" data-at-unix="1587746516">2020-04-24 11:41:56</time>
         by <a href="/users#msfjarvis">invitation</a> from
         <a href="/~Amolith">Amolith</a>
-    </span>
+    </dd>
 
 
 
-      <label>Karma</label>
-      <span>
-        2817
-      </span>
+      <dt>Karma</dt>
+      <dd>
+        2925
+      </dd>
 
-    <label>Stories Submitted</label>
-    <span>
-      <a href="/~msfjarvis/stories">38</a>, most commonly tagged <a class="tag tag_rust" title="Rust programming" href="/t/rust">rust</a>
-    </span>
+    <dt>Stories Submitted</dt>
+    <dd>
+      <a href="/~msfjarvis/stories">38</a>, most commonly tagged <a aria-label="Tag rust" class="tag tag_rust" title="Rust programming" href="/t/rust">rust</a>
+    </dd>
 
-    <label>Comments Posted</label>
-    <span><a href="/~msfjarvis/threads">258</a></span>
+    <dt>Comments Posted</dt>
+    <dd><a href="/~msfjarvis/threads">283</a></dd>
 
 
 
-      <label>Homepage</label>
+      <dt>Homepage</dt>
 
-      <span>
+      <dd>
         <a href="https://msfjarvis.dev"
           rel="me ugc">https://msfjarvis.dev</a>
-      </span>
+      </dd>
 
-      <label>GitHub</label>
+      <dt>GitHub</dt>
 
-      <span>
+      <dd>
         <a href="https://github.com/msfjarvis"
           rel="me ugc">https://github.com/msfjarvis</a>
-      </span>
+      </dd>
 
-      <label>Mastodon</label>
+      <dt>Mastodon</dt>
 
-      <span>
-        <a href="https://androiddev.social/@msfjarvis"
-          rel="me ugc">@msfjarvis@androiddev.social
+      <dd>
+        <a href="https://fantastic.earth/@msfjarvis"
+          rel="me ugc">@msfjarvis@fantastic.earth
           </a>
-      </span>
+      </dd>
 
-      <label>About</label>
+      <dt>About</dt>
 
-      <div class="shorten_first_p">
+      <dd class="shorten_first_p">
           <p>Android and Kotlin developer, currently working for <a href="https://cloudflare.com/" rel="ugc">Cloudflare</a></p>
 <p>openpgp4fpr:8F87050B0F9CB84115157399B7843F823355E9B9</p>
 
-      </div>
+      </dd>
 
-  </div>
+  </dl>
 </section>
 
 
 
-  </div>
+  </main>
 
   <footer>
     <span id="office-hours-live">

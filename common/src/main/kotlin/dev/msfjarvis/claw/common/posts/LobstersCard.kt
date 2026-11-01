@@ -49,7 +49,9 @@ import dev.msfjarvis.claw.common.R
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
+import dev.msfjarvis.claw.model.Discussion
 import dev.msfjarvis.claw.model.LinkMetadata
+import dev.msfjarvis.claw.model.SourceStory
 import dev.msfjarvis.claw.model.UIPost
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
@@ -152,7 +154,7 @@ internal fun Submitter(
 private fun SaveButton(isSaved: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
   Crossfade(targetState = isSaved, label = "save-button") { saved ->
     Button(
-      modifier = modifier,
+      modifier = modifier.testTag("save_button"),
       onClick = onClick,
       contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
       colors =
@@ -164,7 +166,6 @@ private fun SaveButton(isSaved: Boolean, onClick: () -> Unit, modifier: Modifier
       Icon(
         imageVector = if (saved) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
         contentDescription = if (saved) "Remove from saved posts" else "Add to saved posts",
-        modifier = Modifier.testTag("save_button"),
       )
     }
   }
@@ -173,7 +174,7 @@ private fun SaveButton(isSaved: Boolean, onClick: () -> Unit, modifier: Modifier
 @Composable
 private fun CommentsButton(commentCount: Int, onClick: () -> Unit, modifier: Modifier = Modifier) {
   Button(
-    modifier = modifier,
+    modifier = modifier.testTag("comments_button"),
     onClick = onClick,
     contentPadding = PaddingValues(start = 8.dp, end = 8.dp, top = 6.dp, bottom = 4.dp),
     colors =
@@ -186,7 +187,7 @@ private fun CommentsButton(commentCount: Int, onClick: () -> Unit, modifier: Mod
       Icon(
         imageVector = Icons.AutoMirrored.Filled.Comment,
         contentDescription = stringResource(R.string.open_comments),
-        modifier = Modifier.align(Alignment.Center).testTag("comments_button"),
+        modifier = Modifier.align(Alignment.Center),
       )
       Box(
         modifier =
@@ -266,16 +267,24 @@ val TEST_POST_ACTIONS =
 @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
 val TEST_POST =
   UIPost(
-    shortId = "bdzmde",
-    title =
-      "I'm brave enough to say it: Linux is good now, and if you want to feel like you actually own your PC, make 2026 the year of Linux on (your) desktop",
-    url =
-      "https://www.pcgamer.com/software/linux/im-brave-enough-to-say-it-linux-is-good-now-and-if-you-want-to-feel-like-you-actually-own-your-pc-make-2026-the-year-of-linux-on-your-desktop",
-    createdAt = "2026-01-02T09:49:33.000-06:00",
+    discussion =
+      Discussion(
+        stories =
+          listOf(
+            SourceStory(
+              shortId = "bdzmde",
+              title =
+                "I'm brave enough to say it: Linux is good now, and if you want to feel like you actually own your PC, make 2026 the year of Linux on (your) desktop",
+              url =
+                "https://www.pcgamer.com/software/linux/im-brave-enough-to-say-it-linux-is-good-now-and-if-you-want-to-feel-like-you-actually-own-your-pc-make-2026-the-year-of-linux-on-your-desktop",
+              createdAt = "2026-01-02T09:49:33.000-06:00",
+              submitter = "rau",
+              tags = listOf("linux", "games", "vibecoding", "concatenative"),
+            )
+          )
+      ),
     commentCount = 100,
     commentsUrl = "https://lobste.rs/s/q1hh1g/simple_anomaly_detection_using_plain_sql",
-    submitter = "rau",
-    tags = listOf("linux", "games", "vibecoding", "concatenative"),
     description = "",
   )
 

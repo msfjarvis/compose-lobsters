@@ -27,9 +27,15 @@ import org.gradle.kotlin.dsl.findByType
 class AndroidCommonPlugin : Plugin<Project> {
 
   override fun apply(project: Project) {
+    project.pluginManager.apply(SpotlessPlugin::class)
+    listOf("com.android.application", "com.android.library", "com.android.test").forEach { id ->
+      project.pluginManager.withPlugin(id) { configureAndroid(project) }
+    }
+  }
+
+  private fun configureAndroid(project: Project) {
     project.configureSlimTests()
     project.pluginManager.apply(AndroidCacheFixPlugin::class)
-    project.pluginManager.apply(SpotlessPlugin::class)
     project.extensions.configure<CommonExtension> {
       compileSdk {
         version =

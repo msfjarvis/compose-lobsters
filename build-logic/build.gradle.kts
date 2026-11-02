@@ -92,8 +92,6 @@ gradlePlugin {
 
 lint.baseline = project.file("lint-baseline.xml")
 
-tasks.named<Test>("functionalTest") { useJUnitPlatform() }
-
 tasks.withType<KotlinCompile>().configureEach {
   compilerOptions.jvmTarget.set(JvmTarget.JVM_21)
 }
@@ -114,12 +112,6 @@ dependencies {
 
   // Expose the generated version catalog API to the plugin.
   implementation(files(libs::class.java.superclass.protectionDomain.codeSource.location))
-
-  testImplementation(kotlin("test"))
-
-  functionalTestImplementation(kotlin("test-junit5"))
-  functionalTestRuntimeOnly("org.junit.platform:junit-platform-launcher")
-  functionalTestImplementation(gradleTestKit())
 
   lintChecks(libs.androidx.lint.gradle)
 }

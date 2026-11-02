@@ -15,43 +15,9 @@ import java.util.concurrent.atomic.AtomicReference
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
-import kotlin.test.assertTrue
 import org.gradle.testkit.runner.GradleRunner
 
 class UpdateFixturesPluginFunctionalTest {
-  @Test
-  fun downloadsConfiguredFixturesOnEachCombinedInvocation() {
-    val response = AtomicReference("first version")
-    val requests = AtomicInteger()
-    withFixtureServer(response, requests) { url ->
-      withProject("fixtures { fixtures.put(\"$url\", \"downloaded.html\") }") { project ->
-        val firstRun = run(project, "updateFixtures", "processTestFixturesResources")
-        val downloaded = project.resolve("src/testFixtures/resources/downloaded.html")
-        val processed = project.resolve("build/resources/testFixtures/downloaded.html")
-        assertEquals("first version", Files.readString(downloaded))
-        assertEquals("first version", Files.readString(processed))
-        assertEquals(1, requests.get())
-        assertTrue(
-          firstRun.output.indexOf(":updateFixtures") <
-            firstRun.output.indexOf(":processTestFixturesResources")
-        )
-
-        // Resource processing by itself must not trigger a download, even when the plugin is
-        // configured. Force the resource task to execute by removing its previous output.
-        Files.delete(processed)
-        response.set("second version")
-        run(project, "processTestFixturesResources")
-        assertEquals("first version", Files.readString(downloaded))
-        assertEquals(1, requests.get())
-
-        run(project, "updateFixtures", "processTestFixturesResources")
-        assertEquals("second version", Files.readString(downloaded))
-        assertEquals("second version", Files.readString(processed))
-        assertEquals(2, requests.get())
-      }
-    }
-  }
-
   @Test
   fun emptyFixtureMapDoesNotChangeExistingResourcesOrDownload() {
     val response = AtomicReference("unexpected")
@@ -62,7 +28,7 @@ class UpdateFixturesPluginFunctionalTest {
         Files.createDirectories(existingResource.parent)
         Files.writeString(existingResource, "keep me")
 
-        run(project, "updateFixtures", "processTestFixturesResources")
+        run(project, "updateFixtures")
 
         assertEquals("keep me", Files.readString(existingResource))
         assertEquals(

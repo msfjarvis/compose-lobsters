@@ -22,19 +22,12 @@ class UpdateFixturesPlugin : Plugin<Project> {
     val extension = project.extensions.create<UpdateFixturesExtension>("fixtures")
     extension.fixtures.convention(emptyMap())
 
-    val updateFixtures =
-      project.tasks.register<UpdateFixturesTask>("updateFixtures") {
-        group = "verification"
-        description = "Download configured HTML test fixtures"
-        outputs.upToDateWhen { false }
-        fixtures.set(extension.fixtures)
-        outputDirectory.set(project.layout.projectDirectory.dir("src/testFixtures/resources"))
-      }
-
-    // Keep explicitly combined invocations deterministic without making ordinary resource
-    // processing trigger network downloads.
-    project.tasks
-      .matching { it.name == "processTestFixturesResources" }
-      .configureEach { mustRunAfter(updateFixtures) }
+    project.tasks.register<UpdateFixturesTask>("updateFixtures") {
+      group = "verification"
+      description = "Download configured HTML test fixtures"
+      outputs.upToDateWhen { false }
+      fixtures.set(extension.fixtures)
+      outputDirectory.set(project.layout.projectDirectory.dir("src/testFixtures/resources"))
+    }
   }
 }

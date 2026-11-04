@@ -17,7 +17,10 @@ class AndroidDistributionPlugin : Plugin<Project> {
       project.pluginManager.withPlugin(id) {
         project.extensions.configure<CommonExtension> {
           flavorDimensions += "distribution"
-          productFlavors.create("foss") { dimension = "distribution" }
+          productFlavors.create("foss") {
+            dimension = "distribution"
+            proguardFiles("r8-foss-rules.pro")
+          }
           productFlavors.create("gplay") { dimension = "distribution" }
         }
       }

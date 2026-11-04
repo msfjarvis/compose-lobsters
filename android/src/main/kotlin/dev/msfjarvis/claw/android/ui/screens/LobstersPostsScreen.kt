@@ -41,6 +41,7 @@ import androidx.compose.material3.adaptive.navigation3.rememberListDetailSceneSt
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -264,16 +265,16 @@ fun LobstersPostsScreen(
     }
   }
 
-  LaunchedEffect(currentDestination, isSearchActive) {
-    if (currentDestinationIsTopLevel) {
-      when {
-        isSearchActive -> setWebUri(SEARCH_WEB_URI)
-        currentDestination == Hottest -> setWebUri(HOTTEST_WEB_URI)
-        currentDestination == Newest -> setWebUri(NEWEST_WEB_URI)
-        currentDestination == Saved -> setWebUri(null)
-      }
+  val assistUri =
+    when {
+      currentDestinationIsTopLevel && isSearchActive -> SEARCH_WEB_URI
+      currentDestination == Hottest -> HOTTEST_WEB_URI
+      currentDestination == Newest -> NEWEST_WEB_URI
+      currentDestination is Comments -> currentDestination.commentsUrl
+      currentDestination is User -> "https://lobste.rs/u/${currentDestination.username}"
+      else -> null
     }
-  }
+  SideEffect { setWebUri(assistUri) }
 
   LaunchedEffect(currentDestinationIsTopLevel, isSearchActive) {
     if (!currentDestinationIsTopLevel && isSearchActive) {
@@ -425,7 +426,6 @@ fun LobstersPostsScreen(
             entry<Hottest>(
               metadata = ListDetailSceneStrategy.listPane(detailPlaceholder = { Placeholder() })
             ) {
-              setWebUri(HOTTEST_WEB_URI)
               val hottestPosts = viewModel.hottestPosts.collectAsLazyPagingItems()
               NetworkPosts(
                 lazyPagingItems = hottestPosts,
@@ -438,7 +438,6 @@ fun LobstersPostsScreen(
             entry<Newest>(
               metadata = ListDetailSceneStrategy.listPane(detailPlaceholder = { Placeholder() })
             ) {
-              setWebUri(NEWEST_WEB_URI)
               val newestPosts = viewModel.newestPosts.collectAsLazyPagingItems()
               NetworkPosts(
                 lazyPagingItems = newestPosts,
@@ -451,7 +450,6 @@ fun LobstersPostsScreen(
             entry<Saved>(
               metadata = ListDetailSceneStrategy.listPane(detailPlaceholder = { Placeholder() })
             ) {
-              setWebUri(null)
               DatabasePosts(
                 items = savedPosts,
                 listState = savedListState,

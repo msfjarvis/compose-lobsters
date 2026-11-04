@@ -13,27 +13,16 @@ import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.unit.dp
 import androidx.navigation3.runtime.NavKey
-import dev.chrisbanes.haze.HazeInput
-import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.blur.HazeBlurDefaults
-import dev.chrisbanes.haze.blur.HazeBlurStyle
-import dev.chrisbanes.haze.blur.hazeBlur
 import dev.msfjarvis.claw.android.ui.navigation.AppDestinations
-import dev.msfjarvis.claw.common.ui.FloatingNavigationBar
 import kotlinx.collections.immutable.ImmutableList
 
 const val AnimationDuration = 100
@@ -44,7 +33,6 @@ fun ClawNavigationBar(
   currentNavKey: NavKey?,
   navigateTo: (NavKey) -> Unit,
   isVisible: Boolean,
-  hazeState: HazeState,
   modifier: Modifier = Modifier,
 ) {
   AnimatedVisibility(
@@ -63,28 +51,7 @@ fun ClawNavigationBar(
       ),
     label = "",
     content = {
-      val surfaceColor = MaterialTheme.colorScheme.surface
-      FloatingNavigationBar(
-        tonalElevation = 16.dp,
-        shape = MaterialTheme.shapes.extraLarge,
-        modifier =
-          modifier
-            .padding(horizontal = 16.dp)
-            .navigationBarsPadding()
-            .clip(MaterialTheme.shapes.extraLarge)
-            .hazeBlur(
-              input = HazeInput.Sources(hazeState),
-              style =
-                HazeBlurStyle {
-                  backgroundColor(surfaceColor)
-                  colorEffects(emptyList())
-                  blurRadius(24.dp)
-                  noiseFactor(0f)
-                },
-            ),
-        containerColor =
-          if (HazeBlurDefaults.isBlurEnabledByDefault()) Color.Transparent else surfaceColor,
-      ) {
+      NavigationBar(modifier = modifier) {
         items.forEach { navItem ->
           val isSelected = currentNavKey == navItem.navKey
           NavigationBarItem(

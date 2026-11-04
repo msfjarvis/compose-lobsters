@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Replace the fancy navigation bar with a Material 3 one
+
 ## [1.76.0] - 2026-11-01
 
 ### Fixed

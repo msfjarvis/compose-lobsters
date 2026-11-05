@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Search page now prompt users to solve the bot challenge first
+  which is required for it to work
+
 ### Changed
 
 - Replace the fancy navigation bar with a Material 3 one

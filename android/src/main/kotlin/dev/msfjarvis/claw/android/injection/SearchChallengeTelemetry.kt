@@ -16,6 +16,7 @@ import io.sentry.Sentry
 import io.sentry.SentryAttribute
 import io.sentry.SentryAttributes
 import io.sentry.metrics.SentryMetricsParameters
+import java.io.IOException
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -51,11 +52,18 @@ internal class SearchChallengeInterceptor(private val report: (Boolean) -> Unit)
         response.header("Content-Type")?.startsWith("text/html", ignoreCase = true) == true
     ) {
       val html = response.peekBody(64 * 1024L).string()
-      report(isAnubisChallenge(html))
+      val challenged = isAnubisChallenge(html)
+      report(challenged)
+      if (challenged) {
+        response.close()
+        throw SearchChallengeException()
+      }
     }
     return response
   }
 }
+
+internal class SearchChallengeException : IOException("Search requires a bot challenge")
 
 internal fun isAnubisChallenge(html: String): Boolean =
   html.contains("/.within.website/x/", ignoreCase = true) &&

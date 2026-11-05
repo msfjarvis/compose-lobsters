@@ -373,6 +373,7 @@ fun LobstersPostsScreen(
             postActions = postActions,
             filteredTags = filteredTags,
             contentPadding = PaddingValues(bottom = searchResultsBottomPadding),
+            onClearanceCookie = settingsViewModel::saveAnubisCookie,
           )
         }
       }

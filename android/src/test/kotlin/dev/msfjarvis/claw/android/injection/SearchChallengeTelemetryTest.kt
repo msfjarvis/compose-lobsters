@@ -14,23 +14,27 @@ import okhttp3.Request
 import okhttp3.Response
 import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 class SearchChallengeTelemetryTest {
   private val challenge =
     """<title>Making sure you&#39;re not a bot!</title><link href="/.within.website/x/xess/xess.min.css">"""
 
   @Test
-  fun `challenge is counted without consuming response`() {
+  fun `challenge is counted and reported as an error`() {
     val reports = mutableListOf<Boolean>()
-    val response = execute("https://lobste.rs/search?q=private", challenge, reports)
-    response.use { assertThat(it.body.string()).isEqualTo(challenge) }
+    assertThrows<SearchChallengeException> {
+      execute("https://lobste.rs/search?q=private", challenge, reports)
+    }
     assertThat(reports).containsExactly(true)
   }
 
   @Test
   fun `normal search is counted separately`() {
     val reports = mutableListOf<Boolean>()
-    execute("https://lobste.rs/search?q=rust", "<title>Search | Lobsters</title>", reports).close()
+    execute("https://lobste.rs/search?q=rust", "<title>Search | Lobsters</title>", reports).use {
+      assertThat(it.body.string()).isEqualTo("<title>Search | Lobsters</title>")
+    }
     assertThat(reports).containsExactly(false)
     assertThat(isAnubisChallenge("<title>Making sure you're not a bot!</title>")).isFalse()
     assertThat(isAnubisChallenge(challenge.replace("&#39;", "'"))).isTrue()
@@ -49,7 +53,9 @@ class SearchChallengeTelemetryTest {
   @Test
   fun `challenge on an error status is also counted`() {
     val reports = mutableListOf<Boolean>()
-    execute("https://lobste.rs/search", challenge, reports, status = 403).close()
+    assertThrows<SearchChallengeException> {
+      execute("https://lobste.rs/search", challenge, reports, status = 403)
+    }
     assertThat(reports).containsExactly(true)
   }
 

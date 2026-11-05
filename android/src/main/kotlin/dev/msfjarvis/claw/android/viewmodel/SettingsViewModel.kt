@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.msfjarvis.claw.android.reminders.DailySavedPostReminderScheduler
 import dev.msfjarvis.claw.android.reminders.DailySavedPostReminderSettings
+import dev.msfjarvis.claw.core.network.LobstersCookieJar
 import dev.msfjarvis.claw.core.network.SessionCookieStore
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoMap
@@ -20,6 +21,8 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalTime
+import okhttp3.Cookie
+import okhttp3.HttpUrl.Companion.toHttpUrl
 
 @Inject
 @ViewModelKey
@@ -67,5 +70,11 @@ class SettingsViewModel(
 
   fun saveCookie(cookie: String, username: String) {
     sessionCookieStore.set(cookie, username)
+  }
+
+  fun saveAnubisCookie(cookie: String) {
+    val url = "https://lobste.rs/".toHttpUrl()
+    val parsed = Cookie.parse(url, cookie) ?: return
+    LobstersCookieJar(sessionCookieStore).saveFromResponse(url, listOf(parsed))
   }
 }

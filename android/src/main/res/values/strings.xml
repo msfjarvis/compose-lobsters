@@ -39,6 +39,11 @@
   <string name="empty_inbox_icon">Empty inbox icon</string>
   <string name="no_saved_posts">No saved posts</string>
   <string name="no_search_results">No search results</string>
+  <string name="search_challenge_message">Lobsters needs to verify your browser before searching.</string>
+  <string name="search_challenge_button">Verify browser</string>
+  <string name="challenge_cancel">Cancel</string>
+  <string name="challenge_load_error">Could not load verification.</string>
+  <string name="challenge_retry">Retry</string>
   <string name="enable_post_a_day_reminders">Enable post-a-day reminders</string>
   <string name="enable_post_a_day_reminders_summary">Get a notification with a random saved post every day</string>
   <string name="daily_saved_post_reminder_time">Reminder time</string>

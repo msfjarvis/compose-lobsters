@@ -65,8 +65,6 @@ import androidx.navigation3.ui.NavDisplay
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.mikepenz.aboutlibraries.ui.compose.android.produceLibraries
 import com.mikepenz.aboutlibraries.ui.compose.m3.LibrariesContainer
-import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.hazeSource
 import dev.msfjarvis.claw.android.R
 import dev.msfjarvis.claw.android.reminders.DEFAULT_DAILY_SAVED_POST_REMINDER_TIME
 import dev.msfjarvis.claw.android.ui.PostActions
@@ -149,7 +147,6 @@ fun LobstersPostsScreen(
   val savedListState = rememberLazyListState()
   val coroutineScope = rememberCoroutineScope()
   val snackbarHostState = remember { SnackbarHostState() }
-  val hazeState = remember { HazeState() }
 
   val savedPosts by viewModel.savedPostsByMonth.collectAsStateWithLifecycle(persistentMapOf())
   val savedPostsCount by viewModel.savedPostsCount.collectAsStateWithLifecycle(0L)
@@ -376,6 +373,7 @@ fun LobstersPostsScreen(
             postActions = postActions,
             filteredTags = filteredTags,
             contentPadding = PaddingValues(bottom = searchResultsBottomPadding),
+            onClearanceCookie = settingsViewModel::saveAnubisCookie,
           )
         }
       }
@@ -387,12 +385,11 @@ fun LobstersPostsScreen(
           currentNavKey = currentDestination,
           navigateTo = { destination -> navigateToDestination(destination, false) },
           isVisible = currentDestinationIsTopLevel && !isSearchActive,
-          hazeState = hazeState,
         )
       }
     },
     snackbarHost = { SnackbarHost(snackbarHostState) },
-    modifier = Modifier.semantics { testTagsAsResourceId = true },
+    modifier = modifier.semantics { testTagsAsResourceId = true },
   ) { contentPadding ->
     Row {
       AnimatedVisibility(visible = navigationType == ClawNavigationType.NAVIGATION_RAIL) {
@@ -405,7 +402,6 @@ fun LobstersPostsScreen(
       }
       NavDisplay(
         backStack = backStack,
-        modifier = modifier.hazeSource(hazeState),
         sceneStrategies = listOf(listDetailStrategy),
         entryDecorators = listOf(rememberSaveableStateHolderNavEntryDecorator()),
         onBack = {

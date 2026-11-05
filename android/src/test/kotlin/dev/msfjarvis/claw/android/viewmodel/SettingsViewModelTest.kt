@@ -63,6 +63,43 @@ class SettingsViewModelTest {
   }
 
   @Test
+  fun `saving clearance preserves existing login cookies and username`() {
+    val store = FakeSessionCookieStore()
+    store.set("lobsters_trap=session; other=value", "alice")
+    val viewModel =
+      SettingsViewModel(
+        store,
+        FakeWebViewCookieStore(),
+        FakeDailySavedPostReminderSettings(),
+        FakeDailySavedPostReminderScheduler(),
+      )
+
+    viewModel.saveAnubisCookie("techaro.lol-anubis-auth-site=aaa.bbb.ccc")
+
+    assertThat(store.savedCookie).contains("lobsters_trap=session")
+    assertThat(store.savedCookie).contains("other=value")
+    assertThat(store.savedCookie).contains("techaro.lol-anubis-auth-site=aaa.bbb.ccc")
+    assertThat(store.savedUsername).isEqualTo("alice")
+  }
+
+  @Test
+  fun `saving anonymous clearance does not create a logged-in username`() {
+    val store = FakeSessionCookieStore()
+    val viewModel =
+      SettingsViewModel(
+        store,
+        FakeWebViewCookieStore(),
+        FakeDailySavedPostReminderSettings(),
+        FakeDailySavedPostReminderScheduler(),
+      )
+
+    viewModel.saveAnubisCookie("techaro.lol-anubis-auth-site=aaa.bbb.ccc")
+
+    assertThat(store.savedCookie).contains("techaro.lol-anubis-auth-site=aaa.bbb.ccc")
+    assertThat(store.savedUsername).isEmpty()
+  }
+
+  @Test
   fun `enabling reminder delegates scheduling`() {
     val scheduler = FakeDailySavedPostReminderScheduler()
     val viewModel =

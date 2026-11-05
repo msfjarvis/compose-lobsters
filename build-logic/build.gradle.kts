@@ -12,14 +12,9 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
   `kotlin-dsl`
-  id("com.autonomousapps.testkit") version "0.21"
   alias(libs.plugins.android.lint)
   alias(libs.plugins.dependencyAnalysis)
 }
-
-group = "dev.msfjarvis.claw"
-
-version = "1.0"
 
 gradlePlugin {
   plugins {

@@ -21,7 +21,6 @@
   <string name="no_comments">No Comments</string>
   <string name="open_comments">Open comments</string>
   <string name="avatar_of">Avatar of %1$s</string>
-  <string name="home">Home</string>
   <string name="show_error">Show error</string>
   <string name="copy_stacktrace">Copy stacktrace</string>
   <string name="stacktrace">Stacktrace</string>

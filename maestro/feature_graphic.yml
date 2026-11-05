@@ -20,15 +20,17 @@ appId: dev.msfjarvis.claw.android
 - inputText: "Rust"
 - pressKey: Enter
 - hideKeyboard
+- tapOn: "Verify browser"
 - extendedWaitUntil:
-    visible:
-      id: "comments_button"
+    visible: "Open comments"
     timeout: 5000
 - waitForAnimationToEnd:
     timeout: 2000
 - takeScreenshot: "SearchPage"
 - back
 - back
+- tapOn: "Close search"
+- tapOn: "Close search"
 - tapOn: "Settings"
 - takeScreenshot: "SettingsPage"
 - tapOn: "Tag filtering"

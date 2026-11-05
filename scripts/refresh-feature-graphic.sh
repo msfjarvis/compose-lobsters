@@ -10,8 +10,10 @@ SCREENSHOT_DIR="${SCRIPT_DIR}"/../screenshots
 
 function run_maestro_flow() {
   local MAESTRO_FLOW="${1:?}"
+  local MAESTRO_OUTPUT_DIR
+  MAESTRO_OUTPUT_DIR="$(mktemp -d)"
 
-  # Create a directory for generated screenshots since Maestro puts them in $PWD
+  # Create a directory for the screenshots used by the montage.
   mkdir -p "${SCREENSHOT_DIR}"
   pushd "${SCREENSHOT_DIR}" || exit 1
   # Delete any existing screenshots
@@ -31,8 +33,10 @@ function run_maestro_flow() {
   # Clear data for the app to make re-runs consistent
   adb shell pm clear dev.msfjarvis.claw.android
 
-  # Run the Maestro Flows from $PROJECT_DIR/maestro
-  maestro test "${SCRIPT_DIR}"/../maestro/"${MAESTRO_FLOW}"
+  # Run the Maestro flow and keep its artifacts in a predictable location.
+  maestro test --test-output-dir "${MAESTRO_OUTPUT_DIR}" "${SCRIPT_DIR}"/../maestro/"${MAESTRO_FLOW}"
+  cp "${MAESTRO_OUTPUT_DIR}"/*/"${MAESTRO_FLOW%.yml}"/takeScreenshot/*.png "${SCREENSHOT_DIR}/"
+  rm -r "${MAESTRO_OUTPUT_DIR}"
 
   # Turn off Demo Mode on the device
   adb shell am broadcast -a com.android.systemui.demo -e command exit
@@ -65,7 +69,7 @@ function generate_grid() {
   # Dimensions are dynamically retrieved from connected device
   montage @"${MONTAGE_INPUT}" -tile 3x0 -geometry "${DEVICE_DIMENSIONS}+0.0!" \
     -border 0 -density 300 \
-    "${OUTPUT_FILE}.png" || true
+    "${OUTPUT_FILE}.png"
 
   # Convert the resulting PNG to WebP
   cwebp "${OUTPUT_FILE}.png" -o "${OUTPUT_FILE}.webp"

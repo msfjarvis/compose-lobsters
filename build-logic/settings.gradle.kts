@@ -15,8 +15,6 @@ pluginManagement {
       filter {
         includeModule("org.gradle.kotlin.kotlin-dsl", "org.gradle.kotlin.kotlin-dsl.gradle.plugin")
         includeModule("org.gradle.kotlin", "gradle-kotlin-dsl-plugins")
-        includeModule("com.autonomousapps.testkit", "com.autonomousapps.testkit.gradle.plugin")
-        includeModule("com.autonomousapps", "gradle-testkit-plugin")
       }
     }
     exclusiveContent {

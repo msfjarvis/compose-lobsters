@@ -15,15 +15,15 @@
     "fflate": "^0.8.3"
   },
   "devDependencies": {
-    "@cloudflare/vitest-plugin": "^1.1.2",
-    "@oxlint/plugins": "^1.90.0",
-    "@types/node": "^26.4.0",
+    "@cloudflare/vitest-plugin": "^1.5.1",
+    "@oxlint/plugins": "^1.91.0",
+    "@types/node": "^26.6.6",
     "cf": "1.0.0-beta.25",
     "oxfmt": "^0.75.0",
-    "oxlint": "^1.90.0",
+    "oxlint": "^1.91.0",
     "typescript": "^5.9.3",
-    "vitest": "^4.1.11",
-    "wrangler": "^4.155.0"
+    "vitest": "^4.1.12",
+    "wrangler": "^4.157.0"
   },
   "allowScripts": {
     "esbuild@0.28.1": true,

@@ -68,7 +68,6 @@ internal fun AnubisChallengeDialog(onCookie: (String) -> Unit, onDismiss: () -> 
   ) {
     Surface(modifier = Modifier.fillMaxSize()) {
       Column(modifier = Modifier.fillMaxSize()) {
-        Button(onClick = onDismiss) { Text(stringResource(R.string.challenge_cancel)) }
         if (hasError) {
           Text(stringResource(R.string.challenge_load_error))
           Button(

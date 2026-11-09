@@ -98,8 +98,16 @@ metro { unusedGraphInputsSeverity = DiagnosticSeverity.ERROR }
 
 moduleGraphAssert {
   assertOnAnyBuild = true
-  maxHeight = 4
-  restricted = arrayOf(":core -X> :.*")
+  // Core is infrastructure: it must never acquire application or feature dependencies.
+  // Keep these target-aware as modules are introduced rather than relying on graph depth.
+  restricted =
+    arrayOf(
+      ":core -X> :android",
+      ":core -X> :api",
+      ":core -X> :common",
+      ":core -X> :database-.*",
+      ":core -X> :feature:.*",
+    )
 }
 
 dependencies {

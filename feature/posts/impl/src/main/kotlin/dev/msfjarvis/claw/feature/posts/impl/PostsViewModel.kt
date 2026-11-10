@@ -17,7 +17,6 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource
 import dev.msfjarvis.claw.api.LobstersApi
-import dev.msfjarvis.claw.feature.posts.api.PostDataTransfer
 import dev.msfjarvis.claw.feature.posts.api.PostPagingConfig.PAGE_SIZE
 import dev.msfjarvis.claw.feature.posts.api.PostPagingConfig.STARTING_PAGE_INDEX
 import dev.msfjarvis.claw.feature.posts.api.SavedPosts
@@ -28,8 +27,6 @@ import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.Inject
 import dev.zacsweers.metrox.viewmodel.ViewModelKey
-import java.io.InputStream
-import java.io.OutputStream
 import kotlin.time.Clock
 import kotlin.time.Instant
 import kotlinx.collections.immutable.toImmutableMap
@@ -51,7 +48,6 @@ class PostsViewModel(
   private val savedPosts: SavedPosts,
   private val savedPostsUpdateNotifier: SavedPostsUpdateNotifier,
   private val linkMetadataRepository: LinkMetadataRepository,
-  private val postDataTransfer: PostDataTransfer,
 ) : ViewModel() {
   val hottestPosts: Flow<PagingData<UIPost>> by lazy {
     Pager(
@@ -114,12 +110,6 @@ class PostsViewModel(
 
   suspend fun getLinkMetadata(url: String): LinkMetadata =
     linkMetadataRepository.getLinkMetadata(url)
-
-  suspend fun importPosts(input: InputStream): Result<Unit> = postDataTransfer.importPosts(input)
-
-  suspend fun exportPostsAsJson(output: OutputStream) {
-    postDataTransfer.exportPostsAsJson(output)
-  }
 
   fun markPostAsRead(postId: String) {
     viewModelScope.launch { readPostsRepository.markRead(postId) }

@@ -10,48 +10,46 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.msfjarvis.claw.android.reminders.DailySavedPostReminderScheduler
 import dev.msfjarvis.claw.android.reminders.DailySavedPostReminderSettings
-import dev.msfjarvis.claw.core.network.LobstersCookieJar
-import dev.msfjarvis.claw.core.network.SessionCookieStore
+import dev.msfjarvis.claw.feature.auth.api.AuthSessionStore
 import dev.msfjarvis.claw.feature.auth.api.WebViewCookieStore
+import dev.msfjarvis.claw.feature.posts.api.PostDataTransfer
+import dev.msfjarvis.claw.feature.posts.api.SavedPosts
+import dev.msfjarvis.claw.feature.settings.impl.SettingsAppConfig
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.binding
 import dev.zacsweers.metrox.viewmodel.ViewModelKey
+import java.io.InputStream
+import java.io.OutputStream
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalTime
-import okhttp3.Cookie
-import okhttp3.HttpUrl.Companion.toHttpUrl
 
 @Inject
 @ViewModelKey
 @ContributesIntoMap(scope = AppScope::class, binding = binding<ViewModel>())
 class SettingsViewModel(
-  private val sessionCookieStore: SessionCookieStore,
+  private val authSessionStore: AuthSessionStore,
   private val webViewCookieStore: WebViewCookieStore,
   private val dailySavedPostReminderSettings: DailySavedPostReminderSettings,
   private val dailySavedPostReminderScheduler: DailySavedPostReminderScheduler,
+  val appConfig: SettingsAppConfig,
+  savedPosts: SavedPosts,
+  private val postDataTransfer: PostDataTransfer,
 ) : ViewModel() {
 
   val isLoggedIn =
-    sessionCookieStore
+    authSessionStore
       .isLoggedIn()
-      .stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = false,
-      )
+      .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), false)
 
   val username =
-    sessionCookieStore
-      .username()
-      .stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = null,
-      )
+    authSessionStore.username().stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), null)
+
+  val savedPostsCount =
+    savedPosts.savedPostsCount.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), 0L)
 
   val isDailySavedPostReminderEnabled = dailySavedPostReminderSettings.isEnabled
   val dailySavedPostReminderTime = dailySavedPostReminderSettings.reminderTime
@@ -65,17 +63,21 @@ class SettingsViewModel(
   }
 
   fun logout() {
-    sessionCookieStore.clear()
+    authSessionStore.clear()
     webViewCookieStore.clearLobstersCookies()
   }
 
   fun saveCookie(cookie: String, username: String) {
-    sessionCookieStore.set(cookie, username)
+    authSessionStore.set(cookie, username)
   }
 
   fun saveAnubisCookie(cookie: String) {
-    val url = "https://lobste.rs/".toHttpUrl()
-    val parsed = Cookie.parse(url, cookie) ?: return
-    LobstersCookieJar(sessionCookieStore).saveFromResponse(url, listOf(parsed))
+    authSessionStore.saveClearanceCookie(cookie)
+  }
+
+  suspend fun importPosts(input: InputStream): Result<Unit> = postDataTransfer.importPosts(input)
+
+  suspend fun exportPostsAsJson(output: OutputStream) {
+    postDataTransfer.exportPostsAsJson(output)
   }
 }

@@ -27,7 +27,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Scaffold
@@ -94,6 +93,7 @@ import dev.msfjarvis.claw.feature.posts.impl.navigation.AppDestinations
 import dev.msfjarvis.claw.feature.posts.impl.navigation.postsNavigationEntryContributor
 import dev.msfjarvis.claw.feature.profile.impl.navigation.profileNavigationEntryContributor
 import dev.msfjarvis.claw.feature.search.api.SearchUiState
+import dev.msfjarvis.claw.feature.settings.impl.navigation.settingsNavigationEntryContributor
 import dev.msfjarvis.claw.feature.tags.impl.TagFilterViewModel
 import dev.msfjarvis.claw.feature.tags.impl.TagList
 import dev.msfjarvis.claw.navigation.api.NavigationEntryContributor
@@ -144,11 +144,11 @@ fun LobstersPostsScreen(
   val snackbarHostState = remember { SnackbarHostState() }
 
   val savedPosts by postsViewModel.savedPostsByMonth.collectAsStateWithLifecycle(persistentMapOf())
-  val savedPostsCount by postsViewModel.savedPostsCount.collectAsStateWithLifecycle(0L)
 
   val filteredTags by tagFilterViewModel.filteredTags.collectAsStateWithLifecycle(persistentSetOf())
   val isLoggedIn by settingsViewModel.isLoggedIn.collectAsStateWithLifecycle(false)
   val username by settingsViewModel.username.collectAsStateWithLifecycle(null)
+  val savedPostsCount by settingsViewModel.savedPostsCount.collectAsStateWithLifecycle(0L)
   val isDailySavedPostReminderEnabled by
     settingsViewModel.isDailySavedPostReminderEnabled.collectAsStateWithLifecycle(false)
   val dailySavedPostReminderTime by
@@ -463,45 +463,41 @@ fun LobstersPostsScreen(
                 navigateToDestination(destination, allowStacking)
               },
             ),
+            settingsNavigationEntryContributor(
+              metadata = ListDetailSceneStrategy.extraPane(),
+              contentPadding = contentPadding,
+              openLibrariesScreen = { navigateToDestination(AboutLibraries, false) },
+              openRepository = {
+                uriHandler.openUri("https://github.com/msfjarvis/compose-lobsters")
+              },
+              openTagFiltering = { navigateToDestination(it, false) },
+              openLoginScreen = { navigateToDestination(Login, false) },
+              onLogout = settingsViewModel::logout,
+              isLoggedIn = isLoggedIn,
+              username = username,
+              snackbarHostState = snackbarHostState,
+              importPosts = settingsViewModel::importPosts,
+              exportPostsAsJson = settingsViewModel::exportPostsAsJson,
+              savedPostsCount = savedPostsCount,
+              isDailySavedPostReminderEnabled = isDailySavedPostReminderEnabled,
+              dailySavedPostReminderTime = dailySavedPostReminderTime,
+              onDailySavedPostReminderEnabledChange = onDailySavedPostReminderEnabledChange,
+              onDailySavedPostReminderTimeChange = settingsViewModel::setDailySavedPostReminderTime,
+              settingsAppConfig = settingsViewModel.appConfig,
+              librariesContent = { padding, contentModifier ->
+                LibrariesContainer(
+                  libraries = libraries,
+                  contentPadding = padding,
+                  modifier = contentModifier,
+                )
+              },
+            ),
             loginNavigationEntryContributor(
               onLoginSuccess = settingsViewModel::saveCookie,
               popBackStack = { popBackStack(backStack) },
               metadata = ListDetailSceneStrategy.extraPane(),
             ),
             NavigationEntryContributor {
-              entry<Settings>(metadata = ListDetailSceneStrategy.extraPane()) {
-                SettingsScreen(
-                  openInputStream = context.contentResolver::openInputStream,
-                  openOutputStream = context.contentResolver::openOutputStream,
-                  openLibrariesScreen = { navigateToDestination(AboutLibraries, false) },
-                  openRepository = {
-                    uriHandler.openUri("https://github.com/msfjarvis/compose-lobsters")
-                  },
-                  openTagFiltering = { navigateToDestination(TagFiltering, false) },
-                  openLoginScreen = { navigateToDestination(Login, false) },
-                  onLogout = { settingsViewModel.logout() },
-                  isLoggedIn = isLoggedIn,
-                  username = username,
-                  importPosts = postsViewModel::importPosts,
-                  exportPostsAsJson = postsViewModel::exportPostsAsJson,
-                  savedPostsCount = savedPostsCount,
-                  isDailySavedPostReminderEnabled = isDailySavedPostReminderEnabled,
-                  dailySavedPostReminderTime = dailySavedPostReminderTime,
-                  onDailySavedPostReminderEnabledChange = onDailySavedPostReminderEnabledChange,
-                  onDailySavedPostReminderTimeChange =
-                    settingsViewModel::setDailySavedPostReminderTime,
-                  snackbarHostState = snackbarHostState,
-                  contentPadding = contentPadding,
-                  modifier = Modifier.fillMaxSize(),
-                )
-              }
-              entry<AboutLibraries>(metadata = ListDetailSceneStrategy.extraPane()) {
-                LibrariesContainer(
-                  libraries = libraries,
-                  contentPadding = contentPadding,
-                  modifier = Modifier.fillMaxSize(),
-                )
-              }
               entry<TagFiltering> {
                 TagList(
                   popBackStack = { popBackStack(backStack) },

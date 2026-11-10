@@ -48,11 +48,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import dev.msfjarvis.claw.android.BuildConfig
-import dev.msfjarvis.claw.android.R
+import dev.msfjarvis.claw.android.ui.navigation.TagFiltering
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
-import io.sentry.Sentry
+import dev.msfjarvis.claw.feature.settings.impl.R
+import dev.msfjarvis.claw.feature.settings.impl.SettingsAppConfig
 import java.io.InputStream
 import java.io.OutputStream
 import java.time.format.DateTimeFormatter
@@ -63,26 +63,16 @@ import kotlinx.datetime.toJavaLocalTime
 
 private const val JSON_MIME_TYPE = "application/json"
 
-internal fun loggedInAccountText(username: String?): String {
-  return if (username.isNullOrBlank()) {
-    "Sign out of your lobste.rs account"
-  } else {
-    "Logged in as $username"
-  }
-}
-
 @Composable
 fun SettingsScreen(
   openLibrariesScreen: () -> Unit,
   openRepository: () -> Unit,
-  openTagFiltering: () -> Unit,
+  openTagFiltering: (TagFiltering) -> Unit,
   openLoginScreen: () -> Unit,
   onLogout: () -> Unit,
   isLoggedIn: Boolean,
   username: String?,
   snackbarHostState: SnackbarHostState,
-  openInputStream: (Uri) -> InputStream?,
-  openOutputStream: (Uri) -> OutputStream?,
   importPosts: suspend (InputStream) -> Result<Unit>,
   exportPostsAsJson: suspend (OutputStream) -> Unit,
   contentPadding: PaddingValues,
@@ -91,6 +81,7 @@ fun SettingsScreen(
   dailySavedPostReminderTime: LocalTime,
   onDailySavedPostReminderEnabledChange: (Boolean) -> Unit,
   onDailySavedPostReminderTimeChange: (LocalTime) -> Unit,
+  settingsAppConfig: SettingsAppConfig,
   modifier: Modifier = Modifier,
 ) {
   val context = LocalContext.current
@@ -100,7 +91,7 @@ fun SettingsScreen(
     SectionHeader(title = "Account")
     if (isLoggedIn && !username.isNullOrBlank()) {
       ListItem(
-        supportingContent = { Text(loggedInAccountText(username)) },
+        supportingContent = { Text("Logged in as $username") },
         leadingContent = {
           Icon(
             imageVector = Icons.Filled.AccountCircle,
@@ -142,12 +133,19 @@ fun SettingsScreen(
       },
       trailingContent = {
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-          ImportPosts(openInputStream, coroutineScope, snackbarHostState, importPosts)
+          ImportPosts(
+            context.contentResolver::openInputStream,
+            coroutineScope,
+            snackbarHostState,
+            importPosts,
+            settingsAppConfig.recordMetric,
+          )
           ExportPosts(
             coroutineScope,
             snackbarHostState,
-            openOutputStream,
+            context.contentResolver::openOutputStream,
             exportPostsAsJson,
+            settingsAppConfig.recordMetric,
           )
         }
       },
@@ -168,7 +166,7 @@ fun SettingsScreen(
           modifier = Modifier.height(32.dp),
         )
       },
-      modifier = Modifier.clickable(onClick = openTagFiltering),
+      modifier = Modifier.clickable { openTagFiltering(TagFiltering) },
     ) {
       Text(stringResource(R.string.tag_filtering))
     }
@@ -241,8 +239,8 @@ fun SettingsScreen(
         Text(
           stringResource(
             R.string.version_placeholder,
-            BuildConfig.VERSION_NAME,
-            BuildConfig.VERSION_CODE,
+            settingsAppConfig.versionName,
+            settingsAppConfig.versionCode,
           )
         )
       },
@@ -325,6 +323,7 @@ private fun ImportPosts(
   coroutineScope: CoroutineScope,
   snackbarHostState: SnackbarHostState,
   importPosts: suspend (InputStream) -> Result<Unit>,
+  recordMetric: (String) -> Unit,
   modifier: Modifier = Modifier,
 ) {
   val importAction =
@@ -351,7 +350,7 @@ private fun ImportPosts(
   OutlinedButton(
     onClick = {
       importAction.launch(JSON_MIME_TYPE)
-      Sentry.metrics().count("import", 1.0)
+      recordMetric("import")
     },
     shape = MaterialTheme.shapes.extraSmall,
     modifier = modifier,
@@ -366,6 +365,7 @@ private inline fun ExportPosts(
   snackbarHostState: SnackbarHostState,
   crossinline openOutputStream: (Uri) -> OutputStream?,
   crossinline exportPostsAsJson: suspend (OutputStream) -> Unit,
+  crossinline recordMetric: (String) -> Unit,
   modifier: Modifier = Modifier,
 ) {
   val jsonExportAction =
@@ -380,15 +380,15 @@ private inline fun ExportPosts(
           openOutputStream(uri)?.use { stream ->
             exportPostsAsJson(stream)
             snackbarHostState.showSnackbarDismissing("Successfully exported posts")
-            Sentry.metrics().count("json_export_success", 1.0)
+            recordMetric("json_export_success")
           }
             ?: run {
               snackbarHostState.showSnackbarDismissing("Unable to open output file")
-              Sentry.metrics().count("json_export_failure", 1.0)
+              recordMetric("json_export_failure")
             }
         } catch (e: Exception) {
           snackbarHostState.showSnackbarDismissing("Failed to export posts: ${e.message}")
-          Sentry.metrics().count("json_export_failure", 1.0)
+          recordMetric("json_export_failure")
         }
       }
     }
@@ -420,8 +420,6 @@ private fun SettingsScreenPreview() {
       isLoggedIn = false,
       username = null,
       snackbarHostState = SnackbarHostState(),
-      openInputStream = { null },
-      openOutputStream = { null },
       importPosts = { Result.success(Unit) },
       exportPostsAsJson = {},
       contentPadding = PaddingValues(),
@@ -430,6 +428,7 @@ private fun SettingsScreenPreview() {
       dailySavedPostReminderTime = LocalTime(9, 0),
       onDailySavedPostReminderEnabledChange = {},
       onDailySavedPostReminderTimeChange = {},
+      settingsAppConfig = SettingsAppConfig("1.0", 1) {},
     )
   }
 }

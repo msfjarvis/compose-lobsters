@@ -19,6 +19,7 @@ import dev.msfjarvis.claw.core.work.impl.InjectedWorkerFactory
 import dev.msfjarvis.claw.feature.posts.api.HottestPostsSource
 import dev.msfjarvis.claw.feature.posts.api.SavedPosts
 import dev.msfjarvis.claw.feature.posts.impl.CachedRemotePostsRepository
+import dev.msfjarvis.claw.feature.settings.impl.SettingsAppConfig
 import dev.msfjarvis.claw.feature.widgets.impl.WidgetDependencies
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.DependencyGraph
@@ -26,6 +27,7 @@ import dev.zacsweers.metro.Provides
 import dev.zacsweers.metro.SingleIn
 import dev.zacsweers.metrox.android.MetroAppComponentProviders
 import dev.zacsweers.metrox.viewmodel.ViewModelGraph
+import io.sentry.Sentry
 import kotlin.time.Clock
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.datetime.TimeZone
@@ -52,6 +54,12 @@ interface AppGraph : MetroAppComponentProviders, ViewModelGraph, WidgetDependenc
     AppUpdateManagerFactory.create(context)
 
   @Provides fun providesClock(): Clock = Clock.System
+
+  @Provides
+  fun providesSettingsAppConfig(): SettingsAppConfig =
+    SettingsAppConfig(BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE) { metric ->
+      Sentry.metrics().count(metric, 1.0)
+    }
 
   @Provides fun providesZoneId(): TimeZone = TimeZone.currentSystemDefault()
 

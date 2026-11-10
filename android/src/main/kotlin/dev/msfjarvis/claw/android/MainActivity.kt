@@ -25,12 +25,9 @@ import androidx.core.view.WindowCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation3.runtime.NavKey
 import dev.msfjarvis.claw.android.injection.InjectedViewModelFactory
-import dev.msfjarvis.claw.android.ui.navigation.Comments
-import dev.msfjarvis.claw.android.ui.navigation.Hottest
-import dev.msfjarvis.claw.android.ui.navigation.Newest
-import dev.msfjarvis.claw.android.ui.navigation.Saved
 import dev.msfjarvis.claw.android.ui.screens.LobstersPostsScreen
 import dev.msfjarvis.claw.common.theme.LobstersTheme
+import dev.msfjarvis.claw.navigation.api.matchDeepLink
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.Inject
@@ -98,21 +95,9 @@ class MainActivity(
   }
 
   private fun handleIntent(intent: Intent) {
-    val data = intent.data
-    if (data != null && data.scheme == BuildConfig.DEEPLINK_SCHEME) {
-      when (data.host) {
-        "comments" -> {
-          val postId = data.pathSegments.firstOrNull()
-          if (postId != null) {
-            // Deep links only carry the short id; any title slug works for fetching comments,
-            // so synthesize one.
-            deepLinkDestination = Comments(postId, "https://lobste.rs/s/$postId/c")
-          }
-        }
-        "newest" -> deepLinkDestination = Newest
-        "hottest" -> deepLinkDestination = Hottest
-        "saved" -> deepLinkDestination = Saved
-      }
-    }
+    val data = intent.data ?: return
+    deepLinkDestination =
+      matchDeepLink(data.toString(), appDeepLinkMatchers(BuildConfig.DEEPLINK_SCHEME))
+        ?: deepLinkDestination
   }
 }

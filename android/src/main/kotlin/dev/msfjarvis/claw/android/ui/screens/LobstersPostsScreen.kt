@@ -58,7 +58,6 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation3.runtime.NavKey
-import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
@@ -83,12 +82,10 @@ import dev.msfjarvis.claw.android.ui.navigation.Comments
 import dev.msfjarvis.claw.android.ui.navigation.Hottest
 import dev.msfjarvis.claw.android.ui.navigation.Login
 import dev.msfjarvis.claw.android.ui.navigation.Newest
-import dev.msfjarvis.claw.android.ui.navigation.NonStackable
 import dev.msfjarvis.claw.android.ui.navigation.Reply
 import dev.msfjarvis.claw.android.ui.navigation.Saved
 import dev.msfjarvis.claw.android.ui.navigation.Settings
 import dev.msfjarvis.claw.android.ui.navigation.TagFiltering
-import dev.msfjarvis.claw.android.ui.navigation.TopLevelDestination
 import dev.msfjarvis.claw.android.ui.navigation.User
 import dev.msfjarvis.claw.android.ui.updates.InAppUpdates
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
@@ -98,6 +95,10 @@ import dev.msfjarvis.claw.common.comments.reply.ReplyScreen
 import dev.msfjarvis.claw.common.tags.TagFilterViewModel
 import dev.msfjarvis.claw.common.tags.TagList
 import dev.msfjarvis.claw.common.user.UserProfile
+import dev.msfjarvis.claw.navigation.api.NavigationEntryContributor
+import dev.msfjarvis.claw.navigation.api.TopLevelDestination
+import dev.msfjarvis.claw.navigation.impl.BackStackNavigator
+import dev.msfjarvis.claw.navigation.impl.NavigationHost
 import dev.zacsweers.metrox.viewmodel.metroViewModel
 import io.sentry.compose.navigation3.SentryBackStackEntry
 import io.sentry.compose.navigation3.SentryNavEffect
@@ -106,6 +107,7 @@ import kotlin.time.Duration.Companion.milliseconds
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.persistentSetOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -400,15 +402,15 @@ fun LobstersPostsScreen(
           isVisible = currentDestinationIsTopLevel && !isSearchActive,
         )
       }
-      NavDisplay(
-        backStack = backStack,
-        sceneStrategies = listOf(listDetailStrategy),
-        entryDecorators = listOf(rememberSaveableStateHolderNavEntryDecorator()),
+      NavigationHost(
+        backStack = backStack.toImmutableList(),
         onBack = {
           if (popBackStack(backStack) == null) {
             activity?.finish()
           }
         },
+        sceneStrategies = persistentListOf(listDetailStrategy),
+        entryDecorators = persistentListOf(rememberSaveableStateHolderNavEntryDecorator()),
         popTransitionSpec = {
           slideInHorizontally(initialOffsetX = { -it }, animationSpec = tween(200)) togetherWith
             slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(200))
@@ -417,142 +419,150 @@ fun LobstersPostsScreen(
           slideInHorizontally(initialOffsetX = { -it }, animationSpec = tween(200)) togetherWith
             slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(200))
         },
-        entryProvider =
-          entryProvider {
-            entry<Hottest>(
-              metadata = ListDetailSceneStrategy.listPane(detailPlaceholder = { Placeholder() })
-            ) {
-              val hottestPosts = viewModel.hottestPosts.collectAsLazyPagingItems()
-              NetworkPosts(
-                lazyPagingItems = hottestPosts,
-                listState = hottestListState,
-                postActions = postActions,
-                contentPadding = contentPadding,
-                filteredTags = filteredTags,
-              )
-            }
-            entry<Newest>(
-              metadata = ListDetailSceneStrategy.listPane(detailPlaceholder = { Placeholder() })
-            ) {
-              val newestPosts = viewModel.newestPosts.collectAsLazyPagingItems()
-              NetworkPosts(
-                lazyPagingItems = newestPosts,
-                listState = newestListState,
-                postActions = postActions,
-                contentPadding = contentPadding,
-                filteredTags = filteredTags,
-              )
-            }
-            entry<Saved>(
-              metadata = ListDetailSceneStrategy.listPane(detailPlaceholder = { Placeholder() })
-            ) {
-              DatabasePosts(
-                items = savedPosts,
-                listState = savedListState,
-                postActions = postActions,
-                contentPadding = contentPadding,
-              )
-            }
-            entry<Comments>(metadata = ListDetailSceneStrategy.detailPane()) { dest ->
-              val commentsPostActions =
-                remember(isSearchActive) {
-                  PostActions(context, uriHandler, viewModel) { postId, commentsUrl ->
-                    navigateToDestination(Comments(postId, commentsUrl), true)
+        contributors =
+          persistentListOf(
+            NavigationEntryContributor {
+              entry<Hottest>(
+                metadata = ListDetailSceneStrategy.listPane(detailPlaceholder = { Placeholder() })
+              ) {
+                val hottestPosts = viewModel.hottestPosts.collectAsLazyPagingItems()
+                NetworkPosts(
+                  lazyPagingItems = hottestPosts,
+                  listState = hottestListState,
+                  postActions = postActions,
+                  contentPadding = contentPadding,
+                  filteredTags = filteredTags,
+                )
+              }
+              entry<Newest>(
+                metadata = ListDetailSceneStrategy.listPane(detailPlaceholder = { Placeholder() })
+              ) {
+                val newestPosts = viewModel.newestPosts.collectAsLazyPagingItems()
+                NetworkPosts(
+                  lazyPagingItems = newestPosts,
+                  listState = newestListState,
+                  postActions = postActions,
+                  contentPadding = contentPadding,
+                  filteredTags = filteredTags,
+                )
+              }
+              entry<Saved>(
+                metadata = ListDetailSceneStrategy.listPane(detailPlaceholder = { Placeholder() })
+              ) {
+                DatabasePosts(
+                  items = savedPosts,
+                  listState = savedListState,
+                  postActions = postActions,
+                  contentPadding = contentPadding,
+                )
+              }
+            },
+            NavigationEntryContributor {
+              entry<Comments>(metadata = ListDetailSceneStrategy.detailPane()) { dest ->
+                val commentsPostActions =
+                  remember(isSearchActive) {
+                    PostActions(context, uriHandler, viewModel) { postId, commentsUrl ->
+                      navigateToDestination(Comments(postId, commentsUrl), true)
+                    }
                   }
-                }
-              CommentsPage(
-                postId = dest.postId,
-                commentsUrl = dest.commentsUrl,
-                postActions = commentsPostActions,
-                contentPadding = contentPadding,
-                openUserProfile = { navigateToDestination(User(it), false) },
-                openReplyScreen = { postId, commentId, commentText ->
-                  navigateToDestination(Reply(postId, commentId, commentText), true)
-                },
-              )
-            }
-            entry<Reply>(metadata = ListDetailSceneStrategy.extraPane()) { dest ->
-              ReplyScreen(
-                postId = dest.postId,
-                commentId = dest.commentId,
-                commentText = dest.commentText,
-                onReplySubmitted = { popBackStack(backStack) },
-                contentPadding = contentPadding,
-                modifier = Modifier.fillMaxSize(),
-              )
-            }
-            entry<User>(
-              metadata =
-                NavDisplay.transitionSpec {
-                  slideInHorizontally(
-                    initialOffsetX = { it },
-                    animationSpec = tween(200),
-                  ) togetherWith ExitTransition.KeepUntilTransitionsFinished
-                } +
-                  NavDisplay.popTransitionSpec {
-                    // Slide old content down, revealing the new content in place underneath
-                    EnterTransition.None togetherWith
-                      slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(200))
+                CommentsPage(
+                  postId = dest.postId,
+                  commentsUrl = dest.commentsUrl,
+                  postActions = commentsPostActions,
+                  contentPadding = contentPadding,
+                  openUserProfile = { navigateToDestination(User(it), false) },
+                  openReplyScreen = { postId, commentId, commentText ->
+                    navigateToDestination(Reply(postId, commentId, commentText), true)
+                  },
+                )
+              }
+              entry<Reply>(metadata = ListDetailSceneStrategy.extraPane()) { dest ->
+                ReplyScreen(
+                  postId = dest.postId,
+                  commentId = dest.commentId,
+                  commentText = dest.commentText,
+                  onReplySubmitted = { popBackStack(backStack) },
+                  contentPadding = contentPadding,
+                  modifier = Modifier.fillMaxSize(),
+                )
+              }
+            },
+            NavigationEntryContributor {
+              entry<User>(
+                metadata =
+                  NavDisplay.transitionSpec {
+                    slideInHorizontally(
+                      initialOffsetX = { it },
+                      animationSpec = tween(200),
+                    ) togetherWith ExitTransition.KeepUntilTransitionsFinished
                   } +
-                  NavDisplay.predictivePopTransitionSpec {
-                    EnterTransition.None togetherWith
-                      slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(200))
-                  } +
-                  ListDetailSceneStrategy.extraPane()
-            ) { dest ->
-              UserProfile(
-                username = dest.username,
-                contentPadding = contentPadding,
-                openUserProfile = { navigateToDestination(User(it), false) },
-              )
-            }
-            entry<Settings>(metadata = ListDetailSceneStrategy.extraPane()) {
-              SettingsScreen(
-                openInputStream = context.contentResolver::openInputStream,
-                openOutputStream = context.contentResolver::openOutputStream,
-                openLibrariesScreen = { navigateToDestination(AboutLibraries, false) },
-                openRepository = {
-                  uriHandler.openUri("https://github.com/msfjarvis/compose-lobsters")
-                },
-                openTagFiltering = { navigateToDestination(TagFiltering, false) },
-                openLoginScreen = { navigateToDestination(Login, false) },
-                onLogout = { settingsViewModel.logout() },
-                isLoggedIn = isLoggedIn,
-                username = username,
-                importPosts = viewModel::importPosts,
-                exportPostsAsJson = viewModel::exportPostsAsJson,
-                savedPostsCount = savedPostsCount,
-                isDailySavedPostReminderEnabled = isDailySavedPostReminderEnabled,
-                dailySavedPostReminderTime = dailySavedPostReminderTime,
-                onDailySavedPostReminderEnabledChange = onDailySavedPostReminderEnabledChange,
-                onDailySavedPostReminderTimeChange =
-                  settingsViewModel::setDailySavedPostReminderTime,
-                snackbarHostState = snackbarHostState,
-                contentPadding = contentPadding,
-                modifier = Modifier.fillMaxSize(),
-              )
-            }
-            entry<Login>(metadata = ListDetailSceneStrategy.extraPane()) {
-              LoginScreen(
-                onLoginSuccess = settingsViewModel::saveCookie,
-                popBackStack = { popBackStack(backStack) },
-                modifier = Modifier.fillMaxSize(),
-              )
-            }
-            entry<AboutLibraries>(metadata = ListDetailSceneStrategy.extraPane()) {
-              LibrariesContainer(
-                libraries = libraries,
-                contentPadding = contentPadding,
-                modifier = Modifier.fillMaxSize(),
-              )
-            }
-            entry<TagFiltering> {
-              TagList(
-                popBackStack = { popBackStack(backStack) },
-                contentPadding = contentPadding,
-              )
-            }
-          },
+                    NavDisplay.popTransitionSpec {
+                      // Slide old content down, revealing the new content in place underneath
+                      EnterTransition.None togetherWith
+                        slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(200))
+                    } +
+                    NavDisplay.predictivePopTransitionSpec {
+                      EnterTransition.None togetherWith
+                        slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(200))
+                    } +
+                    ListDetailSceneStrategy.extraPane()
+              ) { dest ->
+                UserProfile(
+                  username = dest.username,
+                  contentPadding = contentPadding,
+                  openUserProfile = { navigateToDestination(User(it), false) },
+                )
+              }
+            },
+            NavigationEntryContributor {
+              entry<Settings>(metadata = ListDetailSceneStrategy.extraPane()) {
+                SettingsScreen(
+                  openInputStream = context.contentResolver::openInputStream,
+                  openOutputStream = context.contentResolver::openOutputStream,
+                  openLibrariesScreen = { navigateToDestination(AboutLibraries, false) },
+                  openRepository = {
+                    uriHandler.openUri("https://github.com/msfjarvis/compose-lobsters")
+                  },
+                  openTagFiltering = { navigateToDestination(TagFiltering, false) },
+                  openLoginScreen = { navigateToDestination(Login, false) },
+                  onLogout = { settingsViewModel.logout() },
+                  isLoggedIn = isLoggedIn,
+                  username = username,
+                  importPosts = viewModel::importPosts,
+                  exportPostsAsJson = viewModel::exportPostsAsJson,
+                  savedPostsCount = savedPostsCount,
+                  isDailySavedPostReminderEnabled = isDailySavedPostReminderEnabled,
+                  dailySavedPostReminderTime = dailySavedPostReminderTime,
+                  onDailySavedPostReminderEnabledChange = onDailySavedPostReminderEnabledChange,
+                  onDailySavedPostReminderTimeChange =
+                    settingsViewModel::setDailySavedPostReminderTime,
+                  snackbarHostState = snackbarHostState,
+                  contentPadding = contentPadding,
+                  modifier = Modifier.fillMaxSize(),
+                )
+              }
+              entry<Login>(metadata = ListDetailSceneStrategy.extraPane()) {
+                LoginScreen(
+                  onLoginSuccess = settingsViewModel::saveCookie,
+                  popBackStack = { popBackStack(backStack) },
+                  modifier = Modifier.fillMaxSize(),
+                )
+              }
+              entry<AboutLibraries>(metadata = ListDetailSceneStrategy.extraPane()) {
+                LibrariesContainer(
+                  libraries = libraries,
+                  contentPadding = contentPadding,
+                  modifier = Modifier.fillMaxSize(),
+                )
+              }
+              entry<TagFiltering> {
+                TagList(
+                  popBackStack = { popBackStack(backStack) },
+                  contentPadding = contentPadding,
+                )
+              }
+            },
+          ),
       )
     }
   }
@@ -564,44 +574,11 @@ fun navigateTo(
   destination: NavKey,
   allowStacking: Boolean = false,
 ) {
-  if (destination is TopLevelDestination) {
-    backStack.clear()
-    if (destination != Hottest) {
-      backStack.add(Hottest)
-    }
-    backStack.add(destination)
-    return
-  }
-
-  if (destination is NonStackable) {
-    if (allowStacking && destination is Comments) {
-      val lastItem = backStack.lastOrNull()
-      if (lastItem is Comments && lastItem.postId == destination.postId) {
-        return
-      }
-      backStack.add(destination)
-      return
-    }
-
-    val existingEntry = backStack.firstOrNull {
-      it is NonStackable && it::class.java.isAssignableFrom(destination::class.java)
-    }
-
-    if (existingEntry != null) {
-      backStack.remove(existingEntry)
-    }
-  }
-
-  backStack.add(destination)
+  BackStackNavigator(backStack, Hottest).navigate(destination, allowStacking)
 }
 
-private fun popBackStack(backStack: MutableList<NavKey>): NavKey? {
-  if (backStack.size <= 1) {
-    return null
-  }
-
-  return backStack.removeAt(backStack.lastIndex)
-}
+private fun popBackStack(backStack: MutableList<NavKey>): NavKey? =
+  BackStackNavigator(backStack, Hottest).pop()
 
 @Composable
 private fun Placeholder(modifier: Modifier = Modifier) {

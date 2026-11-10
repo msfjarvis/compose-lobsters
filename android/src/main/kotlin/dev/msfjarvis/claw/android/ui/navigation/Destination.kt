@@ -6,7 +6,6 @@
  */
 package dev.msfjarvis.claw.android.ui.navigation
 
-import android.os.Parcelable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.NewReleases
@@ -16,42 +15,6 @@ import androidx.compose.material.icons.outlined.NewReleases
 import androidx.compose.material.icons.outlined.Whatshot
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation3.runtime.NavKey
-import kotlinx.parcelize.Parcelize
-import kotlinx.serialization.Serializable
-
-interface TopLevelDestination
-
-interface NonStackable
-
-@Parcelize @Serializable data object Hottest : NavKey, TopLevelDestination, Parcelable
-
-@Parcelize @Serializable data object Newest : NavKey, TopLevelDestination, Parcelable
-
-@Parcelize @Serializable data object Saved : NavKey, TopLevelDestination, Parcelable
-
-@Parcelize
-@Serializable
-data class Comments(val postId: String, val commentsUrl: String) : NavKey, Parcelable, NonStackable
-
-@Parcelize @Serializable data class User(val username: String) : NavKey, Parcelable, NonStackable
-
-@Parcelize
-@Serializable
-class Reply(
-  val postId: String,
-  val commentId: String,
-  // This can potentially be massive, but I'm trusting that anybody wanting to reply to a wall of
-  // text will probably want a physical keyboard to write their rebuttal.
-  val commentText: String,
-) : NavKey, Parcelable
-
-@Parcelize @Serializable data object Settings : NavKey, Parcelable
-
-@Parcelize @Serializable data object AboutLibraries : NavKey, Parcelable
-
-@Parcelize @Serializable data object TagFiltering : NavKey, Parcelable
-
-@Parcelize @Serializable data object Login : NavKey, Parcelable
 
 enum class AppDestinations(
   val icon: ImageVector,

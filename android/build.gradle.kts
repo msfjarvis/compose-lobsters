@@ -98,8 +98,6 @@ metro { unusedGraphInputsSeverity = DiagnosticSeverity.ERROR }
 
 moduleGraphAssert {
   assertOnAnyBuild = true
-  // Core is infrastructure: it must never acquire application or feature dependencies.
-  // Keep these target-aware as modules are introduced rather than relying on graph depth.
   restricted =
     arrayOf(
       ":core -X> :android",
@@ -179,12 +177,14 @@ dependencies {
   implementation(libs.unfurl)
   implementation(libs.zipline)
   implementation(libs.zipline.loader)
-  implementation(projects.common)
-  implementation(projects.core.common)
   implementation(projects.core.network.api)
   implementation(projects.core.network.impl)
   implementation(projects.core.parser.api)
   implementation(projects.core.parser.impl)
+  implementation(projects.common)
+  implementation(projects.core.common)
+  implementation(projects.core.navigation.api)
+  implementation(projects.core.navigation.impl)
   implementation(projects.core.database.api)
   implementation(projects.core.database.impl)
   implementation(projects.model)
@@ -201,6 +201,7 @@ dependencies {
   androidTestImplementation(libs.androidx.test.ext.junit)
   androidTestImplementation(libs.androidx.test.rules)
   androidTestImplementation(libs.androidx.test.runner)
+  androidTestImplementation(libs.androidx.compose.ui.test.junit4)
 
   addTestDependencies(project)
 }

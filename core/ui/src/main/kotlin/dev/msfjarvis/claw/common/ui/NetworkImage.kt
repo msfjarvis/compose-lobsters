@@ -15,7 +15,7 @@ import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import coil3.compose.AsyncImage
 
 @Composable
-internal fun NetworkImage(
+fun NetworkImage(
   url: String?,
   placeholder: ImageVector,
   contentDescription: String,

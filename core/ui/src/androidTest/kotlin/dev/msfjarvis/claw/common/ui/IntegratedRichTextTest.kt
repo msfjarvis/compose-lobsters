@@ -55,7 +55,6 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.google.common.truth.Truth.assertThat
-import dev.msfjarvis.claw.common.BuildConfig
 import org.junit.Rule
 import org.junit.Test
 
@@ -141,7 +140,10 @@ class IntegratedRichTextTest {
             Text("Keyboard start", Modifier.focusRequester(start).focusable())
             ThemedRichText(
               """<blockquote><ul><li><a href="https://lobste.rs/s/abc123/title">Story</a></li></ul></blockquote>
-              <ul><li><blockquote><a href="https://example.com/?a=1&amp;b=2">External</a></blockquote></li></ul>"""
+              <ul><li><blockquote><a href="https://example.com/?a=1&amp;b=2">External</a></blockquote></li></ul>""",
+              transformDestination = { url ->
+                if (url.startsWith("https://lobste.rs/s/")) "claw-debug://comments/abc123" else url
+              },
             )
           }
         }
@@ -149,8 +151,7 @@ class IntegratedRichTextTest {
     }
     val links = compose.onAllNodes(hasClickAction(), useUnmergedTree = true)
     assertThat(links.fetchSemanticsNodes()).hasSize(2)
-    val expected =
-      listOf("${BuildConfig.DEEPLINK_SCHEME}://comments/abc123", "https://example.com/?a=1&b=2")
+    val expected = listOf("claw-debug://comments/abc123", "https://example.com/?a=1&b=2")
     // Establish a host target: entering keyboard mode can auto-focus an arbitrary descendant.
     compose.runOnIdle {
       assertThat(input.requestInputMode(InputMode.Keyboard)).isTrue()

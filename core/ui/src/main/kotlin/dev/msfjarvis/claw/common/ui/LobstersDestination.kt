@@ -7,17 +7,16 @@
 package dev.msfjarvis.claw.common.ui
 
 import androidx.core.net.toUri
-import dev.msfjarvis.claw.api.LobstersApi
-import dev.msfjarvis.claw.common.BuildConfig
+import dev.msfjarvis.claw.core.ui.BuildConfig
 
-// Keep Android Uri's case-sensitive scheme/host and decoded path behavior.
-internal fun rewriteUrlIfLobstersPost(url: String): String {
-  val lobstersUri = LobstersApi.BASE_URL.toUri()
+/** Rewrites Lobsters story links into app deep links. */
+fun rewriteUrlIfLobstersPost(url: String): String {
+  val lobstersHost = "lobste.rs"
   return try {
     val uri = url.toUri()
     if (
       uri.scheme in setOf("http", "https") &&
-        uri.host == lobstersUri.host &&
+        uri.host == lobstersHost &&
         uri.path?.startsWith("/s/") == true
     ) {
       val pathSegments = uri.path?.split("/").orEmpty()

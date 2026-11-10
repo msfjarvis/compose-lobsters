@@ -6,7 +6,6 @@
  */
 package dev.msfjarvis.claw.common.posts
 
-import androidx.annotation.VisibleForTesting
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -45,12 +44,11 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import dev.msfjarvis.claw.common.R
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
+import dev.msfjarvis.claw.core.ui.R
 import dev.msfjarvis.claw.model.Discussion
-import dev.msfjarvis.claw.model.LinkMetadata
 import dev.msfjarvis.claw.model.SourceStory
 import dev.msfjarvis.claw.model.UIPost
 import kotlinx.collections.immutable.ImmutableList
@@ -61,36 +59,38 @@ fun LobstersCard(
   post: UIPost,
   isSaved: Boolean,
   isRead: Boolean,
-  postActions: PostActions,
+  onPostClick: (UIPost) -> Unit,
+  onCommentsClick: (UIPost) -> Unit,
+  onSaveClick: (UIPost) -> Unit,
   modifier: Modifier = Modifier,
 ) {
   Row(
     modifier =
       modifier
-        .clickable { postActions.viewPost(post.shortId, post.url, post.commentsUrl) }
+        .clickable { onPostClick(post) }
         .background(MaterialTheme.colorScheme.background)
         .padding(horizontal = 12.dp, vertical = 8.dp),
     horizontalArrangement = Arrangement.spacedBy(12.dp),
     verticalAlignment = Alignment.CenterVertically,
   ) {
-    PostDetails(post = post, isRead = { isRead }, modifier = Modifier.weight(1f))
+    PostDetails(post = post, isRead = isRead, modifier = Modifier.weight(1f))
     Column(
       verticalArrangement = Arrangement.spacedBy(8.dp),
       horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-      SaveButton(isSaved = isSaved, onClick = { postActions.toggleSave(post) })
+      SaveButton(isSaved = isSaved, onClick = { onSaveClick(post) })
       CommentsButton(
         commentCount = post.commentCount,
-        onClick = { postActions.viewComments(post.shortId, post.commentsUrl) },
+        onClick = { onCommentsClick(post) },
       )
     }
   }
 }
 
 @Composable
-fun PostDetails(post: UIPost, isRead: () -> Boolean, modifier: Modifier = Modifier) {
+fun PostDetails(post: UIPost, isRead: Boolean, modifier: Modifier = Modifier) {
   Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
-    PostTitle(title = post.title, isRead = isRead(), maxLines = 2)
+    PostTitle(title = post.title, isRead = isRead, maxLines = 2)
     TagRow(tags = post.tags.toImmutableList())
     Spacer(Modifier.height(4.dp))
     Submitter(
@@ -105,7 +105,7 @@ fun PostDetails(post: UIPost, isRead: () -> Boolean, modifier: Modifier = Modifi
 }
 
 @Composable
-internal fun PostTitle(
+fun PostTitle(
   title: String,
   isRead: Boolean,
   modifier: Modifier = Modifier,
@@ -123,7 +123,7 @@ internal fun PostTitle(
 }
 
 @Composable
-internal fun Submitter(
+fun Submitter(
   text: AnnotatedString,
   avatarUrl: String,
   contentDescription: String,
@@ -209,7 +209,7 @@ private fun CommentsButton(commentCount: Int, onClick: () -> Unit, modifier: Mod
 }
 
 @Composable
-internal fun TagRow(tags: ImmutableList<String>, modifier: Modifier = Modifier) {
+fun TagRow(tags: ImmutableList<String>, modifier: Modifier = Modifier) {
   FlexBox(
     modifier = modifier,
     config = {
@@ -236,62 +236,36 @@ private fun TagText(tag: String, modifier: Modifier = Modifier) {
   )
 }
 
-@VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-val TEST_POST_ACTIONS =
-  object : PostActions {
-    override fun viewPost(postId: String, postUrl: String, commentsUrl: String) {}
-
-    override fun viewComments(postId: String, commentsUrl: String) {}
-
-    override fun viewCommentsPage(post: UIPost) {}
-
-    override fun toggleSave(post: UIPost) {}
-
-    override fun share(post: UIPost) {}
-
-    override fun shareComment(commentId: String) {}
-
-    override fun isPostRead(post: UIPost): Boolean {
-      return true
-    }
-
-    override fun isPostSaved(post: UIPost): Boolean {
-      return true
-    }
-
-    override suspend fun getLinkMetadata(url: String): LinkMetadata {
-      return LinkMetadata("", "")
-    }
-  }
-
-@VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
-val TEST_POST =
-  UIPost(
-    discussion =
-      Discussion(
-        stories =
-          listOf(
-            SourceStory(
-              shortId = "bdzmde",
-              title =
-                "I'm brave enough to say it: Linux is good now, and if you want to feel like you actually own your PC, make 2026 the year of Linux on (your) desktop",
-              url =
-                "https://www.pcgamer.com/software/linux/im-brave-enough-to-say-it-linux-is-good-now-and-if-you-want-to-feel-like-you-actually-own-your-pc-make-2026-the-year-of-linux-on-your-desktop",
-              createdAt = "2026-01-02T09:49:33.000-06:00",
-              submitter = "rau",
-              tags = listOf("linux", "games", "vibecoding", "concatenative"),
-            )
-          )
-      ),
-    commentCount = 100,
-    commentsUrl = "https://lobste.rs/s/q1hh1g/simple_anomaly_detection_using_plain_sql",
-    description = "",
-  )
-
 @ThemePreviews
 @Composable
 private fun LobstersCardPreview() {
   LobstersTheme {
-    LobstersCard(post = TEST_POST, isSaved = true, isRead = true, postActions = TEST_POST_ACTIONS)
+    LobstersCard(
+      post =
+        UIPost(
+          discussion =
+            Discussion(
+              stories =
+                listOf(
+                  SourceStory(
+                    shortId = "bdzmde",
+                    title = "Compose Multiplatform makes shared UI simple",
+                    url = "https://example.com/compose",
+                    createdAt = "2026-01-02T09:49:33.000-06:00",
+                    submitter = "alice",
+                    tags = listOf("android", "compose"),
+                  )
+                )
+            ),
+          commentCount = 12,
+          commentsUrl = "https://lobste.rs/s/bdzmde/compose_multiplatform",
+          description = "",
+        ),
+      isSaved = true,
+      isRead = true,
+      onPostClick = {},
+      onCommentsClick = {},
+      onSaveClick = {},
+    )
   }
 }

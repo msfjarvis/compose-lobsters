@@ -43,7 +43,6 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.common.truth.Truth.assertThat
-import dev.msfjarvis.claw.common.BuildConfig
 import org.junit.Rule
 import org.junit.Test
 
@@ -55,7 +54,10 @@ class ThemedRichTextTest {
     val colors = mutableStateOf(lightColorScheme())
     compose.setContent {
       MaterialTheme(colorScheme = colors.value) {
-        ThemedRichText("<a href='https://lobste.rs/s/abc123/title'>open</a>")
+        ThemedRichText(
+          "<a href='https://lobste.rs/s/abc123/title'>open</a>",
+          transformDestination = { "claw-debug://comments/abc123" },
+        )
       }
     }
     fun link(): LinkAnnotation.Url {
@@ -69,7 +71,7 @@ class ThemedRichTextTest {
       assertThat(links).hasSize(1)
       return links.single().item as LinkAnnotation.Url
     }
-    assertThat(link().url).isEqualTo("${BuildConfig.DEEPLINK_SCHEME}://comments/abc123")
+    assertThat(link().url).isEqualTo("claw-debug://comments/abc123")
     assertThat(link().styles?.style?.fontWeight).isEqualTo(FontWeight.Bold)
     assertThat(link().styles?.style?.textDecoration).isEqualTo(TextDecoration.Underline)
     compose.runOnIdle {
@@ -188,7 +190,8 @@ class ThemedRichTextTest {
             """<p><a href="https://lobste.rs/s/abc123/title">Story</a></p>
             <p><a href="https://example.com/page?q=1&amp;x=2#end">External</a></p>
             <script>not rendered</script><img src="https://example.com/image.png">
-            <p>Ordinary</p>"""
+            <p>Ordinary</p>""",
+            transformDestination = { "claw-debug://comments/abc123" },
           )
         }
       }
@@ -198,11 +201,11 @@ class ThemedRichTextTest {
     val links = compose.onAllNodes(hasClickAction(), useUnmergedTree = true)
     assertThat(links.fetchSemanticsNodes()).hasSize(2)
     links[0].performTouchInput { click(center) }
-    assertThat(opened).containsExactly("${BuildConfig.DEEPLINK_SCHEME}://comments/abc123")
+    assertThat(opened).containsExactly("claw-debug://comments/abc123")
     links[1].performTouchInput { click(center) }
     assertThat(opened)
       .containsExactly(
-        "${BuildConfig.DEEPLINK_SCHEME}://comments/abc123",
+        "claw-debug://comments/abc123",
         "https://example.com/page?q=1&x=2#end",
       )
       .inOrder()

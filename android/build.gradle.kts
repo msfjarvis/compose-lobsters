@@ -189,6 +189,7 @@ dependencies {
   implementation(projects.core.navigation.impl)
   implementation(projects.core.database.api)
   implementation(projects.core.database.impl)
+  implementation(projects.core.ui)
   implementation(projects.model)
 
   compileOnly(libs.androidx.compose.glance.preview)

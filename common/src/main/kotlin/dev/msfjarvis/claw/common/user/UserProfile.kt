@@ -38,6 +38,7 @@ import dev.msfjarvis.claw.common.ui.NetworkError
 import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.common.ui.ProgressBar
 import dev.msfjarvis.claw.common.ui.ThemedRichText
+import dev.msfjarvis.claw.common.ui.rewriteUrlIfLobstersPost
 import dev.msfjarvis.claw.model.User
 import dev.zacsweers.metrox.viewmodel.metroViewModel
 
@@ -99,7 +100,7 @@ private fun UserProfileInternal(
         modifier = Modifier.requiredSize(120.dp).clip(CircleShape),
       )
       Text(text = user.username, style = MaterialTheme.typography.displaySmall)
-      ThemedRichText(text = user.about)
+      ThemedRichText(text = user.about, transformDestination = ::rewriteUrlIfLobstersPost)
       user.invitedBy?.let { invitedBy ->
         Text(
           text =

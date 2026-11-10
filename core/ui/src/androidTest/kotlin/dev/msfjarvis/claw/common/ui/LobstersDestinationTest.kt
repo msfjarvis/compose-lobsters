@@ -7,18 +7,19 @@
 package dev.msfjarvis.claw.common.ui
 
 import com.google.common.truth.Truth.assertWithMessage
-import dev.msfjarvis.claw.api.LobstersApi
-import dev.msfjarvis.claw.common.BuildConfig
+import dev.msfjarvis.claw.core.ui.BuildConfig
 import org.junit.Test
 
 // Pure destination policy, run on Android to retain the original Uri parsing contract.
 // java.net.URI and HttpUrl normalize/reject inputs differently; neither is a drop-in replacement.
 class LobstersDestinationTest {
+  private val deepLinkScheme = BuildConfig.DEEPLINK_SCHEME
+
   @Test
   fun exactConfiguredHostAndHttpSchemesAcceptShortIdsWithoutDependingOnSlugOrSuffix() {
     for (url in
       listOf(
-        "${LobstersApi.BASE_URL}/s/abc123",
+        "https://lobste.rs/s/abc123",
         "https://lobste.rs/s/abc123/",
         "http://lobste.rs/s/abc123/a_title",
         "https://lobste.rs/s/abc123/title?utm_source=test#comment-42",
@@ -28,7 +29,7 @@ class LobstersDestinationTest {
       )) {
       assertWithMessage(url)
         .that(rewriteUrlIfLobstersPost(url))
-        .isEqualTo("${BuildConfig.DEEPLINK_SCHEME}://comments/abc123")
+        .isEqualTo("${deepLinkScheme}://comments/abc123")
     }
   }
 
@@ -49,7 +50,7 @@ class LobstersDestinationTest {
     cases.forEach { (url, id) ->
       assertWithMessage(url)
         .that(rewriteUrlIfLobstersPost(url))
-        .isEqualTo("${BuildConfig.DEEPLINK_SCHEME}://comments/$id")
+        .isEqualTo("${deepLinkScheme}://comments/$id")
     }
   }
 
@@ -71,7 +72,7 @@ class LobstersDestinationTest {
         "ftp://lobste.rs/s/abc123",
         "javascript:alert('https://lobste.rs/s/abc123')",
         "mailto:lobste.rs/s/abc123",
-        "${BuildConfig.DEEPLINK_SCHEME}://comments/abc123",
+        "${deepLinkScheme}://comments/abc123",
       )) {
       assertWithMessage(url).that(rewriteUrlIfLobstersPost(url)).isEqualTo(url)
     }

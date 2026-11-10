@@ -146,6 +146,7 @@ include(
   "model",
   "zipline-parser",
   ":core:common",
+  ":core:ui",
   ":core:database:api",
   ":core:database:impl",
   ":core:navigation:api",

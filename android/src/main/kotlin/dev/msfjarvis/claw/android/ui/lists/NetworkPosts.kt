@@ -37,7 +37,6 @@ import androidx.paging.compose.itemContentType
 import dev.msfjarvis.claw.android.glance.samplePosts
 import dev.msfjarvis.claw.android.glance.withPrimaryStory
 import dev.msfjarvis.claw.common.posts.PostActions
-import dev.msfjarvis.claw.common.posts.TEST_POST_ACTIONS
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.NetworkError
 import dev.msfjarvis.claw.common.ui.ProgressBar

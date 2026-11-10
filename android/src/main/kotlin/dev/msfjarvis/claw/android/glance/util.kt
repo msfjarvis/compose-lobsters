@@ -27,9 +27,9 @@ import androidx.glance.layout.padding
 import androidx.glance.material3.ColorProviders
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
-import dev.msfjarvis.claw.common.posts.TEST_POST
 import dev.msfjarvis.claw.common.theme.DarkThemeColors
 import dev.msfjarvis.claw.common.theme.LightThemeColors
+import dev.msfjarvis.claw.model.Discussion
 import dev.msfjarvis.claw.model.SourceStory
 import dev.msfjarvis.claw.model.UIPost
 import java.nio.ByteBuffer
@@ -66,17 +66,38 @@ fun WidgetContainer(
   }
 }
 
+private val SamplePost =
+  UIPost(
+    discussion =
+      Discussion(
+        stories =
+          listOf(
+            SourceStory(
+              shortId = "bdzmde",
+              title = "Compose Multiplatform makes shared UI simple",
+              url = "https://example.com/compose",
+              createdAt = "2026-01-02T09:49:33.000-06:00",
+              submitter = "alice",
+              tags = listOf("android", "compose"),
+            )
+          )
+      ),
+    commentCount = 100,
+    commentsUrl = "https://lobste.rs/s/bdzmde/compose_multiplatform",
+    description = "",
+  )
+
 @SuppressLint("VisibleForTests")
 fun samplePosts(
   count: Int = 5,
   mutator: UIPost.(idx: Int) -> UIPost = { this },
 ): PersistentList<UIPost> {
-  return buildList(count) { repeat(count) { add(TEST_POST.mutator(it)) } }.toPersistentList()
+  return buildList(count) { repeat(count) { add(SamplePost.mutator(it)) } }.toPersistentList()
 }
 
 internal fun generatedWidgetPreviewPosts(): PersistentList<UIPost> {
   return listOf(
-      TEST_POST.withPrimaryStory {
+      SamplePost.withPrimaryStory {
           copy(
             shortId = "widget-preview-1",
             title = "Rust 2026 roadmap",
@@ -90,7 +111,7 @@ internal fun generatedWidgetPreviewPosts(): PersistentList<UIPost> {
           commentsUrl = "https://lobste.rs/s/widget_preview_1/rust_2026_roadmap",
           description = "",
         ),
-      TEST_POST.withPrimaryStory {
+      SamplePost.withPrimaryStory {
           copy(
             shortId = "widget-preview-2",
             title = "SQLite tips for mobile apps",

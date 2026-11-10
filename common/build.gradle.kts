@@ -35,6 +35,7 @@ dependencies {
   api(projects.core.database.api)
   api(projects.core.network.api)
   implementation(projects.core.common)
+  implementation(projects.core.ui)
   api(projects.model)
 
   implementation(platform(libs.okhttp.bom))
@@ -65,7 +66,6 @@ dependencies {
   implementation(libs.metrox.viewmodel.compose)
   implementation(libs.sqldelight.runtime)
   implementation(libs.sqldelight.extensions.coroutines)
-  implementation(projects.htmlRenderer)
 
   compileOnly(libs.androidx.compose.ui.tooling.preview)
 

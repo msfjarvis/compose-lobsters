@@ -6,9 +6,11 @@
  */
 package dev.msfjarvis.claw.common.ui
 
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextLinkStyles
@@ -20,25 +22,32 @@ import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
 import dev.msfjarvis.claw.htmlrenderer.HtmlText
 
 @Composable
-internal fun ThemedRichText(text: String, modifier: Modifier = Modifier) {
-  HtmlText(
-    html = text,
-    linkStyles =
-      TextLinkStyles(
-        style =
-          SpanStyle(
-            background = MaterialTheme.colorScheme.surfaceVariant,
-            color = MaterialTheme.colorScheme.onSurface,
-            fontWeight = FontWeight.Bold,
-            textDecoration = TextDecoration.Underline,
-          )
-      ),
-    quoteBarColor = MaterialTheme.colorScheme.outlineVariant,
-    transformDestination = ::rewriteUrlIfLobstersPost,
-    color = contentColorFor(MaterialTheme.colorScheme.background),
-    style = MaterialTheme.typography.bodyLarge.copy(lineBreak = LineBreak.Paragraph),
-    modifier = modifier,
-  )
+fun ThemedRichText(
+  text: String,
+  modifier: Modifier = Modifier,
+  transformDestination: (String) -> String = { it },
+) {
+  val color = contentColorFor(MaterialTheme.colorScheme.background)
+  CompositionLocalProvider(LocalContentColor provides color) {
+    HtmlText(
+      html = text,
+      linkStyles =
+        TextLinkStyles(
+          style =
+            SpanStyle(
+              background = MaterialTheme.colorScheme.surfaceVariant,
+              color = MaterialTheme.colorScheme.onSurface,
+              fontWeight = FontWeight.Bold,
+              textDecoration = TextDecoration.Underline,
+            )
+        ),
+      quoteBarColor = MaterialTheme.colorScheme.outlineVariant,
+      transformDestination = transformDestination,
+      color = LocalContentColor.current,
+      style = MaterialTheme.typography.bodyLarge.copy(lineBreak = LineBreak.Paragraph),
+      modifier = modifier,
+    )
+  }
 }
 
 @ThemePreviews

@@ -1,0 +1,13 @@
+<!--
+ ~ Copyright © Harsh Shandilya.
+ ~ Use of this source code is governed by an MIT-style
+ ~ license that can be found in the LICENSE file or at
+ ~ https://opensource.org/licenses/MIT.
+ -->
+<resources>
+  <string name="user_avatar_for">User avatar for %1$s</string>
+  <string name="open_comments">Open comments</string>
+  <string name="show_error">Show error</string>
+  <string name="copy_stacktrace">Copy stacktrace</string>
+  <string name="stacktrace">Stacktrace</string>
+</resources>

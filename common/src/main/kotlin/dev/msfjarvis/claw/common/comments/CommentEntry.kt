@@ -55,7 +55,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.github.michaelbull.result.coroutines.runSuspendCatching
 import com.github.michaelbull.result.onOk
-import dev.msfjarvis.claw.common.R
 import dev.msfjarvis.claw.common.comments.reply.plainTextFromHtml
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.posts.PostTitle
@@ -63,6 +62,8 @@ import dev.msfjarvis.claw.common.posts.Submitter
 import dev.msfjarvis.claw.common.posts.TagRow
 import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.common.ui.ThemedRichText
+import dev.msfjarvis.claw.common.ui.rewriteUrlIfLobstersPost
+import dev.msfjarvis.claw.core.ui.R as UiR
 import dev.msfjarvis.claw.model.LinkMetadata
 import dev.msfjarvis.claw.model.UIPost
 import kotlin.time.Clock
@@ -104,7 +105,7 @@ internal fun CommentsHeader(
       }
 
       if (post.description.isNotBlank()) {
-        ThemedRichText(post.description)
+        ThemedRichText(post.description, transformDestination = ::rewriteUrlIfLobstersPost)
         Spacer(Modifier.height(4.dp))
       }
       Submitter(
@@ -113,7 +114,7 @@ internal fun CommentsHeader(
             "${if (primaryStory.userIsAuthor) "Authored" else "Submitted"} by ${primaryStory.submitter}"
           ),
         avatarUrl = "https://lobste.rs/avatars/${primaryStory.submitter}-100.png",
-        contentDescription = stringResource(R.string.user_avatar_for, primaryStory.submitter),
+        contentDescription = stringResource(UiR.string.user_avatar_for, primaryStory.submitter),
         modifier = Modifier.clickable { openUserProfile(primaryStory.submitter) },
       )
     }
@@ -288,6 +289,7 @@ internal fun CommentEntry(
         ThemedRichText(
           text = comment.comment,
           modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 12.dp),
+          transformDestination = ::rewriteUrlIfLobstersPost,
         )
       }
       AnimatedVisibility(

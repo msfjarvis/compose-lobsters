@@ -28,14 +28,14 @@ import androidx.compose.ui.platform.ClipEntry
 import androidx.compose.ui.platform.LocalClipboard
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import dev.msfjarvis.claw.common.R
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
+import dev.msfjarvis.claw.core.ui.R
 import kotlinx.coroutines.launch
 
 @Composable
 fun NetworkError(label: String, error: Throwable, modifier: Modifier = Modifier) {
-  LaunchedEffect(Unit) { Log.e("NetworkError", "Failed to load posts", error) }
+  LaunchedEffect(error) { Log.e("NetworkError", "Failed to load content", error) }
   var showDialog by remember { mutableStateOf(false) }
   Column(verticalArrangement = Arrangement.spacedBy(4.dp), modifier = modifier) {
     Text(

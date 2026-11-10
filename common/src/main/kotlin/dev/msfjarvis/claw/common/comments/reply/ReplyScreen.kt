@@ -40,6 +40,7 @@ import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.ThemedRichText
 import dev.msfjarvis.claw.common.ui.preview.DevicePreviews
 import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
+import dev.msfjarvis.claw.common.ui.rewriteUrlIfLobstersPost
 import dev.zacsweers.metrox.viewmodel.metroViewModel
 
 @Composable
@@ -99,7 +100,11 @@ internal fun ReplyScreenContent(
     verticalArrangement = Arrangement.spacedBy(16.dp),
   ) {
     ElevatedCard(onClick = onParentCommentClick, modifier = Modifier.fillMaxWidth()) {
-      ThemedRichText(text = commentText, modifier = Modifier.padding(16.dp))
+      ThemedRichText(
+        text = commentText,
+        modifier = Modifier.padding(16.dp),
+        transformDestination = ::rewriteUrlIfLobstersPost,
+      )
     }
     TextField(
       value = uiState.editor,

@@ -16,14 +16,9 @@
   <string name="debug_controls">Debug Controls</string>
   <string name="force_cleanup_expired_tags_now">Force Cleanup Expired Tags Now</string>
   <string name="this_will_immediately_run_the_cleanup_wo">This will immediately run the cleanup worker to remove expired tag blocks</string>
-  <string name="user_avatar_for">User avatar for %1$s</string>
   <string name="comments_label">Comments</string>
   <string name="no_comments">No Comments</string>
-  <string name="open_comments">Open comments</string>
   <string name="avatar_of">Avatar of %1$s</string>
-  <string name="show_error">Show error</string>
-  <string name="copy_stacktrace">Copy stacktrace</string>
-  <string name="stacktrace">Stacktrace</string>
   <string name="reply_editor_label">Write a reply</string>
   <string name="submit_reply">Submit reply</string>
   <string name="in_reply_to">In reply to</string>

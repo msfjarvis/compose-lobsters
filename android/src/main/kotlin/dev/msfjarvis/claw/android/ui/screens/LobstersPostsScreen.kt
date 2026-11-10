@@ -85,13 +85,13 @@ import dev.msfjarvis.claw.android.ui.navigation.User
 import dev.msfjarvis.claw.android.ui.updates.InAppUpdates
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.android.viewmodel.SettingsViewModel
-import dev.msfjarvis.claw.common.user.UserProfile
 import dev.msfjarvis.claw.feature.auth.impl.navigation.loginNavigationEntryContributor
 import dev.msfjarvis.claw.feature.discussion.impl.navigation.discussionNavigationEntryContributor
 import dev.msfjarvis.claw.feature.posts.impl.PostActions
 import dev.msfjarvis.claw.feature.posts.impl.PostsViewModel
 import dev.msfjarvis.claw.feature.posts.impl.navigation.AppDestinations
 import dev.msfjarvis.claw.feature.posts.impl.navigation.postsNavigationEntryContributor
+import dev.msfjarvis.claw.feature.profile.impl.navigation.profileNavigationEntryContributor
 import dev.msfjarvis.claw.feature.tags.impl.TagFilterViewModel
 import dev.msfjarvis.claw.feature.tags.impl.TagList
 import dev.msfjarvis.claw.navigation.api.NavigationEntryContributor
@@ -462,33 +462,28 @@ fun LobstersPostsScreen(
               },
               onReplySubmitted = { popBackStack(backStack) },
             ),
-            NavigationEntryContributor {
-              entry<User>(
-                metadata =
-                  NavDisplay.transitionSpec {
-                    slideInHorizontally(
-                      initialOffsetX = { it },
-                      animationSpec = tween(200),
-                    ) togetherWith ExitTransition.KeepUntilTransitionsFinished
+            profileNavigationEntryContributor(
+              contentPadding = contentPadding,
+              metadata =
+                NavDisplay.transitionSpec {
+                  slideInHorizontally(
+                    initialOffsetX = { it },
+                    animationSpec = tween(200),
+                  ) togetherWith ExitTransition.KeepUntilTransitionsFinished
+                } +
+                  NavDisplay.popTransitionSpec {
+                    EnterTransition.None togetherWith
+                      slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(200))
                   } +
-                    NavDisplay.popTransitionSpec {
-                      // Slide old content down, revealing the new content in place underneath
-                      EnterTransition.None togetherWith
-                        slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(200))
-                    } +
-                    NavDisplay.predictivePopTransitionSpec {
-                      EnterTransition.None togetherWith
-                        slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(200))
-                    } +
-                    ListDetailSceneStrategy.extraPane()
-              ) { dest ->
-                UserProfile(
-                  username = dest.username,
-                  contentPadding = contentPadding,
-                  openUserProfile = { navigateToDestination(User(it), false) },
-                )
-              }
-            },
+                  NavDisplay.predictivePopTransitionSpec {
+                    EnterTransition.None togetherWith
+                      slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(200))
+                  } +
+                  ListDetailSceneStrategy.extraPane(),
+              navigate = { destination, allowStacking ->
+                navigateToDestination(destination, allowStacking)
+              },
+            ),
             loginNavigationEntryContributor(
               onLoginSuccess = settingsViewModel::saveCookie,
               popBackStack = { popBackStack(backStack) },

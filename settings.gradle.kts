@@ -162,6 +162,7 @@ include(
   ":feature:discussion:api",
   ":feature:discussion:impl",
   ":feature:profile:api",
+  ":feature:profile:impl",
   ":feature:auth:api",
   ":feature:auth:impl",
   ":feature:tags:api",

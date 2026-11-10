@@ -38,7 +38,7 @@ class UserProfileViewModel(
   @param:IODispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
 
-  var userProfile by mutableStateOf<NetworkState>(Loading)
+  internal var userProfile by mutableStateOf<NetworkState>(Loading)
 
   suspend fun loadProfile(username: String) {
     userProfile =
@@ -55,7 +55,9 @@ class UserProfileViewModel(
         }
         .fold(
           success = { profile -> Success(profile) },
-          failure = { Error(error = it, description = "Failed to load profile for $username") },
+          failure = {
+            Error(error = it, description = "Failed to load profile for $username")
+          },
         )
   }
 }

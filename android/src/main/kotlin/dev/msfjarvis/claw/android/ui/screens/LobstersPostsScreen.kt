@@ -70,6 +70,7 @@ import dev.msfjarvis.claw.android.ui.decorations.ClawNavigationBar
 import dev.msfjarvis.claw.android.ui.decorations.ClawNavigationRail
 import dev.msfjarvis.claw.android.ui.decorations.ClawTopBarMode
 import dev.msfjarvis.claw.android.ui.decorations.NavigationItem
+import dev.msfjarvis.claw.android.ui.lists.NetworkPosts
 import dev.msfjarvis.claw.android.ui.lists.SearchResultsList
 import dev.msfjarvis.claw.android.ui.navigation.AboutLibraries
 import dev.msfjarvis.claw.android.ui.navigation.ClawNavigationType
@@ -83,7 +84,7 @@ import dev.msfjarvis.claw.android.ui.navigation.Settings
 import dev.msfjarvis.claw.android.ui.navigation.TagFiltering
 import dev.msfjarvis.claw.android.ui.navigation.User
 import dev.msfjarvis.claw.android.ui.updates.InAppUpdates
-import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
+import dev.msfjarvis.claw.android.viewmodel.SearchViewModel
 import dev.msfjarvis.claw.android.viewmodel.SettingsViewModel
 import dev.msfjarvis.claw.feature.auth.impl.navigation.loginNavigationEntryContributor
 import dev.msfjarvis.claw.feature.discussion.impl.navigation.discussionNavigationEntryContributor
@@ -92,6 +93,7 @@ import dev.msfjarvis.claw.feature.posts.impl.PostsViewModel
 import dev.msfjarvis.claw.feature.posts.impl.navigation.AppDestinations
 import dev.msfjarvis.claw.feature.posts.impl.navigation.postsNavigationEntryContributor
 import dev.msfjarvis.claw.feature.profile.impl.navigation.profileNavigationEntryContributor
+import dev.msfjarvis.claw.feature.search.api.SearchUiState
 import dev.msfjarvis.claw.feature.tags.impl.TagFilterViewModel
 import dev.msfjarvis.claw.feature.tags.impl.TagList
 import dev.msfjarvis.claw.navigation.api.NavigationEntryContributor
@@ -102,24 +104,15 @@ import dev.zacsweers.metrox.viewmodel.metroViewModel
 import io.sentry.compose.navigation3.SentryBackStackEntry
 import io.sentry.compose.navigation3.SentryNavEffect
 import io.sentry.compose.navigation3.SentryNavOptions
-import kotlin.time.Duration.Companion.milliseconds
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-private const val SEARCH_DEBOUNCE_MILLIS = 300L
 private const val SEARCH_WEB_URI = "https://lobste.rs/search"
 private const val HOTTEST_WEB_URI = "https://lobste.rs/"
 private const val NEWEST_WEB_URI = "https://lobste.rs/newest"
-
-@VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-fun shouldDismissSearchOnBack(
-  isSearchActive: Boolean,
-  isCurrentDestinationTopLevel: Boolean,
-): Boolean = isSearchActive && isCurrentDestinationTopLevel
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
@@ -130,7 +123,7 @@ fun LobstersPostsScreen(
   modifier: Modifier = Modifier,
   deepLinkDestination: NavKey? = null,
   clearDeepLink: () -> Unit = {},
-  viewModel: ClawViewModel = metroViewModel(),
+  searchViewModel: SearchViewModel = metroViewModel(),
   postsViewModel: PostsViewModel = metroViewModel(),
   settingsViewModel: SettingsViewModel = metroViewModel(),
   tagFilterViewModel: TagFilterViewModel = metroViewModel(key = "tag_filter"),
@@ -185,11 +178,22 @@ fun LobstersPostsScreen(
         }
       }
     }
-  var isSearchActive by rememberSaveable { mutableStateOf(false) }
-  var searchQuery by rememberSaveable { mutableStateOf("") }
-  var lastExecutedSearchQuery by rememberSaveable { mutableStateOf<String?>(null) }
+  var savedSearchState by
+    rememberSaveable(stateSaver = SearchUiStateSaver) { mutableStateOf(SearchUiState()) }
+  var hasRestoredSearchState by remember(searchViewModel) { mutableStateOf(false) }
+  val searchState by searchViewModel.uiState.collectAsStateWithLifecycle(SearchUiState())
+  LaunchedEffect(searchViewModel) {
+    searchViewModel.restoreUiState(savedSearchState)
+    hasRestoredSearchState = true
+  }
+  SideEffect {
+    if (hasRestoredSearchState) savedSearchState = searchState
+  }
+  val isSearchActive = searchState.isActive
+  val searchQuery = searchState.query
+  val lastExecutedSearchQuery = searchState.lastExecutedQuery
   val searchResultsListState = rememberLazyListState()
-  val searchResults = viewModel.searchResults.collectAsLazyPagingItems()
+  val searchResults = searchViewModel.searchResults.collectAsLazyPagingItems()
   val currentDestination = backStack.lastOrNull()
   val currentDestinationIsTopLevel = currentDestination is TopLevelDestination
   val normalizedSearchQuery = searchQuery.trim()
@@ -228,17 +232,10 @@ fun LobstersPostsScreen(
   // endregion
 
   val executeSearch = { query: String ->
-    val normalizedQuery = query.trim()
-    lastExecutedSearchQuery = normalizedQuery
-    coroutineScope.launch { searchResultsListState.scrollToItem(0) }
-    viewModel.searchQuery = normalizedQuery
-    searchResults.refresh()
+    searchViewModel.executeSearch(query)
   }
   val dismissSearch = {
-    isSearchActive = false
-    searchQuery = ""
-    lastExecutedSearchQuery = ""
-    viewModel.searchQuery = ""
+    searchViewModel.dismissSearch()
   }
   val navigateToDestination = { destination: NavKey, allowStacking: Boolean ->
     if (isSearchActive) {
@@ -246,9 +243,7 @@ fun LobstersPostsScreen(
     }
     navigateTo(backStack, destination, allowStacking = allowStacking)
   }
-  val startSearch = {
-    isSearchActive = true
-  }
+  val startSearch = searchViewModel::startSearch
 
   val postActions =
     remember(isSearchActive) {
@@ -289,27 +284,9 @@ fun LobstersPostsScreen(
     }
   }
 
-  LaunchedEffect(isSearchActive, normalizedSearchQuery) {
-    if (!isSearchActive) return@LaunchedEffect
-    delay(SEARCH_DEBOUNCE_MILLIS.milliseconds)
-    if (normalizedSearchQuery != lastExecutedSearchQuery) {
-      executeSearch(normalizedSearchQuery)
-    }
-  }
-
-  LaunchedEffect(
-    isSearchActive,
-    normalizedSearchQuery,
-    lastExecutedSearchQuery,
-    viewModel.searchQuery,
-  ) {
-    if (!isSearchActive) return@LaunchedEffect
-    if (normalizedSearchQuery.isBlank()) return@LaunchedEffect
-    if (
-      normalizedSearchQuery == lastExecutedSearchQuery &&
-        viewModel.searchQuery != normalizedSearchQuery
-    ) {
-      executeSearch(normalizedSearchQuery)
+  LaunchedEffect(searchState.requestGeneration) {
+    if (searchState.requestGeneration > 0) {
+      searchResultsListState.scrollToItem(0)
     }
   }
 
@@ -368,23 +345,25 @@ fun LobstersPostsScreen(
         popBackStack = { popBackStack(backStack) },
         onStartSearch = startSearch,
         onDismissSearch = dismissSearch,
-        onQueryChange = { searchQuery = it },
-        onSearch = { query ->
-          searchQuery = query
-          executeSearch(query)
-        },
+        onQueryChange = searchViewModel::updateQuery,
+        onSearch = { query -> executeSearch(query) },
       ) {
         if (
           normalizedSearchQuery.isNotBlank() && normalizedSearchQuery == lastExecutedSearchQuery
         ) {
           SearchResultsList(
             lazyPagingItems = searchResults,
-            listState = searchResultsListState,
-            postActions = postActions,
-            filteredTags = filteredTags,
-            contentPadding = PaddingValues(bottom = searchResultsBottomPadding),
             onClearanceCookie = settingsViewModel::saveAnubisCookie,
-          )
+          ) { listModifier ->
+            NetworkPosts(
+              lazyPagingItems = searchResults,
+              listState = searchResultsListState,
+              postActions = postActions,
+              filteredTags = filteredTags,
+              contentPadding = PaddingValues(bottom = searchResultsBottomPadding),
+              modifier = listModifier,
+            )
+          }
         }
       }
     },

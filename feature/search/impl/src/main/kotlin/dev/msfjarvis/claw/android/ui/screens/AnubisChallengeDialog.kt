@@ -32,15 +32,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import dev.msfjarvis.claw.android.R
-import dev.msfjarvis.claw.core.network.CHROME_USER_AGENT
+import dev.msfjarvis.claw.feature.search.impl.R
 import kotlinx.coroutines.delay
 
 private const val ORIGIN = "https://lobste.rs"
 private const val CHALLENGE_URL = "$ORIGIN/search?what=stories&order=newest&q=rust&page=1"
 
 @Composable
-internal fun AnubisChallengeDialog(onCookie: (String) -> Unit, onDismiss: () -> Unit) {
+internal fun AnubisChallengeDialog(
+  userAgent: String,
+  onCookie: (String) -> Unit,
+  onDismiss: () -> Unit,
+) {
   val manager = remember { CookieManager.getInstance() }
   val previousCookies = remember { manager.getCookie(ORIGIN) }
   var webView by remember { mutableStateOf<WebView?>(null) }
@@ -86,7 +89,7 @@ internal fun AnubisChallengeDialog(onCookie: (String) -> Unit, onDismiss: () -> 
               .apply {
                 @SuppressLint("SetJavaScriptEnabled")
                 settings.javaScriptEnabled = true
-                settings.userAgentString = CHROME_USER_AGENT
+                settings.userAgentString = userAgent
                 webViewClient =
                   object : WebViewClient() {
                     override fun shouldOverrideUrlLoading(

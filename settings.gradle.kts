@@ -168,6 +168,8 @@ include(
   ":feature:tags:api",
   ":feature:tags:impl",
   ":feature:settings:api",
+  ":feature:search:api",
+  ":feature:search:impl",
   ":feature:reminders:api",
   ":feature:widgets:api",
 )

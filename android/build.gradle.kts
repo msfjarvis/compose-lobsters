@@ -193,6 +193,8 @@ dependencies {
   implementation(projects.feature.auth.impl)
   implementation(projects.feature.tags.impl)
   implementation(projects.feature.settings.api)
+  implementation(projects.feature.search.api)
+  implementation(projects.feature.search.impl)
   implementation(projects.feature.reminders.api)
   implementation(projects.feature.widgets.api)
   implementation(projects.core.navigation.impl)

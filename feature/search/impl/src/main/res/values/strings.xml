@@ -1,0 +1,13 @@
+<!--
+ ~ Copyright © Harsh Shandilya.
+ ~ Use of this source code is governed by an MIT-style
+ ~ license that can be found in the LICENSE file or at
+ ~ https://opensource.org/licenses/MIT.
+ -->
+<resources>
+  <string name="no_search_results">No search results</string>
+  <string name="search_challenge_message">Lobsters needs to verify your browser before searching.</string>
+  <string name="search_challenge_button">Verify browser</string>
+  <string name="challenge_load_error">Could not load verification.</string>
+  <string name="challenge_retry">Retry</string>
+</resources>

@@ -1,0 +1,15 @@
+<!--
+ ~ Copyright © Harsh Shandilya.
+ ~ Use of this source code is governed by an MIT-style
+ ~ license that can be found in the LICENSE file or at
+ ~ https://opensource.org/licenses/MIT.
+ -->
+<resources>
+  <string name="comments_label">Comments</string>
+  <string name="no_comments">No Comments</string>
+  <string name="reply_editor_label">Write a reply</string>
+  <string name="submit_reply">Submit reply</string>
+  <string name="in_reply_to">In reply to</string>
+  <string name="quote">Quote</string>
+  <string name="cancel">Cancel</string>
+</resources>

@@ -6,31 +6,10 @@
  */
 package dev.msfjarvis.claw.android
 
-import androidx.navigation3.runtime.NavKey
-import dev.msfjarvis.claw.android.ui.navigation.Comments
+import dev.msfjarvis.claw.feature.discussion.impl.navigation.discussionDeepLinkMatcher
 import dev.msfjarvis.claw.feature.posts.impl.navigation.postsDeepLinkMatcher
 import dev.msfjarvis.claw.navigation.api.DeepLinkMatcher
-import java.net.URI
-import java.net.URISyntaxException
 
 /** Assemble the route matchers contributed by the app's current feature implementations. */
 internal fun appDeepLinkMatchers(scheme: String): List<DeepLinkMatcher> =
-  listOf(postsDeepLinkMatcher(scheme), DiscussionDeepLinkMatcher(scheme))
-
-private class DiscussionDeepLinkMatcher(private val scheme: String) : DeepLinkMatcher {
-  override fun match(uri: String): NavKey? {
-    val data = uri.toUriOrNull() ?: return null
-    if (data.scheme != scheme || data.host != "comments") return null
-    return data.path.orEmpty().split('/').firstOrNull(String::isNotBlank)?.let { postId ->
-      // The short id is sufficient; synthesize the canonical comments URL.
-      Comments(postId, "https://lobste.rs/s/$postId/c")
-    }
-  }
-}
-
-internal fun String.toUriOrNull(): URI? =
-  try {
-    URI(this)
-  } catch (_: URISyntaxException) {
-    null
-  }
+  listOf(postsDeepLinkMatcher(scheme), discussionDeepLinkMatcher(scheme))

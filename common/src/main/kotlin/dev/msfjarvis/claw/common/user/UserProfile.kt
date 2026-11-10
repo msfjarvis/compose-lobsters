@@ -100,7 +100,10 @@ private fun UserProfileInternal(
         modifier = Modifier.requiredSize(120.dp).clip(CircleShape),
       )
       Text(text = user.username, style = MaterialTheme.typography.displaySmall)
-      ThemedRichText(text = user.about, transformDestination = ::rewriteUrlIfLobstersPost)
+      ThemedRichText(
+        text = user.about,
+        transformDestination = { rewriteUrlIfLobstersPost(it) },
+      )
       user.invitedBy?.let { invitedBy ->
         Text(
           text =

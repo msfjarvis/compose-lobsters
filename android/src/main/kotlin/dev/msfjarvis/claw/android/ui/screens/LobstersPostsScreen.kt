@@ -85,10 +85,9 @@ import dev.msfjarvis.claw.android.ui.navigation.User
 import dev.msfjarvis.claw.android.ui.updates.InAppUpdates
 import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.android.viewmodel.SettingsViewModel
-import dev.msfjarvis.claw.common.comments.CommentsPage
-import dev.msfjarvis.claw.common.comments.reply.ReplyScreen
 import dev.msfjarvis.claw.common.user.UserProfile
 import dev.msfjarvis.claw.feature.auth.impl.navigation.loginNavigationEntryContributor
+import dev.msfjarvis.claw.feature.discussion.impl.navigation.discussionNavigationEntryContributor
 import dev.msfjarvis.claw.feature.posts.impl.PostActions
 import dev.msfjarvis.claw.feature.posts.impl.PostsViewModel
 import dev.msfjarvis.claw.feature.posts.impl.navigation.AppDestinations
@@ -441,44 +440,28 @@ fun LobstersPostsScreen(
               filteredTags = filteredTags,
               contentPadding = contentPadding,
             ),
-            NavigationEntryContributor {
-              entry<Comments>(metadata = ListDetailSceneStrategy.detailPane()) { dest ->
-                val commentsPostActions =
-                  remember(isSearchActive) {
-                    PostActions(
-                      context = context,
-                      uriHandler = uriHandler,
-                      markPostAsRead = postsViewModel::markPostAsRead,
-                      onToggleSave = postsViewModel::toggleSave,
-                      checkPostRead = postsViewModel::isPostRead,
-                      checkPostSaved = postsViewModel::isPostSaved,
-                      loadLinkMetadata = postsViewModel::getLinkMetadata,
-                    ) { postId, commentsUrl ->
-                      navigateToDestination(Comments(postId, commentsUrl), true)
-                    }
+            discussionNavigationEntryContributor(
+              postActions =
+                remember(isSearchActive) {
+                  PostActions(
+                    context = context,
+                    uriHandler = uriHandler,
+                    markPostAsRead = postsViewModel::markPostAsRead,
+                    onToggleSave = postsViewModel::toggleSave,
+                    checkPostRead = postsViewModel::isPostRead,
+                    checkPostSaved = postsViewModel::isPostSaved,
+                    loadLinkMetadata = postsViewModel::getLinkMetadata,
+                  ) { postId, commentsUrl ->
+                    navigateToDestination(Comments(postId, commentsUrl), true)
                   }
-                CommentsPage(
-                  postId = dest.postId,
-                  commentsUrl = dest.commentsUrl,
-                  postActions = commentsPostActions,
-                  contentPadding = contentPadding,
-                  openUserProfile = { navigateToDestination(User(it), false) },
-                  openReplyScreen = { postId, commentId, commentText ->
-                    navigateToDestination(Reply(postId, commentId, commentText), true)
-                  },
-                )
-              }
-              entry<Reply>(metadata = ListDetailSceneStrategy.extraPane()) { dest ->
-                ReplyScreen(
-                  postId = dest.postId,
-                  commentId = dest.commentId,
-                  commentText = dest.commentText,
-                  onReplySubmitted = { popBackStack(backStack) },
-                  contentPadding = contentPadding,
-                  modifier = Modifier.fillMaxSize(),
-                )
-              }
-            },
+                },
+              contentPadding = contentPadding,
+              openUserProfile = { navigateToDestination(User(it), false) },
+              navigate = { destination, allowStacking ->
+                navigateToDestination(destination, allowStacking)
+              },
+              onReplySubmitted = { popBackStack(backStack) },
+            ),
             NavigationEntryContributor {
               entry<User>(
                 metadata =

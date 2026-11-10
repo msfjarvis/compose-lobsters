@@ -11,7 +11,7 @@ import dev.msfjarvis.claw.model.Comment
 import dev.zacsweers.metro.Inject
 
 @Inject
-class CommentsRepository(private val storage: CommentsStorage) {
+internal class CommentsRepository(private val storage: CommentsStorage) {
   suspend fun getSeenComments(postId: String): Set<String>? = storage.getSeenCommentIds(postId)
 
   suspend fun markSeenComments(postId: String, comments: List<Comment>) {

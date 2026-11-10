@@ -39,7 +39,8 @@ import kotlinx.coroutines.withContext
 @Inject
 @ViewModelKey
 @ContributesIntoMap(AppScope::class)
-class CommentsViewModel(
+class CommentsViewModel
+internal constructor(
   private val api: LobstersApi,
   private val authenticatedApi: AuthenticatedLobstersApi,
   private val commentsRepository: CommentsRepository,
@@ -48,7 +49,7 @@ class CommentsViewModel(
 ) : ViewModel() {
   private val commentsHandler = CommentsHandler()
 
-  var postDetails by mutableStateOf<NetworkState>(NetworkState.Loading)
+  internal var postDetails by mutableStateOf<NetworkState>(NetworkState.Loading)
     private set
 
   internal val commentNodes: StateFlow<List<CommentNode>> = commentsHandler.listItems
@@ -81,7 +82,9 @@ class CommentsViewModel(
         }
         .fold(
           success = { details -> NetworkState.Success(details) },
-          failure = { NetworkState.Error(error = it, description = "Failed to load comments") },
+          failure = {
+            NetworkState.Error(error = it, description = "Failed to load comments")
+          },
         )
   }
 

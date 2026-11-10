@@ -34,7 +34,7 @@ import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import com.google.common.truth.Truth.assertThat
-import dev.msfjarvis.claw.common.BuildConfig
+import dev.msfjarvis.claw.feature.discussion.impl.BuildConfig
 import dev.msfjarvis.claw.model.Comment
 import kotlin.time.Instant
 import org.junit.Rule

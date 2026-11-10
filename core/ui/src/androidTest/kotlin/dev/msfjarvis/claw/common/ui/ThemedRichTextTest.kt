@@ -52,11 +52,12 @@ class ThemedRichTextTest {
   @Test
   fun oneFinalLinkReachesTextAndThemeChangesRefreshUnchangedHtml() {
     val colors = mutableStateOf(lightColorScheme())
+    val destination = mutableStateOf("claw-debug://comments/abc123")
     compose.setContent {
       MaterialTheme(colorScheme = colors.value) {
         ThemedRichText(
           "<a href='https://lobste.rs/s/abc123/title'>open</a>",
-          transformDestination = { "claw-debug://comments/abc123" },
+          transformDestination = { destination.value },
         )
       }
     }
@@ -75,8 +76,10 @@ class ThemedRichTextTest {
     assertThat(link().styles?.style?.fontWeight).isEqualTo(FontWeight.Bold)
     assertThat(link().styles?.style?.textDecoration).isEqualTo(TextDecoration.Underline)
     compose.runOnIdle {
+      destination.value = "claw-debug://comments/xyz789"
       colors.value = colors.value.copy(onSurface = Color.Red, surfaceVariant = Color.Blue)
     }
+    assertThat(link().url).isEqualTo("claw-debug://comments/xyz789")
     assertThat(link().styles?.style?.color).isEqualTo(colors.value.onSurface)
     assertThat(link().styles?.style?.background).isEqualTo(colors.value.surfaceVariant)
   }
@@ -191,7 +194,13 @@ class ThemedRichTextTest {
             <p><a href="https://example.com/page?q=1&amp;x=2#end">External</a></p>
             <script>not rendered</script><img src="https://example.com/image.png">
             <p>Ordinary</p>""",
-            transformDestination = { "claw-debug://comments/abc123" },
+            transformDestination = { destination ->
+              if (destination.startsWith("https://lobste.rs/s/")) {
+                "claw-debug://comments/abc123"
+              } else {
+                destination
+              }
+            },
           )
         }
       }

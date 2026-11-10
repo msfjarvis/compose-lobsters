@@ -8,7 +8,7 @@ package dev.msfjarvis.claw.common.comments
 
 import androidx.compose.ui.graphics.Color
 
-object CommentTreeColors {
+internal object CommentTreeColors {
 
   // Fully opaque ARGB colors, ordered so neighboring depth guides have strongly different hues.
   // Every entry has at least 3:1 contrast against both app backgrounds.

@@ -160,6 +160,7 @@ include(
   ":feature:posts:api",
   ":feature:posts:impl",
   ":feature:discussion:api",
+  ":feature:discussion:impl",
   ":feature:profile:api",
   ":feature:auth:api",
   ":feature:auth:impl",

@@ -26,9 +26,8 @@ import dev.msfjarvis.claw.core.NetworkState.Success
 import dev.msfjarvis.claw.model.UIPost
 import dev.zacsweers.metrox.viewmodel.metroViewModel
 
-@Suppress("UNCHECKED_CAST")
 @Composable
-fun CommentsPage(
+internal fun CommentsPage(
   postId: String,
   commentsUrl: String,
   postActions: PostActions,
@@ -53,7 +52,7 @@ fun CommentsPage(
     is Success<*> -> {
       if (seenCommentsState != SeenCommentsState.Loading) {
         CommentsPageInternal(
-          details = (postDetails as Success<UIPost>).data,
+          details = postDetails.data as UIPost,
           postActions = postActions,
           seenCommentsState = seenCommentsState,
           markSeenComments = viewModel::markSeenComments,

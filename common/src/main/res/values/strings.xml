@@ -16,14 +16,7 @@
   <string name="debug_controls">Debug Controls</string>
   <string name="force_cleanup_expired_tags_now">Force Cleanup Expired Tags Now</string>
   <string name="this_will_immediately_run_the_cleanup_wo">This will immediately run the cleanup worker to remove expired tag blocks</string>
-  <string name="comments_label">Comments</string>
-  <string name="no_comments">No Comments</string>
   <string name="avatar_of">Avatar of %1$s</string>
-  <string name="reply_editor_label">Write a reply</string>
-  <string name="submit_reply">Submit reply</string>
-  <string name="in_reply_to">In reply to</string>
-  <string name="quote">Quote</string>
-  <string name="cancel">Cancel</string>
   <string name="discard_tag_filter_changes_title">Discard tag filter changes?</string>
   <string name="discard_tag_filter_changes_message">Your unsaved tag filter changes will be lost.</string>
   <string name="discard_changes">Discard</string>

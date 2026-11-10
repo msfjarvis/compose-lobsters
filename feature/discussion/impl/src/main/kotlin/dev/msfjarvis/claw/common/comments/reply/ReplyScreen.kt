@@ -35,16 +35,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import dev.msfjarvis.claw.common.R
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.ThemedRichText
 import dev.msfjarvis.claw.common.ui.preview.DevicePreviews
 import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
 import dev.msfjarvis.claw.common.ui.rewriteUrlIfLobstersPost
+import dev.msfjarvis.claw.feature.discussion.impl.R
 import dev.zacsweers.metrox.viewmodel.metroViewModel
 
 @Composable
-fun ReplyScreen(
+internal fun ReplyScreen(
   postId: String,
   commentId: String,
   commentText: String,
@@ -103,7 +103,7 @@ internal fun ReplyScreenContent(
       ThemedRichText(
         text = commentText,
         modifier = Modifier.padding(16.dp),
-        transformDestination = ::rewriteUrlIfLobstersPost,
+        transformDestination = { rewriteUrlIfLobstersPost(it) },
       )
     }
     TextField(

@@ -32,14 +32,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import dev.drewhamilton.poko.Poko
-import dev.msfjarvis.claw.common.R
 import dev.msfjarvis.claw.common.posts.PostActions
+import dev.msfjarvis.claw.feature.discussion.impl.R
 import dev.msfjarvis.claw.model.Comment
 import dev.msfjarvis.claw.model.UIPost
 import kotlinx.coroutines.flow.StateFlow
 
-@Poko internal class CommentsVisitDecision(val unreadCount: Int, val shouldPersist: Boolean)
+internal data class CommentsVisitDecision(val unreadCount: Int, val shouldPersist: Boolean)
 
 internal fun buildCommentsVisitDecision(
   currentCommentIds: List<String>,

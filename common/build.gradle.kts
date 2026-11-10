@@ -11,7 +11,6 @@ import dev.msfjarvis.claw.gradle.addTestDependencies
 plugins {
   id("dev.msfjarvis.claw.android-library")
   id("dev.msfjarvis.claw.kotlin-android")
-  id("dev.msfjarvis.claw.android-screenshot")
   alias(libs.plugins.kotlin.composeCompiler)
   alias(libs.plugins.dependencyAnalysis)
   alias(libs.plugins.metro)
@@ -20,6 +19,10 @@ plugins {
 
 android {
   namespace = "dev.msfjarvis.claw.common"
+  androidResources.enable = true
+  buildFeatures.compose = true
+  defaultConfig.testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+  packaging.resources.merges += setOf("META-INF/LICENSE.md", "META-INF/LICENSE-notice.md")
 }
 
 dependencies {
@@ -73,6 +76,11 @@ dependencies {
   runtimeOnly(libs.androidx.compose.ui.tooling)
 
   testImplementation(libs.kotlinx.coroutines.test)
+
+  androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+  androidTestImplementation(libs.androidx.test.runner)
+  androidTestImplementation(libs.androidx.test.ext.junit)
+  debugImplementation(libs.androidx.compose.ui.test.manifest)
   testImplementation(libs.sqldelight.jvmDriver)
   testImplementation(projects.core.database.impl)
   testImplementation(libs.sqldelight.runtime)

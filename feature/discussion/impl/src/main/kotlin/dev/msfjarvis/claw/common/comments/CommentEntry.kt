@@ -105,7 +105,9 @@ internal fun CommentsHeader(
       }
 
       if (post.description.isNotBlank()) {
-        ThemedRichText(post.description, transformDestination = ::rewriteUrlIfLobstersPost)
+        ThemedRichText(post.description) {
+          rewriteUrlIfLobstersPost(it)
+        }
         Spacer(Modifier.height(4.dp))
       }
       Submitter(
@@ -289,7 +291,7 @@ internal fun CommentEntry(
         ThemedRichText(
           text = comment.comment,
           modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 12.dp),
-          transformDestination = ::rewriteUrlIfLobstersPost,
+          transformDestination = { rewriteUrlIfLobstersPost(it) },
         )
       }
       AnimatedVisibility(

@@ -173,4 +173,5 @@ include(
   ":feature:reminders:api",
   ":feature:reminders:impl",
   ":feature:widgets:api",
+  ":feature:widgets:impl",
 )

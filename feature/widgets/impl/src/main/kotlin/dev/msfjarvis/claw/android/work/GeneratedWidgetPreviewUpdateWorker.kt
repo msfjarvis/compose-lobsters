@@ -16,7 +16,6 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
-import dev.msfjarvis.claw.android.BuildConfig
 import dev.msfjarvis.claw.android.glance.SavedPostsWidgetReceiver
 import dev.msfjarvis.claw.android.glance.generatedWidgetPreviewDelayMinutes
 import dev.msfjarvis.claw.core.work.api.WorkerInstanceFactory
@@ -40,8 +39,8 @@ class GeneratedWidgetPreviewUpdateWorker(
       val result =
         GlanceAppWidgetManager(applicationContext)
           .setWidgetPreviews(SavedPostsWidgetReceiver::class)
-      if (BuildConfig.ENABLE_LOGS) {
-        Log.d("WidgetPreviewUpdateWorker", "GlanceAppWidgetManager#setWidgetPreviews -> $result")
+      if (Log.isLoggable(TAG, Log.DEBUG)) {
+        Log.d(TAG, "GlanceAppWidgetManager#setWidgetPreviews -> $result")
       }
     } catch (_: IllegalArgumentException) {
       // Workaround for Motorola Android 15 bug where AppWidgetServiceImpl incorrectly
@@ -52,6 +51,7 @@ class GeneratedWidgetPreviewUpdateWorker(
   }
 
   companion object {
+    private const val TAG = "WidgetPreview"
     const val UNIQUE_WORK_NAME = "generatedWidgetPreviewUpdate"
 
     fun enqueue(workManager: WorkManager) {

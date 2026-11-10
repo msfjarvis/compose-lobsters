@@ -16,7 +16,6 @@ import androidx.core.net.toUri
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
-import androidx.glance.LocalContext
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.action.actionStartActivity
@@ -31,48 +30,24 @@ import androidx.glance.layout.padding
 import androidx.glance.text.Text
 import androidx.glance.text.TextAlign
 import androidx.glance.text.TextStyle
-import com.slack.eithernet.ApiResult
-import dev.msfjarvis.claw.android.BuildConfig
-import dev.msfjarvis.claw.android.ClawApplication
-import dev.msfjarvis.claw.android.MainActivity
-import dev.msfjarvis.claw.android.R
-import dev.msfjarvis.claw.model.LobstersPost
+import dev.msfjarvis.claw.feature.widgets.impl.BuildConfig
+import dev.msfjarvis.claw.feature.widgets.impl.R
+import dev.msfjarvis.claw.feature.widgets.impl.widgetDependencies
 import dev.msfjarvis.claw.model.UIPost
-import dev.msfjarvis.claw.model.toUIPost
-import java.util.concurrent.CancellationException
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 
 class HottestPostsWidget : GlanceAppWidget() {
 
   override suspend fun provideGlance(context: Context, id: GlanceId) {
-    val appGraph = (context.applicationContext as ClawApplication).appGraph
-    val cachedRemotePostsRepository = appGraph.cachedRemotePostsRepository
-    val tagBlockRepository = appGraph.tagBlockRepository
+    val dependencies = widgetDependencies(context)
     val filteredTags =
       try {
-        tagBlockRepository.getSavedTagsSnapshot()
+        dependencies.widgetTagFilter.getSavedTagsSnapshot()
       } catch (_: Exception) {
         emptySet()
       }
-    val posts =
-      when (val postsResult = appGraph.lobstersApi.getHottestPosts(1)) {
-        is ApiResult.Success -> {
-          val uiPosts = postsResult.value.map(LobstersPost::toUIPost)
-          // Cache the posts for future use when network is unavailable
-          // Using try-catch to prevent widget rendering failures if caching fails
-          try {
-            cachedRemotePostsRepository.savePosts(uiPosts)
-          } catch (_: Exception) {
-            // Silently ignore caching failures - widget should still render
-          }
-          uiPosts.toImmutableList()
-        }
-        else -> {
-          // Fall back to cached posts when network fails
-          cachedPostsOrEmpty { cachedRemotePostsRepository.getCachedPosts() }.toImmutableList()
-        }
-      }
+    val posts = dependencies.hottestPosts.getHottestPosts().toImmutableList()
     // Filter out posts with tags that are in the filtered tags set
     val filteredPosts =
       if (filteredTags.isEmpty()) {
@@ -129,7 +104,6 @@ class HottestPostsWidget : GlanceAppWidget() {
                           )
                           .apply {
                             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            setClass(LocalContext.current, MainActivity::class.java)
                           }
                       )
                     ),
@@ -163,15 +137,5 @@ class HottestPostsWidget : GlanceAppWidget() {
       actionsEnabled = false,
       showFooterAction = false,
     )
-  }
-}
-
-internal suspend fun <T> cachedPostsOrEmpty(loader: suspend () -> List<T>): List<T> {
-  return try {
-    loader()
-  } catch (cancellation: CancellationException) {
-    throw cancellation
-  } catch (_: Exception) {
-    emptyList()
   }
 }

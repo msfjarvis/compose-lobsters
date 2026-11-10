@@ -12,14 +12,14 @@ import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import dev.msfjarvis.claw.android.BuildConfig
 import dev.msfjarvis.claw.android.reminders.DailySavedPostReminderScheduler
-import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.api.ParserRuntimeConfig
 import dev.msfjarvis.claw.core.coroutines.MainDispatcher
 import dev.msfjarvis.claw.core.work.api.WorkManagerRequests
 import dev.msfjarvis.claw.core.work.impl.InjectedWorkerFactory
+import dev.msfjarvis.claw.feature.posts.api.HottestPostsSource
 import dev.msfjarvis.claw.feature.posts.api.SavedPosts
 import dev.msfjarvis.claw.feature.posts.impl.CachedRemotePostsRepository
-import dev.msfjarvis.claw.feature.tags.api.TagBlocks
+import dev.msfjarvis.claw.feature.widgets.impl.WidgetDependencies
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.DependencyGraph
 import dev.zacsweers.metro.Provides
@@ -31,7 +31,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.datetime.TimeZone
 
 @DependencyGraph(AppScope::class)
-interface AppGraph : MetroAppComponentProviders, ViewModelGraph {
+interface AppGraph : MetroAppComponentProviders, ViewModelGraph, WidgetDependencies {
   val plugins: Set<AppPlugin>
 
   val workManagerRequests: Set<WorkManagerRequests>
@@ -64,13 +64,11 @@ interface AppGraph : MetroAppComponentProviders, ViewModelGraph {
 
   val workerFactory: InjectedWorkerFactory
 
-  val savedPostsRepository: SavedPosts
+  override val savedPostsRepository: SavedPosts
 
   val cachedRemotePostsRepository: CachedRemotePostsRepository
 
-  val lobstersApi: LobstersApi
-
-  val tagBlockRepository: TagBlocks
+  override val hottestPosts: HottestPostsSource
 
   @MainDispatcher val mainDispatcher: CoroutineDispatcher
 

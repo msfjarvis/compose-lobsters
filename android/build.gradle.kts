@@ -122,9 +122,6 @@ dependencies {
   implementation(libs.androidx.compose.animation.core)
   implementation(libs.androidx.compose.foundation)
   implementation(libs.androidx.compose.foundation.layout)
-  implementation(libs.androidx.compose.glance)
-  implementation(libs.androidx.compose.glance.core)
-  implementation(libs.androidx.compose.glance.m3)
   implementation(libs.androidx.compose.material.icons.core)
   implementation(libs.androidx.compose.material.icons.extended)
   implementation(libs.androidx.compose.material3)
@@ -198,13 +195,12 @@ dependencies {
   implementation(projects.feature.reminders.api)
   implementation(projects.feature.reminders.impl)
   implementation(projects.feature.widgets.api)
+  implementation(projects.feature.widgets.impl)
   implementation(projects.core.navigation.impl)
   implementation(projects.core.database.api)
   implementation(projects.core.database.impl)
   implementation(projects.core.ui)
   implementation(projects.model)
-
-  compileOnly(libs.androidx.compose.glance.preview)
 
   runtimeOnly(libs.androidx.profileinstaller)
 

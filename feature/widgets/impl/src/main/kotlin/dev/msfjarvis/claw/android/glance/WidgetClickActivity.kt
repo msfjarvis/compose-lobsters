@@ -10,8 +10,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.core.net.toUri
-import dev.msfjarvis.claw.android.BuildConfig
-import dev.msfjarvis.claw.android.MainActivity
+import dev.msfjarvis.claw.feature.widgets.impl.BuildConfig
 import io.sentry.Breadcrumb
 import io.sentry.Sentry
 import io.sentry.SentryLevel
@@ -46,11 +45,12 @@ class WidgetClickActivity : Activity() {
           }
         )
         val commentsIntent =
-          Intent(Intent.ACTION_VIEW, "${BuildConfig.DEEPLINK_SCHEME}://comments/$shortId".toUri())
-            .apply {
-              addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-              setClass(this@WidgetClickActivity, MainActivity::class.java)
-            }
+          Intent(
+              Intent.ACTION_VIEW,
+              "${BuildConfig.DEEPLINK_SCHEME}://comments/$shortId".toUri(),
+            )
+            .setPackage(packageName)
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(commentsIntent)
       }
       // Handle external URL
@@ -76,11 +76,12 @@ class WidgetClickActivity : Activity() {
         )
         // For internal URLs without shortId, extract it from the URL or use comments action
         val commentsIntent =
-          Intent(Intent.ACTION_VIEW, "${BuildConfig.DEEPLINK_SCHEME}://comments/$shortId".toUri())
-            .apply {
-              addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-              setClass(this@WidgetClickActivity, MainActivity::class.java)
-            }
+          Intent(
+              Intent.ACTION_VIEW,
+              "${BuildConfig.DEEPLINK_SCHEME}://comments/$shortId".toUri(),
+            )
+            .setPackage(packageName)
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(commentsIntent)
       }
     }

@@ -34,10 +34,9 @@ import androidx.glance.preview.Preview
 import androidx.glance.text.Text
 import androidx.glance.text.TextAlign
 import androidx.glance.text.TextStyle
-import dev.msfjarvis.claw.android.BuildConfig
-import dev.msfjarvis.claw.android.ClawApplication
-import dev.msfjarvis.claw.android.MainActivity
-import dev.msfjarvis.claw.android.R
+import dev.msfjarvis.claw.feature.widgets.impl.BuildConfig
+import dev.msfjarvis.claw.feature.widgets.impl.R
+import dev.msfjarvis.claw.feature.widgets.impl.widgetDependencies
 import dev.msfjarvis.claw.model.UIPost
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
@@ -45,8 +44,8 @@ import kotlinx.collections.immutable.toImmutableList
 class SavedPostsWidget : GlanceAppWidget() {
 
   override suspend fun provideGlance(context: Context, id: GlanceId) {
-    val appGraph = (context.applicationContext as ClawApplication).appGraph
-    val posts = appGraph.savedPostsRepository.getRecentPosts(50)
+    val dependencies = widgetDependencies(context)
+    val posts = dependencies.savedPostsRepository.getRecentPosts(50)
     val postWindow = posts.toImmutableList()
     provideContent { LobstersGlanceTheme { Content(postWindow) } }
   }
@@ -87,11 +86,11 @@ class SavedPostsWidget : GlanceAppWidget() {
                     .padding(horizontal = 24.dp, vertical = 10.dp)
                     .clickable(
                       actionStartActivity(
-                        Intent(Intent.ACTION_VIEW, "${BuildConfig.DEEPLINK_SCHEME}://saved".toUri())
-                          .apply {
-                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            setClass(LocalContext.current, MainActivity::class.java)
-                          }
+                        Intent(
+                            Intent.ACTION_VIEW,
+                            "${BuildConfig.DEEPLINK_SCHEME}://saved".toUri(),
+                          )
+                          .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                       )
                     ),
               ) {

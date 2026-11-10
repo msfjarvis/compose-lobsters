@@ -30,7 +30,7 @@ import androidx.glance.preview.ExperimentalGlancePreviewApi
 import androidx.glance.preview.Preview
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
-import dev.msfjarvis.claw.android.R
+import dev.msfjarvis.claw.feature.widgets.impl.R
 import dev.msfjarvis.claw.model.UIPost
 
 @SuppressLint("ArgInFormattedQuantityStringRes")

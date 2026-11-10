@@ -14,7 +14,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.unit.dp
-import dev.msfjarvis.claw.android.glance.samplePosts
 import dev.msfjarvis.claw.common.posts.LobstersCard
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.theme.LobstersTheme
@@ -66,7 +65,7 @@ fun LobstersListItem(
 private fun ItemPreview() {
   LobstersTheme {
     LobstersListItem(
-      item = samplePosts(1).first(),
+      item = previewPosts(1).first(),
       isSaved = true,
       isRead = true,
       postActions = TEST_POST_ACTIONS,

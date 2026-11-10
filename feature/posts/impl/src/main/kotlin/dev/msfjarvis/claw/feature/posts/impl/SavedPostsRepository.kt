@@ -4,10 +4,9 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
-package dev.msfjarvis.claw.android.viewmodel
+package dev.msfjarvis.claw.feature.posts.impl
 
 import android.util.Log
-import dev.msfjarvis.claw.android.BuildConfig
 import dev.msfjarvis.claw.core.database.SavedPostsStorage
 import dev.msfjarvis.claw.feature.posts.api.SavedPostReference
 import dev.msfjarvis.claw.feature.posts.api.SavedPosts
@@ -34,13 +33,13 @@ class SavedPostsRepository(private val storage: SavedPostsStorage) : SavedPosts 
 
   override suspend fun toggleSave(post: UIPost) {
     val saved = storage.togglePost(post)
-    if (BuildConfig.ENABLE_LOGS) {
+    if (Log.isLoggable(TAG, Log.DEBUG)) {
       Log.d(TAG, "${if (saved) "Saving" else "Removing"} post: ${post.shortId}")
     }
   }
 
   override suspend fun savePosts(posts: List<UIPost>) {
-    if (BuildConfig.ENABLE_LOGS) {
+    if (Log.isLoggable(TAG, Log.DEBUG)) {
       Log.d(TAG, "Saving posts: ${posts.joinToString(",") { it.shortId }}")
     }
     storage.savePosts(posts)

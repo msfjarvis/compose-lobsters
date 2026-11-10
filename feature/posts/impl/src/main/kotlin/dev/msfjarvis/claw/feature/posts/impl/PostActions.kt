@@ -4,12 +4,11 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
-package dev.msfjarvis.claw.android.ui
+package dev.msfjarvis.claw.feature.posts.impl
 
 import android.content.Context
 import android.content.Intent
 import androidx.compose.ui.platform.UriHandler
-import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.model.LinkMetadata
 import dev.msfjarvis.claw.model.UIPost
@@ -17,17 +16,21 @@ import dev.msfjarvis.claw.model.UIPost
 fun PostActions(
   context: Context,
   uriHandler: UriHandler,
-  viewModel: ClawViewModel,
+  markPostAsRead: (String) -> Unit,
+  onToggleSave: (UIPost) -> Unit,
+  checkPostRead: (UIPost) -> Boolean,
+  checkPostSaved: (UIPost) -> Boolean,
+  loadLinkMetadata: suspend (String) -> LinkMetadata,
   navigateToComments: (String, String) -> Unit,
 ): PostActions {
   return object : PostActions {
     override fun viewPost(postId: String, postUrl: String, commentsUrl: String) {
-      viewModel.markPostAsRead(postId)
+      markPostAsRead(postId)
       uriHandler.openUri(postUrl.ifEmpty { commentsUrl })
     }
 
     override fun viewComments(postId: String, commentsUrl: String) {
-      viewModel.markPostAsRead(postId)
+      markPostAsRead(postId)
       navigateToComments(postId, commentsUrl)
     }
 
@@ -36,7 +39,7 @@ fun PostActions(
     }
 
     override fun toggleSave(post: UIPost) {
-      viewModel.toggleSave(post)
+      onToggleSave(post)
     }
 
     override fun share(post: UIPost) {
@@ -47,12 +50,12 @@ fun PostActions(
       shareUrl("https://lobste.rs/c/$commentId")
     }
 
-    override fun isPostRead(post: UIPost): Boolean = viewModel.isPostRead(post)
+    override fun isPostRead(post: UIPost): Boolean = checkPostRead(post)
 
-    override fun isPostSaved(post: UIPost): Boolean = viewModel.isPostSaved(post)
+    override fun isPostSaved(post: UIPost): Boolean = checkPostSaved(post)
 
     override suspend fun getLinkMetadata(url: String): LinkMetadata {
-      return viewModel.getLinkMetadata(url)
+      return loadLinkMetadata(url)
     }
 
     private fun shareUrl(url: String, title: String? = null) {

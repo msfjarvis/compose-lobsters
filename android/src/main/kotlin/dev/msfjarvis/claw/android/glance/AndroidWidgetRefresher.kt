@@ -9,6 +9,7 @@ package dev.msfjarvis.claw.android.glance
 import android.content.Context
 import androidx.glance.appwidget.updateAll
 import dev.msfjarvis.claw.core.coroutines.MainDispatcher
+import dev.msfjarvis.claw.feature.posts.api.SavedPostsUpdateNotifier
 import dev.msfjarvis.claw.feature.widgets.api.WidgetRefresher
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
@@ -26,4 +27,11 @@ class AndroidWidgetRefresher(
   override suspend fun refreshSavedPosts() {
     withContext(mainDispatcher) { SavedPostsWidget().updateAll(context) }
   }
+}
+
+@Inject
+@ContributesBinding(AppScope::class, binding = binding<SavedPostsUpdateNotifier>())
+class AndroidSavedPostsUpdateNotifier(private val widgetRefresher: WidgetRefresher) :
+  SavedPostsUpdateNotifier {
+  override suspend fun onSavedPostsUpdated() = widgetRefresher.refreshSavedPosts()
 }

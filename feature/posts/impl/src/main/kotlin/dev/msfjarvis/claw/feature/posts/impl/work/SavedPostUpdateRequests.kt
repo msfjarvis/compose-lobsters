@@ -4,13 +4,14 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
-package dev.msfjarvis.claw.android.work
+package dev.msfjarvis.claw.feature.posts.impl.work
 
 import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
+import dev.msfjarvis.claw.android.work.SavedPostUpdaterWorker
 import dev.msfjarvis.claw.core.work.api.WorkManagerRequests
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoSet

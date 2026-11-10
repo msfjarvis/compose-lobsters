@@ -4,7 +4,7 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
-package dev.msfjarvis.claw.android.ui.navigation
+package dev.msfjarvis.claw.feature.posts.impl.navigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -15,6 +15,9 @@ import androidx.compose.material.icons.outlined.NewReleases
 import androidx.compose.material.icons.outlined.Whatshot
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation3.runtime.NavKey
+import dev.msfjarvis.claw.android.ui.navigation.Hottest
+import dev.msfjarvis.claw.android.ui.navigation.Newest
+import dev.msfjarvis.claw.android.ui.navigation.Saved
 
 enum class AppDestinations(
   val icon: ImageVector,

@@ -14,7 +14,6 @@
     <item quantity="one">%1$d comment</item>
     <item quantity="other">%1$d comments</item>
   </plurals>
-  <string name="no_post_selected">No post selected</string>
   <string name="data_management">Data Management</string>
   <string name="data_transfer">Data transfer</string>
   <string name="import_and_export_your_saved_posts">Import and export your saved posts</string>
@@ -36,8 +35,6 @@
   <string name="search_posts">Search posts</string>
   <string name="close_search">Close search</string>
   <string name="settings">Settings</string>
-  <string name="empty_inbox_icon">Empty inbox icon</string>
-  <string name="no_saved_posts">No saved posts</string>
   <string name="no_search_results">No search results</string>
   <string name="search_challenge_message">Lobsters needs to verify your browser before searching.</string>
   <string name="search_challenge_button">Verify browser</string>

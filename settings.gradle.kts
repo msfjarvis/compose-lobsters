@@ -158,6 +158,7 @@ include(
   ":core:work:api",
   ":core:work:impl",
   ":feature:posts:api",
+  ":feature:posts:impl",
   ":feature:discussion:api",
   ":feature:profile:api",
   ":feature:auth:api",

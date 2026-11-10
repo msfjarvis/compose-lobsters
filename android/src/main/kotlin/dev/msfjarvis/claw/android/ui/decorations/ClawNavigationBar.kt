@@ -22,7 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
 import androidx.navigation3.runtime.NavKey
-import dev.msfjarvis.claw.android.ui.navigation.AppDestinations
+import dev.msfjarvis.claw.feature.posts.impl.navigation.AppDestinations
 import kotlinx.collections.immutable.ImmutableList
 
 const val AnimationDuration = 100

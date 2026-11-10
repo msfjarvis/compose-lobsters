@@ -34,7 +34,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
-import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.navigation3.ListDetailSceneStrategy
 import androidx.compose.material3.adaptive.navigation3.rememberListDetailSceneStrategy
@@ -66,17 +65,13 @@ import com.mikepenz.aboutlibraries.ui.compose.android.produceLibraries
 import com.mikepenz.aboutlibraries.ui.compose.m3.LibrariesContainer
 import dev.msfjarvis.claw.android.R
 import dev.msfjarvis.claw.android.reminders.DEFAULT_DAILY_SAVED_POST_REMINDER_TIME
-import dev.msfjarvis.claw.android.ui.PostActions
 import dev.msfjarvis.claw.android.ui.decorations.ClawAppBar
 import dev.msfjarvis.claw.android.ui.decorations.ClawNavigationBar
 import dev.msfjarvis.claw.android.ui.decorations.ClawNavigationRail
 import dev.msfjarvis.claw.android.ui.decorations.ClawTopBarMode
 import dev.msfjarvis.claw.android.ui.decorations.NavigationItem
-import dev.msfjarvis.claw.android.ui.lists.DatabasePosts
-import dev.msfjarvis.claw.android.ui.lists.NetworkPosts
 import dev.msfjarvis.claw.android.ui.lists.SearchResultsList
 import dev.msfjarvis.claw.android.ui.navigation.AboutLibraries
-import dev.msfjarvis.claw.android.ui.navigation.AppDestinations
 import dev.msfjarvis.claw.android.ui.navigation.ClawNavigationType
 import dev.msfjarvis.claw.android.ui.navigation.Comments
 import dev.msfjarvis.claw.android.ui.navigation.Hottest
@@ -94,6 +89,10 @@ import dev.msfjarvis.claw.common.comments.CommentsPage
 import dev.msfjarvis.claw.common.comments.reply.ReplyScreen
 import dev.msfjarvis.claw.common.user.UserProfile
 import dev.msfjarvis.claw.feature.auth.impl.navigation.loginNavigationEntryContributor
+import dev.msfjarvis.claw.feature.posts.impl.PostActions
+import dev.msfjarvis.claw.feature.posts.impl.PostsViewModel
+import dev.msfjarvis.claw.feature.posts.impl.navigation.AppDestinations
+import dev.msfjarvis.claw.feature.posts.impl.navigation.postsNavigationEntryContributor
 import dev.msfjarvis.claw.feature.tags.impl.TagFilterViewModel
 import dev.msfjarvis.claw.feature.tags.impl.TagList
 import dev.msfjarvis.claw.navigation.api.NavigationEntryContributor
@@ -133,6 +132,7 @@ fun LobstersPostsScreen(
   deepLinkDestination: NavKey? = null,
   clearDeepLink: () -> Unit = {},
   viewModel: ClawViewModel = metroViewModel(),
+  postsViewModel: PostsViewModel = metroViewModel(),
   settingsViewModel: SettingsViewModel = metroViewModel(),
   tagFilterViewModel: TagFilterViewModel = metroViewModel(key = "tag_filter"),
 ) {
@@ -151,8 +151,8 @@ fun LobstersPostsScreen(
   val coroutineScope = rememberCoroutineScope()
   val snackbarHostState = remember { SnackbarHostState() }
 
-  val savedPosts by viewModel.savedPostsByMonth.collectAsStateWithLifecycle(persistentMapOf())
-  val savedPostsCount by viewModel.savedPostsCount.collectAsStateWithLifecycle(0L)
+  val savedPosts by postsViewModel.savedPostsByMonth.collectAsStateWithLifecycle(persistentMapOf())
+  val savedPostsCount by postsViewModel.savedPostsCount.collectAsStateWithLifecycle(0L)
 
   val filteredTags by tagFilterViewModel.filteredTags.collectAsStateWithLifecycle(persistentSetOf())
   val isLoggedIn by settingsViewModel.isLoggedIn.collectAsStateWithLifecycle(false)
@@ -253,7 +253,15 @@ fun LobstersPostsScreen(
 
   val postActions =
     remember(isSearchActive) {
-      PostActions(context, uriHandler, viewModel) { postId, commentsUrl ->
+      PostActions(
+        context = context,
+        uriHandler = uriHandler,
+        markPostAsRead = postsViewModel::markPostAsRead,
+        onToggleSave = postsViewModel::toggleSave,
+        checkPostRead = postsViewModel::isPostRead,
+        checkPostSaved = postsViewModel::isPostSaved,
+        loadLinkMetadata = postsViewModel::getLinkMetadata,
+      ) { postId, commentsUrl ->
         navigateToDestination(Comments(postId, commentsUrl), false)
       }
     }
@@ -422,47 +430,30 @@ fun LobstersPostsScreen(
         },
         contributors =
           persistentListOf(
-            NavigationEntryContributor {
-              entry<Hottest>(
-                metadata = ListDetailSceneStrategy.listPane(detailPlaceholder = { Placeholder() })
-              ) {
-                val hottestPosts = viewModel.hottestPosts.collectAsLazyPagingItems()
-                NetworkPosts(
-                  lazyPagingItems = hottestPosts,
-                  listState = hottestListState,
-                  postActions = postActions,
-                  contentPadding = contentPadding,
-                  filteredTags = filteredTags,
-                )
-              }
-              entry<Newest>(
-                metadata = ListDetailSceneStrategy.listPane(detailPlaceholder = { Placeholder() })
-              ) {
-                val newestPosts = viewModel.newestPosts.collectAsLazyPagingItems()
-                NetworkPosts(
-                  lazyPagingItems = newestPosts,
-                  listState = newestListState,
-                  postActions = postActions,
-                  contentPadding = contentPadding,
-                  filteredTags = filteredTags,
-                )
-              }
-              entry<Saved>(
-                metadata = ListDetailSceneStrategy.listPane(detailPlaceholder = { Placeholder() })
-              ) {
-                DatabasePosts(
-                  items = savedPosts,
-                  listState = savedListState,
-                  postActions = postActions,
-                  contentPadding = contentPadding,
-                )
-              }
-            },
+            postsNavigationEntryContributor(
+              hottestPosts = postsViewModel.hottestPosts,
+              newestPosts = postsViewModel.newestPosts,
+              hottestListState = hottestListState,
+              newestListState = newestListState,
+              savedPosts = savedPosts,
+              savedListState = savedListState,
+              postActions = postActions,
+              filteredTags = filteredTags,
+              contentPadding = contentPadding,
+            ),
             NavigationEntryContributor {
               entry<Comments>(metadata = ListDetailSceneStrategy.detailPane()) { dest ->
                 val commentsPostActions =
                   remember(isSearchActive) {
-                    PostActions(context, uriHandler, viewModel) { postId, commentsUrl ->
+                    PostActions(
+                      context = context,
+                      uriHandler = uriHandler,
+                      markPostAsRead = postsViewModel::markPostAsRead,
+                      onToggleSave = postsViewModel::toggleSave,
+                      checkPostRead = postsViewModel::isPostRead,
+                      checkPostSaved = postsViewModel::isPostSaved,
+                      loadLinkMetadata = postsViewModel::getLinkMetadata,
+                    ) { postId, commentsUrl ->
                       navigateToDestination(Comments(postId, commentsUrl), true)
                     }
                   }
@@ -534,8 +525,8 @@ fun LobstersPostsScreen(
                   onLogout = { settingsViewModel.logout() },
                   isLoggedIn = isLoggedIn,
                   username = username,
-                  importPosts = viewModel::importPosts,
-                  exportPostsAsJson = viewModel::exportPostsAsJson,
+                  importPosts = postsViewModel::importPosts,
+                  exportPostsAsJson = postsViewModel::exportPostsAsJson,
                   savedPostsCount = savedPostsCount,
                   isDailySavedPostReminderEnabled = isDailySavedPostReminderEnabled,
                   dailySavedPostReminderTime = dailySavedPostReminderTime,
@@ -578,8 +569,3 @@ fun navigateTo(
 
 private fun popBackStack(backStack: MutableList<NavKey>): NavKey? =
   BackStackNavigator(backStack, Hottest).pop()
-
-@Composable
-private fun Placeholder(modifier: Modifier = Modifier) {
-  Text(text = stringResource(R.string.no_post_selected), modifier = modifier)
-}

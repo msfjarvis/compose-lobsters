@@ -12,6 +12,8 @@ import com.slack.eithernet.ApiResult.Failure
 import com.slack.eithernet.ApiResult.Success
 import dev.msfjarvis.claw.api.toError
 import dev.msfjarvis.claw.core.coroutines.IODispatcher
+import dev.msfjarvis.claw.feature.posts.api.PostPagingConfig.PAGE_SIZE
+import dev.msfjarvis.claw.feature.posts.api.PostPagingConfig.STARTING_PAGE_INDEX
 import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.UIPost
 import dev.msfjarvis.claw.model.toUIPost
@@ -53,10 +55,5 @@ class LobstersPagingSource(
   @AssistedFactory
   interface Factory {
     fun create(remoteFetcher: RemoteFetcher<LobstersPost>): LobstersPagingSource
-  }
-
-  companion object {
-    const val PAGE_SIZE = 25
-    const val STARTING_PAGE_INDEX = 1
   }
 }

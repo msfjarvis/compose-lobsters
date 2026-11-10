@@ -11,6 +11,7 @@ import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.coroutines.mapToOne
 import dev.msfjarvis.claw.core.coroutines.DatabaseReadDispatcher
 import dev.msfjarvis.claw.core.coroutines.DatabaseWriteDispatcher
+import dev.msfjarvis.claw.core.coroutines.DefaultDispatcher
 import dev.msfjarvis.claw.core.database.SavedPostIdAndCommentsUrl
 import dev.msfjarvis.claw.core.database.SavedPostsStorage
 import dev.msfjarvis.claw.database.SavedPostSerializer
@@ -39,6 +40,7 @@ class SqlDelightSavedPostsStorage(
   private val json: Json,
   @param:DatabaseReadDispatcher private val readDispatcher: CoroutineDispatcher,
   @param:DatabaseWriteDispatcher private val writeDispatcher: CoroutineDispatcher,
+  @param:DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher,
 ) : SavedPostsStorage {
   override val posts: Flow<List<UIPost>> =
     queries.selectAllPosts().asFlow().mapToList(readDispatcher).map { rows ->
@@ -87,7 +89,10 @@ class SqlDelightSavedPostsStorage(
     }
 
   override suspend fun importSerializedPosts(serialized: String) {
-    val posts = json.decodeFromString(ListSerializer(SavedPostSerializer), serialized)
+    val posts =
+      withContext(defaultDispatcher) {
+        json.decodeFromString(ListSerializer(SavedPostSerializer), serialized)
+      }
     withContext(writeDispatcher) {
       queries.transaction {
         posts.forEach(queries::insertOrReplacePost)

@@ -14,7 +14,7 @@ import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.core.work.api.WorkerInstanceFactory
 import dev.msfjarvis.claw.core.work.api.WorkerKey
 import dev.msfjarvis.claw.feature.posts.api.SavedPosts
-import dev.msfjarvis.claw.feature.widgets.api.WidgetRefresher
+import dev.msfjarvis.claw.feature.posts.api.SavedPostsUpdateNotifier
 import dev.msfjarvis.claw.model.LobstersPostDetails
 import dev.msfjarvis.claw.model.UIPost
 import dev.msfjarvis.claw.model.toUIPost
@@ -29,18 +29,17 @@ import kotlin.time.Duration.Companion.milliseconds
 import kotlinx.coroutines.delay
 
 /**
- * WorkManager-backed [CoroutineWorker] that gets all the posts from [SavedPostsRepository] that
- * were created in the last 30 days, fetches their newest state using the [LobstersApi] and then
- * writes them back to the database. API calls are staggered with a configurable delay to avoid rate
- * limiting. This allows saved posts to stay up-to-date with current comment counts and other
- * metadata changes.
+ * WorkManager-backed [CoroutineWorker] that gets all the posts from [SavedPosts] that were created
+ * in the last 30 days, fetches their newest state using the [LobstersApi] and then writes them back
+ * to the database. API calls are staggered with a configurable delay to avoid rate limiting. This
+ * allows saved posts to stay up-to-date with current comment counts and other metadata changes.
  */
 @AssistedInject
 class SavedPostUpdaterWorker(
   context: Context,
   @Assisted params: WorkerParameters,
   private val savedPostsRepository: SavedPosts,
-  private val widgetRefresher: WidgetRefresher,
+  private val savedPostsUpdateNotifier: SavedPostsUpdateNotifier,
   private val lobstersApi: LobstersApi,
 ) : CoroutineWorker(context, params) {
   override suspend fun doWork(): Result {
@@ -71,7 +70,7 @@ class SavedPostUpdaterWorker(
 
     if (updatedPosts.isNotEmpty()) {
       savedPostsRepository.savePosts(updatedPosts)
-      widgetRefresher.refreshSavedPosts()
+      savedPostsUpdateNotifier.onSavedPostsUpdated()
     }
 
     return Result.success()

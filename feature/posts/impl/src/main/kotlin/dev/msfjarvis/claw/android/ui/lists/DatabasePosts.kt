@@ -27,9 +27,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import dev.msfjarvis.claw.android.R
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.ui.decorations.MonthHeader
+import dev.msfjarvis.claw.feature.posts.impl.R
 import dev.msfjarvis.claw.model.UIPost
 import kotlinx.collections.immutable.ImmutableMap
 

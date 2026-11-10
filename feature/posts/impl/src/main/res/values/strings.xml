@@ -1,0 +1,11 @@
+<!--
+ ~ Copyright © Harsh Shandilya.
+ ~ Use of this source code is governed by an MIT-style
+ ~ license that can be found in the LICENSE file or at
+ ~ https://opensource.org/licenses/MIT.
+ -->
+<resources>
+  <string name="no_post_selected">No post selected</string>
+  <string name="empty_inbox_icon">Empty inbox icon</string>
+  <string name="no_saved_posts">No saved posts</string>
+</resources>

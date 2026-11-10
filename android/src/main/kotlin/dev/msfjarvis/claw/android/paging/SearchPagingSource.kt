@@ -9,11 +9,11 @@ package dev.msfjarvis.claw.android.paging
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.slack.eithernet.ApiResult
-import dev.msfjarvis.claw.android.paging.LobstersPagingSource.Companion.PAGE_SIZE
-import dev.msfjarvis.claw.android.paging.LobstersPagingSource.Companion.STARTING_PAGE_INDEX
 import dev.msfjarvis.claw.api.LobstersSearchApi
 import dev.msfjarvis.claw.api.toError
 import dev.msfjarvis.claw.core.coroutines.IODispatcher
+import dev.msfjarvis.claw.feature.posts.api.PostPagingConfig.PAGE_SIZE
+import dev.msfjarvis.claw.feature.posts.api.PostPagingConfig.STARTING_PAGE_INDEX
 import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.UIPost
 import dev.msfjarvis.claw.model.toUIPost

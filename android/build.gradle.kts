@@ -187,6 +187,7 @@ dependencies {
   implementation(projects.core.common)
   implementation(projects.core.navigation.api)
   implementation(projects.feature.posts.api)
+  implementation(projects.feature.posts.impl)
   implementation(projects.feature.discussion.api)
   implementation(projects.feature.profile.api)
   implementation(projects.feature.auth.impl)

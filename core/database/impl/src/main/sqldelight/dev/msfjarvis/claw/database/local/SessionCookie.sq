@@ -16,5 +16,10 @@ ON CONFLICT(id) DO UPDATE SET
   value = excluded.value,
   username = excluded.username;
 
+setCookie:
+INSERT INTO SessionCookie(id, value, username)
+VALUES (1, ?, (SELECT username FROM SessionCookie WHERE id = 1))
+ON CONFLICT(id) DO UPDATE SET value = excluded.value;
+
 deleteAll:
 DELETE FROM SessionCookie;

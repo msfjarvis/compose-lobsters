@@ -16,6 +16,8 @@ interface SessionCookieStorage {
 
   fun set(cookie: String, username: String)
 
+  fun setCookie(cookie: String)
+
   fun clear()
 
   fun isLoggedIn(): Flow<Boolean>

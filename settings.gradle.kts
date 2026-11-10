@@ -161,6 +161,7 @@ include(
   ":feature:discussion:api",
   ":feature:profile:api",
   ":feature:auth:api",
+  ":feature:auth:impl",
   ":feature:tags:api",
   ":feature:settings:api",
   ":feature:reminders:api",

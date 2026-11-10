@@ -35,6 +35,10 @@ class SqlDelightSessionCookieStorage(
     queries.upsert(cookie, username)
   }
 
+  override fun setCookie(cookie: String) {
+    queries.setCookie(cookie)
+  }
+
   override fun clear() {
     queries.deleteAll()
   }

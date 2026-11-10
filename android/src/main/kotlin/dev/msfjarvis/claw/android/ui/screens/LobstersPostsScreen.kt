@@ -95,6 +95,7 @@ import dev.msfjarvis.claw.common.comments.reply.ReplyScreen
 import dev.msfjarvis.claw.common.tags.TagFilterViewModel
 import dev.msfjarvis.claw.common.tags.TagList
 import dev.msfjarvis.claw.common.user.UserProfile
+import dev.msfjarvis.claw.feature.auth.impl.navigation.loginNavigationEntryContributor
 import dev.msfjarvis.claw.navigation.api.NavigationEntryContributor
 import dev.msfjarvis.claw.navigation.api.TopLevelDestination
 import dev.msfjarvis.claw.navigation.impl.BackStackNavigator
@@ -514,6 +515,11 @@ fun LobstersPostsScreen(
                 )
               }
             },
+            loginNavigationEntryContributor(
+              onLoginSuccess = settingsViewModel::saveCookie,
+              popBackStack = { popBackStack(backStack) },
+              metadata = ListDetailSceneStrategy.extraPane(),
+            ),
             NavigationEntryContributor {
               entry<Settings>(metadata = ListDetailSceneStrategy.extraPane()) {
                 SettingsScreen(
@@ -538,13 +544,6 @@ fun LobstersPostsScreen(
                     settingsViewModel::setDailySavedPostReminderTime,
                   snackbarHostState = snackbarHostState,
                   contentPadding = contentPadding,
-                  modifier = Modifier.fillMaxSize(),
-                )
-              }
-              entry<Login>(metadata = ListDetailSceneStrategy.extraPane()) {
-                LoginScreen(
-                  onLoginSuccess = settingsViewModel::saveCookie,
-                  popBackStack = { popBackStack(backStack) },
                   modifier = Modifier.fillMaxSize(),
                 )
               }

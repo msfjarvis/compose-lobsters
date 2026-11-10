@@ -37,9 +37,9 @@ import dev.msfjarvis.claw.android.ClawApplication
 import dev.msfjarvis.claw.android.MainActivity
 import dev.msfjarvis.claw.android.R
 import dev.msfjarvis.claw.database.local.CachedRemotePost
+import dev.msfjarvis.claw.database.local.fromCachedRemotePost
 import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.UIPost
-import dev.msfjarvis.claw.model.fromCachedRemotePost
 import dev.msfjarvis.claw.model.toUIPost
 import java.util.concurrent.CancellationException
 import kotlinx.collections.immutable.ImmutableList

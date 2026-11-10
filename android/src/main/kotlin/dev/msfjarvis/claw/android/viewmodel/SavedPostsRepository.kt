@@ -15,8 +15,8 @@ import dev.msfjarvis.claw.core.coroutines.DatabaseReadDispatcher
 import dev.msfjarvis.claw.core.coroutines.DatabaseWriteDispatcher
 import dev.msfjarvis.claw.database.local.SavedPost
 import dev.msfjarvis.claw.database.local.SavedPostQueries
+import dev.msfjarvis.claw.database.local.toSavedPost
 import dev.msfjarvis.claw.model.UIPost
-import dev.msfjarvis.claw.model.toSavedPost
 import dev.zacsweers.metro.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext

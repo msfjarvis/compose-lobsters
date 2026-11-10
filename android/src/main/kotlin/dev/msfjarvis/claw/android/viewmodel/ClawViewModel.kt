@@ -27,8 +27,8 @@ import dev.msfjarvis.claw.android.paging.SearchPagingSource
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.core.coroutines.IODispatcher
 import dev.msfjarvis.claw.core.coroutines.MainDispatcher
+import dev.msfjarvis.claw.database.local.fromSavedPost
 import dev.msfjarvis.claw.model.UIPost
-import dev.msfjarvis.claw.model.fromSavedPost
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.Inject

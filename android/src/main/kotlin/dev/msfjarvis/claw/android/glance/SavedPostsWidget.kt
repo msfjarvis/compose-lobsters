@@ -38,8 +38,8 @@ import dev.msfjarvis.claw.android.BuildConfig
 import dev.msfjarvis.claw.android.ClawApplication
 import dev.msfjarvis.claw.android.MainActivity
 import dev.msfjarvis.claw.android.R
+import dev.msfjarvis.claw.database.local.fromSavedPost
 import dev.msfjarvis.claw.model.UIPost
-import dev.msfjarvis.claw.model.fromSavedPost
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 

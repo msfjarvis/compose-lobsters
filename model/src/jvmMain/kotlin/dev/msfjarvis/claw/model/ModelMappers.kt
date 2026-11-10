@@ -6,8 +6,6 @@
  */
 package dev.msfjarvis.claw.model
 
-import dev.msfjarvis.claw.database.local.SavedPost
-
 fun LobstersPost.toSourceStory(): SourceStory =
   SourceStory(
     shortId = shortId,
@@ -37,33 +35,3 @@ fun LobstersPostDetails.toUIPost(): UIPost {
     commentsUrl = commentsUrl,
   )
 }
-
-fun LobstersPostDetails.toSavedPost(): SavedPost {
-  val primary = stories.first()
-  return SavedPost(
-    shortId = primary.shortId,
-    title = primary.title,
-    url = primary.url,
-    createdAt = primary.createdAt,
-    commentCount = commentCount,
-    commentsUrl = commentsUrl,
-    submitterName = primary.submitter,
-    tags = primary.tags,
-    description = primary.description,
-    userIsAuthor = primary.userIsAuthor,
-  )
-}
-
-fun UIPost.toSavedPost(): SavedPost =
-  SavedPost(
-    shortId = shortId,
-    title = title,
-    url = url,
-    createdAt = createdAt,
-    commentCount = commentCount,
-    commentsUrl = commentsUrl,
-    submitterName = submitter,
-    tags = tags,
-    description = description,
-    userIsAuthor = userIsAuthor,
-  )

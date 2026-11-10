@@ -4,12 +4,9 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
-package dev.msfjarvis.claw.common.comments
+package dev.msfjarvis.claw.model
 
 import com.google.common.truth.Truth.assertThat
-import dev.msfjarvis.claw.model.Comment
-import dev.msfjarvis.claw.model.Discussion
-import dev.msfjarvis.claw.model.SourceStory
 import kotlin.time.Instant
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.fail

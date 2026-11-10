@@ -17,8 +17,8 @@ import dev.msfjarvis.claw.android.injection.WorkerKey
 import dev.msfjarvis.claw.android.viewmodel.SavedPostsRepository
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.database.local.SavedPost
+import dev.msfjarvis.claw.database.local.toSavedPost
 import dev.msfjarvis.claw.model.LobstersPostDetails
-import dev.msfjarvis.claw.model.toSavedPost
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.Assisted
 import dev.zacsweers.metro.AssistedFactory

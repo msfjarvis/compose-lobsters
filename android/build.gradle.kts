@@ -196,6 +196,7 @@ dependencies {
   implementation(projects.feature.search.api)
   implementation(projects.feature.search.impl)
   implementation(projects.feature.reminders.api)
+  implementation(projects.feature.reminders.impl)
   implementation(projects.feature.widgets.api)
   implementation(projects.core.navigation.impl)
   implementation(projects.core.database.api)

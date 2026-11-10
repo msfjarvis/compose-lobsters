@@ -1,0 +1,11 @@
+<!--
+ ~ Copyright © Harsh Shandilya.
+ ~ Use of this source code is governed by an MIT-style
+ ~ license that can be found in the LICENSE file or at
+ ~ https://opensource.org/licenses/MIT.
+ -->
+<resources>
+  <string name="daily_saved_post_notification_channel_name">Daily saved post</string>
+  <string name="daily_saved_post_notification_text">A saved post for today</string>
+  <string name="daily_saved_post_discussion_action">Check out the discussion</string>
+</resources>

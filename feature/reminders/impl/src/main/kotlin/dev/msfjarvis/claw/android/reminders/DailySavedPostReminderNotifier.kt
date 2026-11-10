@@ -19,9 +19,9 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import androidx.core.net.toUri
-import dev.msfjarvis.claw.android.BuildConfig
-import dev.msfjarvis.claw.android.R
 import dev.msfjarvis.claw.core.database.DailySavedPostLedgerEntry
+import dev.msfjarvis.claw.feature.reminders.impl.BuildConfig
+import dev.msfjarvis.claw.feature.reminders.impl.R
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject

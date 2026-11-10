@@ -171,5 +171,6 @@ include(
   ":feature:search:api",
   ":feature:search:impl",
   ":feature:reminders:api",
+  ":feature:reminders:impl",
   ":feature:widgets:api",
 )

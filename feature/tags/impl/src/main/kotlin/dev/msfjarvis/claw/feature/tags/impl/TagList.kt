@@ -4,7 +4,7 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
-package dev.msfjarvis.claw.common.tags
+package dev.msfjarvis.claw.feature.tags.impl
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
@@ -44,12 +44,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import dev.msfjarvis.claw.common.BuildConfig
-import dev.msfjarvis.claw.common.NetworkState.Error
-import dev.msfjarvis.claw.common.NetworkState.Loading
-import dev.msfjarvis.claw.common.NetworkState.Success
-import dev.msfjarvis.claw.common.R
 import dev.msfjarvis.claw.common.ui.ProgressBar
+import dev.msfjarvis.claw.core.NetworkState.Error
+import dev.msfjarvis.claw.core.NetworkState.Loading
+import dev.msfjarvis.claw.core.NetworkState.Success
 import dev.msfjarvis.claw.model.Tag
 import dev.zacsweers.metrox.viewmodel.metroViewModel
 import kotlin.time.Clock

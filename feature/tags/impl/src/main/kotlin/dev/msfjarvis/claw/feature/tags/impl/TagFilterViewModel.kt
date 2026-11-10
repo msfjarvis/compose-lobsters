@@ -4,7 +4,7 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
-package dev.msfjarvis.claw.common.tags
+package dev.msfjarvis.claw.feature.tags.impl
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -18,7 +18,7 @@ import com.slack.eithernet.ApiResult.Success
 import dev.msfjarvis.claw.api.AuthenticatedLobstersApi
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.api.toError
-import dev.msfjarvis.claw.common.NetworkState
+import dev.msfjarvis.claw.core.NetworkState
 import dev.msfjarvis.claw.core.coroutines.IODispatcher
 import dev.msfjarvis.claw.core.network.SessionCookieStore
 import dev.msfjarvis.claw.feature.tags.api.TagBlocks

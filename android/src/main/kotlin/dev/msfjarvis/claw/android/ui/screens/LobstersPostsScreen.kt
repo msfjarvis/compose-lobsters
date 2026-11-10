@@ -92,10 +92,10 @@ import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
 import dev.msfjarvis.claw.android.viewmodel.SettingsViewModel
 import dev.msfjarvis.claw.common.comments.CommentsPage
 import dev.msfjarvis.claw.common.comments.reply.ReplyScreen
-import dev.msfjarvis.claw.common.tags.TagFilterViewModel
-import dev.msfjarvis.claw.common.tags.TagList
 import dev.msfjarvis.claw.common.user.UserProfile
 import dev.msfjarvis.claw.feature.auth.impl.navigation.loginNavigationEntryContributor
+import dev.msfjarvis.claw.feature.tags.impl.TagFilterViewModel
+import dev.msfjarvis.claw.feature.tags.impl.TagList
 import dev.msfjarvis.claw.navigation.api.NavigationEntryContributor
 import dev.msfjarvis.claw.navigation.api.TopLevelDestination
 import dev.msfjarvis.claw.navigation.impl.BackStackNavigator

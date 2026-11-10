@@ -8,15 +8,11 @@ package dev.msfjarvis.claw.android
 
 import android.app.Application
 import android.os.Build
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.PeriodicWorkRequestBuilder
 import dev.msfjarvis.claw.android.injection.AppGraph
 import dev.msfjarvis.claw.android.work.GeneratedWidgetPreviewUpdateWorker
-import dev.msfjarvis.claw.android.work.TagExpirationCleanupWorker
 import dev.zacsweers.metro.createGraphFactory
 import dev.zacsweers.metrox.android.MetroAppComponentProviders
 import dev.zacsweers.metrox.android.MetroApplication
-import java.util.concurrent.TimeUnit
 
 class ClawApplication : Application(), MetroApplication {
 
@@ -29,13 +25,6 @@ class ClawApplication : Application(), MetroApplication {
     super.onCreate()
     appGraph.plugins.forEach { plugin -> plugin.apply(this) }
     appGraph.workManagerRequests.forEach { it.enqueue() }
-    val tagCleanupWorkRequest =
-      PeriodicWorkRequestBuilder<TagExpirationCleanupWorker>(24, TimeUnit.HOURS).build()
-    appGraph.workManager.enqueueUniquePeriodicWork(
-      uniqueWorkName = "cleanupExpiredTags",
-      existingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.KEEP,
-      request = tagCleanupWorkRequest,
-    )
     appGraph.dailySavedPostReminderScheduler.reconcile()
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
       GeneratedWidgetPreviewUpdateWorker.enqueue(appGraph.workManager)

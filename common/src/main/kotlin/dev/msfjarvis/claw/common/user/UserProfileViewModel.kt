@@ -16,10 +16,10 @@ import com.slack.eithernet.ApiResult
 import com.slack.eithernet.ApiResult.Failure
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.api.toError
-import dev.msfjarvis.claw.common.NetworkState
-import dev.msfjarvis.claw.common.NetworkState.Error
-import dev.msfjarvis.claw.common.NetworkState.Loading
-import dev.msfjarvis.claw.common.NetworkState.Success
+import dev.msfjarvis.claw.core.NetworkState
+import dev.msfjarvis.claw.core.NetworkState.Error
+import dev.msfjarvis.claw.core.NetworkState.Loading
+import dev.msfjarvis.claw.core.NetworkState.Success
 import dev.msfjarvis.claw.core.coroutines.IODispatcher
 import dev.msfjarvis.claw.model.User
 import dev.zacsweers.metro.AppScope

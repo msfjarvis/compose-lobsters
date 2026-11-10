@@ -4,7 +4,7 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
-package dev.msfjarvis.claw.common.tags
+package dev.msfjarvis.claw.feature.tags.impl
 
 import com.google.common.truth.Truth.assertThat
 import dev.msfjarvis.claw.core.database.TagBlocksStorage

@@ -18,7 +18,7 @@ import com.slack.eithernet.ApiResult.Success
 import dev.msfjarvis.claw.api.AuthenticatedLobstersApi
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.api.toError
-import dev.msfjarvis.claw.common.NetworkState
+import dev.msfjarvis.claw.core.NetworkState
 import dev.msfjarvis.claw.core.coroutines.IODispatcher
 import dev.msfjarvis.claw.core.network.SessionCookieStore
 import dev.msfjarvis.claw.model.Comment

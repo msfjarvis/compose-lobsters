@@ -30,15 +30,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
-import dev.msfjarvis.claw.common.NetworkState.Error
-import dev.msfjarvis.claw.common.NetworkState.Loading
-import dev.msfjarvis.claw.common.NetworkState.Success
 import dev.msfjarvis.claw.common.R
 import dev.msfjarvis.claw.common.ui.NetworkError
 import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.common.ui.ProgressBar
 import dev.msfjarvis.claw.common.ui.ThemedRichText
 import dev.msfjarvis.claw.common.ui.rewriteUrlIfLobstersPost
+import dev.msfjarvis.claw.core.NetworkState.Error
+import dev.msfjarvis.claw.core.NetworkState.Loading
+import dev.msfjarvis.claw.core.NetworkState.Success
 import dev.msfjarvis.claw.model.User
 import dev.zacsweers.metrox.viewmodel.metroViewModel
 

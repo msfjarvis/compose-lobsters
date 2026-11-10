@@ -163,6 +163,7 @@ include(
   ":feature:auth:api",
   ":feature:auth:impl",
   ":feature:tags:api",
+  ":feature:tags:impl",
   ":feature:settings:api",
   ":feature:reminders:api",
   ":feature:widgets:api",

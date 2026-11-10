@@ -17,12 +17,12 @@ import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import dev.msfjarvis.claw.common.NetworkState.Error
-import dev.msfjarvis.claw.common.NetworkState.Loading
-import dev.msfjarvis.claw.common.NetworkState.Success
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.ui.NetworkError
 import dev.msfjarvis.claw.common.ui.ProgressBar
+import dev.msfjarvis.claw.core.NetworkState.Error
+import dev.msfjarvis.claw.core.NetworkState.Loading
+import dev.msfjarvis.claw.core.NetworkState.Success
 import dev.msfjarvis.claw.model.UIPost
 import dev.zacsweers.metrox.viewmodel.metroViewModel
 

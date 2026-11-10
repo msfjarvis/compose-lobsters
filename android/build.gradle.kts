@@ -190,7 +190,7 @@ dependencies {
   implementation(projects.feature.discussion.api)
   implementation(projects.feature.profile.api)
   implementation(projects.feature.auth.impl)
-  implementation(projects.feature.tags.api)
+  implementation(projects.feature.tags.impl)
   implementation(projects.feature.settings.api)
   implementation(projects.feature.reminders.api)
   implementation(projects.feature.widgets.api)

@@ -4,7 +4,7 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
-package dev.msfjarvis.claw.common
+package dev.msfjarvis.claw.core
 
 sealed class NetworkState {
   class Success<T>(val data: T) : NetworkState()

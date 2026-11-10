@@ -4,13 +4,19 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
-package dev.msfjarvis.claw.android.injection
+package dev.msfjarvis.claw.core.work.api
 
 import androidx.work.ListenableWorker
+import androidx.work.WorkerParameters
 import dev.zacsweers.metro.MapKey
 import kotlin.reflect.KClass
 
-/** A [MapKey] annotation for binding Worker in a multibinding map. */
+/** Creates a registered worker with the parameters supplied by WorkManager. */
+fun interface WorkerInstanceFactory<T : ListenableWorker> {
+  fun create(params: WorkerParameters): T
+}
+
+/** Identifies the worker class created by a [WorkerInstanceFactory] multibinding. */
 @MapKey
 @Target(AnnotationTarget.CLASS, AnnotationTarget.PROPERTY, AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)

@@ -8,13 +8,10 @@ package dev.msfjarvis.claw.android
 
 import android.app.Application
 import android.os.Build
-import androidx.work.Constraints
 import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import dev.msfjarvis.claw.android.injection.AppGraph
 import dev.msfjarvis.claw.android.work.GeneratedWidgetPreviewUpdateWorker
-import dev.msfjarvis.claw.android.work.SavedPostUpdaterWorker
 import dev.msfjarvis.claw.android.work.TagExpirationCleanupWorker
 import dev.zacsweers.metro.createGraphFactory
 import dev.zacsweers.metrox.android.MetroAppComponentProviders
@@ -31,15 +28,7 @@ class ClawApplication : Application(), MetroApplication {
   override fun onCreate() {
     super.onCreate()
     appGraph.plugins.forEach { plugin -> plugin.apply(this) }
-    val postUpdateWorkRequest =
-      PeriodicWorkRequestBuilder<SavedPostUpdaterWorker>(24, TimeUnit.HOURS)
-        .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())
-        .build()
-    appGraph.workManager.enqueueUniquePeriodicWork(
-      uniqueWorkName = "updateSavedPosts",
-      existingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.KEEP,
-      request = postUpdateWorkRequest,
-    )
+    appGraph.workManagerRequests.forEach { it.enqueue() }
     val tagCleanupWorkRequest =
       PeriodicWorkRequestBuilder<TagExpirationCleanupWorker>(24, TimeUnit.HOURS).build()
     appGraph.workManager.enqueueUniquePeriodicWork(

@@ -4,7 +4,7 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
-package dev.msfjarvis.claw.android.work
+package dev.msfjarvis.claw.core.work.impl
 
 import androidx.work.ListenableWorker
 import androidx.work.WorkInfo

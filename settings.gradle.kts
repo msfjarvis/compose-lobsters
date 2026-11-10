@@ -154,4 +154,6 @@ include(
   ":core:network:impl",
   ":core:parser:api",
   ":core:parser:impl",
+  ":core:work:api",
+  ":core:work:impl",
 )

@@ -7,7 +7,6 @@
 package dev.msfjarvis.claw.android.injection
 
 import android.content.Context
-import androidx.work.ListenableWorker
 import androidx.work.WorkManager
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
@@ -20,14 +19,14 @@ import dev.msfjarvis.claw.api.LobstersParserClient
 import dev.msfjarvis.claw.api.ParserRuntimeConfig
 import dev.msfjarvis.claw.common.tags.TagBlockRepository
 import dev.msfjarvis.claw.core.coroutines.MainDispatcher
+import dev.msfjarvis.claw.core.work.api.WorkManagerRequests
+import dev.msfjarvis.claw.core.work.impl.InjectedWorkerFactory
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.DependencyGraph
-import dev.zacsweers.metro.Multibinds
 import dev.zacsweers.metro.Provides
 import dev.zacsweers.metro.SingleIn
 import dev.zacsweers.metrox.android.MetroAppComponentProviders
 import dev.zacsweers.metrox.viewmodel.ViewModelGraph
-import kotlin.reflect.KClass
 import kotlin.time.Clock
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.datetime.TimeZone
@@ -35,6 +34,8 @@ import kotlinx.datetime.TimeZone
 @DependencyGraph(AppScope::class)
 interface AppGraph : MetroAppComponentProviders, ViewModelGraph {
   val plugins: Set<AppPlugin>
+
+  val workManagerRequests: Set<WorkManagerRequests>
 
   val workManager: WorkManager
 
@@ -61,10 +62,6 @@ interface AppGraph : MetroAppComponentProviders, ViewModelGraph {
       manifestUrl = BuildConfig.ZIPLINE_PARSER_MANIFEST_URL,
       verifySignatures = BuildConfig.ZIPLINE_PARSER_VERIFY_SIGNATURES,
     )
-
-  @Multibinds
-  val workerProviders:
-    Map<KClass<out ListenableWorker>, () -> InjectedWorkerFactory.WorkerInstanceFactory<*>>
 
   val workerFactory: InjectedWorkerFactory
 

@@ -181,6 +181,8 @@ dependencies {
   implementation(projects.core.network.impl)
   implementation(projects.core.parser.api)
   implementation(projects.core.parser.impl)
+  implementation(projects.core.work.api)
+  implementation(projects.core.work.impl)
   implementation(projects.common)
   implementation(projects.core.common)
   implementation(projects.core.navigation.api)

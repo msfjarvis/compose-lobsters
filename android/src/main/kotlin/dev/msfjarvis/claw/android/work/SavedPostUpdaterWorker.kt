@@ -12,10 +12,10 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.slack.eithernet.ApiResult.Success
 import dev.msfjarvis.claw.android.glance.SavedPostsWidget
-import dev.msfjarvis.claw.android.injection.InjectedWorkerFactory
-import dev.msfjarvis.claw.android.injection.WorkerKey
 import dev.msfjarvis.claw.android.viewmodel.SavedPostsRepository
 import dev.msfjarvis.claw.api.LobstersApi
+import dev.msfjarvis.claw.core.work.api.WorkerInstanceFactory
+import dev.msfjarvis.claw.core.work.api.WorkerKey
 import dev.msfjarvis.claw.model.LobstersPostDetails
 import dev.msfjarvis.claw.model.UIPost
 import dev.msfjarvis.claw.model.toUIPost
@@ -86,10 +86,10 @@ class SavedPostUpdaterWorker(
   @WorkerKey(SavedPostUpdaterWorker::class)
   @ContributesIntoMap(
     AppScope::class,
-    binding = binding<InjectedWorkerFactory.WorkerInstanceFactory<*>>(),
+    binding = binding<WorkerInstanceFactory<*>>(),
   )
   @AssistedFactory
-  abstract class Factory : InjectedWorkerFactory.WorkerInstanceFactory<SavedPostUpdaterWorker>
+  abstract class Factory : WorkerInstanceFactory<SavedPostUpdaterWorker>
 }
 
 private val storySlug = Regex("[a-zA-Z0-9_-]+")

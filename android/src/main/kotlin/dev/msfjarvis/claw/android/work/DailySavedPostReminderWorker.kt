@@ -9,10 +9,10 @@ package dev.msfjarvis.claw.android.work
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import dev.msfjarvis.claw.android.injection.InjectedWorkerFactory
-import dev.msfjarvis.claw.android.injection.WorkerKey
 import dev.msfjarvis.claw.android.reminders.DailySavedPostReminderDelivery
 import dev.msfjarvis.claw.android.reminders.DailySavedPostReminderScheduler
+import dev.msfjarvis.claw.core.work.api.WorkerInstanceFactory
+import dev.msfjarvis.claw.core.work.api.WorkerKey
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.Assisted
 import dev.zacsweers.metro.AssistedFactory
@@ -40,8 +40,8 @@ class DailySavedPostReminderWorker(
   @WorkerKey(DailySavedPostReminderWorker::class)
   @ContributesIntoMap(
     AppScope::class,
-    binding = binding<InjectedWorkerFactory.WorkerInstanceFactory<*>>(),
+    binding = binding<WorkerInstanceFactory<*>>(),
   )
   @AssistedFactory
-  abstract class Factory : InjectedWorkerFactory.WorkerInstanceFactory<DailySavedPostReminderWorker>
+  abstract class Factory : WorkerInstanceFactory<DailySavedPostReminderWorker>
 }

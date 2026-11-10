@@ -19,8 +19,8 @@ import androidx.work.WorkerParameters
 import dev.msfjarvis.claw.android.BuildConfig
 import dev.msfjarvis.claw.android.glance.SavedPostsWidgetReceiver
 import dev.msfjarvis.claw.android.glance.generatedWidgetPreviewDelayMinutes
-import dev.msfjarvis.claw.android.injection.InjectedWorkerFactory
-import dev.msfjarvis.claw.android.injection.WorkerKey
+import dev.msfjarvis.claw.core.work.api.WorkerInstanceFactory
+import dev.msfjarvis.claw.core.work.api.WorkerKey
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.Assisted
 import dev.zacsweers.metro.AssistedFactory
@@ -72,9 +72,8 @@ class GeneratedWidgetPreviewUpdateWorker(
   @WorkerKey(GeneratedWidgetPreviewUpdateWorker::class)
   @ContributesIntoMap(
     AppScope::class,
-    binding = binding<InjectedWorkerFactory.WorkerInstanceFactory<*>>(),
+    binding = binding<WorkerInstanceFactory<*>>(),
   )
   @AssistedFactory
-  abstract class Factory :
-    InjectedWorkerFactory.WorkerInstanceFactory<GeneratedWidgetPreviewUpdateWorker>
+  abstract class Factory : WorkerInstanceFactory<GeneratedWidgetPreviewUpdateWorker>
 }

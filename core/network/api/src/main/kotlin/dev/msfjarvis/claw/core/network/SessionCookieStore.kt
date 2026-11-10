@@ -8,6 +8,7 @@ package dev.msfjarvis.claw.core.network
 
 import kotlinx.coroutines.flow.Flow
 
+/** Transport-facing access to the persisted session cookie and its current identity. */
 interface SessionCookieStore {
   fun get(): String?
 

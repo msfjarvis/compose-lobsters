@@ -11,25 +11,29 @@ plugins {
   alias(libs.plugins.kotlin.serialization)
   alias(libs.plugins.dependencyAnalysis)
   alias(libs.plugins.metro)
-  alias(libs.plugins.zipline)
 }
 
 dependencies {
   testImplementation(testFixtures(projects.htmlTestFixtures))
 
-  api(libs.eithernet)
-  api(libs.kotlinx.serialization.core)
-  api(libs.okhttp.core)
-  api(libs.retrofit)
-  api(projects.model)
-  api(projects.core.parser.api)
-
+  implementation(platform(libs.okhttp.bom))
+  implementation(libs.eithernet)
   implementation(libs.eithernet.integration.retrofit)
-  implementation(libs.zipline.loader)
+  implementation(libs.kotlinx.coroutines.core)
+  implementation(libs.kotlinx.datetime)
+  implementation(libs.kotlinx.serialization.core)
+  implementation(libs.kotlinx.serialization.json)
+  implementation(libs.okhttp.core)
+  implementation(libs.okhttp.loggingInterceptor)
+  implementation(libs.retrofit)
+  implementation(libs.retrofit.kotlinxSerializationConverter)
+  implementation(projects.core.network.api)
+  implementation(projects.core.parser.api)
+  implementation(projects.model)
 
   testImplementation(libs.eithernet.test.fixtures)
   testImplementation(libs.kotlin.reflect)
   testImplementation(libs.kotlinx.coroutines.test)
-  testImplementation(libs.kotlinx.datetime)
+  testImplementation(projects.ziplineParser)
   addTestDependencies(project)
 }

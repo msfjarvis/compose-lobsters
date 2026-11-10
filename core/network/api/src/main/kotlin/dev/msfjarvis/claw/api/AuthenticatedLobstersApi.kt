@@ -11,7 +11,6 @@ import com.slack.eithernet.ApiResult.Failure
 import com.slack.eithernet.ApiResult.Success
 import dev.msfjarvis.claw.model.FiltersPage
 import dev.msfjarvis.claw.model.ReplyForm
-import dev.zacsweers.metro.Inject
 import java.io.IOException
 import okhttp3.MultipartBody
 
@@ -19,7 +18,6 @@ private const val XML_HTTP_REQUEST = "XMLHttpRequest"
 private const val XML_HTTP_REQUEST_DUPLICATE = "XMLHttpRequest, XMLHttpRequest"
 private const val ACCEPT_ANY = "*/*"
 
-@Inject
 class AuthenticatedLobstersApi(private val api: LobstersApi) {
 
   suspend fun upvoteComment(commentId: String): ApiResult<Unit, Unit> {

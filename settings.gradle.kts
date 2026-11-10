@@ -139,11 +139,11 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 include(
   "android",
-  "api",
   "benchmark",
   "common",
-  "core",
   "core:common",
+  "core:network:api",
+  "core:network:impl",
   "core:parser:api",
   "core:parser:impl",
   "database-core",

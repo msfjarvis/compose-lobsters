@@ -7,7 +7,6 @@
 package dev.msfjarvis.claw.common.comments
 
 import com.google.common.truth.Truth.assertThat
-import dev.msfjarvis.claw.database.local.PostComments
 import dev.msfjarvis.claw.model.Comment
 import kotlin.time.Instant
 import org.junit.jupiter.api.Test
@@ -140,6 +139,9 @@ class CommentsHandlerTest {
       .containsExactly("c1" to true, "c2" to true, "c3" to true)
       .inOrder()
   }
+
+  private fun PostComments(postId: String, commentIds: List<String>): Set<String> =
+    commentIds.toSet()
 
   private fun List<CommentNode>.unreadStates(): List<Pair<String, Boolean>> {
     return map { it.comment.shortId to it.isUnread }

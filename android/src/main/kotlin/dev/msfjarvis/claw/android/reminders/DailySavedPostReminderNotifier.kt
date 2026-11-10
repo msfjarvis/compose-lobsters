@@ -21,7 +21,7 @@ import androidx.core.content.getSystemService
 import androidx.core.net.toUri
 import dev.msfjarvis.claw.android.BuildConfig
 import dev.msfjarvis.claw.android.R
-import dev.msfjarvis.claw.database.local.DailySavedPostNotification
+import dev.msfjarvis.claw.core.database.DailySavedPostLedgerEntry
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
@@ -30,7 +30,7 @@ import dev.zacsweers.metro.binding
 interface DailySavedPostReminderNotifier {
   fun isAvailable(): Boolean
 
-  fun notify(localDate: String, selection: DailySavedPostNotification): NotificationDeliveryResult
+  fun notify(localDate: String, selection: DailySavedPostLedgerEntry): NotificationDeliveryResult
 }
 
 enum class NotificationDeliveryResult {
@@ -63,7 +63,7 @@ class AndroidDailySavedPostReminderNotifier(private val context: Context) :
 
   override fun notify(
     localDate: String,
-    selection: DailySavedPostNotification,
+    selection: DailySavedPostLedgerEntry,
   ): NotificationDeliveryResult {
     if (!isAvailable()) return Unavailable
 

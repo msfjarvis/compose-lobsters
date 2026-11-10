@@ -38,7 +38,6 @@ import dev.msfjarvis.claw.android.BuildConfig
 import dev.msfjarvis.claw.android.ClawApplication
 import dev.msfjarvis.claw.android.MainActivity
 import dev.msfjarvis.claw.android.R
-import dev.msfjarvis.claw.database.local.fromSavedPost
 import dev.msfjarvis.claw.model.UIPost
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
@@ -48,7 +47,7 @@ class SavedPostsWidget : GlanceAppWidget() {
   override suspend fun provideGlance(context: Context, id: GlanceId) {
     val appGraph = (context.applicationContext as ClawApplication).appGraph
     val posts = appGraph.savedPostsRepository.getRecentPosts(50)
-    val postWindow = posts.map { UIPost.fromSavedPost(it) }.toImmutableList()
+    val postWindow = posts.toImmutableList()
     provideContent { LobstersGlanceTheme { Content(postWindow) } }
   }
 

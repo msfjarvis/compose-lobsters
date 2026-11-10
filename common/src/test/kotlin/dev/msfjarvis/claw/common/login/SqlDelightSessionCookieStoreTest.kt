@@ -10,6 +10,7 @@ import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import com.google.common.truth.Truth.assertThat
 import dev.msfjarvis.claw.database.LobstersDatabase
 import dev.msfjarvis.claw.database.local.SessionCookieQueries
+import dev.msfjarvis.claw.database.storage.SqlDelightSessionCookieStorage
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -40,7 +41,7 @@ class SqlDelightSessionCookieStoreTest {
   fun `blank username is logged out`() =
     runTest(dispatcher) {
       queries.upsert("cookie", "")
-      val store = SqlDelightSessionCookieStore(queries, dispatcher)
+      val store = SqlDelightSessionCookieStore(SqlDelightSessionCookieStorage(queries, dispatcher))
 
       assertThat(store.getUsername()).isNull()
       assertThat(store.username().first()).isNull()

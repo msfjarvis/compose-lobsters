@@ -6,61 +6,34 @@
  */
 package dev.msfjarvis.claw.common.tags
 
-import app.cash.sqldelight.coroutines.asFlow
-import app.cash.sqldelight.coroutines.mapToList
-import dev.msfjarvis.claw.core.coroutines.DatabaseReadDispatcher
-import dev.msfjarvis.claw.core.coroutines.DatabaseWriteDispatcher
-import dev.msfjarvis.claw.database.local.TagBlocksQueries
+import dev.msfjarvis.claw.core.database.TagBlocksStorage
 import dev.msfjarvis.claw.model.TagBlock
 import dev.zacsweers.metro.Inject
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.withContext
 
 @Inject
-class TagBlockRepository(
-  private val tagBlocksQueries: TagBlocksQueries,
-  @param:DatabaseReadDispatcher private val readDispatcher: CoroutineDispatcher,
-  @param:DatabaseWriteDispatcher private val writeDispatcher: CoroutineDispatcher,
-) {
-  fun getSavedTags(): Flow<Set<String>> =
-    tagBlocksQueries.selectActiveTags().asFlow().mapToList(readDispatcher).map { it.toSet() }
+class TagBlockRepository(private val storage: TagBlocksStorage) {
+  fun getSavedTags(): Flow<Set<String>> = storage.savedTags
 
-  fun getTagBlocks(): Flow<List<TagBlock>> {
-    return tagBlocksQueries.selectAll().asFlow().mapToList(readDispatcher).map { blocks ->
-      blocks.map { TagBlock(it.tag, it.expiration_millis) }
-    }
-  }
+  fun getTagBlocks(): Flow<List<TagBlock>> = storage.tagBlocks
 
-  suspend fun getSavedTagsSnapshot(): Set<String> =
-    withContext(readDispatcher) { tagBlocksQueries.selectActiveTags().executeAsList().toSet() }
+  suspend fun getSavedTagsSnapshot(): Set<String> = storage.getSavedTags()
 
-  suspend fun getTagBlocksSnapshot(): List<TagBlock> =
-    withContext(readDispatcher) {
-      tagBlocksQueries.selectAll().executeAsList().map { TagBlock(it.tag, it.expiration_millis) }
-    }
+  suspend fun getTagBlocksSnapshot(): List<TagBlock> = storage.getTagBlocks()
 
   suspend fun saveTagBlock(tag: String, expirationMillis: Long?) {
-    withContext(writeDispatcher) { tagBlocksQueries.upsert(tag, expirationMillis) }
+    storage.saveTagBlock(tag, expirationMillis)
   }
 
   suspend fun replaceTagBlocks(blocks: List<TagBlock>) {
-    withContext(writeDispatcher) {
-      tagBlocksQueries.transaction {
-        tagBlocksQueries.deleteAll()
-        blocks.forEach { block ->
-          tagBlocksQueries.insert(block.tag, block.expirationMillis)
-        }
-      }
-    }
+    storage.replaceTagBlocks(blocks)
   }
 
   suspend fun removeTagBlock(tag: String) {
-    withContext(writeDispatcher) { tagBlocksQueries.deleteByTag(tag) }
+    storage.removeTagBlock(tag)
   }
 
   suspend fun removeExpiredTags() {
-    withContext(writeDispatcher) { tagBlocksQueries.deleteExpired() }
+    storage.removeExpiredTags()
   }
 }

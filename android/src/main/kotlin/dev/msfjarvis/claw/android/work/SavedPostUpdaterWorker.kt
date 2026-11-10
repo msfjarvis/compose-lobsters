@@ -16,9 +16,9 @@ import dev.msfjarvis.claw.android.injection.InjectedWorkerFactory
 import dev.msfjarvis.claw.android.injection.WorkerKey
 import dev.msfjarvis.claw.android.viewmodel.SavedPostsRepository
 import dev.msfjarvis.claw.api.LobstersApi
-import dev.msfjarvis.claw.database.local.SavedPost
-import dev.msfjarvis.claw.database.local.toSavedPost
 import dev.msfjarvis.claw.model.LobstersPostDetails
+import dev.msfjarvis.claw.model.UIPost
+import dev.msfjarvis.claw.model.toUIPost
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.Assisted
 import dev.zacsweers.metro.AssistedFactory
@@ -50,7 +50,7 @@ class SavedPostUpdaterWorker(
       return Result.success()
     }
 
-    val updatedPosts = mutableListOf<SavedPost>()
+    val updatedPosts = mutableListOf<UIPost>()
 
     for ((index, post) in postsToUpdate.withIndex()) {
       // A previous refresh may have stored a detail-page comment anchor rather than a story URL.
@@ -108,8 +108,8 @@ internal fun refreshedSavedPost(
   requestedShortId: String,
   requestUrl: String,
   details: LobstersPostDetails,
-): SavedPost? =
+): UIPost? =
   details
     .takeIf { it.stories.firstOrNull()?.shortId == requestedShortId }
-    ?.toSavedPost()
+    ?.toUIPost()
     ?.copy(commentsUrl = requestUrl)

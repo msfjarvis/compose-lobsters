@@ -8,37 +8,21 @@ package dev.msfjarvis.claw.android.viewmodel
 
 import android.util.Log
 import dev.msfjarvis.claw.android.BuildConfig
-import dev.msfjarvis.claw.core.coroutines.DatabaseReadDispatcher
-import dev.msfjarvis.claw.core.coroutines.DatabaseWriteDispatcher
-import dev.msfjarvis.claw.database.local.CachedRemotePost
-import dev.msfjarvis.claw.database.local.CachedRemotePostQueries
+import dev.msfjarvis.claw.core.database.CachedRemotePostsStorage
+import dev.msfjarvis.claw.model.UIPost
 import dev.zacsweers.metro.Inject
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.withContext
 
 @Inject
-class CachedRemotePostsRepository(
-  private val cachedRemotePostQueries: CachedRemotePostQueries,
-  @param:DatabaseReadDispatcher private val readDispatcher: CoroutineDispatcher,
-  @param:DatabaseWriteDispatcher private val writeDispatcher: CoroutineDispatcher,
-) {
-  suspend fun getCachedPosts(): List<CachedRemotePost> {
-    return withContext(readDispatcher) { cachedRemotePostQueries.selectAllPosts().executeAsList() }
-  }
+class CachedRemotePostsRepository(private val storage: CachedRemotePostsStorage) {
+  suspend fun getCachedPosts(): List<UIPost> = storage.getCachedPosts()
 
-  suspend fun getRecentPosts(limit: Long): List<CachedRemotePost> =
-    withContext(readDispatcher) { cachedRemotePostQueries.selectRecentPosts(limit).executeAsList() }
+  suspend fun getRecentPosts(limit: Long): List<UIPost> = storage.getRecentPosts(limit)
 
-  suspend fun savePosts(posts: List<CachedRemotePost>) {
+  suspend fun savePosts(posts: List<UIPost>) {
     if (BuildConfig.ENABLE_LOGS) {
       Log.d(TAG, "Caching remote posts: ${posts.joinToString(",") { it.shortId }}")
     }
-    withContext(writeDispatcher) {
-      cachedRemotePostQueries.transaction {
-        cachedRemotePostQueries.deleteAllPosts()
-        posts.forEach { post -> cachedRemotePostQueries.insertOrReplacePost(post) }
-      }
-    }
+    storage.replaceCachedPosts(posts)
   }
 
   private companion object {

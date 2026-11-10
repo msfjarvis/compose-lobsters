@@ -6,30 +6,15 @@
  */
 package dev.msfjarvis.claw.common.comments
 
-import dev.msfjarvis.claw.core.coroutines.DatabaseReadDispatcher
-import dev.msfjarvis.claw.core.coroutines.DatabaseWriteDispatcher
-import dev.msfjarvis.claw.database.local.PostComments
-import dev.msfjarvis.claw.database.local.PostCommentsQueries
+import dev.msfjarvis.claw.core.database.CommentsStorage
 import dev.msfjarvis.claw.model.Comment
 import dev.zacsweers.metro.Inject
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.withContext
 
 @Inject
-class CommentsRepository(
-  private val postCommentsQueries: PostCommentsQueries,
-  @param:DatabaseReadDispatcher private val readDispatcher: CoroutineDispatcher,
-  @param:DatabaseWriteDispatcher private val writeDispatcher: CoroutineDispatcher,
-) {
-
-  suspend fun getSeenComments(postId: String): Set<String>? =
-    withContext(readDispatcher) {
-      postCommentsQueries.getCommentIds(postId).executeAsOneOrNull()?.toSet()
-    }
+class CommentsRepository(private val storage: CommentsStorage) {
+  suspend fun getSeenComments(postId: String): Set<String>? = storage.getSeenCommentIds(postId)
 
   suspend fun markSeenComments(postId: String, comments: List<Comment>) {
-    withContext(writeDispatcher) {
-      postCommentsQueries.rememberComments(PostComments(postId, comments.map { it.shortId }))
-    }
+    storage.rememberCommentIds(postId, comments.map(Comment::shortId))
   }
 }

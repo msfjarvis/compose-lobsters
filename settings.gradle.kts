@@ -142,18 +142,14 @@ include(
   "benchmark",
   "common",
   "core:common",
+  "core:database:api",
+  "core:database:impl",
   "core:network:api",
   "core:network:impl",
   "core:parser:api",
   "core:parser:impl",
-  "database-core",
-  "database-impl",
   "html-renderer",
   "html-test-fixtures",
   "model",
   "zipline-parser",
 )
-
-project(":database-core").projectDir = file("database/core")
-
-project(":database-impl").projectDir = file("database/impl")

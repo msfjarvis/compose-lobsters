@@ -7,29 +7,27 @@
 package dev.msfjarvis.claw.common.comments
 
 import com.google.common.truth.Truth.assertThat
-import dev.msfjarvis.claw.database.local.PostComments
 import org.junit.jupiter.api.Test
 
 class CommentsPageLogicTest {
-
   @Test
   fun `null repository result maps to no baseline after load completes`() {
-    assertThat(SeenCommentsState.from(postComments = null, hasLoaded = true))
+    assertThat(SeenCommentsState.from(seenCommentIds = null, hasLoaded = true))
       .isEqualTo(SeenCommentsState.NoBaseline)
   }
 
   @Test
   fun `unloaded repository result maps to loading state`() {
-    assertThat(SeenCommentsState.from(postComments = null, hasLoaded = false))
+    assertThat(SeenCommentsState.from(seenCommentIds = null, hasLoaded = false))
       .isEqualTo(SeenCommentsState.Loading)
   }
 
   @Test
   fun `loaded repository result maps to loaded baseline`() {
-    val postComments = postComments(commentIds = listOf("c1", "c2"))
+    val seenCommentIds = seenCommentIds("c1", "c2")
 
-    assertThat(SeenCommentsState.from(postComments = postComments, hasLoaded = true))
-      .isEqualTo(SeenCommentsState.BaselineLoaded(postComments))
+    assertThat(SeenCommentsState.from(seenCommentIds = seenCommentIds, hasLoaded = true))
+      .isEqualTo(SeenCommentsState.BaselineLoaded(seenCommentIds))
   }
 
   @Test
@@ -59,8 +57,7 @@ class CommentsPageLogicTest {
     assertThat(
         buildCommentsVisitDecision(
           currentCommentIds = listOf("c1", "c2"),
-          seenCommentsState =
-            SeenCommentsState.BaselineLoaded(postComments(commentIds = listOf("c1", "c2"))),
+          seenCommentsState = SeenCommentsState.BaselineLoaded(seenCommentIds("c1", "c2")),
         )
       )
       .isEqualTo(CommentsVisitDecision(unreadCount = 0, shouldPersist = true))
@@ -82,8 +79,7 @@ class CommentsPageLogicTest {
     assertThat(
         buildCommentsVisitDecision(
           currentCommentIds = listOf("c1", "c2", "c3"),
-          seenCommentsState =
-            SeenCommentsState.BaselineLoaded(postComments(commentIds = emptyList())),
+          seenCommentsState = SeenCommentsState.BaselineLoaded(emptySet()),
         )
       )
       .isEqualTo(CommentsVisitDecision(unreadCount = 3, shouldPersist = true))
@@ -94,8 +90,7 @@ class CommentsPageLogicTest {
     assertThat(
         buildCommentsVisitDecision(
           currentCommentIds = listOf("c1", "c2", "c3", "c4"),
-          seenCommentsState =
-            SeenCommentsState.BaselineLoaded(postComments(commentIds = listOf("c1", "c2"))),
+          seenCommentsState = SeenCommentsState.BaselineLoaded(seenCommentIds("c1", "c2")),
         )
       )
       .isEqualTo(CommentsVisitDecision(unreadCount = 2, shouldPersist = true))
@@ -106,8 +101,7 @@ class CommentsPageLogicTest {
     assertThat(
         buildCommentsVisitDecision(
           currentCommentIds = listOf("c2", "c3"),
-          seenCommentsState =
-            SeenCommentsState.BaselineLoaded(postComments(commentIds = listOf("c1", "c2"))),
+          seenCommentsState = SeenCommentsState.BaselineLoaded(seenCommentIds("c1", "c2")),
         )
       )
       .isEqualTo(CommentsVisitDecision(unreadCount = 1, shouldPersist = true))
@@ -125,13 +119,8 @@ class CommentsPageLogicTest {
 
   @Test
   fun `shouldRenderCommentsContent baseline loaded is true`() {
-    assertThat(
-        SeenCommentsState.BaselineLoaded(PostComments("p1", emptyList())) !=
-          SeenCommentsState.Loading
-      )
-      .isTrue()
+    assertThat(SeenCommentsState.BaselineLoaded(emptySet()) != SeenCommentsState.Loading).isTrue()
   }
 
-  private fun postComments(commentIds: List<String>) =
-    PostComments(postId = "post", commentIds = commentIds)
+  private fun seenCommentIds(vararg ids: String): Set<String> = ids.toSet()
 }

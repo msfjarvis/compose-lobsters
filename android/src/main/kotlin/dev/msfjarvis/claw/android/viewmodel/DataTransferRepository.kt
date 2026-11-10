@@ -7,33 +7,21 @@
 package dev.msfjarvis.claw.android.viewmodel
 
 import dev.msfjarvis.claw.core.coroutines.IODispatcher
-import dev.msfjarvis.claw.database.SavedPostSerializer
-import dev.msfjarvis.claw.database.local.SavedPost
 import dev.zacsweers.metro.Inject
 import java.io.InputStream
 import java.io.OutputStream
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.builtins.ListSerializer
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.decodeFromStream
-import kotlinx.serialization.json.encodeToStream
 
 @Inject
-@OptIn(ExperimentalSerializationApi::class)
 class DataTransferRepository(
-  private val json: Json,
   private val savedPostsRepository: SavedPostsRepository,
   @param:IODispatcher private val ioDispatcher: CoroutineDispatcher,
 ) {
-  private val serializer = ListSerializer(SavedPostSerializer)
-
   suspend fun importPosts(input: InputStream): Result<Unit> {
     return try {
-      val posts: List<SavedPost> =
-        withContext(ioDispatcher) { json.decodeFromStream(serializer, input) }
-      savedPostsRepository.savePosts(posts)
+      val serialized = withContext(ioDispatcher) { input.readBytes().decodeToString() }
+      savedPostsRepository.importSerializedPosts(serialized)
       Result.success(Unit)
     } catch (t: Throwable) {
       Result.failure(t)
@@ -41,7 +29,7 @@ class DataTransferRepository(
   }
 
   suspend fun exportPostsAsJson(output: OutputStream) {
-    val posts = savedPostsRepository.getSavedPosts()
-    withContext(ioDispatcher) { json.encodeToStream(serializer, posts, output) }
+    val serialized = savedPostsRepository.exportSerializedPosts()
+    withContext(ioDispatcher) { output.write(serialized.encodeToByteArray()) }
   }
 }

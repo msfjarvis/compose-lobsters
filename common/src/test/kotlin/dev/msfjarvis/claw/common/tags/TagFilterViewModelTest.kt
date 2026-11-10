@@ -14,6 +14,7 @@ import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.core.network.SessionCookieStore
 import dev.msfjarvis.claw.database.LobstersDatabase
 import dev.msfjarvis.claw.database.local.TagBlocksQueries
+import dev.msfjarvis.claw.database.storage.SqlDelightTagBlocksStorage
 import dev.msfjarvis.claw.model.CSRFToken
 import dev.msfjarvis.claw.model.FiltersPage
 import dev.msfjarvis.claw.model.LobstersPost
@@ -229,7 +230,7 @@ class TagFilterViewModelTest {
       viewModel.save()
       advanceUntilIdle()
 
-      assertThat(api.savedTags).containsExactly("tags[android]", "1", "tags[kotlin]", "1")
+      assertThat(api.savedTags).containsExactly("android", "kotlin")
       assertThat(repository.getTagBlocks().first().map { it.tag to it.expirationMillis })
         .containsExactly(
           "android" to null,
@@ -263,7 +264,7 @@ class TagFilterViewModelTest {
     }
 
   private fun repository(): TagBlockRepository =
-    TagBlockRepository(tagBlocksQueries, dispatcher, dispatcher)
+    TagBlockRepository(SqlDelightTagBlocksStorage(tagBlocksQueries, dispatcher, dispatcher))
 
   private fun viewModel(
     repository: TagBlockRepository,
@@ -315,7 +316,7 @@ private class FakeTagFiltersApi(
   private val filtersResponses: ArrayDeque<FiltersPage>,
   private val saveFiltersResult: ApiResult<Unit, Unit> = ApiResult.success(Unit),
 ) : LobstersApi {
-  var savedTags: Map<String, String>? = null
+  var savedTags: Set<String>? = null
     private set
 
   override suspend fun getHottestPosts(page: Int): ApiResult<List<LobstersPost>, Unit> =
@@ -341,7 +342,7 @@ private class FakeTagFiltersApi(
     tags: Map<String, String>,
     commit: String,
   ): ApiResult<Unit, Unit> {
-    savedTags = tags
+    savedTags = tags.keys.map { it.removePrefix("tags[").removeSuffix("]") }.toSet()
     return saveFiltersResult
   }
 

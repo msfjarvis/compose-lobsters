@@ -27,7 +27,6 @@ import dev.msfjarvis.claw.android.paging.SearchPagingSource
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.core.coroutines.IODispatcher
 import dev.msfjarvis.claw.core.coroutines.MainDispatcher
-import dev.msfjarvis.claw.database.local.fromSavedPost
 import dev.msfjarvis.claw.model.UIPost
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoMap
@@ -112,7 +111,6 @@ class ClawViewModel(
     get() =
       savedPostsRepository.savedPostsSortedByDate.map { posts ->
         posts
-          .map(UIPost.Companion::fromSavedPost)
           .groupBy { post ->
             val time = post.createdAt.toLocalDateTime()
             "${time.month.name.lowercase().replaceFirstChar { it.uppercase() }} ${time.year}"

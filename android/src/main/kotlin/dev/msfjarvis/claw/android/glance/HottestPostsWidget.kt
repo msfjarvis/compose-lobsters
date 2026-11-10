@@ -36,8 +36,6 @@ import dev.msfjarvis.claw.android.BuildConfig
 import dev.msfjarvis.claw.android.ClawApplication
 import dev.msfjarvis.claw.android.MainActivity
 import dev.msfjarvis.claw.android.R
-import dev.msfjarvis.claw.database.local.CachedRemotePost
-import dev.msfjarvis.claw.database.local.fromCachedRemotePost
 import dev.msfjarvis.claw.model.LobstersPost
 import dev.msfjarvis.claw.model.UIPost
 import dev.msfjarvis.claw.model.toUIPost
@@ -64,22 +62,7 @@ class HottestPostsWidget : GlanceAppWidget() {
           // Cache the posts for future use when network is unavailable
           // Using try-catch to prevent widget rendering failures if caching fails
           try {
-            val cachedPosts = uiPosts.mapIndexed { index, post ->
-              CachedRemotePost(
-                shortId = post.shortId,
-                title = post.title,
-                url = post.url,
-                createdAt = post.createdAt,
-                commentCount = post.commentCount,
-                commentsUrl = post.commentsUrl,
-                submitterName = post.submitter,
-                tags = post.tags,
-                description = post.description,
-                userIsAuthor = post.userIsAuthor,
-                insertionOrder = index,
-              )
-            }
-            cachedRemotePostsRepository.savePosts(cachedPosts)
+            cachedRemotePostsRepository.savePosts(uiPosts)
           } catch (_: Exception) {
             // Silently ignore caching failures - widget should still render
           }
@@ -87,9 +70,7 @@ class HottestPostsWidget : GlanceAppWidget() {
         }
         else -> {
           // Fall back to cached posts when network fails
-          cachedPostsOrEmpty { cachedRemotePostsRepository.getCachedPosts() }
-            .map(UIPost::fromCachedRemotePost)
-            .toImmutableList()
+          cachedPostsOrEmpty { cachedRemotePostsRepository.getCachedPosts() }.toImmutableList()
         }
       }
     // Filter out posts with tags that are in the filtered tags set

@@ -185,8 +185,8 @@ dependencies {
   implementation(projects.core.network.impl)
   implementation(projects.core.parser.api)
   implementation(projects.core.parser.impl)
-  implementation(projects.databaseCore)
-  implementation(projects.databaseImpl)
+  implementation(projects.core.database.api)
+  implementation(projects.core.database.impl)
   implementation(projects.model)
 
   compileOnly(libs.androidx.compose.glance.preview)

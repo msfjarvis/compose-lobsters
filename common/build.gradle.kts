@@ -32,9 +32,9 @@ dependencies {
   api(libs.androidx.lifecycle.viewmodel)
   api(libs.kotlinx.coroutines.core)
   api(libs.metrox.viewmodel)
+  api(projects.core.database.api)
   api(projects.core.network.api)
   implementation(projects.core.common)
-  api(projects.databaseCore)
   api(projects.model)
 
   implementation(platform(libs.okhttp.bom))
@@ -73,6 +73,8 @@ dependencies {
 
   testImplementation(libs.kotlinx.coroutines.test)
   testImplementation(libs.sqldelight.jvmDriver)
+  testImplementation(projects.core.database.impl)
+  testImplementation(libs.sqldelight.runtime)
 
   addTestDependencies(project)
 }

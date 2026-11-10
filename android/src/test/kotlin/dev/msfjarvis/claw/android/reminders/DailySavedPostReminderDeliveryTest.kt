@@ -9,7 +9,7 @@ package dev.msfjarvis.claw.android.reminders
 import androidx.work.ListenableWorker
 import com.google.common.truth.Truth.assertThat
 import dev.msfjarvis.claw.android.viewmodel.DailySavedPostNotificationRepository
-import dev.msfjarvis.claw.database.local.DailySavedPostNotification
+import dev.msfjarvis.claw.core.database.DailySavedPostLedgerEntry
 import kotlin.time.Clock
 import kotlin.time.Instant
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -152,7 +152,7 @@ class DailySavedPostReminderDeliveryTest {
   ) = DailySavedPostReminderDelivery(repository, settings, notifier, clock, timeZone)
 
   private fun selection(deliveredAtEpochMillis: Long? = null) =
-    DailySavedPostNotification(
+    DailySavedPostLedgerEntry(
       localDate = "2026-09-05",
       shortId = "post",
       title = "Post title",
@@ -188,7 +188,7 @@ class DailySavedPostReminderDeliveryTest {
     override fun setReminderTime(time: LocalTime) = Unit
   }
 
-  private class FakeRepository(private val selection: DailySavedPostNotification?) :
+  private class FakeRepository(private val selection: DailySavedPostLedgerEntry?) :
     DailySavedPostNotificationRepository {
     val selectionRequests = mutableListOf<String>()
     val markedDelivered = mutableListOf<Pair<String, Long>>()
@@ -196,7 +196,7 @@ class DailySavedPostReminderDeliveryTest {
     override suspend fun getOrCreateSelection(
       localDate: String,
       selectedAtEpochMillis: Long,
-    ): DailySavedPostNotification? {
+    ): DailySavedPostLedgerEntry? {
       selectionRequests += localDate
       return selection
     }
@@ -212,13 +212,13 @@ class DailySavedPostReminderDeliveryTest {
     private val available: Boolean = true,
     private val deliveryResult: NotificationDeliveryResult = Delivered,
   ) : DailySavedPostReminderNotifier {
-    val notifications = mutableListOf<Pair<String, DailySavedPostNotification>>()
+    val notifications = mutableListOf<Pair<String, DailySavedPostLedgerEntry>>()
 
     override fun isAvailable() = available
 
     override fun notify(
       localDate: String,
-      selection: DailySavedPostNotification,
+      selection: DailySavedPostLedgerEntry,
     ): NotificationDeliveryResult {
       notifications += localDate to selection
       return deliveryResult

@@ -6,241 +6,67 @@
  */
 package dev.msfjarvis.claw.common.tags
 
-import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import com.google.common.truth.Truth.assertThat
-import dev.msfjarvis.claw.database.LobstersDatabase
-import dev.msfjarvis.claw.database.local.TagBlocksQueries
+import dev.msfjarvis.claw.core.database.TagBlocksStorage
 import dev.msfjarvis.claw.model.TagBlock
-import kotlin.time.Clock
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.take
-import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class TagBlockRepositoryTest {
-  private lateinit var driver: JdbcSqliteDriver
-  private lateinit var tagBlocksQueries: TagBlocksQueries
+  @Test
+  fun `repository exposes saved tags and tag blocks from storage`() = runTest {
+    val storage = FakeTagBlocksStorage()
+    storage.replaceTagBlocks(listOf(TagBlock("android", null), TagBlock("kotlin", Long.MAX_VALUE)))
+    val repository = TagBlockRepository(storage)
 
-  @BeforeEach
-  fun setup() {
-    driver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY)
-    LobstersDatabase.Schema.create(driver)
-    tagBlocksQueries = TagBlocksQueries(driver)
-  }
-
-  @AfterEach
-  fun teardown() {
-    driver.close()
+    assertThat(repository.getSavedTags().first()).containsExactly("android", "kotlin")
+    assertThat(repository.getTagBlocks().first()).containsExactlyElementsIn(storage.blocks.value)
   }
 
   @Test
-  fun `saveTagBlock inserts new tag block successfully`() = runTest {
-    val testDispatcher = StandardTestDispatcher(testScheduler)
-    val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
+  fun `repository forwards tag updates to storage`() = runTest {
+    val storage = FakeTagBlocksStorage()
+    val repository = TagBlockRepository(storage)
 
-    val expirationTime = Clock.System.now().toEpochMilliseconds() + 86400000
-    repository.saveTagBlock("android", expirationTime)
-    val tags = repository.getSavedTags().first()
-    assertThat(tags).containsExactly("android")
-  }
+    repository.saveTagBlock("android", null)
 
-  @Test
-  fun `saveTagBlock with null expiration creates permanent block`() = runTest {
-    val testDispatcher = StandardTestDispatcher(testScheduler)
-
-    val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
-
-    repository.saveTagBlock("kotlin", null)
-
-    val tagBlocks = repository.getTagBlocks().first()
-    assertThat(tagBlocks).hasSize(1)
-    assertThat(tagBlocks[0].tag).isEqualTo("kotlin")
-    assertThat(tagBlocks[0].isPermanent).isTrue()
-  }
-
-  @Test
-  fun `saveTagBlock replaces existing tag block`() = runTest {
-    val testDispatcher = StandardTestDispatcher(testScheduler)
-
-    val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
-
-    val firstExpiration = Clock.System.now().toEpochMilliseconds() + 86400000
-    repository.saveTagBlock("rust", firstExpiration)
-
-    val secondExpiration = Clock.System.now().toEpochMilliseconds() + 172800000
-    repository.saveTagBlock("rust", secondExpiration)
-
-    val tagBlocks = repository.getTagBlocks().first()
-    assertThat(tagBlocks).hasSize(1)
-    assertThat(tagBlocks[0].expirationMillis).isEqualTo(secondExpiration)
-  }
-
-  @Test
-  fun `replaceTagBlocks replaces permanent with temporary block`() = runTest {
-    val testDispatcher = StandardTestDispatcher(testScheduler)
-    val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
-    val expiration = Clock.System.now().toEpochMilliseconds() + 86_400_000
-
-    repository.saveTagBlock("kotlin", null)
-    repository.replaceTagBlocks(listOf(TagBlock("kotlin", expiration)))
-
-    val block = repository.getTagBlocks().first().single()
-    assertThat(block.tag).isEqualTo("kotlin")
-    assertThat(block.expirationMillis).isEqualTo(expiration)
-  }
-
-  @Test
-  fun `replaceTagBlocks replaces temporary with permanent block`() = runTest {
-    val testDispatcher = StandardTestDispatcher(testScheduler)
-    val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
-    val expiration = Clock.System.now().toEpochMilliseconds() + 86_400_000
-
-    repository.saveTagBlock("kotlin", expiration)
-    repository.replaceTagBlocks(listOf(TagBlock("kotlin", null)))
-
-    val block = repository.getTagBlocks().first().single()
+    val block = repository.getTagBlocksSnapshot().single()
+    assertThat(block.tag).isEqualTo("android")
     assertThat(block.isPermanent).isTrue()
   }
 
-  @Test
-  fun `replaceTagBlocks removes rows omitted from replacement set`() = runTest {
-    val testDispatcher = StandardTestDispatcher(testScheduler)
-    val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
-
-    repository.saveTagBlock("old", null)
-    repository.saveTagBlock("kept", null)
-
-    repository.replaceTagBlocks(listOf(TagBlock("kept", null)))
-
-    assertThat(repository.getTagBlocks().first().map { it.tag }).containsExactly("kept")
-  }
-
-  @Test
-  fun `removeTagBlock deletes tag successfully`() = runTest {
-    val testDispatcher = StandardTestDispatcher(testScheduler)
-
-    val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
-
-    repository.saveTagBlock("python", null)
-    repository.saveTagBlock("javascript", null)
-
-    var tags = repository.getSavedTags().first()
-    assertThat(tags).containsExactly("python", "javascript")
-
-    repository.removeTagBlock("python")
-
-    tags = repository.getSavedTags().first()
-    assertThat(tags).containsExactly("javascript")
-  }
-
-  @Test
-  fun `getSavedTags filters out expired tags`() = runTest {
-    val testDispatcher = StandardTestDispatcher(testScheduler)
-
-    val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
-
-    val pastTime = Clock.System.now().toEpochMilliseconds() - 1000
-    val futureTime = Clock.System.now().toEpochMilliseconds() + 86400000
-
-    repository.saveTagBlock("expired-tag", pastTime)
-    repository.saveTagBlock("active-tag", futureTime)
-    repository.saveTagBlock("permanent-tag", null)
-
-    val tags = repository.getSavedTags().first()
-
-    assertThat(tags).containsExactly("active-tag", "permanent-tag")
-    assertThat(tags).doesNotContain("expired-tag")
-  }
-
-  @Test
-  fun `getSavedTags emits updates after mutations`() = runTest {
-    val testDispatcher = StandardTestDispatcher(testScheduler)
-
-    val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
-    val emissions = mutableListOf<Set<String>>()
-
-    val collector =
-      backgroundScope.launch(testDispatcher) { repository.getSavedTags().take(3).toList(emissions) }
-
-    repository.saveTagBlock("android", null)
-    repository.removeTagBlock("android")
-
-    collector.join()
-
-    assertThat(emissions)
-      .containsExactly(emptySet<String>(), setOf("android"), emptySet<String>())
-      .inOrder()
-  }
-
-  @Test
-  fun `getTagBlocks returns all blocks including expired`() = runTest {
-    val testDispatcher = StandardTestDispatcher(testScheduler)
-
-    val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
-
-    val pastTime = Clock.System.now().toEpochMilliseconds() - 1000
-    val futureTime = Clock.System.now().toEpochMilliseconds() + 86400000
-
-    repository.saveTagBlock("expired", pastTime)
-    repository.saveTagBlock("active", futureTime)
-    repository.saveTagBlock("permanent", null)
-
-    val tagBlocks = repository.getTagBlocks().first()
-
-    assertThat(tagBlocks).hasSize(3)
-    assertThat(tagBlocks.map { it.tag }).containsExactly("expired", "active", "permanent")
-  }
-
-  @Test
-  fun `getTagBlocks emits updates after mutations`() = runTest {
-    val testDispatcher = StandardTestDispatcher(testScheduler)
-
-    val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
-    val emissions = mutableListOf<List<String>>()
-    val collectedBlocks = mutableListOf<List<TagBlock>>()
-
-    val collector =
-      backgroundScope.launch(testDispatcher) {
-        repository.getTagBlocks().take(3).toList(collectedBlocks)
+  private class FakeTagBlocksStorage : TagBlocksStorage {
+    val blocks = MutableStateFlow<List<TagBlock>>(emptyList())
+    override val savedTags: Flow<Set<String>>
+      get() = blocks.map { values ->
+        values.filterNot(TagBlock::isExpired).map(TagBlock::tag).toSet()
       }
 
-    repository.saveTagBlock("kotlin", null)
-    repository.removeTagBlock("kotlin")
+    override val tagBlocks: Flow<List<TagBlock>> = blocks
 
-    collector.join()
+    override suspend fun getSavedTags() =
+      blocks.value.filterNot(TagBlock::isExpired).map(TagBlock::tag).toSet()
 
-    emissions += collectedBlocks.map { blocks -> blocks.map { it.tag } }
+    override suspend fun getTagBlocks() = blocks.value
 
-    assertThat(emissions)
-      .containsExactly(emptyList<String>(), listOf("kotlin"), emptyList<String>())
-      .inOrder()
-  }
+    override suspend fun saveTagBlock(tag: String, expirationMillis: Long?) {
+      blocks.value = blocks.value.filterNot { it.tag == tag } + TagBlock(tag, expirationMillis)
+    }
 
-  @Test
-  fun `removeExpiredTags only removes expired blocks`() = runTest {
-    val testDispatcher = StandardTestDispatcher(testScheduler)
+    override suspend fun replaceTagBlocks(blocks: List<TagBlock>) {
+      this.blocks.value = blocks
+    }
 
-    val repository = TagBlockRepository(tagBlocksQueries, testDispatcher, testDispatcher)
+    override suspend fun removeTagBlock(tag: String) {
+      blocks.value = blocks.value.filterNot { it.tag == tag }
+    }
 
-    val pastTime = Clock.System.now().toEpochMilliseconds() - 1000
-    val futureTime = Clock.System.now().toEpochMilliseconds() + 86400000
-
-    repository.saveTagBlock("expired1", pastTime)
-    repository.saveTagBlock("expired2", pastTime - 5000)
-    repository.saveTagBlock("future", futureTime)
-    repository.saveTagBlock("permanent", null)
-
-    repository.removeExpiredTags()
-
-    val remaining = repository.getTagBlocks().first()
-    assertThat(remaining).hasSize(2)
-    assertThat(remaining.map { it.tag }).containsExactly("future", "permanent")
+    override suspend fun removeExpiredTags() {
+      blocks.value = blocks.value.filterNot(TagBlock::isExpired)
+    }
   }
 }

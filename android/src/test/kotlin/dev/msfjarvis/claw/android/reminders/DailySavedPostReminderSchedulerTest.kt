@@ -8,7 +8,7 @@ package dev.msfjarvis.claw.android.reminders
 
 import com.google.common.truth.Truth.assertThat
 import dev.msfjarvis.claw.android.viewmodel.DailySavedPostNotificationRepository
-import dev.msfjarvis.claw.database.local.DailySavedPostNotification
+import dev.msfjarvis.claw.core.database.DailySavedPostLedgerEntry
 import kotlin.time.Clock
 import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.minutes
@@ -132,7 +132,7 @@ class DailySavedPostReminderSchedulerTest {
     override suspend fun getOrCreateSelection(
       localDate: String,
       selectedAtEpochMillis: Long,
-    ): DailySavedPostNotification? = null
+    ): DailySavedPostLedgerEntry? = null
 
     override suspend fun markDelivered(localDate: String, deliveredAtEpochMillis: Long) = Unit
 

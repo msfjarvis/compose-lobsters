@@ -6,52 +6,31 @@
  */
 package dev.msfjarvis.claw.common.login
 
-import app.cash.sqldelight.coroutines.asFlow
-import app.cash.sqldelight.coroutines.mapToOneOrNull
-import dev.msfjarvis.claw.core.coroutines.DatabaseReadDispatcher
+import dev.msfjarvis.claw.core.database.SessionCookieStorage
 import dev.msfjarvis.claw.core.network.SessionCookieStore
-import dev.msfjarvis.claw.database.local.SessionCookieQueries
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.SingleIn
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 
 @Inject
 @SingleIn(AppScope::class)
 @ContributesBinding(AppScope::class)
-class SqlDelightSessionCookieStore(
-  private val queries: SessionCookieQueries,
-  @param:DatabaseReadDispatcher private val readDispatcher: CoroutineDispatcher,
-) : SessionCookieStore {
+class SqlDelightSessionCookieStore(private val storage: SessionCookieStorage) : SessionCookieStore {
+  override fun get(): String? = storage.getCookie()
 
-  override fun get(): String? {
-    return queries.get().executeAsOneOrNull()
-  }
-
-  override fun getUsername(): String? {
-    return queries.getUsername().executeAsOneOrNull()?.username?.takeIf(String::isNotBlank)
-  }
+  override fun getUsername(): String? = storage.getUsername()
 
   override fun set(cookie: String, username: String) {
-    queries.upsert(cookie, username)
+    storage.set(cookie, username)
   }
 
   override fun clear() {
-    queries.deleteAll()
+    storage.clear()
   }
 
-  override fun isLoggedIn(): Flow<Boolean> {
-    return queries.getUsername().asFlow().mapToOneOrNull(readDispatcher).map {
-      !it?.username.isNullOrBlank()
-    }
-  }
+  override fun isLoggedIn(): Flow<Boolean> = storage.isLoggedIn()
 
-  override fun username(): Flow<String?> {
-    return queries.getUsername().asFlow().mapToOneOrNull(readDispatcher).map {
-      it?.username?.takeIf(String::isNotBlank)
-    }
-  }
+  override fun username(): Flow<String?> = storage.username()
 }

@@ -143,6 +143,7 @@ include(
   "benchmark",
   "common",
   "core",
+  "core:common",
   "database-core",
   "database-impl",
   "html-renderer",

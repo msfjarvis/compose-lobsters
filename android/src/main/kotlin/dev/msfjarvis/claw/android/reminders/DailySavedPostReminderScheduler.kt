@@ -29,16 +29,6 @@ import kotlinx.datetime.plus
 import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
 
-interface DailySavedPostReminderScheduler {
-  fun setEnabled(enabled: Boolean)
-
-  suspend fun setReminderTime(time: LocalTime)
-
-  fun reconcile()
-
-  fun scheduleNext()
-}
-
 @Inject
 @ContributesBinding(AppScope::class, binding = binding<DailySavedPostReminderScheduler>())
 class WorkManagerDailySavedPostReminderScheduler(

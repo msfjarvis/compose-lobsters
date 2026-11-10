@@ -157,4 +157,12 @@ include(
   ":core:parser:impl",
   ":core:work:api",
   ":core:work:impl",
+  ":feature:posts:api",
+  ":feature:discussion:api",
+  ":feature:profile:api",
+  ":feature:auth:api",
+  ":feature:tags:api",
+  ":feature:settings:api",
+  ":feature:reminders:api",
+  ":feature:widgets:api",
 )

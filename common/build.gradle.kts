@@ -36,6 +36,7 @@ dependencies {
   api(projects.core.network.api)
   implementation(projects.core.common)
   implementation(projects.core.ui)
+  implementation(projects.feature.tags.api)
   api(projects.model)
 
   implementation(platform(libs.okhttp.bom))

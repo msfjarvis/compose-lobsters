@@ -9,39 +9,47 @@ package dev.msfjarvis.claw.android.viewmodel
 import android.util.Log
 import dev.msfjarvis.claw.android.BuildConfig
 import dev.msfjarvis.claw.core.database.SavedPostsStorage
+import dev.msfjarvis.claw.feature.posts.api.SavedPostReference
+import dev.msfjarvis.claw.feature.posts.api.SavedPosts
 import dev.msfjarvis.claw.model.UIPost
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.binding
 
 @Inject
-class SavedPostsRepository(private val storage: SavedPostsStorage) {
+@ContributesBinding(AppScope::class, binding = binding<SavedPosts>())
+class SavedPostsRepository(private val storage: SavedPostsStorage) : SavedPosts {
   val savedPosts = storage.posts
-  val savedPostsSortedByDate = storage.postsSortedByDate
-  val savedPostsCount = storage.count
-  val savedPostIds = storage.postIds
+  override val savedPostsSortedByDate = storage.postsSortedByDate
+  override val savedPostsCount = storage.count
+  override val savedPostIds = storage.postIds
 
   suspend fun getSavedPosts() = storage.getPosts()
 
-  suspend fun getPostIdsFromLastNDays(days: Long) = storage.getPostIdsFromLastNDays(days)
+  override suspend fun getPostIdsFromLastNDays(days: Long): List<SavedPostReference> =
+    storage.getPostIdsFromLastNDays(days).map { SavedPostReference(it.shortId, it.commentsUrl) }
 
-  suspend fun getRecentPosts(limit: Long) = storage.getRecentPosts(limit)
+  override suspend fun getRecentPosts(limit: Long) = storage.getRecentPosts(limit)
 
-  suspend fun toggleSave(post: UIPost) {
+  override suspend fun toggleSave(post: UIPost) {
     val saved = storage.togglePost(post)
     if (BuildConfig.ENABLE_LOGS) {
       Log.d(TAG, "${if (saved) "Saving" else "Removing"} post: ${post.shortId}")
     }
   }
 
-  suspend fun savePosts(posts: List<UIPost>) {
+  override suspend fun savePosts(posts: List<UIPost>) {
     if (BuildConfig.ENABLE_LOGS) {
       Log.d(TAG, "Saving posts: ${posts.joinToString(",") { it.shortId }}")
     }
     storage.savePosts(posts)
   }
 
-  suspend fun importSerializedPosts(serialized: String) = storage.importSerializedPosts(serialized)
+  override suspend fun importSerializedPosts(serialized: String) =
+    storage.importSerializedPosts(serialized)
 
-  suspend fun exportSerializedPosts() = storage.exportSerializedPosts()
+  override suspend fun exportSerializedPosts() = storage.exportSerializedPosts()
 
   private companion object {
     private const val TAG = "SavedPostsRepository"

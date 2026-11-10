@@ -7,16 +7,14 @@
 package dev.msfjarvis.claw.android.viewmodel
 
 import android.webkit.CookieManager
+import dev.msfjarvis.claw.feature.auth.api.WebViewCookieStore
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
-
-interface WebViewCookieStore {
-  fun clearLobstersCookies()
-}
+import dev.zacsweers.metro.binding
 
 @Inject
-@ContributesBinding(AppScope::class)
+@ContributesBinding(AppScope::class, binding = binding<WebViewCookieStore>())
 class AndroidWebViewCookieStore : WebViewCookieStore {
   override fun clearLobstersCookies() {
     try {

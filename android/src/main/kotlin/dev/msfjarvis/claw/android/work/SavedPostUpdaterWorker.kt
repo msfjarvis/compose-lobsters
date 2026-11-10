@@ -7,15 +7,14 @@
 package dev.msfjarvis.claw.android.work
 
 import android.content.Context
-import androidx.glance.appwidget.updateAll
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.slack.eithernet.ApiResult.Success
-import dev.msfjarvis.claw.android.glance.SavedPostsWidget
-import dev.msfjarvis.claw.android.viewmodel.SavedPostsRepository
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.core.work.api.WorkerInstanceFactory
 import dev.msfjarvis.claw.core.work.api.WorkerKey
+import dev.msfjarvis.claw.feature.posts.api.SavedPosts
+import dev.msfjarvis.claw.feature.widgets.api.WidgetRefresher
 import dev.msfjarvis.claw.model.LobstersPostDetails
 import dev.msfjarvis.claw.model.UIPost
 import dev.msfjarvis.claw.model.toUIPost
@@ -40,7 +39,8 @@ import kotlinx.coroutines.delay
 class SavedPostUpdaterWorker(
   context: Context,
   @Assisted params: WorkerParameters,
-  private val savedPostsRepository: SavedPostsRepository,
+  private val savedPostsRepository: SavedPosts,
+  private val widgetRefresher: WidgetRefresher,
   private val lobstersApi: LobstersApi,
 ) : CoroutineWorker(context, params) {
   override suspend fun doWork(): Result {
@@ -71,7 +71,7 @@ class SavedPostUpdaterWorker(
 
     if (updatedPosts.isNotEmpty()) {
       savedPostsRepository.savePosts(updatedPosts)
-      SavedPostsWidget().updateAll(applicationContext)
+      widgetRefresher.refreshSavedPosts()
     }
 
     return Result.success()

@@ -13,14 +13,14 @@ import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import dev.msfjarvis.claw.android.BuildConfig
 import dev.msfjarvis.claw.android.reminders.DailySavedPostReminderScheduler
 import dev.msfjarvis.claw.android.viewmodel.CachedRemotePostsRepository
-import dev.msfjarvis.claw.android.viewmodel.SavedPostsRepository
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.api.LobstersParserClient
 import dev.msfjarvis.claw.api.ParserRuntimeConfig
-import dev.msfjarvis.claw.common.tags.TagBlockRepository
 import dev.msfjarvis.claw.core.coroutines.MainDispatcher
 import dev.msfjarvis.claw.core.work.api.WorkManagerRequests
 import dev.msfjarvis.claw.core.work.impl.InjectedWorkerFactory
+import dev.msfjarvis.claw.feature.posts.api.SavedPosts
+import dev.msfjarvis.claw.feature.tags.api.TagBlocks
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.DependencyGraph
 import dev.zacsweers.metro.Provides
@@ -65,13 +65,13 @@ interface AppGraph : MetroAppComponentProviders, ViewModelGraph {
 
   val workerFactory: InjectedWorkerFactory
 
-  val savedPostsRepository: SavedPostsRepository
+  val savedPostsRepository: SavedPosts
 
   val cachedRemotePostsRepository: CachedRemotePostsRepository
 
   val lobstersApi: LobstersApi
 
-  val tagBlockRepository: TagBlockRepository
+  val tagBlockRepository: TagBlocks
 
   val ziplineClient: LobstersParserClient
 

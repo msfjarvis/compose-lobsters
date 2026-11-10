@@ -17,17 +17,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.datetime.LocalTime
 
-val DEFAULT_DAILY_SAVED_POST_REMINDER_TIME = LocalTime(9, 0)
-
-interface DailySavedPostReminderSettings {
-  val isEnabled: StateFlow<Boolean>
-  val reminderTime: StateFlow<LocalTime>
-
-  fun setEnabled(enabled: Boolean)
-
-  fun setReminderTime(time: LocalTime)
-}
-
 @Inject
 @ContributesBinding(AppScope::class, binding = binding<DailySavedPostReminderSettings>())
 @SingleIn(AppScope::class)

@@ -11,7 +11,6 @@ import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.glance.appwidget.updateAll
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,14 +18,14 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import dev.msfjarvis.claw.android.glance.SavedPostsWidget
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource.Companion.PAGE_SIZE
 import dev.msfjarvis.claw.android.paging.LobstersPagingSource.Companion.STARTING_PAGE_INDEX
 import dev.msfjarvis.claw.android.paging.SearchPagingSource
 import dev.msfjarvis.claw.api.LobstersApi
 import dev.msfjarvis.claw.core.coroutines.IODispatcher
-import dev.msfjarvis.claw.core.coroutines.MainDispatcher
+import dev.msfjarvis.claw.feature.posts.api.SavedPosts
+import dev.msfjarvis.claw.feature.widgets.api.WidgetRefresher
 import dev.msfjarvis.claw.model.UIPost
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoMap
@@ -55,13 +54,13 @@ class ClawViewModel(
   context: Context,
   private val api: LobstersApi,
   private val readPostsRepository: ReadPostsRepository,
-  private val savedPostsRepository: SavedPostsRepository,
+  private val savedPostsRepository: SavedPosts,
+  private val widgetRefresher: WidgetRefresher,
   private val linkMetadataRepository: LinkMetadataRepository,
   private val dataTransferRepository: DataTransferRepository,
   private val pagingSourceFactory: LobstersPagingSource.Factory,
   private val searchPagingSourceFactory: SearchPagingSource.Factory,
   @param:IODispatcher private val ioDispatcher: CoroutineDispatcher,
-  @param:MainDispatcher private val mainDispatcher: CoroutineDispatcher,
 ) : AndroidViewModel(context as Application) {
   private var _hottestPosts: Flow<PagingData<UIPost>>? = null
   val hottestPosts: Flow<PagingData<UIPost>>
@@ -136,7 +135,7 @@ class ClawViewModel(
   fun toggleSave(post: UIPost) {
     viewModelScope.launch {
       savedPostsRepository.toggleSave(post)
-      withContext(mainDispatcher) { SavedPostsWidget().updateAll(getApplication()) }
+      widgetRefresher.refreshSavedPosts()
     }
   }
 

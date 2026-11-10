@@ -7,6 +7,7 @@
 package dev.msfjarvis.claw.android.viewmodel
 
 import dev.msfjarvis.claw.core.coroutines.IODispatcher
+import dev.msfjarvis.claw.feature.posts.api.SavedPosts
 import dev.zacsweers.metro.Inject
 import java.io.InputStream
 import java.io.OutputStream
@@ -15,7 +16,7 @@ import kotlinx.coroutines.withContext
 
 @Inject
 class DataTransferRepository(
-  private val savedPostsRepository: SavedPostsRepository,
+  private val savedPostsRepository: SavedPosts,
   @param:IODispatcher private val ioDispatcher: CoroutineDispatcher,
 ) {
   suspend fun importPosts(input: InputStream): Result<Unit> {

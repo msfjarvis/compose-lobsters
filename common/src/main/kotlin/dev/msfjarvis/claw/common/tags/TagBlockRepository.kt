@@ -7,33 +7,38 @@
 package dev.msfjarvis.claw.common.tags
 
 import dev.msfjarvis.claw.core.database.TagBlocksStorage
+import dev.msfjarvis.claw.feature.tags.api.TagBlocks
 import dev.msfjarvis.claw.model.TagBlock
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
 import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.binding
 import kotlinx.coroutines.flow.Flow
 
 @Inject
-class TagBlockRepository(private val storage: TagBlocksStorage) {
+@ContributesBinding(AppScope::class, binding = binding<TagBlocks>())
+class TagBlockRepository(private val storage: TagBlocksStorage) : TagBlocks {
   fun getSavedTags(): Flow<Set<String>> = storage.savedTags
 
   fun getTagBlocks(): Flow<List<TagBlock>> = storage.tagBlocks
 
-  suspend fun getSavedTagsSnapshot(): Set<String> = storage.getSavedTags()
+  override suspend fun getSavedTagsSnapshot(): Set<String> = storage.getSavedTags()
 
-  suspend fun getTagBlocksSnapshot(): List<TagBlock> = storage.getTagBlocks()
+  override suspend fun getTagBlocksSnapshot(): List<TagBlock> = storage.getTagBlocks()
 
-  suspend fun saveTagBlock(tag: String, expirationMillis: Long?) {
+  override suspend fun saveTagBlock(tag: String, expirationMillis: Long?) {
     storage.saveTagBlock(tag, expirationMillis)
   }
 
-  suspend fun replaceTagBlocks(blocks: List<TagBlock>) {
+  override suspend fun replaceTagBlocks(blocks: List<TagBlock>) {
     storage.replaceTagBlocks(blocks)
   }
 
-  suspend fun removeTagBlock(tag: String) {
+  override suspend fun removeTagBlock(tag: String) {
     storage.removeTagBlock(tag)
   }
 
-  suspend fun removeExpiredTags() {
+  override suspend fun removeExpiredTags() {
     storage.removeExpiredTags()
   }
 }

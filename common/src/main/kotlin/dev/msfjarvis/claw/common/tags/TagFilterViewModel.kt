@@ -21,6 +21,7 @@ import dev.msfjarvis.claw.api.toError
 import dev.msfjarvis.claw.common.NetworkState
 import dev.msfjarvis.claw.core.coroutines.IODispatcher
 import dev.msfjarvis.claw.core.network.SessionCookieStore
+import dev.msfjarvis.claw.feature.tags.api.TagBlocks
 import dev.msfjarvis.claw.model.Tag
 import dev.msfjarvis.claw.model.TagBlock
 import dev.zacsweers.metro.AppScope
@@ -47,7 +48,7 @@ import kotlinx.coroutines.withContext
 class TagFilterViewModel(
   private val api: LobstersApi,
   private val authenticatedApi: AuthenticatedLobstersApi,
-  private val tagBlockRepository: TagBlockRepository,
+  private val tagBlockRepository: TagBlocks,
   private val sessionCookieStore: SessionCookieStore,
   @param:IODispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel() {

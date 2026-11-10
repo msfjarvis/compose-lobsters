@@ -11,10 +11,4 @@ import androidx.navigation3.runtime.NavKey
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 
-@Parcelize @Serializable data object Settings : NavKey, Parcelable
-
 @Parcelize @Serializable data object AboutLibraries : NavKey, Parcelable
-
-@Parcelize @Serializable data object TagFiltering : NavKey, Parcelable
-
-@Parcelize @Serializable data object Login : NavKey, Parcelable

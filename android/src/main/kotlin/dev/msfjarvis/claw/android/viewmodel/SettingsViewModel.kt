@@ -12,6 +12,7 @@ import dev.msfjarvis.claw.android.reminders.DailySavedPostReminderScheduler
 import dev.msfjarvis.claw.android.reminders.DailySavedPostReminderSettings
 import dev.msfjarvis.claw.core.network.LobstersCookieJar
 import dev.msfjarvis.claw.core.network.SessionCookieStore
+import dev.msfjarvis.claw.feature.auth.api.WebViewCookieStore
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.Inject

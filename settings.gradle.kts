@@ -140,7 +140,6 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(
   "android",
   "benchmark",
-  "common",
   "html-renderer",
   "html-test-fixtures",
   "model",

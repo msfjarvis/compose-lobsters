@@ -4,7 +4,7 @@
  * license that can be found in the LICENSE file or at
  * https://opensource.org/licenses/MIT.
  */
-package dev.msfjarvis.claw.common.urllauncher
+package dev.msfjarvis.claw.android.urllauncher
 
 import android.content.ActivityNotFoundException
 import android.content.Context

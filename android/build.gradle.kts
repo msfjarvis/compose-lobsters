@@ -100,11 +100,10 @@ moduleGraphAssert {
   assertOnAnyBuild = true
   restricted =
     arrayOf(
-      ":core -X> :android",
-      ":core -X> :api",
-      ":core -X> :common",
-      ":core -X> :database-.*",
-      ":core -X> :feature:.*",
+      ":core:.* -X> :feature:.*",
+      ":core:.* -X> :android",
+      ":feature:.*:api -X> :feature:.*",
+      ":feature:.*:impl -X> :feature:.*:impl",
     )
 }
 
@@ -135,6 +134,7 @@ dependencies {
   implementation(libs.androidx.compose.ui.text)
   implementation(libs.androidx.compose.ui.unit)
   implementation(libs.androidx.annotation)
+  implementation(libs.androidx.browser)
   implementation(libs.androidx.collection)
   implementation(libs.androidx.core)
   implementation(libs.androidx.core.splashscreen)
@@ -180,7 +180,6 @@ dependencies {
   implementation(projects.core.parser.impl)
   implementation(projects.core.work.api)
   implementation(projects.core.work.impl)
-  implementation(projects.common)
   implementation(projects.core.common)
   implementation(projects.core.navigation.api)
   implementation(projects.feature.posts.api)

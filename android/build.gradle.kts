@@ -182,6 +182,8 @@ dependencies {
   implementation(projects.common)
   implementation(projects.core)
   implementation(projects.core.common)
+  implementation(projects.core.parser.api)
+  implementation(projects.core.parser.impl)
   implementation(projects.databaseCore)
   implementation(projects.databaseImpl)
   implementation(projects.model)

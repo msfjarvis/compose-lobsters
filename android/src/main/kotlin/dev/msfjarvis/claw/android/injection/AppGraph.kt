@@ -11,11 +11,13 @@ import androidx.work.ListenableWorker
 import androidx.work.WorkManager
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import dev.msfjarvis.claw.android.BuildConfig
 import dev.msfjarvis.claw.android.reminders.DailySavedPostReminderScheduler
 import dev.msfjarvis.claw.android.viewmodel.CachedRemotePostsRepository
 import dev.msfjarvis.claw.android.viewmodel.SavedPostsRepository
-import dev.msfjarvis.claw.android.zipline.AndroidZiplineParserClient
 import dev.msfjarvis.claw.api.LobstersApi
+import dev.msfjarvis.claw.api.LobstersParserClient
+import dev.msfjarvis.claw.api.ParserRuntimeConfig
 import dev.msfjarvis.claw.common.tags.TagBlockRepository
 import dev.msfjarvis.claw.core.coroutines.MainDispatcher
 import dev.zacsweers.metro.AppScope
@@ -53,6 +55,13 @@ interface AppGraph : MetroAppComponentProviders, ViewModelGraph {
 
   @Provides fun providesZoneId(): TimeZone = TimeZone.currentSystemDefault()
 
+  @Provides
+  fun providesParserRuntimeConfig(): ParserRuntimeConfig =
+    ParserRuntimeConfig(
+      manifestUrl = BuildConfig.ZIPLINE_PARSER_MANIFEST_URL,
+      verifySignatures = BuildConfig.ZIPLINE_PARSER_VERIFY_SIGNATURES,
+    )
+
   @Multibinds
   val workerProviders:
     Map<KClass<out ListenableWorker>, () -> InjectedWorkerFactory.WorkerInstanceFactory<*>>
@@ -67,7 +76,7 @@ interface AppGraph : MetroAppComponentProviders, ViewModelGraph {
 
   val tagBlockRepository: TagBlockRepository
 
-  val ziplineClient: AndroidZiplineParserClient
+  val ziplineClient: LobstersParserClient
 
   @MainDispatcher val mainDispatcher: CoroutineDispatcher
 

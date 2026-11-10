@@ -144,6 +144,8 @@ include(
   "common",
   "core",
   "core:common",
+  "core:parser:api",
+  "core:parser:impl",
   "database-core",
   "database-impl",
   "html-renderer",

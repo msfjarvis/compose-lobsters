@@ -14,8 +14,8 @@ import app.cash.zipline.loader.FreshnessChecker
 import app.cash.zipline.loader.LoadResult
 import app.cash.zipline.loader.ManifestVerifier
 import app.cash.zipline.loader.ZiplineLoader
-import dev.msfjarvis.claw.android.BuildConfig
 import dev.msfjarvis.claw.api.LobstersParserClient
+import dev.msfjarvis.claw.api.ParserRuntimeConfig
 import dev.msfjarvis.claw.parser.LobstersParserService
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesBinding
@@ -60,8 +60,7 @@ internal suspend fun loadWithEmbeddedFallback(
 class AndroidZiplineParserClient(
   private val context: Context,
   private val httpClient: OkHttpClient,
-  private val manifestUrl: String = BuildConfig.ZIPLINE_PARSER_MANIFEST_URL,
-  private val verifySignatures: Boolean = BuildConfig.ZIPLINE_PARSER_VERIFY_SIGNATURES,
+  private val config: ParserRuntimeConfig,
 ) : LobstersParserClient, AutoCloseable {
   private val ziplineThread = AtomicReference<Thread>()
   private val dispatcher: ExecutorCoroutineDispatcher =
@@ -105,7 +104,7 @@ class AndroidZiplineParserClient(
     evictManifestCacheEntry()
 
     val manifestVerifier =
-      if (verifySignatures) {
+      if (config.verifySignatures) {
         ManifestVerifier.Builder()
           .addEd25519(
             "key0",
@@ -128,16 +127,16 @@ class AndroidZiplineParserClient(
         )
 
     val freshnessChecker =
-      if (verifySignatures) {
+      if (config.verifySignatures) {
         DefaultFreshnessCheckerNotFresh
       } else {
         EmbeddedAssetsFreshnessChecker
       }
     val effectiveManifestUrl =
-      if (!verifySignatures && embeddedManifestFile.exists()) {
+      if (!config.verifySignatures && embeddedManifestFile.exists()) {
         embeddedManifestFile.toURI().toString()
       } else {
-        manifestUrl
+        config.manifestUrl
       }
 
     return withContext(dispatcher) {
@@ -202,7 +201,7 @@ class AndroidZiplineParserClient(
     val cache = httpClient.cache ?: return
     val urls = cache.urls()
     while (urls.hasNext()) {
-      if (urls.next() == manifestUrl) {
+      if (urls.next() == config.manifestUrl) {
         urls.remove()
         return
       }

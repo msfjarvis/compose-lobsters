@@ -22,7 +22,7 @@ dependencies {
   api(libs.okhttp.core)
   api(libs.retrofit)
   api(projects.model)
-  api(projects.ziplineParser)
+  api(projects.core.parser.api)
 
   implementation(libs.eithernet.integration.retrofit)
   implementation(libs.zipline.loader)

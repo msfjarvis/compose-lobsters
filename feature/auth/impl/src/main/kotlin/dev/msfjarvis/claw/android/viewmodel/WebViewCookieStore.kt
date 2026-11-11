@@ -1,0 +1,28 @@
+/*
+ * Copyright © Harsh Shandilya.
+ * Use of this source code is governed by an MIT-style
+ * license that can be found in the LICENSE file or at
+ * https://opensource.org/licenses/MIT.
+ */
+package dev.msfjarvis.claw.android.viewmodel
+
+import android.webkit.CookieManager
+import dev.msfjarvis.claw.feature.auth.api.WebViewCookieStore
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesBinding
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metro.binding
+
+@Inject
+@ContributesBinding(AppScope::class, binding = binding<WebViewCookieStore>())
+class AndroidWebViewCookieStore : WebViewCookieStore {
+  override fun clearLobstersCookies() {
+    try {
+      CookieManager.getInstance().removeAllCookies(null)
+      CookieManager.getInstance().flush()
+    } catch (_: Exception) {
+      // I would directly catch `android.webkit.WebViewFactory$MissingWebViewPackageException`
+      // but it is not public, so just swallow all exceptions and forget it.
+    }
+  }
+}

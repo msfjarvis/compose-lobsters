@@ -10,6 +10,8 @@ plugins {
   alias(libs.plugins.dependencyAnalysis)
 }
 
+tasks.withType<Test>().configureEach { useJUnitPlatform() }
+
 kotlin {
   jvm()
   js {
@@ -23,14 +25,15 @@ kotlin {
         api(libs.kotlinx.serialization.core)
       }
     }
-    jvmMain {
-      dependencies {
-        api(projects.databaseCore)
-      }
-    }
     jvmTest {
       dependencies {
         implementation(kotlin("test"))
+        implementation(project.dependencies.platform(libs.junit.bom))
+        implementation(libs.junit.jupiter.api)
+        implementation(libs.truth)
+        runtimeOnly(libs.junit.jupiter.engine)
+        runtimeOnly(libs.junit.platform.launcher)
+        runtimeOnly(libs.junit.legacy)
       }
     }
   }

@@ -1,0 +1,434 @@
+/*
+ * Copyright © Harsh Shandilya.
+ * Use of this source code is governed by an MIT-style
+ * license that can be found in the LICENSE file or at
+ * https://opensource.org/licenses/MIT.
+ */
+package dev.msfjarvis.claw.android.ui.screens
+
+import android.app.TimePickerDialog
+import android.content.Context
+import android.net.Uri
+import android.text.format.DateFormat
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.windowInsetsBottomHeight
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.LibraryBooks
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Bookmarks
+import androidx.compose.material.icons.filled.Code
+import androidx.compose.material.icons.filled.FilterList
+import androidx.compose.material.icons.filled.ImportExport
+import androidx.compose.material.icons.filled.NotificationsActive
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Switch
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import dev.msfjarvis.claw.android.ui.navigation.TagFiltering
+import dev.msfjarvis.claw.common.theme.LobstersTheme
+import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
+import dev.msfjarvis.claw.feature.settings.impl.R
+import dev.msfjarvis.claw.feature.settings.impl.SettingsAppConfig
+import java.io.InputStream
+import java.io.OutputStream
+import java.time.format.DateTimeFormatter
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
+import kotlinx.datetime.LocalTime
+import kotlinx.datetime.toJavaLocalTime
+
+private const val JSON_MIME_TYPE = "application/json"
+
+@Composable
+fun SettingsScreen(
+  openLibrariesScreen: () -> Unit,
+  openRepository: () -> Unit,
+  openTagFiltering: (TagFiltering) -> Unit,
+  openLoginScreen: () -> Unit,
+  onLogout: () -> Unit,
+  isLoggedIn: Boolean,
+  username: String?,
+  snackbarHostState: SnackbarHostState,
+  importPosts: suspend (InputStream) -> Result<Unit>,
+  exportPostsAsJson: suspend (OutputStream) -> Unit,
+  contentPadding: PaddingValues,
+  savedPostsCount: Long,
+  isDailySavedPostReminderEnabled: Boolean,
+  dailySavedPostReminderTime: LocalTime,
+  onDailySavedPostReminderEnabledChange: (Boolean) -> Unit,
+  onDailySavedPostReminderTimeChange: (LocalTime) -> Unit,
+  settingsAppConfig: SettingsAppConfig,
+  modifier: Modifier = Modifier,
+) {
+  val context = LocalContext.current
+  val coroutineScope = rememberCoroutineScope()
+  Column(modifier.padding(contentPadding).verticalScroll(rememberScrollState())) {
+    // Account Section
+    SectionHeader(title = "Account")
+    if (isLoggedIn && !username.isNullOrBlank()) {
+      ListItem(
+        supportingContent = { Text("Logged in as $username") },
+        leadingContent = {
+          Icon(
+            imageVector = Icons.Filled.AccountCircle,
+            contentDescription = null,
+            modifier = Modifier.height(32.dp),
+          )
+        },
+        modifier = Modifier.clickable(onClick = onLogout),
+      ) {
+        Text("Log out")
+      }
+    } else {
+      ListItem(
+        supportingContent = { Text("Sign in to your lobste.rs account") },
+        leadingContent = {
+          Icon(
+            imageVector = Icons.Filled.AccountCircle,
+            contentDescription = null,
+            modifier = Modifier.height(32.dp),
+          )
+        },
+        modifier = Modifier.clickable(onClick = openLoginScreen),
+      ) {
+        Text("Log in with lobste.rs")
+      }
+    }
+    Spacer(modifier = Modifier.height(24.dp))
+
+    // Data Management Section
+    SectionHeader(title = stringResource(R.string.data_management))
+    ListItem(
+      supportingContent = { Text(stringResource(R.string.import_and_export_your_saved_posts)) },
+      leadingContent = {
+        Icon(
+          imageVector = Icons.Filled.ImportExport,
+          contentDescription = null,
+          modifier = Modifier.height(32.dp),
+        )
+      },
+      trailingContent = {
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+          ImportPosts(
+            context.contentResolver::openInputStream,
+            coroutineScope,
+            snackbarHostState,
+            importPosts,
+            settingsAppConfig.recordMetric,
+          )
+          ExportPosts(
+            coroutineScope,
+            snackbarHostState,
+            context.contentResolver::openOutputStream,
+            exportPostsAsJson,
+            settingsAppConfig.recordMetric,
+          )
+        }
+      },
+    ) {
+      Text(stringResource(R.string.data_transfer))
+    }
+
+    Spacer(modifier = Modifier.height(24.dp))
+
+    // App Information Section
+    SectionHeader(title = stringResource(R.string.posts))
+    ListItem(
+      supportingContent = { Text(stringResource(R.string.filter_posts_by_tags)) },
+      leadingContent = {
+        Icon(
+          imageVector = Icons.Filled.FilterList,
+          contentDescription = null,
+          modifier = Modifier.height(32.dp),
+        )
+      },
+      modifier = Modifier.clickable { openTagFiltering(TagFiltering) },
+    ) {
+      Text(stringResource(R.string.tag_filtering))
+    }
+    ListItem(
+      supportingContent = {
+        Text(stringResource(R.string.enable_post_a_day_reminders_summary))
+      },
+      leadingContent = {
+        Icon(
+          imageVector = Icons.Filled.NotificationsActive,
+          contentDescription = null,
+          modifier = Modifier.height(32.dp),
+        )
+      },
+      trailingContent = {
+        Switch(
+          checked = isDailySavedPostReminderEnabled,
+          onCheckedChange = onDailySavedPostReminderEnabledChange,
+        )
+      },
+    ) {
+      Text(stringResource(R.string.enable_post_a_day_reminders))
+    }
+    if (isDailySavedPostReminderEnabled) {
+      ListItem(
+        supportingContent = {
+          Text(formatDailySavedPostReminderTime(context, dailySavedPostReminderTime))
+        },
+        leadingContent = {
+          // 24.dp is the internal default "small icon" size but the token is not public, so I'm
+          // just hard coding it here.
+          Spacer(Modifier.size(24.dp))
+        },
+        modifier =
+          Modifier.clickable {
+            TimePickerDialog(
+                context,
+                { _, hour, minute ->
+                  onDailySavedPostReminderTimeChange(LocalTime(hour, minute))
+                },
+                dailySavedPostReminderTime.hour,
+                dailySavedPostReminderTime.minute,
+                DateFormat.is24HourFormat(context),
+              )
+              .show()
+          },
+      ) {
+        Text(stringResource(R.string.daily_saved_post_reminder_time))
+      }
+    }
+    ListItem(
+      supportingContent = { Text(stringResource(R.string.posts_saved_locally, savedPostsCount)) },
+      leadingContent = {
+        Icon(
+          imageVector = Icons.Filled.Bookmarks,
+          contentDescription = null,
+          modifier = Modifier.height(32.dp),
+        )
+      },
+    ) {
+      Text(stringResource(R.string.saved_posts))
+    }
+
+    Spacer(modifier = Modifier.height(24.dp))
+
+    // About Section
+    SectionHeader(title = stringResource(R.string.about))
+    ListItem(
+      supportingContent = {
+        Text(
+          stringResource(
+            R.string.version_placeholder,
+            settingsAppConfig.versionName,
+            settingsAppConfig.versionCode,
+          )
+        )
+      },
+      leadingContent = {
+        Icon(
+          imageVector = Icons.Filled.Code,
+          contentDescription = null,
+          modifier = Modifier.height(32.dp),
+        )
+      },
+    ) {
+      Text(stringResource(R.string.version))
+    }
+    ListItem(
+      supportingContent = {
+        Text(stringResource(R.string.view_open_source_libraries_used_in_this_))
+      },
+      leadingContent = {
+        Icon(
+          imageVector = Icons.AutoMirrored.Filled.LibraryBooks,
+          contentDescription = null,
+          modifier = Modifier.height(32.dp),
+        )
+      },
+      modifier = Modifier.clickable(onClick = openLibrariesScreen),
+    ) {
+      Text(stringResource(R.string.libraries))
+    }
+    ListItem(
+      supportingContent = { Text(stringResource(R.string.view_the_source_code_on_github)) },
+      leadingContent = {
+        Icon(
+          imageVector = Icons.Filled.Code,
+          contentDescription = null,
+          modifier = Modifier.height(32.dp),
+        )
+      },
+      modifier = Modifier.clickable(onClick = openRepository),
+    ) {
+      Text(stringResource(R.string.source_code))
+    }
+    // Spacer to offset any navigation bars and keep the last item clickable
+    Spacer(modifier = Modifier.windowInsetsBottomHeight(WindowInsets.systemBars))
+  }
+}
+
+/**
+ * Forced to use [java.time.format.DateTimeFormatter] here instead of just `kotlinx.datetime`
+ * because there is no Locale aware formatting in it yet. Being tracked in issue
+ * https://github.com/Kotlin/kotlinx-datetime/issues/352
+ */
+private fun formatDailySavedPostReminderTime(context: Context, time: LocalTime): String {
+  val is24HourZone = DateFormat.is24HourFormat(context)
+  return if (is24HourZone) {
+    time.toString()
+  } else {
+    DateTimeFormatter.ofPattern("KK:mm a").format(time.toJavaLocalTime())
+  }
+}
+
+@Composable
+private fun SectionHeader(title: String, modifier: Modifier = Modifier) {
+  Column(modifier = modifier) {
+    Text(
+      text = title,
+      style = MaterialTheme.typography.titleMedium,
+      color = MaterialTheme.colorScheme.primary,
+      modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+    )
+    HorizontalDivider(
+      modifier = Modifier.padding(horizontal = 16.dp),
+      color = MaterialTheme.colorScheme.outlineVariant,
+    )
+  }
+}
+
+@Composable
+private fun ImportPosts(
+  openInputStream: (Uri) -> InputStream?,
+  coroutineScope: CoroutineScope,
+  snackbarHostState: SnackbarHostState,
+  importPosts: suspend (InputStream) -> Result<Unit>,
+  recordMetric: (String) -> Unit,
+  modifier: Modifier = Modifier,
+) {
+  val importAction =
+    rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+      if (uri == null) {
+        coroutineScope.launch { snackbarHostState.showSnackbarDismissing("No file selected") }
+        return@rememberLauncherForActivityResult
+      }
+      coroutineScope.launch {
+        try {
+          openInputStream(uri)?.use { stream ->
+            val result = importPosts(stream)
+            if (result.isSuccess) {
+              snackbarHostState.showSnackbarDismissing("Successfully imported posts")
+            } else {
+              snackbarHostState.showSnackbarDismissing("Failed to import posts")
+            }
+          } ?: snackbarHostState.showSnackbarDismissing("Unable to open selected file")
+        } catch (e: Exception) {
+          snackbarHostState.showSnackbarDismissing("Failed to open file: ${e.message}")
+        }
+      }
+    }
+  OutlinedButton(
+    onClick = {
+      importAction.launch(JSON_MIME_TYPE)
+      recordMetric("import")
+    },
+    shape = MaterialTheme.shapes.extraSmall,
+    modifier = modifier,
+  ) {
+    Text(text = stringResource(R.string.import_action))
+  }
+}
+
+@Composable
+private inline fun ExportPosts(
+  coroutineScope: CoroutineScope,
+  snackbarHostState: SnackbarHostState,
+  crossinline openOutputStream: (Uri) -> OutputStream?,
+  crossinline exportPostsAsJson: suspend (OutputStream) -> Unit,
+  crossinline recordMetric: (String) -> Unit,
+  modifier: Modifier = Modifier,
+) {
+  val jsonExportAction =
+    rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument(JSON_MIME_TYPE)) { uri
+      ->
+      if (uri == null) {
+        coroutineScope.launch { snackbarHostState.showSnackbarDismissing("No file selected") }
+        return@rememberLauncherForActivityResult
+      }
+      coroutineScope.launch {
+        try {
+          openOutputStream(uri)?.use { stream ->
+            exportPostsAsJson(stream)
+            snackbarHostState.showSnackbarDismissing("Successfully exported posts")
+            recordMetric("json_export_success")
+          }
+            ?: run {
+              snackbarHostState.showSnackbarDismissing("Unable to open output file")
+              recordMetric("json_export_failure")
+            }
+        } catch (e: Exception) {
+          snackbarHostState.showSnackbarDismissing("Failed to export posts: ${e.message}")
+          recordMetric("json_export_failure")
+        }
+      }
+    }
+  OutlinedButton(
+    onClick = { jsonExportAction.launch("claw-export.json") },
+    shape = MaterialTheme.shapes.extraSmall,
+    modifier = modifier,
+  ) {
+    Text(text = stringResource(R.string.export))
+  }
+}
+
+/** Shows a Snackbar but dismisses any existing ones first. */
+private suspend inline fun SnackbarHostState.showSnackbarDismissing(text: String) {
+  currentSnackbarData?.dismiss()
+  showSnackbar(text)
+}
+
+@ThemePreviews
+@Composable
+private fun SettingsScreenPreview() {
+  LobstersTheme {
+    SettingsScreen(
+      openLibrariesScreen = {},
+      openRepository = {},
+      openTagFiltering = {},
+      openLoginScreen = {},
+      onLogout = {},
+      isLoggedIn = false,
+      username = null,
+      snackbarHostState = SnackbarHostState(),
+      importPosts = { Result.success(Unit) },
+      exportPostsAsJson = {},
+      contentPadding = PaddingValues(),
+      savedPostsCount = 42,
+      isDailySavedPostReminderEnabled = false,
+      dailySavedPostReminderTime = LocalTime(9, 0),
+      onDailySavedPostReminderEnabledChange = {},
+      onDailySavedPostReminderTimeChange = {},
+      settingsAppConfig = SettingsAppConfig("1.0", 1) {},
+    )
+  }
+}

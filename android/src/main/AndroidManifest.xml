@@ -58,13 +58,6 @@
       </intent-filter>
     </activity>
 
-    <activity
-      android:name=".glance.WidgetClickActivity"
-      android:exported="false"
-      android:theme="@android:style/Theme.NoDisplay"
-      android:excludeFromRecents="true"
-      android:taskAffinity="" />
-
     <provider
       android:name="androidx.startup.InitializationProvider"
       android:authorities="${applicationId}.androidx-startup"
@@ -75,28 +68,6 @@
         android:value="androidx.startup"
         tools:node="remove" />
     </provider>
-
-    <receiver
-      android:name=".glance.SavedPostsWidgetReceiver"
-      android:exported="true">
-      <intent-filter>
-        <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-      </intent-filter>
-      <meta-data
-        android:name="android.appwidget.provider"
-        android:resource="@xml/saved_posts_widget_info" />
-    </receiver>
-
-    <receiver
-      android:name=".glance.HottestPostsWidgetReceiver"
-      android:exported="true">
-      <intent-filter>
-        <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
-      </intent-filter>
-      <meta-data
-        android:name="android.appwidget.provider"
-        android:resource="@xml/hottest_posts_widget_info" />
-    </receiver>
 
     <!-- Required: set your sentry.io project identifier (DSN) -->
     <meta-data

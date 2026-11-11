@@ -27,14 +27,12 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
-import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.navigation3.ListDetailSceneStrategy
 import androidx.compose.material3.adaptive.navigation3.rememberListDetailSceneStrategy
@@ -58,7 +56,6 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation3.runtime.NavKey
-import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.runtime.rememberSaveableStateHolderNavEntryDecorator
 import androidx.navigation3.ui.NavDisplay
@@ -67,58 +64,55 @@ import com.mikepenz.aboutlibraries.ui.compose.android.produceLibraries
 import com.mikepenz.aboutlibraries.ui.compose.m3.LibrariesContainer
 import dev.msfjarvis.claw.android.R
 import dev.msfjarvis.claw.android.reminders.DEFAULT_DAILY_SAVED_POST_REMINDER_TIME
-import dev.msfjarvis.claw.android.ui.PostActions
 import dev.msfjarvis.claw.android.ui.decorations.ClawAppBar
 import dev.msfjarvis.claw.android.ui.decorations.ClawNavigationBar
 import dev.msfjarvis.claw.android.ui.decorations.ClawNavigationRail
 import dev.msfjarvis.claw.android.ui.decorations.ClawTopBarMode
 import dev.msfjarvis.claw.android.ui.decorations.NavigationItem
-import dev.msfjarvis.claw.android.ui.lists.DatabasePosts
 import dev.msfjarvis.claw.android.ui.lists.NetworkPosts
 import dev.msfjarvis.claw.android.ui.lists.SearchResultsList
 import dev.msfjarvis.claw.android.ui.navigation.AboutLibraries
-import dev.msfjarvis.claw.android.ui.navigation.AppDestinations
 import dev.msfjarvis.claw.android.ui.navigation.ClawNavigationType
 import dev.msfjarvis.claw.android.ui.navigation.Comments
 import dev.msfjarvis.claw.android.ui.navigation.Hottest
 import dev.msfjarvis.claw.android.ui.navigation.Login
 import dev.msfjarvis.claw.android.ui.navigation.Newest
-import dev.msfjarvis.claw.android.ui.navigation.NonStackable
 import dev.msfjarvis.claw.android.ui.navigation.Reply
 import dev.msfjarvis.claw.android.ui.navigation.Saved
 import dev.msfjarvis.claw.android.ui.navigation.Settings
 import dev.msfjarvis.claw.android.ui.navigation.TagFiltering
-import dev.msfjarvis.claw.android.ui.navigation.TopLevelDestination
 import dev.msfjarvis.claw.android.ui.navigation.User
 import dev.msfjarvis.claw.android.ui.updates.InAppUpdates
-import dev.msfjarvis.claw.android.viewmodel.ClawViewModel
+import dev.msfjarvis.claw.android.viewmodel.SearchViewModel
 import dev.msfjarvis.claw.android.viewmodel.SettingsViewModel
-import dev.msfjarvis.claw.common.comments.CommentsPage
-import dev.msfjarvis.claw.common.comments.reply.ReplyScreen
-import dev.msfjarvis.claw.common.tags.TagFilterViewModel
-import dev.msfjarvis.claw.common.tags.TagList
-import dev.msfjarvis.claw.common.user.UserProfile
+import dev.msfjarvis.claw.feature.auth.impl.navigation.loginNavigationEntryContributor
+import dev.msfjarvis.claw.feature.discussion.impl.navigation.discussionNavigationEntryContributor
+import dev.msfjarvis.claw.feature.posts.impl.PostActions
+import dev.msfjarvis.claw.feature.posts.impl.PostsViewModel
+import dev.msfjarvis.claw.feature.posts.impl.navigation.AppDestinations
+import dev.msfjarvis.claw.feature.posts.impl.navigation.postsNavigationEntryContributor
+import dev.msfjarvis.claw.feature.profile.impl.navigation.profileNavigationEntryContributor
+import dev.msfjarvis.claw.feature.search.api.SearchUiState
+import dev.msfjarvis.claw.feature.settings.impl.navigation.settingsNavigationEntryContributor
+import dev.msfjarvis.claw.feature.tags.impl.TagFilterViewModel
+import dev.msfjarvis.claw.feature.tags.impl.TagList
+import dev.msfjarvis.claw.navigation.api.NavigationEntryContributor
+import dev.msfjarvis.claw.navigation.api.TopLevelDestination
+import dev.msfjarvis.claw.navigation.impl.BackStackNavigator
+import dev.msfjarvis.claw.navigation.impl.NavigationHost
 import dev.zacsweers.metrox.viewmodel.metroViewModel
 import io.sentry.compose.navigation3.SentryBackStackEntry
 import io.sentry.compose.navigation3.SentryNavEffect
 import io.sentry.compose.navigation3.SentryNavOptions
-import kotlin.time.Duration.Companion.milliseconds
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.persistentSetOf
-import kotlinx.coroutines.delay
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.launch
 
-private const val SEARCH_DEBOUNCE_MILLIS = 300L
 private const val SEARCH_WEB_URI = "https://lobste.rs/search"
 private const val HOTTEST_WEB_URI = "https://lobste.rs/"
 private const val NEWEST_WEB_URI = "https://lobste.rs/newest"
-
-@VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
-fun shouldDismissSearchOnBack(
-  isSearchActive: Boolean,
-  isCurrentDestinationTopLevel: Boolean,
-): Boolean = isSearchActive && isCurrentDestinationTopLevel
 
 @OptIn(ExperimentalMaterial3AdaptiveApi::class)
 @Composable
@@ -129,7 +123,8 @@ fun LobstersPostsScreen(
   modifier: Modifier = Modifier,
   deepLinkDestination: NavKey? = null,
   clearDeepLink: () -> Unit = {},
-  viewModel: ClawViewModel = metroViewModel(),
+  searchViewModel: SearchViewModel = metroViewModel(),
+  postsViewModel: PostsViewModel = metroViewModel(),
   settingsViewModel: SettingsViewModel = metroViewModel(),
   tagFilterViewModel: TagFilterViewModel = metroViewModel(key = "tag_filter"),
 ) {
@@ -148,12 +143,12 @@ fun LobstersPostsScreen(
   val coroutineScope = rememberCoroutineScope()
   val snackbarHostState = remember { SnackbarHostState() }
 
-  val savedPosts by viewModel.savedPostsByMonth.collectAsStateWithLifecycle(persistentMapOf())
-  val savedPostsCount by viewModel.savedPostsCount.collectAsStateWithLifecycle(0L)
+  val savedPosts by postsViewModel.savedPostsByMonth.collectAsStateWithLifecycle(persistentMapOf())
 
   val filteredTags by tagFilterViewModel.filteredTags.collectAsStateWithLifecycle(persistentSetOf())
   val isLoggedIn by settingsViewModel.isLoggedIn.collectAsStateWithLifecycle(false)
   val username by settingsViewModel.username.collectAsStateWithLifecycle(null)
+  val savedPostsCount by settingsViewModel.savedPostsCount.collectAsStateWithLifecycle(0L)
   val isDailySavedPostReminderEnabled by
     settingsViewModel.isDailySavedPostReminderEnabled.collectAsStateWithLifecycle(false)
   val dailySavedPostReminderTime by
@@ -183,11 +178,22 @@ fun LobstersPostsScreen(
         }
       }
     }
-  var isSearchActive by rememberSaveable { mutableStateOf(false) }
-  var searchQuery by rememberSaveable { mutableStateOf("") }
-  var lastExecutedSearchQuery by rememberSaveable { mutableStateOf<String?>(null) }
+  var savedSearchState by
+    rememberSaveable(stateSaver = SearchUiStateSaver) { mutableStateOf(SearchUiState()) }
+  var hasRestoredSearchState by remember(searchViewModel) { mutableStateOf(false) }
+  val searchState by searchViewModel.uiState.collectAsStateWithLifecycle(SearchUiState())
+  LaunchedEffect(searchViewModel) {
+    searchViewModel.restoreUiState(savedSearchState)
+    hasRestoredSearchState = true
+  }
+  SideEffect {
+    if (hasRestoredSearchState) savedSearchState = searchState
+  }
+  val isSearchActive = searchState.isActive
+  val searchQuery = searchState.query
+  val lastExecutedSearchQuery = searchState.lastExecutedQuery
   val searchResultsListState = rememberLazyListState()
-  val searchResults = viewModel.searchResults.collectAsLazyPagingItems()
+  val searchResults = searchViewModel.searchResults.collectAsLazyPagingItems()
   val currentDestination = backStack.lastOrNull()
   val currentDestinationIsTopLevel = currentDestination is TopLevelDestination
   val normalizedSearchQuery = searchQuery.trim()
@@ -226,17 +232,10 @@ fun LobstersPostsScreen(
   // endregion
 
   val executeSearch = { query: String ->
-    val normalizedQuery = query.trim()
-    lastExecutedSearchQuery = normalizedQuery
-    coroutineScope.launch { searchResultsListState.scrollToItem(0) }
-    viewModel.searchQuery = normalizedQuery
-    searchResults.refresh()
+    searchViewModel.executeSearch(query)
   }
   val dismissSearch = {
-    isSearchActive = false
-    searchQuery = ""
-    lastExecutedSearchQuery = ""
-    viewModel.searchQuery = ""
+    searchViewModel.dismissSearch()
   }
   val navigateToDestination = { destination: NavKey, allowStacking: Boolean ->
     if (isSearchActive) {
@@ -244,13 +243,19 @@ fun LobstersPostsScreen(
     }
     navigateTo(backStack, destination, allowStacking = allowStacking)
   }
-  val startSearch = {
-    isSearchActive = true
-  }
+  val startSearch = searchViewModel::startSearch
 
   val postActions =
     remember(isSearchActive) {
-      PostActions(context, uriHandler, viewModel) { postId, commentsUrl ->
+      PostActions(
+        context = context,
+        uriHandler = uriHandler,
+        markPostAsRead = postsViewModel::markPostAsRead,
+        onToggleSave = postsViewModel::toggleSave,
+        checkPostRead = postsViewModel::isPostRead,
+        checkPostSaved = postsViewModel::isPostSaved,
+        loadLinkMetadata = postsViewModel::getLinkMetadata,
+      ) { postId, commentsUrl ->
         navigateToDestination(Comments(postId, commentsUrl), false)
       }
     }
@@ -279,27 +284,9 @@ fun LobstersPostsScreen(
     }
   }
 
-  LaunchedEffect(isSearchActive, normalizedSearchQuery) {
-    if (!isSearchActive) return@LaunchedEffect
-    delay(SEARCH_DEBOUNCE_MILLIS.milliseconds)
-    if (normalizedSearchQuery != lastExecutedSearchQuery) {
-      executeSearch(normalizedSearchQuery)
-    }
-  }
-
-  LaunchedEffect(
-    isSearchActive,
-    normalizedSearchQuery,
-    lastExecutedSearchQuery,
-    viewModel.searchQuery,
-  ) {
-    if (!isSearchActive) return@LaunchedEffect
-    if (normalizedSearchQuery.isBlank()) return@LaunchedEffect
-    if (
-      normalizedSearchQuery == lastExecutedSearchQuery &&
-        viewModel.searchQuery != normalizedSearchQuery
-    ) {
-      executeSearch(normalizedSearchQuery)
+  LaunchedEffect(searchState.requestGeneration) {
+    if (searchState.requestGeneration > 0) {
+      searchResultsListState.scrollToItem(0)
     }
   }
 
@@ -358,23 +345,25 @@ fun LobstersPostsScreen(
         popBackStack = { popBackStack(backStack) },
         onStartSearch = startSearch,
         onDismissSearch = dismissSearch,
-        onQueryChange = { searchQuery = it },
-        onSearch = { query ->
-          searchQuery = query
-          executeSearch(query)
-        },
+        onQueryChange = searchViewModel::updateQuery,
+        onSearch = { query -> executeSearch(query) },
       ) {
         if (
           normalizedSearchQuery.isNotBlank() && normalizedSearchQuery == lastExecutedSearchQuery
         ) {
           SearchResultsList(
             lazyPagingItems = searchResults,
-            listState = searchResultsListState,
-            postActions = postActions,
-            filteredTags = filteredTags,
-            contentPadding = PaddingValues(bottom = searchResultsBottomPadding),
             onClearanceCookie = settingsViewModel::saveAnubisCookie,
-          )
+          ) { listModifier ->
+            NetworkPosts(
+              lazyPagingItems = searchResults,
+              listState = searchResultsListState,
+              postActions = postActions,
+              filteredTags = filteredTags,
+              contentPadding = PaddingValues(bottom = searchResultsBottomPadding),
+              modifier = listModifier,
+            )
+          }
         }
       }
     },
@@ -400,15 +389,15 @@ fun LobstersPostsScreen(
           isVisible = currentDestinationIsTopLevel && !isSearchActive,
         )
       }
-      NavDisplay(
-        backStack = backStack,
-        sceneStrategies = listOf(listDetailStrategy),
-        entryDecorators = listOf(rememberSaveableStateHolderNavEntryDecorator()),
+      NavigationHost(
+        backStack = backStack.toImmutableList(),
         onBack = {
           if (popBackStack(backStack) == null) {
             activity?.finish()
           }
         },
+        sceneStrategies = persistentListOf(listDetailStrategy),
+        entryDecorators = persistentListOf(rememberSaveableStateHolderNavEntryDecorator()),
         popTransitionSpec = {
           slideInHorizontally(initialOffsetX = { -it }, animationSpec = tween(200)) togetherWith
             slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(200))
@@ -417,71 +406,43 @@ fun LobstersPostsScreen(
           slideInHorizontally(initialOffsetX = { -it }, animationSpec = tween(200)) togetherWith
             slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(200))
         },
-        entryProvider =
-          entryProvider {
-            entry<Hottest>(
-              metadata = ListDetailSceneStrategy.listPane(detailPlaceholder = { Placeholder() })
-            ) {
-              val hottestPosts = viewModel.hottestPosts.collectAsLazyPagingItems()
-              NetworkPosts(
-                lazyPagingItems = hottestPosts,
-                listState = hottestListState,
-                postActions = postActions,
-                contentPadding = contentPadding,
-                filteredTags = filteredTags,
-              )
-            }
-            entry<Newest>(
-              metadata = ListDetailSceneStrategy.listPane(detailPlaceholder = { Placeholder() })
-            ) {
-              val newestPosts = viewModel.newestPosts.collectAsLazyPagingItems()
-              NetworkPosts(
-                lazyPagingItems = newestPosts,
-                listState = newestListState,
-                postActions = postActions,
-                contentPadding = contentPadding,
-                filteredTags = filteredTags,
-              )
-            }
-            entry<Saved>(
-              metadata = ListDetailSceneStrategy.listPane(detailPlaceholder = { Placeholder() })
-            ) {
-              DatabasePosts(
-                items = savedPosts,
-                listState = savedListState,
-                postActions = postActions,
-                contentPadding = contentPadding,
-              )
-            }
-            entry<Comments>(metadata = ListDetailSceneStrategy.detailPane()) { dest ->
-              val commentsPostActions =
+        contributors =
+          persistentListOf(
+            postsNavigationEntryContributor(
+              hottestPosts = postsViewModel.hottestPosts,
+              newestPosts = postsViewModel.newestPosts,
+              hottestListState = hottestListState,
+              newestListState = newestListState,
+              savedPosts = savedPosts,
+              savedListState = savedListState,
+              postActions = postActions,
+              filteredTags = filteredTags,
+              contentPadding = contentPadding,
+            ),
+            discussionNavigationEntryContributor(
+              postActions =
                 remember(isSearchActive) {
-                  PostActions(context, uriHandler, viewModel) { postId, commentsUrl ->
+                  PostActions(
+                    context = context,
+                    uriHandler = uriHandler,
+                    markPostAsRead = postsViewModel::markPostAsRead,
+                    onToggleSave = postsViewModel::toggleSave,
+                    checkPostRead = postsViewModel::isPostRead,
+                    checkPostSaved = postsViewModel::isPostSaved,
+                    loadLinkMetadata = postsViewModel::getLinkMetadata,
+                  ) { postId, commentsUrl ->
                     navigateToDestination(Comments(postId, commentsUrl), true)
                   }
-                }
-              CommentsPage(
-                postId = dest.postId,
-                commentsUrl = dest.commentsUrl,
-                postActions = commentsPostActions,
-                contentPadding = contentPadding,
-                openUserProfile = { navigateToDestination(User(it), false) },
-                openReplyScreen = { postId, commentId, commentText ->
-                  navigateToDestination(Reply(postId, commentId, commentText), true)
                 },
-              )
-            }
-            entry<Reply>(metadata = ListDetailSceneStrategy.extraPane()) { dest ->
-              ReplyScreen(
-                postId = dest.postId,
-                commentId = dest.commentId,
-                commentText = dest.commentText,
-                onReplySubmitted = { popBackStack(backStack) },
-                contentPadding = contentPadding,
-                modifier = Modifier.fillMaxSize(),
-              )
-            }
-            entry<User>(
+              contentPadding = contentPadding,
+              openUserProfile = { navigateToDestination(User(it), false) },
+              navigate = { destination, allowStacking ->
+                navigateToDestination(destination, allowStacking)
+              },
+              onReplySubmitted = { popBackStack(backStack) },
+            ),
+            profileNavigationEntryContributor(
+              contentPadding = contentPadding,
               metadata =
                 NavDisplay.transitionSpec {
                   slideInHorizontally(
@@ -490,7 +451,6 @@ fun LobstersPostsScreen(
                   ) togetherWith ExitTransition.KeepUntilTransitionsFinished
                 } +
                   NavDisplay.popTransitionSpec {
-                    // Slide old content down, revealing the new content in place underneath
                     EnterTransition.None togetherWith
                       slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(200))
                   } +
@@ -498,61 +458,54 @@ fun LobstersPostsScreen(
                     EnterTransition.None togetherWith
                       slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(200))
                   } +
-                  ListDetailSceneStrategy.extraPane()
-            ) { dest ->
-              UserProfile(
-                username = dest.username,
-                contentPadding = contentPadding,
-                openUserProfile = { navigateToDestination(User(it), false) },
-              )
-            }
-            entry<Settings>(metadata = ListDetailSceneStrategy.extraPane()) {
-              SettingsScreen(
-                openInputStream = context.contentResolver::openInputStream,
-                openOutputStream = context.contentResolver::openOutputStream,
-                openLibrariesScreen = { navigateToDestination(AboutLibraries, false) },
-                openRepository = {
-                  uriHandler.openUri("https://github.com/msfjarvis/compose-lobsters")
-                },
-                openTagFiltering = { navigateToDestination(TagFiltering, false) },
-                openLoginScreen = { navigateToDestination(Login, false) },
-                onLogout = { settingsViewModel.logout() },
-                isLoggedIn = isLoggedIn,
-                username = username,
-                importPosts = viewModel::importPosts,
-                exportPostsAsJson = viewModel::exportPostsAsJson,
-                savedPostsCount = savedPostsCount,
-                isDailySavedPostReminderEnabled = isDailySavedPostReminderEnabled,
-                dailySavedPostReminderTime = dailySavedPostReminderTime,
-                onDailySavedPostReminderEnabledChange = onDailySavedPostReminderEnabledChange,
-                onDailySavedPostReminderTimeChange =
-                  settingsViewModel::setDailySavedPostReminderTime,
-                snackbarHostState = snackbarHostState,
-                contentPadding = contentPadding,
-                modifier = Modifier.fillMaxSize(),
-              )
-            }
-            entry<Login>(metadata = ListDetailSceneStrategy.extraPane()) {
-              LoginScreen(
-                onLoginSuccess = settingsViewModel::saveCookie,
-                popBackStack = { popBackStack(backStack) },
-                modifier = Modifier.fillMaxSize(),
-              )
-            }
-            entry<AboutLibraries>(metadata = ListDetailSceneStrategy.extraPane()) {
-              LibrariesContainer(
-                libraries = libraries,
-                contentPadding = contentPadding,
-                modifier = Modifier.fillMaxSize(),
-              )
-            }
-            entry<TagFiltering> {
-              TagList(
-                popBackStack = { popBackStack(backStack) },
-                contentPadding = contentPadding,
-              )
-            }
-          },
+                  ListDetailSceneStrategy.extraPane(),
+              navigate = { destination, allowStacking ->
+                navigateToDestination(destination, allowStacking)
+              },
+            ),
+            settingsNavigationEntryContributor(
+              metadata = ListDetailSceneStrategy.extraPane(),
+              contentPadding = contentPadding,
+              openLibrariesScreen = { navigateToDestination(AboutLibraries, false) },
+              openRepository = {
+                uriHandler.openUri("https://github.com/msfjarvis/compose-lobsters")
+              },
+              openTagFiltering = { navigateToDestination(it, false) },
+              openLoginScreen = { navigateToDestination(Login, false) },
+              onLogout = settingsViewModel::logout,
+              isLoggedIn = isLoggedIn,
+              username = username,
+              snackbarHostState = snackbarHostState,
+              importPosts = settingsViewModel::importPosts,
+              exportPostsAsJson = settingsViewModel::exportPostsAsJson,
+              savedPostsCount = savedPostsCount,
+              isDailySavedPostReminderEnabled = isDailySavedPostReminderEnabled,
+              dailySavedPostReminderTime = dailySavedPostReminderTime,
+              onDailySavedPostReminderEnabledChange = onDailySavedPostReminderEnabledChange,
+              onDailySavedPostReminderTimeChange = settingsViewModel::setDailySavedPostReminderTime,
+              settingsAppConfig = settingsViewModel.appConfig,
+              librariesContent = { padding, contentModifier ->
+                LibrariesContainer(
+                  libraries = libraries,
+                  contentPadding = padding,
+                  modifier = contentModifier,
+                )
+              },
+            ),
+            loginNavigationEntryContributor(
+              onLoginSuccess = settingsViewModel::saveCookie,
+              popBackStack = { popBackStack(backStack) },
+              metadata = ListDetailSceneStrategy.extraPane(),
+            ),
+            NavigationEntryContributor {
+              entry<TagFiltering> {
+                TagList(
+                  popBackStack = { popBackStack(backStack) },
+                  contentPadding = contentPadding,
+                )
+              }
+            },
+          ),
       )
     }
   }
@@ -564,46 +517,8 @@ fun navigateTo(
   destination: NavKey,
   allowStacking: Boolean = false,
 ) {
-  if (destination is TopLevelDestination) {
-    backStack.clear()
-    if (destination != Hottest) {
-      backStack.add(Hottest)
-    }
-    backStack.add(destination)
-    return
-  }
-
-  if (destination is NonStackable) {
-    if (allowStacking && destination is Comments) {
-      val lastItem = backStack.lastOrNull()
-      if (lastItem is Comments && lastItem.postId == destination.postId) {
-        return
-      }
-      backStack.add(destination)
-      return
-    }
-
-    val existingEntry = backStack.firstOrNull {
-      it is NonStackable && it::class.java.isAssignableFrom(destination::class.java)
-    }
-
-    if (existingEntry != null) {
-      backStack.remove(existingEntry)
-    }
-  }
-
-  backStack.add(destination)
+  BackStackNavigator(backStack, Hottest).navigate(destination, allowStacking)
 }
 
-private fun popBackStack(backStack: MutableList<NavKey>): NavKey? {
-  if (backStack.size <= 1) {
-    return null
-  }
-
-  return backStack.removeAt(backStack.lastIndex)
-}
-
-@Composable
-private fun Placeholder(modifier: Modifier = Modifier) {
-  Text(text = stringResource(R.string.no_post_selected), modifier = modifier)
-}
+private fun popBackStack(backStack: MutableList<NavKey>): NavKey? =
+  BackStackNavigator(backStack, Hottest).pop()

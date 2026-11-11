@@ -1,0 +1,136 @@
+/*
+ * Copyright © Harsh Shandilya.
+ * Use of this source code is governed by an MIT-style
+ * license that can be found in the LICENSE file or at
+ * https://opensource.org/licenses/MIT.
+ */
+package dev.msfjarvis.claw.android.ui.lists
+
+import androidx.activity.compose.ReportDrawnWhen
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.paging.LoadState
+import androidx.paging.PagingData
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.itemContentType
+import dev.msfjarvis.claw.common.posts.PostActions
+import dev.msfjarvis.claw.common.theme.LobstersTheme
+import dev.msfjarvis.claw.common.ui.NetworkError
+import dev.msfjarvis.claw.common.ui.ProgressBar
+import dev.msfjarvis.claw.common.ui.preview.DevicePreviews
+import dev.msfjarvis.claw.model.UIPost
+import kotlinx.collections.immutable.ImmutableSet
+import kotlinx.collections.immutable.persistentSetOf
+import kotlinx.coroutines.flow.MutableStateFlow
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun NetworkPosts(
+  lazyPagingItems: LazyPagingItems<UIPost>,
+  listState: LazyListState,
+  postActions: PostActions,
+  contentPadding: PaddingValues,
+  filteredTags: ImmutableSet<String>,
+  modifier: Modifier = Modifier,
+) {
+  ReportDrawnWhen { lazyPagingItems.itemCount > 0 }
+  val refreshLoadState by rememberUpdatedState(lazyPagingItems.loadState.refresh)
+  val state = rememberPullToRefreshState()
+  PullToRefreshBox(
+    modifier = modifier.fillMaxSize(),
+    isRefreshing = refreshLoadState == LoadState.Loading,
+    state = state,
+    onRefresh = { lazyPagingItems.refresh() },
+    indicator = {
+      PullToRefreshDefaults.Indicator(
+        state = state,
+        isRefreshing = refreshLoadState == LoadState.Loading,
+        modifier = Modifier.align(Alignment.TopCenter).padding(contentPadding),
+      )
+    },
+  ) {
+    if (lazyPagingItems.itemCount == 0 && refreshLoadState is LoadState.Error) {
+      Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()),
+      ) {
+        NetworkError(
+          label = "Failed to load posts",
+          error = (refreshLoadState as LoadState.Error).error,
+        )
+      }
+    } else {
+      LazyColumn(contentPadding = contentPadding, state = listState) {
+        items(
+          count = lazyPagingItems.itemCount,
+          // Intentionally keyed on just the index to avoid crashes
+          key = { index -> index },
+          contentType = lazyPagingItems.itemContentType { "LobstersItem" },
+        ) { index ->
+          val item = lazyPagingItems[index]
+          if (item != null) {
+            val shouldShowPost = item.tags.none { tag -> filteredTags.contains(tag) }
+            if (shouldShowPost) {
+              val isSaved = postActions.isPostSaved(item)
+              val isRead = postActions.isPostRead(item)
+              LobstersListItem(
+                item = item,
+                isSaved = isSaved,
+                isRead = isRead,
+                postActions = postActions,
+              )
+              HorizontalDivider()
+            }
+          }
+        }
+        if (lazyPagingItems.loadState.append == LoadState.Loading) {
+          item(key = "progressbar") {
+            ProgressBar(
+              modifier =
+                Modifier.fillMaxWidth()
+                  .wrapContentWidth(Alignment.CenterHorizontally)
+                  .padding(vertical = 16.dp)
+            )
+          }
+        }
+      }
+    }
+  }
+}
+
+@DevicePreviews
+@Composable
+private fun ListPreview() {
+  val items = previewPosts(20)
+  val flow = MutableStateFlow(PagingData.from(items))
+  LobstersTheme {
+    NetworkPosts(
+      lazyPagingItems = flow.collectAsLazyPagingItems(),
+      listState = rememberLazyListState(),
+      postActions = TEST_POST_ACTIONS,
+      contentPadding = PaddingValues(),
+      filteredTags = persistentSetOf(),
+    )
+  }
+}

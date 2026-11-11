@@ -1,0 +1,12 @@
+/*
+ * Copyright © Harsh Shandilya.
+ * Use of this source code is governed by an MIT-style
+ * license that can be found in the LICENSE file or at
+ * https://opensource.org/licenses/MIT.
+ */
+package dev.msfjarvis.claw.core.network
+
+/** Reports HTML responses from the search endpoint without coupling transport to app telemetry. */
+fun interface SearchChallengeTelemetry {
+  fun report(challenged: Boolean, authenticated: Boolean)
+}

@@ -1,0 +1,396 @@
+/*
+ * Copyright © Harsh Shandilya.
+ * Use of this source code is governed by an MIT-style
+ * license that can be found in the LICENSE file or at
+ * https://opensource.org/licenses/MIT.
+ */
+package dev.msfjarvis.claw.common.comments
+
+import android.text.format.DateUtils
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.Reply
+import androidx.compose.material.icons.filled.Public
+import androidx.compose.material.icons.filled.ThumbUpAlt
+import androidx.compose.material.icons.filled.ThumbUpOffAlt
+import androidx.compose.material.icons.outlined.Share
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
+import com.github.michaelbull.result.coroutines.runSuspendCatching
+import com.github.michaelbull.result.onOk
+import dev.msfjarvis.claw.common.comments.reply.plainTextFromHtml
+import dev.msfjarvis.claw.common.posts.PostActions
+import dev.msfjarvis.claw.common.posts.PostTitle
+import dev.msfjarvis.claw.common.posts.Submitter
+import dev.msfjarvis.claw.common.posts.TagRow
+import dev.msfjarvis.claw.common.ui.NetworkImage
+import dev.msfjarvis.claw.common.ui.ThemedRichText
+import dev.msfjarvis.claw.common.ui.rewriteUrlIfLobstersPost
+import dev.msfjarvis.claw.core.ui.R as UiR
+import dev.msfjarvis.claw.model.LinkMetadata
+import dev.msfjarvis.claw.model.UIPost
+import kotlin.time.Clock
+import kotlin.time.Instant
+import kotlinx.collections.immutable.toImmutableList
+
+@Composable
+internal fun CommentsHeader(
+  post: UIPost,
+  postActions: PostActions,
+  openUserProfile: (String) -> Unit,
+  modifier: Modifier = Modifier,
+) {
+  val primaryStory = post.discussion.first
+  val linkMetadata by
+    produceState(initialValue = LinkMetadata(primaryStory.url, null), key1 = post) {
+      runSuspendCatching { postActions.getLinkMetadata(primaryStory.url) }
+        .onOk { metadata -> value = metadata }
+    }
+
+  Surface(color = MaterialTheme.colorScheme.background, modifier = modifier) {
+    Column(
+      modifier = Modifier.padding(16.dp).fillMaxWidth(),
+      verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+      PostTitle(title = primaryStory.title, isRead = false)
+      TagRow(tags = primaryStory.tags.toImmutableList())
+      Spacer(Modifier.height(4.dp))
+
+      if (linkMetadata.url.isNotBlank()) {
+        PostLink(
+          linkMetadata = linkMetadata,
+          modifier =
+            Modifier.clickable {
+              postActions.viewPost(post.shortId, linkMetadata.url, post.commentsUrl)
+            },
+        )
+        Spacer(Modifier.height(4.dp))
+      }
+
+      if (post.description.isNotBlank()) {
+        ThemedRichText(post.description) {
+          rewriteUrlIfLobstersPost(it)
+        }
+        Spacer(Modifier.height(4.dp))
+      }
+      Submitter(
+        text =
+          AnnotatedString(
+            "${if (primaryStory.userIsAuthor) "Authored" else "Submitted"} by ${primaryStory.submitter}"
+          ),
+        avatarUrl = "https://lobste.rs/avatars/${primaryStory.submitter}-100.png",
+        contentDescription = stringResource(UiR.string.user_avatar_for, primaryStory.submitter),
+        modifier = Modifier.clickable { openUserProfile(primaryStory.submitter) },
+      )
+    }
+  }
+}
+
+@Composable
+private fun PostLink(linkMetadata: LinkMetadata, modifier: Modifier = Modifier) {
+  Box(
+    modifier.background(
+      color = MaterialTheme.colorScheme.secondary,
+      shape = RoundedCornerShape(8.dp),
+    )
+  ) {
+    Row(modifier = Modifier.padding(16.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+      NetworkImage(
+        url = linkMetadata.faviconUrl,
+        placeholder = Icons.Filled.Public,
+        contentDescription = "",
+        modifier = Modifier.size(24.dp),
+      )
+      Text(
+        text = linkMetadata.url,
+        overflow = TextOverflow.Ellipsis,
+        maxLines = 1,
+        color = MaterialTheme.colorScheme.onSecondary,
+        style = MaterialTheme.typography.labelLarge,
+      )
+    }
+  }
+}
+
+private val ThreadIndentWidth = 10.dp
+private val ThreadGuideOffset = 5.dp
+private val ThreadGuideWidth = 1.5.dp
+
+@Composable
+internal fun CommentEntry(
+  isExpanded: Boolean,
+  commentNode: CommentNode,
+  openUserProfile: (String) -> Unit,
+  onToggleExpandedState: (String, Boolean) -> Unit,
+  isLoggedIn: Boolean,
+  upvoteComment: (String) -> Unit,
+  unvoteComment: (String) -> Unit,
+  onReply: (String, String) -> Unit,
+  onShare: (String) -> Unit,
+  modifier: Modifier = Modifier,
+) {
+  val comment = commentNode.comment
+  var hasLocallyUpvoted by remember(comment.shortId) { mutableStateOf(comment.isUpvoted) }
+  var isActionBarExpanded by
+    remember(comment.shortId) { mutableStateOf(commentNode.indentLevel == 0) }
+  val score =
+    displayScore(
+      score = comment.score,
+      initiallyUpvoted = comment.isUpvoted,
+      isUpvoted = hasLocallyUpvoted,
+    )
+  val indentGuideLevel = commentNode.indentLevel.minus(1).coerceAtLeast(0)
+  Box(
+    modifier =
+      modifier
+        .fillMaxWidth()
+        .background(MaterialTheme.colorScheme.background)
+        .drawBehind {
+          if (indentGuideLevel > 0) {
+            repeat(indentGuideLevel) { level ->
+              val x = ThreadIndentWidth.toPx() * level + ThreadGuideOffset.toPx()
+              drawLine(
+                color = CommentTreeColors.colorForDepth(depth = level),
+                start = Offset(x, 0f),
+                end = Offset(x, size.height),
+                strokeWidth = ThreadGuideWidth.toPx(),
+                cap = StrokeCap.Round,
+              )
+            }
+          }
+        }
+        .combinedClickable(
+          onClick = {
+            if (isExpanded) {
+              isActionBarExpanded = !isActionBarExpanded
+            } else {
+              onToggleExpandedState(comment.shortId, true)
+            }
+          },
+          onLongClick = {
+            isActionBarExpanded = false
+            onToggleExpandedState(comment.shortId, !isExpanded)
+          },
+        )
+        .padding(start = ThreadIndentWidth * indentGuideLevel)
+  ) {
+    Column(
+      modifier =
+        Modifier.fillMaxWidth()
+          .background(
+            if (commentNode.isUnread) {
+              MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.72f)
+            } else {
+              MaterialTheme.colorScheme.background
+            }
+          ),
+      verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+      Row(
+        modifier =
+          Modifier.fillMaxWidth()
+            .padding(
+              start = 16.dp,
+              end = 16.dp,
+              top = 12.dp,
+              bottom = 12.dp,
+            ),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+      ) {
+        Text(
+          text =
+            buildString {
+              append(comment.user)
+              if (commentNode.isPostAuthor) append(" [OP]")
+            },
+          style = MaterialTheme.typography.labelLarge,
+          color = MaterialTheme.colorScheme.onSurfaceVariant,
+          modifier = Modifier.clickable { openUserProfile(comment.user) },
+        )
+        Spacer(Modifier.weight(1f))
+        if (!isExpanded && commentNode.descendantCount() > 0) {
+          Text(
+            text = " +${commentNode.descendantCount()} ",
+            style = MaterialTheme.typography.labelLargeEmphasized,
+            color = MaterialTheme.colorScheme.onTertiary,
+            modifier =
+              Modifier.background(
+                color = MaterialTheme.colorScheme.tertiary,
+                shape = RoundedCornerShape(CornerSize(4.dp)),
+              ),
+          )
+        }
+        Text(
+          text = score.toString(),
+          style =
+            MaterialTheme.typography.labelLarge.let {
+              if (hasLocallyUpvoted) it.copy(fontWeight = FontWeight.Bold) else it
+            },
+          color =
+            if (hasLocallyUpvoted) MaterialTheme.colorScheme.secondary
+            else MaterialTheme.colorScheme.onBackground,
+        )
+        Text(
+          text = buildCommentAgeString(comment.timestamp, comment.edited),
+          style = MaterialTheme.typography.labelLarge,
+          color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+      }
+
+      AnimatedVisibility(
+        visible = isExpanded,
+        enter =
+          expandVertically(
+            expandFrom = Alignment.Top,
+            animationSpec = tween(durationMillis = 100, easing = LinearEasing),
+          ),
+        exit =
+          shrinkVertically(
+            shrinkTowards = Alignment.Top,
+            animationSpec = tween(durationMillis = 100, easing = LinearEasing),
+          ),
+      ) {
+        ThemedRichText(
+          text = comment.comment,
+          modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 12.dp),
+          transformDestination = { rewriteUrlIfLobstersPost(it) },
+        )
+      }
+      AnimatedVisibility(
+        visible = isActionBarExpanded && isExpanded,
+        enter =
+          expandVertically(
+            expandFrom = Alignment.Top,
+            animationSpec = tween(durationMillis = 50, easing = LinearEasing),
+          ),
+        exit =
+          shrinkVertically(
+            shrinkTowards = Alignment.Top,
+            animationSpec = tween(durationMillis = 50, easing = LinearEasing),
+          ),
+      ) {
+        CommentActionTray(
+          isLoggedIn = isLoggedIn,
+          isUpvoted = hasLocallyUpvoted,
+          onVoteClick = {
+            if (hasLocallyUpvoted) {
+              unvoteComment(comment.shortId)
+            } else {
+              upvoteComment(comment.shortId)
+            }
+            hasLocallyUpvoted = !hasLocallyUpvoted
+          },
+          onReplyClick = {
+            onReply(comment.shortId, plainTextFromHtml(comment.comment))
+          },
+          onShareClick = { onShare(comment.shortId) },
+        )
+      }
+    }
+  }
+}
+
+@Composable
+private fun CommentActionTray(
+  isLoggedIn: Boolean,
+  isUpvoted: Boolean,
+  onVoteClick: () -> Unit,
+  onReplyClick: () -> Unit,
+  onShareClick: () -> Unit,
+  modifier: Modifier = Modifier,
+) {
+  Row(
+    modifier =
+      modifier
+        .fillMaxWidth()
+        .background(MaterialTheme.colorScheme.surfaceContainerHighest)
+        .padding(horizontal = 12.dp, vertical = 8.dp),
+    horizontalArrangement = Arrangement.End,
+    verticalAlignment = Alignment.CenterVertically,
+  ) {
+    if (isLoggedIn) {
+      Icon(
+        imageVector = if (isUpvoted) Icons.Filled.ThumbUpAlt else Icons.Filled.ThumbUpOffAlt,
+        contentDescription = if (isUpvoted) "Remove upvote" else "Upvote",
+        tint =
+          if (isUpvoted) MaterialTheme.colorScheme.error
+          else MaterialTheme.colorScheme.onSurfaceVariant,
+        modifier = Modifier.size(24.dp).clickable(role = Role.Button, onClick = onVoteClick),
+      )
+      Spacer(Modifier.size(12.dp))
+    }
+    Icon(
+      imageVector = Icons.Outlined.Share,
+      contentDescription = "Share",
+      tint = MaterialTheme.colorScheme.onSurfaceVariant,
+      modifier = Modifier.size(24.dp).clickable(role = Role.Button, onClick = onShareClick),
+    )
+    if (isLoggedIn) {
+      Spacer(Modifier.size(12.dp))
+      Icon(
+        imageVector = Icons.AutoMirrored.Outlined.Reply,
+        contentDescription = "Reply",
+        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+        modifier = Modifier.size(24.dp).clickable(role = Role.Button, onClick = onReplyClick),
+      )
+    }
+  }
+}
+
+private fun displayScore(score: Int, initiallyUpvoted: Boolean, isUpvoted: Boolean): Int {
+  return when {
+    initiallyUpvoted == isUpvoted -> score
+    isUpvoted -> score + 1
+    else -> score - 1
+  }
+}
+
+private fun buildCommentAgeString(timestamp: Instant, edited: Boolean): String {
+  val now = Clock.System.now().toEpochMilliseconds()
+  val relativeTime =
+    DateUtils.getRelativeTimeSpanString(
+      timestamp.toEpochMilliseconds(),
+      now,
+      DateUtils.MINUTE_IN_MILLIS,
+      DateUtils.FORMAT_ABBREV_RELATIVE,
+    )
+  return if (edited) "$relativeTime · edited" else relativeTime.toString()
+}

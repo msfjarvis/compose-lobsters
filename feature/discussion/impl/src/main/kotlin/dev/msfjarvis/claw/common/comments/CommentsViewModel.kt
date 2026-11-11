@@ -1,0 +1,129 @@
+/*
+ * Copyright © Harsh Shandilya.
+ * Use of this source code is governed by an MIT-style
+ * license that can be found in the LICENSE file or at
+ * https://opensource.org/licenses/MIT.
+ */
+package dev.msfjarvis.claw.common.comments
+
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.github.michaelbull.result.coroutines.runSuspendCatching
+import com.github.michaelbull.result.fold
+import com.slack.eithernet.ApiResult.Failure
+import com.slack.eithernet.ApiResult.Success
+import dev.msfjarvis.claw.api.AuthenticatedLobstersApi
+import dev.msfjarvis.claw.api.LobstersApi
+import dev.msfjarvis.claw.api.toError
+import dev.msfjarvis.claw.core.NetworkState
+import dev.msfjarvis.claw.core.coroutines.IODispatcher
+import dev.msfjarvis.claw.core.network.SessionCookieStore
+import dev.msfjarvis.claw.model.Comment
+import dev.msfjarvis.claw.model.UIPost
+import dev.msfjarvis.claw.model.toUIPost
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.ContributesIntoMap
+import dev.zacsweers.metro.Inject
+import dev.zacsweers.metrox.viewmodel.ViewModelKey
+import java.io.IOException
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+
+@Inject
+@ViewModelKey
+@ContributesIntoMap(AppScope::class)
+class CommentsViewModel
+internal constructor(
+  private val api: LobstersApi,
+  private val authenticatedApi: AuthenticatedLobstersApi,
+  private val commentsRepository: CommentsRepository,
+  @param:IODispatcher private val ioDispatcher: CoroutineDispatcher,
+  sessionCookieStore: SessionCookieStore,
+) : ViewModel() {
+  private val commentsHandler = CommentsHandler()
+
+  internal var postDetails by mutableStateOf<NetworkState>(NetworkState.Loading)
+    private set
+
+  internal val commentNodes: StateFlow<List<CommentNode>> = commentsHandler.listItems
+
+  val isLoggedIn: StateFlow<Boolean> =
+    sessionCookieStore
+      .isLoggedIn()
+      .stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = false,
+      )
+
+  suspend fun loadPostDetails(postId: String, commentsUrl: String) {
+    if (postDetails is NetworkState.Error) {
+      // If the post details failed to load previously, reset the state to loading
+      postDetails = NetworkState.Loading
+    }
+    postDetails =
+      runSuspendCatching<UIPost> {
+          withContext(ioDispatcher) {
+            when (val result = api.getPostDetails(commentsUrl)) {
+              is Success -> result.value.toUIPost()
+              is Failure.NetworkFailure -> throw result.error
+              is Failure.UnknownFailure -> throw result.error
+              is Failure.HttpFailure -> throw result.toError()
+              is Failure.ApiFailure -> throw IOException("API returned an invalid response")
+            }
+          }
+        }
+        .fold(
+          success = { details -> NetworkState.Success(details) },
+          failure = {
+            NetworkState.Error(error = it, description = "Failed to load comments")
+          },
+        )
+  }
+
+  suspend fun getSeenComments(postId: String) = commentsRepository.getSeenComments(postId)
+
+  fun markSeenComments(postId: String, comments: List<Comment>) {
+    viewModelScope.launch { commentsRepository.markSeenComments(postId, comments) }
+  }
+
+  fun upvoteComment(commentId: String) {
+    if (!isLoggedIn.value) return
+    viewModelScope.launch {
+      withContext(ioDispatcher) { authenticatedApi.upvoteComment(commentId) }
+    }
+  }
+
+  fun unvoteComment(commentId: String) {
+    if (!isLoggedIn.value) return
+    viewModelScope.launch {
+      withContext(ioDispatcher) { authenticatedApi.unvoteComment(commentId) }
+    }
+  }
+
+  internal fun createCommentNodes(details: UIPost, seenCommentsState: SeenCommentsState) {
+    val storiesById = details.discussion.stories.associateBy { it.shortId }
+    commentsHandler.createListNode(details.comments, seenCommentsState) { comment ->
+      val source =
+        requireNotNull(storiesById[comment.sourceStoryId]) {
+          "No source story found for comment ${comment.shortId} (source ${comment.sourceStoryId})"
+        }
+      source.userIsAuthor && comment.user == source.submitter
+    }
+  }
+
+  internal fun updateCommentNodeExpanded(shortId: String, isExpanded: Boolean) {
+    commentsHandler.updateListNode(shortId, isExpanded)
+  }
+
+  internal fun updateUnreadStatus(seenCommentsState: SeenCommentsState) {
+    commentsHandler.updateUnreadStatus(seenCommentsState)
+  }
+}

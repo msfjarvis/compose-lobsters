@@ -1,0 +1,110 @@
+/*
+ * Copyright © Harsh Shandilya.
+ * Use of this source code is governed by an MIT-style
+ * license that can be found in the LICENSE file or at
+ * https://opensource.org/licenses/MIT.
+ */
+package dev.msfjarvis.claw.android.glance
+
+import android.annotation.SuppressLint
+import android.content.Intent
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.unit.dp
+import androidx.glance.ColorFilter
+import androidx.glance.GlanceComposable
+import androidx.glance.GlanceModifier
+import androidx.glance.GlanceTheme
+import androidx.glance.Image
+import androidx.glance.ImageProvider
+import androidx.glance.LocalContext
+import androidx.glance.action.clickable
+import androidx.glance.appwidget.action.actionStartActivity
+import androidx.glance.appwidget.cornerRadius
+import androidx.glance.background
+import androidx.glance.layout.Alignment
+import androidx.glance.layout.Row
+import androidx.glance.layout.fillMaxWidth
+import androidx.glance.layout.padding
+import androidx.glance.preview.ExperimentalGlancePreviewApi
+import androidx.glance.preview.Preview
+import androidx.glance.text.Text
+import androidx.glance.text.TextStyle
+import dev.msfjarvis.claw.feature.widgets.impl.R
+import dev.msfjarvis.claw.model.UIPost
+
+@SuppressLint("ArgInFormattedQuantityStringRes")
+@Composable
+@GlanceComposable
+fun WidgetPostEntry(
+  post: UIPost,
+  modifier: GlanceModifier = GlanceModifier,
+  actionsEnabled: Boolean = true,
+) {
+  val titleStyle = MaterialTheme.typography.bodyMedium
+  val context = LocalContext.current
+  val commentsAction =
+    if (actionsEnabled) {
+      actionStartActivity(
+        Intent(context, WidgetClickActivity::class.java).apply {
+          action = WidgetClickActivity.ACTION_OPEN_COMMENTS
+          putExtra(WidgetClickActivity.EXTRA_SHORT_ID, post.shortId)
+        }
+      )
+    } else {
+      null
+    }
+  val postAction =
+    if (!actionsEnabled) {
+      null
+    } else if (post.url.startsWith('/') || post.url.isEmpty()) {
+      commentsAction
+    } else {
+      actionStartActivity(
+        Intent(context, WidgetClickActivity::class.java).apply {
+          putExtra(WidgetClickActivity.EXTRA_URL, post.url)
+          putExtra(WidgetClickActivity.EXTRA_SHORT_ID, post.shortId)
+        }
+      )
+    }
+  Row(
+    verticalAlignment = Alignment.CenterVertically,
+    modifier =
+      modifier.fillMaxWidth().cornerRadius(8.dp).background(GlanceTheme.colors.secondaryContainer),
+  ) {
+    val titleModifier =
+      GlanceModifier.defaultWeight()
+        .padding(horizontal = 8.dp, vertical = 4.dp)
+        .padding(start = 4.dp)
+    val commentsModifier =
+      GlanceModifier.padding(horizontal = 8.dp, vertical = 4.dp).padding(horizontal = 4.dp)
+    Text(
+      text = post.title,
+      modifier = if (postAction != null) titleModifier.clickable(postAction) else titleModifier,
+      maxLines = 1,
+      style =
+        TextStyle(color = GlanceTheme.colors.onSecondaryContainer, fontSize = titleStyle.fontSize),
+    )
+    Image(
+      provider = ImageProvider(R.drawable.ic_comment),
+      contentDescription =
+        context.resources.getQuantityString(
+          R.plurals.comments,
+          post.commentCount,
+          post.commentCount,
+        ),
+      colorFilter = ColorFilter.tint(GlanceTheme.colors.onSecondaryContainer),
+      modifier =
+        if (commentsAction != null) commentsModifier.clickable(commentsAction)
+        else commentsModifier,
+    )
+  }
+}
+
+@OptIn(ExperimentalGlancePreviewApi::class)
+@Preview
+@GlanceComposable
+@Composable
+private fun WidgetPostEntryPreview() {
+  WidgetPostEntry(generatedWidgetPreviewPosts().first(), actionsEnabled = false)
+}

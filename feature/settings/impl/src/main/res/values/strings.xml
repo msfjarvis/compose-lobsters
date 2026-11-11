@@ -1,0 +1,28 @@
+<!--
+ ~ Copyright © Harsh Shandilya.
+ ~ Use of this source code is governed by an MIT-style
+ ~ license that can be found in the LICENSE file or at
+ ~ https://opensource.org/licenses/MIT.
+ -->
+<resources>
+  <string name="data_management">Data Management</string>
+  <string name="data_transfer">Data transfer</string>
+  <string name="import_and_export_your_saved_posts">Import and export your saved posts</string>
+  <string name="posts">Posts</string>
+  <string name="version">Version</string>
+  <string name="version_placeholder">%1$s (%2$s)</string>
+  <string name="posts_saved_locally">%1$s posts saved locally</string>
+  <string name="saved_posts">Saved posts</string>
+  <string name="tag_filtering">Tag filtering</string>
+  <string name="filter_posts_by_tags">Filter posts by tags</string>
+  <string name="about">About</string>
+  <string name="libraries">Libraries</string>
+  <string name="view_open_source_libraries_used_in_this_">View open source libraries used in this app</string>
+  <string name="source_code">Source code</string>
+  <string name="view_the_source_code_on_github">View the source code on GitHub</string>
+  <string name="import_action">Import</string>
+  <string name="export">Export</string>
+  <string name="enable_post_a_day_reminders">Enable post-a-day reminders</string>
+  <string name="enable_post_a_day_reminders_summary">Get a notification with a random saved post every day</string>
+  <string name="daily_saved_post_reminder_time">Reminder time</string>
+</resources>

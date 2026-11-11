@@ -98,8 +98,13 @@ metro { unusedGraphInputsSeverity = DiagnosticSeverity.ERROR }
 
 moduleGraphAssert {
   assertOnAnyBuild = true
-  maxHeight = 4
-  restricted = arrayOf(":core -X> :.*")
+  restricted =
+    arrayOf(
+      ":core:.* -X> :feature:.*",
+      ":core:.* -X> :android",
+      ":feature:.*:api -X> :feature:.*",
+      ":feature:.*:impl -X> :feature:.*:impl",
+    )
 }
 
 dependencies {
@@ -116,9 +121,6 @@ dependencies {
   implementation(libs.androidx.compose.animation.core)
   implementation(libs.androidx.compose.foundation)
   implementation(libs.androidx.compose.foundation.layout)
-  implementation(libs.androidx.compose.glance)
-  implementation(libs.androidx.compose.glance.core)
-  implementation(libs.androidx.compose.glance.m3)
   implementation(libs.androidx.compose.material.icons.core)
   implementation(libs.androidx.compose.material.icons.extended)
   implementation(libs.androidx.compose.material3)
@@ -132,6 +134,7 @@ dependencies {
   implementation(libs.androidx.compose.ui.text)
   implementation(libs.androidx.compose.ui.unit)
   implementation(libs.androidx.annotation)
+  implementation(libs.androidx.browser)
   implementation(libs.androidx.collection)
   implementation(libs.androidx.core)
   implementation(libs.androidx.core.splashscreen)
@@ -159,6 +162,7 @@ dependencies {
   implementation(libs.metrox.viewmodel)
   implementation(libs.metrox.viewmodel.compose)
   implementation(libs.okhttp.core)
+  implementation(libs.okhttp.loggingInterceptor)
   add("gplayImplementation", libs.play.app.update)
   implementation(libs.retrofit)
   implementation(libs.sentry)
@@ -170,14 +174,32 @@ dependencies {
   implementation(libs.unfurl)
   implementation(libs.zipline)
   implementation(libs.zipline.loader)
-  implementation(projects.api)
-  implementation(projects.common)
-  implementation(projects.core)
-  implementation(projects.databaseCore)
-  implementation(projects.databaseImpl)
+  implementation(projects.core.network.api)
+  implementation(projects.core.network.impl)
+  implementation(projects.core.parser.api)
+  implementation(projects.core.parser.impl)
+  implementation(projects.core.work.api)
+  implementation(projects.core.work.impl)
+  implementation(projects.core.common)
+  implementation(projects.core.navigation.api)
+  implementation(projects.feature.posts.api)
+  implementation(projects.feature.posts.impl)
+  implementation(projects.feature.discussion.impl)
+  implementation(projects.feature.profile.impl)
+  implementation(projects.feature.auth.impl)
+  implementation(projects.feature.tags.impl)
+  implementation(projects.feature.settings.impl)
+  implementation(projects.feature.search.api)
+  implementation(projects.feature.search.impl)
+  implementation(projects.feature.reminders.api)
+  implementation(projects.feature.reminders.impl)
+  implementation(projects.feature.widgets.api)
+  implementation(projects.feature.widgets.impl)
+  implementation(projects.core.navigation.impl)
+  implementation(projects.core.database.api)
+  implementation(projects.core.database.impl)
+  implementation(projects.core.ui)
   implementation(projects.model)
-
-  compileOnly(libs.androidx.compose.glance.preview)
 
   runtimeOnly(libs.androidx.profileinstaller)
 
@@ -189,6 +211,7 @@ dependencies {
   androidTestImplementation(libs.androidx.test.ext.junit)
   androidTestImplementation(libs.androidx.test.rules)
   androidTestImplementation(libs.androidx.test.runner)
+  androidTestImplementation(libs.androidx.compose.ui.test.junit4)
 
   addTestDependencies(project)
 }

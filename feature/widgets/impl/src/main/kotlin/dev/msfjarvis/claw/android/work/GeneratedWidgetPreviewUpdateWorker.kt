@@ -1,0 +1,79 @@
+/*
+ * Copyright © Harsh Shandilya.
+ * Use of this source code is governed by an MIT-style
+ * license that can be found in the LICENSE file or at
+ * https://opensource.org/licenses/MIT.
+ */
+package dev.msfjarvis.claw.android.work
+
+import android.content.Context
+import android.os.Build
+import android.util.Log
+import androidx.annotation.RequiresApi
+import androidx.glance.appwidget.GlanceAppWidgetManager
+import androidx.work.CoroutineWorker
+import androidx.work.OneTimeWorkRequest
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.WorkerParameters
+import dev.msfjarvis.claw.android.glance.SavedPostsWidgetReceiver
+import dev.msfjarvis.claw.android.glance.generatedWidgetPreviewDelayMinutes
+import dev.msfjarvis.claw.core.work.api.WorkerInstanceFactory
+import dev.msfjarvis.claw.core.work.api.WorkerKey
+import dev.zacsweers.metro.AppScope
+import dev.zacsweers.metro.Assisted
+import dev.zacsweers.metro.AssistedFactory
+import dev.zacsweers.metro.AssistedInject
+import dev.zacsweers.metro.ContributesIntoMap
+import dev.zacsweers.metro.binding
+import java.util.concurrent.TimeUnit
+
+@AssistedInject
+@RequiresApi(Build.VERSION_CODES.VANILLA_ICE_CREAM)
+class GeneratedWidgetPreviewUpdateWorker(
+  context: Context,
+  @Assisted params: WorkerParameters,
+) : CoroutineWorker(context, params) {
+  override suspend fun doWork(): Result {
+    try {
+      val result =
+        GlanceAppWidgetManager(applicationContext)
+          .setWidgetPreviews(SavedPostsWidgetReceiver::class)
+      if (Log.isLoggable(TAG, Log.DEBUG)) {
+        Log.d(TAG, "GlanceAppWidgetManager#setWidgetPreviews -> $result")
+      }
+    } catch (_: IllegalArgumentException) {
+      // Workaround for Motorola Android 15 bug where AppWidgetServiceImpl incorrectly
+      // reports registered widgets as invalid when setting previews.
+      // See: https://claw.sentry.io/share/issue/f8ee09821d8840b9b86293d3ffb627d3/
+    }
+    return Result.success()
+  }
+
+  companion object {
+    private const val TAG = "WidgetPreview"
+    const val UNIQUE_WORK_NAME = "generatedWidgetPreviewUpdate"
+
+    fun enqueue(workManager: WorkManager) {
+      workManager.enqueueUniqueWork(
+        UNIQUE_WORK_NAME,
+        androidx.work.ExistingWorkPolicy.KEEP,
+        request(),
+      )
+    }
+
+    fun request(): OneTimeWorkRequest {
+      return OneTimeWorkRequestBuilder<GeneratedWidgetPreviewUpdateWorker>()
+        .setInitialDelay(generatedWidgetPreviewDelayMinutes(), TimeUnit.MINUTES)
+        .build()
+    }
+  }
+
+  @WorkerKey(GeneratedWidgetPreviewUpdateWorker::class)
+  @ContributesIntoMap(
+    AppScope::class,
+    binding = binding<WorkerInstanceFactory<*>>(),
+  )
+  @AssistedFactory
+  abstract class Factory : WorkerInstanceFactory<GeneratedWidgetPreviewUpdateWorker>
+}

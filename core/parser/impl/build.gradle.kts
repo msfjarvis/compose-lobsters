@@ -12,6 +12,7 @@ plugins {
   alias(libs.plugins.android.junit5)
   alias(libs.plugins.dependencyAnalysis)
   alias(libs.plugins.metro)
+  alias(libs.plugins.zipline)
 }
 
 android {

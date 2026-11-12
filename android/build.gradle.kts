@@ -150,6 +150,7 @@ dependencies {
   implementation(libs.androidx.work.runtime)
   implementation(libs.coil3.compose)
   implementation(libs.coil3.core)
+  implementation(libs.coil3.network.okhttp)
   implementation(libs.eithernet)
   implementation(libs.kotlin.parcelize.runtime)
   implementation(libs.kotlinx.collections.immutable)

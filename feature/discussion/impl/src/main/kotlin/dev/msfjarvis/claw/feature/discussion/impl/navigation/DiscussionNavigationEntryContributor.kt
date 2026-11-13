@@ -29,6 +29,7 @@ fun discussionNavigationEntryContributor(
     CommentsPage(
       postId = destination.postId,
       commentsUrl = destination.commentsUrl,
+      header = destination.header,
       postActions = postActions,
       contentPadding = contentPadding,
       openUserProfile = openUserProfile,

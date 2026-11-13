@@ -14,7 +14,7 @@ internal val TEST_POST_ACTIONS =
   object : PostActions {
     override fun viewPost(postId: String, postUrl: String, commentsUrl: String) = Unit
 
-    override fun viewComments(postId: String, commentsUrl: String) = Unit
+    override fun viewComments(post: UIPost) = Unit
 
     override fun viewCommentsPage(post: UIPost) = Unit
 

@@ -74,6 +74,7 @@ import dev.msfjarvis.claw.android.ui.lists.SearchResultsList
 import dev.msfjarvis.claw.android.ui.navigation.AboutLibraries
 import dev.msfjarvis.claw.android.ui.navigation.ClawNavigationType
 import dev.msfjarvis.claw.android.ui.navigation.Comments
+import dev.msfjarvis.claw.android.ui.navigation.CommentsHeaderData
 import dev.msfjarvis.claw.android.ui.navigation.Hottest
 import dev.msfjarvis.claw.android.ui.navigation.Login
 import dev.msfjarvis.claw.android.ui.navigation.Newest
@@ -96,6 +97,7 @@ import dev.msfjarvis.claw.feature.search.api.SearchUiState
 import dev.msfjarvis.claw.feature.settings.impl.navigation.settingsNavigationEntryContributor
 import dev.msfjarvis.claw.feature.tags.impl.TagFilterViewModel
 import dev.msfjarvis.claw.feature.tags.impl.TagList
+import dev.msfjarvis.claw.model.UIPost
 import dev.msfjarvis.claw.navigation.api.NavigationEntryContributor
 import dev.msfjarvis.claw.navigation.api.TopLevelDestination
 import dev.msfjarvis.claw.navigation.impl.BackStackNavigator
@@ -255,8 +257,8 @@ fun LobstersPostsScreen(
         checkPostRead = postsViewModel::isPostRead,
         checkPostSaved = postsViewModel::isPostSaved,
         loadLinkMetadata = postsViewModel::getLinkMetadata,
-      ) { postId, commentsUrl ->
-        navigateToDestination(Comments(postId, commentsUrl), false)
+      ) { post ->
+        navigateToDestination(post.toCommentsDestination(), false)
       }
     }
 
@@ -430,8 +432,8 @@ fun LobstersPostsScreen(
                     checkPostRead = postsViewModel::isPostRead,
                     checkPostSaved = postsViewModel::isPostSaved,
                     loadLinkMetadata = postsViewModel::getLinkMetadata,
-                  ) { postId, commentsUrl ->
-                    navigateToDestination(Comments(postId, commentsUrl), true)
+                  ) { post ->
+                    navigateToDestination(post.toCommentsDestination(), true)
                   }
                 },
               contentPadding = contentPadding,
@@ -510,6 +512,13 @@ fun LobstersPostsScreen(
     }
   }
 }
+
+private fun UIPost.toCommentsDestination() =
+  Comments(
+    postId = shortId,
+    commentsUrl = commentsUrl,
+    header = CommentsHeaderData(title, tags, url, submitter, userIsAuthor),
+  )
 
 @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
 fun navigateTo(

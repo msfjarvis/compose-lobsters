@@ -53,7 +53,7 @@ fun LobstersListItem(
       isSaved = isSaved,
       isRead = isRead,
       onPostClick = { postActions.viewPost(it.shortId, it.url, it.commentsUrl) },
-      onCommentsClick = { postActions.viewComments(it.shortId, it.commentsUrl) },
+      onCommentsClick = { postActions.viewComments(it) },
       onSaveClick = postActions::toggleSave,
       modifier = modifier,
     )

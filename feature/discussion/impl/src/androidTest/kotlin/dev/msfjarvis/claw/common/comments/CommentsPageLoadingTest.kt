@@ -7,13 +7,20 @@
 package dev.msfjarvis.claw.common.comments
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.ProgressBarRangeInfo
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.getUnclippedBoundsInRoot
+import androidx.compose.ui.test.hasProgressBarRangeInfo
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.unit.dp
 import com.google.common.truth.Truth.assertThat
 import dev.msfjarvis.claw.android.ui.navigation.CommentsHeaderData
 import dev.msfjarvis.claw.common.posts.PostActions
@@ -50,7 +57,7 @@ class CommentsPageLoadingTest {
         commentCount = 0,
         commentsUrl = "https://lobste.rs/s/id",
       )
-    val displayedHeader = mutableStateOf<CommentsHeaderData?>(header)
+    val displayedHeader = mutableStateOf<CommentsHeaderData?>(null)
     val state = mutableStateOf<NetworkState>(NetworkState.Loading)
     val nodes = MutableStateFlow<List<CommentNode>>(emptyList())
     var openedPost: OpenedPost? = null
@@ -95,9 +102,19 @@ class CommentsPageLoadingTest {
           upvoteComment = {},
           unvoteComment = {},
           openReplyScreen = { _, _ -> },
+          modifier = Modifier.fillMaxSize(),
         )
       }
     }
+    val screen = compose.onRoot().getUnclippedBoundsInRoot()
+    val progress =
+      compose
+        .onNode(hasProgressBarRangeInfo(ProgressBarRangeInfo.Indeterminate))
+        .getUnclippedBoundsInRoot()
+    assertThat((progress.top.value + progress.bottom.value) / 2)
+      .isWithin(2.dp.value)
+      .of((screen.top.value + screen.bottom.value) / 2)
+    compose.runOnIdle { displayedHeader.value = header }
     compose.onNodeWithText("List title").assertIsDisplayed()
     compose.onNodeWithText("kotlin").assertIsDisplayed()
     compose.onNodeWithText("Submitted by alice").assertIsDisplayed()

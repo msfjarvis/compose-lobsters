@@ -159,7 +159,10 @@ internal fun CommentsPageInternal(
       } else if (details == null || seenCommentsState == SeenCommentsState.Loading) {
         item {
           Box(
-            modifier = Modifier.fillMaxWidth().padding(32.dp),
+            modifier =
+              (if (displayedHeader == null) Modifier.fillParentMaxSize()
+                else Modifier.fillMaxWidth())
+                .padding(32.dp),
             contentAlignment = Alignment.Center,
           ) {
             ProgressBar()

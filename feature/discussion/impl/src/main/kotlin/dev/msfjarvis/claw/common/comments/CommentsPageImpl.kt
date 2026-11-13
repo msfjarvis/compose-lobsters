@@ -66,9 +66,6 @@ internal fun buildCommentsVisitDecision(
 @Composable
 internal fun CommentsPageInternal(
   header: CommentsHeaderData?,
-  postId: String,
-  commentsUrl: String,
-  details: UIPost?,
   networkState: NetworkState,
   postActions: PostActions,
   seenCommentsState: SeenCommentsState,
@@ -86,6 +83,8 @@ internal fun CommentsPageInternal(
   openReplyScreen: (String, String) -> Unit,
   modifier: Modifier = Modifier,
 ) {
+  val details = (networkState as? NetworkState.Success<*>)?.data as? UIPost
+
   LaunchedEffect(key1 = details, key2 = seenCommentsState) {
     if (details != null && seenCommentsState != SeenCommentsState.Loading) {
       createCommentNodes(details, seenCommentsState)
@@ -127,8 +126,6 @@ internal fun CommentsPageInternal(
         item(key = "post_header") {
           CommentsHeader(
             header = header,
-            postId = postId,
-            commentsUrl = commentsUrl,
             description = details?.description.orEmpty(),
             postActions = postActions,
             openUserProfile = openUserProfile,

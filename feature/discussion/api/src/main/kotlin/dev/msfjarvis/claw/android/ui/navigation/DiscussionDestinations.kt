@@ -15,6 +15,8 @@ import kotlinx.serialization.Serializable
 @Parcelize
 @Serializable
 data class CommentsHeaderData(
+  val postId: String,
+  val commentsUrl: String,
   val title: String,
   val tags: List<String>,
   val url: String,

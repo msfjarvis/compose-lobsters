@@ -517,7 +517,7 @@ private fun UIPost.toCommentsDestination() =
   Comments(
     postId = shortId,
     commentsUrl = commentsUrl,
-    header = CommentsHeaderData(title, tags, url, submitter, userIsAuthor),
+    header = CommentsHeaderData(shortId, commentsUrl, title, tags, url, submitter, userIsAuthor),
   )
 
 @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)

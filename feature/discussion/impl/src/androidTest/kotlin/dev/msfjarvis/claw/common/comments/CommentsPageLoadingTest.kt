@@ -13,6 +13,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
+import com.google.common.truth.Truth.assertThat
 import dev.msfjarvis.claw.android.ui.navigation.CommentsHeaderData
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.core.NetworkState
@@ -24,13 +26,23 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import org.junit.Rule
 import org.junit.Test
 
+private data class OpenedPost(val postId: String, val postUrl: String, val commentsUrl: String)
+
 class CommentsPageLoadingTest {
   @get:Rule val compose = createComposeRule()
 
   @Test
   fun headerRemainsVisibleWhileLoadingAndAfterDetailsArrive() {
     val header =
-      CommentsHeaderData("List title", listOf("kotlin"), "https://example.com", "alice", false)
+      CommentsHeaderData(
+        "id",
+        "https://lobste.rs/s/id",
+        "List title",
+        listOf("kotlin"),
+        "https://example.com",
+        "alice",
+        false,
+      )
     val details =
       UIPost(
         discussion = Discussion(listOf(SourceStory("id", "", "API title", "", "bob", emptyList()))),
@@ -40,9 +52,12 @@ class CommentsPageLoadingTest {
       )
     val state = mutableStateOf<NetworkState>(NetworkState.Loading)
     val nodes = MutableStateFlow<List<CommentNode>>(emptyList())
+    var openedPost: OpenedPost? = null
     val actions =
       object : PostActions {
-        override fun viewPost(postId: String, postUrl: String, commentsUrl: String) = Unit
+        override fun viewPost(postId: String, postUrl: String, commentsUrl: String) {
+          openedPost = OpenedPost(postId, postUrl, commentsUrl)
+        }
 
         override fun viewComments(post: UIPost) = Unit
 
@@ -64,9 +79,6 @@ class CommentsPageLoadingTest {
       MaterialTheme {
         CommentsPageInternal(
           header = header,
-          postId = "id",
-          commentsUrl = details.commentsUrl,
-          details = (state.value as? NetworkState.Success<*>)?.data as? UIPost,
           networkState = state.value,
           postActions = actions,
           seenCommentsState = SeenCommentsState.NoBaseline,
@@ -88,6 +100,11 @@ class CommentsPageLoadingTest {
     compose.onNodeWithText("List title").assertIsDisplayed()
     compose.onNodeWithText("kotlin").assertIsDisplayed()
     compose.onNodeWithText("Submitted by alice").assertIsDisplayed()
+    compose.onNodeWithText("https://example.com").performClick()
+    compose.runOnIdle {
+      assertThat(openedPost)
+        .isEqualTo(OpenedPost("id", "https://example.com", "https://lobste.rs/s/id"))
+    }
     compose.onNodeWithText("Loaded description").assertDoesNotExist()
     compose.runOnIdle { state.value = NetworkState.Success(details) }
     compose.onNodeWithText("List title").assertIsDisplayed()

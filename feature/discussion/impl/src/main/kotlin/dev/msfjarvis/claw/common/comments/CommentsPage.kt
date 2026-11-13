@@ -31,15 +31,23 @@ internal fun CommentsPage(
   openUserProfile: (String) -> Unit,
   openReplyScreen: (postId: String, commentId: String, commentText: String) -> Unit,
   modifier: Modifier = Modifier,
-  viewModel: CommentsViewModel = metroViewModel(key = postId),
+  viewModel: CommentsViewModel = metroViewModel(key = header?.postId ?: postId),
 ) {
-  LaunchedEffect(postId, commentsUrl) {
-    viewModel.loadPostDetails(postId, commentsUrl)
+  val resolvedPostId = header?.postId ?: postId
+  val resolvedCommentsUrl = header?.commentsUrl ?: commentsUrl
+  LaunchedEffect(resolvedPostId, resolvedCommentsUrl) {
+    viewModel.loadPostDetails(resolvedPostId, resolvedCommentsUrl)
   }
   val seenCommentsState by
-    produceState<SeenCommentsState>(initialValue = SeenCommentsState.Loading, key1 = postId) {
+    produceState<SeenCommentsState>(
+      initialValue = SeenCommentsState.Loading,
+      key1 = resolvedPostId,
+    ) {
       value =
-        SeenCommentsState.from(seenCommentIds = viewModel.getSeenComments(postId), hasLoaded = true)
+        SeenCommentsState.from(
+          seenCommentIds = viewModel.getSeenComments(resolvedPostId),
+          hasLoaded = true,
+        )
     }
   val commentListState = rememberLazyListState()
   val isLoggedIn by viewModel.isLoggedIn.collectAsStateWithLifecycle()
@@ -49,14 +57,19 @@ internal fun CommentsPage(
   val displayedHeader =
     header
       ?: details?.let {
-        CommentsHeaderData(it.title, it.tags, it.url, it.submitter, it.userIsAuthor)
+        CommentsHeaderData(
+          resolvedPostId,
+          resolvedCommentsUrl,
+          it.title,
+          it.tags,
+          it.url,
+          it.submitter,
+          it.userIsAuthor,
+        )
       }
 
   CommentsPageInternal(
     header = displayedHeader,
-    postId = postId,
-    commentsUrl = commentsUrl,
-    details = details,
     networkState = postDetails,
     postActions = postActions,
     seenCommentsState = seenCommentsState,
@@ -72,7 +85,7 @@ internal fun CommentsPage(
     upvoteComment = viewModel::upvoteComment,
     unvoteComment = viewModel::unvoteComment,
     openReplyScreen = { commentId, commentText ->
-      openReplyScreen(postId, commentId, commentText)
+      openReplyScreen(resolvedPostId, commentId, commentText)
     },
     modifier = modifier.fillMaxSize(),
   )

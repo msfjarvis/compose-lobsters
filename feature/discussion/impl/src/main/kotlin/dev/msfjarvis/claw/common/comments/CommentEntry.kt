@@ -73,8 +73,6 @@ import kotlinx.collections.immutable.toImmutableList
 @Composable
 internal fun CommentsHeader(
   header: CommentsHeaderData,
-  postId: String,
-  commentsUrl: String,
   description: String,
   postActions: PostActions,
   openUserProfile: (String) -> Unit,
@@ -100,7 +98,7 @@ internal fun CommentsHeader(
           linkMetadata = linkMetadata,
           modifier =
             Modifier.clickable {
-              postActions.viewPost(postId, linkMetadata.url, commentsUrl)
+              postActions.viewPost(header.postId, linkMetadata.url, header.commentsUrl)
             },
         )
         Spacer(Modifier.height(4.dp))

@@ -84,6 +84,19 @@ internal fun CommentsPageInternal(
   modifier: Modifier = Modifier,
 ) {
   val details = (networkState as? NetworkState.Success<*>)?.data as? UIPost
+  val displayedHeader =
+    header
+      ?: details?.let {
+        CommentsHeaderData(
+          it.shortId,
+          it.commentsUrl,
+          it.title,
+          it.tags,
+          it.url,
+          it.submitter,
+          it.userIsAuthor,
+        )
+      }
 
   LaunchedEffect(key1 = details, key2 = seenCommentsState) {
     if (details != null && seenCommentsState != SeenCommentsState.Loading) {
@@ -122,10 +135,10 @@ internal fun CommentsPageInternal(
 
   Surface(color = MaterialTheme.colorScheme.surfaceVariant) {
     LazyColumn(modifier = modifier, contentPadding = contentPadding, state = commentListState) {
-      if (header != null) {
+      if (displayedHeader != null) {
         item(key = "post_header") {
           CommentsHeader(
-            header = header,
+            header = displayedHeader,
             description = details?.description.orEmpty(),
             postActions = postActions,
             openUserProfile = openUserProfile,

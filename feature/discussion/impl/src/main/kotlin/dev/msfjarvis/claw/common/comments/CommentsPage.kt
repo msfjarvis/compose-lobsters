@@ -17,8 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dev.msfjarvis.claw.android.ui.navigation.CommentsHeaderData
 import dev.msfjarvis.claw.common.posts.PostActions
-import dev.msfjarvis.claw.core.NetworkState.Success
-import dev.msfjarvis.claw.model.UIPost
 import dev.zacsweers.metrox.viewmodel.metroViewModel
 
 @Composable
@@ -52,25 +50,9 @@ internal fun CommentsPage(
   val commentListState = rememberLazyListState()
   val isLoggedIn by viewModel.isLoggedIn.collectAsStateWithLifecycle()
 
-  val postDetails = viewModel.postDetails
-  val details = (postDetails as? Success<*>)?.data as? UIPost
-  val displayedHeader =
-    header
-      ?: details?.let {
-        CommentsHeaderData(
-          resolvedPostId,
-          resolvedCommentsUrl,
-          it.title,
-          it.tags,
-          it.url,
-          it.submitter,
-          it.userIsAuthor,
-        )
-      }
-
   CommentsPageInternal(
-    header = displayedHeader,
-    networkState = postDetails,
+    header = header,
+    networkState = viewModel.postDetails,
     postActions = postActions,
     seenCommentsState = seenCommentsState,
     markSeenComments = viewModel::markSeenComments,

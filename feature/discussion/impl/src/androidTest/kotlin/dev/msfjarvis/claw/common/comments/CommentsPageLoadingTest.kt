@@ -50,6 +50,7 @@ class CommentsPageLoadingTest {
         commentCount = 0,
         commentsUrl = "https://lobste.rs/s/id",
       )
+    val displayedHeader = mutableStateOf<CommentsHeaderData?>(header)
     val state = mutableStateOf<NetworkState>(NetworkState.Loading)
     val nodes = MutableStateFlow<List<CommentNode>>(emptyList())
     var openedPost: OpenedPost? = null
@@ -78,7 +79,7 @@ class CommentsPageLoadingTest {
     compose.setContent {
       MaterialTheme {
         CommentsPageInternal(
-          header = header,
+          header = displayedHeader.value,
           networkState = state.value,
           postActions = actions,
           seenCommentsState = SeenCommentsState.NoBaseline,
@@ -110,7 +111,11 @@ class CommentsPageLoadingTest {
     compose.onNodeWithText("List title").assertIsDisplayed()
     compose.onNodeWithText("API title").assertDoesNotExist()
     compose.onNodeWithText("Loaded description").assertIsDisplayed()
+    compose.runOnIdle { displayedHeader.value = null }
+    compose.onNodeWithText("API title").assertIsDisplayed()
+    compose.onNodeWithText("Submitted by bob").assertIsDisplayed()
     compose.runOnIdle {
+      displayedHeader.value = header
       state.value = NetworkState.Error(IllegalStateException(), "Failed to load comments")
     }
     compose.onNodeWithText("List title").assertIsDisplayed()

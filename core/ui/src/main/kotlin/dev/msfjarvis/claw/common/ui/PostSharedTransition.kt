@@ -12,6 +12,9 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.navigation3.ui.LocalNavAnimatedContentScope
 
+// The navigation host and independently contributed destinations share one transition scope.
+// A null default keeps standalone screens and previews usable outside the navigation host.
+@Suppress("ComposeCompositionLocalUsage")
 val LocalPostSharedTransitionScope = staticCompositionLocalOf<SharedTransitionScope?> { null }
 
 @Composable

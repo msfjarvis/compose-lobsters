@@ -21,7 +21,7 @@ fun PostActions(
   checkPostRead: (UIPost) -> Boolean,
   checkPostSaved: (UIPost) -> Boolean,
   loadLinkMetadata: suspend (String) -> LinkMetadata,
-  navigateToComments: (String, String) -> Unit,
+  navigateToComments: (UIPost) -> Unit,
 ): PostActions {
   return object : PostActions {
     override fun viewPost(postId: String, postUrl: String, commentsUrl: String) {
@@ -29,9 +29,9 @@ fun PostActions(
       uriHandler.openUri(postUrl.ifEmpty { commentsUrl })
     }
 
-    override fun viewComments(postId: String, commentsUrl: String) {
-      markPostAsRead(postId)
-      navigateToComments(postId, commentsUrl)
+    override fun viewComments(post: UIPost) {
+      markPostAsRead(post.shortId)
+      navigateToComments(post)
     }
 
     override fun viewCommentsPage(post: UIPost) {

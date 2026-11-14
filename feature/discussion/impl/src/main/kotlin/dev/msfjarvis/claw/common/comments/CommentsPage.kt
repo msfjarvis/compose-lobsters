@@ -6,7 +6,6 @@
  */
 package dev.msfjarvis.claw.common.comments
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -14,82 +13,62 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.produceState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.msfjarvis.claw.android.ui.navigation.CommentsHeaderData
 import dev.msfjarvis.claw.common.posts.PostActions
-import dev.msfjarvis.claw.common.ui.NetworkError
-import dev.msfjarvis.claw.common.ui.ProgressBar
-import dev.msfjarvis.claw.core.NetworkState.Error
-import dev.msfjarvis.claw.core.NetworkState.Loading
-import dev.msfjarvis.claw.core.NetworkState.Success
-import dev.msfjarvis.claw.model.UIPost
 import dev.zacsweers.metrox.viewmodel.metroViewModel
 
 @Composable
 internal fun CommentsPage(
   postId: String,
   commentsUrl: String,
+  header: CommentsHeaderData?,
   postActions: PostActions,
   contentPadding: PaddingValues,
   openUserProfile: (String) -> Unit,
   openReplyScreen: (postId: String, commentId: String, commentText: String) -> Unit,
   modifier: Modifier = Modifier,
-  viewModel: CommentsViewModel = metroViewModel(key = postId),
+  viewModel: CommentsViewModel = metroViewModel(key = header?.postId ?: postId),
 ) {
-  LaunchedEffect(postId, commentsUrl) {
-    viewModel.loadPostDetails(postId, commentsUrl)
+  val resolvedPostId = header?.postId ?: postId
+  val resolvedCommentsUrl = header?.commentsUrl ?: commentsUrl
+  LaunchedEffect(resolvedPostId, resolvedCommentsUrl) {
+    viewModel.loadPostDetails(resolvedPostId, resolvedCommentsUrl)
   }
   val seenCommentsState by
-    produceState<SeenCommentsState>(initialValue = SeenCommentsState.Loading, key1 = postId) {
+    produceState<SeenCommentsState>(
+      initialValue = SeenCommentsState.Loading,
+      key1 = resolvedPostId,
+    ) {
       value =
-        SeenCommentsState.from(seenCommentIds = viewModel.getSeenComments(postId), hasLoaded = true)
+        SeenCommentsState.from(
+          seenCommentIds = viewModel.getSeenComments(resolvedPostId),
+          hasLoaded = true,
+        )
     }
   val commentListState = rememberLazyListState()
   val isLoggedIn by viewModel.isLoggedIn.collectAsStateWithLifecycle()
 
-  when (val postDetails = viewModel.postDetails) {
-    is Success<*> -> {
-      if (seenCommentsState != SeenCommentsState.Loading) {
-        CommentsPageInternal(
-          details = postDetails.data as UIPost,
-          postActions = postActions,
-          seenCommentsState = seenCommentsState,
-          markSeenComments = viewModel::markSeenComments,
-          openUserProfile = openUserProfile,
-          contentPadding = contentPadding,
-          commentListState = commentListState,
-          commentNodes = viewModel.commentNodes,
-          createCommentNodes = viewModel::createCommentNodes,
-          updateCommentNodeExpanded = viewModel::updateCommentNodeExpanded,
-          updateUnreadStatus = viewModel::updateUnreadStatus,
-          isLoggedIn = isLoggedIn,
-          upvoteComment = viewModel::upvoteComment,
-          unvoteComment = viewModel::unvoteComment,
-          openReplyScreen = { commentId, commentText ->
-            openReplyScreen(postId, commentId, commentText)
-          },
-          modifier = modifier.fillMaxSize(),
-        )
-      } else {
-        Box(modifier = Modifier.fillMaxSize()) {
-          ProgressBar(modifier = Modifier.align(Alignment.Center))
-        }
-      }
-    }
-    is Error -> {
-      Box(modifier = Modifier.fillMaxSize()) {
-        NetworkError(
-          label = postDetails.description,
-          error = postDetails.error,
-          modifier = Modifier.align(Alignment.Center),
-        )
-      }
-    }
-    Loading -> {
-      Box(modifier = Modifier.fillMaxSize()) {
-        ProgressBar(modifier = Modifier.align(Alignment.Center))
-      }
-    }
-  }
+  CommentsPageInternal(
+    header = header,
+    networkState = viewModel.postDetails,
+    postActions = postActions,
+    seenCommentsState = seenCommentsState,
+    markSeenComments = viewModel::markSeenComments,
+    openUserProfile = openUserProfile,
+    contentPadding = contentPadding,
+    commentListState = commentListState,
+    commentNodes = viewModel.commentNodes,
+    createCommentNodes = viewModel::createCommentNodes,
+    updateCommentNodeExpanded = viewModel::updateCommentNodeExpanded,
+    updateUnreadStatus = viewModel::updateUnreadStatus,
+    isLoggedIn = isLoggedIn,
+    upvoteComment = viewModel::upvoteComment,
+    unvoteComment = viewModel::unvoteComment,
+    openReplyScreen = { commentId, commentText ->
+      openReplyScreen(resolvedPostId, commentId, commentText)
+    },
+    modifier = modifier.fillMaxSize(),
+  )
 }

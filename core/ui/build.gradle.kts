@@ -34,6 +34,7 @@ dependencies {
   api(projects.model)
 
   implementation(libs.androidx.compose.animation)
+  implementation(libs.androidx.navigation3.ui)
   implementation(libs.androidx.compose.material.icons.core)
   implementation(libs.androidx.compose.material.icons.extended)
   implementation(libs.androidx.core)

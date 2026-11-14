@@ -7,6 +7,7 @@
 package dev.msfjarvis.claw.common.comments
 
 import android.widget.Toast
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
@@ -24,6 +25,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
@@ -32,7 +34,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import dev.msfjarvis.claw.android.ui.navigation.CommentsHeaderData
 import dev.msfjarvis.claw.common.posts.PostActions
+import dev.msfjarvis.claw.common.ui.NetworkError
+import dev.msfjarvis.claw.common.ui.ProgressBar
+import dev.msfjarvis.claw.common.ui.postSharedBounds
+import dev.msfjarvis.claw.core.NetworkState
 import dev.msfjarvis.claw.feature.discussion.impl.R
 import dev.msfjarvis.claw.model.Comment
 import dev.msfjarvis.claw.model.UIPost
@@ -59,7 +66,8 @@ internal fun buildCommentsVisitDecision(
 
 @Composable
 internal fun CommentsPageInternal(
-  details: UIPost,
+  header: CommentsHeaderData?,
+  networkState: NetworkState,
   postActions: PostActions,
   seenCommentsState: SeenCommentsState,
   markSeenComments: (String, List<Comment>) -> Unit,
@@ -76,8 +84,25 @@ internal fun CommentsPageInternal(
   openReplyScreen: (String, String) -> Unit,
   modifier: Modifier = Modifier,
 ) {
+  val details = (networkState as? NetworkState.Success<*>)?.data as? UIPost
+  val displayedHeader =
+    header
+      ?: details?.let {
+        CommentsHeaderData(
+          it.shortId,
+          it.commentsUrl,
+          it.title,
+          it.tags,
+          it.url,
+          it.submitter,
+          it.userIsAuthor,
+        )
+      }
+
   LaunchedEffect(key1 = details, key2 = seenCommentsState) {
-    createCommentNodes(details, seenCommentsState)
+    if (details != null && seenCommentsState != SeenCommentsState.Loading) {
+      createCommentNodes(details, seenCommentsState)
+    }
   }
 
   LaunchedEffect(key1 = seenCommentsState) { updateUnreadStatus(seenCommentsState) }
@@ -90,6 +115,7 @@ internal fun CommentsPageInternal(
   val commentNodes by commentNodes.collectAsStateWithLifecycle()
 
   LaunchedEffect(key1 = details, key2 = seenCommentsState) {
+    if (details == null || seenCommentsState == SeenCommentsState.Loading) return@LaunchedEffect
     val decision =
       buildCommentsVisitDecision(
         currentCommentIds = details.comments.map(Comment::shortId),
@@ -110,16 +136,40 @@ internal fun CommentsPageInternal(
 
   Surface(color = MaterialTheme.colorScheme.surfaceVariant) {
     LazyColumn(modifier = modifier, contentPadding = contentPadding, state = commentListState) {
-      item {
-        CommentsHeader(
-          post = details,
-          postActions = postActions,
-          openUserProfile = openUserProfile,
-          modifier = Modifier.testTag("comments_header"),
-        )
+      if (displayedHeader != null) {
+        item(key = "post_header") {
+          CommentsHeader(
+            header = displayedHeader,
+            description = details?.description.orEmpty(),
+            postActions = postActions,
+            openUserProfile = openUserProfile,
+            modifier = Modifier.postSharedBounds(displayedHeader.postId).testTag("comments_header"),
+          )
+        }
       }
 
-      if (commentNodes.isNotEmpty()) {
+      if (networkState is NetworkState.Error) {
+        item {
+          Box(
+            modifier = Modifier.fillMaxWidth().padding(32.dp),
+            contentAlignment = Alignment.Center,
+          ) {
+            NetworkError(label = networkState.description, error = networkState.error)
+          }
+        }
+      } else if (details == null || seenCommentsState == SeenCommentsState.Loading) {
+        item {
+          Box(
+            modifier =
+              (if (displayedHeader == null) Modifier.fillParentMaxSize()
+                else Modifier.fillMaxWidth())
+                .padding(32.dp),
+            contentAlignment = Alignment.Center,
+          ) {
+            ProgressBar()
+          }
+        }
+      } else if (commentNodes.isNotEmpty()) {
         item(key = "comments_header") {
           Text(
             text = stringResource(R.string.comments_label),

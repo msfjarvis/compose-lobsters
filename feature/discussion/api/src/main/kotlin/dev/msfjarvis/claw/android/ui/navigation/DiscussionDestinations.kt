@@ -14,8 +14,23 @@ import kotlinx.serialization.Serializable
 
 @Parcelize
 @Serializable
-data class Comments(val postId: String, val commentsUrl: String) :
-  NavKey, Parcelable, NonStackable {
+data class CommentsHeaderData(
+  val postId: String,
+  val commentsUrl: String,
+  val title: String,
+  val tags: List<String>,
+  val url: String,
+  val submitter: String,
+  val userIsAuthor: Boolean,
+) : Parcelable
+
+@Parcelize
+@Serializable
+data class Comments(
+  val postId: String,
+  val commentsUrl: String,
+  val header: CommentsHeaderData? = null,
+) : NavKey, Parcelable, NonStackable {
   override fun isSameStackEntry(other: NavKey): Boolean =
     other is Comments && postId == other.postId
 }

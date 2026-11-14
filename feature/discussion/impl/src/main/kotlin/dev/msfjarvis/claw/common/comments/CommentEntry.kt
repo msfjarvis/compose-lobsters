@@ -55,6 +55,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.github.michaelbull.result.coroutines.runSuspendCatching
 import com.github.michaelbull.result.onOk
+import dev.msfjarvis.claw.android.ui.navigation.CommentsHeaderData
 import dev.msfjarvis.claw.common.comments.reply.plainTextFromHtml
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.posts.PostTitle
@@ -65,22 +66,21 @@ import dev.msfjarvis.claw.common.ui.ThemedRichText
 import dev.msfjarvis.claw.common.ui.rewriteUrlIfLobstersPost
 import dev.msfjarvis.claw.core.ui.R as UiR
 import dev.msfjarvis.claw.model.LinkMetadata
-import dev.msfjarvis.claw.model.UIPost
 import kotlin.time.Clock
 import kotlin.time.Instant
 import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 internal fun CommentsHeader(
-  post: UIPost,
+  header: CommentsHeaderData,
+  description: String,
   postActions: PostActions,
   openUserProfile: (String) -> Unit,
   modifier: Modifier = Modifier,
 ) {
-  val primaryStory = post.discussion.first
   val linkMetadata by
-    produceState(initialValue = LinkMetadata(primaryStory.url, null), key1 = post) {
-      runSuspendCatching { postActions.getLinkMetadata(primaryStory.url) }
+    produceState(initialValue = LinkMetadata(header.url, null), key1 = header.url) {
+      runSuspendCatching { postActions.getLinkMetadata(header.url) }
         .onOk { metadata -> value = metadata }
     }
 
@@ -89,8 +89,8 @@ internal fun CommentsHeader(
       modifier = Modifier.padding(16.dp).fillMaxWidth(),
       verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-      PostTitle(title = primaryStory.title, isRead = false)
-      TagRow(tags = primaryStory.tags.toImmutableList())
+      PostTitle(title = header.title, isRead = false)
+      TagRow(tags = header.tags.toImmutableList())
       Spacer(Modifier.height(4.dp))
 
       if (linkMetadata.url.isNotBlank()) {
@@ -98,14 +98,14 @@ internal fun CommentsHeader(
           linkMetadata = linkMetadata,
           modifier =
             Modifier.clickable {
-              postActions.viewPost(post.shortId, linkMetadata.url, post.commentsUrl)
+              postActions.viewPost(header.postId, linkMetadata.url, header.commentsUrl)
             },
         )
         Spacer(Modifier.height(4.dp))
       }
 
-      if (post.description.isNotBlank()) {
-        ThemedRichText(post.description) {
+      if (description.isNotBlank()) {
+        ThemedRichText(description) {
           rewriteUrlIfLobstersPost(it)
         }
         Spacer(Modifier.height(4.dp))
@@ -113,11 +113,11 @@ internal fun CommentsHeader(
       Submitter(
         text =
           AnnotatedString(
-            "${if (primaryStory.userIsAuthor) "Authored" else "Submitted"} by ${primaryStory.submitter}"
+            "${if (header.userIsAuthor) "Authored" else "Submitted"} by ${header.submitter}"
           ),
-        avatarUrl = "https://lobste.rs/avatars/${primaryStory.submitter}-100.png",
-        contentDescription = stringResource(UiR.string.user_avatar_for, primaryStory.submitter),
-        modifier = Modifier.clickable { openUserProfile(primaryStory.submitter) },
+        avatarUrl = "https://lobste.rs/avatars/${header.submitter}-100.png",
+        contentDescription = stringResource(UiR.string.user_avatar_for, header.submitter),
+        modifier = Modifier.clickable { openUserProfile(header.submitter) },
       )
     }
   }

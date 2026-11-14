@@ -38,6 +38,7 @@ import dev.msfjarvis.claw.android.ui.navigation.CommentsHeaderData
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.ui.NetworkError
 import dev.msfjarvis.claw.common.ui.ProgressBar
+import dev.msfjarvis.claw.common.ui.postSharedBounds
 import dev.msfjarvis.claw.core.NetworkState
 import dev.msfjarvis.claw.feature.discussion.impl.R
 import dev.msfjarvis.claw.model.Comment
@@ -142,7 +143,7 @@ internal fun CommentsPageInternal(
             description = details?.description.orEmpty(),
             postActions = postActions,
             openUserProfile = openUserProfile,
-            modifier = Modifier.testTag("comments_header"),
+            modifier = Modifier.postSharedBounds(displayedHeader.postId).testTag("comments_header"),
           )
         }
       }

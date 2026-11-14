@@ -69,6 +69,13 @@
       "groupName": "AndroidX"
     },
     {
+      // Keep predictive shared-element back transitions working; see docs/navigation3-predictive-back-regression.md.
+      "matchPackageNames": [
+        "/^androidx\\.navigation3:/",
+      ],
+      "enabled": false,
+    },
+    {
       "matchPackageNames": [
         "/^io.sentry/",
         "/^sentry/",

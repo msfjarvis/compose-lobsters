@@ -32,6 +32,8 @@ dependencies {
   testImplementation(libs.eithernet.test.fixtures)
   testImplementation(libs.kotlin.reflect)
   testImplementation(libs.kotlinx.coroutines.test)
+  // Tests load HTML fixtures as resources, which dependency analysis cannot detect.
+  testRuntimeOnly(testFixtures(projects.htmlTestFixtures))
   implementation(projects.ziplineParser)
   addTestDependencies(project)
 }

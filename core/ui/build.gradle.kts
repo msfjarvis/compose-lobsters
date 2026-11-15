@@ -43,6 +43,7 @@ dependencies {
   implementation(libs.androidx.compose.material.icons.core)
   implementation(libs.androidx.compose.material.icons.extended)
   implementation(libs.androidx.core)
+  implementation(libs.androidx.core.ktx)
   implementation(libs.coil3.compose)
   implementation(projects.htmlRenderer)
 

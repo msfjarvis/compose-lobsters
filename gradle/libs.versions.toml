@@ -6,6 +6,7 @@ androidx-activity = "1.14.0-alpha03"
 androidx-annotation = "1.11.0"
 coil3 = "3.6.3"
 androidx-collection = "1.7.0"
+androidx-core = "1.19.1"
 compose-animation = "1.13.0-rc01"
 compose-foundation = "1.13.0-rc01"
 compose-icons = "1.7.8"
@@ -80,7 +81,8 @@ androidx-compose-ui-text = { module = "androidx.compose.ui:ui-text", version.ref
 androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose-ui" }
 androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose-ui" }
 androidx-compose-ui-unit = { module = "androidx.compose.ui:ui-unit", version.ref = "compose-ui" }
-androidx-core = "androidx.core:core:1.19.1"
+androidx-core = { module = "androidx.core:core", version.ref = "androidx-core" }
+androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
 androidx-core-splashscreen = "androidx.core:core-splashscreen:1.2.0"
 androidx-lifecycle-common = { module = "androidx.lifecycle:lifecycle-common", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidx-lifecycle" }

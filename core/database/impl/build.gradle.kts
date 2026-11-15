@@ -34,7 +34,6 @@ dependencies {
   implementation(projects.core.common)
   implementation(projects.core.database.api)
   implementation(libs.androidx.sqlite)
-  implementation(libs.kotlinx.datetime)
   implementation(libs.kotlinx.serialization.json)
   implementation(libs.sqldelight.androidDriver)
   implementation(libs.sqldelight.extensions.coroutines)

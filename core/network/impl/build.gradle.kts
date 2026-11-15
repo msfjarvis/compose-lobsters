@@ -14,8 +14,6 @@ plugins {
 }
 
 dependencies {
-  testImplementation(testFixtures(projects.htmlTestFixtures))
-
   implementation(platform(libs.okhttp.bom))
   implementation(libs.eithernet)
   implementation(libs.eithernet.integration.retrofit)

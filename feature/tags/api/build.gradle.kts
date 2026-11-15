@@ -16,8 +16,6 @@ android { namespace = "dev.msfjarvis.claw.feature.tags.api" }
 
 dependencies {
   api(projects.model)
-  implementation(projects.core.navigation.api)
   api(libs.androidx.navigation3.runtime)
-  api(libs.kotlinx.coroutines.core)
   api(libs.kotlinx.serialization.core)
 }

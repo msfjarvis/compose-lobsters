@@ -21,14 +21,11 @@ android {
 
 dependencies {
   api(projects.feature.profile.api)
-  implementation(projects.feature.discussion.api)
-  implementation(projects.feature.posts.api)
   implementation(projects.core.common)
   implementation(projects.core.network.api)
   implementation(projects.core.navigation.api)
   implementation(projects.core.ui)
   implementation(projects.model)
-  implementation(libs.androidx.compose.material.icons.extended)
   implementation(libs.androidx.lifecycle.viewmodel)
   implementation(libs.kotlinResult)
   implementation(libs.kotlinResult.coroutines)

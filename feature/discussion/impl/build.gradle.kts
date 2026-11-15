@@ -21,16 +21,12 @@ android { namespace = "dev.msfjarvis.claw.feature.discussion.impl" }
 
 dependencies {
   api(projects.feature.discussion.api)
-  implementation(projects.feature.posts.api)
-  implementation(projects.feature.profile.api)
-  implementation(projects.feature.auth.api)
   implementation(projects.core.common)
   implementation(projects.core.database.api)
   implementation(projects.core.navigation.api)
   implementation(projects.core.network.api)
   implementation(projects.core.ui)
   implementation(projects.model)
-  implementation(libs.androidx.activity.compose)
   implementation(libs.androidx.compose.animation)
   implementation(libs.androidx.material3.navigation3)
   implementation(libs.androidx.compose.material.icons.extended)
@@ -41,7 +37,6 @@ dependencies {
   implementation(libs.ksoup)
   implementation(libs.kotlinx.collections.immutable)
   implementation(libs.kotlinx.coroutines.core)
-  implementation(libs.kotlinx.datetime)
   implementation(libs.metrox.viewmodel)
   implementation(libs.metrox.viewmodel.compose)
 

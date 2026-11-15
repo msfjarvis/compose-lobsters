@@ -30,7 +30,6 @@ dependencies {
   implementation(projects.model)
   implementation(libs.androidx.compose.material3)
   implementation(libs.androidx.compose.runtime)
-  implementation(libs.androidx.compose.ui)
   implementation(libs.androidx.compose.glance)
   implementation(libs.androidx.compose.glance.core)
   implementation(libs.androidx.compose.glance.m3)

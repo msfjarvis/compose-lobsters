@@ -21,17 +21,12 @@ android {
 
 dependencies {
   implementation(projects.feature.reminders.api)
-  implementation(projects.feature.posts.api)
-  implementation(projects.core.common)
   implementation(projects.core.database.api)
-  implementation(projects.core.navigation.api)
   implementation(projects.core.work.api)
-  implementation(projects.model)
   implementation(libs.androidx.core)
   implementation(libs.androidx.work.runtime)
   implementation(libs.kotlinx.coroutines.core)
   implementation(libs.kotlinx.datetime)
-  implementation(libs.metrox.android)
   testImplementation(libs.kotlinx.coroutines.test)
   addTestDependencies(project)
 }

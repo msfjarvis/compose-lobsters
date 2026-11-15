@@ -21,7 +21,6 @@ kotlin {
   sourceSets {
     commonMain {
       dependencies {
-        api(libs.kotlinx.datetime)
         api(libs.kotlinx.serialization.core)
       }
     }

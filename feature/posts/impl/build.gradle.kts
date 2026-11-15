@@ -37,7 +37,6 @@ dependencies {
   implementation(libs.androidx.work.runtime)
   implementation(libs.kotlinx.collections.immutable)
   implementation(libs.kotlinx.coroutines.core)
-  implementation(libs.metrox.android)
   implementation(libs.metrox.viewmodel)
   implementation(libs.swipe)
   implementation(libs.unfurl)

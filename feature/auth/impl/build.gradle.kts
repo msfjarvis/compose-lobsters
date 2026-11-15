@@ -19,7 +19,6 @@ android { namespace = "dev.msfjarvis.claw.feature.auth.impl" }
 dependencies {
   implementation(platform(libs.okhttp.bom))
   api(projects.feature.auth.api)
-  implementation(projects.core.common)
   implementation(projects.core.network.api)
   implementation(projects.core.database.api)
   implementation(projects.core.navigation.api)
@@ -29,7 +28,6 @@ dependencies {
   implementation(libs.androidx.compose.runtime)
   implementation(libs.androidx.compose.ui)
   implementation(libs.kotlinx.coroutines.core)
-  implementation(libs.metrox.android)
   implementation(libs.okhttp.core)
 
   testImplementation(projects.core.database.impl)

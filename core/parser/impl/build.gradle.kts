@@ -27,14 +27,11 @@ dependencies {
   implementation(libs.okio)
   implementation(libs.zipline)
   implementation(libs.zipline.loader)
-  implementation(projects.core.common)
   api(projects.core.parser.api)
   implementation(projects.ziplineParser)
 
   testImplementation(libs.kotlinx.coroutines.test)
 
-  androidTestImplementation(libs.androidx.test.ext.junit)
-  androidTestImplementation(libs.androidx.test.rules)
   androidTestImplementation(libs.androidx.test.runner)
 
   addTestDependencies(project)

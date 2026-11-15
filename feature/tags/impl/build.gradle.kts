@@ -43,7 +43,6 @@ dependencies {
   implementation(libs.kotlinResult)
   implementation(libs.kotlinResult.coroutines)
   implementation(libs.kotlinx.coroutines.core)
-  implementation(libs.metrox.android)
   implementation(libs.metrox.viewmodel)
   implementation(libs.metrox.viewmodel.compose)
 

@@ -11,10 +11,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Search page now prompt users to solve the bot challenge first
   which is required for it to work
+- Comments page renders its header instantly
 
 ### Changed
 
 - Replace the fancy navigation bar with a Material 3 one
+- A shared element transition is now used to animate going from a post list to its comments
 
 ## [1.76.0] - 2026-11-01
 

@@ -20,19 +20,26 @@ android {
 }
 
 dependencies {
+  api(projects.core.common)
+  api(projects.core.network.api)
   api(projects.feature.search.api)
-  implementation(projects.core.common)
-  implementation(projects.core.network.api)
+  api(projects.model)
+  api(libs.androidx.compose.foundation.layout)
+  api(libs.androidx.compose.runtime)
+  api(libs.androidx.compose.ui)
+  api(libs.androidx.lifecycle.viewmodel)
+  api(libs.androidx.paging.common)
+  api(libs.androidx.paging.compose)
+  api(libs.kotlinx.coroutines.core)
+  api(libs.metrox.viewmodel)
+
   implementation(projects.feature.posts.api)
-  implementation(projects.model)
   implementation(libs.androidx.compose.foundation)
   implementation(libs.androidx.compose.material3)
-  implementation(libs.androidx.compose.runtime)
-  implementation(libs.androidx.compose.ui)
-  implementation(libs.androidx.lifecycle.viewmodel)
-  implementation(libs.androidx.paging.common)
-  implementation(libs.androidx.paging.compose)
-  implementation(libs.kotlinx.coroutines.core)
-  implementation(libs.metrox.viewmodel)
+  implementation(libs.androidx.compose.ui.graphics)
+  implementation(libs.androidx.compose.ui.text)
+  implementation(libs.androidx.compose.ui.unit)
+  implementation(libs.eithernet)
+
   addTestDependencies(project)
 }

@@ -22,6 +22,8 @@ android {
 }
 
 dependencies {
+  api(projects.model)
+  api(libs.androidx.compose.animation)
   api(libs.androidx.compose.foundation)
   api(libs.androidx.compose.foundation.layout)
   api(libs.androidx.compose.material3)
@@ -31,17 +33,22 @@ dependencies {
   api(libs.androidx.compose.ui.text)
   api(libs.androidx.compose.ui.unit)
   api(libs.kotlinx.collections.immutable)
-  api(projects.model)
 
-  implementation(libs.androidx.compose.animation)
-  implementation(libs.androidx.navigation3.ui)
+  implementation(projects.htmlRenderer)
+  implementation(libs.androidx.compose.animation.core)
   implementation(libs.androidx.compose.material.icons.core)
   implementation(libs.androidx.compose.material.icons.extended)
+  implementation(libs.androidx.compose.runtime.annotation)
   implementation(libs.androidx.core)
+  implementation(libs.androidx.core.ktx)
+  implementation(libs.androidx.navigation3.ui)
   implementation(libs.coil3.compose)
-  implementation(projects.htmlRenderer)
+  implementation(libs.kotlinx.coroutines.core)
 
   compileOnly(libs.androidx.compose.ui.tooling.preview)
+
+  androidTestImplementation(libs.androidx.compose.ui.geometry)
+  androidTestImplementation(libs.androidx.compose.ui.test)
 
   addTestDependencies(project)
 }

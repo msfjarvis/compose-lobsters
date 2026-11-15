@@ -14,5 +14,4 @@ android { namespace = "dev.msfjarvis.claw.navigation.api" }
 
 dependencies {
   api(libs.androidx.navigation3.runtime)
-  api(libs.kotlinx.serialization.core)
 }

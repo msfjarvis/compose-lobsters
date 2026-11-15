@@ -29,18 +29,20 @@ sqldelight {
 }
 
 dependencies {
-  implementation(libs.sqldelight.runtime)
+  api(projects.core.common)
+  api(projects.core.database.api)
+  api(projects.model)
+  api(libs.kotlinx.coroutines.core)
+  api(libs.kotlinx.serialization.core)
+  api(libs.kotlinx.serialization.json)
+  api(libs.sqldelight.runtime)
 
-  implementation(projects.core.common)
-  implementation(projects.core.database.api)
   implementation(libs.androidx.sqlite)
-  implementation(libs.kotlinx.datetime)
-  implementation(libs.kotlinx.serialization.json)
+  implementation(libs.sentry.android.sqlite)
   implementation(libs.sqldelight.androidDriver)
   implementation(libs.sqldelight.extensions.coroutines)
   implementation(libs.sqldelight.primitiveAdapters)
   implementation(libs.sqlite.android)
-  implementation(libs.sentry.android.sqlite)
 
   testImplementation(libs.sqldelight.jvmDriver)
   testImplementation(libs.sqldelight.runtime)

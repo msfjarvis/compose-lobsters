@@ -17,24 +17,28 @@ plugins {
 android { namespace = "dev.msfjarvis.claw.feature.auth.impl" }
 
 dependencies {
-  implementation(platform(libs.okhttp.bom))
+  api(projects.core.database.api)
+  api(projects.core.navigation.api)
+  api(projects.core.network.api)
   api(projects.feature.auth.api)
-  implementation(projects.core.common)
-  implementation(projects.core.network.api)
-  implementation(projects.core.database.api)
-  implementation(projects.core.navigation.api)
+  api(libs.androidx.compose.foundation.layout)
+  api(libs.androidx.compose.runtime)
+  api(libs.androidx.compose.ui)
+  api(libs.androidx.navigation3.runtime)
+  api(libs.kotlinx.coroutines.core)
+
+  implementation(platform(libs.okhttp.bom))
   implementation(libs.androidx.compose.foundation)
-  implementation(libs.androidx.compose.foundation.layout)
   implementation(libs.androidx.compose.material3)
-  implementation(libs.androidx.compose.runtime)
-  implementation(libs.androidx.compose.ui)
-  implementation(libs.kotlinx.coroutines.core)
-  implementation(libs.metrox.android)
+  implementation(libs.androidx.compose.ui.graphics)
+  implementation(libs.androidx.compose.ui.text)
+  implementation(libs.androidx.compose.ui.unit)
   implementation(libs.okhttp.core)
 
   testImplementation(projects.core.database.impl)
   testImplementation(libs.kotlinx.coroutines.test)
   testImplementation(libs.sqldelight.jvmDriver)
+  testImplementation(libs.sqldelight.runtime)
 
   addTestDependencies(project)
 }

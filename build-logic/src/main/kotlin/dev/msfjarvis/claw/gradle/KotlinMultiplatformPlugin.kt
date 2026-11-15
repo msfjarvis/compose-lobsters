@@ -8,6 +8,7 @@ package dev.msfjarvis.claw.gradle
 
 import com.android.build.api.dsl.Lint
 import com.android.build.gradle.LintPlugin
+import com.squareup.sort.SortDependenciesPlugin
 import dev.msfjarvis.claw.gradle.LintConfig.configureLint
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -24,6 +25,7 @@ class KotlinMultiplatformPlugin : Plugin<Project> {
       apply(KotlinMultiplatformPluginWrapper::class)
       apply(LintPlugin::class)
       apply(SpotlessPlugin::class)
+      apply(SortDependenciesPlugin::class)
     }
     val extension = project.extensions.getByType<KotlinMultiplatformExtension>()
     extension.targets.configureEach {

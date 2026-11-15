@@ -21,25 +21,35 @@ android {
 }
 
 dependencies {
-  implementation(projects.feature.widgets.api)
-  implementation(projects.feature.posts.api)
-  implementation(projects.feature.tags.api)
-  implementation(projects.core.common)
+  api(projects.core.common)
+  api(projects.core.work.api)
+  api(projects.feature.posts.api)
+  api(projects.feature.tags.api)
+  api(projects.feature.widgets.api)
+  api(projects.model)
+  api(libs.androidx.compose.glance)
+  api(libs.androidx.compose.glance.core)
+  api(libs.androidx.compose.runtime)
+  api(libs.androidx.work.runtime)
+  api(libs.kotlinx.collections.immutable)
+  api(libs.kotlinx.coroutines.core)
+  api(libs.metrox.android)
+
   implementation(projects.core.ui)
-  implementation(projects.core.work.api)
-  implementation(projects.model)
-  implementation(libs.androidx.compose.material3)
-  implementation(libs.androidx.compose.runtime)
-  implementation(libs.androidx.compose.ui)
-  implementation(libs.androidx.compose.glance)
-  implementation(libs.androidx.compose.glance.core)
+  implementation(libs.androidx.annotation)
+  implementation(libs.androidx.collection)
   implementation(libs.androidx.compose.glance.m3)
+  implementation(libs.androidx.compose.material3)
+  implementation(libs.androidx.compose.ui.text)
+  implementation(libs.androidx.compose.ui.unit)
   implementation(libs.androidx.core)
-  implementation(libs.androidx.work.runtime)
-  implementation(libs.kotlinx.collections.immutable)
-  implementation(libs.metrox.android)
-  implementation(libs.sentry.android.core)
+  implementation(libs.sentry)
+
   compileOnly(libs.androidx.compose.glance.preview)
+
+  runtimeOnly(libs.sentry.android.core)
+
   testImplementation(libs.kotlinx.coroutines.test)
+
   addTestDependencies(project)
 }

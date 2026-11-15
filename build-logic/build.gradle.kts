@@ -14,6 +14,7 @@ plugins {
   `kotlin-dsl`
   alias(libs.plugins.android.lint)
   alias(libs.plugins.dependencyAnalysis)
+  alias(libs.plugins.sort.dependencies)
 }
 
 gradlePlugin {
@@ -97,16 +98,16 @@ tasks.withType<JavaCompile>().configureEach {
 }
 
 dependencies {
+  // Expose the generated version catalog API to the plugin.
+  implementation(files(libs::class.java.superclass.protectionDomain.codeSource.location))
   implementation(libs.build.agp)
   implementation(libs.build.cachefix)
   implementation(libs.build.kotlin.gradle)
   implementation(libs.build.screenshot)
   implementation(libs.build.semver)
   implementation(libs.build.sentry)
+  implementation(libs.build.sort.dependencies)
   implementation(libs.build.spotless)
-
-  // Expose the generated version catalog API to the plugin.
-  implementation(files(libs::class.java.superclass.protectionDomain.codeSource.location))
 
   lintChecks(libs.androidx.lint.gradle)
 }

@@ -10,6 +10,6 @@ plugins {
 }
 
 dependencies {
-  api(libs.kotlinx.coroutines.core)
   api(projects.model)
+  api(libs.kotlinx.coroutines.core)
 }

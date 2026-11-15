@@ -7,6 +7,7 @@
 package dev.msfjarvis.claw.gradle
 
 import com.android.compose.screenshot.tasks.PreviewScreenshotValidationTask
+import com.squareup.sort.SortDependenciesPlugin
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -24,6 +25,7 @@ class KotlinCommonPlugin : Plugin<Project> {
 
   override fun apply(project: Project) {
     project.pluginManager.apply(SpotlessPlugin::class)
+    project.pluginManager.apply(SortDependenciesPlugin::class)
     project.tasks.run {
       withType<KotlinCompile>().configureEach {
         compilerOptions {

@@ -15,6 +15,7 @@ import com.android.build.api.variant.ApplicationAndroidComponentsExtension
 import com.android.build.api.variant.HasAndroidTestBuilder
 import com.android.build.api.variant.HasUnitTestBuilder
 import com.android.build.api.variant.LibraryAndroidComponentsExtension
+import com.squareup.sort.SortDependenciesPlugin
 import dev.msfjarvis.claw.gradle.LintConfig.configureLint
 import org.gradle.accessors.dm.LibrariesForLibs
 import org.gradle.android.AndroidCacheFixPlugin
@@ -28,6 +29,7 @@ class AndroidCommonPlugin : Plugin<Project> {
 
   override fun apply(project: Project) {
     project.pluginManager.apply(SpotlessPlugin::class)
+    project.pluginManager.apply(SortDependenciesPlugin::class)
     listOf("com.android.application", "com.android.library", "com.android.test").forEach { id ->
       project.pluginManager.withPlugin(id) { configureAndroid(project) }
     }

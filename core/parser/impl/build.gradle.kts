@@ -21,19 +21,21 @@ android {
 }
 
 dependencies {
-  androidTestImplementation(libs.androidx.monitor)
-  implementation(libs.kotlinx.serialization.core)
-  implementation(projects.model)
-  implementation(platform(libs.okhttp.bom))
-  implementation(libs.kotlinx.coroutines.core)
+  api(projects.core.parser.api)
+  api(projects.ziplineParser)
   api(libs.okhttp.core)
+
+  implementation(platform(libs.okhttp.bom))
+  implementation(projects.model)
+  implementation(libs.kotlinx.coroutines.core)
+  implementation(libs.kotlinx.serialization.core)
   implementation(libs.okio)
   implementation(libs.zipline)
   implementation(libs.zipline.loader)
-  api(projects.core.parser.api)
-  api(projects.ziplineParser)
 
   testImplementation(libs.kotlinx.coroutines.test)
+
+  androidTestImplementation(libs.androidx.monitor)
 
   androidTestRuntimeOnly(libs.androidx.test.runner)
 

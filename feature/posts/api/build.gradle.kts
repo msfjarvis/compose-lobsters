@@ -15,10 +15,11 @@ plugins {
 android { namespace = "dev.msfjarvis.claw.feature.posts.api" }
 
 dependencies {
-  implementation(libs.kotlin.parcelize.runtime)
-  api(libs.kotlinx.coroutines.core)
-  api(projects.model)
   api(projects.core.navigation.api)
+  api(projects.model)
   api(libs.androidx.navigation3.runtime)
+  api(libs.kotlinx.coroutines.core)
   api(libs.kotlinx.serialization.core)
+
+  implementation(libs.kotlin.parcelize.runtime)
 }

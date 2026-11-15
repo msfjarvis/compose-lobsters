@@ -17,9 +17,10 @@ plugins {
 android { namespace = "dev.msfjarvis.claw.work.impl" }
 
 dependencies {
-  api(libs.androidx.work.runtime)
-  implementation(libs.sentry)
   api(projects.core.work.api)
+  api(libs.androidx.work.runtime)
+
+  implementation(libs.sentry)
 
   addTestDependencies(project)
 }

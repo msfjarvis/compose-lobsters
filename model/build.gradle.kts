@@ -26,13 +26,14 @@ kotlin {
     }
     jvmTest {
       dependencies {
-        implementation(kotlin("test"))
         implementation(project.dependencies.platform(libs.junit.bom))
+        implementation(kotlin("test"))
         implementation(libs.junit.jupiter.api)
         implementation(libs.truth)
+
         runtimeOnly(libs.junit.jupiter.engine)
-        runtimeOnly(libs.junit.platform.launcher)
         runtimeOnly(libs.junit.legacy)
+        runtimeOnly(libs.junit.platform.launcher)
       }
     }
   }

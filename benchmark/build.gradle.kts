@@ -45,8 +45,8 @@ dependencies {
   implementation(libs.androidx.benchmark.macro.junit4)
   implementation(libs.androidx.monitor)
   implementation(libs.androidx.test.uiautomator)
-  implementation(libs.kotlin.stdlib)
   implementation(libs.junit.legacy)
+  implementation(libs.kotlin.stdlib)
 
   runtimeOnly(libs.androidx.profileinstaller)
   runtimeOnly(libs.androidx.test.core)

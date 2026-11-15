@@ -20,10 +20,20 @@ android {
 }
 
 dependencies {
+  api(projects.core.common)
+  api(projects.core.navigation.api)
+  api(projects.core.network.api)
   api(libs.androidx.compose.foundation.layout)
   api(libs.androidx.compose.runtime)
   api(libs.androidx.compose.ui)
+  api(libs.androidx.lifecycle.viewmodel)
   api(libs.androidx.navigation3.runtime)
+  api(libs.kotlinx.coroutines.core)
+  api(libs.metrox.viewmodel)
+
+  implementation(projects.core.ui)
+  implementation(projects.feature.profile.api)
+  implementation(projects.model)
   implementation(libs.androidx.compose.foundation)
   implementation(libs.androidx.compose.material.icons.core)
   implementation(libs.androidx.compose.material3)
@@ -32,18 +42,11 @@ dependencies {
   implementation(libs.androidx.compose.ui.unit)
   implementation(libs.androidx.lifecycle.compose)
   implementation(libs.eithernet)
-  implementation(projects.feature.profile.api)
-  api(projects.core.common)
-  api(projects.core.network.api)
-  api(projects.core.navigation.api)
-  implementation(projects.core.ui)
-  implementation(projects.model)
-  api(libs.androidx.lifecycle.viewmodel)
   implementation(libs.kotlinResult)
   implementation(libs.kotlinResult.coroutines)
-  api(libs.kotlinx.coroutines.core)
-  api(libs.metrox.viewmodel)
   implementation(libs.metrox.viewmodel.compose)
+
   compileOnly(libs.androidx.compose.ui.tooling.preview)
+
   addTestDependencies(project)
 }

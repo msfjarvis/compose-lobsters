@@ -11,9 +11,9 @@ plugins {
 
 dependencies {
   api(platform(libs.okhttp.bom))
+  api(projects.model)
   api(libs.eithernet)
   api(libs.kotlinx.coroutines.core)
   api(libs.okhttp.core)
   api(libs.retrofit)
-  api(projects.model)
 }

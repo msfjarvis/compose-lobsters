@@ -11,4 +11,5 @@ plugins {
   alias(libs.plugins.screenshot) apply false
   alias(libs.plugins.android.test) apply false
   alias(libs.plugins.dependencyAnalysis)
+  alias(libs.plugins.sort.dependencies)
 }

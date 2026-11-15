@@ -14,12 +14,13 @@ plugins {
 android { namespace = "dev.msfjarvis.claw.navigation.impl" }
 
 dependencies {
-  api(libs.androidx.navigation3.runtime)
   api(projects.core.navigation.api)
+  api(libs.androidx.compose.runtime)
+  api(libs.androidx.compose.ui)
+  api(libs.androidx.navigation3.runtime)
   api(libs.kotlinx.collections.immutable)
+
   implementation(projects.core.ui)
   implementation(libs.androidx.compose.animation)
   implementation(libs.androidx.navigation3.ui)
-  api(libs.androidx.compose.runtime)
-  api(libs.androidx.compose.ui)
 }

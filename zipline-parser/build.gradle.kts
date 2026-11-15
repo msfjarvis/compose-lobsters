@@ -23,15 +23,16 @@ kotlin {
   sourceSets {
     commonMain {
       dependencies {
-        api(libs.zipline)
         api(projects.model)
+        api(libs.zipline)
+
         implementation(libs.ksoup)
       }
     }
     jvmTest {
       dependencies {
-        implementation(kotlin("test"))
         implementation(project.dependencies.testFixtures(projects.htmlTestFixtures))
+        implementation(kotlin("test"))
       }
     }
     jsTest {

@@ -18,13 +18,14 @@ import androidx.navigation3.ui.LocalNavAnimatedContentScope
 val LocalPostSharedTransitionScope = staticCompositionLocalOf<SharedTransitionScope?> { null }
 
 @Composable
-fun Modifier.postSharedBounds(postId: String): Modifier {
+fun Modifier.postSharedBounds(postId: String, element: String): Modifier {
   val scope = LocalPostSharedTransitionScope.current ?: return this
   val visibilityScope = LocalNavAnimatedContentScope.current
   return with(scope) {
     sharedBounds(
-      sharedContentState = rememberSharedContentState(key = "post-$postId"),
+      sharedContentState = rememberSharedContentState(key = postId to element),
       animatedVisibilityScope = visibilityScope,
+      resizeMode = SharedTransitionScope.ResizeMode.scaleToBounds(),
     )
   }
 }

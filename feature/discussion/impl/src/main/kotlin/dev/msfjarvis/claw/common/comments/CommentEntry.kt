@@ -63,6 +63,7 @@ import dev.msfjarvis.claw.common.posts.Submitter
 import dev.msfjarvis.claw.common.posts.TagRow
 import dev.msfjarvis.claw.common.ui.NetworkImage
 import dev.msfjarvis.claw.common.ui.ThemedRichText
+import dev.msfjarvis.claw.common.ui.postSharedBounds
 import dev.msfjarvis.claw.common.ui.rewriteUrlIfLobstersPost
 import dev.msfjarvis.claw.core.ui.R as UiR
 import dev.msfjarvis.claw.model.LinkMetadata
@@ -89,8 +90,12 @@ internal fun CommentsHeader(
       modifier = Modifier.padding(16.dp).fillMaxWidth(),
       verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-      PostTitle(title = header.title, isRead = false)
-      TagRow(tags = header.tags.toImmutableList())
+      PostTitle(
+        title = header.title,
+        isRead = false,
+        modifier = Modifier.postSharedBounds(header.postId, "title"),
+      )
+      TagRow(tags = header.tags.toImmutableList(), postId = header.postId)
       Spacer(Modifier.height(4.dp))
 
       if (linkMetadata.url.isNotBlank()) {
@@ -117,6 +122,7 @@ internal fun CommentsHeader(
           ),
         avatarUrl = "https://lobste.rs/avatars/${header.submitter}-100.png",
         contentDescription = stringResource(UiR.string.user_avatar_for, header.submitter),
+        postId = header.postId,
         modifier = Modifier.clickable { openUserProfile(header.submitter) },
       )
     }

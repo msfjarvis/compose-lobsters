@@ -46,6 +46,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.NetworkImage
+import dev.msfjarvis.claw.common.ui.postSharedBounds
 import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
 import dev.msfjarvis.claw.core.ui.R
 import dev.msfjarvis.claw.model.Discussion
@@ -90,8 +91,13 @@ fun LobstersCard(
 @Composable
 fun PostDetails(post: UIPost, isRead: Boolean, modifier: Modifier = Modifier) {
   Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(8.dp)) {
-    PostTitle(title = post.title, isRead = isRead, maxLines = 2)
-    TagRow(tags = post.tags.toImmutableList())
+    PostTitle(
+      title = post.title,
+      isRead = isRead,
+      maxLines = 2,
+      modifier = Modifier.postSharedBounds(post.shortId, "title"),
+    )
+    TagRow(tags = post.tags.toImmutableList(), postId = post.shortId)
     Spacer(Modifier.height(4.dp))
     Submitter(
       text =
@@ -99,6 +105,7 @@ fun PostDetails(post: UIPost, isRead: Boolean, modifier: Modifier = Modifier) {
           "${if (post.userIsAuthor) "Authored" else "Submitted"} by ${post.submitter}"
         ),
       avatarUrl = "https://lobste.rs/avatars/${post.submitter}-100.png",
+      postId = post.shortId,
       contentDescription = stringResource(R.string.user_avatar_for, post.submitter),
     )
   }
@@ -127,6 +134,7 @@ fun Submitter(
   text: AnnotatedString,
   avatarUrl: String,
   contentDescription: String,
+  postId: String,
   modifier: Modifier = Modifier,
 ) {
   Row(
@@ -138,12 +146,13 @@ fun Submitter(
       url = avatarUrl,
       placeholder = Icons.Filled.AccountCircle,
       contentDescription = contentDescription,
-      modifier = Modifier.requiredSize(24.dp).clip(CircleShape),
+      modifier = Modifier.postSharedBounds(postId, "avatar").requiredSize(24.dp).clip(CircleShape),
       placeholderTintColor = MaterialTheme.colorScheme.onBackground,
     )
 
     Text(
       text = text,
+      modifier = Modifier.postSharedBounds(postId, "submitter"),
       style = MaterialTheme.typography.bodyMedium,
       color = MaterialTheme.colorScheme.onBackground,
     )
@@ -209,7 +218,7 @@ private fun CommentsButton(commentCount: Int, onClick: () -> Unit, modifier: Mod
 }
 
 @Composable
-fun TagRow(tags: ImmutableList<String>, modifier: Modifier = Modifier) {
+fun TagRow(tags: ImmutableList<String>, postId: String, modifier: Modifier = Modifier) {
   FlexBox(
     modifier = modifier,
     config = {
@@ -219,7 +228,12 @@ fun TagRow(tags: ImmutableList<String>, modifier: Modifier = Modifier) {
       wrap(FlexWrap.Wrap)
     },
   ) {
-    tags.forEach { tag -> TagText(tag = tag) }
+    tags.forEachIndexed { index, tag ->
+      TagText(
+        tag = tag,
+        modifier = Modifier.postSharedBounds(postId, "tag-$index-$tag"),
+      )
+    }
   }
 }
 

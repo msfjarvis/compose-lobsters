@@ -150,7 +150,7 @@ okhttp-core = { module = "com.squareup.okhttp3:okhttp" }
 okio = { module = "com.squareup.okio:okio" }
 okhttp-loggingInterceptor = { module = "com.squareup.okhttp3:logging-interceptor" }
 play-app-update = { module = "com.google.android.play:app-update", version.ref = "playAppUpdate" }
-play-services-tasks = "com.google.android.gms:play-services-tasks:18.0.2"
+play-services-tasks = "com.google.android.gms:play-services-tasks:18.4.1"
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 retrofit-kotlinxSerializationConverter = { module = "com.squareup.retrofit2:converter-kotlinx-serialization", version.ref = "retrofit" }
 screenshot-validation-api = { module = "com.android.tools.screenshot:screenshot-validation-api", version.ref = "screenshot" }

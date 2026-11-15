@@ -26,16 +26,16 @@ dependencies {
   implementation(projects.model)
   implementation(platform(libs.okhttp.bom))
   implementation(libs.kotlinx.coroutines.core)
-  implementation(libs.okhttp.core)
+  api(libs.okhttp.core)
   implementation(libs.okio)
   implementation(libs.zipline)
   implementation(libs.zipline.loader)
   api(projects.core.parser.api)
-  implementation(projects.ziplineParser)
+  api(projects.ziplineParser)
 
   testImplementation(libs.kotlinx.coroutines.test)
 
-  androidTestImplementation(libs.androidx.test.runner)
+  androidTestRuntimeOnly(libs.androidx.test.runner)
 
   addTestDependencies(project)
 }

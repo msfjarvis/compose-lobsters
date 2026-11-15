@@ -207,7 +207,7 @@ dependencies {
 
   testImplementation(libs.kotlinx.coroutines.test)
 
-  androidTestImplementation(libs.androidx.test.runner)
+  androidTestRuntimeOnly(libs.androidx.test.runner)
 
   addTestDependencies(project)
 }

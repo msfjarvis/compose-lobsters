@@ -18,7 +18,7 @@ dependencies {
   implementation(libs.kotlin.parcelize.runtime)
   api(libs.kotlinx.coroutines.core)
   api(projects.model)
-  implementation(projects.core.navigation.api)
+  api(projects.core.navigation.api)
   api(libs.androidx.navigation3.runtime)
   api(libs.kotlinx.serialization.core)
 }

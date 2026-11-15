@@ -38,7 +38,7 @@ dependencies {
   api(libs.kotlinx.collections.immutable)
   api(projects.model)
 
-  implementation(libs.androidx.compose.animation)
+  api(libs.androidx.compose.animation)
   implementation(libs.androidx.navigation3.ui)
   implementation(libs.androidx.compose.material.icons.core)
   implementation(libs.androidx.compose.material.icons.extended)

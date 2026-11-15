@@ -20,6 +20,6 @@ dependencies {
   implementation(projects.core.ui)
   implementation(libs.androidx.compose.animation)
   implementation(libs.androidx.navigation3.ui)
-  implementation(libs.androidx.compose.runtime)
-  implementation(libs.androidx.compose.ui)
+  api(libs.androidx.compose.runtime)
+  api(libs.androidx.compose.ui)
 }

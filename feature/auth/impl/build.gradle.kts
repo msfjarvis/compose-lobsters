@@ -17,6 +17,11 @@ plugins {
 android { namespace = "dev.msfjarvis.claw.feature.auth.impl" }
 
 dependencies {
+  api(libs.androidx.navigation3.runtime)
+  implementation(libs.androidx.compose.ui.graphics)
+  implementation(libs.androidx.compose.ui.text)
+  implementation(libs.androidx.compose.ui.unit)
+  testImplementation(libs.sqldelight.runtime)
   implementation(platform(libs.okhttp.bom))
   api(projects.feature.auth.api)
   implementation(projects.core.network.api)

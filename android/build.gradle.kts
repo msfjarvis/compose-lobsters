@@ -108,6 +108,16 @@ moduleGraphAssert {
 }
 
 dependencies {
+  androidTestImplementation(libs.androidx.monitor)
+  androidTestImplementation(libs.androidx.test.core)
+  androidTestImplementation(projects.ziplineParser)
+  add("gplayImplementation", libs.play.services.tasks)
+  implementation(libs.coil3.plain)
+  implementation(projects.feature.auth.api)
+  implementation(projects.feature.discussion.api)
+  implementation(projects.feature.profile.api)
+  implementation(projects.feature.settings.api)
+  implementation(projects.feature.tags.api)
   baselineProfile(projects.benchmark)
   add("embeddedZiplineParser", projects.ziplineParser)
 

@@ -29,6 +29,9 @@ sqldelight {
 }
 
 dependencies {
+  api(libs.kotlinx.coroutines.core)
+  api(libs.kotlinx.serialization.core)
+  api(projects.model)
   implementation(libs.sqldelight.runtime)
 
   implementation(projects.core.common)

@@ -15,6 +15,7 @@ plugins {
 android { namespace = "dev.msfjarvis.claw.feature.posts.api" }
 
 dependencies {
+  implementation(libs.kotlin.parcelize.runtime)
   api(libs.kotlinx.coroutines.core)
   api(projects.model)
   implementation(projects.core.navigation.api)

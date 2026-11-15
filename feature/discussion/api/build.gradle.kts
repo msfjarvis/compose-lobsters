@@ -15,6 +15,7 @@ plugins {
 android { namespace = "dev.msfjarvis.claw.feature.discussion.api" }
 
 dependencies {
+  implementation(libs.kotlin.parcelize.runtime)
   implementation(projects.core.navigation.api)
   api(libs.androidx.navigation3.runtime)
   api(libs.kotlinx.serialization.core)

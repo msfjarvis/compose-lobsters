@@ -20,6 +20,11 @@ android {
 }
 
 dependencies {
+  api(libs.androidx.compose.foundation.layout)
+  implementation(libs.androidx.compose.ui.graphics)
+  implementation(libs.androidx.compose.ui.text)
+  implementation(libs.androidx.compose.ui.unit)
+  implementation(libs.eithernet)
   api(projects.feature.search.api)
   implementation(projects.core.common)
   implementation(projects.core.network.api)

@@ -22,6 +22,11 @@ android {
 }
 
 dependencies {
+  androidTestImplementation(libs.androidx.compose.ui.geometry)
+  androidTestImplementation(libs.androidx.compose.ui.test)
+  implementation(libs.androidx.compose.animation.core)
+  implementation(libs.androidx.compose.runtime.annotation)
+  implementation(libs.kotlinx.coroutines.core)
   api(libs.androidx.compose.foundation)
   api(libs.androidx.compose.foundation.layout)
   api(libs.androidx.compose.material3)

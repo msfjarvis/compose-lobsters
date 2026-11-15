@@ -21,6 +21,12 @@ android {
 }
 
 dependencies {
+  api(libs.kotlinx.coroutines.core)
+  implementation(libs.androidx.annotation)
+  implementation(libs.androidx.collection)
+  implementation(libs.androidx.compose.ui.text)
+  implementation(libs.androidx.compose.ui.unit)
+  implementation(libs.sentry)
   implementation(projects.feature.widgets.api)
   implementation(projects.feature.posts.api)
   implementation(projects.feature.tags.api)

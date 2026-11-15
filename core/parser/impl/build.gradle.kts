@@ -21,6 +21,9 @@ android {
 }
 
 dependencies {
+  androidTestImplementation(libs.androidx.monitor)
+  implementation(libs.kotlinx.serialization.core)
+  implementation(projects.model)
   implementation(platform(libs.okhttp.bom))
   implementation(libs.kotlinx.coroutines.core)
   implementation(libs.okhttp.core)

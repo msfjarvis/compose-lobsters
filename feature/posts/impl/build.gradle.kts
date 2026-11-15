@@ -20,6 +20,21 @@ android {
 }
 
 dependencies {
+  api(libs.androidx.compose.foundation)
+  api(libs.androidx.compose.foundation.layout)
+  api(libs.androidx.compose.material3.adaptive.layout)
+  api(libs.androidx.compose.runtime)
+  api(libs.androidx.compose.ui)
+  api(libs.androidx.navigation3.runtime)
+  api(libs.eithernet)
+  implementation(libs.androidx.compose.material.icons.core)
+  implementation(libs.androidx.compose.material3)
+  implementation(libs.androidx.compose.material3.adaptive)
+  implementation(libs.androidx.compose.ui.graphics)
+  implementation(libs.androidx.compose.ui.text)
+  implementation(libs.androidx.compose.ui.unit)
+  implementation(libs.kotlinx.datetime)
+  implementation(libs.okhttp.core)
   implementation(projects.feature.posts.api)
   implementation(projects.core.common)
   implementation(projects.core.database.api)

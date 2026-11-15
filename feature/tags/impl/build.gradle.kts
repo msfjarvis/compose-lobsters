@@ -21,6 +21,15 @@ android {
 }
 
 dependencies {
+  implementation(libs.androidx.compose.ui.graphics)
+  implementation(libs.androidx.compose.ui.text)
+  implementation(libs.androidx.compose.ui.unit)
+  implementation(libs.androidx.lifecycle.common)
+  implementation(libs.androidx.lifecycle.runtime.compose)
+  implementation(libs.eithernet)
+  implementation(libs.kotlinx.datetime)
+  testImplementation(libs.okhttp.core)
+  testImplementation(libs.sqldelight.runtime)
   api(projects.feature.tags.api)
   implementation(projects.core.common)
   implementation(projects.core.database.api)

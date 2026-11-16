@@ -17,7 +17,6 @@ import androidx.compose.ui.unit.dp
 import dev.msfjarvis.claw.common.posts.LobstersCard
 import dev.msfjarvis.claw.common.posts.PostActions
 import dev.msfjarvis.claw.common.theme.LobstersTheme
-import dev.msfjarvis.claw.common.ui.postSharedBounds
 import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
 import dev.msfjarvis.claw.model.UIPost
 import me.saket.swipe.SwipeAction
@@ -56,7 +55,7 @@ fun LobstersListItem(
       onPostClick = { postActions.viewPost(it.shortId, it.url, it.commentsUrl) },
       onCommentsClick = { postActions.viewComments(it) },
       onSaveClick = postActions::toggleSave,
-      modifier = modifier.postSharedBounds(item.shortId),
+      modifier = modifier,
     )
   }
 }

@@ -27,18 +27,7 @@ interface Navigator {
   fun pop(): NavKey?
 }
 
-/** Converts an external URI into an app-owned navigation key, if the URI is recognized. */
-fun interface DeepLinkMatcher {
-  fun match(uri: String): NavKey?
-}
-
 /** Adds app-owned destination entries to the generic navigation host. */
 fun interface NavigationEntryContributor {
   fun EntryProviderScope<NavKey>.addEntries()
 }
-
-/** Returns the first destination recognized by the supplied app-owned matchers. */
-fun matchDeepLink(uri: String, matchers: Iterable<DeepLinkMatcher>): NavKey? =
-  matchers.firstNotNullOfOrNull {
-    it.match(uri)
-  }

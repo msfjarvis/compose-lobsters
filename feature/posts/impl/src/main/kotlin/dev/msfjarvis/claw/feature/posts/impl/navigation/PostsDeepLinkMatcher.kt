@@ -6,28 +6,18 @@
  */
 package dev.msfjarvis.claw.feature.posts.impl.navigation
 
+import androidx.navigation3.runtime.NavKey
+import androidx.navigation3.runtime.deeplink.DeepLinkMatcher
+import androidx.navigation3.runtime.deeplink.DeepLinkUri
+import androidx.navigation3.runtime.deeplink.UriDeepLinkMatcher
 import dev.msfjarvis.claw.android.ui.navigation.Hottest
 import dev.msfjarvis.claw.android.ui.navigation.Newest
 import dev.msfjarvis.claw.android.ui.navigation.Saved
-import dev.msfjarvis.claw.navigation.api.DeepLinkMatcher
-import java.net.URI
-import java.net.URISyntaxException
 
 /** Matches the external routes owned by the posts feature. */
-fun postsDeepLinkMatcher(scheme: String): DeepLinkMatcher = DeepLinkMatcher { uri ->
-  val data = uri.toUriOrNull() ?: return@DeepLinkMatcher null
-  if (data.scheme != scheme) return@DeepLinkMatcher null
-  when (data.host) {
-    "newest" -> Newest
-    "hottest" -> Hottest
-    "saved" -> Saved
-    else -> null
-  }
-}
-
-private fun String.toUriOrNull(): URI? =
-  try {
-    URI(this)
-  } catch (_: URISyntaxException) {
-    null
-  }
+fun postsDeepLinkMatchers(scheme: String): List<DeepLinkMatcher<NavKey, *>> =
+  listOf(
+    UriDeepLinkMatcher(DeepLinkUri("$scheme://newest"), Newest.serializer()),
+    UriDeepLinkMatcher(DeepLinkUri("$scheme://hottest"), Hottest.serializer()),
+    UriDeepLinkMatcher(DeepLinkUri("$scheme://saved"), Saved.serializer()),
+  )

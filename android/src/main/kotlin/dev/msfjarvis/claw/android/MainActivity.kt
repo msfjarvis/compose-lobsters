@@ -24,10 +24,10 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation3.runtime.NavKey
+import androidx.navigation3.runtime.deeplink.DeepLinkRequest
 import dev.msfjarvis.claw.android.injection.InjectedViewModelFactory
 import dev.msfjarvis.claw.android.ui.screens.LobstersPostsScreen
 import dev.msfjarvis.claw.common.theme.LobstersTheme
-import dev.msfjarvis.claw.navigation.api.matchDeepLink
 import dev.zacsweers.metro.AppScope
 import dev.zacsweers.metro.ContributesIntoMap
 import dev.zacsweers.metro.Inject
@@ -97,7 +97,9 @@ class MainActivity(
   private fun handleIntent(intent: Intent) {
     val data = intent.data ?: return
     deepLinkDestination =
-      matchDeepLink(data.toString(), appDeepLinkMatchers(BuildConfig.DEEPLINK_SCHEME))
-        ?: deepLinkDestination
+      matchDeepLink(
+        DeepLinkRequest(data.toString()),
+        appDeepLinkMatchers(BuildConfig.DEEPLINK_SCHEME),
+      ) ?: deepLinkDestination
   }
 }

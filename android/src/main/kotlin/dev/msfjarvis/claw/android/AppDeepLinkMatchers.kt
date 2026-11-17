@@ -6,10 +6,17 @@
  */
 package dev.msfjarvis.claw.android
 
+import androidx.navigation3.runtime.NavKey
+import androidx.navigation3.runtime.deeplink.DeepLinkMatcher
+import androidx.navigation3.runtime.deeplink.DeepLinkRequest
 import dev.msfjarvis.claw.feature.discussion.impl.navigation.discussionDeepLinkMatcher
-import dev.msfjarvis.claw.feature.posts.impl.navigation.postsDeepLinkMatcher
-import dev.msfjarvis.claw.navigation.api.DeepLinkMatcher
+import dev.msfjarvis.claw.feature.posts.impl.navigation.postsDeepLinkMatchers
 
 /** Assemble the route matchers contributed by the app's current feature implementations. */
-internal fun appDeepLinkMatchers(scheme: String): List<DeepLinkMatcher> =
-  listOf(postsDeepLinkMatcher(scheme), discussionDeepLinkMatcher(scheme))
+internal fun appDeepLinkMatchers(scheme: String): List<DeepLinkMatcher<NavKey, *>> =
+  postsDeepLinkMatchers(scheme) + discussionDeepLinkMatcher(scheme)
+
+internal fun matchDeepLink(
+  request: DeepLinkRequest,
+  matchers: List<DeepLinkMatcher<NavKey, *>>,
+): NavKey? = matchers.mapNotNull { it.match(request) }.maxOrNull()?.key

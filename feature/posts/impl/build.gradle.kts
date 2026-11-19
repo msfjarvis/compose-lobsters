@@ -9,6 +9,7 @@ import dev.msfjarvis.claw.gradle.addTestDependencies
 plugins {
   id("dev.msfjarvis.claw.android-library")
   id("dev.msfjarvis.claw.kotlin-android")
+  id("dev.msfjarvis.claw.android-screenshot")
   alias(libs.plugins.dependencyAnalysis)
   alias(libs.plugins.kotlin.composeCompiler)
   alias(libs.plugins.metro)
@@ -56,6 +57,8 @@ dependencies {
   implementation(libs.kotlinx.datetime)
   implementation(libs.okhttp.core)
   implementation(libs.swipe)
+
+  screenshotTestImplementation(libs.coil3.compose)
 
   testImplementation(libs.kotlinx.coroutines.test)
 

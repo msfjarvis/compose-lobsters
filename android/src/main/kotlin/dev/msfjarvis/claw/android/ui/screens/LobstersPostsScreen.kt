@@ -34,6 +34,11 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
+import androidx.compose.material3.adaptive.layout.ListDetailPaneScaffoldRole
+import androidx.compose.material3.adaptive.layout.PaneAdaptedValue
+import androidx.compose.material3.adaptive.layout.ThreePaneScaffoldDestinationItem
+import androidx.compose.material3.adaptive.layout.calculateThreePaneScaffoldValue
+import androidx.compose.material3.adaptive.navigation.BackNavigationBehavior
 import androidx.compose.material3.adaptive.navigation3.ListDetailSceneStrategy
 import androidx.compose.material3.adaptive.navigation3.rememberListDetailSceneStrategy
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
@@ -106,6 +111,7 @@ import dev.zacsweers.metrox.viewmodel.metroViewModel
 import io.sentry.compose.navigation3.SentryBackStackEntry
 import io.sentry.compose.navigation3.SentryNavEffect
 import io.sentry.compose.navigation3.SentryNavOptions
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.persistentSetOf
@@ -134,7 +140,10 @@ fun LobstersPostsScreen(
 
   val libraries by produceLibraries()
   val backStack = rememberNavBackStack(Hottest)
-  val listDetailStrategy = rememberListDetailSceneStrategy<NavKey>()
+  val listDetailStrategy =
+    rememberListDetailSceneStrategy<NavKey>(
+      backNavigationBehavior = BackNavigationBehavior.PopLatest
+    )
 
   // region Pain
   val context = LocalContext.current
@@ -198,6 +207,32 @@ fun LobstersPostsScreen(
   val searchResults = searchViewModel.searchResults.collectAsLazyPagingItems()
   val currentDestination = backStack.lastOrNull()
   val currentDestinationIsTopLevel = currentDestination is TopLevelDestination
+  val selectedTopLevelDestination = backStack.lastOrNull { it is TopLevelDestination }
+  var sceneEntries by remember { mutableStateOf<ImmutableList<NavKey>>(persistentListOf()) }
+  val isTopLevelSceneVisible =
+    when {
+      sceneEntries.isEmpty() -> currentDestinationIsTopLevel
+      sceneEntries.none { it is TopLevelDestination } -> false
+      sceneEntries.size == 1 -> true
+      else -> {
+        val history = sceneEntries.map { key ->
+          val role =
+            when (key) {
+              is TopLevelDestination -> ListDetailPaneScaffoldRole.List
+              is Comments -> ListDetailPaneScaffoldRole.Detail
+              else -> ListDetailPaneScaffoldRole.Extra
+            }
+          ThreePaneScaffoldDestinationItem(pane = role, contentKey = key)
+        }
+        val directive = listDetailStrategy.directive
+        calculateThreePaneScaffoldValue(
+          maxHorizontalPartitions = directive.maxHorizontalPartitions,
+          maxVerticalPartitions = directive.maxVerticalPartitions,
+          adaptStrategies = listDetailStrategy.adaptStrategies,
+          destinationHistory = history,
+        )[ListDetailPaneScaffoldRole.List] == PaneAdaptedValue.Expanded
+      }
+    }
   val normalizedSearchQuery = searchQuery.trim()
   val searchResultsBottomPadding =
     if (navigationType == ClawNavigationType.BOTTOM_NAVIGATION) {
@@ -245,7 +280,12 @@ fun LobstersPostsScreen(
     }
     navigateTo(backStack, destination, allowStacking = allowStacking)
   }
-  val startSearch = searchViewModel::startSearch
+  val startSearch = {
+    if (!currentDestinationIsTopLevel && selectedTopLevelDestination != null) {
+      navigateTo(backStack, selectedTopLevelDestination)
+    }
+    searchViewModel.startSearch()
+  }
 
   val postActions =
     remember(isSearchActive) {
@@ -336,7 +376,7 @@ fun LobstersPostsScreen(
     topBar = {
       ClawAppBar(
         activity = activity,
-        isTopLevel = currentDestinationIsTopLevel,
+        isTopLevelVisible = isTopLevelSceneVisible,
         mode =
           if (currentDestinationIsTopLevel && isSearchActive) {
             ClawTopBarMode.Searching(query = searchQuery, requestFocus = true)
@@ -373,9 +413,9 @@ fun LobstersPostsScreen(
       AnimatedVisibility(visible = navigationType == ClawNavigationType.BOTTOM_NAVIGATION) {
         ClawNavigationBar(
           items = navItems,
-          currentNavKey = currentDestination,
+          currentNavKey = selectedTopLevelDestination,
           navigateTo = { destination -> navigateToDestination(destination, false) },
-          isVisible = currentDestinationIsTopLevel && !isSearchActive,
+          isVisible = isTopLevelSceneVisible && !isSearchActive,
         )
       }
     },
@@ -386,9 +426,9 @@ fun LobstersPostsScreen(
       AnimatedVisibility(visible = navigationType == ClawNavigationType.NAVIGATION_RAIL) {
         ClawNavigationRail(
           items = navItems,
-          currentNavKey = currentDestination,
+          currentNavKey = selectedTopLevelDestination,
           navigateTo = { destination -> navigateToDestination(destination, false) },
-          isVisible = currentDestinationIsTopLevel && !isSearchActive,
+          isVisible = isTopLevelSceneVisible && !isSearchActive,
         )
       }
       NavigationHost(
@@ -399,6 +439,7 @@ fun LobstersPostsScreen(
           }
         },
         sceneStrategies = persistentListOf(listDetailStrategy),
+        onVisibleSceneEntriesChanged = { sceneEntries = it },
         entryDecorators = persistentListOf(rememberSaveableStateHolderNavEntryDecorator()),
         popTransitionSpec = {
           slideInHorizontally(initialOffsetX = { -it }, animationSpec = tween(200)) togetherWith

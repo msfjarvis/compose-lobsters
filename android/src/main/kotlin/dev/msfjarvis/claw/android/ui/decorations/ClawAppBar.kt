@@ -56,7 +56,7 @@ sealed interface ClawTopBarMode {
 @Composable
 fun ClawAppBar(
   activity: Activity?,
-  isTopLevel: Boolean,
+  isTopLevelVisible: Boolean,
   mode: ClawTopBarMode,
   navigateTo: (NavKey) -> Unit,
   popBackStack: () -> NavKey?,
@@ -68,7 +68,7 @@ fun ClawAppBar(
   content: @Composable ColumnScope.() -> Unit,
 ) {
   when {
-    !isTopLevel -> {
+    !isTopLevelVisible -> {
       TopAppBar(
         modifier = modifier.shadow(8.dp),
         navigationIcon = {
@@ -189,7 +189,7 @@ private fun ClawAppBarBrowsingPreview() {
   LobstersTheme {
     ClawAppBar(
       activity = null,
-      isTopLevel = true,
+      isTopLevelVisible = true,
       mode = ClawTopBarMode.Browsing,
       navigateTo = {},
       popBackStack = { null },
@@ -209,7 +209,7 @@ private fun ClawAppBarSearchingPreview() {
   LobstersTheme {
     ClawAppBar(
       activity = null,
-      isTopLevel = true,
+      isTopLevelVisible = true,
       mode = ClawTopBarMode.Searching(query = "compose", requestFocus = false),
       navigateTo = {},
       popBackStack = { null },

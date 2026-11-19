@@ -20,7 +20,7 @@ private fun ClawAppBarBrowsingPreviewScreenshot() {
   LobstersTheme {
     ClawAppBar(
       activity = null,
-      isTopLevel = true,
+      isTopLevelVisible = true,
       mode = ClawTopBarMode.Browsing,
       navigateTo = {},
       popBackStack = { null },
@@ -40,7 +40,7 @@ private fun ClawAppBarSearchingPreviewScreenshot() {
   LobstersTheme {
     ClawAppBar(
       activity = null,
-      isTopLevel = true,
+      isTopLevelVisible = true,
       mode = ClawTopBarMode.Searching(query = "compose", requestFocus = false),
       navigateTo = {},
       popBackStack = { null },
@@ -60,7 +60,7 @@ private fun ClawAppBarSearchingWithResultsPreviewScreenshot() {
   LobstersTheme {
     ClawAppBar(
       activity = null,
-      isTopLevel = true,
+      isTopLevelVisible = true,
       mode = ClawTopBarMode.Searching(query = "compose", requestFocus = false),
       navigateTo = {},
       popBackStack = { null },

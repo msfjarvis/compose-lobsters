@@ -55,8 +55,18 @@ class AssistContentTest {
 
     ActivityScenario.launch<MainActivity>(intent).use { scenario ->
       scenario.assertAssistUri("https://lobste.rs/s/ktew3s/c")
+      scenario.onActivity {
+        InstrumentationRegistry.getInstrumentation()
+          .callActivityOnNewIntent(
+            it,
+            Intent(context, MainActivity::class.java).apply {
+              data = "${BuildConfig.DEEPLINK_SCHEME}://newest".toUri()
+            },
+          )
+      }
+      scenario.assertAssistUri("https://lobste.rs/newest")
       scenario.recreate()
-      scenario.assertAssistUri("https://lobste.rs/s/ktew3s/c")
+      scenario.assertAssistUri("https://lobste.rs/newest")
       scenario.onActivity { it.onBackPressedDispatcher.onBackPressed() }
       scenario.assertAssistUri("https://lobste.rs/")
     }

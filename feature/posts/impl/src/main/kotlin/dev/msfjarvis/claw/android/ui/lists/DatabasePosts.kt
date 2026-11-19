@@ -11,8 +11,11 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
@@ -57,7 +60,15 @@ fun DatabasePosts(
         )
       }
     } else {
-      LazyColumn(state = listState, contentPadding = contentPadding) {
+      LazyColumn(
+        state = listState,
+        contentPadding = contentPadding,
+        modifier =
+          Modifier.align(Alignment.TopCenter)
+            .widthIn(max = FeedMaxWidth)
+            .fillMaxWidth()
+            .fillMaxHeight(),
+      ) {
         items.forEach { (month, posts) ->
           stickyHeader(contentType = "month-header") { MonthHeader(label = month) }
           items(items = posts, key = { it.shortId }, contentType = { "LobstersItem" }) { item ->

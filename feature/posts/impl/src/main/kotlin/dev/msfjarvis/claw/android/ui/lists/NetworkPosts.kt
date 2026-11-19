@@ -9,9 +9,11 @@ package dev.msfjarvis.claw.android.ui.lists
 import androidx.activity.compose.ReportDrawnWhen
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -43,6 +45,8 @@ import dev.msfjarvis.claw.model.UIPost
 import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.coroutines.flow.MutableStateFlow
+
+internal val FeedMaxWidth = 720.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -81,7 +85,15 @@ fun NetworkPosts(
         )
       }
     } else {
-      LazyColumn(contentPadding = contentPadding, state = listState) {
+      LazyColumn(
+        modifier =
+          Modifier.align(Alignment.TopCenter)
+            .widthIn(max = FeedMaxWidth)
+            .fillMaxWidth()
+            .fillMaxHeight(),
+        contentPadding = contentPadding,
+        state = listState,
+      ) {
         items(
           count = lazyPagingItems.itemCount,
           // Intentionally keyed on just the index to avoid crashes

@@ -11,9 +11,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -134,75 +137,81 @@ internal fun CommentsPageInternal(
   }
 
   Surface(color = MaterialTheme.colorScheme.surfaceVariant) {
-    LazyColumn(modifier = modifier, contentPadding = contentPadding, state = commentListState) {
-      if (displayedHeader != null) {
-        item(key = "post_header") {
-          CommentsHeader(
-            header = displayedHeader,
-            description = details?.description.orEmpty(),
-            postActions = postActions,
-            openUserProfile = openUserProfile,
-            modifier = Modifier.testTag("comments_header"),
-          )
-        }
-      }
-
-      if (networkState is NetworkState.Error) {
-        item {
-          Box(
-            modifier = Modifier.fillMaxWidth().padding(32.dp),
-            contentAlignment = Alignment.Center,
-          ) {
-            NetworkError(label = networkState.description, error = networkState.error)
+    Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
+      LazyColumn(
+        modifier = Modifier.widthIn(max = 720.dp).fillMaxWidth().fillMaxHeight(),
+        contentPadding = contentPadding,
+        state = commentListState,
+      ) {
+        if (displayedHeader != null) {
+          item(key = "post_header") {
+            CommentsHeader(
+              header = displayedHeader,
+              description = details?.description.orEmpty(),
+              postActions = postActions,
+              openUserProfile = openUserProfile,
+              modifier = Modifier.testTag("comments_header"),
+            )
           }
         }
-      } else if (details == null || seenCommentsState == SeenCommentsState.Loading) {
-        item {
-          Box(
-            modifier =
-              (if (displayedHeader == null) Modifier.fillParentMaxSize()
-                else Modifier.fillMaxWidth())
-                .padding(32.dp),
-            contentAlignment = Alignment.Center,
-          ) {
-            ProgressBar()
+
+        if (networkState is NetworkState.Error) {
+          item {
+            Box(
+              modifier = Modifier.fillMaxWidth().padding(32.dp),
+              contentAlignment = Alignment.Center,
+            ) {
+              NetworkError(label = networkState.description, error = networkState.error)
+            }
           }
-        }
-      } else if (commentNodes.isNotEmpty()) {
-        item(key = "comments_header") {
-          Text(
-            text = stringResource(R.string.comments_label),
-            style = MaterialTheme.typography.labelLarge,
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
-          )
-        }
+        } else if (details == null || seenCommentsState == SeenCommentsState.Loading) {
+          item {
+            Box(
+              modifier =
+                (if (displayedHeader == null) Modifier.fillParentMaxSize()
+                  else Modifier.fillMaxWidth())
+                  .padding(32.dp),
+              contentAlignment = Alignment.Center,
+            ) {
+              ProgressBar()
+            }
+          }
+        } else if (commentNodes.isNotEmpty()) {
+          item(key = "comments_header") {
+            Text(
+              text = stringResource(R.string.comments_label),
+              style = MaterialTheme.typography.labelLarge,
+              modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+            )
+          }
 
-        items(items = commentNodes, key = { node -> node.comment.shortId }) { node ->
-          NodeBox(
-            node = node,
-            isExpanded = node.isExpanded,
-            openUserProfile = openUserProfile,
-            onToggleExpandedState = onToggleExpandedState,
-            isLoggedIn = isLoggedIn,
-            upvoteComment = upvoteComment,
-            unvoteComment = unvoteComment,
-            openReplyScreen = openReplyScreen,
-            shareComment = postActions::shareComment,
-          )
-        }
+          items(items = commentNodes, key = { node -> node.comment.shortId }) { node ->
+            NodeBox(
+              node = node,
+              isExpanded = node.isExpanded,
+              openUserProfile = openUserProfile,
+              onToggleExpandedState = onToggleExpandedState,
+              isLoggedIn = isLoggedIn,
+              upvoteComment = upvoteComment,
+              unvoteComment = unvoteComment,
+              openReplyScreen = openReplyScreen,
+              shareComment = postActions::shareComment,
+            )
+          }
 
-        item(key = "bottom_spacer") {
-          Spacer(modifier = Modifier.windowInsetsBottomHeight(WindowInsets.systemBars))
-        }
-      } else {
-        item {
-          Text(
-            text = stringResource(R.string.no_comments),
-            style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.fillMaxWidth().padding(16.dp),
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center,
-          )
+          item(key = "bottom_spacer") {
+            Spacer(modifier = Modifier.windowInsetsBottomHeight(WindowInsets.systemBars))
+          }
+        } else {
+          item {
+            Text(
+              text = stringResource(R.string.no_comments),
+              style = MaterialTheme.typography.bodyLarge,
+              modifier = Modifier.fillMaxWidth().padding(16.dp),
+              fontWeight = FontWeight.Bold,
+              textAlign = TextAlign.Center,
+            )
+          }
         }
       }
     }

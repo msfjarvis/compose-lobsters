@@ -57,6 +57,8 @@ dependencies {
   implementation(libs.ksoup)
   implementation(libs.metrox.viewmodel.compose)
 
+  screenshotTestImplementation(libs.coil3.compose)
+
   compileOnly(libs.androidx.compose.ui.tooling.preview)
 
   testImplementation(libs.kotlinx.coroutines.test)

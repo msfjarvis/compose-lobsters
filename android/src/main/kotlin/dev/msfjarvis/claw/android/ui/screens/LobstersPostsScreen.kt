@@ -377,6 +377,7 @@ fun LobstersPostsScreen(
       ClawAppBar(
         activity = activity,
         isTopLevelVisible = isTopLevelSceneVisible,
+        useDockedSearch = navigationType == ClawNavigationType.NAVIGATION_RAIL,
         mode =
           if (currentDestinationIsTopLevel && isSearchActive) {
             ClawTopBarMode.Searching(query = searchQuery, requestFocus = true)
@@ -428,7 +429,7 @@ fun LobstersPostsScreen(
           items = navItems,
           currentNavKey = selectedTopLevelDestination,
           navigateTo = { destination -> navigateToDestination(destination, false) },
-          isVisible = isTopLevelSceneVisible && !isSearchActive,
+          isVisible = isTopLevelSceneVisible,
         )
       }
       NavigationHost(

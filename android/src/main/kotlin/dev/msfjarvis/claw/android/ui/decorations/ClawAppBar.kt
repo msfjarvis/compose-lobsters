@@ -10,6 +10,7 @@ import android.app.Activity
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.text.input.clearText
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -28,6 +29,7 @@ import androidx.compose.material3.rememberSearchBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.NonRestartableComposable
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
@@ -81,7 +83,10 @@ fun ClawAppBar(
       )
     }
     mode is ClawTopBarMode.Searching -> {
-      val textFieldState = rememberTextFieldState()
+      val textFieldState = rememberTextFieldState(initialText = mode.query)
+      LaunchedEffect(textFieldState) {
+        snapshotFlow { textFieldState.text.toString() }.collect(onQueryChange)
+      }
       val searchBarState = rememberSearchBarState()
       val appBarWithSearchColors =
         SearchBarDefaults.appBarWithSearchColors(
@@ -105,7 +110,7 @@ fun ClawAppBar(
               IconButton(
                 onClick = {
                   if (mode.query.isNotEmpty()) {
-                    onQueryChange("")
+                    textFieldState.clearText()
                   } else {
                     onDismissSearch()
                   }

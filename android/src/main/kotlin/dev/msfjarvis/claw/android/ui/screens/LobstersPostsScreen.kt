@@ -326,16 +326,11 @@ fun LobstersPostsScreen(
     }
   }
 
-  var lastScrolledSearchGeneration by rememberSaveable { mutableStateOf(0L) }
-  LaunchedEffect(hasRestoredSearchState, searchState.requestGeneration) {
-    if (hasRestoredSearchState) {
-      val generation = searchState.requestGeneration
-      if (generation > 0 && generation != lastScrolledSearchGeneration) {
-        searchResultsListState.scrollToItem(0)
-      }
-      lastScrolledSearchGeneration = generation
-    }
-  }
+  RestoreSearchResultsScroll(
+    listState = searchResultsListState,
+    requestGeneration = searchState.requestGeneration,
+    hasRestoredSearchState = hasRestoredSearchState,
+  )
 
   // Let NavDisplay own back-stack pops so predictive back can animate the previous destination.
   BackHandler(enabled = shouldDismissSearchOnBack(isSearchActive, currentDestinationIsTopLevel)) {

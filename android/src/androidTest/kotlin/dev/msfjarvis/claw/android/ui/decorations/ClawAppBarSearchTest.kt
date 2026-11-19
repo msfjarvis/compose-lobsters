@@ -13,6 +13,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.hasSetTextAction
 import androidx.compose.ui.test.junit4.v2.createComposeRule
+import androidx.compose.ui.test.onAllNodesWithContentDescription
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextReplacement
@@ -24,13 +25,40 @@ class ClawAppBarSearchTest {
   @get:Rule val compose = createComposeRule()
 
   @Test
+  fun detailSceneWithoutVisibleTopLevelShowsBackAffordance() {
+    var popped = false
+    compose.setContent {
+      MaterialTheme {
+        ClawAppBar(
+          activity = null,
+          isTopLevelVisible = false,
+          mode = ClawTopBarMode.Browsing,
+          navigateTo = {},
+          popBackStack = {
+            popped = true
+            null
+          },
+          onStartSearch = {},
+          onDismissSearch = {},
+          onQueryChange = {},
+          onSearch = {},
+          content = {},
+        )
+      }
+    }
+
+    compose.onNodeWithContentDescription("Go back to previous screen").performClick()
+    compose.runOnIdle { assertEquals(true, popped) }
+  }
+
+  @Test
   fun restoredQueryIsVisibleAndEditsAndClearReachOwner() {
     var query by mutableStateOf("compose")
     compose.setContent {
       MaterialTheme {
         ClawAppBar(
           activity = null,
-          isTopLevel = true,
+          isTopLevelVisible = true,
           mode = ClawTopBarMode.Searching(query, requestFocus = false),
           navigateTo = {},
           popBackStack = { null },
@@ -42,11 +70,11 @@ class ClawAppBarSearchTest {
         )
       }
     }
-    compose.onNode(hasSetTextAction()).assertTextContains("compose")
-    compose.onNode(hasSetTextAction()).performTextReplacement("compose test")
+    compose.onAllNodes(hasSetTextAction())[0].assertTextContains("compose")
+    compose.onAllNodes(hasSetTextAction())[0].performTextReplacement("compose test")
     compose.runOnIdle { assertEquals("compose test", query) }
-    compose.onNodeWithContentDescription("Close search").performClick()
-    compose.onNode(hasSetTextAction()).assertTextContains("")
+    compose.onAllNodesWithContentDescription("Close search")[0].performClick()
+    compose.onAllNodes(hasSetTextAction())[0].assertTextContains("")
     compose.runOnIdle { assertEquals("", query) }
   }
 }

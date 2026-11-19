@@ -9,7 +9,9 @@ package dev.msfjarvis.claw.android.ui.decorations
 import android.app.Activity
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.text.input.clearText
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material.icons.Icons
@@ -18,11 +20,13 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material3.AppBarWithSearch
+import androidx.compose.material3.ExpandedDockedSearchBar
 import androidx.compose.material3.ExpandedFullScreenContainedSearchBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.SearchBarDefaults
+import androidx.compose.material3.SearchBarValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberSearchBarState
@@ -65,6 +69,7 @@ fun ClawAppBar(
   onQueryChange: (String) -> Unit,
   onSearch: (String) -> Unit,
   modifier: Modifier = Modifier,
+  useDockedSearch: Boolean = false,
   content: @Composable ColumnScope.() -> Unit,
 ) {
   when {
@@ -109,7 +114,7 @@ fun ClawAppBar(
             trailingIcon = {
               IconButton(
                 onClick = {
-                  if (mode.query.isNotEmpty()) {
+                  if (textFieldState.text.isNotEmpty()) {
                     textFieldState.clearText()
                   } else {
                     onDismissSearch()
@@ -131,12 +136,32 @@ fun ClawAppBar(
           colors = appBarWithSearchColors,
           inputField = inputField,
         )
-        ExpandedFullScreenContainedSearchBar(
-          state = searchBarState,
-          inputField = inputField,
-          colors = appBarWithSearchColors.searchBarColors,
-          content = content,
-        )
+        if (useDockedSearch) {
+          ExpandedDockedSearchBar(
+            state = searchBarState,
+            inputField = inputField,
+            colors = appBarWithSearchColors.searchBarColors,
+            modifier = Modifier.widthIn(max = 720.dp).heightIn(max = 600.dp),
+            content = content,
+          )
+        } else {
+          ExpandedFullScreenContainedSearchBar(
+            state = searchBarState,
+            inputField = inputField,
+            colors = appBarWithSearchColors.searchBarColors,
+            content = content,
+          )
+        }
+        LaunchedEffect(searchBarState, useDockedSearch) {
+          if (useDockedSearch) {
+            var expanded = false
+            snapshotFlow { searchBarState.targetValue }
+              .collect { value ->
+                if (value == SearchBarValue.Expanded) expanded = true
+                else if (expanded) onDismissSearch()
+              }
+          }
+        }
         LaunchedEffect(searchBarState, mode.requestFocus) {
           if (mode.requestFocus) {
             searchBarState.animateToExpanded()

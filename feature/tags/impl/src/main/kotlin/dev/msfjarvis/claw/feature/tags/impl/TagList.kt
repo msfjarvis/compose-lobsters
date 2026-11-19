@@ -37,7 +37,7 @@ import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -67,9 +67,9 @@ fun TagList(
   val allTagsState = viewModel.allTags
   val filteredTags by viewModel.filteredTags.collectAsStateWithLifecycle(emptySet())
   val tagBlocks by viewModel.tagBlocks.collectAsStateWithLifecycle(emptyList())
-  var showDatePicker by remember { mutableStateOf(false) }
-  var selectedTagForDatePicker by remember { mutableStateOf<String?>(null) }
-  var showDiscardDialog by remember { mutableStateOf(false) }
+  var showDatePicker by rememberSaveable { mutableStateOf(false) }
+  var selectedTagForDatePicker by rememberSaveable { mutableStateOf<String?>(null) }
+  var showDiscardDialog by rememberSaveable { mutableStateOf(false) }
 
   BackHandler(enabled = viewModel.isDirty) { showDiscardDialog = true }
 

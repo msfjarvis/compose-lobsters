@@ -13,11 +13,12 @@ import android.text.format.DateFormat
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlexBox
+import androidx.compose.foundation.layout.FlexDirection
+import androidx.compose.foundation.layout.FlexWrap
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -140,26 +141,32 @@ fun SettingsScreen(
             modifier = Modifier.height(32.dp),
           )
         },
-        trailingContent = {
-          Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            ImportPosts(
-              context.contentResolver::openInputStream,
-              coroutineScope,
-              snackbarHostState,
-              importPosts,
-              settingsAppConfig.recordMetric,
-            )
-            ExportPosts(
-              coroutineScope,
-              snackbarHostState,
-              context.contentResolver::openOutputStream,
-              exportPostsAsJson,
-              settingsAppConfig.recordMetric,
-            )
-          }
-        },
       ) {
         Text(stringResource(R.string.data_transfer))
+      }
+      FlexBox(
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+        config = {
+          direction(FlexDirection.Row)
+          wrap(FlexWrap.Wrap)
+          columnGap(8.dp)
+          rowGap(8.dp)
+        },
+      ) {
+        ImportPosts(
+          context.contentResolver::openInputStream,
+          coroutineScope,
+          snackbarHostState,
+          importPosts,
+          settingsAppConfig.recordMetric,
+        )
+        ExportPosts(
+          coroutineScope,
+          snackbarHostState,
+          context.contentResolver::openOutputStream,
+          exportPostsAsJson,
+          settingsAppConfig.recordMetric,
+        )
       }
 
       Spacer(modifier = Modifier.height(24.dp))

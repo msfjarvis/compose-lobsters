@@ -6,6 +6,7 @@
  */
 @file:Suppress("UnstableApiUsage")
 
+import com.android.compose.screenshot.tasks.PreviewScreenshotValidationTask
 import dev.msfjarvis.claw.gradle.addTestDependencies
 
 plugins {
@@ -19,6 +20,11 @@ plugins {
 android {
   namespace = "dev.msfjarvis.claw.core.ui"
   buildFeatures.buildConfig = true
+}
+
+// Emoji rendering varies slightly between Linux and macOS.
+tasks.withType<PreviewScreenshotValidationTask>().configureEach {
+  testEngineInput.threshold.set(0.0004f)
 }
 
 dependencies {

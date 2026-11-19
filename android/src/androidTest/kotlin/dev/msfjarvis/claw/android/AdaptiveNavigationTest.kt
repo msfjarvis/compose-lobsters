@@ -76,6 +76,12 @@ class AdaptiveNavigationTest {
       }
       compose.onNodeWithTag("HOTTEST").assertIsDisplayed()
       compose.onNodeWithContentDescription("Go back to previous screen").assertDoesNotExist()
+      compose.onNodeWithContentDescription("Close detail").performClick()
+      compose.waitUntil(timeoutMillis = 10_000) {
+        var uri: String? = null
+        scenario.onActivity { uri = it.webUri }
+        uri == "https://lobste.rs/"
+      }
     }
   }
 }

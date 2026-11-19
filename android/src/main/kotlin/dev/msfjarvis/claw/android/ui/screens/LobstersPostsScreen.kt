@@ -326,9 +326,14 @@ fun LobstersPostsScreen(
     }
   }
 
-  LaunchedEffect(searchState.requestGeneration) {
-    if (searchState.requestGeneration > 0) {
-      searchResultsListState.scrollToItem(0)
+  var lastScrolledSearchGeneration by rememberSaveable { mutableStateOf(0L) }
+  LaunchedEffect(hasRestoredSearchState, searchState.requestGeneration) {
+    if (hasRestoredSearchState) {
+      val generation = searchState.requestGeneration
+      if (generation > 0 && generation != lastScrolledSearchGeneration) {
+        searchResultsListState.scrollToItem(0)
+      }
+      lastScrolledSearchGeneration = generation
     }
   }
 
@@ -378,6 +383,12 @@ fun LobstersPostsScreen(
         activity = activity,
         isTopLevelVisible = isTopLevelSceneVisible,
         useDockedSearch = navigationType == ClawNavigationType.NAVIGATION_RAIL,
+        onCloseDetail =
+          if (isTopLevelSceneVisible && !currentDestinationIsTopLevel) {
+            { popBackStack(backStack) }
+          } else {
+            null
+          },
         mode =
           if (currentDestinationIsTopLevel && isSearchActive) {
             ClawTopBarMode.Searching(query = searchQuery, requestFocus = true)

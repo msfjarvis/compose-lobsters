@@ -70,6 +70,7 @@ fun ClawAppBar(
   onSearch: (String) -> Unit,
   modifier: Modifier = Modifier,
   useDockedSearch: Boolean = false,
+  onCloseDetail: (() -> Unit)? = null,
   content: @Composable ColumnScope.() -> Unit,
 ) {
   when {
@@ -183,6 +184,14 @@ fun ClawAppBar(
           Text(text = stringResource(R.string.app_name), fontWeight = FontWeight.Bold)
         },
         actions = {
+          if (onCloseDetail != null) {
+            IconButton(onClick = onCloseDetail) {
+              Icon(
+                imageVector = Icons.Filled.Close,
+                contentDescription = stringResource(R.string.close_detail),
+              )
+            }
+          }
           IconButton(onClick = onStartSearch) {
             Icon(
               imageVector = Icons.Filled.Search,

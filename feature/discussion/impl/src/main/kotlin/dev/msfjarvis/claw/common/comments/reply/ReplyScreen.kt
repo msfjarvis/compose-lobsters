@@ -8,14 +8,17 @@ package dev.msfjarvis.claw.common.comments.reply
 
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -30,6 +33,13 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
@@ -54,6 +64,18 @@ internal fun ReplyScreen(
   viewModel: ReplyViewModel = metroViewModel(key = commentId),
 ) {
   val uiState = viewModel.uiState
+  var savedEditor by
+    rememberSaveable(commentId, stateSaver = TextFieldValue.Saver) {
+      mutableStateOf(uiState.editor)
+    }
+  var hasRestoredEditor by remember(viewModel) { mutableStateOf(false) }
+  LaunchedEffect(viewModel) {
+    if (savedEditor != viewModel.uiState.editor) viewModel.updateEditor(savedEditor)
+    hasRestoredEditor = true
+  }
+  SideEffect {
+    if (hasRestoredEditor) savedEditor = uiState.editor
+  }
 
   LaunchedEffect(uiState.submitSucceeded) {
     if (uiState.submitSucceeded) {
@@ -88,41 +110,49 @@ internal fun ReplyScreenContent(
   modifier: Modifier = Modifier,
   scrollState: ScrollState = rememberScrollState(),
 ) {
-  Column(
+  Box(
     modifier =
       modifier
         .fillMaxSize()
         .padding(contentPadding)
         .consumeWindowInsets(contentPadding)
-        .imePadding()
-        .verticalScroll(scrollState)
-        .padding(16.dp),
-    verticalArrangement = Arrangement.spacedBy(16.dp),
+        .imePadding(),
+    contentAlignment = Alignment.TopCenter,
   ) {
-    ElevatedCard(onClick = onParentCommentClick, modifier = Modifier.fillMaxWidth()) {
-      ThemedRichText(
-        text = commentText,
-        modifier = Modifier.padding(16.dp),
-        transformDestination = { rewriteUrlIfLobstersPost(it) },
-      )
-    }
-    TextField(
-      value = uiState.editor,
-      onValueChange = onEditorChanged,
-      label = { Text(stringResource(R.string.reply_editor_label)) },
-      supportingText = {
-        uiState.errorMessage?.let { Text(text = it, color = MaterialTheme.colorScheme.error) }
-      },
-      enabled = !uiState.isSubmitting,
-      modifier = Modifier.fillMaxWidth().heightIn(min = 200.dp),
-    )
-    Button(
-      onClick = onSubmit,
-      enabled = !uiState.isSubmitting,
-      modifier = Modifier.fillMaxWidth(),
+    Column(
+      modifier =
+        Modifier.widthIn(max = 720.dp)
+          .fillMaxWidth()
+          .fillMaxHeight()
+          .verticalScroll(scrollState)
+          .padding(16.dp),
+      verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
-      Icon(imageVector = Icons.AutoMirrored.Filled.Send, contentDescription = null)
-      Text(text = stringResource(R.string.submit_reply))
+      ElevatedCard(onClick = onParentCommentClick, modifier = Modifier.fillMaxWidth()) {
+        ThemedRichText(
+          text = commentText,
+          modifier = Modifier.padding(16.dp),
+          transformDestination = { rewriteUrlIfLobstersPost(it) },
+        )
+      }
+      TextField(
+        value = uiState.editor,
+        onValueChange = onEditorChanged,
+        label = { Text(stringResource(R.string.reply_editor_label)) },
+        supportingText = {
+          uiState.errorMessage?.let { Text(text = it, color = MaterialTheme.colorScheme.error) }
+        },
+        enabled = !uiState.isSubmitting,
+        modifier = Modifier.fillMaxWidth().heightIn(min = 200.dp),
+      )
+      Button(
+        onClick = onSubmit,
+        enabled = !uiState.isSubmitting,
+        modifier = Modifier.fillMaxWidth(),
+      ) {
+        Icon(imageVector = Icons.AutoMirrored.Filled.Send, contentDescription = null)
+        Text(text = stringResource(R.string.submit_reply))
+      }
     }
   }
 

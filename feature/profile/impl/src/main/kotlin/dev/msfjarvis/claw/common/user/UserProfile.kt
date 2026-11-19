@@ -10,9 +10,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -53,11 +56,14 @@ fun UserProfile(
   LaunchedEffect(username) { viewModel.loadProfile(username) }
   when (val state = viewModel.userProfile) {
     is Success<*> -> {
-      UserProfileInternal(
-        user = state.data as User,
-        openUserProfile = openUserProfile,
-        modifier = modifier.padding(contentPadding),
-      )
+      Box(modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
+        UserProfileInternal(
+          user = state.data as User,
+          openUserProfile = openUserProfile,
+          modifier =
+            Modifier.fillMaxHeight().padding(contentPadding).widthIn(max = 720.dp).fillMaxWidth(),
+        )
+      }
     }
     is Error -> {
       Box(modifier = Modifier.padding(contentPadding).fillMaxSize()) {

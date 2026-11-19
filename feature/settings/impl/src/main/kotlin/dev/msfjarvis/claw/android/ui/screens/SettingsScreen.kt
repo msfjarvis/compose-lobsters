@@ -14,15 +14,19 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -44,6 +48,7 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -62,6 +67,7 @@ import kotlinx.datetime.LocalTime
 import kotlinx.datetime.toJavaLocalTime
 
 private const val JSON_MIME_TYPE = "application/json"
+private val maxReadingWidth = 720.dp
 
 @Composable
 fun SettingsScreen(
@@ -86,204 +92,208 @@ fun SettingsScreen(
 ) {
   val context = LocalContext.current
   val coroutineScope = rememberCoroutineScope()
-  Column(modifier.padding(contentPadding).verticalScroll(rememberScrollState())) {
-    // Account Section
-    SectionHeader(title = "Account")
-    if (isLoggedIn && !username.isNullOrBlank()) {
-      ListItem(
-        supportingContent = { Text("Logged in as $username") },
-        leadingContent = {
-          Icon(
-            imageVector = Icons.Filled.AccountCircle,
-            contentDescription = null,
-            modifier = Modifier.height(32.dp),
-          )
-        },
-        modifier = Modifier.clickable(onClick = onLogout),
-      ) {
-        Text("Log out")
-      }
-    } else {
-      ListItem(
-        supportingContent = { Text("Sign in to your lobste.rs account") },
-        leadingContent = {
-          Icon(
-            imageVector = Icons.Filled.AccountCircle,
-            contentDescription = null,
-            modifier = Modifier.height(32.dp),
-          )
-        },
-        modifier = Modifier.clickable(onClick = openLoginScreen),
-      ) {
-        Text("Log in with lobste.rs")
-      }
-    }
-    Spacer(modifier = Modifier.height(24.dp))
-
-    // Data Management Section
-    SectionHeader(title = stringResource(R.string.data_management))
-    ListItem(
-      supportingContent = { Text(stringResource(R.string.import_and_export_your_saved_posts)) },
-      leadingContent = {
-        Icon(
-          imageVector = Icons.Filled.ImportExport,
-          contentDescription = null,
-          modifier = Modifier.height(32.dp),
-        )
-      },
-      trailingContent = {
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-          ImportPosts(
-            context.contentResolver::openInputStream,
-            coroutineScope,
-            snackbarHostState,
-            importPosts,
-            settingsAppConfig.recordMetric,
-          )
-          ExportPosts(
-            coroutineScope,
-            snackbarHostState,
-            context.contentResolver::openOutputStream,
-            exportPostsAsJson,
-            settingsAppConfig.recordMetric,
-          )
+  Box(modifier.fillMaxSize().padding(contentPadding), contentAlignment = Alignment.TopCenter) {
+    Column(
+      Modifier.widthIn(max = maxReadingWidth).fillMaxWidth().verticalScroll(rememberScrollState())
+    ) {
+      // Account Section
+      SectionHeader(title = "Account")
+      if (isLoggedIn && !username.isNullOrBlank()) {
+        ListItem(
+          supportingContent = { Text("Logged in as $username") },
+          leadingContent = {
+            Icon(
+              imageVector = Icons.Filled.AccountCircle,
+              contentDescription = null,
+              modifier = Modifier.height(32.dp),
+            )
+          },
+          modifier = Modifier.clickable(onClick = onLogout),
+        ) {
+          Text("Log out")
         }
-      },
-    ) {
-      Text(stringResource(R.string.data_transfer))
-    }
+      } else {
+        ListItem(
+          supportingContent = { Text("Sign in to your lobste.rs account") },
+          leadingContent = {
+            Icon(
+              imageVector = Icons.Filled.AccountCircle,
+              contentDescription = null,
+              modifier = Modifier.height(32.dp),
+            )
+          },
+          modifier = Modifier.clickable(onClick = openLoginScreen),
+        ) {
+          Text("Log in with lobste.rs")
+        }
+      }
+      Spacer(modifier = Modifier.height(24.dp))
 
-    Spacer(modifier = Modifier.height(24.dp))
+      // Data Management Section
+      SectionHeader(title = stringResource(R.string.data_management))
+      ListItem(
+        supportingContent = { Text(stringResource(R.string.import_and_export_your_saved_posts)) },
+        leadingContent = {
+          Icon(
+            imageVector = Icons.Filled.ImportExport,
+            contentDescription = null,
+            modifier = Modifier.height(32.dp),
+          )
+        },
+        trailingContent = {
+          Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            ImportPosts(
+              context.contentResolver::openInputStream,
+              coroutineScope,
+              snackbarHostState,
+              importPosts,
+              settingsAppConfig.recordMetric,
+            )
+            ExportPosts(
+              coroutineScope,
+              snackbarHostState,
+              context.contentResolver::openOutputStream,
+              exportPostsAsJson,
+              settingsAppConfig.recordMetric,
+            )
+          }
+        },
+      ) {
+        Text(stringResource(R.string.data_transfer))
+      }
 
-    // App Information Section
-    SectionHeader(title = stringResource(R.string.posts))
-    ListItem(
-      supportingContent = { Text(stringResource(R.string.filter_posts_by_tags)) },
-      leadingContent = {
-        Icon(
-          imageVector = Icons.Filled.FilterList,
-          contentDescription = null,
-          modifier = Modifier.height(32.dp),
-        )
-      },
-      modifier = Modifier.clickable { openTagFiltering(TagFiltering) },
-    ) {
-      Text(stringResource(R.string.tag_filtering))
-    }
-    ListItem(
-      supportingContent = {
-        Text(stringResource(R.string.enable_post_a_day_reminders_summary))
-      },
-      leadingContent = {
-        Icon(
-          imageVector = Icons.Filled.NotificationsActive,
-          contentDescription = null,
-          modifier = Modifier.height(32.dp),
-        )
-      },
-      trailingContent = {
-        Switch(
-          checked = isDailySavedPostReminderEnabled,
-          onCheckedChange = onDailySavedPostReminderEnabledChange,
-        )
-      },
-    ) {
-      Text(stringResource(R.string.enable_post_a_day_reminders))
-    }
-    if (isDailySavedPostReminderEnabled) {
+      Spacer(modifier = Modifier.height(24.dp))
+
+      // App Information Section
+      SectionHeader(title = stringResource(R.string.posts))
+      ListItem(
+        supportingContent = { Text(stringResource(R.string.filter_posts_by_tags)) },
+        leadingContent = {
+          Icon(
+            imageVector = Icons.Filled.FilterList,
+            contentDescription = null,
+            modifier = Modifier.height(32.dp),
+          )
+        },
+        modifier = Modifier.clickable { openTagFiltering(TagFiltering) },
+      ) {
+        Text(stringResource(R.string.tag_filtering))
+      }
       ListItem(
         supportingContent = {
-          Text(formatDailySavedPostReminderTime(context, dailySavedPostReminderTime))
+          Text(stringResource(R.string.enable_post_a_day_reminders_summary))
         },
         leadingContent = {
-          // 24.dp is the internal default "small icon" size but the token is not public, so I'm
-          // just hard coding it here.
-          Spacer(Modifier.size(24.dp))
-        },
-        modifier =
-          Modifier.clickable {
-            TimePickerDialog(
-                context,
-                { _, hour, minute ->
-                  onDailySavedPostReminderTimeChange(LocalTime(hour, minute))
-                },
-                dailySavedPostReminderTime.hour,
-                dailySavedPostReminderTime.minute,
-                DateFormat.is24HourFormat(context),
-              )
-              .show()
-          },
-      ) {
-        Text(stringResource(R.string.daily_saved_post_reminder_time))
-      }
-    }
-    ListItem(
-      supportingContent = { Text(stringResource(R.string.posts_saved_locally, savedPostsCount)) },
-      leadingContent = {
-        Icon(
-          imageVector = Icons.Filled.Bookmarks,
-          contentDescription = null,
-          modifier = Modifier.height(32.dp),
-        )
-      },
-    ) {
-      Text(stringResource(R.string.saved_posts))
-    }
-
-    Spacer(modifier = Modifier.height(24.dp))
-
-    // About Section
-    SectionHeader(title = stringResource(R.string.about))
-    ListItem(
-      supportingContent = {
-        Text(
-          stringResource(
-            R.string.version_placeholder,
-            settingsAppConfig.versionName,
-            settingsAppConfig.versionCode,
+          Icon(
+            imageVector = Icons.Filled.NotificationsActive,
+            contentDescription = null,
+            modifier = Modifier.height(32.dp),
           )
-        )
-      },
-      leadingContent = {
-        Icon(
-          imageVector = Icons.Filled.Code,
-          contentDescription = null,
-          modifier = Modifier.height(32.dp),
-        )
-      },
-    ) {
-      Text(stringResource(R.string.version))
+        },
+        trailingContent = {
+          Switch(
+            checked = isDailySavedPostReminderEnabled,
+            onCheckedChange = onDailySavedPostReminderEnabledChange,
+          )
+        },
+      ) {
+        Text(stringResource(R.string.enable_post_a_day_reminders))
+      }
+      if (isDailySavedPostReminderEnabled) {
+        ListItem(
+          supportingContent = {
+            Text(formatDailySavedPostReminderTime(context, dailySavedPostReminderTime))
+          },
+          leadingContent = {
+            // 24.dp is the internal default "small icon" size but the token is not public, so I'm
+            // just hard coding it here.
+            Spacer(Modifier.size(24.dp))
+          },
+          modifier =
+            Modifier.clickable {
+              TimePickerDialog(
+                  context,
+                  { _, hour, minute ->
+                    onDailySavedPostReminderTimeChange(LocalTime(hour, minute))
+                  },
+                  dailySavedPostReminderTime.hour,
+                  dailySavedPostReminderTime.minute,
+                  DateFormat.is24HourFormat(context),
+                )
+                .show()
+            },
+        ) {
+          Text(stringResource(R.string.daily_saved_post_reminder_time))
+        }
+      }
+      ListItem(
+        supportingContent = { Text(stringResource(R.string.posts_saved_locally, savedPostsCount)) },
+        leadingContent = {
+          Icon(
+            imageVector = Icons.Filled.Bookmarks,
+            contentDescription = null,
+            modifier = Modifier.height(32.dp),
+          )
+        },
+      ) {
+        Text(stringResource(R.string.saved_posts))
+      }
+
+      Spacer(modifier = Modifier.height(24.dp))
+
+      // About Section
+      SectionHeader(title = stringResource(R.string.about))
+      ListItem(
+        supportingContent = {
+          Text(
+            stringResource(
+              R.string.version_placeholder,
+              settingsAppConfig.versionName,
+              settingsAppConfig.versionCode,
+            )
+          )
+        },
+        leadingContent = {
+          Icon(
+            imageVector = Icons.Filled.Code,
+            contentDescription = null,
+            modifier = Modifier.height(32.dp),
+          )
+        },
+      ) {
+        Text(stringResource(R.string.version))
+      }
+      ListItem(
+        supportingContent = {
+          Text(stringResource(R.string.view_open_source_libraries_used_in_this_))
+        },
+        leadingContent = {
+          Icon(
+            imageVector = Icons.AutoMirrored.Filled.LibraryBooks,
+            contentDescription = null,
+            modifier = Modifier.height(32.dp),
+          )
+        },
+        modifier = Modifier.clickable(onClick = openLibrariesScreen),
+      ) {
+        Text(stringResource(R.string.libraries))
+      }
+      ListItem(
+        supportingContent = { Text(stringResource(R.string.view_the_source_code_on_github)) },
+        leadingContent = {
+          Icon(
+            imageVector = Icons.Filled.Code,
+            contentDescription = null,
+            modifier = Modifier.height(32.dp),
+          )
+        },
+        modifier = Modifier.clickable(onClick = openRepository),
+      ) {
+        Text(stringResource(R.string.source_code))
+      }
+      // Spacer to offset any navigation bars and keep the last item clickable
+      Spacer(modifier = Modifier.windowInsetsBottomHeight(WindowInsets.systemBars))
     }
-    ListItem(
-      supportingContent = {
-        Text(stringResource(R.string.view_open_source_libraries_used_in_this_))
-      },
-      leadingContent = {
-        Icon(
-          imageVector = Icons.AutoMirrored.Filled.LibraryBooks,
-          contentDescription = null,
-          modifier = Modifier.height(32.dp),
-        )
-      },
-      modifier = Modifier.clickable(onClick = openLibrariesScreen),
-    ) {
-      Text(stringResource(R.string.libraries))
-    }
-    ListItem(
-      supportingContent = { Text(stringResource(R.string.view_the_source_code_on_github)) },
-      leadingContent = {
-        Icon(
-          imageVector = Icons.Filled.Code,
-          contentDescription = null,
-          modifier = Modifier.height(32.dp),
-        )
-      },
-      modifier = Modifier.clickable(onClick = openRepository),
-    ) {
-      Text(stringResource(R.string.source_code))
-    }
-    // Spacer to offset any navigation bars and keep the last item clickable
-    Spacer(modifier = Modifier.windowInsetsBottomHeight(WindowInsets.systemBars))
   }
 }
 

@@ -9,6 +9,7 @@ import dev.msfjarvis.claw.gradle.addTestDependencies
 plugins {
   id("dev.msfjarvis.claw.android-library")
   id("dev.msfjarvis.claw.kotlin-android")
+  id("dev.msfjarvis.claw.android-screenshot")
   alias(libs.plugins.dependencyAnalysis)
   alias(libs.plugins.kotlin.composeCompiler)
   alias(libs.plugins.metro)

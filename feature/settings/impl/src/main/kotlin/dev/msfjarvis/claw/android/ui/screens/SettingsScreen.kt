@@ -15,7 +15,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlexBox
+import androidx.compose.foundation.layout.FlexDirection
+import androidx.compose.foundation.layout.FlexWrap
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -51,6 +55,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.msfjarvis.claw.android.ui.navigation.TagFiltering
@@ -131,35 +136,66 @@ fun SettingsScreen(
 
       // Data Management Section
       SectionHeader(title = stringResource(R.string.data_management))
-      ListItem(
-        supportingContent = { Text(stringResource(R.string.import_and_export_your_saved_posts)) },
-        leadingContent = {
-          Icon(
-            imageVector = Icons.Filled.ImportExport,
-            contentDescription = null,
-            modifier = Modifier.height(32.dp),
+      BoxWithConstraints(Modifier.fillMaxWidth()) {
+        val actions: @Composable () -> Unit = {
+          ImportPosts(
+            context.contentResolver::openInputStream,
+            coroutineScope,
+            snackbarHostState,
+            importPosts,
+            settingsAppConfig.recordMetric,
           )
-        },
-        trailingContent = {
-          Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            ImportPosts(
-              context.contentResolver::openInputStream,
-              coroutineScope,
-              snackbarHostState,
-              importPosts,
-              settingsAppConfig.recordMetric,
-            )
-            ExportPosts(
-              coroutineScope,
-              snackbarHostState,
-              context.contentResolver::openOutputStream,
-              exportPostsAsJson,
-              settingsAppConfig.recordMetric,
-            )
+          ExportPosts(
+            coroutineScope,
+            snackbarHostState,
+            context.contentResolver::openOutputStream,
+            exportPostsAsJson,
+            settingsAppConfig.recordMetric,
+          )
+        }
+        val wide = maxWidth >= 600.dp && LocalDensity.current.fontScale <= 1.3f
+        val useCompactRow = maxWidth >= 320.dp && LocalDensity.current.fontScale <= 1.3f
+        Column {
+          ListItem(
+            supportingContent = {
+              Text(stringResource(R.string.import_and_export_your_saved_posts))
+            },
+            leadingContent = {
+              Icon(
+                imageVector = Icons.Filled.ImportExport,
+                contentDescription = null,
+                modifier = Modifier.height(32.dp),
+              )
+            },
+            trailingContent =
+              if (wide) {
+                { Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) { actions() } }
+              } else null,
+          ) {
+            Text(stringResource(R.string.data_transfer))
           }
-        },
-      ) {
-        Text(stringResource(R.string.data_transfer))
+          if (!wide && useCompactRow) {
+            Row(
+              modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+              horizontalArrangement = Arrangement.SpaceEvenly,
+            ) {
+              actions()
+            }
+          } else if (!wide) {
+            FlexBox(
+              modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+              config = {
+                direction(FlexDirection.Row)
+                wrap(FlexWrap.Wrap)
+                justifyContent(androidx.compose.foundation.layout.FlexJustifyContent.SpaceEvenly)
+                columnGap(8.dp)
+                rowGap(8.dp)
+              },
+            ) {
+              actions()
+            }
+          }
+        }
       }
 
       Spacer(modifier = Modifier.height(24.dp))

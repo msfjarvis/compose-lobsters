@@ -6,7 +6,6 @@
  */
 @file:Suppress("UnstableApiUsage")
 
-import com.android.compose.screenshot.tasks.PreviewScreenshotValidationTask
 import dev.msfjarvis.claw.gradle.addTestDependencies
 
 plugins {
@@ -18,11 +17,6 @@ plugins {
 
 android {
   namespace = "dev.msfjarvis.claw.htmlrenderer"
-}
-
-// The standalone screenshot plugin defaults to exact comparison; emoji vary across hosts.
-tasks.withType<PreviewScreenshotValidationTask>().configureEach {
-  testEngineInput.threshold.set(0.00012f)
 }
 
 kotlin {

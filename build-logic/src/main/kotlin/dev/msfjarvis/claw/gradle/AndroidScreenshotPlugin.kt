@@ -7,15 +7,21 @@
 package dev.msfjarvis.claw.gradle
 
 import com.android.build.api.dsl.LibraryExtension
+import com.android.compose.screenshot.tasks.PreviewScreenshotValidationTask
 import org.gradle.accessors.dm.LibrariesForLibs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.withType
 
 @Suppress("UnstableApiUsage")
 class AndroidScreenshotPlugin : Plugin<Project> {
   override fun apply(project: Project) {
     project.pluginManager.apply("com.android.compose.screenshot")
+    // Allow small host-dependent emoji rendering differences (0.04% of pixels).
+    project.tasks.withType<PreviewScreenshotValidationTask>().configureEach {
+      testEngineInput.threshold.set(0.0004f)
+    }
     project.pluginManager.withPlugin("com.android.library") {
       project.extensions.configure<LibraryExtension> {
         androidResources.enable = true

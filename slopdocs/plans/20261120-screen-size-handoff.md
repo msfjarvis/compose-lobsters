@@ -22,7 +22,24 @@
 - Host screenshot baselines exist for feed/saved posts, comments, settings and reply at several compact, medium, expanded, short-height and large-font sizes. Some were visually inspected; **human visual approval is still needed**. Full-app deterministic screenshots covering the actual feed-plus-comments scene and expanded search are still missing. The Compose preview renderer did not capture the expanded docked-search popup, so a misleading empty-popup baseline was removed.
 - Tablet emulator: targeted instrumentation passed for expanded navigation/close, search recreation, deep-link recreation, login WebView history/retry, process-style paged search restoration, search scroll reset, reminder picker restore/cancel, full-width feed/saved gutter scrolling, comments loading and reply draft restoration. Tests using `StateRestorationTester` emulate saved-state recreation, not a real OS process kill.
 - A temporary tablet was also resized to compact width and back: the search query survived; compact comments/back and tablet navigation tests passed. Medium-width comments and 1.5x font were inspected manually. Test outcomes depending on an external login page are not proof of a complete sign-in flow.
-- The configured Gradle managed emulator initially failed on NixOS because the SDK emulator could not find `libX11.so.6`. A temporary Pixel Tablet AVD worked with `ANDROID_AVD_HOME` in `/tmp` and `LD_LIBRARY_PATH="$(nix eval --raw nixpkgs#libx11)/lib"`; use `adb -s <emulator>` explicitly. The emulator started for this session has been stopped. A physical phone was connected with an existing debug app installed: ask before overwriting it.
+- The configured Gradle managed emulator initially failed on NixOS because the SDK emulator could not find `libX11.so.6`. The temporary emulator was a **Pixel Tablet**, API 36 AOSP `default;x86_64` image, 2560×1600 px at 320 dpi (1280×800 dp). It was stopped and its temporary AVD deleted. A physical phone was connected with an existing debug app installed: ask before overwriting it.
+
+### Recreate the tablet emulator
+
+The SDK used here was `/home/msfjarvis/Android/Sdk`; adjust for the host. Create an isolated AVD rather than modifying an existing one:
+
+```sh
+sdk=/home/msfjarvis/Android/Sdk
+export ANDROID_AVD_HOME="$(mktemp -d)"
+printf 'no\n' | "$sdk/cmdline-tools/latest/bin/avdmanager" create avd \
+  -n claw-audit-tablet -k 'system-images;android-36;default;x86_64' --device pixel_tablet
+LD_LIBRARY_PATH="$(nix eval --raw nixpkgs#libx11)/lib" \
+  "$sdk/emulator/emulator" -avd claw-audit-tablet \
+  -no-window -no-audio -no-snapshot -no-boot-anim -gpu swiftshader_indirect \
+  -memory 2048 -cores 2
+```
+
+Use `adb -s <emulator-serial>` for tests when a physical device is connected. Stop the emulator and remove the temporary `ANDROID_AVD_HOME` after testing.
 
 ## Remaining work
 

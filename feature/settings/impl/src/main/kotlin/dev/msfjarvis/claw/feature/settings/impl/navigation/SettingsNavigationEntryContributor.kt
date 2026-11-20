@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 import dev.msfjarvis.claw.android.ui.navigation.TagFiltering
 import dev.msfjarvis.claw.android.ui.screens.SettingsScreen
@@ -30,14 +31,14 @@ fun settingsNavigationEntryContributor(
   openTagFiltering: (TagFiltering) -> Unit,
   openLoginScreen: () -> Unit,
   onLogout: () -> Unit,
-  isLoggedIn: Boolean,
-  username: String?,
+  isLoggedIn: State<Boolean>,
+  username: State<String?>,
   snackbarHostState: SnackbarHostState,
   importPosts: suspend (InputStream) -> Result<Unit>,
   exportPostsAsJson: suspend (OutputStream) -> Unit,
-  savedPostsCount: Long,
-  isDailySavedPostReminderEnabled: Boolean,
-  dailySavedPostReminderTime: LocalTime,
+  savedPostsCount: State<Long>,
+  isDailySavedPostReminderEnabled: State<Boolean>,
+  dailySavedPostReminderTime: State<LocalTime>,
   onDailySavedPostReminderEnabledChange: (Boolean) -> Unit,
   onDailySavedPostReminderTimeChange: (LocalTime) -> Unit,
   settingsAppConfig: SettingsAppConfig,
@@ -50,15 +51,15 @@ fun settingsNavigationEntryContributor(
       openTagFiltering = openTagFiltering,
       openLoginScreen = openLoginScreen,
       onLogout = onLogout,
-      isLoggedIn = isLoggedIn,
-      username = username,
+      isLoggedIn = isLoggedIn.value,
+      username = username.value,
       snackbarHostState = snackbarHostState,
       importPosts = importPosts,
       exportPostsAsJson = exportPostsAsJson,
       contentPadding = contentPadding,
-      savedPostsCount = savedPostsCount,
-      isDailySavedPostReminderEnabled = isDailySavedPostReminderEnabled,
-      dailySavedPostReminderTime = dailySavedPostReminderTime,
+      savedPostsCount = savedPostsCount.value,
+      isDailySavedPostReminderEnabled = isDailySavedPostReminderEnabled.value,
+      dailySavedPostReminderTime = dailySavedPostReminderTime.value,
       onDailySavedPostReminderEnabledChange = onDailySavedPostReminderEnabledChange,
       onDailySavedPostReminderTimeChange = onDailySavedPostReminderTimeChange,
       settingsAppConfig = settingsAppConfig,

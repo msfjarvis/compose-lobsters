@@ -157,12 +157,12 @@ fun LobstersPostsScreen(
   val savedPosts by postsViewModel.savedPostsByMonth.collectAsStateWithLifecycle(persistentMapOf())
 
   val filteredTags by tagFilterViewModel.filteredTags.collectAsStateWithLifecycle(persistentSetOf())
-  val isLoggedIn by settingsViewModel.isLoggedIn.collectAsStateWithLifecycle(false)
-  val username by settingsViewModel.username.collectAsStateWithLifecycle(null)
-  val savedPostsCount by settingsViewModel.savedPostsCount.collectAsStateWithLifecycle(0L)
-  val isDailySavedPostReminderEnabled by
+  val isLoggedIn = settingsViewModel.isLoggedIn.collectAsStateWithLifecycle(false)
+  val username = settingsViewModel.username.collectAsStateWithLifecycle(null)
+  val savedPostsCount = settingsViewModel.savedPostsCount.collectAsStateWithLifecycle(0L)
+  val isDailySavedPostReminderEnabled =
     settingsViewModel.isDailySavedPostReminderEnabled.collectAsStateWithLifecycle(false)
-  val dailySavedPostReminderTime by
+  val dailySavedPostReminderTime =
     settingsViewModel.dailySavedPostReminderTime.collectAsStateWithLifecycle(
       DEFAULT_DAILY_SAVED_POST_REMINDER_TIME
     )

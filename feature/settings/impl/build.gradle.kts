@@ -43,6 +43,7 @@ dependencies {
   implementation(libs.androidx.compose.foundation)
   implementation(libs.androidx.compose.material.icons.core)
   implementation(libs.androidx.compose.material.icons.extended)
+  implementation(libs.androidx.compose.runtime.saveable)
   implementation(libs.androidx.compose.ui.graphics)
   implementation(libs.androidx.compose.ui.text)
   implementation(libs.androidx.compose.ui.unit)
@@ -50,6 +51,8 @@ dependencies {
 
   testImplementation(projects.model)
   testImplementation(libs.kotlinx.coroutines.test)
+
+  androidTestImplementation(libs.androidx.test.espresso.core)
 
   addTestDependencies(project)
 }

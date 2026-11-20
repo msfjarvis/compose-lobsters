@@ -47,6 +47,7 @@ dependencies {
   implementation(libs.androidx.compose.ui.graphics)
   implementation(libs.androidx.compose.ui.text)
   implementation(libs.androidx.compose.ui.unit)
+  implementation(libs.androidx.lifecycle.runtime.compose)
   implementation(libs.androidx.navigation3.runtime)
 
   testImplementation(projects.model)

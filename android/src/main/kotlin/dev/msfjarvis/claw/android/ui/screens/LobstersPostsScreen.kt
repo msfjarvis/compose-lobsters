@@ -68,7 +68,6 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.mikepenz.aboutlibraries.ui.compose.android.produceLibraries
 import com.mikepenz.aboutlibraries.ui.compose.m3.LibrariesContainer
 import dev.msfjarvis.claw.android.R
-import dev.msfjarvis.claw.android.reminders.DEFAULT_DAILY_SAVED_POST_REMINDER_TIME
 import dev.msfjarvis.claw.android.ui.decorations.ClawAppBar
 import dev.msfjarvis.claw.android.ui.decorations.ClawNavigationBar
 import dev.msfjarvis.claw.android.ui.decorations.ClawNavigationRail
@@ -157,15 +156,6 @@ fun LobstersPostsScreen(
   val savedPosts by postsViewModel.savedPostsByMonth.collectAsStateWithLifecycle(persistentMapOf())
 
   val filteredTags by tagFilterViewModel.filteredTags.collectAsStateWithLifecycle(persistentSetOf())
-  val isLoggedIn by settingsViewModel.isLoggedIn.collectAsStateWithLifecycle(false)
-  val username by settingsViewModel.username.collectAsStateWithLifecycle(null)
-  val savedPostsCount by settingsViewModel.savedPostsCount.collectAsStateWithLifecycle(0L)
-  val isDailySavedPostReminderEnabled by
-    settingsViewModel.isDailySavedPostReminderEnabled.collectAsStateWithLifecycle(false)
-  val dailySavedPostReminderTime by
-    settingsViewModel.dailySavedPostReminderTime.collectAsStateWithLifecycle(
-      DEFAULT_DAILY_SAVED_POST_REMINDER_TIME
-    )
   val notificationPermissionDeniedMessage =
     stringResource(R.string.daily_saved_post_notification_permission_denied)
   val notificationSnackbarActionLabel = stringResource(R.string.settings)
@@ -523,14 +513,14 @@ fun LobstersPostsScreen(
               openTagFiltering = { navigateToDestination(it, false) },
               openLoginScreen = { navigateToDestination(Login, false) },
               onLogout = settingsViewModel::logout,
-              isLoggedIn = isLoggedIn,
-              username = username,
+              isLoggedIn = settingsViewModel.isLoggedIn,
+              username = settingsViewModel.username,
               snackbarHostState = snackbarHostState,
               importPosts = settingsViewModel::importPosts,
               exportPostsAsJson = settingsViewModel::exportPostsAsJson,
-              savedPostsCount = savedPostsCount,
-              isDailySavedPostReminderEnabled = isDailySavedPostReminderEnabled,
-              dailySavedPostReminderTime = dailySavedPostReminderTime,
+              savedPostsCount = settingsViewModel.savedPostsCount,
+              isDailySavedPostReminderEnabled = settingsViewModel.isDailySavedPostReminderEnabled,
+              dailySavedPostReminderTime = settingsViewModel.dailySavedPostReminderTime,
               onDailySavedPostReminderEnabledChange = onDailySavedPostReminderEnabledChange,
               onDailySavedPostReminderTimeChange = settingsViewModel::setDailySavedPostReminderTime,
               settingsAppConfig = settingsViewModel.appConfig,

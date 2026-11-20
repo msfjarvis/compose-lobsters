@@ -8,8 +8,8 @@ package dev.msfjarvis.claw.android.ui.lists
 
 import androidx.activity.compose.ReportDrawnWhen
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -86,11 +86,7 @@ fun NetworkPosts(
       }
     } else {
       LazyColumn(
-        modifier =
-          Modifier.align(Alignment.TopCenter)
-            .widthIn(max = FeedMaxWidth)
-            .fillMaxWidth()
-            .fillMaxHeight(),
+        modifier = Modifier.fillMaxSize(),
         contentPadding = contentPadding,
         state = listState,
       ) {
@@ -106,24 +102,31 @@ fun NetworkPosts(
             if (shouldShowPost) {
               val isSaved = postActions.isPostSaved(item)
               val isRead = postActions.isPostRead(item)
-              LobstersListItem(
-                item = item,
-                isSaved = isSaved,
-                isRead = isRead,
-                postActions = postActions,
-              )
-              HorizontalDivider()
+              Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.TopCenter) {
+                Column(Modifier.widthIn(max = FeedMaxWidth).fillMaxWidth()) {
+                  LobstersListItem(
+                    item = item,
+                    isSaved = isSaved,
+                    isRead = isRead,
+                    postActions = postActions,
+                  )
+                  HorizontalDivider()
+                }
+              }
             }
           }
         }
         if (lazyPagingItems.loadState.append == LoadState.Loading) {
           item(key = "progressbar") {
-            ProgressBar(
-              modifier =
-                Modifier.fillMaxWidth()
-                  .wrapContentWidth(Alignment.CenterHorizontally)
-                  .padding(vertical = 16.dp)
-            )
+            Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.TopCenter) {
+              ProgressBar(
+                modifier =
+                  Modifier.widthIn(max = FeedMaxWidth)
+                    .fillMaxWidth()
+                    .wrapContentWidth(Alignment.CenterHorizontally)
+                    .padding(vertical = 16.dp)
+              )
+            }
           }
         }
       }

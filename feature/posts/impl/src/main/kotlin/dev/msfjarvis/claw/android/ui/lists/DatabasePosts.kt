@@ -11,7 +11,6 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
@@ -63,24 +62,31 @@ fun DatabasePosts(
       LazyColumn(
         state = listState,
         contentPadding = contentPadding,
-        modifier =
-          Modifier.align(Alignment.TopCenter)
-            .widthIn(max = FeedMaxWidth)
-            .fillMaxWidth()
-            .fillMaxHeight(),
+        modifier = Modifier.fillMaxSize(),
       ) {
         items.forEach { (month, posts) ->
-          stickyHeader(contentType = "month-header") { MonthHeader(label = month) }
+          stickyHeader(contentType = "month-header") {
+            Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.TopCenter) {
+              MonthHeader(
+                label = month,
+                modifier = Modifier.widthIn(max = FeedMaxWidth).fillMaxWidth(),
+              )
+            }
+          }
           items(items = posts, key = { it.shortId }, contentType = { "LobstersItem" }) { item ->
             val isSaved = postActions.isPostSaved(item)
             val isRead = postActions.isPostRead(item)
-            LobstersListItem(
-              item = item,
-              isSaved = isSaved,
-              isRead = isRead,
-              postActions = postActions,
-            )
-            HorizontalDivider()
+            Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.TopCenter) {
+              Column(Modifier.widthIn(max = FeedMaxWidth).fillMaxWidth()) {
+                LobstersListItem(
+                  item = item,
+                  isSaved = isSaved,
+                  isRead = isRead,
+                  postActions = postActions,
+                )
+                HorizontalDivider()
+              }
+            }
           }
         }
       }

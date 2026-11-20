@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.StateRestorationTester
 import androidx.compose.ui.test.junit4.v2.createComposeRule
 import androidx.compose.ui.unit.dp
@@ -106,7 +107,8 @@ class SearchPagingRestorationTest {
   @Test fun restoredAnchorClampsWhenSavedPageDisappears() = assertRestoredAnchorClamps(0)
 
   private fun assertRestoredAnchorClamps(restoredPageSize: Int) {
-    var pageThreeItemCount = 25
+    val pageThreeItemCount = AtomicInteger(25)
+    val restoredPageLoads = AtomicInteger()
     val api =
       object : LobstersSearchApi {
         override suspend fun searchPosts(
@@ -120,10 +122,11 @@ class SearchPagingRestorationTest {
                 List(25) {
                   LobstersPost("$page-$it", title = "Post $page-$it", submitter = "alice")
                 }
-              3 ->
-                List(pageThreeItemCount) {
-                  LobstersPost("3-$it", title = "Post 3-$it", submitter = "alice")
-                }
+              3 -> {
+                val size = pageThreeItemCount.get()
+                if (size != 25) restoredPageLoads.incrementAndGet()
+                List(size) { LobstersPost("3-$it", title = "Post 3-$it", submitter = "alice") }
+              }
               else -> emptyList()
             }
           )
@@ -170,11 +173,17 @@ class SearchPagingRestorationTest {
     compose.runOnIdle { runBlocking { listState.scrollToItem(55, 3) } }
     compose.runOnIdle {
       assertEquals(55, listState.firstVisibleItemIndex)
-      pageThreeItemCount = restoredPageSize
+      pageThreeItemCount.set(restoredPageSize)
       model = newModel()
     }
     restoration.emulateSavedInstanceStateRestore()
-    compose.waitUntil(10_000) { count.get() >= 50 + restoredPageSize }
+    compose.waitUntil(10_000) {
+      restoredPageLoads.get() > 0 && count.get() == 50 + restoredPageSize
+    }
+    val lastTitle = if (restoredPageSize == 0) "Post 2-24" else "Post 3-${restoredPageSize - 1}"
+    compose.waitUntil(10_000) {
+      compose.onAllNodes(hasText(lastTitle)).fetchSemanticsNodes().isNotEmpty()
+    }
     compose.runOnIdle {
       // The last available result should remain visible when the old anchor no longer exists.
       val lastIndex = 49 + restoredPageSize

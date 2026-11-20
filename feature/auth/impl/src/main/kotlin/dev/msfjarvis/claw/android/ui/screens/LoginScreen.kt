@@ -41,8 +41,13 @@ import dev.msfjarvis.claw.core.network.CHROME_USER_AGENT
 private const val LOGIN_URL = "https://lobste.rs/login"
 private const val LOBSTERS_URL = "https://lobste.rs"
 
-private class LoginWebViewState(val restoredState: Bundle? = null) {
+private class LoginWebViewState(var restoredState: Bundle? = null) {
   var webView: WebView? = null
+
+  fun reset() {
+    webView = null
+    restoredState = null
+  }
 
   companion object {
     val Saver =
@@ -85,9 +90,9 @@ fun LoginScreen(
           Spacer(modifier = Modifier.height(12.dp))
           Button(
             onClick = {
+              webViewState.reset()
               hasError = false
               isLoading = true
-              webViewState.webView?.loadUrl(LOGIN_URL)
             }
           ) {
             Text("Retry")

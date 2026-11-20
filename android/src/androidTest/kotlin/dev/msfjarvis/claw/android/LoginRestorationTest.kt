@@ -13,6 +13,9 @@ import android.webkit.WebView
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.junit4.StateRestorationTester
 import androidx.compose.ui.test.junit4.v2.createAndroidComposeRule
+import androidx.compose.ui.test.onAllNodesWithText
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
 import dev.msfjarvis.claw.android.ui.screens.LoginScreen
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotSame
@@ -21,6 +24,48 @@ import org.junit.Test
 
 class LoginRestorationTest {
   @get:Rule val compose = createAndroidComposeRule<ComponentActivity>()
+
+  @Test
+  @SuppressLint("DeprecatedCall") // Exercise the platform WebView history APIs used by the screen.
+  fun retryStartsLoginInANewWebViewWithoutFailedNavigationHistory() {
+    val restoration = StateRestorationTester(compose)
+    restoration.setContent { LoginScreen(onLoginSuccess = { _, _ -> }, popBackStack = {}) }
+    fun webView(): WebView? = findWebView(compose.activity.window.decorView)
+    fun onUi(condition: () -> Boolean): Boolean {
+      var result = false
+      compose.runOnIdle { result = condition() }
+      return result
+    }
+    compose.waitUntil(10_000) { onUi { webView() != null } }
+    lateinit var failedWebView: WebView
+    compose.runOnIdle {
+      failedWebView = checkNotNull(webView())
+      failedWebView.apply {
+        stopLoading()
+        loadUrl("https://127.0.0.1:1/failed")
+      }
+    }
+    compose.waitUntil(10_000) {
+      compose.onAllNodesWithText("Failed to load login page.").fetchSemanticsNodes().isNotEmpty()
+    }
+    restoration.emulateSavedInstanceStateRestore()
+    compose.onNodeWithText("Retry").performClick()
+
+    compose.waitUntil(10_000) {
+      onUi {
+        val retried = webView()
+        retried != null &&
+          retried !== failedWebView &&
+          retried.copyBackForwardList().currentItem?.url == "https://lobste.rs/login"
+      }
+    }
+    compose.runOnIdle {
+      val retried = checkNotNull(webView())
+      assertNotSame(failedWebView, retried)
+      assertEquals(1, retried.copyBackForwardList().size)
+      assertEquals("https://lobste.rs/login", retried.copyBackForwardList().currentItem?.url)
+    }
+  }
 
   @Test
   @SuppressLint("DeprecatedCall") // Exercise the platform WebView history APIs used by the screen.

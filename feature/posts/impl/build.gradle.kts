@@ -62,5 +62,8 @@ dependencies {
 
   testImplementation(libs.kotlinx.coroutines.test)
 
+  androidTestImplementation(libs.androidx.compose.ui.test)
+  androidTestImplementation(libs.coil3.compose)
+
   addTestDependencies(project)
 }

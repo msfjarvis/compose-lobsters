@@ -10,6 +10,7 @@ import android.app.TimePickerDialog
 import android.content.Context
 import android.net.Uri
 import android.text.format.DateFormat
+import android.widget.TimePicker
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
@@ -51,7 +52,13 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -97,6 +104,46 @@ fun SettingsScreen(
 ) {
   val context = LocalContext.current
   val coroutineScope = rememberCoroutineScope()
+  var isReminderTimePickerVisible by rememberSaveable { mutableStateOf(false) }
+  var pendingReminderHour by rememberSaveable {
+    mutableIntStateOf(dailySavedPostReminderTime.hour)
+  }
+  var pendingReminderMinute by rememberSaveable {
+    mutableIntStateOf(dailySavedPostReminderTime.minute)
+  }
+
+  DisposableEffect(isReminderTimePickerVisible, context) {
+    if (isReminderTimePickerVisible) {
+      val dialog =
+        object :
+          TimePickerDialog(
+            context,
+            { _, hour, minute ->
+              onDailySavedPostReminderTimeChange(LocalTime(hour, minute))
+              isReminderTimePickerVisible = false
+            },
+            pendingReminderHour,
+            pendingReminderMinute,
+            DateFormat.is24HourFormat(context),
+          ) {
+          override fun onTimeChanged(view: TimePicker, hourOfDay: Int, minute: Int) {
+            super.onTimeChanged(view, hourOfDay, minute)
+            pendingReminderHour = hourOfDay
+            pendingReminderMinute = minute
+          }
+        }
+      dialog.setOnCancelListener { isReminderTimePickerVisible = false }
+      dialog.setOnDismissListener { isReminderTimePickerVisible = false }
+      dialog.show()
+      onDispose {
+        dialog.setOnCancelListener(null)
+        dialog.setOnDismissListener(null)
+        dialog.dismiss()
+      }
+    } else {
+      onDispose {}
+    }
+  }
   Box(modifier.fillMaxSize().padding(contentPadding), contentAlignment = Alignment.TopCenter) {
     Column(
       Modifier.widthIn(max = maxReadingWidth).fillMaxWidth().verticalScroll(rememberScrollState())
@@ -247,16 +294,9 @@ fun SettingsScreen(
           },
           modifier =
             Modifier.clickable {
-              TimePickerDialog(
-                  context,
-                  { _, hour, minute ->
-                    onDailySavedPostReminderTimeChange(LocalTime(hour, minute))
-                  },
-                  dailySavedPostReminderTime.hour,
-                  dailySavedPostReminderTime.minute,
-                  DateFormat.is24HourFormat(context),
-                )
-                .show()
+              pendingReminderHour = dailySavedPostReminderTime.hour
+              pendingReminderMinute = dailySavedPostReminderTime.minute
+              isReminderTimePickerVisible = true
             },
         ) {
           Text(stringResource(R.string.daily_saved_post_reminder_time))

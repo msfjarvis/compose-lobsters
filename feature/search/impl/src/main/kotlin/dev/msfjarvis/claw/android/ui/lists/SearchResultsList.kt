@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -78,6 +79,10 @@ fun SearchResultsList(
           Text(stringResource(R.string.search_challenge_button))
         }
       }
+    } else if (lazyPagingItems.itemCount == 0 && refreshLoadState is LoadState.Loading) {
+      // Do not measure an empty list: that would clamp a restored scroll anchor before paging
+      // loads.
+      CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
     } else if (hasNoResults) {
       Text(
         text = stringResource(R.string.no_search_results),

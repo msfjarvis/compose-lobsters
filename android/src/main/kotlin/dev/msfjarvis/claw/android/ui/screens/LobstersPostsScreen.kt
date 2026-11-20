@@ -193,8 +193,9 @@ fun LobstersPostsScreen(
     rememberSaveable(stateSaver = SearchUiStateSaver) { mutableStateOf(SearchUiState()) }
   var hasRestoredSearchState by remember(searchViewModel) { mutableStateOf(false) }
   val searchState by searchViewModel.uiState.collectAsStateWithLifecycle(SearchUiState())
+  val searchResultsListState = rememberLazyListState()
   LaunchedEffect(searchViewModel) {
-    searchViewModel.restoreUiState(savedSearchState)
+    searchViewModel.restoreUiState(savedSearchState, searchResultsListState.firstVisibleItemIndex)
     hasRestoredSearchState = true
   }
   SideEffect {
@@ -203,7 +204,6 @@ fun LobstersPostsScreen(
   val isSearchActive = searchState.isActive
   val searchQuery = searchState.query
   val lastExecutedSearchQuery = searchState.lastExecutedQuery
-  val searchResultsListState = rememberLazyListState()
   val searchResults = searchViewModel.searchResults.collectAsLazyPagingItems()
   val currentDestination = backStack.lastOrNull()
   val currentDestinationIsTopLevel = currentDestination is TopLevelDestination

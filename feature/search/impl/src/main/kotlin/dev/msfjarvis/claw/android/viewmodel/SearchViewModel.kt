@@ -33,6 +33,8 @@ import kotlinx.coroutines.launch
 
 private const val SEARCH_DEBOUNCE_MILLIS = 300L
 
+private data class SearchRequest(val query: String?, val generation: Long, val initialPage: Int)
+
 @OptIn(ExperimentalCoroutinesApi::class)
 @Inject
 @ViewModelKey
@@ -42,9 +44,11 @@ class SearchViewModel(private val searchPagingSourceFactory: SearchPagingSource.
   val uiState: StateFlow<SearchUiState>
     field: MutableStateFlow<SearchUiState> = MutableStateFlow(SearchUiState())
   private var stateRestored = false
+  private var initialPage = STARTING_PAGE_INDEX
 
-  fun restoreUiState(state: SearchUiState) {
+  fun restoreUiState(state: SearchUiState, firstVisibleItemIndex: Int = 0) {
     if (!stateRestored) {
+      initialPage = firstVisibleItemIndex.coerceAtLeast(0) / PAGE_SIZE + STARTING_PAGE_INDEX
       uiState.value = state
       stateRestored = true
       if (state.isActive) scheduleSearch()
@@ -53,12 +57,12 @@ class SearchViewModel(private val searchPagingSourceFactory: SearchPagingSource.
 
   val searchResults =
     uiState
-      .map { it.lastExecutedQuery to it.requestGeneration }
+      .map { SearchRequest(it.lastExecutedQuery, it.requestGeneration, initialPage) }
       .distinctUntilChanged()
-      .flatMapLatest { (query, _) ->
+      .flatMapLatest { (query, _, page) ->
         Pager(
             PagingConfig(pageSize = PAGE_SIZE),
-            initialKey = STARTING_PAGE_INDEX,
+            initialKey = page,
             pagingSourceFactory = { searchPagingSourceFactory.create { query.orEmpty() } },
           )
           .flow
@@ -80,11 +84,13 @@ class SearchViewModel(private val searchPagingSourceFactory: SearchPagingSource.
   }
 
   fun executeSearch(query: String) {
+    initialPage = STARTING_PAGE_INDEX
     stateRestored = true
     uiState.value = uiState.value.executeSearch(query.trim())
   }
 
   fun dismissSearch() {
+    initialPage = STARTING_PAGE_INDEX
     stateRestored = true
     searchJob?.cancel()
     uiState.value = uiState.value.dismissSearch()

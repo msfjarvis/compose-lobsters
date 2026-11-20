@@ -41,5 +41,8 @@ dependencies {
   implementation(libs.androidx.compose.ui.unit)
   implementation(libs.eithernet)
 
+  testImplementation(libs.androidx.paging.testing)
+  testImplementation(libs.kotlinx.coroutines.test)
+
   addTestDependencies(project)
 }

@@ -43,6 +43,7 @@ import androidx.compose.material3.adaptive.navigation3.ListDetailSceneStrategy
 import androidx.compose.material3.adaptive.navigation3.rememberListDetailSceneStrategy
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
@@ -90,6 +91,7 @@ import dev.msfjarvis.claw.android.ui.navigation.User
 import dev.msfjarvis.claw.android.ui.updates.InAppUpdates
 import dev.msfjarvis.claw.android.viewmodel.SearchViewModel
 import dev.msfjarvis.claw.android.viewmodel.SettingsViewModel
+import dev.msfjarvis.claw.common.ui.LocalPostSharedTransitionFeed
 import dev.msfjarvis.claw.feature.auth.impl.navigation.loginNavigationEntryContributor
 import dev.msfjarvis.claw.feature.discussion.impl.navigation.discussionNavigationEntryContributor
 import dev.msfjarvis.claw.feature.posts.impl.PostActions
@@ -428,125 +430,128 @@ fun LobstersPostsScreen(
           isVisible = isTopLevelSceneVisible,
         )
       }
-      NavigationHost(
-        backStack = backStack.toImmutableList(),
-        onBack = {
-          if (popBackStack(backStack) == null) {
-            activity?.finish()
-          }
-        },
-        sceneStrategies = persistentListOf(listDetailStrategy),
-        onVisibleSceneEntriesChanged = { sceneEntries = it },
-        entryDecorators = persistentListOf(rememberSaveableStateHolderNavEntryDecorator()),
-        popTransitionSpec = {
-          slideInHorizontally(initialOffsetX = { -it }, animationSpec = tween(200)) togetherWith
-            slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(200))
-        },
-        predictivePopTransitionSpec = {
-          slideInHorizontally(initialOffsetX = { -it }, animationSpec = tween(200)) togetherWith
-            slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(200))
-        },
-        contributors =
-          persistentListOf(
-            postsNavigationEntryContributor(
-              hottestPosts = postsViewModel.hottestPosts,
-              newestPosts = postsViewModel.newestPosts,
-              hottestListState = hottestListState,
-              newestListState = newestListState,
-              savedPosts = savedPosts,
-              savedListState = savedListState,
-              postActions = postActions,
-              filteredTags = filteredTags,
-              contentPadding = contentPadding,
-            ),
-            discussionNavigationEntryContributor(
-              postActions =
-                remember(isSearchActive) {
-                  PostActions(
-                    context = context,
-                    uriHandler = uriHandler,
-                    markPostAsRead = postsViewModel::markPostAsRead,
-                    onToggleSave = postsViewModel::toggleSave,
-                    checkPostRead = postsViewModel::isPostRead,
-                    checkPostSaved = postsViewModel::isPostSaved,
-                    loadLinkMetadata = postsViewModel::getLinkMetadata,
-                  ) { post ->
-                    navigateToDestination(post.toCommentsDestination(), true)
-                  }
+      CompositionLocalProvider(LocalPostSharedTransitionFeed provides selectedTopLevelDestination) {
+        NavigationHost(
+          backStack = backStack.toImmutableList(),
+          onBack = {
+            if (popBackStack(backStack) == null) {
+              activity?.finish()
+            }
+          },
+          sceneStrategies = persistentListOf(listDetailStrategy),
+          onVisibleSceneEntriesChanged = { sceneEntries = it },
+          entryDecorators = persistentListOf(rememberSaveableStateHolderNavEntryDecorator()),
+          popTransitionSpec = {
+            slideInHorizontally(initialOffsetX = { -it }, animationSpec = tween(200)) togetherWith
+              slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(200))
+          },
+          predictivePopTransitionSpec = {
+            slideInHorizontally(initialOffsetX = { -it }, animationSpec = tween(200)) togetherWith
+              slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(200))
+          },
+          contributors =
+            persistentListOf(
+              postsNavigationEntryContributor(
+                hottestPosts = postsViewModel.hottestPosts,
+                newestPosts = postsViewModel.newestPosts,
+                hottestListState = hottestListState,
+                newestListState = newestListState,
+                savedPosts = savedPosts,
+                savedListState = savedListState,
+                postActions = postActions,
+                filteredTags = filteredTags,
+                contentPadding = contentPadding,
+              ),
+              discussionNavigationEntryContributor(
+                postActions =
+                  remember(isSearchActive) {
+                    PostActions(
+                      context = context,
+                      uriHandler = uriHandler,
+                      markPostAsRead = postsViewModel::markPostAsRead,
+                      onToggleSave = postsViewModel::toggleSave,
+                      checkPostRead = postsViewModel::isPostRead,
+                      checkPostSaved = postsViewModel::isPostSaved,
+                      loadLinkMetadata = postsViewModel::getLinkMetadata,
+                    ) { post ->
+                      navigateToDestination(post.toCommentsDestination(), true)
+                    }
+                  },
+                contentPadding = contentPadding,
+                openUserProfile = { navigateToDestination(User(it), false) },
+                navigate = { destination, allowStacking ->
+                  navigateToDestination(destination, allowStacking)
                 },
-              contentPadding = contentPadding,
-              openUserProfile = { navigateToDestination(User(it), false) },
-              navigate = { destination, allowStacking ->
-                navigateToDestination(destination, allowStacking)
-              },
-              onReplySubmitted = { popBackStack(backStack) },
-            ),
-            profileNavigationEntryContributor(
-              contentPadding = contentPadding,
-              metadata =
-                NavDisplay.transitionSpec {
-                  slideInHorizontally(
-                    initialOffsetX = { it },
-                    animationSpec = tween(200),
-                  ) togetherWith ExitTransition.KeepUntilTransitionsFinished
-                } +
-                  NavDisplay.popTransitionSpec {
-                    EnterTransition.None togetherWith
-                      slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(200))
+                onReplySubmitted = { popBackStack(backStack) },
+              ),
+              profileNavigationEntryContributor(
+                contentPadding = contentPadding,
+                metadata =
+                  NavDisplay.transitionSpec {
+                    slideInHorizontally(
+                      initialOffsetX = { it },
+                      animationSpec = tween(200),
+                    ) togetherWith ExitTransition.KeepUntilTransitionsFinished
                   } +
-                  NavDisplay.predictivePopTransitionSpec {
-                    EnterTransition.None togetherWith
-                      slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(200))
-                  } +
-                  ListDetailSceneStrategy.extraPane(),
-              navigate = { destination, allowStacking ->
-                navigateToDestination(destination, allowStacking)
+                    NavDisplay.popTransitionSpec {
+                      EnterTransition.None togetherWith
+                        slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(200))
+                    } +
+                    NavDisplay.predictivePopTransitionSpec {
+                      EnterTransition.None togetherWith
+                        slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(200))
+                    } +
+                    ListDetailSceneStrategy.extraPane(),
+                navigate = { destination, allowStacking ->
+                  navigateToDestination(destination, allowStacking)
+                },
+              ),
+              settingsNavigationEntryContributor(
+                metadata = ListDetailSceneStrategy.extraPane(),
+                contentPadding = contentPadding,
+                openLibrariesScreen = { navigateToDestination(AboutLibraries, false) },
+                openRepository = {
+                  uriHandler.openUri("https://github.com/msfjarvis/compose-lobsters")
+                },
+                openTagFiltering = { navigateToDestination(it, false) },
+                openLoginScreen = { navigateToDestination(Login, false) },
+                onLogout = settingsViewModel::logout,
+                isLoggedIn = settingsViewModel.isLoggedIn,
+                username = settingsViewModel.username,
+                snackbarHostState = snackbarHostState,
+                importPosts = settingsViewModel::importPosts,
+                exportPostsAsJson = settingsViewModel::exportPostsAsJson,
+                savedPostsCount = settingsViewModel.savedPostsCount,
+                isDailySavedPostReminderEnabled = settingsViewModel.isDailySavedPostReminderEnabled,
+                dailySavedPostReminderTime = settingsViewModel.dailySavedPostReminderTime,
+                onDailySavedPostReminderEnabledChange = onDailySavedPostReminderEnabledChange,
+                onDailySavedPostReminderTimeChange =
+                  settingsViewModel::setDailySavedPostReminderTime,
+                settingsAppConfig = settingsViewModel.appConfig,
+                librariesContent = { padding, contentModifier ->
+                  LibrariesContainer(
+                    libraries = libraries,
+                    contentPadding = padding,
+                    modifier = contentModifier,
+                  )
+                },
+              ),
+              loginNavigationEntryContributor(
+                onLoginSuccess = settingsViewModel::saveCookie,
+                popBackStack = { popBackStack(backStack) },
+                metadata = ListDetailSceneStrategy.extraPane(),
+              ),
+              NavigationEntryContributor {
+                entry<TagFiltering> {
+                  TagList(
+                    popBackStack = { popBackStack(backStack) },
+                    contentPadding = contentPadding,
+                  )
+                }
               },
             ),
-            settingsNavigationEntryContributor(
-              metadata = ListDetailSceneStrategy.extraPane(),
-              contentPadding = contentPadding,
-              openLibrariesScreen = { navigateToDestination(AboutLibraries, false) },
-              openRepository = {
-                uriHandler.openUri("https://github.com/msfjarvis/compose-lobsters")
-              },
-              openTagFiltering = { navigateToDestination(it, false) },
-              openLoginScreen = { navigateToDestination(Login, false) },
-              onLogout = settingsViewModel::logout,
-              isLoggedIn = settingsViewModel.isLoggedIn,
-              username = settingsViewModel.username,
-              snackbarHostState = snackbarHostState,
-              importPosts = settingsViewModel::importPosts,
-              exportPostsAsJson = settingsViewModel::exportPostsAsJson,
-              savedPostsCount = settingsViewModel.savedPostsCount,
-              isDailySavedPostReminderEnabled = settingsViewModel.isDailySavedPostReminderEnabled,
-              dailySavedPostReminderTime = settingsViewModel.dailySavedPostReminderTime,
-              onDailySavedPostReminderEnabledChange = onDailySavedPostReminderEnabledChange,
-              onDailySavedPostReminderTimeChange = settingsViewModel::setDailySavedPostReminderTime,
-              settingsAppConfig = settingsViewModel.appConfig,
-              librariesContent = { padding, contentModifier ->
-                LibrariesContainer(
-                  libraries = libraries,
-                  contentPadding = padding,
-                  modifier = contentModifier,
-                )
-              },
-            ),
-            loginNavigationEntryContributor(
-              onLoginSuccess = settingsViewModel::saveCookie,
-              popBackStack = { popBackStack(backStack) },
-              metadata = ListDetailSceneStrategy.extraPane(),
-            ),
-            NavigationEntryContributor {
-              entry<TagFiltering> {
-                TagList(
-                  popBackStack = { popBackStack(backStack) },
-                  contentPadding = contentPadding,
-                )
-              }
-            },
-          ),
-      )
+        )
+      }
     }
   }
 }

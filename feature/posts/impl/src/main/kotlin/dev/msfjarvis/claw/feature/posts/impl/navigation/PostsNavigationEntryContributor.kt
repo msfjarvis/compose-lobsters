@@ -12,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.adaptive.ExperimentalMaterial3AdaptiveApi
 import androidx.compose.material3.adaptive.navigation3.ListDetailSceneStrategy
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.res.stringResource
 import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -21,6 +22,7 @@ import dev.msfjarvis.claw.android.ui.navigation.Hottest
 import dev.msfjarvis.claw.android.ui.navigation.Newest
 import dev.msfjarvis.claw.android.ui.navigation.Saved
 import dev.msfjarvis.claw.common.posts.PostActions
+import dev.msfjarvis.claw.common.ui.LocalPostSharedTransitionFeed
 import dev.msfjarvis.claw.feature.posts.impl.R
 import dev.msfjarvis.claw.model.UIPost
 import dev.msfjarvis.claw.navigation.api.NavigationEntryContributor
@@ -44,32 +46,38 @@ fun postsNavigationEntryContributor(
   entry<Hottest>(
     metadata = ListDetailSceneStrategy.listPane(detailPlaceholder = { Placeholder() })
   ) {
-    NetworkPosts(
-      lazyPagingItems = hottestPosts.collectAsLazyPagingItems(),
-      listState = hottestListState,
-      postActions = postActions,
-      contentPadding = contentPadding,
-      filteredTags = filteredTags,
-    )
+    CompositionLocalProvider(LocalPostSharedTransitionFeed provides Hottest) {
+      NetworkPosts(
+        lazyPagingItems = hottestPosts.collectAsLazyPagingItems(),
+        listState = hottestListState,
+        postActions = postActions,
+        contentPadding = contentPadding,
+        filteredTags = filteredTags,
+      )
+    }
   }
   entry<Newest>(
     metadata = ListDetailSceneStrategy.listPane(detailPlaceholder = { Placeholder() })
   ) {
-    NetworkPosts(
-      lazyPagingItems = newestPosts.collectAsLazyPagingItems(),
-      listState = newestListState,
-      postActions = postActions,
-      contentPadding = contentPadding,
-      filteredTags = filteredTags,
-    )
+    CompositionLocalProvider(LocalPostSharedTransitionFeed provides Newest) {
+      NetworkPosts(
+        lazyPagingItems = newestPosts.collectAsLazyPagingItems(),
+        listState = newestListState,
+        postActions = postActions,
+        contentPadding = contentPadding,
+        filteredTags = filteredTags,
+      )
+    }
   }
   entry<Saved>(metadata = ListDetailSceneStrategy.listPane(detailPlaceholder = { Placeholder() })) {
-    DatabasePosts(
-      items = savedPosts,
-      listState = savedListState,
-      postActions = postActions,
-      contentPadding = contentPadding,
-    )
+    CompositionLocalProvider(LocalPostSharedTransitionFeed provides Saved) {
+      DatabasePosts(
+        items = savedPosts,
+        listState = savedListState,
+        postActions = postActions,
+        contentPadding = contentPadding,
+      )
+    }
   }
 }
 

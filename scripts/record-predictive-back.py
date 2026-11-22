@@ -7,6 +7,7 @@ import os
 import pty
 import re
 import select
+import shutil
 import signal
 import subprocess
 import sys
@@ -14,7 +15,7 @@ import time
 
 
 def main():
-    parser = argparse.ArgumentParser(description=__doc__, epilog="Requires adb and scrcpy.")
+    parser = argparse.ArgumentParser(description=__doc__, epilog="Requires adb, scrcpy, and ffmpeg with libvpx-vp9.")
     parser.add_argument("output", help="output recording (.mp4 or .mkv); must not exist")
     parser.add_argument("-s", "--serial", help="adb device serial (or set ANDROID_SERIAL)")
     parser.add_argument("--hold", type=float, default=4, help="hold duration in seconds (default: 4)")
@@ -23,8 +24,11 @@ def main():
         parser.error("--hold must be greater than 0 and at most 60 seconds")
     if not args.output.lower().endswith((".mp4", ".mkv")):
         parser.error("output must end in .mp4 or .mkv")
-    if os.path.exists(args.output):
-        parser.error("output already exists")
+    webm_output = os.path.splitext(args.output)[0] + ".webm"
+    if os.path.exists(args.output) or os.path.exists(webm_output):
+        parser.error("output or corresponding .webm already exists")
+    if not shutil.which("ffmpeg"):
+        parser.error("ffmpeg is required to generate the WebM")
 
     serial = args.serial or os.environ.get("ANDROID_SERIAL")
     adb = ["adb"] + (["-s", serial] if serial else [])
@@ -96,7 +100,15 @@ def main():
                 recording.wait()
     if recording.returncode:
         raise RuntimeError(f"scrcpy exited with status {recording.returncode}")
-    print(f"Saved {args.output}")
+    print(f"Saved {args.output}", flush=True)
+    print(f"Encoding {webm_output}...", flush=True)
+    subprocess.run([
+        "ffmpeg", "-v", "error", "-n", "-i", args.output,
+        "-an", "-c:v", "libvpx-vp9", "-pix_fmt", "yuv420p",
+        "-b:v", "0", "-crf", "32", "-deadline", "good",
+        "-cpu-used", "2", "-row-mt", "1", webm_output,
+    ], check=True)
+    print(f"Saved {webm_output}")
 
 
 if __name__ == "__main__":

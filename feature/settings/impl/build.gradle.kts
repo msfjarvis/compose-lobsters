@@ -9,6 +9,7 @@ import dev.msfjarvis.claw.gradle.addTestDependencies
 plugins {
   id("dev.msfjarvis.claw.android-library")
   id("dev.msfjarvis.claw.kotlin-android")
+  id("dev.msfjarvis.claw.android-screenshot")
   alias(libs.plugins.dependencyAnalysis)
   alias(libs.plugins.kotlin.composeCompiler)
   alias(libs.plugins.metro)
@@ -42,13 +43,17 @@ dependencies {
   implementation(libs.androidx.compose.foundation)
   implementation(libs.androidx.compose.material.icons.core)
   implementation(libs.androidx.compose.material.icons.extended)
+  implementation(libs.androidx.compose.runtime.saveable)
   implementation(libs.androidx.compose.ui.graphics)
   implementation(libs.androidx.compose.ui.text)
   implementation(libs.androidx.compose.ui.unit)
+  implementation(libs.androidx.lifecycle.runtime.compose)
   implementation(libs.androidx.navigation3.runtime)
 
   testImplementation(projects.model)
   testImplementation(libs.kotlinx.coroutines.test)
+
+  androidTestImplementation(libs.androidx.test.espresso.core)
 
   addTestDependencies(project)
 }

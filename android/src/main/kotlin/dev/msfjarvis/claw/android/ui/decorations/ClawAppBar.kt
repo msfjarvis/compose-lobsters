@@ -9,7 +9,10 @@ package dev.msfjarvis.claw.android.ui.decorations
 import android.app.Activity
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.text.input.clearText
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -17,17 +20,20 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material3.AppBarWithSearch
+import androidx.compose.material3.ExpandedDockedSearchBar
 import androidx.compose.material3.ExpandedFullScreenContainedSearchBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.SearchBarDefaults
+import androidx.compose.material3.SearchBarValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberSearchBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.NonRestartableComposable
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
@@ -54,7 +60,7 @@ sealed interface ClawTopBarMode {
 @Composable
 fun ClawAppBar(
   activity: Activity?,
-  isTopLevel: Boolean,
+  isTopLevelVisible: Boolean,
   mode: ClawTopBarMode,
   navigateTo: (NavKey) -> Unit,
   popBackStack: () -> NavKey?,
@@ -63,10 +69,12 @@ fun ClawAppBar(
   onQueryChange: (String) -> Unit,
   onSearch: (String) -> Unit,
   modifier: Modifier = Modifier,
+  useDockedSearch: Boolean = false,
+  onCloseDetail: (() -> Unit)? = null,
   content: @Composable ColumnScope.() -> Unit,
 ) {
   when {
-    !isTopLevel -> {
+    !isTopLevelVisible -> {
       TopAppBar(
         modifier = modifier.shadow(8.dp),
         navigationIcon = {
@@ -81,7 +89,10 @@ fun ClawAppBar(
       )
     }
     mode is ClawTopBarMode.Searching -> {
-      val textFieldState = rememberTextFieldState()
+      val textFieldState = rememberTextFieldState(initialText = mode.query)
+      LaunchedEffect(textFieldState) {
+        snapshotFlow { textFieldState.text.toString() }.collect(onQueryChange)
+      }
       val searchBarState = rememberSearchBarState()
       val appBarWithSearchColors =
         SearchBarDefaults.appBarWithSearchColors(
@@ -104,8 +115,8 @@ fun ClawAppBar(
             trailingIcon = {
               IconButton(
                 onClick = {
-                  if (mode.query.isNotEmpty()) {
-                    onQueryChange("")
+                  if (textFieldState.text.isNotEmpty()) {
+                    textFieldState.clearText()
                   } else {
                     onDismissSearch()
                   }
@@ -126,12 +137,32 @@ fun ClawAppBar(
           colors = appBarWithSearchColors,
           inputField = inputField,
         )
-        ExpandedFullScreenContainedSearchBar(
-          state = searchBarState,
-          inputField = inputField,
-          colors = appBarWithSearchColors.searchBarColors,
-          content = content,
-        )
+        if (useDockedSearch) {
+          ExpandedDockedSearchBar(
+            state = searchBarState,
+            inputField = inputField,
+            colors = appBarWithSearchColors.searchBarColors,
+            modifier = Modifier.widthIn(max = 720.dp).heightIn(max = 600.dp),
+            content = content,
+          )
+        } else {
+          ExpandedFullScreenContainedSearchBar(
+            state = searchBarState,
+            inputField = inputField,
+            colors = appBarWithSearchColors.searchBarColors,
+            content = content,
+          )
+        }
+        LaunchedEffect(searchBarState, useDockedSearch) {
+          if (useDockedSearch) {
+            var expanded = false
+            snapshotFlow { searchBarState.targetValue }
+              .collect { value ->
+                if (value == SearchBarValue.Expanded) expanded = true
+                else if (expanded) onDismissSearch()
+              }
+          }
+        }
         LaunchedEffect(searchBarState, mode.requestFocus) {
           if (mode.requestFocus) {
             searchBarState.animateToExpanded()
@@ -153,6 +184,14 @@ fun ClawAppBar(
           Text(text = stringResource(R.string.app_name), fontWeight = FontWeight.Bold)
         },
         actions = {
+          if (onCloseDetail != null) {
+            IconButton(onClick = onCloseDetail) {
+              Icon(
+                imageVector = Icons.Filled.Close,
+                contentDescription = stringResource(R.string.close_detail),
+              )
+            }
+          }
           IconButton(onClick = onStartSearch) {
             Icon(
               imageVector = Icons.Filled.Search,
@@ -184,7 +223,7 @@ private fun ClawAppBarBrowsingPreview() {
   LobstersTheme {
     ClawAppBar(
       activity = null,
-      isTopLevel = true,
+      isTopLevelVisible = true,
       mode = ClawTopBarMode.Browsing,
       navigateTo = {},
       popBackStack = { null },
@@ -204,7 +243,7 @@ private fun ClawAppBarSearchingPreview() {
   LobstersTheme {
     ClawAppBar(
       activity = null,
-      isTopLevel = true,
+      isTopLevelVisible = true,
       mode = ClawTopBarMode.Searching(query = "compose", requestFocus = false),
       navigateTo = {},
       popBackStack = { null },

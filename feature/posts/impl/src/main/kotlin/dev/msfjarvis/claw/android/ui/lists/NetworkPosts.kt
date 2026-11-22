@@ -8,10 +8,12 @@ package dev.msfjarvis.claw.android.ui.lists
 
 import androidx.activity.compose.ReportDrawnWhen
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -43,6 +45,8 @@ import dev.msfjarvis.claw.model.UIPost
 import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.coroutines.flow.MutableStateFlow
+
+internal val FeedMaxWidth = 720.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -81,7 +85,11 @@ fun NetworkPosts(
         )
       }
     } else {
-      LazyColumn(contentPadding = contentPadding, state = listState) {
+      LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = contentPadding,
+        state = listState,
+      ) {
         items(
           count = lazyPagingItems.itemCount,
           // Intentionally keyed on just the index to avoid crashes
@@ -94,24 +102,31 @@ fun NetworkPosts(
             if (shouldShowPost) {
               val isSaved = postActions.isPostSaved(item)
               val isRead = postActions.isPostRead(item)
-              LobstersListItem(
-                item = item,
-                isSaved = isSaved,
-                isRead = isRead,
-                postActions = postActions,
-              )
-              HorizontalDivider()
+              Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.TopCenter) {
+                Column(Modifier.widthIn(max = FeedMaxWidth).fillMaxWidth()) {
+                  LobstersListItem(
+                    item = item,
+                    isSaved = isSaved,
+                    isRead = isRead,
+                    postActions = postActions,
+                  )
+                  HorizontalDivider()
+                }
+              }
             }
           }
         }
         if (lazyPagingItems.loadState.append == LoadState.Loading) {
           item(key = "progressbar") {
-            ProgressBar(
-              modifier =
-                Modifier.fillMaxWidth()
-                  .wrapContentWidth(Alignment.CenterHorizontally)
-                  .padding(vertical = 16.dp)
-            )
+            Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.TopCenter) {
+              ProgressBar(
+                modifier =
+                  Modifier.widthIn(max = FeedMaxWidth)
+                    .fillMaxWidth()
+                    .wrapContentWidth(Alignment.CenterHorizontally)
+                    .padding(vertical = 16.dp)
+              )
+            }
           }
         }
       }

@@ -197,6 +197,8 @@ dependencies {
   implementation(libs.sentry.android.navigation3)
   implementation(libs.unfurl)
 
+  debugImplementation(libs.androidx.compose.ui.test.manifest)
+
   screenshotTestImplementation(libs.androidx.compose.ui.tooling)
   screenshotTestImplementation(libs.screenshot.validation.api)
 
@@ -205,6 +207,7 @@ dependencies {
   testImplementation(libs.kotlinx.coroutines.test)
 
   androidTestImplementation(projects.ziplineParser)
+  androidTestImplementation(libs.androidx.compose.ui.test.junit4)
   androidTestImplementation(libs.androidx.monitor)
   androidTestImplementation(libs.androidx.test.core)
 

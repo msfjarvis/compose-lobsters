@@ -51,11 +51,19 @@ class MainActivity(
   var deepLinkDestination by mutableStateOf<NavKey?>(null)
     private set
 
+  private var pendingDeepLink: String? = null
+
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     installSplashScreen()
     WindowCompat.enableEdgeToEdge(window)
-    handleIntent(intent)
+    if (savedInstanceState == null) {
+      handleIntent(intent)
+    } else {
+      savedInstanceState.getString(PENDING_DEEP_LINK)?.let { uri ->
+        handleIntent(Intent(Intent.ACTION_VIEW, uri.toUri()))
+      }
+    }
     setContent {
       LobstersTheme(
         dynamicColor = true,
@@ -71,10 +79,18 @@ class MainActivity(
           windowSizeClass = windowSizeClass,
           setWebUri = { url -> webUri = url },
           deepLinkDestination = deepLinkDestination,
-          clearDeepLink = { deepLinkDestination = null },
+          clearDeepLink = {
+            deepLinkDestination = null
+            pendingDeepLink = null
+          },
         )
       }
     }
+  }
+
+  override fun onSaveInstanceState(outState: Bundle) {
+    pendingDeepLink?.let { outState.putString(PENDING_DEEP_LINK, it) }
+    super.onSaveInstanceState(outState)
   }
 
   override fun onNewIntent(intent: Intent) {
@@ -96,10 +112,14 @@ class MainActivity(
 
   private fun handleIntent(intent: Intent) {
     val data = intent.data ?: return
-    deepLinkDestination =
+    val destination =
       matchDeepLink(
         DeepLinkRequest(data.toString()),
         appDeepLinkMatchers(BuildConfig.DEEPLINK_SCHEME),
-      ) ?: deepLinkDestination
+      ) ?: return
+    deepLinkDestination = destination
+    pendingDeepLink = data.toString()
   }
 }
+
+private const val PENDING_DEEP_LINK = "pending_deep_link"

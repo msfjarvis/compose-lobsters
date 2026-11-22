@@ -12,6 +12,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Search page now prompt users to solve the bot challenge first
   which is required for it to work
 - Comments page renders its header instantly
+- Tablet layouts now properly constrain their width
+- Search on tablets now uses the docked layout instead of the
+  full screen one
+- App state is now properly restored if the system kills it for
+  any reason
+- Settings page layout no longer gets squeezed on large font sizes
+- Import/export buttons on tablets are now laid out in a more
+  accessible format
 
 ### Changed
 

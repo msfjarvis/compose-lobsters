@@ -8,6 +8,7 @@ package dev.msfjarvis.claw.android.ui.screens
 
 import android.annotation.SuppressLint
 import android.graphics.Bitmap
+import android.os.Bundle
 import android.webkit.CookieManager
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
@@ -28,7 +29,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.Saver
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,6 +40,29 @@ import dev.msfjarvis.claw.core.network.CHROME_USER_AGENT
 
 private const val LOGIN_URL = "https://lobste.rs/login"
 private const val LOBSTERS_URL = "https://lobste.rs"
+
+private class LoginWebViewState(var restoredState: Bundle? = null) {
+  var webView: WebView? = null
+
+  fun reset() {
+    webView = null
+    restoredState = null
+  }
+
+  companion object {
+    val Saver =
+      Saver<LoginWebViewState, Bundle>(
+        save = { state ->
+          // The platform API is still required to restore WebView navigation history.
+          @SuppressLint("DeprecatedCall")
+          state.webView?.let { view -> Bundle().also { view.saveState(it) } }
+            ?: state.restoredState
+            ?: Bundle()
+        },
+        restore = { LoginWebViewState(it) },
+      )
+  }
+}
 
 internal fun parseAuthenticatedUsername(usernameResult: String): String? {
   return usernameResult.removeSurrounding("\"").takeUnless { it.isBlank() || it == "null" }
@@ -49,9 +74,9 @@ fun LoginScreen(
   popBackStack: () -> Unit,
   modifier: Modifier = Modifier,
 ) {
-  var isLoading by remember { mutableStateOf(true) }
-  var hasError by remember { mutableStateOf(false) }
-  var webViewRef by remember { mutableStateOf<WebView?>(null) }
+  var isLoading by rememberSaveable { mutableStateOf(true) }
+  var hasError by rememberSaveable { mutableStateOf(false) }
+  val webViewState = rememberSaveable(saver = LoginWebViewState.Saver) { LoginWebViewState() }
 
   Scaffold(modifier = modifier) { contentPadding ->
     Box(modifier = Modifier.padding(contentPadding).fillMaxSize()) {
@@ -65,9 +90,9 @@ fun LoginScreen(
           Spacer(modifier = Modifier.height(12.dp))
           Button(
             onClick = {
+              webViewState.reset()
               hasError = false
               isLoading = true
-              webViewRef?.loadUrl(LOGIN_URL)
             }
           ) {
             Text("Retry")
@@ -122,9 +147,13 @@ fun LoginScreen(
                       }
                     }
                   }
-                loadUrl(LOGIN_URL)
+                @SuppressLint("DeprecatedCall")
+                val restoredHistory = webViewState.restoredState?.let { restoreState(it) }
+                if (restoredHistory == null) {
+                  loadUrl(LOGIN_URL)
+                }
               }
-              .also { webViewRef = it }
+              .also { webViewState.webView = it }
           },
           modifier = Modifier.fillMaxSize(),
         )

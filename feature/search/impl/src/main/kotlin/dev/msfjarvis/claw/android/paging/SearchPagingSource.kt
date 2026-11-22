@@ -66,7 +66,7 @@ class SearchPagingSource(
 
   override fun getRefreshKey(state: PagingState<Int, UIPost>): Int? {
     return state.anchorPosition?.let { anchorPosition ->
-      (anchorPosition / PAGE_SIZE).coerceAtLeast(STARTING_PAGE_INDEX)
+      anchorPosition.coerceAtLeast(0) / PAGE_SIZE + STARTING_PAGE_INDEX
     }
   }
 

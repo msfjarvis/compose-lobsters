@@ -17,13 +17,22 @@ import androidx.navigation3.ui.LocalNavAnimatedContentScope
 @Suppress("ComposeCompositionLocalUsage")
 val LocalPostSharedTransitionScope = staticCompositionLocalOf<SharedTransitionScope?> { null }
 
+/** Identifies the feed that owns a shared post, preventing matches across feeds. */
+@Suppress("ComposeCompositionLocalUsage")
+val LocalPostSharedTransitionFeed = staticCompositionLocalOf<Any?> { null }
+
+private data class PostSharedElementKey(val feed: Any?, val postId: String, val element: String)
+
 @Composable
 fun Modifier.postSharedBounds(postId: String, element: String): Modifier {
   val scope = LocalPostSharedTransitionScope.current ?: return this
   val visibilityScope = LocalNavAnimatedContentScope.current
   return with(scope) {
     sharedBounds(
-      sharedContentState = rememberSharedContentState(key = postId to element),
+      sharedContentState =
+        rememberSharedContentState(
+          key = PostSharedElementKey(LocalPostSharedTransitionFeed.current, postId, element)
+        ),
       animatedVisibilityScope = visibilityScope,
       resizeMode = SharedTransitionScope.ResizeMode.scaleToBounds(),
     )

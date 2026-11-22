@@ -220,7 +220,7 @@ private fun CommentsButton(commentCount: Int, onClick: () -> Unit, modifier: Mod
 @Composable
 fun TagRow(tags: ImmutableList<String>, postId: String, modifier: Modifier = Modifier) {
   FlexBox(
-    modifier = modifier,
+    modifier = modifier.postSharedBounds(postId, "tags"),
     config = {
       rowGap(8.dp)
       columnGap(8.dp)
@@ -228,11 +228,8 @@ fun TagRow(tags: ImmutableList<String>, postId: String, modifier: Modifier = Mod
       wrap(FlexWrap.Wrap)
     },
   ) {
-    tags.forEachIndexed { index, tag ->
-      TagText(
-        tag = tag,
-        modifier = Modifier.postSharedBounds(postId, "tag-$index-$tag"),
-      )
+    tags.forEach { tag ->
+      TagText(tag = tag)
     }
   }
 }

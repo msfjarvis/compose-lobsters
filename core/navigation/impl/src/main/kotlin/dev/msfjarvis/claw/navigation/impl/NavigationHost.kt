@@ -11,17 +11,23 @@ import androidx.compose.animation.ContentTransform
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.NavEntryDecorator
 import androidx.navigation3.runtime.NavKey
 import androidx.navigation3.runtime.entryProvider
+import androidx.navigation3.runtime.rememberDecoratedNavEntries
+import androidx.navigation3.scene.NavigationBackHandler
 import androidx.navigation3.scene.Scene
 import androidx.navigation3.scene.SceneStrategy
+import androidx.navigation3.scene.rememberNavigationEventState
+import androidx.navigation3.scene.rememberSceneState
 import androidx.navigation3.ui.NavDisplay
 import dev.msfjarvis.claw.common.ui.LocalPostSharedTransitionScope
 import dev.msfjarvis.claw.navigation.api.NavigationEntryContributor
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 
 /** Hosts app-supplied destinations without depending on any feature implementation. */
 @Composable
@@ -35,23 +41,49 @@ fun NavigationHost(
   modifier: Modifier = Modifier,
   entryDecorators: ImmutableList<NavEntryDecorator<NavKey>> = persistentListOf(),
   sceneStrategies: ImmutableList<SceneStrategy<NavKey>> = persistentListOf(),
+  onVisibleSceneEntriesChanged: (ImmutableList<NavKey>) -> Unit,
 ) {
   SharedTransitionLayout {
     CompositionLocalProvider(LocalPostSharedTransitionScope provides this) {
+      val entriesProvider =
+        entryProvider<NavKey> {
+          contributors.forEach { contributor ->
+            with(contributor) { addEntries() }
+          }
+        }
+      val entries =
+        rememberDecoratedNavEntries(
+          backStack = backStack,
+          entryDecorators = entryDecorators,
+          entryProvider = entriesProvider,
+        )
+      val sceneState =
+        rememberSceneState(
+          entries = entries,
+          sceneStrategies = sceneStrategies,
+          sharedTransitionScope = this@SharedTransitionLayout,
+          onBack = onBack,
+        )
+      val navigationEventState = rememberNavigationEventState(sceneState)
+      val visibleSceneEntries =
+        sceneState.currentScene.entries
+          .mapNotNull { sceneEntry ->
+            val entryIndex = entries.indexOfFirst { it.contentKey == sceneEntry.contentKey }
+            backStack.getOrNull(entryIndex)
+          }
+          .toImmutableList()
+      SideEffect { onVisibleSceneEntriesChanged(visibleSceneEntries) }
+      NavigationBackHandler(
+        sceneState = sceneState,
+        state = navigationEventState,
+        onBackCompleted = onBack,
+      )
       NavDisplay(
-        backStack = backStack,
-        onBack = onBack,
+        sceneState = sceneState,
+        navigationEventState = navigationEventState,
         modifier = modifier,
-        entryDecorators = entryDecorators,
-        sceneStrategies = sceneStrategies,
         popTransitionSpec = popTransitionSpec,
         predictivePopTransitionSpec = predictivePopTransitionSpec,
-        entryProvider =
-          entryProvider {
-            contributors.forEach { contributor ->
-              with(contributor) { addEntries() }
-            }
-          },
       )
     }
   }

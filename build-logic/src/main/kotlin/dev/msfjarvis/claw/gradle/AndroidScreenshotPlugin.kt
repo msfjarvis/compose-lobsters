@@ -7,34 +7,32 @@
 package dev.msfjarvis.claw.gradle
 
 import com.android.build.api.dsl.LibraryExtension
-import com.android.compose.screenshot.tasks.PreviewScreenshotValidationTask
 import org.gradle.accessors.dm.LibrariesForLibs
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.withType
 
 @Suppress("UnstableApiUsage")
 class AndroidScreenshotPlugin : Plugin<Project> {
   override fun apply(project: Project) {
-    project.pluginManager.apply("com.android.compose.screenshot")
-    // Allow small host-dependent emoji rendering differences (0.04% of pixels).
-    project.tasks.withType<PreviewScreenshotValidationTask>().configureEach {
-      testEngineInput.threshold.set(0.0004f)
-    }
     project.pluginManager.withPlugin("com.android.library") {
+      val libs = project.extensions.getByName("libs") as LibrariesForLibs
       project.extensions.configure<LibraryExtension> {
+        testOptions.screenshotTests.create("previewTest") {
+          engineVersion = libs.versions.screenshot.get()
+          targetVariants.add("debug")
+          dependencies {
+            implementation.add(libs.screenshot.validation.api)
+            implementation.add(libs.androidx.compose.ui.tooling.asProvider())
+          }
+        }
         androidResources.enable = true
         buildFeatures.compose = true
-        experimentalProperties["android.experimental.enableScreenshotTest"] = true
         // JUnit's test artifacts each bundle the same license resources.
         packaging.resources.merges += setOf("META-INF/LICENSE.md", "META-INF/LICENSE-notice.md")
         defaultConfig.testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
       }
-      val libs = project.extensions.getByName("libs") as LibrariesForLibs
       project.dependencies.apply {
-        addProvider("screenshotTestImplementation", libs.screenshot.validation.api)
-        addProvider("screenshotTestImplementation", libs.androidx.compose.ui.tooling.asProvider())
         addProvider("androidTestImplementation", libs.androidx.compose.ui.test.junit4)
         addProvider("androidTestImplementation", libs.androidx.test.runner)
         addProvider("androidTestImplementation", libs.androidx.test.ext.junit)

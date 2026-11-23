@@ -24,7 +24,6 @@ plugins {
   alias(libs.plugins.modulegraphassert)
   alias(libs.plugins.baselineprofile)
   alias(libs.plugins.licensee)
-  alias(libs.plugins.screenshot)
   alias(libs.plugins.kotlin.composeCompiler)
   alias(libs.plugins.kotlin.serialization)
   alias(libs.plugins.dependencyAnalysis)
@@ -51,7 +50,6 @@ android {
   defaultConfig.applicationId = "dev.msfjarvis.claw.android"
   defaultConfig.testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   buildFeatures.compose = true
-  experimentalProperties["android.experimental.enableScreenshotTest"] = true
 
   buildTypes {
     create("internal") {
@@ -63,6 +61,14 @@ android {
   }
 
   testOptions {
+    screenshotTests.create("previewTest") {
+      engineVersion = libs.versions.screenshot.get()
+      targetVariants.add("fossDebug")
+      dependencies {
+        implementation(libs.androidx.compose.ui.tooling)
+        implementation(libs.screenshot.validation.api)
+      }
+    }
     // Compose Preview runfiles need Android resources on the unit-test runtime classpath.
     unitTests.isIncludeAndroidResources = true
   }
@@ -198,9 +204,6 @@ dependencies {
   implementation(libs.unfurl)
 
   debugImplementation(libs.androidx.compose.ui.test.manifest)
-
-  screenshotTestImplementation(libs.androidx.compose.ui.tooling)
-  screenshotTestImplementation(libs.screenshot.validation.api)
 
   runtimeOnly(libs.androidx.profileinstaller)
 

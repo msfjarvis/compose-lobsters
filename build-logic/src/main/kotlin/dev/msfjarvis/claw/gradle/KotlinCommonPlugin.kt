@@ -6,7 +6,6 @@
  */
 package dev.msfjarvis.claw.gradle
 
-import com.android.compose.screenshot.tasks.PreviewScreenshotValidationTask
 import com.squareup.sort.SortDependenciesPlugin
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
@@ -40,9 +39,7 @@ class KotlinCommonPlugin : Plugin<Project> {
         targetCompatibility = JavaVersion.VERSION_21.toString()
       }
       withType<Test>().configureEach {
-        maxParallelForks =
-          if (this is PreviewScreenshotValidationTask) 1
-          else (Runtime.getRuntime().availableProcessors() / 2).coerceAtLeast(1)
+        maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).coerceAtLeast(1)
         testLogging { events(TestLogEvent.PASSED, TestLogEvent.SKIPPED, TestLogEvent.FAILED) }
         useJUnitPlatform()
       }

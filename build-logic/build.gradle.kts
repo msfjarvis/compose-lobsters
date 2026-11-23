@@ -103,7 +103,6 @@ dependencies {
   implementation(libs.build.agp)
   implementation(libs.build.cachefix)
   implementation(libs.build.kotlin.gradle)
-  implementation(libs.build.screenshot)
   implementation(libs.build.semver)
   implementation(libs.build.sentry)
   implementation(libs.build.sort.dependencies)

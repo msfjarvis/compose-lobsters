@@ -8,11 +8,13 @@ package dev.msfjarvis.claw.android.ui.lists
 
 import androidx.activity.compose.ReportDrawn
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
@@ -47,15 +49,23 @@ fun DatabasePosts(
   ReportDrawn()
   Box(modifier = modifier.fillMaxSize()) {
     if (items.isEmpty()) {
-      Column(modifier = Modifier.align(Alignment.Center)) {
+      Column(
+        modifier = Modifier.align(Alignment.Center).padding(24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+      ) {
         Icon(
           imageVector = Icons.Filled.Inbox,
-          contentDescription = stringResource(R.string.empty_inbox_icon),
+          contentDescription = null,
           modifier = Modifier.align(Alignment.CenterHorizontally).size(36.dp),
         )
         Text(
           text = stringResource(R.string.no_saved_posts),
           style = MaterialTheme.typography.headlineSmall,
+        )
+        Text(
+          text = stringResource(R.string.saved_posts_hint),
+          style = MaterialTheme.typography.bodyMedium,
         )
       }
     } else {

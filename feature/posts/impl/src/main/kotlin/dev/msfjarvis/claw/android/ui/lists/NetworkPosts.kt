@@ -7,6 +7,7 @@
 package dev.msfjarvis.claw.android.ui.lists
 
 import androidx.activity.compose.ReportDrawnWhen
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -20,8 +21,10 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
@@ -30,6 +33,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.PagingData
@@ -41,6 +45,7 @@ import dev.msfjarvis.claw.common.theme.LobstersTheme
 import dev.msfjarvis.claw.common.ui.NetworkError
 import dev.msfjarvis.claw.common.ui.ProgressBar
 import dev.msfjarvis.claw.common.ui.preview.DevicePreviews
+import dev.msfjarvis.claw.feature.posts.impl.R
 import dev.msfjarvis.claw.model.UIPost
 import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.collections.immutable.persistentSetOf
@@ -79,10 +84,16 @@ fun NetworkPosts(
         contentAlignment = Alignment.Center,
         modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()),
       ) {
-        NetworkError(
-          label = "Failed to load posts",
-          error = (refreshLoadState as LoadState.Error).error,
-        )
+        Column(
+          horizontalAlignment = Alignment.CenterHorizontally,
+          verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+          NetworkError(
+            label = stringResource(R.string.failed_to_load_posts),
+            error = (refreshLoadState as LoadState.Error).error,
+          )
+          Button(onClick = { lazyPagingItems.retry() }) { Text(stringResource(R.string.retry)) }
+        }
       }
     } else {
       LazyColumn(
@@ -113,6 +124,38 @@ fun NetworkPosts(
                   HorizontalDivider()
                 }
               }
+            }
+          }
+        }
+        if (
+          lazyPagingItems.itemCount > 0 &&
+            filteredTags.isNotEmpty() &&
+            lazyPagingItems.loadState.append.endOfPaginationReached &&
+            lazyPagingItems.itemSnapshotList.items.all { post ->
+              post.tags.any { it in filteredTags }
+            }
+        ) {
+          item {
+            Box(Modifier.fillParentMaxSize().padding(24.dp), contentAlignment = Alignment.Center) {
+              Text(stringResource(R.string.all_posts_filtered))
+            }
+          }
+        }
+        if (lazyPagingItems.itemCount == 0 && refreshLoadState is LoadState.NotLoading) {
+          item {
+            Box(Modifier.fillParentMaxSize().padding(24.dp), contentAlignment = Alignment.Center) {
+              Text(stringResource(R.string.no_posts))
+            }
+          }
+        }
+        if (lazyPagingItems.loadState.append is LoadState.Error) {
+          item(key = "append_error") {
+            Column(
+              Modifier.fillMaxWidth().padding(16.dp),
+              horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+              Text(stringResource(R.string.failed_to_load_more_posts))
+              Button(onClick = { lazyPagingItems.retry() }) { Text(stringResource(R.string.retry)) }
             }
           }
         }

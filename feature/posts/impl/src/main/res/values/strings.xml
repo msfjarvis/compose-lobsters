@@ -8,4 +8,10 @@
   <string name="no_post_selected">No post selected</string>
   <string name="empty_inbox_icon">Empty inbox icon</string>
   <string name="no_saved_posts">No saved posts</string>
+  <string name="saved_posts_hint">Tap the heart on a post to save it for later.</string>
+  <string name="failed_to_load_posts">Failed to load posts</string>
+  <string name="failed_to_load_more_posts">Failed to load more posts</string>
+  <string name="retry">Retry</string>
+  <string name="no_posts">No posts available.</string>
+  <string name="all_posts_filtered">All posts are hidden by your tag filters. Change them in Settings.</string>
 </resources>

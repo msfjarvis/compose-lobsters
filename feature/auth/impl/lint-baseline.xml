@@ -1,27 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<issues format="6" by="lint 9.5.1" type="baseline" client="gradle" dependencies="true" name="AGP (9.5.1)" variant="all" version="9.5.1">
-
-    <issue
-        id="DeprecatedCall"
-        message="android.webkit.WebView.loadUrl is deprecated; consider using an alternative."
-        errorLine1="              webViewRef?.loadUrl(LOGIN_URL)"
-        errorLine2="              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/kotlin/dev/msfjarvis/claw/android/ui/screens/LoginScreen.kt"
-            line="70"
-            column="15"/>
-    </issue>
-
-    <issue
-        id="DeprecatedCall"
-        message="android.webkit.WebView.loadUrl is deprecated; consider using an alternative."
-        errorLine1="              webViewRef?.loadUrl(LOGIN_URL)"
-        errorLine2="                                  ~~~~~~~~~">
-        <location
-            file="src/main/kotlin/dev/msfjarvis/claw/android/ui/screens/LoginScreen.kt"
-            line="70"
-            column="35"/>
-    </issue>
+<issues format="6" by="lint 9.5.2" type="baseline" client="gradle" dependencies="true" name="AGP (9.5.2)" variant="all" version="9.5.2">
 
     <issue
         id="DeprecatedCall"
@@ -30,7 +8,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/dev/msfjarvis/claw/android/ui/screens/LoginScreen.kt"
-            line="79"
+            line="104"
             column="13"/>
     </issue>
 
@@ -41,7 +19,7 @@
         errorLine2="                    ~~~~~~~">
         <location
             file="src/main/kotlin/dev/msfjarvis/claw/android/ui/screens/LoginScreen.kt"
-            line="79"
+            line="104"
             column="21"/>
     </issue>
 
@@ -52,7 +30,7 @@
         errorLine2="                ~~~~~~~~">
         <location
             file="src/main/kotlin/dev/msfjarvis/claw/android/ui/screens/LoginScreen.kt"
-            line="82"
+            line="107"
             column="17"/>
     </issue>
 
@@ -63,7 +41,7 @@
         errorLine2="                ~~~~~~~~">
         <location
             file="src/main/kotlin/dev/msfjarvis/claw/android/ui/screens/LoginScreen.kt"
-            line="88"
+            line="113"
             column="17"/>
     </issue>
 
@@ -74,7 +52,7 @@
         errorLine2="                ^">
         <location
             file="src/main/kotlin/dev/msfjarvis/claw/android/ui/screens/LoginScreen.kt"
-            line="89"
+            line="114"
             column="17"/>
     </issue>
 
@@ -85,30 +63,30 @@
         errorLine2="                  ^">
         <location
             file="src/main/kotlin/dev/msfjarvis/claw/android/ui/screens/LoginScreen.kt"
-            line="90"
+            line="115"
             column="19"/>
     </issue>
 
     <issue
         id="DeprecatedCall"
         message="android.webkit.WebView.loadUrl is deprecated; consider using an alternative."
-        errorLine1="                loadUrl(LOGIN_URL)"
-        errorLine2="                ~~~~~~~~~~~~~~~~~~">
+        errorLine1="                  loadUrl(LOGIN_URL)"
+        errorLine2="                  ~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/kotlin/dev/msfjarvis/claw/android/ui/screens/LoginScreen.kt"
-            line="125"
-            column="17"/>
+            line="153"
+            column="19"/>
     </issue>
 
     <issue
         id="DeprecatedCall"
         message="android.webkit.WebView.loadUrl is deprecated; consider using an alternative."
-        errorLine1="                loadUrl(LOGIN_URL)"
-        errorLine2="                        ~~~~~~~~~">
+        errorLine1="                  loadUrl(LOGIN_URL)"
+        errorLine2="                          ~~~~~~~~~">
         <location
             file="src/main/kotlin/dev/msfjarvis/claw/android/ui/screens/LoginScreen.kt"
-            line="125"
-            column="25"/>
+            line="153"
+            column="27"/>
     </issue>
 
 </issues>

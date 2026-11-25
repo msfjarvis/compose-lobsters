@@ -9,7 +9,6 @@ package dev.msfjarvis.claw.common.comments.reply
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.slack.eithernet.ApiResult
@@ -34,8 +33,8 @@ class ReplyViewModel(
   internal var uiState by mutableStateOf(ReplyUiState())
     private set
 
-  fun updateEditor(value: TextFieldValue) {
-    uiState = uiState.copy(editor = value, errorMessage = null)
+  fun clearEditorError() {
+    if (uiState.errorMessage != null) uiState = uiState.copy(errorMessage = null)
   }
 
   fun showQuoteDialog() {
@@ -46,21 +45,12 @@ class ReplyViewModel(
     uiState = uiState.copy(isQuoteDialogOpen = false)
   }
 
-  fun insertQuote(commentText: String) {
-    uiState =
-      uiState.copy(
-        editor = insertQuote(uiState.editor, commentText),
-        isQuoteDialogOpen = false,
-        errorMessage = null,
-      )
-  }
-
   fun clearSubmitSucceeded() {
     uiState = uiState.copy(submitSucceeded = false)
   }
 
-  fun submit(commentId: String, postId: String) {
-    val replyText = uiState.editor.text.trim()
+  fun submit(commentId: String, postId: String, text: String) {
+    val replyText = text.trim()
     if (replyText.isBlank()) {
       uiState = uiState.copy(errorMessage = "Reply cannot be blank")
       return

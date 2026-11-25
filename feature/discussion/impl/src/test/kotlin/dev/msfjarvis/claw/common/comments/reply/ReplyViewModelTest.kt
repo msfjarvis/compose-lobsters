@@ -6,8 +6,6 @@
  */
 package dev.msfjarvis.claw.common.comments.reply
 
-import androidx.compose.ui.text.TextRange
-import androidx.compose.ui.text.input.TextFieldValue
 import com.google.common.truth.Truth.assertThat
 import com.slack.eithernet.ApiResult
 import dev.msfjarvis.claw.api.AuthenticatedLobstersApi
@@ -56,7 +54,7 @@ class ReplyViewModelTest {
           ioDispatcher = dispatcher,
         )
 
-      viewModel.submit(commentId = "c_1", postId = "story_1")
+      viewModel.submit(commentId = "c_1", postId = "story_1", text = "")
       advanceUntilIdle()
 
       assertThat(viewModel.uiState.errorMessage).isEqualTo("Reply cannot be blank")
@@ -72,9 +70,7 @@ class ReplyViewModelTest {
           api = AuthenticatedLobstersApi(fakeApi),
           ioDispatcher = dispatcher,
         )
-      viewModel.updateEditor(TextFieldValue("reply body", TextRange("reply body".length)))
-
-      viewModel.submit(commentId = "c_1", postId = "story_1")
+      viewModel.submit(commentId = "c_1", postId = "story_1", text = "reply body")
       advanceUntilIdle()
 
       assertThat(viewModel.uiState.isSubmitting).isFalse()
@@ -83,7 +79,7 @@ class ReplyViewModelTest {
     }
 
   @Test
-  fun `failed submit preserves editor text and exposes error`() =
+  fun `failed submit exposes error`() =
     runTest(dispatcher) {
       val fakeApi = FakeLobstersApi(postReplyResult = ApiResult.unknownFailure(IOException("boom")))
       val viewModel =
@@ -91,12 +87,9 @@ class ReplyViewModelTest {
           api = AuthenticatedLobstersApi(fakeApi),
           ioDispatcher = dispatcher,
         )
-      viewModel.updateEditor(TextFieldValue("reply body", TextRange("reply body".length)))
-
-      viewModel.submit(commentId = "c_1", postId = "story_1")
+      viewModel.submit(commentId = "c_1", postId = "story_1", text = "reply body")
       advanceUntilIdle()
 
-      assertThat(viewModel.uiState.editor.text).isEqualTo("reply body")
       assertThat(viewModel.uiState.errorMessage).contains("boom")
     }
 }

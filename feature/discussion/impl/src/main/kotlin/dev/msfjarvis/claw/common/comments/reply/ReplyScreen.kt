@@ -20,6 +20,8 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.input.TextFieldState
+import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
@@ -33,16 +35,13 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.msfjarvis.claw.common.theme.LobstersTheme
@@ -52,6 +51,7 @@ import dev.msfjarvis.claw.common.ui.preview.ThemePreviews
 import dev.msfjarvis.claw.common.ui.rewriteUrlIfLobstersPost
 import dev.msfjarvis.claw.feature.discussion.impl.R
 import dev.zacsweers.metrox.viewmodel.metroViewModel
+import kotlinx.coroutines.flow.drop
 
 @Composable
 internal fun ReplyScreen(
@@ -64,18 +64,7 @@ internal fun ReplyScreen(
   viewModel: ReplyViewModel = metroViewModel(key = commentId),
 ) {
   val uiState = viewModel.uiState
-  var savedEditor by
-    rememberSaveable(commentId, stateSaver = TextFieldValue.Saver) {
-      mutableStateOf(uiState.editor)
-    }
-  var hasRestoredEditor by remember(viewModel) { mutableStateOf(false) }
-  LaunchedEffect(viewModel) {
-    if (savedEditor != viewModel.uiState.editor) viewModel.updateEditor(savedEditor)
-    hasRestoredEditor = true
-  }
-  SideEffect {
-    if (hasRestoredEditor) savedEditor = uiState.editor
-  }
+  val editor = rememberSaveable(commentId, saver = TextFieldState.Saver) { TextFieldState() }
 
   LaunchedEffect(uiState.submitSucceeded) {
     if (uiState.submitSucceeded) {
@@ -88,11 +77,16 @@ internal fun ReplyScreen(
     commentText = commentText,
     uiState = uiState,
     contentPadding = contentPadding,
-    onEditorChanged = viewModel::updateEditor,
+    editor = editor,
+    onEditorChanged = viewModel::clearEditorError,
     onParentCommentClick = viewModel::showQuoteDialog,
     onDismissDialog = viewModel::dismissQuoteDialog,
-    onQuote = { viewModel.insertQuote(commentText) },
-    onSubmit = { viewModel.submit(commentId, postId) },
+    onQuote = {
+      insertQuote(editor, commentText)
+      viewModel.dismissQuoteDialog()
+      viewModel.clearEditorError()
+    },
+    onSubmit = { viewModel.submit(commentId, postId, editor.text.toString()) },
     modifier = modifier,
   )
 }
@@ -102,14 +96,21 @@ internal fun ReplyScreenContent(
   commentText: String,
   uiState: ReplyUiState,
   contentPadding: PaddingValues,
-  onEditorChanged: (TextFieldValue) -> Unit,
+  onEditorChanged: () -> Unit,
   onParentCommentClick: () -> Unit,
   onDismissDialog: () -> Unit,
   onQuote: () -> Unit,
   onSubmit: () -> Unit,
   modifier: Modifier = Modifier,
   scrollState: ScrollState = rememberScrollState(),
+  editor: TextFieldState = rememberTextFieldState(),
 ) {
+  val currentOnEditorChanged by rememberUpdatedState(onEditorChanged)
+  LaunchedEffect(editor) {
+    snapshotFlow { editor.text.toString() to editor.selection }
+      .drop(1)
+      .collect { currentOnEditorChanged() }
+  }
   Box(
     modifier =
       modifier
@@ -136,8 +137,7 @@ internal fun ReplyScreenContent(
         )
       }
       TextField(
-        value = uiState.editor,
-        onValueChange = onEditorChanged,
+        state = editor,
         label = { Text(stringResource(R.string.reply_editor_label)) },
         supportingText = {
           uiState.errorMessage?.let { Text(text = it, color = MaterialTheme.colorScheme.error) }
@@ -185,7 +185,8 @@ private fun ReplyScreenPreview() {
   LobstersTheme {
     ReplyScreenContent(
       commentText = COMMENT_TEXT,
-      uiState = ReplyUiState(editor = TextFieldValue("Draft")),
+      uiState = ReplyUiState(),
+      editor = rememberTextFieldState("Draft"),
       contentPadding = PaddingValues(),
       onEditorChanged = {},
       onParentCommentClick = {},
@@ -219,7 +220,8 @@ private fun ReplyScreenSubmittingPreview() {
   LobstersTheme {
     ReplyScreenContent(
       commentText = COMMENT_TEXT,
-      uiState = ReplyUiState(editor = TextFieldValue("Draft"), isSubmitting = true),
+      uiState = ReplyUiState(isSubmitting = true),
+      editor = rememberTextFieldState("Draft"),
       contentPadding = PaddingValues(),
       onEditorChanged = {},
       onParentCommentClick = {},

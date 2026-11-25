@@ -45,6 +45,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.res.stringResource
@@ -66,6 +67,7 @@ import dev.msfjarvis.claw.common.ui.ThemedRichText
 import dev.msfjarvis.claw.common.ui.postSharedBounds
 import dev.msfjarvis.claw.common.ui.rewriteUrlIfLobstersPost
 import dev.msfjarvis.claw.core.ui.R as UiR
+import dev.msfjarvis.claw.feature.discussion.impl.R
 import dev.msfjarvis.claw.model.LinkMetadata
 import kotlin.time.Clock
 import kotlin.time.Instant
@@ -183,11 +185,24 @@ internal fun CommentEntry(
       isUpvoted = hasLocallyUpvoted,
     )
   val indentGuideLevel = commentNode.indentLevel.minus(1).coerceAtLeast(0)
+  val unreadMarkerColor = MaterialTheme.colorScheme.primary
   Box(
     modifier =
       modifier
         .fillMaxWidth()
         .background(MaterialTheme.colorScheme.background)
+        .drawWithContent {
+          drawContent()
+          if (commentNode.isUnread) {
+            val stroke = 3.dp.toPx()
+            drawLine(
+              color = unreadMarkerColor,
+              start = Offset(size.width - stroke / 2, 0f),
+              end = Offset(size.width - stroke / 2, size.height),
+              strokeWidth = stroke,
+            )
+          }
+        }
         .drawBehind {
           if (indentGuideLevel > 0) {
             repeat(indentGuideLevel) { level ->
@@ -251,6 +266,14 @@ internal fun CommentEntry(
           color = MaterialTheme.colorScheme.onSurfaceVariant,
           modifier = Modifier.clickable { openUserProfile(comment.user) },
         )
+        if (commentNode.isUnread) {
+          Text(
+            text = stringResource(R.string.unread_comment_label),
+            style = MaterialTheme.typography.labelMedium,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.primary,
+          )
+        }
         Spacer(Modifier.weight(1f))
         if (!isExpanded && commentNode.descendantCount() > 0) {
           Text(

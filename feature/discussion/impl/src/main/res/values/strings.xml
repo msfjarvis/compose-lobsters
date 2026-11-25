@@ -6,6 +6,7 @@
  -->
 <resources>
   <string name="comments_label">Comments</string>
+  <string name="unread_comment_label">New</string>
   <string name="no_comments">No Comments</string>
   <string name="reply_editor_label">Write a reply</string>
   <string name="submit_reply">Submit reply</string>

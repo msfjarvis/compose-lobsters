@@ -38,6 +38,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
@@ -94,7 +95,7 @@ fun PostDetails(post: UIPost, isRead: Boolean, modifier: Modifier = Modifier) {
     PostTitle(
       title = post.title,
       isRead = isRead,
-      maxLines = 2,
+      maxLines = if (LocalDensity.current.fontScale > 1.3f) Int.MAX_VALUE else 2,
       modifier = Modifier.postSharedBounds(post.shortId, "title"),
     )
     TagRow(tags = post.tags.toImmutableList(), postId = post.shortId)

@@ -23,7 +23,7 @@ appId: dev.msfjarvis.claw.android
 - tapOn: "Verify browser"
 - extendedWaitUntil:
     visible: "Open comments"
-    timeout: 5000
+    timeout: 8000
 - waitForAnimationToEnd:
     timeout: 2000
 - takeScreenshot: "SearchPage"
@@ -32,6 +32,8 @@ appId: dev.msfjarvis.claw.android
 - tapOn: "Close search"
 - tapOn: "Close search"
 - tapOn: "Settings"
+- waitForAnimationToEnd:
+    timeout: 2000
 - takeScreenshot: "SettingsPage"
 - tapOn: "Tag filtering"
 - tapOn: "ai"

@@ -7,11 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Feed recovery and empty states now provide guidance when posts cannot be loaded
+
 ### Fixed
 
 - Search page now prompt users to solve the bot challenge first
   which is required for it to work
 - Comments page renders its header instantly
+- Feed titles now wrap instead of being clipped at large font sizes
+- Search position and query are restored when returning to or recreating the page
+- The login flow can be restarted after a restored WebView error
+- Reminder time-picker drafts survive recreation
+- Unread comments are marked with a visible indicator
 - Tablet layouts now properly constrain their width
 - Search on tablets now uses the docked layout instead of the
   full screen one
@@ -24,7 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Replace the fancy navigation bar with a Material 3 one
-- A shared element transition is now used to animate going from a post list to its comments
+- Posts now transition individually into comment headers
 
 ## [1.76.0] - 2026-11-01
 

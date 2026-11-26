@@ -6,8 +6,8 @@
  */
 package dev.msfjarvis.claw.common.comments.reply
 
+import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.ui.text.TextRange
-import androidx.compose.ui.text.input.TextFieldValue
 import com.fleeksoft.ksoup.Ksoup
 import com.fleeksoft.ksoup.nodes.Element
 import com.fleeksoft.ksoup.nodes.Node
@@ -51,14 +51,11 @@ internal fun plainTextFromHtml(commentText: String): String {
   return sb.toString().trim()
 }
 
-internal fun insertQuote(current: TextFieldValue, commentText: String): TextFieldValue {
+internal fun insertQuote(editor: TextFieldState, commentText: String) {
   val quoted = quoteText(commentText)
-  val range = current.selection
-  val newText = buildString {
-    append(current.text.substring(0, range.min))
-    append(quoted)
-    append(current.text.substring(range.max))
+  editor.edit {
+    val start = selection.min
+    replace(start, selection.max, quoted)
+    selection = TextRange(start + quoted.length)
   }
-  val cursor = range.min + quoted.length
-  return TextFieldValue(text = newText, selection = TextRange(cursor))
 }

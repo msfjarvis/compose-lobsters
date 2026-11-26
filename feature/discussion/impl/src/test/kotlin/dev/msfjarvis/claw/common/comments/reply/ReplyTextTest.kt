@@ -6,8 +6,8 @@
  */
 package dev.msfjarvis.claw.common.comments.reply
 
+import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.ui.text.TextRange
-import androidx.compose.ui.text.input.TextFieldValue
 import com.google.common.truth.Truth.assertThat
 import org.junit.jupiter.api.Test
 
@@ -20,23 +20,23 @@ class ReplyTextTest {
 
   @Test
   fun `insertQuote inserts quote at cursor position`() {
-    val initial = TextFieldValue(text = "hello world", selection = TextRange(6))
+    val editor = TextFieldState(initialText = "hello world", initialSelection = TextRange(6))
 
-    val result = insertQuote(initial, "quoted")
+    insertQuote(editor, "quoted")
 
-    assertThat(result.text).isEqualTo("hello > quoted\nworld")
-    assertThat(result.selection.collapsed).isTrue()
-    assertThat(result.selection.start).isEqualTo("hello > quoted\n".length)
+    assertThat(editor.text.toString()).isEqualTo("hello > quoted\nworld")
+    assertThat(editor.selection.collapsed).isTrue()
+    assertThat(editor.selection.start).isEqualTo("hello > quoted\n".length)
   }
 
   @Test
   fun `insertQuote replaces current selection`() {
-    val initial = TextFieldValue(text = "hello world", selection = TextRange(6, 11))
+    val editor = TextFieldState(initialText = "hello world", initialSelection = TextRange(11, 6))
 
-    val result = insertQuote(initial, "quoted")
+    insertQuote(editor, "quoted")
 
-    assertThat(result.text).isEqualTo("hello > quoted\n")
-    assertThat(result.selection.start).isEqualTo(result.text.length)
+    assertThat(editor.text.toString()).isEqualTo("hello > quoted\n")
+    assertThat(editor.selection.start).isEqualTo(editor.text.length)
   }
 
   @Test

@@ -6,10 +6,7 @@
  */
 package dev.msfjarvis.claw.common.comments.reply
 
-import androidx.compose.ui.text.input.TextFieldValue
-
 internal data class ReplyUiState(
-  val editor: TextFieldValue = TextFieldValue(),
   val isQuoteDialogOpen: Boolean = false,
   val isSubmitting: Boolean = false,
   val errorMessage: String? = null,

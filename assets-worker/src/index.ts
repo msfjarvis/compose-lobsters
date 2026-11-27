@@ -110,7 +110,7 @@ function currentTimestamp(): string {
     .replace(/\.\d{3}Z$/, "Z");
 }
 
-function joinChunks(chunks: readonly Uint8Array[], size: number): Uint8Array {
+function joinChunks(chunks: ReadonlyArray<Uint8Array>, size: number): Uint8Array {
   const output = new Uint8Array(size);
   let offset = 0;
 
@@ -144,7 +144,7 @@ function parseArchive(archive: Uint8Array): ReleaseArchive {
       throw new BadRequestError(`The ZIP archive cannot contain more than ${MAX_MODULES} modules`);
     }
 
-    const chunks: Uint8Array[] = [];
+    const chunks: Array<Uint8Array> = [];
     let size = 0;
     file.ondata = (error, chunk, final) => {
       if (error) {

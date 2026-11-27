@@ -15,7 +15,6 @@ export default defineConfig({
   ],
   jsPlugins: [{ name: "anti-slop", specifier: "./tools/oxlint/anti-slop/index.ts" }],
   rules: {
-    "typescript/array-type": "off",
     "no-console": "off",
     "@nkzw/no-instanceof": "off",
     "oxc/no-accumulating-spread": "error",

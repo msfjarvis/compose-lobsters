@@ -476,6 +476,8 @@ export default {
         return new Response(error.message, { status: 409 });
       }
 
+      // Log unexpected failures for Worker observability before returning a generic response.
+      // oxlint-disable-next-line no-console
       console.error(
         JSON.stringify({
           error: error instanceof Error ? error.message : String(error),

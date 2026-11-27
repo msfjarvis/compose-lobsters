@@ -31,10 +31,27 @@ jobs:
         dependency-graph: generate-and-submit
 
     - name: Check changelog format
+      id: changelog
       uses: mindsers/changelog-reader-action@1faaf50aa09d5793d9a100819973df801febfb31 # v2.4.0
       with:
         path: ./CHANGELOG.md
+        version: Unreleased
         validation_level: error
+
+    - name: Check Play Store release notes length
+      env:
+        CHANGELOG: ${{ steps.changelog.outputs.changes }}
+      run: |
+        python3 -c '
+        import os
+        import sys
+
+        # release.yml writes the action output followed by a newline.
+        count = len(os.environ["CHANGELOG"]) + 1
+        print(f"Play Store release notes: {count}/500 characters")
+        if count > 500:
+            sys.exit("Play Store release notes exceed 500 characters")
+        '
 
     - name: Run unit tests
       run: ./gradlew --no-configuration-cache --stacktrace :build-logic:check check validateDebugScreenshotTest -PslimTests

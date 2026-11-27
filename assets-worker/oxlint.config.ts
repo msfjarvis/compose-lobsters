@@ -1,7 +1,11 @@
+import cloudflare from "@cloudflare/oxlint-config";
 import { defineConfig } from "oxlint";
 
 export default defineConfig({
+  extends: [cloudflare],
+  env: cloudflare.env,
   ignorePatterns: [
+    ...(cloudflare.ignorePatterns ?? []),
     ".wrangler/**",
     ".cloudflare/**",
     "dist/**",
@@ -11,6 +15,10 @@ export default defineConfig({
   ],
   jsPlugins: [{ name: "anti-slop", specifier: "./tools/oxlint/anti-slop/index.ts" }],
   rules: {
+    "unicorn/prefer-string-replace-all": "off",
+    "typescript/array-type": "off",
+    "no-console": "off",
+    "@nkzw/no-instanceof": "off",
     "oxc/no-accumulating-spread": "error",
     "anti-slop/no-array-filter-map": "error",
     "anti-slop/no-reduce-accumulator-copy": "error",

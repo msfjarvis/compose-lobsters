@@ -1,0 +1,16 @@
+
+### Added
+
+- Feed loading guidance and unread comment indicators
+
+### Fixed
+
+- Search bot challenge prompts and restored search state
+- Restored login, reminder drafts and app state
+- Instant comment headers and improved post transitions
+- Feed titles and settings layout at large font sizes
+- Tablet layouts, search and import/export accessibility
+
+### Changed
+
+- New Material 3 navigation bar

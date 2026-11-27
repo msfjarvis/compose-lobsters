@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.77.0] - 2026-11-27
+
 ### Added
 
 - Feed loading guidance and unread comment indicators
@@ -752,7 +754,8 @@ Thanks to Charles Lombardo for contributing the action button UI changes.
 
 - Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.76.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.77.0...HEAD
+[1.77.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.76.0...v1.77.0
 [1.76.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.75.0...v1.76.0
 [1.75.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.74.0...v1.75.0
 [1.74.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.73.0...v1.74.0

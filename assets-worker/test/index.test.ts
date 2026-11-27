@@ -289,6 +289,35 @@ describe("Zipline release administration", () => {
     expect(await env.RELEASES.get("current/v3")).toBe(PREVIOUS_RELEASE_TIMESTAMP);
   });
 
+  it("rejects malformed rollback bodies without changing the active release", async () => {
+    await env.RELEASES.put("current/v3", RELEASE_TIMESTAMP);
+
+    for (const body of [
+      "{",
+      "null",
+      "[]",
+      '"20260829T000000Z"',
+      "{}",
+      '{"releaseTimestamp":42}',
+      '{"releaseTimestamp":"invalid"}',
+    ]) {
+      const request = rollbackRequest(PREVIOUS_RELEASE_TIMESTAMP);
+
+      const response = await exports.default.fetch("https://assets.example/admin/rollback", {
+        ...request,
+        body,
+      });
+
+      expect(response.status).toBe(400);
+      expect(await response.text()).toBe(
+        body === "{"
+          ? "The request body must be valid JSON"
+          : "releaseTimestamp must be a UTC timestamp such as 20260830T000000Z",
+      );
+      expect(await env.RELEASES.get("current/v3")).toBe(RELEASE_TIMESTAMP);
+    }
+  });
+
   it("does not activate an unknown release during rollback", async () => {
     await env.RELEASES.put("current/v3", RELEASE_TIMESTAMP);
 

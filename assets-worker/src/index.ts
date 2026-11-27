@@ -106,7 +106,7 @@ function responseHeaders(object: R2Object, assetName: string, cacheControl: stri
 function currentTimestamp(): string {
   return new Date()
     .toISOString()
-    .replace(/[-:]/g, "")
+    .replaceAll(/[-:]/g, "")
     .replace(/\.\d{3}Z$/, "Z");
 }
 

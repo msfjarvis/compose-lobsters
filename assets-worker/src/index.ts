@@ -1,4 +1,5 @@
 import { Unzip, UnzipInflate } from "fflate/browser";
+import { z } from "zod";
 
 const ADMIN_RELEASE_PATH = "/admin/releases";
 const ADMIN_ROLLBACK_PATH = "/admin/rollback";
@@ -10,6 +11,7 @@ const MAX_UNCOMPRESSED_BYTES = 32 * 1024 * 1024;
 const RELEASE_TIMESTAMP = /^\d{8}T\d{6}Z$/;
 const ZIPLINE_VERSION = /^v[1-9]\d*$/;
 const ASSET_NAME = /^(?:manifest\.zipline\.json|[A-Za-z0-9][A-Za-z0-9._-]*\.zipline)$/;
+const rollbackSchema = z.object({ releaseTimestamp: z.string().regex(RELEASE_TIMESTAMP) });
 
 type AssetRequest = {
   assetName: string;
@@ -106,11 +108,11 @@ function responseHeaders(object: R2Object, assetName: string, cacheControl: stri
 function currentTimestamp(): string {
   return new Date()
     .toISOString()
-    .replace(/[-:]/g, "")
+    .replaceAll(/[-:]/g, "")
     .replace(/\.\d{3}Z$/, "Z");
 }
 
-function joinChunks(chunks: readonly Uint8Array[], size: number): Uint8Array {
+function joinChunks(chunks: ReadonlyArray<Uint8Array>, size: number): Uint8Array {
   const output = new Uint8Array(size);
   let offset = 0;
 
@@ -144,7 +146,7 @@ function parseArchive(archive: Uint8Array): ReleaseArchive {
       throw new BadRequestError(`The ZIP archive cannot contain more than ${MAX_MODULES} modules`);
     }
 
-    const chunks: Uint8Array[] = [];
+    const chunks: Array<Uint8Array> = [];
     let size = 0;
     file.ondata = (error, chunk, final) => {
       if (error) {
@@ -298,10 +300,6 @@ async function reserveReleaseUpdate(env: Env, ziplineVersion: string): Promise<v
   }
 }
 
-function isString(value: unknown): value is string {
-  return Object.prototype.toString.call(value) === "[object String]";
-}
-
 async function rollbackReleaseTimestamp(request: Request): Promise<string> {
   let body: unknown;
 
@@ -311,17 +309,13 @@ async function rollbackReleaseTimestamp(request: Request): Promise<string> {
     throw new BadRequestError("The request body must be valid JSON");
   }
 
-  if (
-    !(body instanceof Object) ||
-    Array.isArray(body) ||
-    !("releaseTimestamp" in body) ||
-    !isString(body.releaseTimestamp) ||
-    !RELEASE_TIMESTAMP.test(body.releaseTimestamp)
-  ) {
+  const result = rollbackSchema.safeParse(body);
+
+  if (!result.success) {
     throw new BadRequestError("releaseTimestamp must be a UTC timestamp such as 20260830T000000Z");
   }
 
-  return body.releaseTimestamp;
+  return result.data.releaseTimestamp;
 }
 
 async function handleAdminRelease(request: Request, env: Env): Promise<Response> {
@@ -476,6 +470,8 @@ export default {
         return new Response(error.message, { status: 409 });
       }
 
+      // Log unexpected failures for Worker observability before returning a generic response.
+      // oxlint-disable-next-line no-console
       console.error(
         JSON.stringify({
           error: error instanceof Error ? error.message : String(error),

@@ -7,33 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.77.0] - 2026-11-27
+
 ### Added
 
-- Feed recovery and empty states now provide guidance when posts cannot be loaded
+- Feed loading guidance and unread comment indicators
 
 ### Fixed
 
-- Search page now prompt users to solve the bot challenge first
-  which is required for it to work
-- Comments page renders its header instantly
-- Feed titles now wrap instead of being clipped at large font sizes
-- Search position and query are restored when returning to or recreating the page
-- The login flow can be restarted after a restored WebView error
-- Reminder time-picker drafts survive recreation
-- Unread comments are marked with a visible indicator
-- Tablet layouts now properly constrain their width
-- Search on tablets now uses the docked layout instead of the
-  full screen one
-- App state is now properly restored if the system kills it for
-  any reason
-- Settings page layout no longer gets squeezed on large font sizes
-- Import/export buttons on tablets are now laid out in a more
-  accessible format
+- Search bot challenge prompts and restored search state
+- Restored login, reminder drafts and app state
+- Instant comment headers and improved post transitions
+- Feed titles and settings layout at large font sizes
+- Tablet layouts, search and import/export accessibility
 
 ### Changed
 
-- Replace the fancy navigation bar with a Material 3 one
-- Posts now transition individually into comment headers
+- New Material 3 navigation bar
 
 ## [1.76.0] - 2026-11-01
 
@@ -764,7 +754,8 @@ Thanks to Charles Lombardo for contributing the action button UI changes.
 
 - Initial Play Store release
 
-[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.76.0...HEAD
+[Unreleased]: https://github.com/msfjarvis/compose-lobsters/compare/v1.77.0...HEAD
+[1.77.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.76.0...v1.77.0
 [1.76.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.75.0...v1.76.0
 [1.75.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.74.0...v1.75.0
 [1.74.0]: https://github.com/msfjarvis/compose-lobsters/compare/v1.73.0...v1.74.0
